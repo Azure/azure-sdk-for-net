@@ -8,70 +8,36 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A rule governing the accessibility of a managed hsm pool from a specific virtual network. </summary>
     public partial class ManagedHsmVirtualNetworkRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
-        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId)
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public ManagedHsmVirtualNetworkRule(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(id, nameof(id));
 
-            SubnetId = subnetId;
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
-        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmVirtualNetworkRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SubnetId = subnetId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/> for deserialization. </summary>
-        internal ManagedHsmVirtualNetworkRule()
-        {
+            Id = id;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
-        [WirePath("id")]
-        public ResourceIdentifier SubnetId { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The security domain properties of the managed hsm. </summary>
     public partial class ManagedHSMSecurityDomainProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         internal ManagedHSMSecurityDomainProperties()
@@ -53,19 +24,18 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActivationStatus = activationStatus;
             ActivationStatusMessage = activationStatusMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Activation Status. </summary>
-        [WirePath("activationStatus")]
         public ManagedHSMSecurityDomainActivationStatus? ActivationStatus { get; }
+
         /// <summary> Activation Status Message. </summary>
-        [WirePath("activationStatusMessage")]
         public string ActivationStatusMessage { get; }
     }
 }

@@ -8,128 +8,46 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableKeyVaultResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableKeyVaultResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _vaultsClientDiagnostics;
+        private Vaults _vaultsRestClient;
+
+        /// <summary> Initializes a new instance of MockableKeyVaultResourceGroupResource for mocking. </summary>
         protected MockableKeyVaultResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKeyVaultResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKeyVaultResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKeyVaultResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of ManagedHsmResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedHsmResources and their operations over a ManagedHsmResource. </returns>
-        public virtual ManagedHsmCollection GetManagedHsms()
-        {
-            return GetCachedClient(client => new ManagedHsmCollection(client, Id));
-        }
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        /// <summary>
-        /// Gets the specified managed HSM Pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the managed HSM Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedHsmResource>> GetManagedHsmAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified managed HSM Pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the managed HSM Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedHsmResource> GetManagedHsm(string name, CancellationToken cancellationToken = default)
-        {
-            return GetManagedHsms().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of KeyVaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of KeyVaultResources and their operations over a KeyVaultResource. </returns>
+        /// <summary> Gets a collection of KeyVaults in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of KeyVaults and their operations over a KeyVaultResource. </returns>
         public virtual KeyVaultCollection GetKeyVaults()
         {
             return GetCachedClient(client => new KeyVaultCollection(client, Id));
         }
 
-        /// <summary>
-        /// Gets the specified Azure key vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the specified Azure key vault. </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
@@ -137,30 +55,12 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<KeyVaultResource>> GetKeyVaultAsync(string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
             return await GetKeyVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets the specified Azure key vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the specified Azure key vault. </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
@@ -168,7 +68,114 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         [ForwardsClientCalls]
         public virtual Response<KeyVaultResource> GetKeyVault(string vaultName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
             return GetKeyVaults().Get(vaultName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedHsms in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ManagedHsms and their operations over a ManagedHsmResource. </returns>
+        public virtual ManagedHsmCollection GetManagedHsms()
+        {
+            return GetCachedClient(client => new ManagedHsmCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified managed HSM Pool. </summary>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedHsmResource>> GetManagedHsmAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetManagedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified managed HSM Pool. </summary>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedHsmResource> GetManagedHsm(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetManagedHsms().Get(name, cancellationToken);
+        }
+
+        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <param name="vaultName"> Name of the vault. </param>
+        /// <param name="operationKind"> Name of the operation. </param>
+        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
+
+            using DiagnosticScope scope = VaultsClientDiagnostics.CreateScope("MockableKeyVaultResourceGroupResource.UpdateAccessPolicy");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(keyVaultAccessPolicyParameters), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <param name="vaultName"> Name of the vault. </param>
+        /// <param name="operationKind"> Name of the operation. </param>
+        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(string vaultName, AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
+
+            using DiagnosticScope scope = VaultsClientDiagnostics.CreateScope("MockableKeyVaultResourceGroupResource.UpdateAccessPolicy");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(keyVaultAccessPolicyParameters), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

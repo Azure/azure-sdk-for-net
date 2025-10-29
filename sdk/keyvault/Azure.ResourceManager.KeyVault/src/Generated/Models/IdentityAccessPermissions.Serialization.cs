@@ -8,17 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class IdentityAccessPermissions : IUtf8JsonSerializable, IJsonModel<IdentityAccessPermissions>
+    /// <summary> Permissions the identity has for keys, secrets, certificates and storage. </summary>
+    public partial class IdentityAccessPermissions : IJsonModel<IdentityAccessPermissions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAccessPermissions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IdentityAccessPermissions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +29,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IdentityAccessPermissions)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
-                foreach (var item in Keys)
+                foreach (IdentityAccessKeyPermission item in Keys)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Secrets)
+                foreach (IdentityAccessSecretPermission item in Secrets)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -60,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
-                foreach (var item in Certificates)
+                foreach (IdentityAccessCertificatePermission item in Certificates)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -70,21 +68,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteStartArray();
-                foreach (var item in Storage)
+                foreach (IdentityAccessStoragePermission item in Storage)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,22 +91,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
         }
 
-        IdentityAccessPermissions IJsonModel<IdentityAccessPermissions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IdentityAccessPermissions IJsonModel<IdentityAccessPermissions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IdentityAccessPermissions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IdentityAccessPermissions)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIdentityAccessPermissions(document.RootElement, options);
         }
 
-        internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,60 +120,59 @@ namespace Azure.ResourceManager.KeyVault.Models
             IList<IdentityAccessSecretPermission> secrets = default;
             IList<IdentityAccessCertificatePermission> certificates = default;
             IList<IdentityAccessStoragePermission> storage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keys"u8))
+                if (prop.NameEquals("keys"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IdentityAccessKeyPermission> array = new List<IdentityAccessKeyPermission>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new IdentityAccessKeyPermission(item.GetString()));
                     }
                     keys = array;
                     continue;
                 }
-                if (property.NameEquals("secrets"u8))
+                if (prop.NameEquals("secrets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IdentityAccessSecretPermission> array = new List<IdentityAccessSecretPermission>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new IdentityAccessSecretPermission(item.GetString()));
                     }
                     secrets = array;
                     continue;
                 }
-                if (property.NameEquals("certificates"u8))
+                if (prop.NameEquals("certificates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IdentityAccessCertificatePermission> array = new List<IdentityAccessCertificatePermission>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new IdentityAccessCertificatePermission(item.GetString()));
                     }
                     certificates = array;
                     continue;
                 }
-                if (property.NameEquals("storage"u8))
+                if (prop.NameEquals("storage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IdentityAccessStoragePermission> array = new List<IdentityAccessStoragePermission>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new IdentityAccessStoragePermission(item.GetString()));
                     }
@@ -179,144 +181,42 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IdentityAccessPermissions(keys ?? new ChangeTrackingList<IdentityAccessKeyPermission>(), secrets ?? new ChangeTrackingList<IdentityAccessSecretPermission>(), certificates ?? new ChangeTrackingList<IdentityAccessCertificatePermission>(), storage ?? new ChangeTrackingList<IdentityAccessStoragePermission>(), serializedAdditionalRawData);
+            return new IdentityAccessPermissions(keys ?? new ChangeTrackingList<IdentityAccessKeyPermission>(), secrets ?? new ChangeTrackingList<IdentityAccessSecretPermission>(), certificates ?? new ChangeTrackingList<IdentityAccessCertificatePermission>(), storage ?? new ChangeTrackingList<IdentityAccessStoragePermission>(), additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IdentityAccessPermissions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keys: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Keys))
-                {
-                    if (Keys.Any())
-                    {
-                        builder.Append("  keys: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Keys)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secrets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Secrets))
-                {
-                    if (Secrets.Any())
-                    {
-                        builder.Append("  secrets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Secrets)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Certificates))
-                {
-                    if (Certificates.Any())
-                    {
-                        builder.Append("  certificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Certificates)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Storage))
-                {
-                    if (Storage.Any())
-                    {
-                        builder.Append("  storage: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Storage)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<IdentityAccessPermissions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IdentityAccessPermissions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IdentityAccessPermissions IPersistableModel<IdentityAccessPermissions>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IdentityAccessPermissions IPersistableModel<IdentityAccessPermissions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IdentityAccessPermissions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIdentityAccessPermissions(document.RootElement, options);
                     }
                 default:
@@ -324,6 +224,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IdentityAccessPermissions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

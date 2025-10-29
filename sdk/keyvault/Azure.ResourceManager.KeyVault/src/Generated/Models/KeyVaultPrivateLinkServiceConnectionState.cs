@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> An object that represents the approval state of the private link connection. </summary>
     public partial class KeyVaultPrivateLinkServiceConnectionState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkServiceConnectionState"/>. </summary>
         public KeyVaultPrivateLinkServiceConnectionState()
@@ -54,23 +25,22 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, KeyVaultActionsRequiredMessage? actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, KeyVaultActionsRequiredMessage? actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </summary>
-        [WirePath("status")]
         public KeyVaultPrivateEndpointServiceConnectionStatus? Status { get; set; }
+
         /// <summary> The reason for approval or rejection. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
-        [WirePath("actionsRequired")]
         public KeyVaultActionsRequiredMessage? ActionsRequired { get; set; }
     }
 }

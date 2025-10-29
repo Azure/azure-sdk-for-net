@@ -6,74 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableKeyVaultArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableKeyVaultArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableKeyVaultArmClient for mocking. </summary>
         protected MockableKeyVaultArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKeyVaultArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKeyVaultArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKeyVaultArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableKeyVaultArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedManagedHsmResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedManagedHsmResource.CreateResourceIdentifier" /> to create a <see cref="DeletedManagedHsmResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedManagedHsmResource"/> object. </returns>
-        public virtual DeletedManagedHsmResource GetDeletedManagedHsmResource(ResourceIdentifier id)
-        {
-            DeletedManagedHsmResource.ValidateResourceId(id);
-            return new DeletedManagedHsmResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedHsmResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedHsmResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHsmResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedHsmResource"/> object. </returns>
-        public virtual ManagedHsmResource GetManagedHsmResource(ResourceIdentifier id)
-        {
-            ManagedHsmResource.ValidateResourceId(id);
-            return new ManagedHsmResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DeletedKeyVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedKeyVaultResource.CreateResourceIdentifier" /> to create a <see cref="DeletedKeyVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedKeyVaultResource"/> object. </returns>
-        public virtual DeletedKeyVaultResource GetDeletedKeyVaultResource(ResourceIdentifier id)
-        {
-            DeletedKeyVaultResource.ValidateResourceId(id);
-            return new DeletedKeyVaultResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="KeyVaultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyVaultResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="KeyVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="KeyVaultResource"/> object. </returns>
         public virtual KeyVaultResource GetKeyVaultResource(ResourceIdentifier id)
@@ -82,10 +35,43 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return new KeyVaultResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedHsmPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DeletedKeyVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedKeyVaultResource"/> object. </returns>
+        public virtual DeletedKeyVaultResource GetDeletedKeyVaultResource(ResourceIdentifier id)
+        {
+            DeletedKeyVaultResource.ValidateResourceId(id);
+            return new DeletedKeyVaultResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedHsmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedHsmResource"/> object. </returns>
+        public virtual ManagedHsmResource GetManagedHsmResource(ResourceIdentifier id)
+        {
+            ManagedHsmResource.ValidateResourceId(id);
+            return new ManagedHsmResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DeletedManagedHsmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedManagedHsmResource"/> object. </returns>
+        public virtual DeletedManagedHsmResource GetDeletedManagedHsmResource(ResourceIdentifier id)
+        {
+            DeletedManagedHsmResource.ValidateResourceId(id);
+            return new DeletedManagedHsmResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedHsmPrivateEndpointConnectionResource"/> object. </returns>
         public virtual ManagedHsmPrivateEndpointConnectionResource GetManagedHsmPrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -94,22 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return new ManagedHsmPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="KeyVaultPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyVaultPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            KeyVaultPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new KeyVaultPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="KeyVaultSecretResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyVaultSecretResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultSecretResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="KeyVaultSecretResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="KeyVaultSecretResource"/> object. </returns>
         public virtual KeyVaultSecretResource GetKeyVaultSecretResource(ResourceIdentifier id)

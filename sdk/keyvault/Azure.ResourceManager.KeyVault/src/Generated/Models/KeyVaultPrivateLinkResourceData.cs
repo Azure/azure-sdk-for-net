@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -15,81 +16,66 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A private link resource. </summary>
     public partial class KeyVaultPrivateLinkResourceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/>. </summary>
-        public KeyVaultPrivateLinkResourceData()
+        internal KeyVaultPrivateLinkResourceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <param name="groupId"> Group identifier of private link resource. </param>
-        /// <param name="requiredMembers"> Required member names of private link resource. </param>
-        /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyVaultPrivateLinkResourceProperties properties, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
             Tags = tags;
-            GroupId = groupId;
-            RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource properties. </summary>
+        internal KeyVaultPrivateLinkResourceProperties Properties { get; }
+
         /// <summary> Azure location of the key vault resource. </summary>
-        [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Tags assigned to the key vault resource. </summary>
-        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
+
         /// <summary> Group identifier of private link resource. </summary>
-        [WirePath("properties.groupId")]
-        public string GroupId { get; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties.GroupId;
+            }
+        }
+
         /// <summary> Required member names of private link resource. </summary>
-        [WirePath("properties.requiredMembers")]
-        public IReadOnlyList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers
+        {
+            get
+            {
+                return Properties.RequiredMembers;
+            }
+        }
+
         /// <summary> Required DNS zone names of the the private link resource. </summary>
-        [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames
+        {
+            get
+            {
+                return Properties.RequiredZoneNames;
+            }
+        }
     }
 }

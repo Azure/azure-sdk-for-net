@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the secret. </summary>
     public partial class SecretProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecretProperties"/>. </summary>
         public SecretProperties()
@@ -56,31 +27,30 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="attributes"> The attributes of the secret. </param>
         /// <param name="secretUri"> The URI to retrieve the current version of the secret. </param>
         /// <param name="secretUriWithVersion"> The URI to retrieve the specific version of the secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretProperties(string value, string contentType, SecretAttributes attributes, Uri secretUri, string secretUriWithVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecretProperties(string value, string contentType, SecretAttributes attributes, Uri secretUri, string secretUriWithVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             ContentType = contentType;
             Attributes = attributes;
             SecretUri = secretUri;
             SecretUriWithVersion = secretUriWithVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
+
         /// <summary> The content type of the secret. </summary>
-        [WirePath("contentType")]
         public string ContentType { get; set; }
+
         /// <summary> The attributes of the secret. </summary>
-        [WirePath("attributes")]
         public SecretAttributes Attributes { get; set; }
+
         /// <summary> The URI to retrieve the current version of the secret. </summary>
-        [WirePath("secretUri")]
         public Uri SecretUri { get; }
+
         /// <summary> The URI to retrieve the specific version of the secret. </summary>
-        [WirePath("secretUriWithVersion")]
         public string SecretUriWithVersion { get; }
     }
 }

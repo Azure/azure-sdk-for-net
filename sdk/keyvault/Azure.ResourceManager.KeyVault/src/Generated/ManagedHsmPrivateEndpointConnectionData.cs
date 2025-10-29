@@ -7,110 +7,99 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary>
-    /// A class representing the ManagedHsmPrivateEndpointConnection data model.
-    /// Private endpoint connection resource.
-    /// </summary>
-    public partial class ManagedHsmPrivateEndpointConnectionData : TrackedResourceData
+    /// <summary> Private endpoint connection resource. </summary>
+    public partial class ManagedHsmPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ManagedHsmPrivateEndpointConnectionData(AzureLocation location) : base(location)
+        public ManagedHsmPrivateEndpointConnectionData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, ManagedServiceIdentity identity, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedHsmPrivateEndpointConnectionProperties properties, IDictionary<string, string> tags, AzureLocation? location, ManagedHsmSku sku, ManagedServiceIdentity identity, ETag? eTag) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Tags = tags;
+            Location = location;
             Sku = sku;
             Identity = identity;
-            ETag = etag;
-            PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionData"/> for deserialization. </summary>
-        internal ManagedHsmPrivateEndpointConnectionData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        internal ManagedHsmPrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; set; }
 
         /// <summary> SKU details. </summary>
-        [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
+
         /// <summary> Managed service identity. </summary>
-        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; set; }
-        /// <summary> Properties of the private endpoint object. </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
-        [WirePath("properties.privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-        }
 
         /// <summary> Approval state of the private link connection. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
         /// <summary> Provisioning state of the private endpoint connection. </summary>
-        [WirePath("properties.provisioningState")]
-        public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Full identifier of the private endpoint resource. </summary>
+        public string PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+        }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class ManagedHsmOperationSource : IOperationSource<ManagedHsmResource>
+    /// <summary></summary>
+    internal partial class ManagedHsmOperationSource : IOperationSource<ManagedHsmResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedHsmOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedHsmResource IOperationSource<ManagedHsmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedHsmData data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedHsmResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedHsmResource> IOperationSource<ManagedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
-            return await Task.FromResult(new ManagedHsmResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedHsmData data = ManagedHsmData.DeserializeManagedHsmData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedHsmResource(_client, data);
         }
     }
 }

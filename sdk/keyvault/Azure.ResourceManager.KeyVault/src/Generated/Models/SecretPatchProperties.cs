@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the secret. </summary>
     public partial class SecretPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecretPatchProperties"/>. </summary>
         public SecretPatchProperties()
@@ -54,23 +25,22 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="value"> The value of the secret. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretPatchProperties(string value, string contentType, SecretAttributes attributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecretPatchProperties(string value, string contentType, SecretAttributes attributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             ContentType = contentType;
             Attributes = attributes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value of the secret. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
+
         /// <summary> The content type of the secret. </summary>
-        [WirePath("contentType")]
         public string ContentType { get; set; }
+
         /// <summary> The attributes of the secret. </summary>
-        [WirePath("attributes")]
         public SecretAttributes Attributes { get; set; }
     }
 }
