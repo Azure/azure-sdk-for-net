@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
 
@@ -45,8 +46,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
         /// <param name="nestedProperty"></param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -56,6 +58,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             Prop1 = prop1;
             Prop2 = prop2;
             NestedProperty = nestedProperty;
+            ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -90,6 +93,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Gets or sets the NestedProperty. </summary>
         [WirePath("nestedProperty")]
         internal NestedFooModel NestedProperty { get; set; }
+
+        /// <summary> ETag property for testing etag parameter name generation. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; set; }
 
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("nestedProperty.properties")]
