@@ -27,7 +27,27 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>. </summary>
+        /// <summary>
+        /// Get a CopilotSettingsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.PortalServices/copilotSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PortalServicesCopilotSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
         public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting()
         {
