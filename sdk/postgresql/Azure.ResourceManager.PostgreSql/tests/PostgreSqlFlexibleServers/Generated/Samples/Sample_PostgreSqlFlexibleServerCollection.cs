@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Enabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Enabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {

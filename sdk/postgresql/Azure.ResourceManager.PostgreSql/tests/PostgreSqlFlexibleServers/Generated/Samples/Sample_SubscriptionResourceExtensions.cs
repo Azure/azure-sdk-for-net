@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation locationName = new AzureLocation("eastus");
-            await foreach (Capability item in subscriptionResource.GetCapabilitiesByLocationsAsync(locationName))
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in subscriptionResource.GetCapabilitiesByLocationsAsync(locationName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

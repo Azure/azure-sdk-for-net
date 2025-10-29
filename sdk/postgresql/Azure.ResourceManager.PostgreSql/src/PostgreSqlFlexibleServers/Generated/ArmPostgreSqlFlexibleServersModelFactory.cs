@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: Backup.earliestRestoreDate
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = null, GeographicallyRedundantBackup? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
+        public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
             return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
         }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Capability"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="capabilityStatus">
         /// The status of the capability.
         /// Serialized Name: CapabilityBase.status
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Features supported.
         /// Serialized Name: Capability.supportedFeatures
         /// </param>
-        /// <param name="fastProvisioningSupported">
+        /// <param name="supportFastProvisioning">
         /// Indicates if fast provisioning is supported. 'Enabled' means fast provisioning is supported. 'Disabled' stands for fast provisioning is not supported. Will be deprecated in the future. Look to Supported Features for 'FastProvisioning'.
         /// Serialized Name: Capability.fastProvisioningSupported
         /// </param>
@@ -461,15 +461,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'.
         /// Serialized Name: Capability.restricted
         /// </param>
-        /// <returns> A new <see cref="Models.Capability"/> instance for mocking. </returns>
-        public static Capability Capability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, IEnumerable<SupportedFeature> supportedFeatures = null, FastProvisioningSupport? fastProvisioningSupported = null, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, GeographicallyRedundantBackupSupport? geoBackupSupported = null, PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = null, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = null, PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = null, PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = null, PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, IEnumerable<SupportedFeature> supportedFeatures = null, PostgreSqlFlexibleServerFastProvisioningSupported? supportFastProvisioning = null, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = null, PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = null, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = null, PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = null, PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = null, PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = null)
         {
             supportedServerEditions ??= new List<PostgreSqlFlexibleServerEditionCapability>();
             supportedServerVersions ??= new List<PostgreSqlFlexibleServerServerVersionCapability>();
             supportedFeatures ??= new List<SupportedFeature>();
             supportedFastProvisioningEditions ??= new List<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
 
-            return new Capability(
+            return new PostgreSqlFlexibleServerCapabilityProperties(
                 capabilityStatus,
                 reason,
                 serializedAdditionalRawData: null,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedServerEditions?.ToList(),
                 supportedServerVersions?.ToList(),
                 supportedFeatures?.ToList(),
-                fastProvisioningSupported,
+                supportFastProvisioning,
                 supportedFastProvisioningEditions?.ToList(),
                 geoBackupSupported,
                 zoneRedundantHaSupported,
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: ServerForPatch.properties.location
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(SkuForPatch sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, PostgreSqlFlexibleServerStorage storage = null, BackupForPatch backup = null, HighAvailabilityForPatch highAvailability = null, MaintenanceWindowForPatch maintenanceWindow = null, AuthConfigForPatch authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, CreateModeForPatch? createMode = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerNetwork network = null, Cluster cluster = null, AzureLocation? location = null)
+        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(SkuForPatch sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, PostgreSqlFlexibleServerStorage storage = null, BackupForPatch backup = null, HighAvailabilityForPatch highAvailability = null, MaintenanceWindowForPatch maintenanceWindow = null, AuthConfigForPatch authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerNetwork network = null, Cluster cluster = null, AzureLocation? location = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: BackupForPatch.earliestRestoreDate
         /// </param>
         /// <returns> A new <see cref="Models.BackupForPatch"/> instance for mocking. </returns>
-        public static BackupForPatch BackupForPatch(int? backupRetentionDays = null, GeographicallyRedundantBackup? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
+        public static BackupForPatch BackupForPatch(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
             return new BackupForPatch(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
         }

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             MaintenanceWindowForPatch maintenanceWindow = default;
             AuthConfigForPatch authConfig = default;
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
-            CreateModeForPatch? createMode = default;
+            PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            createMode = new CreateModeForPatch(property0.Value.GetString());
+                            createMode = new PostgreSqlFlexibleServerCreateModeForUpdate(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))

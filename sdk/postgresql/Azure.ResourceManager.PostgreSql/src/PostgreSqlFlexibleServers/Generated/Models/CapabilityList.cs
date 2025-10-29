@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// The Capability items on this page
         /// Serialized Name: CapabilityList.value
         /// </param>
-        internal CapabilityList(IEnumerable<Capability> value)
+        internal CapabilityList(IEnumerable<PostgreSqlFlexibleServerCapabilityProperties> value)
         {
             Value = value.ToList();
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: CapabilityList.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityList(IReadOnlyList<Capability> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilityList(IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// The Capability items on this page
         /// Serialized Name: CapabilityList.value
         /// </summary>
-        public IReadOnlyList<Capability> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: CapabilityList.nextLink

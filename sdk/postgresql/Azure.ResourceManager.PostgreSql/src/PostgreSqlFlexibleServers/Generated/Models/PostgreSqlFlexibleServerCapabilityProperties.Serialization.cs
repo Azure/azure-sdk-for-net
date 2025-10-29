@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class Capability : IUtf8JsonSerializable, IJsonModel<Capability>
+    public partial class PostgreSqlFlexibleServerCapabilityProperties : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerCapabilityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Capability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerCapabilityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Capability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerCapabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Capability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Capability)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerCapabilityProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(FastProvisioningSupported))
+            if (options.Format != "W" && Optional.IsDefined(SupportFastProvisioning))
             {
                 writer.WritePropertyName("fastProvisioningSupported"u8);
-                writer.WriteStringValue(FastProvisioningSupported.Value.ToString());
+                writer.WriteStringValue(SupportFastProvisioning.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFastProvisioningEditions))
             {
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        Capability IJsonModel<Capability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerCapabilityProperties IJsonModel<PostgreSqlFlexibleServerCapabilityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Capability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Capability)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerCapabilityProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapability(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerCapabilityProperties(document.RootElement, options);
         }
 
-        internal static Capability DeserializeCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerCapabilityProperties DeserializePostgreSqlFlexibleServerCapabilityProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = default;
             IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
             IReadOnlyList<SupportedFeature> supportedFeatures = default;
-            FastProvisioningSupport? fastProvisioningSupported = default;
+            PostgreSqlFlexibleServerFastProvisioningSupported? fastProvisioningSupported = default;
             IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = default;
-            GeographicallyRedundantBackupSupport? geoBackupSupported = default;
+            PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = default;
             PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = default;
             PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = default;
             PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    fastProvisioningSupported = new FastProvisioningSupport(property.Value.GetString());
+                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedFastProvisioningEditions"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    geoBackupSupported = new GeographicallyRedundantBackupSupport(property.Value.GetString());
+                    geoBackupSupported = new PostgreSqlFlexibleServerGeoBackupSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zoneRedundantHaSupported"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Capability(
+            return new PostgreSqlFlexibleServerCapabilityProperties(
                 status,
                 reason,
                 serializedAdditionalRawData,
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FastProvisioningSupported), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportFastProvisioning), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  fastProvisioningSupported: ");
@@ -430,10 +430,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                if (Optional.IsDefined(FastProvisioningSupported))
+                if (Optional.IsDefined(SupportFastProvisioning))
                 {
                     builder.Append("  fastProvisioningSupported: ");
-                    builder.AppendLine($"'{FastProvisioningSupported.Value.ToString()}'");
+                    builder.AppendLine($"'{SupportFastProvisioning.Value.ToString()}'");
                 }
             }
 
@@ -592,9 +592,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Capability>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Capability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -603,26 +603,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Capability)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerCapabilityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Capability IPersistableModel<Capability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerCapabilityProperties IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Capability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCapability(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerCapabilityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Capability)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerCapabilityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Capability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerCapabilityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

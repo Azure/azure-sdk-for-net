@@ -214,7 +214,7 @@ acronym-mapping:
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration
   ConfigurationDataType: PostgreSqlFlexibleServerConfigurationDataType
-  CreateModeForUpdate: PostgreSqlFlexibleServerCreateModeForUpdate
+  CreateModeForPatch: PostgreSqlFlexibleServerCreateModeForUpdate
   FailoverMode: PostgreSqlFlexibleServerFailoverMode
   FlexibleServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   GeographicallyRedundantBackup: PostgreSqlFlexibleServerGeoRedundantBackupEnum
@@ -265,7 +265,7 @@ rename-mapping:
   DataEncryption: PostgreSqlFlexibleServerDataEncryption
   FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
   IdentityType: PostgreSqlFlexibleServerIdentityType
-  Origin: PostgreSqlFlexibleServerBackupOrigin
+  BackupType: PostgreSqlFlexibleServerBackupOrigin
   PasswordBasedAuth: PostgreSqlFlexibleServerPasswordAuthEnum
   PrincipalType: PostgreSqlFlexibleServerPrincipalType
   ReplicationRole: PostgreSqlFlexibleServerReplicationRole
@@ -282,12 +282,12 @@ rename-mapping:
   TriggerCutover: PostgreSqlMigrationTriggerCutover
   CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
   DbServerMetadata: PostgreSqlServerMetadata
-  FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupported
-  FlexibleServerCapability.fastProvisioningSupported: SupportFastProvisioning
-  FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
+  FastProvisioningSupport: PostgreSqlFlexibleServerFastProvisioningSupported
+  Capability.fastProvisioningSupported: SupportFastProvisioning
+  Capability: PostgreSqlFlexibleServerCapabilityProperties
   CapturedLog: PostgreSqlFlexibleServerLogFile
   LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
-  GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupported
+  GeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerGeoBackupSupported
   PostgreSqlFlexibleServerHighAvailabilityMode: PostgreSqlFlexibleServerHAMode
   ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
   ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported

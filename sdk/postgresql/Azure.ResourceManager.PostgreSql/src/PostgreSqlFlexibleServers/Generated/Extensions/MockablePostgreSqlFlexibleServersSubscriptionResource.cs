@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Capability> GetCapabilitiesByLocationsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocationsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Capability.DeserializeCapability(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,12 +318,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Capability> GetCapabilitiesByLocations(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocations(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Capability.DeserializeCapability(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

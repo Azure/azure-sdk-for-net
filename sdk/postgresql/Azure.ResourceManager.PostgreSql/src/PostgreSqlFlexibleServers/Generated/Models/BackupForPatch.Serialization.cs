@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             int? backupRetentionDays = default;
-            GeographicallyRedundantBackup? geoRedundantBackup = default;
+            PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = default;
             DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    geoRedundantBackup = new GeographicallyRedundantBackup(property.Value.GetString());
+                    geoRedundantBackup = new PostgreSqlFlexibleServerGeoRedundantBackupEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("earliestRestoreDate"u8))

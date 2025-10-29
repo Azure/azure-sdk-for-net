@@ -1457,12 +1457,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Capability> GetCapabilitiesByServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilitiesByServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilitiesByServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Capability.DeserializeCapability(e), _capabilitiesByServerClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapabilitiesByServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), _capabilitiesByServerClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapabilitiesByServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1483,12 +1483,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Capability> GetCapabilitiesByServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilitiesByServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilitiesByServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Capability.DeserializeCapability(e), _capabilitiesByServerClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapabilitiesByServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), _capabilitiesByServerClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapabilitiesByServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

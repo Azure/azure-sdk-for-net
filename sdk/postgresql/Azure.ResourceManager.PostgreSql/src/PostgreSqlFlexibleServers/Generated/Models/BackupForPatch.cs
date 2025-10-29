@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: BackupForPatch.earliestRestoreDate
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupForPatch(int? backupRetentionDays, GeographicallyRedundantBackup? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupForPatch(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: BackupForPatch.geoRedundantBackup
         /// </summary>
         [WirePath("geoRedundantBackup")]
-        public GeographicallyRedundantBackup? GeoRedundantBackup { get; }
+        public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; }
         /// <summary>
         /// Earliest restore point time (ISO8601 format) for a server.
         /// Serialized Name: BackupForPatch.earliestRestoreDate

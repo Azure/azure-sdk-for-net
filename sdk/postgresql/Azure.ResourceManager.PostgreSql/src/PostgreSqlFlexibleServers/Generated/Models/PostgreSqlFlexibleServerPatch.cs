@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: ServerForPatch.properties.location
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, CreateModeForPatch? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: ServerForPatch.properties.createMode
         /// </summary>
         [WirePath("properties.createMode")]
-        public CreateModeForPatch? CreateMode { get; set; }
+        public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
         /// <summary>
         /// Role of the server in a replication set.
         /// Serialized Name: ServerForPatch.properties.replicationRole

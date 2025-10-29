@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
                 Version = PostgreSqlFlexibleServerVersion.Seventeen,
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
                     TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     StartMinute = 0,
                     DayOfWeek = 0,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
 
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
                     KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
 
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
                     KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
 
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 {
                     BackupRetentionDays = 20,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
 
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Capability item in postgreSqlFlexibleServer.GetCapabilitiesByServersAsync())
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetCapabilitiesByServersAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
