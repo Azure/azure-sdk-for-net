@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.7 (2025-10-29)
+## 5.3.7 (2025-10-30)
 
 ### Other Changes
 - This release contains bug fixes to improve quality.
