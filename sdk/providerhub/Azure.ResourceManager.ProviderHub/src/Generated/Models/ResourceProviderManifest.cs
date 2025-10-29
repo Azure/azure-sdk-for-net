@@ -49,33 +49,45 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal ResourceProviderManifest()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
+            Services = new ChangeTrackingList<ResourceProviderService>();
             RequiredFeatures = new ChangeTrackingList<string>();
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
             Capabilities = new ChangeTrackingList<ResourceProviderCapabilities>();
             GlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
+            Notifications = new ChangeTrackingList<ProviderNotification>();
+            LinkedNotificationRules = new ChangeTrackingList<FanoutLinkedNotificationRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
-        /// <param name="providerAuthentication"></param>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="namespace"></param>
-        /// <param name="providerVersion"></param>
-        /// <param name="providerType"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="resourceTypes"></param>
-        /// <param name="management"></param>
-        /// <param name="capabilities"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="globalNotificationEndpoints"></param>
-        /// <param name="reRegisterSubscriptionMetadata"></param>
+        /// <param name="providerAuthentication"> The provider authentication. </param>
+        /// <param name="providerAuthorizations"> The provider authorizations. </param>
+        /// <param name="namespace"> The namespace. </param>
+        /// <param name="services"> The services. </param>
+        /// <param name="serviceName"> The service name. </param>
+        /// <param name="providerVersion"> The provider version. </param>
+        /// <param name="providerType"> The provider type. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="featuresRule"> The features rule. </param>
+        /// <param name="requestHeaderOptions"> The request header options. </param>
+        /// <param name="resourceTypes"> The resource types. </param>
+        /// <param name="management"> The resource provider management. </param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="crossTenantTokenValidation"> The cross tenant token validation. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="globalNotificationEndpoints"> The global notification endpoints. </param>
+        /// <param name="reRegisterSubscriptionMetadata"> The re-register subscription metadata. </param>
+        /// <param name="isTenantLinkedNotificationEnabled"> Whether tenant linked notification is enabled. </param>
+        /// <param name="notifications"> The notifications. </param>
+        /// <param name="linkedNotificationRules"> The linked notification rules. </param>
+        /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceProviderManifest(ResourceProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IReadOnlyList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ProviderResourceType> resourceTypes, ResourceProviderManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata, bool? isTenantLinkedNotificationEnabled, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
             Namespace = @namespace;
+            Services = services;
+            ServiceName = serviceName;
             ProviderVersion = providerVersion;
             ProviderType = providerType;
             RequiredFeatures = requiredFeatures;
@@ -84,54 +96,59 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypes = resourceTypes;
             Management = management;
             Capabilities = capabilities;
+            CrossTenantTokenValidation = crossTenantTokenValidation;
             Metadata = metadata;
             GlobalNotificationEndpoints = globalNotificationEndpoints;
             ReRegisterSubscriptionMetadata = reRegisterSubscriptionMetadata;
+            IsTenantLinkedNotificationEnabled = isTenantLinkedNotificationEnabled;
+            Notifications = notifications;
+            LinkedNotificationRules = linkedNotificationRules;
+            ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provider authentication. </summary>
+        /// <summary> The provider authentication. </summary>
         internal ResourceProviderAuthentication ProviderAuthentication { get; }
-        /// <summary> Gets the provider authentication allowed audiences. </summary>
+        /// <summary> The allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication?.AllowedAudiences;
         }
 
-        /// <summary> Gets the provider authorizations. </summary>
+        /// <summary> The provider authorizations. </summary>
         public IReadOnlyList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
-        /// <summary> Gets the namespace. </summary>
+        /// <summary> The namespace. </summary>
         public string Namespace { get; }
-        /// <summary> Gets the provider version. </summary>
+        /// <summary> The services. </summary>
+        public IReadOnlyList<ResourceProviderService> Services { get; }
+        /// <summary> The service name. </summary>
+        public string ServiceName { get; }
+        /// <summary> The provider version. </summary>
         public string ProviderVersion { get; }
-        /// <summary> Gets the provider type. </summary>
+        /// <summary> The provider type. </summary>
         public ResourceProviderType? ProviderType { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
-        /// <summary> Gets the features rule. </summary>
-        internal FeaturesRule FeaturesRule { get; }
-        /// <summary> Gets the required features policy. </summary>
+        /// <summary> The features rule. </summary>
+        internal ProviderFeaturesRule FeaturesRule { get; }
+        /// <summary> The required feature policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
-        /// <summary> Gets the request header options. </summary>
-        internal RequestHeaderOptions RequestHeaderOptions { get; }
-        /// <summary> Gets the opt in headers. </summary>
-        public OptInHeaderType? OptInHeaders
-        {
-            get => RequestHeaderOptions?.OptInHeaders;
-        }
-
-        /// <summary> Gets the resource types. </summary>
+        /// <summary> The request header options. </summary>
+        public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
+        /// <summary> The resource types. </summary>
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
-        /// <summary> Gets the management. </summary>
+        /// <summary> The resource provider management. </summary>
         public ResourceProviderManagement Management { get; }
-        /// <summary> Gets the capabilities. </summary>
+        /// <summary> The capabilities. </summary>
         public IReadOnlyList<ResourceProviderCapabilities> Capabilities { get; }
+        /// <summary> The cross tenant token validation. </summary>
+        public CrossTenantTokenValidation? CrossTenantTokenValidation { get; }
         /// <summary>
-        /// Anything
+        /// The metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -161,9 +178,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
-        /// <summary> Gets the global notification endpoints. </summary>
+        /// <summary> The global notification endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
-        /// <summary> Gets the re register subscription metadata. </summary>
+        /// <summary> The re-register subscription metadata. </summary>
         public ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
+        /// <summary> Whether tenant linked notification is enabled. </summary>
+        public bool? IsTenantLinkedNotificationEnabled { get; }
+        /// <summary> The notifications. </summary>
+        public IReadOnlyList<ProviderNotification> Notifications { get; }
+        /// <summary> The linked notification rules. </summary>
+        public IReadOnlyList<FanoutLinkedNotificationRule> LinkedNotificationRules { get; }
+        /// <summary> The resource provider authorization rules. </summary>
+        internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; }
+        /// <summary> The async operation polling rules. </summary>
+        public AsyncOperationPollingRules AsyncOperationPollingRules
+        {
+            get => ResourceProviderAuthorizationRules?.AsyncOperationPollingRules;
+        }
     }
 }

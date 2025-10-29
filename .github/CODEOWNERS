@@ -380,7 +380,7 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# ServiceOwners:                                                   @toddysm @shizhMSFT
+# ServiceOwners:                                                   @toddysm @Azure/azsdk-acr
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
@@ -532,13 +532,13 @@
 # ServiceOwners:                                                   @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot*/                                                         @ethanann-ms @vighatke
+/sdk/iot*/                                                         @ethanann-ms @vighatke @davidemontanari @marcodalessandro @riteshrao
 
 # PRLabel: %Iot
 /sdk/modelsrepository/                                             @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
 
 # ServiceLabel: %IoT
-# ServiceOwners:                                                   @ethanann-ms @vighatke @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+# ServiceOwners:                                                   @ethanann-ms @vighatke @davidemontanari @marcodalessandro @riteshrao @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
 
 # ServiceLabel: %IoT - CLI
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
@@ -998,10 +998,10 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Device Registry
-/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal
 
 # ServiceLabel: %Device Registry %Mgmt
-# ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+# ServiceOwners:                                                   @atastrophic @rohankhandelwal
 
 # PRLabel: %Durable Task Scheduler %Mgmt
 /sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @philliphoff @cgillum
@@ -1035,6 +1035,12 @@
 
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %Impact Reporting
+/sdk/impactreporting/Azure.ResourceManager.*/                      @adityareddy305
+
+# ServiceLabel: %Impact Reporting %Mgmt
+# ServiceOwners:                                                   @adityareddy305
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @ArcturusZhang @ArthurMa1978
@@ -1199,4 +1205,4 @@
 # AzureSdkOwners:                                                  @live1206 @ArcturusZhang @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang @ArthurMa1978

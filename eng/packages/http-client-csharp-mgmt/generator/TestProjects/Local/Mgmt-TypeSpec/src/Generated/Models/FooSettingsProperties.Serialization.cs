@@ -13,9 +13,14 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The FooSettingsProperties. </summary>
+    /// <summary> Base resource properties that can be extended for arm resources. </summary>
     public partial class FooSettingsProperties : IJsonModel<FooSettingsProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="FooSettingsProperties"/> for deserialization. </summary>
+        internal FooSettingsProperties()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooSettingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,15 +39,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 throw new FormatException($"The model {nameof(FooSettingsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AccessControlEnabled))
-            {
-                writer.WritePropertyName("accessControlEnabled"u8);
-                writer.WriteBooleanValue(AccessControlEnabled.Value);
-            }
+            writer.WritePropertyName("marketplace"u8);
+            writer.WriteObjectValue(Marketplace, options);
+            writer.WritePropertyName("user"u8);
+            writer.WriteObjectValue(User, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(AccessControlEnabled))
+            {
+                writer.WritePropertyName("accessControlEnabled"u8);
+                writer.WriteBooleanValue(AccessControlEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MetaData))
             {
@@ -91,19 +100,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            bool? accessControlEnabled = default;
+            MarketplaceDetails marketplace = default;
+            UserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
+            bool? accessControlEnabled = default;
             FooSettingsPropertiesMetaData metaData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("accessControlEnabled"u8))
+                if (prop.NameEquals("marketplace"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    accessControlEnabled = prop.Value.GetBoolean();
+                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("user"u8))
+                {
+                    user = UserDetails.DeserializeUserDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -113,6 +125,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                         continue;
                     }
                     provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("accessControlEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessControlEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("metaData"u8))
@@ -129,7 +150,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooSettingsProperties(accessControlEnabled, provisioningState, metaData, additionalBinaryDataProperties);
+            return new FooSettingsProperties(
+                marketplace,
+                user,
+                provisioningState,
+                accessControlEnabled,
+                metaData,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

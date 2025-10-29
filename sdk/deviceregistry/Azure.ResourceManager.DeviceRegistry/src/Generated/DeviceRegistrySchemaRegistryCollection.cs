@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistrySchemaRegistryResource"/> and their operations.
-    /// Each <see cref="DeviceRegistrySchemaRegistryResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DeviceRegistrySchemaRegistryCollection"/> instance call the GetDeviceRegistrySchemaRegistries method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DeviceRegistrySchemaRegistryResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DeviceRegistrySchemaRegistryCollection"/> instance call the GetDeviceRegistrySchemaRegistries method from an instance of the parent resource.
     /// </summary>
     public partial class DeviceRegistrySchemaRegistryCollection : ArmCollection, IEnumerable<DeviceRegistrySchemaRegistryResource>, IAsyncEnumerable<DeviceRegistrySchemaRegistryResource>
     {
-        private readonly ClientDiagnostics _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics;
-        private readonly SchemaRegistriesRestOperations _deviceRegistrySchemaRegistrySchemaRegistriesRestClient;
+        private readonly ClientDiagnostics _schemaRegistriesClientDiagnostics;
+        private readonly SchemaRegistries _schemaRegistriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistrySchemaRegistryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistrySchemaRegistryCollection for mocking. </summary>
         protected DeviceRegistrySchemaRegistryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistrySchemaRegistryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaRegistryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistrySchemaRegistryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaRegistryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceRegistrySchemaRegistryResource.ResourceType, out string deviceRegistrySchemaRegistrySchemaRegistriesApiVersion);
-            _deviceRegistrySchemaRegistrySchemaRegistriesRestClient = new SchemaRegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistrySchemaRegistrySchemaRegistriesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DeviceRegistrySchemaRegistryResource.ResourceType, out string deviceRegistrySchemaRegistryApiVersion);
+            _schemaRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaRegistryResource.ResourceType.Namespace, Diagnostics);
+            _schemaRegistriesRestClient = new SchemaRegistries(_schemaRegistriesClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaRegistryApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_CreateOrReplace</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrReplace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DeviceRegistrySchemaRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaRegistryName, DeviceRegistrySchemaRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource>(new DeviceRegistrySchemaRegistryOperationSource(Client), _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics, Pipeline, _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, DeviceRegistrySchemaRegistryData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource> operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource>(
+                    new DeviceRegistrySchemaRegistryOperationSource(Client),
+                    _schemaRegistriesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// Create a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_CreateOrReplace</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrReplace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DeviceRegistrySchemaRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string schemaRegistryName, DeviceRegistrySchemaRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, data, cancellationToken);
-                var operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource>(new DeviceRegistrySchemaRegistryOperationSource(Client), _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics, Pipeline, _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, DeviceRegistrySchemaRegistryData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource> operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource>(
+                    new DeviceRegistrySchemaRegistryOperationSource(Client),
+                    _schemaRegistriesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DeviceRegistrySchemaRegistryResource>> GetAsync(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Get");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceRegistrySchemaRegistryData> response = Response.FromValue(DeviceRegistrySchemaRegistryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistrySchemaRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DeviceRegistrySchemaRegistryResource> Get(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Get");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceRegistrySchemaRegistryData> response = Response.FromValue(DeviceRegistrySchemaRegistryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistrySchemaRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +269,78 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// List SchemaRegistry resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List SchemaRegistry resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceRegistrySchemaRegistryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceRegistrySchemaRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistrySchemaRegistryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistrySchemaRegistryResource(Client, DeviceRegistrySchemaRegistryData.DeserializeDeviceRegistrySchemaRegistryData(e)), _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics, Pipeline, "DeviceRegistrySchemaRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupAsyncCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
-        /// <summary>
-        /// List SchemaRegistry resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List SchemaRegistry resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistrySchemaRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistrySchemaRegistryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistrySchemaRegistryResource(Client, DeviceRegistrySchemaRegistryData.DeserializeDeviceRegistrySchemaRegistryData(e)), _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics, Pipeline, "DeviceRegistrySchemaRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Exists");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceRegistrySchemaRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistrySchemaRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistrySchemaRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +351,53 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Exists");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceRegistrySchemaRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistrySchemaRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistrySchemaRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +408,57 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DeviceRegistrySchemaRegistryResource>> GetIfExistsAsync(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.GetIfExists");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceRegistrySchemaRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistrySchemaRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistrySchemaRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceRegistrySchemaRegistryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistrySchemaRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +469,57 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DeviceRegistrySchemaRegistryResource> GetIfExists(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
 
-            using var scope = _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.GetIfExists");
+            using DiagnosticScope scope = _schemaRegistriesClientDiagnostics.CreateScope("DeviceRegistrySchemaRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceRegistrySchemaRegistrySchemaRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, schemaRegistryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaRegistryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceRegistrySchemaRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceRegistrySchemaRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceRegistrySchemaRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceRegistrySchemaRegistryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistrySchemaRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +539,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DeviceRegistrySchemaRegistryResource> IAsyncEnumerable<DeviceRegistrySchemaRegistryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

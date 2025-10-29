@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
-    /// A Class representing a DeviceRegistryBillingContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceRegistryBillingContainerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDeviceRegistryBillingContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeviceRegistryBillingContainer method.
+    /// A class representing a DeviceRegistryBillingContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceRegistryBillingContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeviceRegistryBillingContainers method.
     /// </summary>
     public partial class DeviceRegistryBillingContainerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeviceRegistryBillingContainerResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="billingContainerName"> The billingContainerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string billingContainerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _deviceRegistryBillingContainerBillingContainersClientDiagnostics;
-        private readonly BillingContainersRestOperations _deviceRegistryBillingContainerBillingContainersRestClient;
+        private readonly ClientDiagnostics _billingContainersClientDiagnostics;
+        private readonly BillingContainers _billingContainersRestClient;
         private readonly DeviceRegistryBillingContainerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DeviceRegistry/billingContainers";
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryBillingContainerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistryBillingContainerResource for mocking. </summary>
         protected DeviceRegistryBillingContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryBillingContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryBillingContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceRegistryBillingContainerResource(ArmClient client, DeviceRegistryBillingContainerData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.DeviceRegistry
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryBillingContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryBillingContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistryBillingContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceRegistryBillingContainerBillingContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceRegistryBillingContainerBillingContainersApiVersion);
-            _deviceRegistryBillingContainerBillingContainersRestClient = new BillingContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryBillingContainerBillingContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string deviceRegistryBillingContainerApiVersion);
+            _billingContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
+            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DeviceRegistryBillingContainerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="billingContainerName"> The billingContainerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string billingContainerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a BillingContainer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryBillingContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceRegistryBillingContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceRegistryBillingContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistryBillingContainerBillingContainersClientDiagnostics.CreateScope("DeviceRegistryBillingContainerResource.Get");
+            using DiagnosticScope scope = _billingContainersClientDiagnostics.CreateScope("DeviceRegistryBillingContainerResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryBillingContainerBillingContainersRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceRegistryBillingContainerData> response = Response.FromValue(DeviceRegistryBillingContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryBillingContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// Get a BillingContainer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingContainer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryBillingContainerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceRegistryBillingContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceRegistryBillingContainerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistryBillingContainerBillingContainersClientDiagnostics.CreateScope("DeviceRegistryBillingContainerResource.Get");
+            using DiagnosticScope scope = _billingContainersClientDiagnostics.CreateScope("DeviceRegistryBillingContainerResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceRegistryBillingContainerBillingContainersRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceRegistryBillingContainerData> response = Response.FromValue(DeviceRegistryBillingContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryBillingContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

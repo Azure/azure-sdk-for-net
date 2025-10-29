@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LoggingDetail. </summary>
+    /// <summary> The detail level. </summary>
     public readonly partial struct LoggingDetail : IEquatable<LoggingDetail>
     {
         private readonly string _value;
