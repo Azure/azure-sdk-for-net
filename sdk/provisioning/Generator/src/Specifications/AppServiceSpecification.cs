@@ -36,13 +36,10 @@ public class AppServiceSpecification() :
         RemoveProperty<WebSiteSlotPublicCertificateResource>("Thumbprint");
         RemoveProperty<WebSiteSlotResource>("Slot");
         RemoveProperty<AppServiceCertificateDetails>("Thumbprint");
-        RemoveProperty<CustomDnsSuffixConfigurationData>("ResourceType");
-        RemoveProperty<AseV3NetworkingConfigurationData>("ResourceType");
         RemoveProperty<AppServiceTableStorageApplicationLogsConfig>("SasUri");
         RemoveProperty<AppServiceVirtualNetworkRoute>("ResourceType");
         RemoveProperty<ResponseMessageEnvelopeRemotePrivateEndpointConnection>("ResourceType");
         RemoveProperty<RemotePrivateEndpointConnection>("ResourceType");
-        RemoveProperty<StaticSiteUserProvidedFunctionAppData>("ResourceType");
         RemoveProperty<WebAppPushSettings>("ResourceType");
         RemoveProperty<HostNameSslState>("Thumbprint");
 
@@ -59,6 +56,7 @@ public class AppServiceSpecification() :
         CustomizeProperty<FunctionAppScaleAndConcurrency>("MaximumInstanceCount", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("InstanceMemoryMB", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("HttpPerInstanceConcurrency", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
+        //CustomizeProperty<WebSiteSlotResource>("Name", p => { p.IsReadOnly = false; }); // make writable for slot name
 
         // Naming requirements
         AddNameRequirements<AppCertificateResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: false);

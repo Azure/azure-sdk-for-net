@@ -273,11 +273,11 @@ public partial class StaticSite : ProvisionableResource
     /// <summary>
     /// User provided function apps registered with the static site.
     /// </summary>
-    public BicepList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps 
+    public BicepList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps 
     {
         get { Initialize(); return _userProvidedFunctionApps!; }
     }
-    private BicepList<StaticSiteUserProvidedFunctionAppData>? _userProvidedFunctionApps;
+    private BicepList<StaticSiteUserProvidedFunctionApp>? _userProvidedFunctionApps;
 
     /// <summary>
     /// Creates a new StaticSite.
@@ -290,7 +290,7 @@ public partial class StaticSite : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSite.</param>
     public StaticSite(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/staticSites", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/staticSites", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -299,6 +299,7 @@ public partial class StaticSite : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _allowConfigFileUpdates = DefineProperty<bool>("AllowConfigFileUpdates", ["properties", "allowConfigFileUpdates"]);
@@ -324,7 +325,7 @@ public partial class StaticSite : ProvisionableResource
         _linkedBackends = DefineListProperty<StaticSiteLinkedBackendInfo>("LinkedBackends", ["properties", "linkedBackends"], isOutput: true);
         _privateEndpointConnections = DefineListProperty<ResponseMessageEnvelopeRemotePrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _userProvidedFunctionApps = DefineListProperty<StaticSiteUserProvidedFunctionAppData>("UserProvidedFunctionApps", ["properties", "userProvidedFunctionApps"], isOutput: true);
+        _userProvidedFunctionApps = DefineListProperty<StaticSiteUserProvidedFunctionApp>("UserProvidedFunctionApps", ["properties", "userProvidedFunctionApps"], isOutput: true);
     }
 
     /// <summary>
@@ -332,6 +333,11 @@ public partial class StaticSite : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>
