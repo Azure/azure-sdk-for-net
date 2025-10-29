@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ArizeAIObservabilityEvalOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="ArizeAIObservabilityEvalOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ArizeAIObservabilityEvalOrganizationPatch patch)
+        /// <param name="arizeAIObservabilityEvalOrganizationPatch"> The <see cref="ArizeAIObservabilityEvalOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ArizeAIObservabilityEvalOrganizationPatch arizeAIObservabilityEvalOrganizationPatch)
         {
-            if (patch == null)
+            if (arizeAIObservabilityEvalOrganizationPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(arizeAIObservabilityEvalOrganizationPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
