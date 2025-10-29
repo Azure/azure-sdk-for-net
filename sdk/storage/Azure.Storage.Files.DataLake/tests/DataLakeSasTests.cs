@@ -403,13 +403,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
 
-            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions()
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
             {
                 DelegatedUserTenantId = tenantId?.ToString()
             };
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
@@ -463,13 +462,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
 
-            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions()
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
             {
                 DelegatedUserTenantId = tenantId?.ToString()
             };
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
@@ -521,13 +519,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
 
-            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions()
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
             {
                 DelegatedUserTenantId = tenantId?.ToString()
             };
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
@@ -568,8 +565,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
             await file.CreateAsync();
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -617,8 +615,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
             await file.CreateAsync();
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;

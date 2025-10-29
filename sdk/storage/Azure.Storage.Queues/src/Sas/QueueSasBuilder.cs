@@ -291,7 +291,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -308,7 +308,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>

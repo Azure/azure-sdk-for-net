@@ -579,8 +579,9 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
             await using DisposingContainer test = await GetTestContainerAsync(oauthService);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             string blobName = GetNewBlobName();
 

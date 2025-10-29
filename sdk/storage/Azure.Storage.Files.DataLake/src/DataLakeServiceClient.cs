@@ -454,14 +454,10 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get User Delegation Key
         /// <summary>
-        /// The <see cref="GetUserDelegationKey(DateTimeOffset, DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKey(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
-        /// <param name="expiresOn">
-        /// Expiration of the key's validity.  The time should be specified
-        /// in UTC.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -481,10 +477,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            DateTimeOffset expiresOn,
-            DataLakeGetUserDelegationKeyOptions options = default,
+            DataLakeGetUserDelegationKeyOptions options,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
@@ -494,7 +491,6 @@ namespace Azure.Storage.Files.DataLake
                 BlobGetUserDelegationKeyOptions blobOptions = MapOptions(options);
 
                 Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
-                    expiresOn,
                     blobOptions,
                     cancellationToken);
 
@@ -514,14 +510,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset, DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.DataLakeSasBuilder"/>.
         /// </summary>
-        /// <param name="expiresOn">
-        /// Expiration of the key's validity.  The time should be specified
-        /// in UTC.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -541,10 +533,11 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
-            DateTimeOffset expiresOn,
-            DataLakeGetUserDelegationKeyOptions options = default,
+            DataLakeGetUserDelegationKeyOptions options,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
@@ -554,7 +547,6 @@ namespace Azure.Storage.Files.DataLake
                 BlobGetUserDelegationKeyOptions blobOptions = MapOptions(options);
 
                 Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
-                    expiresOn,
                     blobOptions,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -711,7 +703,7 @@ namespace Azure.Storage.Files.DataLake
         {
             if (options == null)
                 return null;
-            return new BlobGetUserDelegationKeyOptions
+            return new BlobGetUserDelegationKeyOptions(expiresOn: options.ExpiresOn)
             {
                 StartsOn = options.StartsOn,
                 DelegatedUserTenantId = options.DelegatedUserTenantId

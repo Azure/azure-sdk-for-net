@@ -132,8 +132,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -160,8 +161,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -202,13 +204,12 @@ namespace Azure.Storage.Queues.Test
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
 
-            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions()
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
             {
                 DelegatedUserTenantId = tenantId?.ToString()
             };
 
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
@@ -256,13 +257,12 @@ namespace Azure.Storage.Queues.Test
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
 
-            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions()
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
             {
                 DelegatedUserTenantId = tenantId?.ToString()
             };
 
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
@@ -309,13 +309,12 @@ namespace Azure.Storage.Queues.Test
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
 
-            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions()
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
             {
                 DelegatedUserTenantId = tenantId?.ToString()
             };
 
             Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
                 options: options);
 
             Assert.IsNotNull(userDelegationKey.Value);
@@ -351,8 +350,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -399,8 +399,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;

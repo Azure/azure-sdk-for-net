@@ -7,7 +7,9 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -46,7 +48,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                             await blobClient.CreateIfNotExistsAsync();
                             await blobClient.GetPropertiesAsync();
 
-                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                            BlobGetUserDelegationKeyOptions getUserDelegationKeyOptions = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
+                                options: getUserDelegationKeyOptions);
                             var sasBuilder = new BlobSasBuilder(BlobSasPermissions.All, DateTimeOffset.UtcNow.AddHours(1))
                             {
                                 BlobContainerName = containerName,
@@ -83,7 +87,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                             await fileClient.AppendAsync(new MemoryStream(new byte[] { 1 }), 0);
                             await fileClient.GetAccessControlAsync();
 
-                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                            var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
+                                options: getUserDelegationKeyOptions);
                             var sasBuilder = new DataLakeSasBuilder(DataLakeSasPermissions.All, DateTimeOffset.UtcNow.AddHours(1))
                             {
                                 FileSystemName = fileSystemName,

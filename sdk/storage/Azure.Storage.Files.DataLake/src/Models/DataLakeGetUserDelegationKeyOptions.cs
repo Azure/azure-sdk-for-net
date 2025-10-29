@@ -6,12 +6,26 @@ using System;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Optional parameters for Get User Delegation Key.
+    /// Parameters for Get User Delegation Key.
     /// </summary>
     public class DataLakeGetUserDelegationKeyOptions
     {
         /// <summary>
-        /// Start time for the key's validity, with null indicating an
+        /// Constructor for DataLakeGetUserDelegationKeyOptions.
+        /// </summary>
+        public DataLakeGetUserDelegationKeyOptions(DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+        }
+
+        /// <summary>
+        /// Expiration of the key's validity.  The time should be specified
+        /// in UTC.
+        /// </summary>
+        public DateTimeOffset ExpiresOn { get; set; }
+
+        /// <summary>
+        /// Optional. Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         ///
         /// Note: If you set the start time to the current time, failures
@@ -21,7 +35,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary>
-        /// The delegated user tenant id in Azure AD.
+        /// Optional. The delegated user tenant id in Azure AD.
         /// </summary>
         public string DelegatedUserTenantId { get; set; }
     }

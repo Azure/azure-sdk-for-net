@@ -3289,7 +3289,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3322,7 +3322,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3354,7 +3354,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3382,7 +3382,7 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.

@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -41,7 +42,9 @@ namespace Azure.Storage.Blobs.Tests
                         await blobClient.CreateIfNotExistsAsync();
                         await blobClient.GetPropertiesAsync();
 
-                        var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                        BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
+                        var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
+                            options: options);
                         var sasBuilder = new BlobSasBuilder(BlobSasPermissions.All, DateTimeOffset.UtcNow.AddHours(1))
                         {
                             BlobContainerName = containerName,
