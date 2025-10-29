@@ -223,7 +223,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -258,7 +258,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetStatistics");
             scope.Start();
@@ -289,7 +289,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -324,7 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetStatistics");
             scope.Start();
@@ -348,7 +348,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -382,13 +382,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacAssetStatistics> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((StacAssetStatistics)result, result);
+            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>>(), result);
         }
 
         /// <summary> Per Asset statistics. </summary>
@@ -396,7 +396,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -430,13 +430,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacAssetStatistics>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((StacAssetStatistics)result, result);
+            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>>(), result);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -674,7 +674,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CropGeoJson(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
+        public virtual Response CropGeoJson(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJson");
             scope.Start();
@@ -709,7 +709,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -730,7 +730,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CropGeoJsonAsync(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
+        public virtual async Task<Response> CropGeoJsonAsync(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJson");
             scope.Start();
@@ -758,7 +758,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -778,7 +778,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, Feature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -796,7 +796,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -816,7 +816,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, Feature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -843,7 +843,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -862,7 +862,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
+        public virtual Response CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJsonWithDimensions");
             scope.Start();
@@ -899,7 +899,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -918,7 +918,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
+        public virtual async Task<Response> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJsonWithDimensions");
             scope.Start();
@@ -948,7 +948,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -966,7 +966,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, Feature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -986,7 +986,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1004,7 +1004,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, Feature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1028,7 +1028,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1064,7 +1064,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetGeoJsonStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
+        public virtual Response GetGeoJsonStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetGeoJsonStatistics");
             scope.Start();
@@ -1097,7 +1097,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1133,7 +1133,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetGeoJsonStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
+        public virtual async Task<Response> GetGeoJsonStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetGeoJsonStatistics");
             scope.Start();
@@ -1159,7 +1159,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1194,7 +1194,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemStatisticsGeoJson> GetGeoJsonStatistics(string collectionId, string itemId, Feature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemStatisticsGeoJson> GetGeoJsonStatistics(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1210,7 +1210,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1245,7 +1245,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, Feature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1375,16 +1375,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAssetsInfo(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
+        public virtual Response GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetsInfo");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetItemAssetDetails");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetAssetsInfoRequest(collectionId, itemId, assets, context);
+                using HttpMessage message = CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1410,16 +1410,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetsInfoAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
+        public virtual async Task<Response> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetsInfo");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetItemAssetDetails");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using HttpMessage message = CreateGetAssetsInfoRequest(collectionId, itemId, assets, context);
+                using HttpMessage message = CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1437,13 +1437,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<InfoOperationResult> GetAssetsInfo(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, TilerInfo>> GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetAssetsInfo(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((InfoOperationResult)result, result);
+            Response result = GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IDictionary<string, TilerInfo> value = new Dictionary<string, TilerInfo>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateObject())
+            {
+                value.Add(item.Name, TilerInfo.DeserializeTilerInfo(item.Value, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyDictionary<string, TilerInfo>)value, result);
         }
 
         /// <summary> Return dataset's basic info. </summary>
@@ -1454,13 +1461,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<InfoOperationResult>> GetAssetsInfoAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, TilerInfo>>> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetAssetsInfoAsync(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((InfoOperationResult)result, result);
+            Response result = await GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IDictionary<string, TilerInfo> value = new Dictionary<string, TilerInfo>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateObject())
+            {
+                value.Add(item.Name, TilerInfo.DeserializeTilerInfo(item.Value, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyDictionary<string, TilerInfo>)value, result);
         }
 
         /// <summary>
@@ -1480,7 +1494,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1502,7 +1516,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPart");
             scope.Start();
@@ -1539,7 +1553,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1561,7 +1575,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPart");
             scope.Start();
@@ -1591,7 +1605,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1612,7 +1626,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1632,7 +1646,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1653,7 +1667,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1682,7 +1696,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1702,7 +1716,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPartWithDimensions");
             scope.Start();
@@ -1741,7 +1755,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1761,7 +1775,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPartWithDimensions");
             scope.Start();
@@ -1793,7 +1807,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1812,7 +1826,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1834,7 +1848,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1853,7 +1867,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1877,7 +1891,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="latitude"> Latitude. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1888,7 +1902,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        public virtual Response GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPoint");
             scope.Start();
@@ -1921,7 +1935,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="latitude"> Latitude. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1932,7 +1946,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPoint");
             scope.Start();
@@ -1958,7 +1972,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="latitude"> Latitude. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1968,7 +1982,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1984,7 +1998,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="latitude"> Latitude. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -1994,7 +2008,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -2015,7 +2029,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2037,7 +2051,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreview");
             scope.Start();
@@ -2068,7 +2082,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2090,7 +2104,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreview");
             scope.Start();
@@ -2114,7 +2128,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2135,7 +2149,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -2149,7 +2163,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2170,7 +2184,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -2192,7 +2206,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2213,7 +2227,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreviewWithFormat");
             scope.Start();
@@ -2246,7 +2260,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2267,7 +2281,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreviewWithFormat");
             scope.Start();
@@ -2293,7 +2307,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2313,7 +2327,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -2329,7 +2343,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2349,7 +2363,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -2434,7 +2448,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ImageResponse> CreateStaticImage(string collectionId, ImageContent body, CancellationToken cancellationToken = default)
+        public virtual Response<ImageResponse> CreateStaticImage(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -2450,7 +2464,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ImageResponse>> CreateStaticImageAsync(string collectionId, ImageContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageResponse>> CreateStaticImageAsync(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
@@ -2571,7 +2585,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2606,7 +2620,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStatistics");
             scope.Start();
@@ -2637,7 +2651,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2672,7 +2686,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStatistics");
             scope.Start();
@@ -2696,7 +2710,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2730,13 +2744,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StatisticsResult> GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerStacItemStatistics> GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((StatisticsResult)result, result);
+            return Response.FromValue((TilerStacItemStatistics)result, result);
         }
 
         /// <summary> Merged assets statistics. </summary>
@@ -2744,7 +2758,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2778,13 +2792,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StatisticsResult>> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerStacItemStatistics>> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = await GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((StatisticsResult)result, result);
+            return Response.FromValue((TilerStacItemStatistics)result, result);
         }
 
         /// <summary>
@@ -2800,7 +2814,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2829,7 +2843,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileJson");
             scope.Start();
@@ -2862,7 +2876,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2891,7 +2905,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileJson");
             scope.Start();
@@ -2917,7 +2931,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2945,14 +2959,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetaData> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
             Response result = GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((TileJsonMetaData)result, result);
+            return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return the TileJson Tilematrixsetid As a path. </summary>
@@ -2961,7 +2975,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -2989,14 +3003,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetaData>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
             Response result = await GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((TileJsonMetaData)result, result);
+            return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary>
@@ -3026,7 +3040,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3050,7 +3064,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
+        public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTile");
             scope.Start();
@@ -3098,7 +3112,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3122,7 +3136,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
+        public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTile");
             scope.Start();
@@ -3163,7 +3177,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3186,7 +3200,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -3217,7 +3231,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3240,7 +3254,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -3264,7 +3278,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3290,7 +3304,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetWmtsCapabilities");
             scope.Start();
@@ -3323,7 +3337,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3349,7 +3363,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetWmtsCapabilities");
             scope.Start();
@@ -3375,7 +3389,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3400,7 +3414,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -3416,7 +3430,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -3441,7 +3455,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -3910,19 +3924,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<StacAsset>> GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<StacItemPointAsset>> GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
             Response result = GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            IList<StacAsset> value = new List<StacAsset>();
+            IList<StacItemPointAsset> value = new List<StacItemPointAsset>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(StacAsset.DeserializeStacAsset(item, ModelSerializationExtensions.WireOptions));
+                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<StacAsset>)value, result);
+            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
         }
 
         /// <summary> Return a list of assets for a given point. </summary>
@@ -3942,19 +3956,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<StacAsset>>> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<StacItemPointAsset>>> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
             Response result = await GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            IList<StacAsset> value = new List<StacAsset>();
+            IList<StacItemPointAsset> value = new List<StacItemPointAsset>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(StacAsset.DeserializeStacAsset(item, ModelSerializationExtensions.WireOptions));
+                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<StacAsset>)value, result);
+            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
         }
 
         /// <summary>
@@ -4401,7 +4415,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4440,7 +4454,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTileJson");
             scope.Start();
@@ -4471,7 +4485,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4510,7 +4524,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTileJson");
             scope.Start();
@@ -4534,7 +4548,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4572,13 +4586,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetaData> GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
             Response result = GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((TileJsonMetaData)result, result);
+            return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a searchId. </summary>
@@ -4586,7 +4600,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4624,13 +4638,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetaData>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
             Response result = await GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((TileJsonMetaData)result, result);
+            return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary>
@@ -4659,7 +4673,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4691,7 +4705,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTile");
             scope.Start();
@@ -4737,7 +4751,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4769,7 +4783,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTile");
             scope.Start();
@@ -4808,7 +4822,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4839,7 +4853,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
@@ -4868,7 +4882,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4899,7 +4913,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
@@ -4921,7 +4935,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -4947,7 +4961,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsWmtsCapabilities");
             scope.Start();
@@ -4978,7 +4992,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -5004,7 +5018,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsWmtsCapabilities");
             scope.Start();
@@ -5028,7 +5042,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -5053,7 +5067,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
@@ -5067,7 +5081,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
         /// <param name="assetAsBand"> Asset as Band. </param>
         /// <param name="noData"> Overwrite internal Nodata value. </param>
         /// <param name="unscale"> Apply internal Scale or Offset. </param>
@@ -5092,7 +5106,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));

@@ -43,87 +43,10 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteObjectValue(Geometry, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("msft:_created"u8);
-                writer.WriteStringValue(CreatedOn);
-            }
-            if (Optional.IsDefined(UpdatedOn))
-            {
-                writer.WritePropertyName("msft:_updated"u8);
-                writer.WriteStringValue(UpdatedOn);
-            }
-            if (Optional.IsDefined(ShortDescription))
-            {
-                writer.WritePropertyName("msft:short_description"u8);
-                writer.WriteStringValue(ShortDescription);
-            }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("bbox"u8);
-            writer.WriteStartArray();
-            foreach (float item in BoundingBox)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(StacVersion))
-            {
-                writer.WritePropertyName("stac_version"u8);
-                writer.WriteStringValue(StacVersion);
-            }
-            if (Optional.IsDefined(Collection))
-            {
-                writer.WritePropertyName("collection"u8);
-                writer.WriteStringValue(Collection);
-            }
-            if (Optional.IsDefined(Timestamp))
-            {
-                writer.WritePropertyName("_msft:ts"u8);
-                writer.WriteStringValue(Timestamp);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("_msft:etag"u8);
-                writer.WriteStringValue(ETag);
-            }
-            if (Optional.IsCollectionDefined(StacExtensions))
-            {
-                writer.WritePropertyName("stac_extensions"u8);
-                writer.WriteStartArray();
-                foreach (Uri item in StacExtensions)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.AbsoluteUri);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,17 +92,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             GeoJsonGeometry geometry = default;
             FeatureType @type = default;
-            IDictionary<string, BinaryData> properties = default;
-            string createdOn = default;
-            string updatedOn = default;
-            string shortDescription = default;
-            string id = default;
-            IList<float> boundingBox = default;
-            string stacVersion = default;
-            string collection = default;
-            string timestamp = default;
-            string eTag = default;
-            IList<Uri> stacExtensions = default;
+            StacItemStatisticsGeoJsonProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,90 +112,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("msft:_created"u8))
-                {
-                    createdOn = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("msft:_updated"u8))
-                {
-                    updatedOn = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("msft:short_description"u8))
-                {
-                    shortDescription = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("bbox"u8))
-                {
-                    List<float> array = new List<float>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    boundingBox = array;
-                    continue;
-                }
-                if (prop.NameEquals("stac_version"u8))
-                {
-                    stacVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("collection"u8))
-                {
-                    collection = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("_msft:ts"u8))
-                {
-                    timestamp = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("_msft:etag"u8))
-                {
-                    eTag = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("stac_extensions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<Uri> array = new List<Uri>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new Uri(item.GetString()));
-                        }
-                    }
-                    stacExtensions = array;
+                    properties = StacItemStatisticsGeoJsonProperties.DeserializeStacItemStatisticsGeoJsonProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -290,21 +120,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StacItemStatisticsGeoJson(
-                geometry,
-                @type,
-                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                createdOn,
-                updatedOn,
-                shortDescription,
-                id,
-                boundingBox,
-                stacVersion,
-                collection,
-                timestamp,
-                eTag,
-                stacExtensions ?? new ChangeTrackingList<Uri>(),
-                additionalBinaryDataProperties);
+            return new StacItemStatisticsGeoJson(geometry, @type, properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

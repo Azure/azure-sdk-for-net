@@ -44,7 +44,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("interval"u8);
             writer.WriteStartArray();
-            foreach (IList<string> item in Interval)
+            foreach (IList<DateTimeOffset> item in Interval)
             {
                 if (item == null)
                 {
@@ -52,14 +52,9 @@ namespace Azure.Analytics.PlanetaryComputer
                     continue;
                 }
                 writer.WriteStartArray();
-                foreach (string item0 in item)
+                foreach (DateTimeOffset item0 in item)
                 {
-                    if (item0 == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item0);
+                    writer.WriteStringValue(item0, "O");
                 }
                 writer.WriteEndArray();
             }
@@ -106,13 +101,13 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            IList<IList<string>> interval = default;
+            IList<IList<DateTimeOffset>> interval = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("interval"u8))
                 {
-                    List<IList<string>> array = new List<IList<string>>();
+                    List<IList<DateTimeOffset>> array = new List<IList<DateTimeOffset>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -121,17 +116,10 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            List<string> array0 = new List<string>();
+                            List<DateTimeOffset> array0 = new List<DateTimeOffset>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                if (item0.ValueKind == JsonValueKind.Null)
-                                {
-                                    array0.Add(null);
-                                }
-                                else
-                                {
-                                    array0.Add(item0.GetString());
-                                }
+                                array0.Add(item0.GetDateTimeOffset("O"));
                             }
                             array.Add(array0);
                         }

@@ -45,10 +45,10 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created, "O");
+                writer.WriteStringValue(Created.Value, "O");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());

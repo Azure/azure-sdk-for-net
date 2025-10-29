@@ -42,8 +42,11 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteStringValue(Id);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("created"u8);
-            writer.WriteStringValue(Created, "O");
+            if (Optional.IsDefined(Created))
+            {
+                writer.WritePropertyName("created"u8);
+                writer.WriteStringValue(Created.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -88,7 +91,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             Guid id = default;
             IngestionSourceType kind = default;
-            DateTimeOffset created = default;
+            DateTimeOffset? created = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -104,6 +107,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("created"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     created = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }

@@ -111,6 +111,17 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(ItemAssets))
+            {
+                writer.WritePropertyName("item_assets"u8);
+                writer.WriteStartObject();
+                foreach (var item in ItemAssets)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("license"u8);
             writer.WriteStringValue(License);
             writer.WritePropertyName("extent"u8);
@@ -163,20 +174,17 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -216,12 +224,13 @@ namespace Azure.Analytics.PlanetaryComputer
             string title = default;
             string @type = default;
             IDictionary<string, StacAsset> assets = default;
+            IDictionary<string, StacItemAsset> itemAssets = default;
             string license = default;
             StacExtensionExtent extent = default;
             IList<string> keywords = default;
             IList<StacProvider> providers = default;
             IDictionary<string, BinaryData> summaries = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("msft:_created"u8))
@@ -309,6 +318,20 @@ namespace Azure.Analytics.PlanetaryComputer
                     assets = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("item_assets"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, StacItemAsset> dictionary = new Dictionary<string, StacItemAsset>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, StacItemAsset.DeserializeStacItemAsset(prop0.Value, options));
+                    }
+                    itemAssets = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("license"u8))
                 {
                     license = prop.Value.GetString();
@@ -375,10 +398,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     summaries = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new StacCollectionResource(
                 createdOn,
@@ -392,12 +412,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 title,
                 @type,
                 assets ?? new ChangeTrackingDictionary<string, StacAsset>(),
+                itemAssets ?? new ChangeTrackingDictionary<string, StacItemAsset>(),
                 license,
                 extent,
                 keywords ?? new ChangeTrackingList<string>(),
                 providers ?? new ChangeTrackingList<StacProvider>(),
                 summaries ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalBinaryDataProperties);
+                additionalProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetAssetStatisticsRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        internal HttpMessage CreateGetAssetStatisticsRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,9 +68,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -96,11 +96,11 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical, null), true);
             }
-            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("c", categoriesPixels, ",", null, true);
             }
-            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("p", percentiles, ",", null, true);
             }
@@ -156,7 +156,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCropGeoJsonRequest(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateCropGeoJsonRequest(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -178,9 +178,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -226,7 +226,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -255,7 +255,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCropGeoJsonWithDimensionsRequest(string collectionId, string itemId, float width, float height, string format, RequestContent content, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateCropGeoJsonWithDimensionsRequest(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -281,9 +281,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -321,7 +321,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -350,7 +350,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetGeoJsonStatisticsRequest(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        internal HttpMessage CreateGetGeoJsonStatisticsRequest(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -371,9 +371,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -403,11 +403,11 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical, null), true);
             }
-            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("c", categoriesPixels, ",", null, true);
             }
-            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("p", percentiles, ",", null, true);
             }
@@ -454,7 +454,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetAssetsInfoRequest(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
+        internal HttpMessage CreateGetItemAssetDetailsRequest(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -479,7 +479,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetPartRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetPartRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -509,9 +509,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -561,7 +561,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -588,7 +588,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetPartWithDimensionsRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetPartWithDimensionsRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -622,9 +622,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -666,7 +666,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -693,7 +693,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetPointRequest(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal HttpMessage CreateGetPointRequest(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -717,9 +717,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -749,7 +749,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetPreviewRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetPreviewRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -770,9 +770,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -822,7 +822,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -849,7 +849,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetPreviewWithFormatRequest(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetPreviewWithFormatRequest(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -871,9 +871,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -919,7 +919,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -981,7 +981,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetStatisticsRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        internal HttpMessage CreateGetStatisticsRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1002,9 +1002,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1030,11 +1030,11 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical, null), true);
             }
-            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("c", categoriesPixels, ",", null, true);
             }
-            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("p", percentiles, ",", null, true);
             }
@@ -1054,7 +1054,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetTileJsonRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetTileJsonRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1077,9 +1077,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1129,7 +1129,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("resampling", resampling, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1156,7 +1156,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetTileRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
+        internal HttpMessage CreateGetTileRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1188,9 +1188,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1224,7 +1224,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("resampling", resampling, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1247,7 +1247,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("subdataset_name", subdatasetName, true);
             }
-            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", null, true);
             }
@@ -1259,7 +1259,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetWmtsCapabilitiesRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetWmtsCapabilitiesRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1282,9 +1282,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1334,7 +1334,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("resampling", resampling, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1559,7 +1559,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsTileJsonRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetMosaicsTileJsonRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1580,9 +1580,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1660,7 +1660,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("pixel_selection", pixelSelection, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1687,7 +1687,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetMosaicsTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1717,9 +1717,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1781,7 +1781,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("pixel_selection", pixelSelection, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1808,7 +1808,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsWmtsCapabilitiesRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetMosaicsWmtsCapabilitiesRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1829,9 +1829,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (assetBandIndices != null)
             {
-                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", null, true);
+                uri.AppendQuery("asset_bidx", assetBandIndices, true);
             }
             if (assetAsBand != null)
             {
@@ -1881,7 +1881,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("resampling", resampling, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {

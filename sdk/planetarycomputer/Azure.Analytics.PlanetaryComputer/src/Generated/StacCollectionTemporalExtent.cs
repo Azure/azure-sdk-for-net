@@ -24,7 +24,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacCollectionTemporalExtent"/>. </summary>
         /// <param name="interval"> Array of time intervals in format [[start_datetime, end_datetime]]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="interval"/> is null. </exception>
-        public StacCollectionTemporalExtent(IEnumerable<IList<string>> interval)
+        public StacCollectionTemporalExtent(IEnumerable<IList<DateTimeOffset>> interval)
         {
             Argument.AssertNotNull(interval, nameof(interval));
 
@@ -34,13 +34,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacCollectionTemporalExtent"/>. </summary>
         /// <param name="interval"> Array of time intervals in format [[start_datetime, end_datetime]]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacCollectionTemporalExtent(IList<IList<string>> interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacCollectionTemporalExtent(IList<IList<DateTimeOffset>> interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Interval = interval;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of time intervals in format [[start_datetime, end_datetime]]. </summary>
-        public IList<IList<string>> Interval { get; }
+        public IList<IList<DateTimeOffset>> Interval { get; }
     }
 }

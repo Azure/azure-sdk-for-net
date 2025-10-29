@@ -42,11 +42,13 @@ namespace Azure.Analytics.PlanetaryComputer
             Description = description;
             Links = links.ToList();
             Assets = new ChangeTrackingDictionary<string, StacAsset>();
+            ItemAssets = new ChangeTrackingDictionary<string, StacItemAsset>();
             License = license;
             Extent = extent;
             Keywords = new ChangeTrackingList<string>();
             Providers = new ChangeTrackingList<StacProvider>();
             Summaries = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StacCollectionResource"/>. </summary>
@@ -61,6 +63,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="title"> Human-readable title for the collection. </param>
         /// <param name="type"> Type. </param>
         /// <param name="assets"> Assets. </param>
+        /// <param name="itemAssets">
+        /// Item Assets
+        /// 
+        /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
+        /// </param>
         /// <param name="license"> License identifier for the collection data. </param>
         /// <param name="extent"> Spatial and temporal extent of the collection. </param>
         /// <param name="keywords"> Keywords describing the collection. </param>
@@ -70,8 +77,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacCollectionResource(string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="additionalProperties"></param>
+        internal StacCollectionResource(string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, IDictionary<string, StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalProperties)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -84,12 +91,13 @@ namespace Azure.Analytics.PlanetaryComputer
             Title = title;
             Type = @type;
             Assets = assets;
+            ItemAssets = itemAssets;
             License = license;
             Extent = extent;
             Keywords = keywords;
             Providers = providers;
             Summaries = summaries;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> MSFT Created. </summary>
@@ -124,6 +132,13 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Assets. </summary>
         public IDictionary<string, StacAsset> Assets { get; }
+
+        /// <summary>
+        /// Item Assets
+        /// 
+        /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
+        /// </summary>
+        public IDictionary<string, StacItemAsset> ItemAssets { get; }
 
         /// <summary> License identifier for the collection data. </summary>
         public string License { get; set; }
@@ -166,5 +181,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Summaries { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

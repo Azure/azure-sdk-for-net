@@ -23,7 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// - **MultiPolygon**: A collection of Polygons.
     /// 
     /// Used for spatial filtering in STAC.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownGeoJsonGeometry))]
     public abstract partial class GeoJsonGeometry : IJsonModel<GeoJsonGeometry>
@@ -110,9 +110,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 switch (discriminator.GetString())
                 {
                     case "Point":
-                        return GeoJsonPoint.DeserializeGeoJsonPoint(element, options);
+                        return PointGeometry.DeserializePointGeometry(element, options);
                     case "Polygon":
-                        return GeoJsonPolygon.DeserializeGeoJsonPolygon(element, options);
+                        return PolygonGeometry.DeserializePolygonGeometry(element, options);
                     case "MultiPolygon":
                         return MultiPolygon.DeserializeMultiPolygon(element, options);
                     case "MultiLineString":

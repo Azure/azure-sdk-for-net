@@ -20,10 +20,10 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-        private IngestionManagementClient _cachedIngestionManagementClient;
+        private IngestionClient _cachedIngestionClient;
         private StacClient _cachedStacClient;
         private TilerClient _cachedTilerClient;
-        private SharedAccessSignatureClient _cachedSharedAccessSignatureClient;
+        private ManagedStorageSharedAccessSignatureClient _cachedManagedStorageSharedAccessSignatureClient;
 
         /// <summary> Initializes a new instance of PlanetaryComputerClient for mocking. </summary>
         protected PlanetaryComputerClient()
@@ -63,10 +63,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of IngestionManagementClient. </summary>
-        public virtual IngestionManagementClient GetIngestionManagementClient()
+        /// <summary> Initializes a new instance of IngestionClient. </summary>
+        public virtual IngestionClient GetIngestionClient()
         {
-            return Volatile.Read(ref _cachedIngestionManagementClient) ?? Interlocked.CompareExchange(ref _cachedIngestionManagementClient, new IngestionManagementClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionManagementClient;
+            return Volatile.Read(ref _cachedIngestionClient) ?? Interlocked.CompareExchange(ref _cachedIngestionClient, new IngestionClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionClient;
         }
 
         /// <summary> Initializes a new instance of StacClient. </summary>
@@ -81,10 +81,10 @@ namespace Azure.Analytics.PlanetaryComputer
             return Volatile.Read(ref _cachedTilerClient) ?? Interlocked.CompareExchange(ref _cachedTilerClient, new TilerClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTilerClient;
         }
 
-        /// <summary> Initializes a new instance of SharedAccessSignatureClient. </summary>
-        public virtual SharedAccessSignatureClient GetSharedAccessSignatureClient()
+        /// <summary> Initializes a new instance of ManagedStorageSharedAccessSignatureClient. </summary>
+        public virtual ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient()
         {
-            return Volatile.Read(ref _cachedSharedAccessSignatureClient) ?? Interlocked.CompareExchange(ref _cachedSharedAccessSignatureClient, new SharedAccessSignatureClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSharedAccessSignatureClient;
+            return Volatile.Read(ref _cachedManagedStorageSharedAccessSignatureClient) ?? Interlocked.CompareExchange(ref _cachedManagedStorageSharedAccessSignatureClient, new ManagedStorageSharedAccessSignatureClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedStorageSharedAccessSignatureClient;
         }
     }
 }

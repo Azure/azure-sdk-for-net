@@ -17,7 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, created, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, created, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

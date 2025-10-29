@@ -109,11 +109,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("nodata_type"u8);
                 writer.WriteStringValue(NoDataType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Colorinterp))
+            if (Optional.IsCollectionDefined(ColorInterpretation))
             {
                 writer.WritePropertyName("colorinterp"u8);
                 writer.WriteStartArray();
-                foreach (string item in Colorinterp)
+                foreach (string item in ColorInterpretation)
                 {
                     if (item == null)
                     {
@@ -148,14 +148,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("overviews"u8);
                 writer.WriteStartArray();
-                foreach (string item in Overviews)
+                foreach (int item in Overviews)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteNumberValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -215,6 +210,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("maxzoom"u8);
                 writer.WriteNumberValue(MaxZoom.Value);
             }
+            if (Optional.IsDefined(CoordinateReferenceSystem))
+            {
+                writer.WritePropertyName("crs"u8);
+                writer.WriteStringValue(CoordinateReferenceSystem);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -262,17 +262,18 @@ namespace Azure.Analytics.PlanetaryComputer
             IList<IList<string>> bandDescriptions = default;
             string dtype = default;
             NoDataType? noDataType = default;
-            IList<string> colorinterp = default;
+            IList<string> colorInterpretation = default;
             string driver = default;
             int? count = default;
             int? width = default;
             int? height = default;
-            IList<string> overviews = default;
+            IList<int> overviews = default;
             IList<int> scales = default;
             IList<int> offsets = default;
             IDictionary<string, IList<string>> colormap = default;
             int? minZoom = default;
             int? maxZoom = default;
+            string coordinateReferenceSystem = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -384,7 +385,7 @@ namespace Azure.Analytics.PlanetaryComputer
                             array.Add(item.GetString());
                         }
                     }
-                    colorinterp = array;
+                    colorInterpretation = array;
                     continue;
                 }
                 if (prop.NameEquals("driver"u8))
@@ -425,17 +426,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<int> array = new List<int>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetInt32());
                     }
                     overviews = array;
                     continue;
@@ -519,6 +513,11 @@ namespace Azure.Analytics.PlanetaryComputer
                     maxZoom = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("crs"u8))
+                {
+                    coordinateReferenceSystem = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -530,17 +529,18 @@ namespace Azure.Analytics.PlanetaryComputer
                 bandDescriptions ?? new ChangeTrackingList<IList<string>>(),
                 dtype,
                 noDataType,
-                colorinterp ?? new ChangeTrackingList<string>(),
+                colorInterpretation ?? new ChangeTrackingList<string>(),
                 driver,
                 count,
                 width,
                 height,
-                overviews ?? new ChangeTrackingList<string>(),
+                overviews ?? new ChangeTrackingList<int>(),
                 scales ?? new ChangeTrackingList<int>(),
                 offsets ?? new ChangeTrackingList<int>(),
                 colormap ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 minZoom,
                 maxZoom,
+                coordinateReferenceSystem,
                 additionalBinaryDataProperties);
         }
 

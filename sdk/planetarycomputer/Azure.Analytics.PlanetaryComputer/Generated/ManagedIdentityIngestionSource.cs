@@ -30,7 +30,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
-        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
+        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
         }

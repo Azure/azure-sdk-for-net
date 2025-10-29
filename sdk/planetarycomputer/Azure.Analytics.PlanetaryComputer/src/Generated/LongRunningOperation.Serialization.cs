@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 
@@ -89,7 +88,7 @@ namespace Azure.Analytics.PlanetaryComputer
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,7 +141,7 @@ namespace Azure.Analytics.PlanetaryComputer
             DateTimeOffset? startTime = default;
             DateTimeOffset? finishTime = default;
             IDictionary<string, string> additionalInformation = default;
-            ResponseError error = default;
+            ErrorInfo error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -226,7 +225,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureAnalyticsPlanetaryComputerContext.Default);
+                    error = ErrorInfo.DeserializeErrorInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

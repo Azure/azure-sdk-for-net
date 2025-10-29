@@ -18,16 +18,16 @@ namespace Azure.Analytics.PlanetaryComputer
     /// 
     /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0TileJSON metadata describing a tile set according to the TileJSON specification
     /// </summary>
-    public partial class TileJsonMetaData : IJsonModel<TileJsonMetaData>
+    public partial class TileJsonMetadata : IJsonModel<TileJsonMetadata>
     {
-        /// <summary> Initializes a new instance of <see cref="TileJsonMetaData"/> for deserialization. </summary>
-        internal TileJsonMetaData()
+        /// <summary> Initializes a new instance of <see cref="TileJsonMetadata"/> for deserialization. </summary>
+        internal TileJsonMetadata()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TileJsonMetaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TileJsonMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,10 +38,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TileJsonMetaData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TileJsonMetadata)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TileJson))
             {
@@ -174,24 +174,24 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TileJsonMetaData IJsonModel<TileJsonMetaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TileJsonMetadata IJsonModel<TileJsonMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TileJsonMetaData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TileJsonMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TileJsonMetaData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TileJsonMetadata)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTileJsonMetaData(document.RootElement, options);
+            return DeserializeTileJsonMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TileJsonMetaData DeserializeTileJsonMetaData(JsonElement element, ModelReaderWriterOptions options)
+        internal static TileJsonMetadata DeserializeTileJsonMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -369,7 +369,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TileJsonMetaData(
+            return new TileJsonMetadata(
                 tileJson,
                 name,
                 description,
@@ -389,51 +389,51 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TileJsonMetaData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TileJsonMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TileJsonMetaData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TileJsonMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TileJsonMetaData IPersistableModel<TileJsonMetaData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TileJsonMetadata IPersistableModel<TileJsonMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TileJsonMetaData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TileJsonMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetaData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TileJsonMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeTileJsonMetaData(document.RootElement, options);
+                        return DeserializeTileJsonMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TileJsonMetaData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TileJsonMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TileJsonMetaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TileJsonMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="TileJsonMetaData"/> from. </param>
-        public static explicit operator TileJsonMetaData(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="TileJsonMetadata"/> from. </param>
+        public static explicit operator TileJsonMetadata(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeTileJsonMetaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeTileJsonMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

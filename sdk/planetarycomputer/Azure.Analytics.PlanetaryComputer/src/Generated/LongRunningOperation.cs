@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
@@ -46,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="additionalInformation"> Additional information elements about the particular operation type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LongRunningOperation(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, string collectionId, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, IDictionary<string, string> additionalInformation, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LongRunningOperation(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, string collectionId, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, IDictionary<string, string> additionalInformation, ErrorInfo error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -89,6 +88,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public IDictionary<string, string> AdditionalInformation { get; }
 
         /// <summary> Error information. </summary>
-        public ResponseError Error { get; }
+        public ErrorInfo Error { get; }
     }
 }

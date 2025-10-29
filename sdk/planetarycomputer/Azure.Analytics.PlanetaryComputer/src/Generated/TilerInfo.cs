@@ -27,8 +27,8 @@ namespace Azure.Analytics.PlanetaryComputer
             BandMetadata = new ChangeTrackingList<IList<BinaryData>>();
             BandDescriptions = new ChangeTrackingList<IList<string>>();
             Dtype = dtype;
-            Colorinterp = new ChangeTrackingList<string>();
-            Overviews = new ChangeTrackingList<string>();
+            ColorInterpretation = new ChangeTrackingList<string>();
+            Overviews = new ChangeTrackingList<int>();
             Scales = new ChangeTrackingList<int>();
             Offsets = new ChangeTrackingList<int>();
             Colormap = new ChangeTrackingDictionary<string, IList<string>>();
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="bandDescriptions"> Band Descriptions. </param>
         /// <param name="dtype"> Data type. </param>
         /// <param name="noDataType"> NoData Type. </param>
-        /// <param name="colorinterp"> Color interpretation. </param>
+        /// <param name="colorInterpretation"> Color interpretation. </param>
         /// <param name="driver"> Driver. </param>
         /// <param name="count"> Count. </param>
         /// <param name="width"> Width. </param>
@@ -51,15 +51,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colormap"> Colormap. </param>
         /// <param name="minZoom"> Minzoom. </param>
         /// <param name="maxZoom"> Maxzoom. </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfo(IList<float> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorinterp, string driver, int? count, int? width, int? height, IList<string> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, IList<string>> colormap, int? minZoom, int? maxZoom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerInfo(IList<float> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorInterpretation, string driver, int? count, int? width, int? height, IList<int> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, IList<string>> colormap, int? minZoom, int? maxZoom, string coordinateReferenceSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             BandMetadata = bandMetadata;
             BandDescriptions = bandDescriptions;
             Dtype = dtype;
             NoDataType = noDataType;
-            Colorinterp = colorinterp;
+            ColorInterpretation = colorInterpretation;
             Driver = driver;
             Count = count;
             Width = width;
@@ -70,6 +71,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Colormap = colormap;
             MinZoom = minZoom;
             MaxZoom = maxZoom;
+            CoordinateReferenceSystem = coordinateReferenceSystem;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -127,7 +129,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public NoDataType? NoDataType { get; }
 
         /// <summary> Color interpretation. </summary>
-        public IList<string> Colorinterp { get; }
+        public IList<string> ColorInterpretation { get; }
 
         /// <summary> Driver. </summary>
         public string Driver { get; }
@@ -142,7 +144,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public int? Height { get; }
 
         /// <summary> Overviews. </summary>
-        public IList<string> Overviews { get; }
+        public IList<int> Overviews { get; }
 
         /// <summary> Scales. </summary>
         public IList<int> Scales { get; }
@@ -158,5 +160,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Maxzoom. </summary>
         public int? MaxZoom { get; }
+
+        /// <summary> Coordinate Reference System. </summary>
+        public string CoordinateReferenceSystem { get; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Created = created;
@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Guid Id { get; set; }
 
         /// <summary> Created time in UTC format. </summary>
-        public DateTimeOffset Created { get; }
+        public DateTimeOffset? Created { get; }
 
         /// <summary> Discriminator for the ingestion source. </summary>
         internal IngestionSourceType Kind { get; set; }

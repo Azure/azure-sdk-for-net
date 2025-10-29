@@ -15,13 +15,10 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier200201;
         private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier202;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
-
-        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 = new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
 
         private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
@@ -35,7 +32,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/assets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
@@ -45,7 +42,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceCollectionAssetRequest(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context)
+        internal HttpMessage CreateReplaceCollectionAssetRequest(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -54,7 +51,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/assets/", false);
             uri.AppendPath(assetId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
@@ -77,6 +74,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -104,7 +102,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/mosaics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
@@ -114,7 +112,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceMosaicRequest(string collectionId, string mosaicId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceMosaicRequest(string collectionId, string mosaicId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -123,7 +121,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/configurations/mosaics/", false);
             uri.AppendPath(mosaicId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
@@ -316,7 +314,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/configurations/render-options", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
@@ -326,7 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceRenderOptionRequest(string collectionId, string renderOptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceRenderOptionRequest(string collectionId, string renderOptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -335,7 +333,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/configurations/render-options/", false);
             uri.AppendPath(renderOptionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
@@ -458,6 +456,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
+        internal HttpMessage CreateGetLandingPageRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/stac", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateCreateItemRequest(string collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -529,7 +541,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemsRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        internal HttpMessage CreateGetItemCollectionRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -576,20 +588,6 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetStacLandingPageRequest(RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateCreateQueryablesRequest(string collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -608,7 +606,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceQueryableRequest(string collectionId, string queryableName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceQueryableRequest(string collectionId, string queryableName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -617,7 +615,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/queryables/", false);
             uri.AppendPath(queryableName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;

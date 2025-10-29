@@ -69,7 +69,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             Guid id = default;
-            DateTimeOffset created = default;
+            DateTimeOffset? created = default;
             IngestionSourceType kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ManagedIdentityConnection connectionInfo = default;
@@ -82,6 +82,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("created"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     created = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }

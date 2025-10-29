@@ -30,7 +30,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionInfo"> SAS token connection information. </param>
-        internal SharedAccessSignatureTokenIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedAccessSignatureTokenConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
+        internal SharedAccessSignatureTokenIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedAccessSignatureTokenConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
         }
