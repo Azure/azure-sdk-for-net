@@ -55,7 +55,7 @@ param(
   [switch] $LeavePackageInstallCache
 )
 
-begin { 
+begin {
   Set-StrictMode -Version 3.0
 
   if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
@@ -85,24 +85,24 @@ begin {
 
   $filesToCheck = @()
  }
-process { 
+process {
   $filesToCheck += $FileList
  }
-end { 
+end {
   npm --prefix $PackageInstallCache ci | Write-Host
 
   $command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list stdin"
   Write-Host $command
-  $cspellOutput = $filesToCheck | npm --prefix $PackageInstallCache `
+  $cspellOutput = $filesToCheck | npm '--prefix' $PackageInstallCache `
     exec  `
-    --no `
-    -- `
+    '--no' `
+    '--' `
     cspell `
     $JobType `
-    --config $CSpellConfigPath `
-    --no-must-find-files `
-    --root $SpellCheckRoot `
-    --file-list stdin
+    '--config' $CSpellConfigPath `
+    '--no-must-find-files' `
+    '--root' $SpellCheckRoot `
+    '--file-list' stdin
 
   if (!$LeavePackageInstallCache) {
     Write-Host "Cleaning up package install cache at $PackageInstallCache"
