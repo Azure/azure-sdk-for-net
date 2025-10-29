@@ -53,7 +53,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets information about the specified job. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,7 +103,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets information about the specified job. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,7 +153,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,7 +211,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -205,7 +269,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,7 +331,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets information about the specified job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="jobName"> The name of the JobResource. </param>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -97,7 +97,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a Zoo. </summary>
+        /// <summary>
+        /// Get a Zoo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ZooResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -125,7 +145,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a Zoo. </summary>
+        /// <summary>
+        /// Get a Zoo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ZooResource> Get(CancellationToken cancellationToken = default)
         {
@@ -153,7 +193,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Delete a Zoo. </summary>
+        /// <summary>
+        /// Delete a Zoo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -182,7 +242,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Delete a Zoo. </summary>
+        /// <summary>
+        /// Delete a Zoo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -211,7 +291,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update a Zoo. </summary>
+        /// <summary>
+        /// Update a Zoo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,7 +350,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Update a Zoo. </summary>
+        /// <summary>
+        /// Update a Zoo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -289,7 +409,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> A synchronous resource action. </summary>
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/zooAddressList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ZooAddressList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ZooAddressListListResult>> ZooAddressListAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
@@ -318,7 +458,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> A synchronous resource action. </summary>
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/zooAddressList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ZooAddressList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ZooAddressListListResult> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
@@ -347,7 +507,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> A synchronous resource action. </summary>
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/recommend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Recommend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Models.ZooRecommendation>> RecommendAsync(CancellationToken cancellationToken = default)
         {
@@ -375,7 +555,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> A synchronous resource action. </summary>
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/recommend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Recommend. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Models.ZooRecommendation> Recommend(CancellationToken cancellationToken = default)
         {

@@ -125,6 +125,8 @@ namespace Azure.ResourceManager.TrustedSigning
         Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class TrustedSigningExtensions
     {

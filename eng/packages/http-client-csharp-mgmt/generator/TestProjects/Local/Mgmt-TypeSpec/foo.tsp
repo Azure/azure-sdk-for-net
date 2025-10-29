@@ -51,11 +51,27 @@ interface Foos {
 
   delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
-  update is ArmCustomPatchAsync<Foo, Foo>;
-
   list is ArmResourceListByParent<Foo>;
 
   listBySubscription is ArmListBySubscription<Foo>;
+
+  @action("exportDependencies")
+  fooAction is ArmResourceActionAsync<
+    Foo,
+    FooActionRequest,
+    FooActionResult,
+    LroHeaders = ArmAsyncOperationHeader<FinalResult = FooActionResult> &
+      ArmLroLocationHeader<FinalResult = FooActionResult> &
+      Azure.Core.Foundations.RetryAfterHeader
+  >;
+}
+
+model FooActionRequest {
+  id: string;
+}
+
+model FooActionResult {
+  msg: string;
 }
 
 @singleton

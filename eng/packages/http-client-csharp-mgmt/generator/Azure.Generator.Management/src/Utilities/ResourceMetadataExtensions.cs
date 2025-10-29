@@ -48,6 +48,9 @@ namespace Azure.Generator.Management.Utilities
             var methodsInResource = new List<ResourceMethod>();
             var methodsInCollection = new List<ResourceMethod>();
             var methodsInExtension = new List<ResourceMethod>();
+            bool hasUpdateMethod = false;
+            ResourceMethod? createMethod = null;
+
             foreach (var method in resourceMetadata.Methods)
             {
                 var isSingleton = resourceMetadata.SingletonResourceName is not null;
@@ -63,6 +66,7 @@ namespace Azure.Generator.Management.Utilities
                         {
                             methodsInCollection.Add(method);
                         }
+                        createMethod = method;
                         break;
                     case ResourceOperationKind.Get:
                         // both resource and collection should have get method
@@ -70,6 +74,9 @@ namespace Azure.Generator.Management.Utilities
                         methodsInCollection.Add(method);
                         break;
                     case ResourceOperationKind.Update:
+                        hasUpdateMethod = true;
+                        methodsInResource.Add(method);
+                        break;
                     case ResourceOperationKind.Delete:
                         // only resource has get
                         methodsInResource.Add(method);
@@ -79,9 +86,14 @@ namespace Azure.Generator.Management.Utilities
                         methodsInResource.Add(method);
                         break;
                     case ResourceOperationKind.List:
+                        // list method goes to resource if the method's resource scope matches the resource's ID pattern
+                        if (method.ResourceScope == resourceMetadata.ResourceIdPattern)
+                        {
+                            methodsInResource.Add(method);
+                        }
                         // list methods might go to the collection or the extension
                         // when the resource has a parent
-                        if (resourceMetadata.ParentResourceId is not null)
+                        else if (resourceMetadata.ParentResourceId is not null)
                         {
                             if (method.ResourceScope == resourceMetadata.ParentResourceId)
                             {
@@ -112,6 +124,12 @@ namespace Azure.Generator.Management.Utilities
                             $"Unknown resource operation kind '{method.Kind}' for method '{method.OperationPath}' in resource '{resourceMetadata.ResourceIdPattern}'.");
                         break;
                 }
+            }
+
+            // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
+            if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null)
+            {
+                methodsInResource.Add(createMethod);
             }
 
             return new(methodsInResource, methodsInCollection, methodsInExtension);
