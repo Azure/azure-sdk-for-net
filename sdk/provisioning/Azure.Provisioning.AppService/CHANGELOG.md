@@ -1,12 +1,20 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2025-10-31)
 
 ### Features Added
 
+- Bump api-version to latest.
+
 ### Breaking Changes
 
+- Removed `AseV3NetworkingConfigurationData` class. Please use `AseV3NetworkingConfiguration` class instead.
+- Removed `CustomDnsSuffixConfigurationData` class. Please use `CustomDnsSuffixConfiguration` class instead.
+- Removed `StaticSiteUserProvidedFunctionAppData` class. Please use `StaticSiteUserProvidedFunctionApp` class instead.
+
 ### Bugs Fixed
+
+- Property `Name` of `WebSiteSlot` is now settable. (#53508)
 
 ### Other Changes
 
