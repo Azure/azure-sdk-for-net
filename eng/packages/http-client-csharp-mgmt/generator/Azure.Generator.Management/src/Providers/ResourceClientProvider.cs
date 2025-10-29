@@ -79,6 +79,8 @@ namespace Azure.Generator.Management.Providers
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
 
+        internal InputModelType InputModel => _inputModel;
+
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 
@@ -91,9 +93,6 @@ namespace Azure.Generator.Management.Providers
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
-
-        private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
 
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }

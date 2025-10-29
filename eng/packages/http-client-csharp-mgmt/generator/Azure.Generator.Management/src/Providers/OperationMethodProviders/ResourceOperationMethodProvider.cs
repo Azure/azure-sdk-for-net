@@ -428,7 +428,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     .MakeGenericType([_returnBodyType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
-            ValueExpression[] armOperationArguments = [
+            ValueExpression[] commonArmOperationArguments = [
                 _clientDiagnosticsField,
                 This.As<ArmResource>().Pipeline(),
                 messageVariable.Property("Request"),
@@ -436,17 +436,28 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _returnBodyResourceClient != null
-                ? [
-                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
-                    .. armOperationArguments
-                  ]
-                : armOperationArguments;
+            ValueExpression? operationSourceInstance = null;
+            if (_returnBodyResourceClient != null)
+            {
+                // Resource type - pass client to operation source constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.ResourceData.Type].Type;
+                operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
+            }
+            else if (_originalBodyType != null)
+            {
+                // Non-resource type - use parameterless constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_originalBodyType].Type;
+                operationSourceInstance = New.Instance(operationSourceType);
+            }
+
+            var armOperationArguments = operationSourceInstance != null
+                ? [operationSourceInstance, .. commonArmOperationArguments]
+                : commonArmOperationArguments;
 
             var operationDeclaration = Declare(
                 "operation",
                 armOperationType,
-                New.Instance(armOperationType, operationInstanceArguments),
+                New.Instance(armOperationType, armOperationArguments),
                 out var operationVariable);
             statements.Add(operationDeclaration);
 

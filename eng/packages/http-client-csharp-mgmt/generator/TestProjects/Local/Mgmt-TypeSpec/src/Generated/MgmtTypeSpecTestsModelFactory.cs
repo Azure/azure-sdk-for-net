@@ -94,6 +94,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The FooActionRequest. </summary>
+        /// <param name="id"></param>
+        /// <returns> A new <see cref="Models.FooActionRequest"/> instance for mocking. </returns>
+        public static FooActionRequest FooActionRequest(string id = default)
+        {
+            return new FooActionRequest(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooActionResult. </summary>
+        /// <param name="msg"></param>
+        /// <returns> A new <see cref="Models.FooActionResult"/> instance for mocking. </returns>
+        public static FooActionResult FooActionResult(string msg = default)
+        {
+            return new FooActionResult(msg, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
