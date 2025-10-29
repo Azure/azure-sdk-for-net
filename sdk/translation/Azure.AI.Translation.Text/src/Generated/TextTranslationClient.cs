@@ -221,8 +221,8 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(TranslateBody,string,CancellationToken)']/*" />
-        public virtual async Task<Response<TranslationResult>> TranslateAsync(TranslateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(TranslateInputs,string,CancellationToken)']/*" />
+        public virtual async Task<Response<TranslationResult>> TranslateAsync(TranslateInputs body, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -237,8 +237,8 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(TranslateBody,string,CancellationToken)']/*" />
-        public virtual Response<TranslationResult> Translate(TranslateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(TranslateInputs,string,CancellationToken)']/*" />
+        public virtual Response<TranslationResult> Translate(TranslateInputs body, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -258,7 +258,7 @@ namespace Azure.AI.Translation.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TranslateAsync(TranslateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TranslateAsync(TranslateInputs,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -298,7 +298,7 @@ namespace Azure.AI.Translation.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Translate(TranslateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Translate(TranslateInputs,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -346,8 +346,8 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TransliterateAsync(string,string,string,TransliterateBody,string,CancellationToken)']/*" />
-        public virtual async Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, TransliterateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TransliterateAsync(string,string,string,TransliterateInputs,string,CancellationToken)']/*" />
+        public virtual async Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, TransliterateInputs body, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -378,8 +378,8 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Transliterate(string,string,string,TransliterateBody,string,CancellationToken)']/*" />
-        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, TransliterateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Transliterate(string,string,string,TransliterateInputs,string,CancellationToken)']/*" />
+        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, TransliterateInputs body, string clientTraceId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -402,7 +402,7 @@ namespace Azure.AI.Translation.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TransliterateAsync(string,string,string,TransliterateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TransliterateAsync(string,string,string,TransliterateInputs,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -458,7 +458,7 @@ namespace Azure.AI.Translation.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Transliterate(string,string,string,TransliterateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Transliterate(string,string,string,TransliterateInputs,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

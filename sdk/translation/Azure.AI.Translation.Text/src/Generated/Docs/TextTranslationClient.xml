@@ -81,18 +81,18 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="TranslateAsync(TranslateBody,string,CancellationToken)">
+    <member name="TranslateAsync(TranslateInputs,string,CancellationToken)">
       <example>
 This sample shows how to call TranslateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TranslateBody body = new TranslateBody(new TranslateInputItem[]
+TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
 {
-    new TranslateInputItem("This is a test.", new TranslateTarget[]
+    new TranslateInputItem("This is a test.", new TranslationTarget[]
     {
-        new TranslateTarget("cs")
+        new TranslationTarget("cs")
         {
             Script = "Latn",
             ProfanityAction = ProfanityAction.NoAction,
@@ -103,7 +103,7 @@ TranslateBody body = new TranslateBody(new TranslateInputItem[]
             Tone = "formal",
             Gender = "neutral",
             AdaptiveDatasetId = "21000",
-            ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+            ReferenceTextPairs = {new ReferenceTextPair("Please test this out.", "Vyzkoušejte si to.")},
         }
     })
     {
@@ -119,28 +119,28 @@ This sample shows how to call TranslateAsync.
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TranslateBody body = new TranslateBody(new TranslateInputItem[]
+TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
 {
-    new TranslateInputItem("This is a test.", new TranslateTarget[]
+    new TranslateInputItem("This is a test.", new TranslationTarget[]
     {
-        new TranslateTarget("cs")
+        new TranslationTarget("cs")
     })
 });
 Response<TranslationResult> response = await client.TranslateAsync(body);
 ]]></code></example>
     </member>
-    <member name="Translate(TranslateBody,string,CancellationToken)">
+    <member name="Translate(TranslateInputs,string,CancellationToken)">
       <example>
 This sample shows how to call Translate.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TranslateBody body = new TranslateBody(new TranslateInputItem[]
+TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
 {
-    new TranslateInputItem("This is a test.", new TranslateTarget[]
+    new TranslateInputItem("This is a test.", new TranslationTarget[]
     {
-        new TranslateTarget("cs")
+        new TranslationTarget("cs")
         {
             Script = "Latn",
             ProfanityAction = ProfanityAction.NoAction,
@@ -151,7 +151,7 @@ TranslateBody body = new TranslateBody(new TranslateInputItem[]
             Tone = "formal",
             Gender = "neutral",
             AdaptiveDatasetId = "21000",
-            ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+            ReferenceTextPairs = {new ReferenceTextPair("Please test this out.", "Vyzkoušejte si to.")},
         }
     })
     {
@@ -167,11 +167,11 @@ This sample shows how to call Translate.
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TranslateBody body = new TranslateBody(new TranslateInputItem[]
+TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
 {
-    new TranslateInputItem("This is a test.", new TranslateTarget[]
+    new TranslateInputItem("This is a test.", new TranslationTarget[]
     {
-        new TranslateTarget("cs")
+        new TranslationTarget("cs")
     })
 });
 Response<TranslationResult> response = client.Translate(body);
@@ -335,14 +335,14 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
 ]]></code></example>
     </member>
-    <member name="TransliterateAsync(string,string,string,TransliterateBody,string,CancellationToken)">
+    <member name="TransliterateAsync(string,string,string,TransliterateInputs,string,CancellationToken)">
       <example>
 This sample shows how to call TransliterateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TransliterateBody body = new TransliterateBody(new InputTextItem[]
+TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
 {
     new InputTextItem("这是个测试。")
 });
@@ -353,21 +353,21 @@ This sample shows how to call TransliterateAsync.
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TransliterateBody body = new TransliterateBody(new InputTextItem[]
+TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
 {
     new InputTextItem("这是个测试。")
 });
 Response<TransliterateResult> response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", body);
 ]]></code></example>
     </member>
-    <member name="Transliterate(string,string,string,TransliterateBody,string,CancellationToken)">
+    <member name="Transliterate(string,string,string,TransliterateInputs,string,CancellationToken)">
       <example>
 This sample shows how to call Transliterate.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TransliterateBody body = new TransliterateBody(new InputTextItem[]
+TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
 {
     new InputTextItem("这是个测试。")
 });
@@ -378,7 +378,7 @@ This sample shows how to call Transliterate.
 Uri endpoint = new Uri("<endpoint>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
-TransliterateBody body = new TransliterateBody(new InputTextItem[]
+TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
 {
     new InputTextItem("这是个测试。")
 });

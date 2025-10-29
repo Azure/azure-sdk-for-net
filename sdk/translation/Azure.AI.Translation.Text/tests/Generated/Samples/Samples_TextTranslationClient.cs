@@ -217,11 +217,11 @@ target = "Vyzkoušejte si to.",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TranslateBody body = new TranslateBody(new TranslateInputItem[]
+            TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
             {
-new TranslateInputItem("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslationTarget[]
 {
-new TranslateTarget("cs")
+new TranslationTarget("cs")
 {
 Script = "Latn",
 ProfanityAction = ProfanityAction.NoAction,
@@ -232,7 +232,7 @@ Grade = "basic",
 Tone = "formal",
 Gender = "neutral",
 AdaptiveDatasetId = "21000",
-ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+ReferenceTextPairs = {new ReferenceTextPair("Please test this out.", "Vyzkoušejte si to.")},
 }
 })
 {
@@ -251,11 +251,11 @@ TextType = TextType.Plain,
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TranslateBody body = new TranslateBody(new TranslateInputItem[]
+            TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
             {
-new TranslateInputItem("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslationTarget[]
 {
-new TranslateTarget("cs")
+new TranslationTarget("cs")
 {
 Script = "Latn",
 ProfanityAction = ProfanityAction.NoAction,
@@ -266,7 +266,7 @@ Grade = "basic",
 Tone = "formal",
 Gender = "neutral",
 AdaptiveDatasetId = "21000",
-ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+ReferenceTextPairs = {new ReferenceTextPair("Please test this out.", "Vyzkoušejte si to.")},
 }
 })
 {
@@ -347,11 +347,11 @@ language = "cs",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TranslateBody body = new TranslateBody(new TranslateInputItem[]
+            TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
             {
-new TranslateInputItem("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslationTarget[]
 {
-new TranslateTarget("cs")
+new TranslationTarget("cs")
 })
             });
             Response<TranslationResult> response = client.Translate(body);
@@ -364,11 +364,11 @@ new TranslateTarget("cs")
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TranslateBody body = new TranslateBody(new TranslateInputItem[]
+            TranslateInputs body = new TranslateInputs(new TranslateInputItem[]
             {
-new TranslateInputItem("This is a test.", new TranslateTarget[]
+new TranslateInputItem("This is a test.", new TranslationTarget[]
 {
-new TranslateTarget("cs")
+new TranslationTarget("cs")
 })
             });
             Response<TranslationResult> response = await client.TranslateAsync(body);
@@ -429,7 +429,7 @@ text = "这是个测试。",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
             {
 new InputTextItem("这是个测试。")
             });
@@ -443,7 +443,7 @@ new InputTextItem("这是个测试。")
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
             {
 new InputTextItem("这是个测试。")
             });
@@ -505,7 +505,7 @@ text = "这是个测试。",
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
             {
 new InputTextItem("这是个测试。")
             });
@@ -519,7 +519,7 @@ new InputTextItem("这是个测试。")
             Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
-            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            TransliterateInputs body = new TransliterateInputs(new InputTextItem[]
             {
 new InputTextItem("这是个测试。")
             });

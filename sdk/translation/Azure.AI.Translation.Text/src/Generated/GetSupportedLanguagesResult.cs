@@ -50,19 +50,19 @@ namespace Azure.AI.Translation.Text
         {
             Translation = new ChangeTrackingDictionary<string, TranslationLanguage>();
             Transliteration = new ChangeTrackingDictionary<string, TransliterationLanguage>();
-            Dictionary = new ChangeTrackingDictionary<string, SourceDictionaryLanguage>();
+            Models = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetSupportedLanguagesResult"/>. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
-        /// <param name="dictionary"> Languages that support dictionary API. </param>
+        /// <param name="models"> LLM models supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, string> models, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Translation = translation;
             Transliteration = transliteration;
-            Dictionary = dictionary;
+            Models = models;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Translation.Text
         public IReadOnlyDictionary<string, TranslationLanguage> Translation { get; }
         /// <summary> Languages that support transliteration API. </summary>
         public IReadOnlyDictionary<string, TransliterationLanguage> Transliteration { get; }
-        /// <summary> Languages that support dictionary API. </summary>
-        public IReadOnlyDictionary<string, SourceDictionaryLanguage> Dictionary { get; }
+        /// <summary> LLM models supported. </summary>
+        public IReadOnlyDictionary<string, string> Models { get; }
     }
 }

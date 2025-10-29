@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Translate targets parameters. </summary>
-    public partial class TranslateTarget
+    /// <summary> Target language and translation configuration parameters. </summary>
+    public partial class TranslationTarget
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TranslateTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="language">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
         /// multiple string values in the targetsLanguage array.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
-        public TranslateTarget(string language)
+        public TranslationTarget(string language)
         {
             Argument.AssertNotNull(language, nameof(language));
 
             Language = language;
-            ReferenceTextPairs = new ChangeTrackingList<ReferenceSentencePair>();
+            ReferenceTextPairs = new ChangeTrackingList<ReferenceTextPair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="language">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
@@ -76,12 +76,12 @@ namespace Azure.AI.Translation.Text
         /// Possible values are: Asterisk (default) or Tag.
         /// </param>
         /// <param name="deploymentName">
-        /// Default is ‘general’, which uses NMT system.
-        /// ‘abc-inc-gpt-4o’, and ‘abc-inc-gpt-4o-mini’ are examples of deployment names which use GPT-4o uses or
-        /// GPT-4o-mini model. ‘gpt-4o’ uses GPT-4o model.
+        /// Default is 'general', which uses NMT system.
+        /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
+        /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
         ///
-        /// ‘&lt;custom model id&gt;’ uses the custom NMT model tuned by customer.
-        /// ‘best’ system determines which is the best model to use for the request. This intelligence could be introduced
+        /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
+        /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
         ///
         /// </param>
@@ -102,9 +102,9 @@ namespace Azure.AI.Translation.Text
         /// <param name="tone"> Desired tone of target translation. </param>
         /// <param name="gender"> Desired gender of target translation. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
-        /// <param name="referenceTextPairs"> Reference sentence pairs to generate adaptive results. </param>
+        /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslateTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, string grade, string tone, string gender, string adaptiveDatasetId, IList<ReferenceSentencePair> referenceTextPairs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, string grade, string tone, string gender, string adaptiveDatasetId, IList<ReferenceTextPair> referenceTextPairs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Language = language;
             Script = script;
@@ -120,8 +120,8 @@ namespace Azure.AI.Translation.Text
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateTarget"/> for deserialization. </summary>
-        internal TranslateTarget()
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/> for deserialization. </summary>
+        internal TranslationTarget()
         {
         }
 
@@ -144,12 +144,12 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         public ProfanityMarker? ProfanityMarker { get; set; }
         /// <summary>
-        /// Default is ‘general’, which uses NMT system.
-        /// ‘abc-inc-gpt-4o’, and ‘abc-inc-gpt-4o-mini’ are examples of deployment names which use GPT-4o uses or
-        /// GPT-4o-mini model. ‘gpt-4o’ uses GPT-4o model.
+        /// Default is 'general', which uses NMT system.
+        /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
+        /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
         ///
-        /// ‘&lt;custom model id&gt;’ uses the custom NMT model tuned by customer.
-        /// ‘best’ system determines which is the best model to use for the request. This intelligence could be introduced
+        /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
+        /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
         ///
         /// </summary>
@@ -176,7 +176,7 @@ namespace Azure.AI.Translation.Text
         public string Gender { get; set; }
         /// <summary> Reference dataset ID having sentence pair to generate adaptive customized translation. </summary>
         public string AdaptiveDatasetId { get; set; }
-        /// <summary> Reference sentence pairs to generate adaptive results. </summary>
-        public IList<ReferenceSentencePair> ReferenceTextPairs { get; }
+        /// <summary> Reference text pairs to generate adaptive customized translation. </summary>
+        public IList<ReferenceTextPair> ReferenceTextPairs { get; }
     }
 }

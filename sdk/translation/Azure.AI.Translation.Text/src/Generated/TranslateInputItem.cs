@@ -50,7 +50,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="text"> Text to translate. </param>
         /// <param name="targets"> Translation target parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="targets"/> is null. </exception>
-        public TranslateInputItem(string text, IEnumerable<TranslateTarget> targets)
+        public TranslateInputItem(string text, IEnumerable<TranslationTarget> targets)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(targets, nameof(targets));
@@ -76,7 +76,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="targets"> Translation target parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslateInputItem(string text, string script, string language, TextType? textType, IList<TranslateTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslateInputItem(string text, string script, string language, TextType? textType, IList<TranslationTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Script = script;
@@ -110,6 +110,6 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         public TextType? TextType { get; set; }
         /// <summary> Translation target parameters. </summary>
-        public IList<TranslateTarget> Targets { get; }
+        public IList<TranslationTarget> Targets { get; }
     }
 }

@@ -99,7 +99,7 @@ namespace Azure.AI.Translation.Text
             string script = default;
             string language = default;
             TextType? textType = default;
-            IList<TranslateTarget> targets = default;
+            IList<TranslationTarget> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,10 +130,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("targets"u8))
                 {
-                    List<TranslateTarget> array = new List<TranslateTarget>();
+                    List<TranslationTarget> array = new List<TranslationTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TranslateTarget.DeserializeTranslateTarget(item, options));
+                        array.Add(TranslationTarget.DeserializeTranslationTarget(item, options));
                     }
                     targets = array;
                     continue;

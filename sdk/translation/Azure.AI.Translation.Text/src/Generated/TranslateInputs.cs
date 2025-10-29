@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Request body for the translate API. </summary>
-    public partial class TranslateBody
+    /// <summary> Request data for translate. </summary>
+    public partial class TranslateInputs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslateInputs"/>. </summary>
         /// <param name="inputs"> Array of the input text elements to translate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public TranslateBody(IEnumerable<TranslateInputItem> inputs)
+        public TranslateInputs(IEnumerable<TranslateInputItem> inputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslateInputs"/>. </summary>
         /// <param name="inputs"> Array of the input text elements to translate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslateBody(IList<TranslateInputItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslateInputs(IList<TranslateInputItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslateBody"/> for deserialization. </summary>
-        internal TranslateBody()
+        /// <summary> Initializes a new instance of <see cref="TranslateInputs"/> for deserialization. </summary>
+        internal TranslateInputs()
         {
         }
 

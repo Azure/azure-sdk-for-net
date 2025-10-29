@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Reference sentence pair. </summary>
-    public partial class ReferenceSentencePair
+    /// <summary> Reference text pair to generate adaptive customized translation. </summary>
+    public partial class ReferenceTextPair
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReferenceSentencePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceTextPair"/>. </summary>
         /// <param name="source"> Source reference sentence. </param>
         /// <param name="target"> Target reference sentence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="target"/> is null. </exception>
-        public ReferenceSentencePair(string source, string target)
+        public ReferenceTextPair(string source, string target)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(target, nameof(target));
@@ -58,19 +58,19 @@ namespace Azure.AI.Translation.Text
             Target = target;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReferenceSentencePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferenceTextPair"/>. </summary>
         /// <param name="source"> Source reference sentence. </param>
         /// <param name="target"> Target reference sentence. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReferenceSentencePair(string source, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReferenceTextPair(string source, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             Target = target;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReferenceSentencePair"/> for deserialization. </summary>
-        internal ReferenceSentencePair()
+        /// <summary> Initializes a new instance of <see cref="ReferenceTextPair"/> for deserialization. </summary>
+        internal ReferenceTextPair()
         {
         }
 

@@ -56,14 +56,14 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Dictionary))
+            if (Optional.IsCollectionDefined(Models))
             {
-                writer.WritePropertyName("dictionary"u8);
+                writer.WritePropertyName("models"u8);
                 writer.WriteStartObject();
-                foreach (var item in Dictionary)
+                foreach (var item in Models)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -106,7 +106,7 @@ namespace Azure.AI.Translation.Text
             }
             IReadOnlyDictionary<string, TranslationLanguage> translation = default;
             IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
-            IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = default;
+            IReadOnlyDictionary<string, string> models = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,12 +117,12 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    Dictionary<string, TranslationLanguage> dictionary0 = new Dictionary<string, TranslationLanguage>();
+                    Dictionary<string, TranslationLanguage> dictionary = new Dictionary<string, TranslationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value, options));
+                        dictionary.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value, options));
                     }
-                    translation = dictionary0;
+                    translation = dictionary;
                     continue;
                 }
                 if (property.NameEquals("transliteration"u8))
@@ -131,26 +131,26 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    Dictionary<string, TransliterationLanguage> dictionary0 = new Dictionary<string, TransliterationLanguage>();
+                    Dictionary<string, TransliterationLanguage> dictionary = new Dictionary<string, TransliterationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value, options));
+                        dictionary.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value, options));
                     }
-                    transliteration = dictionary0;
+                    transliteration = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dictionary"u8))
+                if (property.NameEquals("models"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, SourceDictionaryLanguage> dictionary0 = new Dictionary<string, SourceDictionaryLanguage>();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value, options));
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    dictionary = dictionary0;
+                    models = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetSupportedLanguagesResult(translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(), transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(), dictionary ?? new ChangeTrackingDictionary<string, SourceDictionaryLanguage>(), serializedAdditionalRawData);
+            return new GetSupportedLanguagesResult(translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(), transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(), models ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetSupportedLanguagesResult>.Write(ModelReaderWriterOptions options)

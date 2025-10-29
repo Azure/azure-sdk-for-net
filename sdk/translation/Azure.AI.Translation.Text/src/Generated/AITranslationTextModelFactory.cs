@@ -16,25 +16,25 @@ namespace Azure.AI.Translation.Text
         /// <summary> Initializes a new instance of <see cref="Text.GetSupportedLanguagesResult"/>. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
-        /// <param name="dictionary"> Languages that support dictionary API. </param>
+        /// <param name="models"> LLM models supported. </param>
         /// <returns> A new <see cref="Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
-        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation = null, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = null, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = null)
+        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation = null, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = null, IReadOnlyDictionary<string, string> models = null)
         {
             translation ??= new Dictionary<string, TranslationLanguage>();
             transliteration ??= new Dictionary<string, TransliterationLanguage>();
-            dictionary ??= new Dictionary<string, SourceDictionaryLanguage>();
+            models ??= new Dictionary<string, string>();
 
-            return new GetSupportedLanguagesResult(translation, transliteration, dictionary, serializedAdditionalRawData: null);
+            return new GetSupportedLanguagesResult(translation, transliteration, models, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
-        public static TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, LanguageDirectionality dir = default)
+        public static TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default)
         {
-            return new TranslationLanguage(name, nativeName, dir, serializedAdditionalRawData: null);
+            return new TranslationLanguage(name, nativeName, directionality, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliterationLanguage"/>. </summary>
@@ -53,10 +53,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="toScripts"> List of scripts available to convert text to. </param>
         /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality dir = default, IEnumerable<LanguageScript> toScripts = null)
+        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> toScripts = null)
         {
             toScripts ??= new List<LanguageScript>();
 
@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Text
                 code,
                 name,
                 nativeName,
-                dir,
+                directionality,
                 serializedAdditionalRawData: null,
                 toScripts?.ToList());
         }
@@ -73,35 +73,11 @@ namespace Azure.AI.Translation.Text
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
-        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality dir = default)
+        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default)
         {
-            return new LanguageScript(code, name, nativeName, dir, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.SourceDictionaryLanguage"/>. </summary>
-        /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
-        /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="translations"> List of languages with alterative translations and examples for the query expressed in the source language. </param>
-        /// <returns> A new <see cref="Text.SourceDictionaryLanguage"/> instance for mocking. </returns>
-        public static SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality dir = default, IEnumerable<TargetDictionaryLanguage> translations = null)
-        {
-            translations ??= new List<TargetDictionaryLanguage>();
-
-            return new SourceDictionaryLanguage(name, nativeName, dir, translations?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.TargetDictionaryLanguage"/>. </summary>
-        /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
-        /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="code"> Language code identifying the target language. </param>
-        /// <returns> A new <see cref="Text.TargetDictionaryLanguage"/> instance for mocking. </returns>
-        public static TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality dir = default, string code = null)
-        {
-            return new TargetDictionaryLanguage(name, nativeName, dir, code, serializedAdditionalRawData: null);
+            return new LanguageScript(code, name, nativeName, directionality, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslateInputItem"/>. </summary>
@@ -121,9 +97,9 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="targets"> Translation target parameters. </param>
         /// <returns> A new <see cref="Text.TranslateInputItem"/> instance for mocking. </returns>
-        public static TranslateInputItem TranslateInputItem(string text = null, string script = null, string language = null, TextType? textType = null, IEnumerable<TranslateTarget> targets = null)
+        public static TranslateInputItem TranslateInputItem(string text = null, string script = null, string language = null, TextType? textType = null, IEnumerable<TranslationTarget> targets = null)
         {
-            targets ??= new List<TranslateTarget>();
+            targets ??= new List<TranslationTarget>();
 
             return new TranslateInputItem(
                 text,
@@ -134,7 +110,7 @@ namespace Azure.AI.Translation.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.TranslateTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TranslationTarget"/>. </summary>
         /// <param name="language">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
@@ -150,12 +126,12 @@ namespace Azure.AI.Translation.Text
         /// Possible values are: Asterisk (default) or Tag.
         /// </param>
         /// <param name="deploymentName">
-        /// Default is ‘general’, which uses NMT system.
-        /// ‘abc-inc-gpt-4o’, and ‘abc-inc-gpt-4o-mini’ are examples of deployment names which use GPT-4o uses or
-        /// GPT-4o-mini model. ‘gpt-4o’ uses GPT-4o model.
+        /// Default is 'general', which uses NMT system.
+        /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
+        /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
         ///
-        /// ‘&lt;custom model id&gt;’ uses the custom NMT model tuned by customer.
-        /// ‘best’ system determines which is the best model to use for the request. This intelligence could be introduced
+        /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
+        /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
         ///
         /// </param>
@@ -176,13 +152,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="tone"> Desired tone of target translation. </param>
         /// <param name="gender"> Desired gender of target translation. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
-        /// <param name="referenceTextPairs"> Reference sentence pairs to generate adaptive results. </param>
-        /// <returns> A new <see cref="Text.TranslateTarget"/> instance for mocking. </returns>
-        public static TranslateTarget TranslateTarget(string language = null, string script = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, string deploymentName = null, bool? allowFallback = null, string grade = null, string tone = null, string gender = null, string adaptiveDatasetId = null, IEnumerable<ReferenceSentencePair> referenceTextPairs = null)
+        /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
+        /// <returns> A new <see cref="Text.TranslationTarget"/> instance for mocking. </returns>
+        public static TranslationTarget TranslationTarget(string language = null, string script = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, string deploymentName = null, bool? allowFallback = null, string grade = null, string tone = null, string gender = null, string adaptiveDatasetId = null, IEnumerable<ReferenceTextPair> referenceTextPairs = null)
         {
-            referenceTextPairs ??= new List<ReferenceSentencePair>();
+            referenceTextPairs ??= new List<ReferenceTextPair>();
 
-            return new TranslateTarget(
+            return new TranslationTarget(
                 language,
                 script,
                 profanityAction,

@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Request body for the transliterate API. </summary>
-    public partial class TransliterateBody
+    /// <summary> Request data for transliterate. </summary>
+    public partial class TransliterateInputs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterateInputs"/>. </summary>
         /// <param name="inputs"> Array of the input text elements to transliterate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public TransliterateBody(IEnumerable<InputTextItem> inputs)
+        public TransliterateInputs(IEnumerable<InputTextItem> inputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterateInputs"/>. </summary>
         /// <param name="inputs"> Array of the input text elements to transliterate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TransliterateBody(IList<InputTextItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TransliterateInputs(IList<InputTextItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/> for deserialization. </summary>
-        internal TransliterateBody()
+        /// <summary> Initializes a new instance of <see cref="TransliterateInputs"/> for deserialization. </summary>
+        internal TransliterateInputs()
         {
         }
 
