@@ -102,7 +102,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> BarQuotaResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> BarQuotaResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -198,7 +198,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> BarQuotaResources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +257,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> BarQuotaResources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

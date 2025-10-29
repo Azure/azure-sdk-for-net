@@ -9,6 +9,7 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -117,9 +118,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 new XmlDocStatement("description", [$"{operation.Path}"])));
 
             // Operation Id item
+            string operationId = operation.Name;
+            if (enclosingType is ResourceClientProvider resourceClientProvider)
+            {
+                operationId = $"{resourceClientProvider.ResourceName.Pluralize()}_{operation.Name.FirstCharToUpperCase()}";
+            }
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Operation Id"]),
-                new XmlDocStatement("description", [$"{operation.Name}"])));
+                new XmlDocStatement("description", [$"{operationId}"])));
 
             // API Version item (if available)
             var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);

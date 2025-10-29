@@ -100,7 +100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> BarSettingsResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -159,7 +159,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> BarSettingsResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -218,7 +218,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> BarSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -266,7 +266,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> BarSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -100,7 +100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> FooSettings_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> FooSettings_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -196,7 +196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> FooSettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -252,7 +252,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> FooSettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -308,7 +308,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> FooSettings_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -360,7 +360,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> FooSettings_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -412,7 +412,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> FooSettings_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -463,7 +463,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> FooSettings_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
