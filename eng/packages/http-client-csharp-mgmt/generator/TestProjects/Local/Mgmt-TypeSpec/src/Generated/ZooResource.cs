@@ -106,7 +106,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Get. </description>
+        /// <description> Zoos_get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -154,7 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Get. </description>
+        /// <description> Zoos_get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -202,7 +202,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Delete. </description>
+        /// <description> Zoos_delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -251,7 +251,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Delete. </description>
+        /// <description> Zoos_delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -300,7 +300,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Update. </description>
+        /// <description> Zoos_update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -359,7 +359,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Update. </description>
+        /// <description> Zoos_update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -418,7 +418,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_ZooAddressList. </description>
+        /// <description> Zoos_zooAddressList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +467,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_ZooAddressList. </description>
+        /// <description> Zoos_zooAddressList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -516,7 +516,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Recommend. </description>
+        /// <description> Zoos_recommend. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -564,7 +564,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Zoos_Recommend. </description>
+        /// <description> Zoos_recommend. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

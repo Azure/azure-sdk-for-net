@@ -102,7 +102,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobResources_Get. </description>
+        /// <description> JobResources_get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobResources_Get. </description>
+        /// <description> JobResources_get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -200,7 +200,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobResources_Update. </description>
+        /// <description> JobResources_update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -259,7 +259,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobResources_Update. </description>
+        /// <description> JobResources_update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

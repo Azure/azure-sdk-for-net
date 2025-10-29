@@ -9,7 +9,6 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
-using Humanizer;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -118,10 +117,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 new XmlDocStatement("description", [$"{operation.Path}"])));
 
             // Operation Id item
+            // Use CrossLanguageDefinitionId for accurate operation IDs
+            // For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")
+            // For non-resource operations, the format is: Namespace.Client.OperationName
             string operationId = operation.Name;
-            if (enclosingType is ResourceClientProvider resourceClientProvider)
+            if (!string.IsNullOrEmpty(serviceMethod.CrossLanguageDefinitionId))
             {
-                operationId = $"{resourceClientProvider.ResourceName.Pluralize()}_{operation.Name.FirstCharToUpperCase()}";
+                var parts = serviceMethod.CrossLanguageDefinitionId.Split('.');
+                if (parts.Length >= 2)
+                {
+                    // Take the last two parts: ResourceClient and OperationName
+                    var resourceOrClientName = parts[^2];  // Second to last
+                    var methodName = parts[^1];            // Last
+                    operationId = $"{resourceOrClientName}_{methodName}";
+                }
             }
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Operation Id"]),

@@ -84,7 +84,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StartFailedServerlessRuntime. </description>
+        /// <description> PrivateLinks_startFailedServerlessRuntime. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +119,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StartFailedServerlessRuntime. </description>
+        /// <description> PrivateLinks_startFailedServerlessRuntime. </description>
         /// </item>
         /// </list>
         /// </summary>

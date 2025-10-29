@@ -98,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResources_Get. </description>
+        /// <description> EndpointResources_get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -146,7 +146,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResources_Get. </description>
+        /// <description> EndpointResources_get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -194,7 +194,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResources_Update. </description>
+        /// <description> EndpointResources_update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,7 +246,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResources_Update. </description>
+        /// <description> EndpointResources_update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -298,7 +298,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResources_Delete. </description>
+        /// <description> EndpointResources_delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -349,7 +349,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResources_Delete. </description>
+        /// <description> EndpointResources_delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
