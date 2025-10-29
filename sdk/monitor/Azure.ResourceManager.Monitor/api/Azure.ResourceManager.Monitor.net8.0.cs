@@ -623,20 +623,24 @@ namespace Azure.ResourceManager.Monitor
     }
     public partial class MetricAlertData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MetricAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MetricAlertData>
     {
-        public MetricAlertData(Azure.Core.AzureLocation location, int severity, bool isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria) { }
+        public MetricAlertData(Azure.Core.AzureLocation location, int severity, bool isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan evaluationFrequency, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria) { }
+        public System.Collections.Generic.IDictionary<string, string> ActionProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricAlertAction> Actions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MetricAlertCriteria Criteria { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.TimeSpan EvaluationFrequency { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAutoMitigateEnabled { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public bool? IsMigrated { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.ResolveConfiguration ResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public int Severity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? TargetResourceRegion { get { throw null; } set { } }
         public Azure.Core.ResourceType? TargetResourceType { get { throw null; } set { } }
-        public System.TimeSpan WindowSize { get { throw null; } set { } }
+        public System.TimeSpan? WindowSize { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.MetricAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MetricAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MetricAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1526,8 +1530,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.EventDataInfo EventDataInfo(Azure.ResourceManager.Monitor.Models.SenderAuthorization authorization = null, System.Collections.Generic.IReadOnlyDictionary<string, string> claims = null, string caller = null, string description = null, string id = null, string eventDataId = null, string correlationId = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString eventName = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString category = null, Azure.ResourceManager.Monitor.Models.EventDataHttpRequestInfo httpRequest = null, Azure.ResourceManager.Monitor.Models.MonitorEventLevel? level = default(Azure.ResourceManager.Monitor.Models.MonitorEventLevel?), string resourceGroupName = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString resourceProviderName = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString resourceType = null, string operationId = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString operationName = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString status = null, Azure.ResourceManager.Monitor.Models.MonitorLocalizableString subStatus = null, System.DateTimeOffset? eventTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? submissionTimestamp = default(System.DateTimeOffset?), string subscriptionId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.LogAnalyticsDestination LogAnalyticsDestination(Azure.Core.ResourceIdentifier workspaceResourceId = null, string workspaceId = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.LogProfileData LogProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier storageAccountId = null, Azure.Core.ResourceIdentifier serviceBusRuleId = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> categories = null, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.MetricAlertData MetricAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, int severity = 0, bool isEnabled = false, System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan evaluationFrequency = default(System.TimeSpan), System.TimeSpan windowSize = default(System.TimeSpan), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.MetricAlertPatch MetricAlertPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, int? severity = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.MetricAlertData MetricAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, int severity = 0, bool isEnabled = false, System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan evaluationFrequency = default(System.TimeSpan), System.TimeSpan? windowSize = default(System.TimeSpan?), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), Azure.ResourceManager.Monitor.Models.ResolveConfiguration resolveConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?), System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Monitor.MetricAlertData MetricAlertData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string description, int severity, bool isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, Azure.Core.ResourceType? targetResourceType, Azure.Core.AzureLocation? targetResourceRegion, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions, System.DateTimeOffset? lastUpdatedOn, bool? isMigrated) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MetricAlertPatch MetricAlertPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string description = null, int? severity = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? targetResourceRegion = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = default(bool?), Azure.ResourceManager.Monitor.Models.ResolveConfiguration resolveConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), bool? isMigrated = default(bool?), System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Monitor.Models.MetricAlertPatch MetricAlertPatch(System.Collections.Generic.IDictionary<string, string> tags, string description, int? severity, bool? isEnabled, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan? evaluationFrequency, System.TimeSpan? windowSize, Azure.Core.ResourceType? targetResourceType, Azure.Core.AzureLocation? targetResourceRegion, Azure.ResourceManager.Monitor.Models.MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricAlertAction> actions, System.DateTimeOffset? lastUpdatedOn, bool? isMigrated) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricAlertStatus MetricAlertStatus(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.MetricAlertStatusProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricAlertStatusProperties MetricAlertStatusProperties(System.Collections.Generic.IReadOnlyDictionary<string, string> dimensions = null, string status = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorBaselineMetadata MonitorBaselineMetadata(string name = null, string value = null) { throw null; }
@@ -2211,6 +2219,19 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicMetricCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicMetricCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DynamicPromQLCriteria : Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>
+    {
+        public DynamicPromQLCriteria(string name, string query, Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator @operator, Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity alertSensitivity) : base (default(string), default(string)) { }
+        public Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity AlertSensitivity { get { throw null; } set { } }
+        public System.DateTimeOffset? IgnoreDataBefore { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator Operator { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DynamicThresholdFailingPeriods : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods>
     {
         public DynamicThresholdFailingPeriods(float numberOfEvaluationPeriods, float minFailingPeriodsToAlert) { }
@@ -2587,14 +2608,18 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class MetricAlertPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricAlertPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricAlertPatch>
     {
         public MetricAlertPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> ActionProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricAlertAction> Actions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MetricAlertCriteria Criteria { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> CustomProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.TimeSpan? EvaluationFrequency { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAutoMitigateEnabled { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? IsMigrated { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.ResolveConfiguration ResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public int? Severity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -3812,6 +3837,18 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class MultiPromQLCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>
+    {
+        protected MultiPromQLCriteria(string name, string query) { }
+        public string Name { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NotificationActionDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NotificationActionDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationActionDetail>
     {
         internal NotificationActionDetail() { }
@@ -4270,6 +4307,18 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class PromQLCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>
+    {
+        public PromQLCriteria() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria> AllOf { get { throw null; } }
+        public System.TimeSpan? FailingPeriodsFor { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.PromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.PromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public enum RecurrenceFrequency
     {
         None = 0,
@@ -4294,6 +4343,18 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.RecurrentSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecurrentSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecurrentSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RecurrentSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResolveConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>
+    {
+        public ResolveConfiguration(bool autoResolved) { }
+        public bool AutoResolved { get { throw null; } set { } }
+        public System.TimeSpan? TimeToResolve { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ResolveConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ResolveConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResolveConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceForUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ResourceForUpdate>
     {
@@ -4516,6 +4577,16 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.SenderAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StaticPromQLCriteria : Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>
+    {
+        public StaticPromQLCriteria(string name, string query) : base (default(string), default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamEncodingType : System.IEquatable<Azure.ResourceManager.Monitor.Models.StreamEncodingType>
