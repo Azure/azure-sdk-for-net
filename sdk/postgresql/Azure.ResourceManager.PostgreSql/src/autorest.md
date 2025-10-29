@@ -11,6 +11,8 @@ library-name: PostgreSql
 
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+#   prenamer: true
 use-model-reader-writer: true
 
 # mgmt-debug:
@@ -221,12 +223,13 @@ rename-mapping:
   Server: PostgreSqlFlexibleServer
   PostgresMajorVersion: PostgreSqlFlexibleServerVersion
   MaintenanceWindow: PostgreSqlFlexibleServerMaintenanceWindow
-  Backup: PostgreSqlFlexibleServerBackupProperties
+  BackupForPatch: PostgreSqlFlexibleServerBackupProperties
   Storage: PostgreSqlFlexibleServerStorage
-  Sku: PostgreSqlFlexibleServerSku
+  SkuForPatch: PostgreSqlFlexibleServerSku
   Network: PostgreSqlFlexibleServerNetwork
   HighAvailability: PostgreSqlFlexibleServerHighAvailability
-  HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
+#   HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
+#   PostgreSqlFlexibleServerHighAvailabilityMode: PostgreSqlFlexibleServerHAMode
   ServerListResult: PostgreSqlFlexibleServerListResult
   ServerState: PostgreSqlFlexibleServerState
   FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
@@ -286,7 +289,6 @@ rename-mapping:
   CapturedLog: PostgreSqlFlexibleServerLogFile
   LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
   GeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerGeoBackupSupported
-  PostgreSqlFlexibleServerHighAvailabilityMode: PostgreSqlFlexibleServerHAMode
   ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
   ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
   StorageAutoGrowthSupport: PostgreSqlFlexibleServerStorageAutoGrowthSupported
@@ -305,6 +307,7 @@ rename-mapping:
   MigrationResourceListResult: PostgreSqlMigrationResourceListResult
   MigrationNameAvailability: PostgreSqlCheckMigrationNameAvailabilityContent
   MigrationNameAvailability.nameAvailable: IsNameAvailable
+  MigrationSecretParametersForPatch: PostgreSqlMigrationSecretParametersForUpdate
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus

@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
@@ -36,10 +39,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             [EditorBrowsable(EditorBrowsableState.Never)]
             set;
         }
-        /// <summary>
-        /// User assigned managed identities assigned to the server.
-        /// </summary>
-        [WirePath("identity")]
-        public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
     }
 }

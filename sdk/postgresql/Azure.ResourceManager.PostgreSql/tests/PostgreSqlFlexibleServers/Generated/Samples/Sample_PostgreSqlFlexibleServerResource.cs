@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     AutoGrow = StorageAutoGrow.Disabled,
                     Tier = PostgreSqlManagedDiskPerformanceTier.P30,
                 },
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 },
                 },
                 AdministratorLoginPassword = "examplenewpassword",
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 },
                 },
                 AdministratorLoginPassword = "examplenewpassword",
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     AutoGrow = StorageAutoGrow.Enabled,
                     Tier = PostgreSqlManagedDiskPerformanceTier.P30,
                 },
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },

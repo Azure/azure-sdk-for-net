@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="location"> The location the resource resides in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Compute tier and size of a server. </summary>
         [WirePath("sku")]
-        public SkuForPatch Sku { get; set; }
+        public PostgreSqlFlexibleServerSku Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup properties of a server. </summary>
         [WirePath("properties.backup")]
-        public BackupForPatch Backup { get; set; }
+        public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> High availability properties of a server. </summary>
         [WirePath("properties.highAvailability")]
         public HighAvailabilityForPatch HighAvailability { get; set; }

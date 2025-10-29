@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            SkuForPatch sku = default;
+            PostgreSqlFlexibleServerSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             PostgreSqlFlexibleServerVersion? version = default;
             PostgreSqlFlexibleServerStorage storage = default;
-            BackupForPatch backup = default;
+            PostgreSqlFlexibleServerBackupProperties backup = default;
             HighAvailabilityForPatch highAvailability = default;
             MaintenanceWindowForPatch maintenanceWindow = default;
             AuthConfigForPatch authConfig = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = SkuForPatch.DeserializeSkuForPatch(property.Value, options);
+                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            backup = BackupForPatch.DeserializeBackupForPatch(property0.Value, options);
+                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("highAvailability"u8))

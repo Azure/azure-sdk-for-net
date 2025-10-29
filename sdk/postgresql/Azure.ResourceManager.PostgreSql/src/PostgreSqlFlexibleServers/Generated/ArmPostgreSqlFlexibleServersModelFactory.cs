@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServerSku sku = null, ManagedServiceIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerBackupProperties backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerCreateMode? createMode = null, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null, Cluster cluster = null)
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServersSku sku = null, ManagedServiceIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, Backup backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerCreateMode? createMode = null, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null, Cluster cluster = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Backup"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
         /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
+        /// <returns> A new <see cref="Models.Backup"/> instance for mocking. </returns>
+        public static Backup Backup(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
-            return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
+            return new Backup(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/>. </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHAMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
+        public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
         {
             return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, serializedAdditionalRawData: null);
         }
@@ -370,10 +370,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedFeatures"> Features supported. </param>
         /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<PostgreSqlFlexibleServerHighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
+        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<HighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
         {
             supportedZones ??= new List<string>();
-            supportedHaMode ??= new List<PostgreSqlFlexibleServerHighAvailabilityMode>();
+            supportedHaMode ??= new List<HighAvailabilityMode>();
             supportedFeatures ??= new List<SupportedFeature>();
 
             return new PostgreSqlFlexibleServerSkuCapability(
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="location"> The location the resource resides in. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(SkuForPatch sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, PostgreSqlFlexibleServerStorage storage = null, BackupForPatch backup = null, HighAvailabilityForPatch highAvailability = null, MaintenanceWindowForPatch maintenanceWindow = null, AuthConfigForPatch authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerNetwork network = null, Cluster cluster = null, AzureLocation? location = null)
+        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerBackupProperties backup = null, HighAvailabilityForPatch highAvailability = null, MaintenanceWindowForPatch maintenanceWindow = null, AuthConfigForPatch authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerNetwork network = null, Cluster cluster = null, AzureLocation? location = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -536,14 +536,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BackupForPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
         /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
-        /// <returns> A new <see cref="Models.BackupForPatch"/> instance for mocking. </returns>
-        public static BackupForPatch BackupForPatch(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
-            return new BackupForPatch(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HighAvailabilityForPatch"/>. </summary>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <returns> A new <see cref="Models.HighAvailabilityForPatch"/> instance for mocking. </returns>
-        public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHAMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
+        public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
         {
             return new HighAvailabilityForPatch(mode, state, standbyAvailabilityZone, serializedAdditionalRawData: null);
         }

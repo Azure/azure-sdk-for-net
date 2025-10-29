@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Compute information of a server. </summary>
-    public partial class SkuForPatch
+    /// <summary> Backup properties of a server. </summary>
+    public partial class Backup
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuForPatch"/>. </summary>
-        public SkuForPatch()
+        /// <summary> Initializes a new instance of <see cref="Backup"/>. </summary>
+        public Backup()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuForPatch"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <summary> Initializes a new instance of <see cref="Backup"/>. </summary>
+        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
+        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
+        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuForPatch(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Backup(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Tier = tier;
+            BackupRetentionDays = backupRetentionDays;
+            GeoRedundantBackup = geoRedundantBackup;
+            EarliestRestoreOn = earliestRestoreOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name by which is known a given compute size assigned to a server. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Tier of the compute assigned to a server. </summary>
-        [WirePath("tier")]
-        public PostgreSqlFlexibleServerSkuTier? Tier { get; set; }
+        /// <summary> Backup retention days for the server. </summary>
+        [WirePath("backupRetentionDays")]
+        public int? BackupRetentionDays { get; set; }
+        /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
+        [WirePath("geoRedundantBackup")]
+        public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; set; }
+        /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
+        [WirePath("earliestRestoreDate")]
+        public DateTimeOffset? EarliestRestoreOn { get; }
     }
 }

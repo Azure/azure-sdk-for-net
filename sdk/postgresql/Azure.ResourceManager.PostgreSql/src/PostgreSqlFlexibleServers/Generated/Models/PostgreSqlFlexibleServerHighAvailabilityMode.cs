@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Modes of high availability supported for this compute. </summary>
+    /// <summary> High availability mode for a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerHighAvailabilityMode : IEquatable<PostgreSqlFlexibleServerHighAvailabilityMode>
     {
         private readonly string _value;
@@ -22,9 +22,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string DisabledValue = "Disabled";
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string SameZoneValue = "SameZone";
 
+        /// <summary> Disabled. </summary>
+        public static PostgreSqlFlexibleServerHighAvailabilityMode Disabled { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(DisabledValue);
         /// <summary> ZoneRedundant. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(ZoneRedundantValue);
         /// <summary> SameZone. </summary>

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            PostgreSqlFlexibleServerSku sku = default;
+            PostgreSqlFlexibleServersSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlFlexibleServerStorage storage = default;
             PostgreSqlFlexibleServerAuthConfig authConfig = default;
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
-            PostgreSqlFlexibleServerBackupProperties backup = default;
+            Backup backup = default;
             PostgreSqlFlexibleServerNetwork network = default;
             PostgreSqlFlexibleServerHighAvailability highAvailability = default;
             PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value, options);
+                    sku = PostgreSqlFlexibleServersSku.DeserializePostgreSqlFlexibleServersSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value, options);
+                            backup = Backup.DeserializeBackup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("network"u8))

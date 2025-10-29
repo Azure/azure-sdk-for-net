@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HighAvailabilityForPatch(PostgreSqlFlexibleServerHAMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HighAvailabilityForPatch(PostgreSqlFlexibleServerHighAvailabilityMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             State = state;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> High availability mode for a server. </summary>
         [WirePath("mode")]
-        public PostgreSqlFlexibleServerHAMode? Mode { get; set; }
+        public PostgreSqlFlexibleServerHighAvailabilityMode? Mode { get; set; }
         /// <summary> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
         [WirePath("state")]
         public PostgreSqlFlexibleServerHAState? State { get; }

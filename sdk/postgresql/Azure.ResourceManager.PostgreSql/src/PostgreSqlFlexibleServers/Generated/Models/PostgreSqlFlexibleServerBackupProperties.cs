@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public int? BackupRetentionDays { get; set; }
         /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
         [WirePath("geoRedundantBackup")]
-        public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; set; }
+        public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; }
         /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
         [WirePath("earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }

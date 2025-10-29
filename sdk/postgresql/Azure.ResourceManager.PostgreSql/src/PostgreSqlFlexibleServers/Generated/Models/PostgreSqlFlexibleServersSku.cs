@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Backup properties of a server. </summary>
-    public partial class BackupForPatch
+    /// <summary> Compute information of a server. </summary>
+    public partial class PostgreSqlFlexibleServersSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupForPatch"/>. </summary>
-        public BackupForPatch()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSku"/>. </summary>
+        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
+        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public PostgreSqlFlexibleServersSku(string name, PostgreSqlFlexibleServerSkuTier tier)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupForPatch"/>. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
-        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSku"/>. </summary>
+        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
+        /// <param name="tier"> Tier of the compute assigned to a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupForPatch(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServersSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BackupRetentionDays = backupRetentionDays;
-            GeoRedundantBackup = geoRedundantBackup;
-            EarliestRestoreOn = earliestRestoreOn;
+            Name = name;
+            Tier = tier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Backup retention days for the server. </summary>
-        [WirePath("backupRetentionDays")]
-        public int? BackupRetentionDays { get; set; }
-        /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
-        [WirePath("geoRedundantBackup")]
-        public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; }
-        /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
-        [WirePath("earliestRestoreDate")]
-        public DateTimeOffset? EarliestRestoreOn { get; }
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSku"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServersSku()
+        {
+        }
+
+        /// <summary> Name by which is known a given compute size assigned to a server. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Tier of the compute assigned to a server. </summary>
+        [WirePath("tier")]
+        public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
     }
 }
