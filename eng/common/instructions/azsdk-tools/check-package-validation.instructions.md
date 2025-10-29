@@ -6,13 +6,7 @@ Check the validation checks for the SDK package by collecting the required infor
 
 ## Instructions
 1. **Collect Required Information**:
-    - Prompt the user for the exact package name
-    - Prompt the user to select the programming language from the following options (case sensitive):
-      - Python
-      - Java
-      - JavaScript
-      - .NET
-      - Go
+    - Prompt the user for the absolute package path to the package directory for the SDK package they want to check.
     - Prompt the user specify values for each of the parameters required by the azsdk_package_run_check tool. Present the user with options to pick from for the allowed values specified by the parameter schema.
 
 2. **Execute Check**:
