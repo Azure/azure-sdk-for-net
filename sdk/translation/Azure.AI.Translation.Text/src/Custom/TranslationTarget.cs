@@ -7,9 +7,9 @@ namespace Azure.AI.Translation.Text
 {
     /// <summary> Translate targets parameters. </summary>
     // Custom convenience constructors for the generated TranslateTarget class
-    public partial class TranslateTarget
+    public partial class TranslationTarget
     {
-        /// <summary> Initializes a new instance of <see cref="TranslateTarget"/> with optional parameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/> with optional parameters. </summary>
         /// <param name="language">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
@@ -45,7 +45,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="gender"> Desired gender of target translation. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
-        public TranslateTarget(string language,
+        public TranslationTarget(string language,
             string script = null,
             ProfanityAction? profanityAction = null,
             ProfanityMarker? profanityMarker = null,

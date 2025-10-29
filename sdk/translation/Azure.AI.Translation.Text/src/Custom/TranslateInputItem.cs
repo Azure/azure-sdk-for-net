@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
@@ -28,7 +27,7 @@ namespace Azure.AI.Translation.Text
         /// complete element. Possible values are: plain (default) or html.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="targets"/> is null. </exception>
-        public TranslateInputItem(string text, IEnumerable<TranslateTarget> targets, string language = null, string script = null, TextType? textType = null)
+        public TranslateInputItem(string text, IEnumerable<TranslationTarget> targets, string language = null, string script = null, TextType? textType = null)
             : this(text, targets)
         {
             Language = language;

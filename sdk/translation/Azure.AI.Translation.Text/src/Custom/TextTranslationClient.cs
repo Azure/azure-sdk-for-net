@@ -203,7 +203,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
 
-            IEnumerable<TranslateInputItem> inputItems = content.Select(input => new TranslateInputItem(input, [new TranslateTarget(targetLanguage)]) { Language = sourceLanguage });
+            IEnumerable<TranslateInputItem> inputItems = content.Select(input => new TranslateInputItem(input, [new TranslationTarget(targetLanguage)]) { Language = sourceLanguage });
             return TranslateAsync(inputItems, cancellationToken: cancellationToken);
         }
 
@@ -270,7 +270,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
 
-            IEnumerable<TranslateInputItem> inputItems = content.Select(input => new TranslateInputItem(input, [new TranslateTarget(targetLanguage)]) { Language = sourceLanguage });
+            IEnumerable<TranslateInputItem> inputItems = content.Select(input => new TranslateInputItem(input, [new TranslationTarget(targetLanguage)]) { Language = sourceLanguage });
             return Translate(inputItems, cancellationToken: cancellationToken);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.AI.Translation.Text
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            Response<TranslationResult> response = await TranslateAsync(new TranslateBody(inputs), GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
+            Response<TranslationResult> response = await TranslateAsync(new TranslateInputs(inputs), GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value.Value, response.GetRawResponse());
         }
 
@@ -309,7 +309,7 @@ namespace Azure.AI.Translation.Text
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            Response<TranslationResult> response = Translate(new TranslateBody(inputs), GetClientTraceId(clientTraceId), cancellationToken);
+            Response<TranslationResult> response = Translate(new TranslateInputs(inputs), GetClientTraceId(clientTraceId), cancellationToken);
             return Response.FromValue(response.Value.Value, response.GetRawResponse());
         }
 
@@ -450,8 +450,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            TransliterateBody transliterateBody = new TransliterateBody(inputs);
-            Response<TransliterateResult> response = await TransliterateAsync(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
+            Response<TransliterateResult> response = await TransliterateAsync(language, fromScript, toScript, new TransliterateInputs(inputs), GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value.Value, response.GetRawResponse());
         }
 
@@ -480,8 +479,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            TransliterateBody transliterateBody = new TransliterateBody(inputs);
-            Response<TransliterateResult> response = Transliterate(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken);
+            Response<TransliterateResult> response = Transliterate(language, fromScript, toScript, new TransliterateInputs(inputs), GetClientTraceId(clientTraceId), cancellationToken);
             return Response.FromValue(response.Value.Value, response.GetRawResponse());
         }
 
