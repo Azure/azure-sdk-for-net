@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// The version of a server.
-    /// Serialized Name: ServerVersion
-    /// </summary>
+    /// <summary> The version of a server. </summary>
     public readonly partial struct PostgreSqlServerVersion : IEquatable<PostgreSqlServerVersion>
     {
         private readonly string _value;

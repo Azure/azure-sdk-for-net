@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// The private link service connection status.
-    /// Serialized Name: PrivateLinkServiceConnectionStateStatus
-    /// </summary>
+    /// <summary> The private link service connection status. </summary>
     public readonly partial struct PostgreSqlPrivateLinkServiceConnectionStateStatus : IEquatable<PostgreSqlPrivateLinkServiceConnectionStateStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary>
-        /// Approved
-        /// Serialized Name: PrivateLinkServiceConnectionStateStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateStatus Approved { get; } = new PostgreSqlPrivateLinkServiceConnectionStateStatus(ApprovedValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrivateLinkServiceConnectionStateStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateStatus Pending { get; } = new PostgreSqlPrivateLinkServiceConnectionStateStatus(PendingValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: PrivateLinkServiceConnectionStateStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateStatus Rejected { get; } = new PostgreSqlPrivateLinkServiceConnectionStateStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: PrivateLinkServiceConnectionStateStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateStatus Disconnected { get; } = new PostgreSqlPrivateLinkServiceConnectionStateStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPrivateLinkServiceConnectionStateStatus left, PostgreSqlPrivateLinkServiceConnectionStateStatus right) => left.Equals(right);

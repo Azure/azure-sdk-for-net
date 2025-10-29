@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Major version of PostgreSQL database engine.
-    /// Serialized Name: PostgresMajorVersion
-    /// </summary>
+    /// <summary> Major version of PostgreSQL database engine. </summary>
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TwelveValue = "12";
         private const string ElevenValue = "11";
 
-        /// <summary>
-        /// 18
-        /// Serialized Name: PostgresMajorVersion.18
-        /// </summary>
+        /// <summary> 18. </summary>
         public static PostgreSqlFlexibleServerVersion Eighteen { get; } = new PostgreSqlFlexibleServerVersion(EighteenValue);
-        /// <summary>
-        /// 17
-        /// Serialized Name: PostgresMajorVersion.17
-        /// </summary>
+        /// <summary> 17. </summary>
         public static PostgreSqlFlexibleServerVersion Seventeen { get; } = new PostgreSqlFlexibleServerVersion(SeventeenValue);
-        /// <summary>
-        /// 16
-        /// Serialized Name: PostgresMajorVersion.16
-        /// </summary>
+        /// <summary> 16. </summary>
         public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
-        /// <summary>
-        /// 15
-        /// Serialized Name: PostgresMajorVersion.15
-        /// </summary>
+        /// <summary> 15. </summary>
         public static PostgreSqlFlexibleServerVersion Fifteen { get; } = new PostgreSqlFlexibleServerVersion(FifteenValue);
-        /// <summary>
-        /// 14
-        /// Serialized Name: PostgresMajorVersion.14
-        /// </summary>
+        /// <summary> 14. </summary>
         public static PostgreSqlFlexibleServerVersion Fourteen { get; } = new PostgreSqlFlexibleServerVersion(FourteenValue);
-        /// <summary>
-        /// 13
-        /// Serialized Name: PostgresMajorVersion.13
-        /// </summary>
+        /// <summary> 13. </summary>
         public static PostgreSqlFlexibleServerVersion Thirteen { get; } = new PostgreSqlFlexibleServerVersion(ThirteenValue);
-        /// <summary>
-        /// 12
-        /// Serialized Name: PostgresMajorVersion.12
-        /// </summary>
+        /// <summary> 12. </summary>
         public static PostgreSqlFlexibleServerVersion Twelve { get; } = new PostgreSqlFlexibleServerVersion(TwelveValue);
-        /// <summary>
-        /// 11
-        /// Serialized Name: PostgresMajorVersion.11
-        /// </summary>
+        /// <summary> 11. </summary>
         public static PostgreSqlFlexibleServerVersion Eleven { get; } = new PostgreSqlFlexibleServerVersion(ElevenValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerVersion left, PostgreSqlFlexibleServerVersion right) => left.Equals(right);

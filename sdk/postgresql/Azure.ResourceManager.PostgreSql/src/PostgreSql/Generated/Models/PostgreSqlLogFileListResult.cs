@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// A list of log files.
-    /// Serialized Name: LogFileListResult
-    /// </summary>
+    /// <summary> A list of log files. </summary>
     internal partial class PostgreSqlLogFileListResult
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLogFileListResult"/>. </summary>
-        /// <param name="value">
-        /// The list of log files.
-        /// Serialized Name: LogFileListResult.value
-        /// </param>
+        /// <param name="value"> The list of log files. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlLogFileListResult(IReadOnlyList<PostgreSqlLogFile> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of log files.
-        /// Serialized Name: LogFileListResult.value
-        /// </summary>
+        /// <summary> The list of log files. </summary>
         public IReadOnlyList<PostgreSqlLogFile> Value { get; }
     }
 }

@@ -36,5 +36,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             [EditorBrowsable(EditorBrowsableState.Never)]
             set;
         }
+        /// <summary>
+        /// User assigned managed identities assigned to the server.
+        /// </summary>
+        [WirePath("identity")]
+        public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
     }
 }

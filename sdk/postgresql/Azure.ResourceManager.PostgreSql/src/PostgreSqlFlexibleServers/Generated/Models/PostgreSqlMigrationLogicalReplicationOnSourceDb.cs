@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates whether to setup logical replication on source server, if needed.
-    /// Serialized Name: LogicalReplicationOnSourceServer
-    /// </summary>
+    /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
     public readonly partial struct PostgreSqlMigrationLogicalReplicationOnSourceDb : IEquatable<PostgreSqlMigrationLogicalReplicationOnSourceDb>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary>
-        /// True
-        /// Serialized Name: LogicalReplicationOnSourceServer.True
-        /// </summary>
+        /// <summary> True. </summary>
         public static PostgreSqlMigrationLogicalReplicationOnSourceDb True { get; } = new PostgreSqlMigrationLogicalReplicationOnSourceDb(TrueValue);
-        /// <summary>
-        /// False
-        /// Serialized Name: LogicalReplicationOnSourceServer.False
-        /// </summary>
+        /// <summary> False. </summary>
         public static PostgreSqlMigrationLogicalReplicationOnSourceDb False { get; } = new PostgreSqlMigrationLogicalReplicationOnSourceDb(FalseValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationLogicalReplicationOnSourceDb left, PostgreSqlMigrationLogicalReplicationOnSourceDb right) => left.Equals(right);

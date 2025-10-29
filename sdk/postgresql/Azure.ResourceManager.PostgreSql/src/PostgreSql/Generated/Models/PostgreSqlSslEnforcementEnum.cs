@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// Enable ssl enforcement or not when connect to server.
-    /// Serialized Name: SslEnforcementEnum
-    /// </summary>
+    /// <summary> Enable ssl enforcement or not when connect to server. </summary>
     public enum PostgreSqlSslEnforcementEnum
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: SslEnforcementEnum.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: SslEnforcementEnum.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

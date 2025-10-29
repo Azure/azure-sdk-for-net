@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Creation mode of a new server.
-    /// Serialized Name: CreateMode
-    /// </summary>
+    /// <summary> Creation mode of a new server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerCreateMode : IEquatable<PostgreSqlFlexibleServerCreateMode>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReplicaValue = "Replica";
         private const string ReviveDroppedValue = "ReviveDropped";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: CreateMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static PostgreSqlFlexibleServerCreateMode Default { get; } = new PostgreSqlFlexibleServerCreateMode(DefaultValue);
-        /// <summary>
-        /// Create
-        /// Serialized Name: CreateMode.Create
-        /// </summary>
+        /// <summary> Create. </summary>
         public static PostgreSqlFlexibleServerCreateMode Create { get; } = new PostgreSqlFlexibleServerCreateMode(CreateValue);
-        /// <summary>
-        /// Update
-        /// Serialized Name: CreateMode.Update
-        /// </summary>
+        /// <summary> Update. </summary>
         public static PostgreSqlFlexibleServerCreateMode Update { get; } = new PostgreSqlFlexibleServerCreateMode(UpdateValue);
-        /// <summary>
-        /// PointInTimeRestore
-        /// Serialized Name: CreateMode.PointInTimeRestore
-        /// </summary>
+        /// <summary> PointInTimeRestore. </summary>
         public static PostgreSqlFlexibleServerCreateMode PointInTimeRestore { get; } = new PostgreSqlFlexibleServerCreateMode(PointInTimeRestoreValue);
-        /// <summary>
-        /// GeoRestore
-        /// Serialized Name: CreateMode.GeoRestore
-        /// </summary>
+        /// <summary> GeoRestore. </summary>
         public static PostgreSqlFlexibleServerCreateMode GeoRestore { get; } = new PostgreSqlFlexibleServerCreateMode(GeoRestoreValue);
-        /// <summary>
-        /// Replica
-        /// Serialized Name: CreateMode.Replica
-        /// </summary>
+        /// <summary> Replica. </summary>
         public static PostgreSqlFlexibleServerCreateMode Replica { get; } = new PostgreSqlFlexibleServerCreateMode(ReplicaValue);
-        /// <summary>
-        /// ReviveDropped
-        /// Serialized Name: CreateMode.ReviveDropped
-        /// </summary>
+        /// <summary> ReviveDropped. </summary>
         public static PostgreSqlFlexibleServerCreateMode ReviveDropped { get; } = new PostgreSqlFlexibleServerCreateMode(ReviveDroppedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerCreateMode left, PostgreSqlFlexibleServerCreateMode right) => left.Equals(right);

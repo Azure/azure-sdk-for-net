@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// Service level objectives for performance tier.
-    /// Serialized Name: PerformanceTierServiceLevelObjectives
-    /// </summary>
+    /// <summary> Service level objectives for performance tier. </summary>
     public partial class PostgreSqlPerformanceTierServiceLevelObjectives
     {
         /// <summary>
@@ -54,38 +51,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierServiceLevelObjectives"/>. </summary>
-        /// <param name="id">
-        /// ID for the service level objective.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.id
-        /// </param>
-        /// <param name="edition">
-        /// Edition of the performance tier.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.edition
-        /// </param>
-        /// <param name="vCores">
-        /// vCore associated with the service level objective
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.vCore
-        /// </param>
-        /// <param name="hardwareGeneration">
-        /// Hardware generation associated with the service level objective
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.hardwareGeneration
-        /// </param>
-        /// <param name="maxBackupRetentionDays">
-        /// Maximum Backup retention in days for the performance tier edition
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.maxBackupRetentionDays
-        /// </param>
-        /// <param name="minBackupRetentionDays">
-        /// Minimum Backup retention in days for the performance tier edition
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.minBackupRetentionDays
-        /// </param>
-        /// <param name="maxStorageInMB">
-        /// Max storage allowed for a server.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.maxStorageMB
-        /// </param>
-        /// <param name="minStorageInMB">
-        /// Max storage allowed for a server.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.minStorageMB
-        /// </param>
+        /// <param name="id"> ID for the service level objective. </param>
+        /// <param name="edition"> Edition of the performance tier. </param>
+        /// <param name="vCores"> vCore associated with the service level objective. </param>
+        /// <param name="hardwareGeneration"> Hardware generation associated with the service level objective. </param>
+        /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
+        /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
+        /// <param name="maxStorageInMB"> Max storage allowed for a server. </param>
+        /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCores, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minStorageInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,52 +73,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// ID for the service level objective.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.id
-        /// </summary>
+        /// <summary> ID for the service level objective. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// Edition of the performance tier.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.edition
-        /// </summary>
+        /// <summary> Edition of the performance tier. </summary>
         [WirePath("edition")]
         public string Edition { get; }
-        /// <summary>
-        /// vCore associated with the service level objective
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.vCore
-        /// </summary>
+        /// <summary> vCore associated with the service level objective. </summary>
         [WirePath("vCore")]
         public int? VCores { get; }
-        /// <summary>
-        /// Hardware generation associated with the service level objective
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.hardwareGeneration
-        /// </summary>
+        /// <summary> Hardware generation associated with the service level objective. </summary>
         [WirePath("hardwareGeneration")]
         public string HardwareGeneration { get; }
-        /// <summary>
-        /// Maximum Backup retention in days for the performance tier edition
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.maxBackupRetentionDays
-        /// </summary>
+        /// <summary> Maximum Backup retention in days for the performance tier edition. </summary>
         [WirePath("maxBackupRetentionDays")]
         public int? MaxBackupRetentionDays { get; }
-        /// <summary>
-        /// Minimum Backup retention in days for the performance tier edition
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.minBackupRetentionDays
-        /// </summary>
+        /// <summary> Minimum Backup retention in days for the performance tier edition. </summary>
         [WirePath("minBackupRetentionDays")]
         public int? MinBackupRetentionDays { get; }
-        /// <summary>
-        /// Max storage allowed for a server.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.maxStorageMB
-        /// </summary>
+        /// <summary> Max storage allowed for a server. </summary>
         [WirePath("maxStorageMB")]
         public int? MaxStorageInMB { get; }
-        /// <summary>
-        /// Max storage allowed for a server.
-        /// Serialized Name: PerformanceTierServiceLevelObjectives.minStorageMB
-        /// </summary>
+        /// <summary> Max storage allowed for a server. </summary>
         [WirePath("minStorageMB")]
         public int? MinStorageInMB { get; }
     }

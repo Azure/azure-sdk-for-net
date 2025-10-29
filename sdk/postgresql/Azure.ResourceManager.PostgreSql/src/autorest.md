@@ -13,18 +13,13 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug:
-  show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 batch:
   - tag: package-2020-01-01
   - tag: package-flexibleserver-2025-08-01
 enable-bicep-serialization: true
-
-no-property-type-replacement:
-  - ServerForPatch
-  - PostgreSqlFlexibleServerPatch
-  - UserAssignedIdentity
 
 ```
 
@@ -210,6 +205,9 @@ acronym-mapping:
   Vcore: VCore
   Vcores: VCores
   UTC: Utc
+
+no-property-type-replacement:
+  - PostgreSqlFlexibleServerData
 
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration

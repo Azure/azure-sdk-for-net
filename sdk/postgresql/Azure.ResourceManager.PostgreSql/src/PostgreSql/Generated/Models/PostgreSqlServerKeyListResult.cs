@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// A list of PostgreSQL Server keys.
-    /// Serialized Name: ServerKeyListResult
-    /// </summary>
+    /// <summary> A list of PostgreSQL Server keys. </summary>
     internal partial class PostgreSqlServerKeyListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerKeyListResult"/>. </summary>
-        /// <param name="value">
-        /// A list of PostgreSQL Server keys.
-        /// Serialized Name: ServerKeyListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerKeyListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of PostgreSQL Server keys. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerKeyListResult(IReadOnlyList<PostgreSqlServerKeyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of PostgreSQL Server keys.
-        /// Serialized Name: ServerKeyListResult.value
-        /// </summary>
+        /// <summary> A list of PostgreSQL Server keys. </summary>
         public IReadOnlyList<PostgreSqlServerKeyData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerKeyListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

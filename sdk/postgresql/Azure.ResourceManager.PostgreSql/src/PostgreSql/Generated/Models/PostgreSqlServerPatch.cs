@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// Parameters allowed to update for a server.
-    /// Serialized Name: ServerUpdateParameters
-    /// </summary>
+    /// <summary> Parameters allowed to update for a server. </summary>
     public partial class PostgreSqlServerPatch
     {
         /// <summary>
@@ -56,46 +53,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPatch"/>. </summary>
-        /// <param name="identity">
-        /// The Azure Active Directory identity of the server.
-        /// Serialized Name: ServerUpdateParameters.identity. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="sku">
-        /// The SKU (pricing tier) of the server.
-        /// Serialized Name: ServerUpdateParameters.sku
-        /// </param>
-        /// <param name="tags">
-        /// Application-specific metadata in the form of key-value pairs.
-        /// Serialized Name: ServerUpdateParameters.tags
-        /// </param>
-        /// <param name="storageProfile">
-        /// Storage profile of a server.
-        /// Serialized Name: ServerUpdateParameters.properties.storageProfile
-        /// </param>
-        /// <param name="administratorLoginPassword">
-        /// The password of the administrator login.
-        /// Serialized Name: ServerUpdateParameters.properties.administratorLoginPassword
-        /// </param>
-        /// <param name="version">
-        /// The version of a server.
-        /// Serialized Name: ServerUpdateParameters.properties.version
-        /// </param>
-        /// <param name="sslEnforcement">
-        /// Enable ssl enforcement or not when connect to server.
-        /// Serialized Name: ServerUpdateParameters.properties.sslEnforcement
-        /// </param>
-        /// <param name="minimalTlsVersion">
-        /// Enforce a minimal Tls version for the server.
-        /// Serialized Name: ServerUpdateParameters.properties.minimalTlsVersion
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
-        /// Serialized Name: ServerUpdateParameters.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="replicationRole">
-        /// The replication role of the server.
-        /// Serialized Name: ServerUpdateParameters.properties.replicationRole
-        /// </param>
+        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="version"> The version of a server. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="replicationRole"> The replication role of the server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerPatch(ManagedServiceIdentity identity, PostgreSqlSku sku, IDictionary<string, string> tags, PostgreSqlStorageProfile storageProfile, string administratorLoginPassword, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, string replicationRole, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -112,64 +79,34 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Azure Active Directory identity of the server.
-        /// Serialized Name: ServerUpdateParameters.identity. Current supported identity types: SystemAssigned
-        /// </summary>
+        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The SKU (pricing tier) of the server.
-        /// Serialized Name: ServerUpdateParameters.sku
-        /// </summary>
+        /// <summary> The SKU (pricing tier) of the server. </summary>
         [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
-        /// <summary>
-        /// Application-specific metadata in the form of key-value pairs.
-        /// Serialized Name: ServerUpdateParameters.tags
-        /// </summary>
+        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Storage profile of a server.
-        /// Serialized Name: ServerUpdateParameters.properties.storageProfile
-        /// </summary>
+        /// <summary> Storage profile of a server. </summary>
         [WirePath("properties.storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
-        /// <summary>
-        /// The password of the administrator login.
-        /// Serialized Name: ServerUpdateParameters.properties.administratorLoginPassword
-        /// </summary>
+        /// <summary> The password of the administrator login. </summary>
         [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
-        /// <summary>
-        /// The version of a server.
-        /// Serialized Name: ServerUpdateParameters.properties.version
-        /// </summary>
+        /// <summary> The version of a server. </summary>
         [WirePath("properties.version")]
         public PostgreSqlServerVersion? Version { get; set; }
-        /// <summary>
-        /// Enable ssl enforcement or not when connect to server.
-        /// Serialized Name: ServerUpdateParameters.properties.sslEnforcement
-        /// </summary>
+        /// <summary> Enable ssl enforcement or not when connect to server. </summary>
         [WirePath("properties.sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
-        /// <summary>
-        /// Enforce a minimal Tls version for the server.
-        /// Serialized Name: ServerUpdateParameters.properties.minimalTlsVersion
-        /// </summary>
+        /// <summary> Enforce a minimal Tls version for the server. </summary>
         [WirePath("properties.minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
-        /// <summary>
-        /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
-        /// Serialized Name: ServerUpdateParameters.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// The replication role of the server.
-        /// Serialized Name: ServerUpdateParameters.properties.replicationRole
-        /// </summary>
+        /// <summary> The replication role of the server. </summary>
         [WirePath("properties.replicationRole")]
         public string ReplicationRole { get; set; }
     }

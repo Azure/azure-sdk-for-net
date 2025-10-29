@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Object recommendation properties.
-    /// Serialized Name: ObjectRecommendation
-    /// </summary>
+    /// <summary> Object recommendation properties. </summary>
     public partial class ObjectRecommendation : ResourceData
     {
         /// <summary>
@@ -62,54 +59,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Always empty.
-        /// Serialized Name: ObjectRecommendation.kind
-        /// </param>
-        /// <param name="initialRecommendedOn">
-        /// Creation time (UTC) of this recommendation.
-        /// Serialized Name: ObjectRecommendation.properties.initialRecommendedTime
-        /// </param>
-        /// <param name="lastRecommendedOn">
-        /// Last time (UTC) that this recommendation was produced.
-        /// Serialized Name: ObjectRecommendation.properties.lastRecommendedTime
-        /// </param>
-        /// <param name="timesRecommended">
-        /// Number of times this recommendation has been produced.
-        /// Serialized Name: ObjectRecommendation.properties.timesRecommended
-        /// </param>
-        /// <param name="improvedQueryIds">
-        /// List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations.
-        /// Serialized Name: ObjectRecommendation.properties.improvedQueryIds
-        /// </param>
-        /// <param name="recommendationReason">
-        /// Reason for this recommendation.
-        /// Serialized Name: ObjectRecommendation.properties.recommendationReason
-        /// </param>
-        /// <param name="currentState">
-        /// Current state.
-        /// Serialized Name: ObjectRecommendation.properties.currentState
-        /// </param>
-        /// <param name="recommendationType">
-        /// Type for this recommendation.
-        /// Serialized Name: ObjectRecommendation.properties.recommendationType
-        /// </param>
-        /// <param name="implementationDetails">
-        /// Implementation details for the recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.implementationDetails
-        /// </param>
-        /// <param name="analyzedWorkload">
-        /// Workload information for the recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.analyzedWorkload
-        /// </param>
-        /// <param name="estimatedImpact">
-        /// Estimated impact of this recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.estimatedImpact
-        /// </param>
-        /// <param name="details">
-        /// Recommendation details for the recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.details
-        /// </param>
+        /// <param name="kind"> Always empty. </param>
+        /// <param name="initialRecommendedOn"> Creation time (UTC) of this recommendation. </param>
+        /// <param name="lastRecommendedOn"> Last time (UTC) that this recommendation was produced. </param>
+        /// <param name="timesRecommended"> Number of times this recommendation has been produced. </param>
+        /// <param name="improvedQueryIds"> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </param>
+        /// <param name="recommendationReason"> Reason for this recommendation. </param>
+        /// <param name="currentState"> Current state. </param>
+        /// <param name="recommendationType"> Type for this recommendation. </param>
+        /// <param name="implementationDetails"> Implementation details for the recommended action. </param>
+        /// <param name="analyzedWorkload"> Workload information for the recommended action. </param>
+        /// <param name="estimatedImpact"> Estimated impact of this recommended action. </param>
+        /// <param name="details"> Recommendation details for the recommended action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ObjectRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? initialRecommendedOn, DateTimeOffset? lastRecommendedOn, int? timesRecommended, IList<long> improvedQueryIds, string recommendationReason, string currentState, RecommendationType? recommendationType, ObjectRecommendationPropertiesImplementationDetails implementationDetails, ObjectRecommendationPropertiesAnalyzedWorkload analyzedWorkload, IReadOnlyList<ImpactRecord> estimatedImpact, ObjectRecommendationDetails details, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -128,76 +89,40 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Always empty.
-        /// Serialized Name: ObjectRecommendation.kind
-        /// </summary>
+        /// <summary> Always empty. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Creation time (UTC) of this recommendation.
-        /// Serialized Name: ObjectRecommendation.properties.initialRecommendedTime
-        /// </summary>
+        /// <summary> Creation time (UTC) of this recommendation. </summary>
         [WirePath("properties.initialRecommendedTime")]
         public DateTimeOffset? InitialRecommendedOn { get; set; }
-        /// <summary>
-        /// Last time (UTC) that this recommendation was produced.
-        /// Serialized Name: ObjectRecommendation.properties.lastRecommendedTime
-        /// </summary>
+        /// <summary> Last time (UTC) that this recommendation was produced. </summary>
         [WirePath("properties.lastRecommendedTime")]
         public DateTimeOffset? LastRecommendedOn { get; set; }
-        /// <summary>
-        /// Number of times this recommendation has been produced.
-        /// Serialized Name: ObjectRecommendation.properties.timesRecommended
-        /// </summary>
+        /// <summary> Number of times this recommendation has been produced. </summary>
         [WirePath("properties.timesRecommended")]
         public int? TimesRecommended { get; set; }
-        /// <summary>
-        /// List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations.
-        /// Serialized Name: ObjectRecommendation.properties.improvedQueryIds
-        /// </summary>
+        /// <summary> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </summary>
         [WirePath("properties.improvedQueryIds")]
         public IList<long> ImprovedQueryIds { get; }
-        /// <summary>
-        /// Reason for this recommendation.
-        /// Serialized Name: ObjectRecommendation.properties.recommendationReason
-        /// </summary>
+        /// <summary> Reason for this recommendation. </summary>
         [WirePath("properties.recommendationReason")]
         public string RecommendationReason { get; set; }
-        /// <summary>
-        /// Current state.
-        /// Serialized Name: ObjectRecommendation.properties.currentState
-        /// </summary>
+        /// <summary> Current state. </summary>
         [WirePath("properties.currentState")]
         public string CurrentState { get; set; }
-        /// <summary>
-        /// Type for this recommendation.
-        /// Serialized Name: ObjectRecommendation.properties.recommendationType
-        /// </summary>
+        /// <summary> Type for this recommendation. </summary>
         [WirePath("properties.recommendationType")]
         public RecommendationType? RecommendationType { get; set; }
-        /// <summary>
-        /// Implementation details for the recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.implementationDetails
-        /// </summary>
+        /// <summary> Implementation details for the recommended action. </summary>
         [WirePath("properties.implementationDetails")]
         public ObjectRecommendationPropertiesImplementationDetails ImplementationDetails { get; set; }
-        /// <summary>
-        /// Workload information for the recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.analyzedWorkload
-        /// </summary>
+        /// <summary> Workload information for the recommended action. </summary>
         [WirePath("properties.analyzedWorkload")]
         public ObjectRecommendationPropertiesAnalyzedWorkload AnalyzedWorkload { get; set; }
-        /// <summary>
-        /// Estimated impact of this recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.estimatedImpact
-        /// </summary>
+        /// <summary> Estimated impact of this recommended action. </summary>
         [WirePath("properties.estimatedImpact")]
         public IReadOnlyList<ImpactRecord> EstimatedImpact { get; }
-        /// <summary>
-        /// Recommendation details for the recommended action.
-        /// Serialized Name: ObjectRecommendation.properties.details
-        /// </summary>
+        /// <summary> Recommendation details for the recommended action. </summary>
         [WirePath("properties.details")]
         public ObjectRecommendationDetails Details { get; }
     }

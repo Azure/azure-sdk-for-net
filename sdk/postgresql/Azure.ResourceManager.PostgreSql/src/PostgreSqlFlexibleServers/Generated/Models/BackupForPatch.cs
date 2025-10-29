@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Backup properties of a server.
-    /// Serialized Name: BackupForPatch
-    /// </summary>
+    /// <summary> Backup properties of a server. </summary>
     public partial class BackupForPatch
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupForPatch"/>. </summary>
-        /// <param name="backupRetentionDays">
-        /// Backup retention days for the server.
-        /// Serialized Name: BackupForPatch.backupRetentionDays
-        /// </param>
-        /// <param name="geoRedundantBackup">
-        /// Indicates if the server is configured to create geographically redundant backups.
-        /// Serialized Name: BackupForPatch.geoRedundantBackup
-        /// </param>
-        /// <param name="earliestRestoreOn">
-        /// Earliest restore point time (ISO8601 format) for a server.
-        /// Serialized Name: BackupForPatch.earliestRestoreDate
-        /// </param>
+        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
+        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
+        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupForPatch(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Backup retention days for the server.
-        /// Serialized Name: BackupForPatch.backupRetentionDays
-        /// </summary>
+        /// <summary> Backup retention days for the server. </summary>
         [WirePath("backupRetentionDays")]
         public int? BackupRetentionDays { get; set; }
-        /// <summary>
-        /// Indicates if the server is configured to create geographically redundant backups.
-        /// Serialized Name: BackupForPatch.geoRedundantBackup
-        /// </summary>
+        /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
         [WirePath("geoRedundantBackup")]
         public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; }
-        /// <summary>
-        /// Earliest restore point time (ISO8601 format) for a server.
-        /// Serialized Name: BackupForPatch.earliestRestoreDate
-        /// </summary>
+        /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
         [WirePath("earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
     }

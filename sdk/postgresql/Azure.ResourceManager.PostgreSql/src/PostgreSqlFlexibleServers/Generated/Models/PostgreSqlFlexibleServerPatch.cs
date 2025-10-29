@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Represents a server to be updated.
-    /// Serialized Name: ServerForPatch
-    /// </summary>
+    /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
         /// <summary>
@@ -57,78 +54,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
-        /// <param name="sku">
-        /// Compute tier and size of a server.
-        /// Serialized Name: ServerForPatch.sku
-        /// </param>
-        /// <param name="identity">
-        /// Describes the identity of the application.
-        /// Serialized Name: ServerForPatch.identity
-        /// </param>
-        /// <param name="tags">
-        /// Application-specific metadata in the form of key-value pairs.
-        /// Serialized Name: ServerForPatch.tags
-        /// </param>
-        /// <param name="administratorLogin">
-        /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
-        /// Serialized Name: ServerForPatch.properties.administratorLogin
-        /// </param>
-        /// <param name="administratorLoginPassword">
-        /// Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time.
-        /// Serialized Name: ServerForPatch.properties.administratorLoginPassword
-        /// </param>
-        /// <param name="version">
-        /// Major version of PostgreSQL database engine.
-        /// Serialized Name: ServerForPatch.properties.version
-        /// </param>
-        /// <param name="storage">
-        /// Storage properties of a server.
-        /// Serialized Name: ServerForPatch.properties.storage
-        /// </param>
-        /// <param name="backup">
-        /// Backup properties of a server.
-        /// Serialized Name: ServerForPatch.properties.backup
-        /// </param>
-        /// <param name="highAvailability">
-        /// High availability properties of a server.
-        /// Serialized Name: ServerForPatch.properties.highAvailability
-        /// </param>
-        /// <param name="maintenanceWindow">
-        /// Maintenance window properties of a server.
-        /// Serialized Name: ServerForPatch.properties.maintenanceWindow
-        /// </param>
-        /// <param name="authConfig">
-        /// Authentication configuration properties of a server.
-        /// Serialized Name: ServerForPatch.properties.authConfig
-        /// </param>
-        /// <param name="dataEncryption">
-        /// Data encryption properties of a server.
-        /// Serialized Name: ServerForPatch.properties.dataEncryption
-        /// </param>
-        /// <param name="createMode">
-        /// Update mode of an existing server.
-        /// Serialized Name: ServerForPatch.properties.createMode
-        /// </param>
-        /// <param name="replicationRole">
-        /// Role of the server in a replication set.
-        /// Serialized Name: ServerForPatch.properties.replicationRole
-        /// </param>
-        /// <param name="replica">
-        /// Read replica properties of a server. Required only in case that you want to promote a server.
-        /// Serialized Name: ServerForPatch.properties.replica
-        /// </param>
-        /// <param name="network">
-        /// Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer.
-        /// Serialized Name: ServerForPatch.properties.network
-        /// </param>
-        /// <param name="cluster">
-        /// Cluster properties of a server.
-        /// Serialized Name: ServerForPatch.properties.cluster
-        /// </param>
-        /// <param name="location">
-        /// The location the resource resides in.
-        /// Serialized Name: ServerForPatch.properties.location
-        /// </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> Describes the identity of the application. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
+        /// <param name="storage"> Storage properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="createMode"> Update mode of an existing server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <param name="location"> The location the resource resides in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, BackupForPatch backup, HighAvailabilityForPatch highAvailability, MaintenanceWindowForPatch maintenanceWindow, AuthConfigForPatch authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, Cluster cluster, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -153,112 +96,58 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Compute tier and size of a server.
-        /// Serialized Name: ServerForPatch.sku
-        /// </summary>
+        /// <summary> Compute tier and size of a server. </summary>
         [WirePath("sku")]
         public SkuForPatch Sku { get; set; }
-        /// <summary>
-        /// Describes the identity of the application.
-        /// Serialized Name: ServerForPatch.identity
-        /// </summary>
+        /// <summary> Describes the identity of the application. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Application-specific metadata in the form of key-value pairs.
-        /// Serialized Name: ServerForPatch.tags
-        /// </summary>
+        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
-        /// Serialized Name: ServerForPatch.properties.administratorLogin
-        /// </summary>
+        /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
         [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; }
-        /// <summary>
-        /// Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time.
-        /// Serialized Name: ServerForPatch.properties.administratorLoginPassword
-        /// </summary>
+        /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
         [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
-        /// <summary>
-        /// Major version of PostgreSQL database engine.
-        /// Serialized Name: ServerForPatch.properties.version
-        /// </summary>
+        /// <summary> Major version of PostgreSQL database engine. </summary>
         [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
-        /// <summary>
-        /// Storage properties of a server.
-        /// Serialized Name: ServerForPatch.properties.storage
-        /// </summary>
+        /// <summary> Storage properties of a server. </summary>
         [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
-        /// <summary>
-        /// Backup properties of a server.
-        /// Serialized Name: ServerForPatch.properties.backup
-        /// </summary>
+        /// <summary> Backup properties of a server. </summary>
         [WirePath("properties.backup")]
         public BackupForPatch Backup { get; set; }
-        /// <summary>
-        /// High availability properties of a server.
-        /// Serialized Name: ServerForPatch.properties.highAvailability
-        /// </summary>
+        /// <summary> High availability properties of a server. </summary>
         [WirePath("properties.highAvailability")]
         public HighAvailabilityForPatch HighAvailability { get; set; }
-        /// <summary>
-        /// Maintenance window properties of a server.
-        /// Serialized Name: ServerForPatch.properties.maintenanceWindow
-        /// </summary>
+        /// <summary> Maintenance window properties of a server. </summary>
         [WirePath("properties.maintenanceWindow")]
         public MaintenanceWindowForPatch MaintenanceWindow { get; set; }
-        /// <summary>
-        /// Authentication configuration properties of a server.
-        /// Serialized Name: ServerForPatch.properties.authConfig
-        /// </summary>
+        /// <summary> Authentication configuration properties of a server. </summary>
         [WirePath("properties.authConfig")]
         public AuthConfigForPatch AuthConfig { get; set; }
-        /// <summary>
-        /// Data encryption properties of a server.
-        /// Serialized Name: ServerForPatch.properties.dataEncryption
-        /// </summary>
+        /// <summary> Data encryption properties of a server. </summary>
         [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
-        /// <summary>
-        /// Update mode of an existing server.
-        /// Serialized Name: ServerForPatch.properties.createMode
-        /// </summary>
+        /// <summary> Update mode of an existing server. </summary>
         [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
-        /// <summary>
-        /// Role of the server in a replication set.
-        /// Serialized Name: ServerForPatch.properties.replicationRole
-        /// </summary>
+        /// <summary> Role of the server in a replication set. </summary>
         [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary>
-        /// Read replica properties of a server. Required only in case that you want to promote a server.
-        /// Serialized Name: ServerForPatch.properties.replica
-        /// </summary>
+        /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
         [WirePath("properties.replica")]
         public PostgreSqlFlexibleServersReplica Replica { get; set; }
-        /// <summary>
-        /// Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer.
-        /// Serialized Name: ServerForPatch.properties.network
-        /// </summary>
+        /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
         [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
-        /// <summary>
-        /// Cluster properties of a server.
-        /// Serialized Name: ServerForPatch.properties.cluster
-        /// </summary>
+        /// <summary> Cluster properties of a server. </summary>
         [WirePath("properties.cluster")]
         public Cluster Cluster { get; set; }
-        /// <summary>
-        /// The location the resource resides in.
-        /// Serialized Name: ServerForPatch.properties.location
-        /// </summary>
+        /// <summary> The location the resource resides in. </summary>
         [WirePath("properties.location")]
         public AzureLocation? Location { get; set; }
     }

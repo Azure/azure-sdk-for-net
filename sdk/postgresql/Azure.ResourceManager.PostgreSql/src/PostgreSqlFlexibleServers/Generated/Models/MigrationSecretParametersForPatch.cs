@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Migration secret parameters.
-    /// Serialized Name: MigrationSecretParametersForPatch
-    /// </summary>
+    /// <summary> Migration secret parameters. </summary>
     public partial class MigrationSecretParametersForPatch
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationSecretParametersForPatch"/>. </summary>
-        /// <param name="adminCredentials">
-        /// Credentials of administrator users for source and target servers.
-        /// Serialized Name: MigrationSecretParametersForPatch.adminCredentials
-        /// </param>
-        /// <param name="sourceServerUsername">
-        /// Gets or sets the name of the user for the source server. This user doesn't need to be an administrator.
-        /// Serialized Name: MigrationSecretParametersForPatch.sourceServerUsername
-        /// </param>
-        /// <param name="targetServerUsername">
-        /// Gets or sets the name of the user for the target server. This user doesn't need to be an administrator.
-        /// Serialized Name: MigrationSecretParametersForPatch.targetServerUsername
-        /// </param>
+        /// <param name="adminCredentials"> Credentials of administrator users for source and target servers. </param>
+        /// <param name="sourceServerUsername"> Gets or sets the name of the user for the source server. This user doesn't need to be an administrator. </param>
+        /// <param name="targetServerUsername"> Gets or sets the name of the user for the target server. This user doesn't need to be an administrator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrationSecretParametersForPatch(AdminCredentialsForPatch adminCredentials, string sourceServerUsername, string targetServerUsername, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Credentials of administrator users for source and target servers.
-        /// Serialized Name: MigrationSecretParametersForPatch.adminCredentials
-        /// </summary>
+        /// <summary> Credentials of administrator users for source and target servers. </summary>
         [WirePath("adminCredentials")]
         public AdminCredentialsForPatch AdminCredentials { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the user for the source server. This user doesn't need to be an administrator.
-        /// Serialized Name: MigrationSecretParametersForPatch.sourceServerUsername
-        /// </summary>
+        /// <summary> Gets or sets the name of the user for the source server. This user doesn't need to be an administrator. </summary>
         [WirePath("sourceServerUsername")]
         public string SourceServerUsername { get; set; }
-        /// <summary>
-        /// Gets or sets the name of the user for the target server. This user doesn't need to be an administrator.
-        /// Serialized Name: MigrationSecretParametersForPatch.targetServerUsername
-        /// </summary>
+        /// <summary> Gets or sets the name of the user for the target server. This user doesn't need to be an administrator. </summary>
         [WirePath("targetServerUsername")]
         public string TargetServerUsername { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// Tags object for patch operations.
-    /// Serialized Name: TagsObject
-    /// </summary>
+    /// <summary> Tags object for patch operations. </summary>
     public partial class PostgreSqlPrivateEndpointConnectionPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionPatch"/>. </summary>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: TagsObject.tags
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPrivateEndpointConnectionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: TagsObject.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }

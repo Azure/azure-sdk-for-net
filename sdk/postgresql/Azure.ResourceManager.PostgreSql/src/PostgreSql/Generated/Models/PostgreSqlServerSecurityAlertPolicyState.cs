@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// Specifies the state of the policy, whether it is enabled or disabled.
-    /// Serialized Name: ServerSecurityAlertPolicyState
-    /// </summary>
+    /// <summary> Specifies the state of the policy, whether it is enabled or disabled. </summary>
     public enum PostgreSqlServerSecurityAlertPolicyState
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ServerSecurityAlertPolicyState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ServerSecurityAlertPolicyState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

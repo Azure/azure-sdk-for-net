@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// The tier of the particular SKU, e.g. Basic.
-    /// Serialized Name: SkuTier
-    /// </summary>
+    /// <summary> The tier of the particular SKU, e.g. Basic. </summary>
     public readonly partial struct PostgreSqlSkuTier : IEquatable<PostgreSqlSkuTier>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string GeneralPurposeValue = "GeneralPurpose";
         private const string MemoryOptimizedValue = "MemoryOptimized";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: SkuTier.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static PostgreSqlSkuTier Basic { get; } = new PostgreSqlSkuTier(BasicValue);
-        /// <summary>
-        /// GeneralPurpose
-        /// Serialized Name: SkuTier.GeneralPurpose
-        /// </summary>
+        /// <summary> GeneralPurpose. </summary>
         public static PostgreSqlSkuTier GeneralPurpose { get; } = new PostgreSqlSkuTier(GeneralPurposeValue);
-        /// <summary>
-        /// MemoryOptimized
-        /// Serialized Name: SkuTier.MemoryOptimized
-        /// </summary>
+        /// <summary> MemoryOptimized. </summary>
         public static PostgreSqlSkuTier MemoryOptimized { get; } = new PostgreSqlSkuTier(MemoryOptimizedValue);
         /// <summary> Determines if two <see cref="PostgreSqlSkuTier"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlSkuTier left, PostgreSqlSkuTier right) => left.Equals(right);

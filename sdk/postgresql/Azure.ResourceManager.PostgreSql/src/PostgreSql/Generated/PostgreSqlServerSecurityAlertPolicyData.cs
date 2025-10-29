@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlServerSecurityAlertPolicy data model.
     /// A server security alert policy.
-    /// Serialized Name: ServerSecurityAlertPolicy
     /// </summary>
     public partial class PostgreSqlServerSecurityAlertPolicyData : ResourceData
     {
@@ -64,34 +63,13 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state">
-        /// Specifies the state of the policy, whether it is enabled or disabled.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.state
-        /// </param>
-        /// <param name="disabledAlerts">
-        /// Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.disabledAlerts
-        /// </param>
-        /// <param name="emailAddresses">
-        /// Specifies an array of e-mail addresses to which the alert is sent.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.emailAddresses
-        /// </param>
-        /// <param name="sendToEmailAccountAdmins">
-        /// Specifies that the alert is sent to the account administrators.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.emailAccountAdmins
-        /// </param>
-        /// <param name="storageEndpoint">
-        /// Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.storageEndpoint
-        /// </param>
-        /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the Threat Detection audit storage account.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.storageAccountAccessKey
-        /// </param>
-        /// <param name="retentionDays">
-        /// Specifies the number of days to keep in the Threat Detection audit logs.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.retentionDays
-        /// </param>
+        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled. </param>
+        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly. </param>
+        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
+        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlServerSecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -105,46 +83,25 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies the state of the policy, whether it is enabled or disabled.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.state
-        /// </summary>
+        /// <summary> Specifies the state of the policy, whether it is enabled or disabled. </summary>
         [WirePath("properties.state")]
         public PostgreSqlServerSecurityAlertPolicyState? State { get; set; }
-        /// <summary>
-        /// Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.disabledAlerts
-        /// </summary>
+        /// <summary> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly. </summary>
         [WirePath("properties.disabledAlerts")]
         public IList<string> DisabledAlerts { get; }
-        /// <summary>
-        /// Specifies an array of e-mail addresses to which the alert is sent.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.emailAddresses
-        /// </summary>
+        /// <summary> Specifies an array of e-mail addresses to which the alert is sent. </summary>
         [WirePath("properties.emailAddresses")]
         public IList<string> EmailAddresses { get; }
-        /// <summary>
-        /// Specifies that the alert is sent to the account administrators.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.emailAccountAdmins
-        /// </summary>
+        /// <summary> Specifies that the alert is sent to the account administrators. </summary>
         [WirePath("properties.emailAccountAdmins")]
         public bool? SendToEmailAccountAdmins { get; set; }
-        /// <summary>
-        /// Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.storageEndpoint
-        /// </summary>
+        /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </summary>
         [WirePath("properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
-        /// <summary>
-        /// Specifies the identifier key of the Threat Detection audit storage account.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.storageAccountAccessKey
-        /// </summary>
+        /// <summary> Specifies the identifier key of the Threat Detection audit storage account. </summary>
         [WirePath("properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
-        /// <summary>
-        /// Specifies the number of days to keep in the Threat Detection audit logs.
-        /// Serialized Name: ServerSecurityAlertPolicy.properties.retentionDays
-        /// </summary>
+        /// <summary> Specifies the number of days to keep in the Threat Detection audit logs. </summary>
         [WirePath("properties.retentionDays")]
         public int? RetentionDays { get; set; }
     }

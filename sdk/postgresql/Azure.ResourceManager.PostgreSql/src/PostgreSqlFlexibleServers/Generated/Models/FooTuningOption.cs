@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The FooTuningOption.
-    /// Serialized Name: TuningOption
-    /// </summary>
+    /// <summary> The FooTuningOption. </summary>
     public readonly partial struct FooTuningOption : IEquatable<FooTuningOption>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string IndexValue = "index";
         private const string TableValue = "table";
 
-        /// <summary>
-        /// index
-        /// Serialized Name: TuningOption.index
-        /// </summary>
+        /// <summary> index. </summary>
         public static FooTuningOption Index { get; } = new FooTuningOption(IndexValue);
-        /// <summary>
-        /// table
-        /// Serialized Name: TuningOption.table
-        /// </summary>
+        /// <summary> table. </summary>
         public static FooTuningOption Table { get; } = new FooTuningOption(TableValue);
         /// <summary> Determines if two <see cref="FooTuningOption"/> values are the same. </summary>
         public static bool operator ==(FooTuningOption left, FooTuningOption right) => left.Equals(right);

@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The status of the capability.
-    /// Serialized Name: CapabilityStatus
-    /// </summary>
+    /// <summary> The status of the capability. </summary>
     public enum PostgreSqlFlexbileServerCapabilityStatus
     {
-        /// <summary>
-        /// Visible
-        /// Serialized Name: CapabilityStatus.Visible
-        /// </summary>
+        /// <summary> Visible. </summary>
         Visible,
-        /// <summary>
-        /// Available
-        /// Serialized Name: CapabilityStatus.Available
-        /// </summary>
+        /// <summary> Available. </summary>
         Available,
-        /// <summary>
-        /// Default
-        /// Serialized Name: CapabilityStatus.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         Default,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: CapabilityStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

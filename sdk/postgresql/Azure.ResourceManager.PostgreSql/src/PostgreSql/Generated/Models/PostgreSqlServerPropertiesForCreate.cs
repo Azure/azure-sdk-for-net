@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary>
     /// The properties used to create a new server.
-    /// Serialized Name: ServerPropertiesForCreate
     /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
     /// </summary>
@@ -56,34 +55,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
-        /// <param name="version">
-        /// Server version.
-        /// Serialized Name: ServerPropertiesForCreate.version
-        /// </param>
-        /// <param name="sslEnforcement">
-        /// Enable ssl enforcement or not when connect to server.
-        /// Serialized Name: ServerPropertiesForCreate.sslEnforcement
-        /// </param>
-        /// <param name="minimalTlsVersion">
-        /// Enforce a minimal Tls version for the server.
-        /// Serialized Name: ServerPropertiesForCreate.minimalTlsVersion
-        /// </param>
-        /// <param name="infrastructureEncryption">
-        /// Status showing whether the server enabled infrastructure encryption.
-        /// Serialized Name: ServerPropertiesForCreate.infrastructureEncryption
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
-        /// Serialized Name: ServerPropertiesForCreate.publicNetworkAccess
-        /// </param>
-        /// <param name="storageProfile">
-        /// Storage profile of a server.
-        /// Serialized Name: ServerPropertiesForCreate.storageProfile
-        /// </param>
-        /// <param name="createMode">
-        /// The mode to create a new server.
-        /// Serialized Name: ServerPropertiesForCreate.createMode
-        /// </param>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="createMode"> The mode to create a new server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerPropertiesForCreate(PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, PostgreSqlStorageProfile storageProfile, PostgreSqlCreateMode createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,46 +75,25 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Server version.
-        /// Serialized Name: ServerPropertiesForCreate.version
-        /// </summary>
+        /// <summary> Server version. </summary>
         [WirePath("version")]
         public PostgreSqlServerVersion? Version { get; set; }
-        /// <summary>
-        /// Enable ssl enforcement or not when connect to server.
-        /// Serialized Name: ServerPropertiesForCreate.sslEnforcement
-        /// </summary>
+        /// <summary> Enable ssl enforcement or not when connect to server. </summary>
         [WirePath("sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
-        /// <summary>
-        /// Enforce a minimal Tls version for the server.
-        /// Serialized Name: ServerPropertiesForCreate.minimalTlsVersion
-        /// </summary>
+        /// <summary> Enforce a minimal Tls version for the server. </summary>
         [WirePath("minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
-        /// <summary>
-        /// Status showing whether the server enabled infrastructure encryption.
-        /// Serialized Name: ServerPropertiesForCreate.infrastructureEncryption
-        /// </summary>
+        /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
         [WirePath("infrastructureEncryption")]
         public PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
-        /// <summary>
-        /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
-        /// Serialized Name: ServerPropertiesForCreate.publicNetworkAccess
-        /// </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         [WirePath("publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Storage profile of a server.
-        /// Serialized Name: ServerPropertiesForCreate.storageProfile
-        /// </summary>
+        /// <summary> Storage profile of a server. </summary>
         [WirePath("storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
-        /// <summary>
-        /// The mode to create a new server.
-        /// Serialized Name: ServerPropertiesForCreate.createMode
-        /// </summary>
+        /// <summary> The mode to create a new server. </summary>
         internal PostgreSqlCreateMode CreateMode { get; set; }
     }
 }

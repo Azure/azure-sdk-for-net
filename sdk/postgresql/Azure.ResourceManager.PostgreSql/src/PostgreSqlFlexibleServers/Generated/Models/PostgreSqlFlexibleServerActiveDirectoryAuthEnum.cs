@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Indicates if the server supports Microsoft Entra authentication.
-    /// Serialized Name: MicrosoftEntraAuth
-    /// </summary>
+    /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
     public readonly partial struct PostgreSqlFlexibleServerActiveDirectoryAuthEnum : IEquatable<PostgreSqlFlexibleServerActiveDirectoryAuthEnum>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: MicrosoftEntraAuth.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlFlexibleServerActiveDirectoryAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: MicrosoftEntraAuth.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerActiveDirectoryAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerActiveDirectoryAuthEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerActiveDirectoryAuthEnum left, PostgreSqlFlexibleServerActiveDirectoryAuthEnum right) => left.Equals(right);

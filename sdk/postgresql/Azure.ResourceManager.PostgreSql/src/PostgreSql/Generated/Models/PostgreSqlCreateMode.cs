@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// The mode to create a new server.
-    /// Serialized Name: CreateMode
-    /// </summary>
+    /// <summary> The mode to create a new server. </summary>
     internal readonly partial struct PostgreSqlCreateMode : IEquatable<PostgreSqlCreateMode>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string GeoRestoreValue = "GeoRestore";
         private const string ReplicaValue = "Replica";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: CreateMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static PostgreSqlCreateMode Default { get; } = new PostgreSqlCreateMode(DefaultValue);
-        /// <summary>
-        /// PointInTimeRestore
-        /// Serialized Name: CreateMode.PointInTimeRestore
-        /// </summary>
+        /// <summary> PointInTimeRestore. </summary>
         public static PostgreSqlCreateMode PointInTimeRestore { get; } = new PostgreSqlCreateMode(PointInTimeRestoreValue);
-        /// <summary>
-        /// GeoRestore
-        /// Serialized Name: CreateMode.GeoRestore
-        /// </summary>
+        /// <summary> GeoRestore. </summary>
         public static PostgreSqlCreateMode GeoRestore { get; } = new PostgreSqlCreateMode(GeoRestoreValue);
-        /// <summary>
-        /// Replica
-        /// Serialized Name: CreateMode.Replica
-        /// </summary>
+        /// <summary> Replica. </summary>
         public static PostgreSqlCreateMode Replica { get; } = new PostgreSqlCreateMode(ReplicaValue);
         /// <summary> Determines if two <see cref="PostgreSqlCreateMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlCreateMode left, PostgreSqlCreateMode right) => left.Equals(right);

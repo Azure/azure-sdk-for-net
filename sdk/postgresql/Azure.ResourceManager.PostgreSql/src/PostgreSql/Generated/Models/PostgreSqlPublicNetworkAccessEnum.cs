@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
-    /// Serialized Name: PublicNetworkAccessEnum
-    /// </summary>
+    /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct PostgreSqlPublicNetworkAccessEnum : IEquatable<PostgreSqlPublicNetworkAccessEnum>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PublicNetworkAccessEnum.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PostgreSqlPublicNetworkAccessEnum Enabled { get; } = new PostgreSqlPublicNetworkAccessEnum(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PublicNetworkAccessEnum.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PostgreSqlPublicNetworkAccessEnum Disabled { get; } = new PostgreSqlPublicNetworkAccessEnum(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlPublicNetworkAccessEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPublicNetworkAccessEnum left, PostgreSqlPublicNetworkAccessEnum right) => left.Equals(right);

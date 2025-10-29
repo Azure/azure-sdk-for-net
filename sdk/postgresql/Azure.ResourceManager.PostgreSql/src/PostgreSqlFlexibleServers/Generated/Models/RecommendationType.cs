@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Type for this recommendation.
-    /// Serialized Name: RecommendationType
-    /// </summary>
+    /// <summary> Type for this recommendation. </summary>
     public readonly partial struct RecommendationType : IEquatable<RecommendationType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReIndexValue = "ReIndex";
         private const string AnalyzeTableValue = "AnalyzeTable";
 
-        /// <summary>
-        /// CreateIndex
-        /// Serialized Name: RecommendationType.CreateIndex
-        /// </summary>
+        /// <summary> CreateIndex. </summary>
         public static RecommendationType CreateIndex { get; } = new RecommendationType(CreateIndexValue);
-        /// <summary>
-        /// DropIndex
-        /// Serialized Name: RecommendationType.DropIndex
-        /// </summary>
+        /// <summary> DropIndex. </summary>
         public static RecommendationType DropIndex { get; } = new RecommendationType(DropIndexValue);
-        /// <summary>
-        /// ReIndex
-        /// Serialized Name: RecommendationType.ReIndex
-        /// </summary>
+        /// <summary> ReIndex. </summary>
         public static RecommendationType ReIndex { get; } = new RecommendationType(ReIndexValue);
-        /// <summary>
-        /// AnalyzeTable
-        /// Serialized Name: RecommendationType.AnalyzeTable
-        /// </summary>
+        /// <summary> AnalyzeTable. </summary>
         public static RecommendationType AnalyzeTable { get; } = new RecommendationType(AnalyzeTableValue);
         /// <summary> Determines if two <see cref="RecommendationType"/> values are the same. </summary>
         public static bool operator ==(RecommendationType left, RecommendationType right) => left.Equals(right);

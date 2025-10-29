@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Capabilities in terms of compute.
-    /// Serialized Name: ServerSkuCapability
-    /// </summary>
+    /// <summary> Capabilities in terms of compute. </summary>
     public partial class PostgreSqlFlexibleServerSkuCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
@@ -25,47 +22,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
-        /// <param name="capabilityStatus">
-        /// The status of the capability.
-        /// Serialized Name: CapabilityBase.status
-        /// </param>
-        /// <param name="reason">
-        /// The reason for the capability not being available.
-        /// Serialized Name: CapabilityBase.reason
-        /// </param>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
+        /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name">
-        /// Name of the compute (SKU).
-        /// Serialized Name: ServerSkuCapability.name
-        /// </param>
-        /// <param name="vCores">
-        /// vCores available for this compute.
-        /// Serialized Name: ServerSkuCapability.vCores
-        /// </param>
-        /// <param name="supportedIops">
-        /// Maximum IOPS supported by this compute.
-        /// Serialized Name: ServerSkuCapability.supportedIops
-        /// </param>
-        /// <param name="supportedMemoryPerVcoreMb">
-        /// Supported memory (in MB) per virtual core assigned to this compute.
-        /// Serialized Name: ServerSkuCapability.supportedMemoryPerVcoreMb
-        /// </param>
-        /// <param name="supportedZones">
-        /// List of supported availability zones. E.g. '1', '2', '3'
-        /// Serialized Name: ServerSkuCapability.supportedZones
-        /// </param>
-        /// <param name="supportedHaMode">
-        /// Modes of high availability supported for this compute.
-        /// Serialized Name: ServerSkuCapability.supportedHaMode
-        /// </param>
-        /// <param name="supportedFeatures">
-        /// Features supported.
-        /// Serialized Name: ServerSkuCapability.supportedFeatures
-        /// </param>
-        /// <param name="securityProfile">
-        /// Security profile of the compute. Indicates if it's a Confidential Compute virtual machine.
-        /// Serialized Name: ServerSkuCapability.securityProfile
-        /// </param>
+        /// <param name="name"> Name of the compute (SKU). </param>
+        /// <param name="vCores"> vCores available for this compute. </param>
+        /// <param name="supportedIops"> Maximum IOPS supported by this compute. </param>
+        /// <param name="supportedMemoryPerVcoreMb"> Supported memory (in MB) per virtual core assigned to this compute. </param>
+        /// <param name="supportedZones"> List of supported availability zones. E.g. '1', '2', '3'. </param>
+        /// <param name="supportedHaMode"> Modes of high availability supported for this compute. </param>
+        /// <param name="supportedFeatures"> Features supported. </param>
+        /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
         internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHighAvailabilityMode> supportedHaMode, IReadOnlyList<SupportedFeature> supportedFeatures, string securityProfile) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
@@ -78,52 +45,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SecurityProfile = securityProfile;
         }
 
-        /// <summary>
-        /// Name of the compute (SKU).
-        /// Serialized Name: ServerSkuCapability.name
-        /// </summary>
+        /// <summary> Name of the compute (SKU). </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// vCores available for this compute.
-        /// Serialized Name: ServerSkuCapability.vCores
-        /// </summary>
+        /// <summary> vCores available for this compute. </summary>
         [WirePath("vCores")]
         public int? VCores { get; }
-        /// <summary>
-        /// Maximum IOPS supported by this compute.
-        /// Serialized Name: ServerSkuCapability.supportedIops
-        /// </summary>
+        /// <summary> Maximum IOPS supported by this compute. </summary>
         [WirePath("supportedIops")]
         public int? SupportedIops { get; }
-        /// <summary>
-        /// Supported memory (in MB) per virtual core assigned to this compute.
-        /// Serialized Name: ServerSkuCapability.supportedMemoryPerVcoreMb
-        /// </summary>
+        /// <summary> Supported memory (in MB) per virtual core assigned to this compute. </summary>
         [WirePath("supportedMemoryPerVcoreMb")]
         public long? SupportedMemoryPerVcoreMb { get; }
-        /// <summary>
-        /// List of supported availability zones. E.g. '1', '2', '3'
-        /// Serialized Name: ServerSkuCapability.supportedZones
-        /// </summary>
+        /// <summary> List of supported availability zones. E.g. '1', '2', '3'. </summary>
         [WirePath("supportedZones")]
         public IReadOnlyList<string> SupportedZones { get; }
-        /// <summary>
-        /// Modes of high availability supported for this compute.
-        /// Serialized Name: ServerSkuCapability.supportedHaMode
-        /// </summary>
+        /// <summary> Modes of high availability supported for this compute. </summary>
         [WirePath("supportedHaMode")]
         public IReadOnlyList<PostgreSqlFlexibleServerHighAvailabilityMode> SupportedHaMode { get; }
-        /// <summary>
-        /// Features supported.
-        /// Serialized Name: ServerSkuCapability.supportedFeatures
-        /// </summary>
+        /// <summary> Features supported. </summary>
         [WirePath("supportedFeatures")]
         public IReadOnlyList<SupportedFeature> SupportedFeatures { get; }
-        /// <summary>
-        /// Security profile of the compute. Indicates if it's a Confidential Compute virtual machine.
-        /// Serialized Name: ServerSkuCapability.securityProfile
-        /// </summary>
+        /// <summary> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </summary>
         [WirePath("securityProfile")]
         public string SecurityProfile { get; }
     }

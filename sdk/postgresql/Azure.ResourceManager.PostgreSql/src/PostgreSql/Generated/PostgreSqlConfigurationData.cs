@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlConfiguration data model.
     /// Represents a Configuration.
-    /// Serialized Name: Configuration
     /// </summary>
     public partial class PostgreSqlConfigurationData : ResourceData
     {
@@ -61,30 +60,12 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value">
-        /// Value of the configuration.
-        /// Serialized Name: Configuration.properties.value
-        /// </param>
-        /// <param name="description">
-        /// Description of the configuration.
-        /// Serialized Name: Configuration.properties.description
-        /// </param>
-        /// <param name="defaultValue">
-        /// Default value of the configuration.
-        /// Serialized Name: Configuration.properties.defaultValue
-        /// </param>
-        /// <param name="dataType">
-        /// Data type of the configuration.
-        /// Serialized Name: Configuration.properties.dataType
-        /// </param>
-        /// <param name="allowedValues">
-        /// Allowed values of the configuration.
-        /// Serialized Name: Configuration.properties.allowedValues
-        /// </param>
-        /// <param name="source">
-        /// Source of the configuration.
-        /// Serialized Name: Configuration.properties.source
-        /// </param>
+        /// <param name="value"> Value of the configuration. </param>
+        /// <param name="description"> Description of the configuration. </param>
+        /// <param name="defaultValue"> Default value of the configuration. </param>
+        /// <param name="dataType"> Data type of the configuration. </param>
+        /// <param name="allowedValues"> Allowed values of the configuration. </param>
+        /// <param name="source"> Source of the configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, string defaultValue, string dataType, string allowedValues, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -97,40 +78,22 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Value of the configuration.
-        /// Serialized Name: Configuration.properties.value
-        /// </summary>
+        /// <summary> Value of the configuration. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Description of the configuration.
-        /// Serialized Name: Configuration.properties.description
-        /// </summary>
+        /// <summary> Description of the configuration. </summary>
         [WirePath("properties.description")]
         public string Description { get; }
-        /// <summary>
-        /// Default value of the configuration.
-        /// Serialized Name: Configuration.properties.defaultValue
-        /// </summary>
+        /// <summary> Default value of the configuration. </summary>
         [WirePath("properties.defaultValue")]
         public string DefaultValue { get; }
-        /// <summary>
-        /// Data type of the configuration.
-        /// Serialized Name: Configuration.properties.dataType
-        /// </summary>
+        /// <summary> Data type of the configuration. </summary>
         [WirePath("properties.dataType")]
         public string DataType { get; }
-        /// <summary>
-        /// Allowed values of the configuration.
-        /// Serialized Name: Configuration.properties.allowedValues
-        /// </summary>
+        /// <summary> Allowed values of the configuration. </summary>
         [WirePath("properties.allowedValues")]
         public string AllowedValues { get; }
-        /// <summary>
-        /// Source of the configuration.
-        /// Serialized Name: Configuration.properties.source
-        /// </summary>
+        /// <summary> Source of the configuration. </summary>
         [WirePath("properties.source")]
         public string Source { get; set; }
     }

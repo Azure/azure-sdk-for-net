@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// High availability properties of a server.
-    /// Serialized Name: HighAvailability
-    /// </summary>
+    /// <summary> High availability properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerHighAvailability
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailability"/>. </summary>
-        /// <param name="mode">
-        /// High availability mode for a server.
-        /// Serialized Name: HighAvailability.mode
-        /// </param>
-        /// <param name="state">
-        /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
-        /// Serialized Name: HighAvailability.state
-        /// </param>
-        /// <param name="standbyAvailabilityZone">
-        /// Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant.
-        /// Serialized Name: HighAvailability.standbyAvailabilityZone
-        /// </param>
+        /// <param name="mode"> High availability mode for a server. </param>
+        /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
+        /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHAMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// High availability mode for a server.
-        /// Serialized Name: HighAvailability.mode
-        /// </summary>
+        /// <summary> High availability mode for a server. </summary>
         [WirePath("mode")]
         public PostgreSqlFlexibleServerHAMode? Mode { get; set; }
-        /// <summary>
-        /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
-        /// Serialized Name: HighAvailability.state
-        /// </summary>
+        /// <summary> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
         [WirePath("state")]
         public PostgreSqlFlexibleServerHAState? State { get; }
-        /// <summary>
-        /// Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant.
-        /// Serialized Name: HighAvailability.standbyAvailabilityZone
-        /// </summary>
+        /// <summary> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
         [WirePath("standbyAvailabilityZone")]
         public string StandbyAvailabilityZone { get; set; }
     }

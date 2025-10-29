@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlPrivateEndpointConnection data model.
     /// A private endpoint connection
-    /// Serialized Name: PrivateEndpointConnection
     /// </summary>
     public partial class PostgreSqlPrivateEndpointConnectionData : ResourceData
     {
@@ -63,18 +62,9 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint">
-        /// Private endpoint which the connection belongs to.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="connectionState">
-        /// Connection state of the private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="provisioningState">
-        /// State of the private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </param>
+        /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, PostgreSqlPrivateLinkServiceConnectionStateProperty connectionState, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -84,10 +74,7 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Private endpoint which the connection belongs to.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
-        /// </summary>
+        /// <summary> Private endpoint which the connection belongs to. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("properties.privateEndpoint.id")]
@@ -102,16 +89,10 @@ namespace Azure.ResourceManager.PostgreSql
             }
         }
 
-        /// <summary>
-        /// Connection state of the private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> Connection state of the private endpoint connection. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
         public PostgreSqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
-        /// <summary>
-        /// State of the private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
-        /// </summary>
+        /// <summary> State of the private endpoint connection. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }

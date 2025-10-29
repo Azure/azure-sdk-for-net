@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// State of the private endpoint connection.
-    /// Serialized Name: PrivateEndpointProvisioningState
-    /// </summary>
+    /// <summary> State of the private endpoint connection. </summary>
     public readonly partial struct PostgreSqlPrivateEndpointProvisioningState : IEquatable<PostgreSqlPrivateEndpointProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string FailedValue = "Failed";
         private const string RejectingValue = "Rejecting";
 
-        /// <summary>
-        /// Approving
-        /// Serialized Name: PrivateEndpointProvisioningState.Approving
-        /// </summary>
+        /// <summary> Approving. </summary>
         public static PostgreSqlPrivateEndpointProvisioningState Approving { get; } = new PostgreSqlPrivateEndpointProvisioningState(ApprovingValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: PrivateEndpointProvisioningState.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         public static PostgreSqlPrivateEndpointProvisioningState Ready { get; } = new PostgreSqlPrivateEndpointProvisioningState(ReadyValue);
-        /// <summary>
-        /// Dropping
-        /// Serialized Name: PrivateEndpointProvisioningState.Dropping
-        /// </summary>
+        /// <summary> Dropping. </summary>
         public static PostgreSqlPrivateEndpointProvisioningState Dropping { get; } = new PostgreSqlPrivateEndpointProvisioningState(DroppingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static PostgreSqlPrivateEndpointProvisioningState Failed { get; } = new PostgreSqlPrivateEndpointProvisioningState(FailedValue);
-        /// <summary>
-        /// Rejecting
-        /// Serialized Name: PrivateEndpointProvisioningState.Rejecting
-        /// </summary>
+        /// <summary> Rejecting. </summary>
         public static PostgreSqlPrivateEndpointProvisioningState Rejecting { get; } = new PostgreSqlPrivateEndpointProvisioningState(RejectingValue);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPrivateEndpointProvisioningState left, PostgreSqlPrivateEndpointProvisioningState right) => left.Equals(right);

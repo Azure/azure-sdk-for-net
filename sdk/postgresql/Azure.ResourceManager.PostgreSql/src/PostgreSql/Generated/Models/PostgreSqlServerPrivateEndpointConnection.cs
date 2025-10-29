@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// A private endpoint connection under a server
-    /// Serialized Name: ServerPrivateEndpointConnection
-    /// </summary>
+    /// <summary> A private endpoint connection under a server. </summary>
     public partial class PostgreSqlServerPrivateEndpointConnection
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPrivateEndpointConnection"/>. </summary>
-        /// <param name="id">
-        /// Resource ID of the Private Endpoint Connection.
-        /// Serialized Name: ServerPrivateEndpointConnection.id
-        /// </param>
-        /// <param name="properties">
-        /// Private endpoint connection properties
-        /// Serialized Name: ServerPrivateEndpointConnection.properties
-        /// </param>
+        /// <param name="id"> Resource ID of the Private Endpoint Connection. </param>
+        /// <param name="properties"> Private endpoint connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerPrivateEndpointConnection(ResourceIdentifier id, PostgreSqlServerPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource ID of the Private Endpoint Connection.
-        /// Serialized Name: ServerPrivateEndpointConnection.id
-        /// </summary>
+        /// <summary> Resource ID of the Private Endpoint Connection. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// Private endpoint connection properties
-        /// Serialized Name: ServerPrivateEndpointConnection.properties
-        /// </summary>
+        /// <summary> Private endpoint connection properties. </summary>
         [WirePath("properties")]
         public PostgreSqlServerPrivateEndpointConnectionProperties Properties { get; }
     }

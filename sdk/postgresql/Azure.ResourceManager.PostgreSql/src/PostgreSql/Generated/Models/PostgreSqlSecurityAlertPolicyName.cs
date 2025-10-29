@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary>
-    /// The PostgreSqlSecurityAlertPolicyName.
-    /// Serialized Name: SecurityAlertPolicyName
-    /// </summary>
+    /// <summary> The PostgreSqlSecurityAlertPolicyName. </summary>
     public readonly partial struct PostgreSqlSecurityAlertPolicyName : IEquatable<PostgreSqlSecurityAlertPolicyName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: SecurityAlertPolicyName.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static PostgreSqlSecurityAlertPolicyName Default { get; } = new PostgreSqlSecurityAlertPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="PostgreSqlSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlSecurityAlertPolicyName left, PostgreSqlSecurityAlertPolicyName right) => left.Equals(right);

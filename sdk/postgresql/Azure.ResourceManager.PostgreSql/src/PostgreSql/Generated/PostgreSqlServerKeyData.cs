@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlServerKey data model.
     /// A PostgreSQL Server key.
-    /// Serialized Name: ServerKey
     /// </summary>
     public partial class PostgreSqlServerKeyData : ResourceData
     {
@@ -62,22 +61,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of encryption protector used to protect the key.
-        /// Serialized Name: ServerKey.kind
-        /// </param>
-        /// <param name="serverKeyType">
-        /// The key type like 'AzureKeyVault'.
-        /// Serialized Name: ServerKey.properties.serverKeyType
-        /// </param>
-        /// <param name="uri">
-        /// The URI of the key.
-        /// Serialized Name: ServerKey.properties.uri
-        /// </param>
-        /// <param name="createdOn">
-        /// The key creation date.
-        /// Serialized Name: ServerKey.properties.creationDate
-        /// </param>
+        /// <param name="kind"> Kind of encryption protector used to protect the key. </param>
+        /// <param name="serverKeyType"> The key type like 'AzureKeyVault'. </param>
+        /// <param name="uri"> The URI of the key. </param>
+        /// <param name="createdOn"> The key creation date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, PostgreSqlServerKeyType? serverKeyType, Uri uri, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,28 +75,16 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Kind of encryption protector used to protect the key.
-        /// Serialized Name: ServerKey.kind
-        /// </summary>
+        /// <summary> Kind of encryption protector used to protect the key. </summary>
         [WirePath("kind")]
         public string Kind { get; }
-        /// <summary>
-        /// The key type like 'AzureKeyVault'.
-        /// Serialized Name: ServerKey.properties.serverKeyType
-        /// </summary>
+        /// <summary> The key type like 'AzureKeyVault'. </summary>
         [WirePath("properties.serverKeyType")]
         public PostgreSqlServerKeyType? ServerKeyType { get; set; }
-        /// <summary>
-        /// The URI of the key.
-        /// Serialized Name: ServerKey.properties.uri
-        /// </summary>
+        /// <summary> The URI of the key. </summary>
         [WirePath("properties.uri")]
         public Uri Uri { get; set; }
-        /// <summary>
-        /// The key creation date.
-        /// Serialized Name: ServerKey.properties.creationDate
-        /// </summary>
+        /// <summary> The key creation date. </summary>
         [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
     }
