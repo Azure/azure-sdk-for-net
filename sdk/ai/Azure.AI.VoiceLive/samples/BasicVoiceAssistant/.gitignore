@@ -321,3 +321,4 @@ FodyWeavers.xsd
 # Sensitive configuration
 appsettings.Development.json
 appsettings.Production.json
+appsettings.json
