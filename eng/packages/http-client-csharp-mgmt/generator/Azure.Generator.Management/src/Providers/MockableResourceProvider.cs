@@ -278,11 +278,19 @@ namespace Azure.Generator.Management.Providers
                         [.. pathParameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
-                    return new MethodProvider(
+                    var method = new MethodProvider(
                         signature,
                         // invoke on a MethodSignature would handle the async extra calls and keyword automatically
                         Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
                         enclosingType);
+
+                    // Copy the enhanced XML documentation from the collection's Get method
+                    if (resourceGetMethod.XmlDocs?.Summary != null)
+                    {
+                        method.XmlDocs?.Update(summary: resourceGetMethod.XmlDocs.Summary);
+                    }
+
+                    return method;
                 }
             }
         }
