@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             return GetCachedClient(client => new ArizeAIObservabilityEvalOrganizationCollection(client, Id));
         }
 
-        /// <summary> Get a OrganizationResource. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             return await GetArizeAIObservabilityEvalOrganizations().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a OrganizationResource. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
