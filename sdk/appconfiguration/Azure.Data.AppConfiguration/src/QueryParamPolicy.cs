@@ -20,88 +20,81 @@ namespace Azure.Data.AppConfiguration
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            try
+            string originalQuery = message.Request.Uri.Query;
+
+            if (string.IsNullOrEmpty(originalQuery))
             {
-                string originalQuery = message.Request.Uri.Query;
+                return;
+            }
 
-                if (string.IsNullOrEmpty(originalQuery))
+            ReadOnlyMemory<char> queryMemory = originalQuery.AsMemory();
+
+            if (queryMemory.Span[0] == '?')
+            {
+                queryMemory = queryMemory.Slice(1);
+            }
+
+            var segments = new List<QueryParameterEntry>();
+            int startIndex = 0;
+
+            for (int i = 0; i < queryMemory.Length; i++)
+            {
+                if (queryMemory.Span[i] == '&')
                 {
-                    return;
-                }
-
-                ReadOnlyMemory<char> queryMemory = originalQuery.AsMemory();
-
-                if (queryMemory.Span[0] == '?')
-                {
-                    queryMemory = queryMemory.Slice(1);
-                }
-
-                var segments = new List<QueryParameterEntry>();
-                int startIndex = 0;
-
-                for (int i = 0; i < queryMemory.Length; i++)
-                {
-                    if (queryMemory.Span[i] == '&')
+                    if (i > startIndex)
                     {
-                        if (i > startIndex)
-                        {
-                            AddParameter(queryMemory.Slice(startIndex, i - startIndex), segments);
-                        }
-                        startIndex = i + 1;
+                        AddParameter(queryMemory.Slice(startIndex, i - startIndex), segments);
                     }
-                }
-
-                // Add the last parameter
-                if (startIndex < queryMemory.Length)
-                {
-                    AddParameter(queryMemory.Slice(startIndex), segments);
-                }
-
-                // List<T>.Sort method is not stable. See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort
-                // Sort by lowercase name, preserving relative order for duplicates
-                segments.Sort((a, b) =>
-                {
-                    int nameComparison = MemoryExtensions.CompareTo(
-                        a.Name.Span,
-                        b.Name.Span,
-                        StringComparison.OrdinalIgnoreCase);
-
-                    if (nameComparison != 0)
-                    {
-                        return nameComparison;
-                    }
-                    return a.Index.CompareTo(b.Index);
-                });
-
-                var sb = new StringBuilder();
-                sb.Append('?');
-
-                for (int i = 0; i < segments.Count; i++)
-                {
-                    if (i > 0)
-                    {
-                        sb.Append('&');
-                    }
-
-                    ReadOnlySpan<char> nameSpan = segments[i].Name.Span;
-                    for (int c = 0; c < nameSpan.Length; c++)
-                    {
-                        sb.Append(char.ToLowerInvariant(nameSpan[c]));
-                    }
-                    sb.Append('=');
-                    sb.Append(segments[i].Value);
-                }
-
-                string newQuery = sb.ToString();
-
-                if (!newQuery.Equals(originalQuery))
-                {
-                    message.Request.Uri.Query = newQuery;
+                    startIndex = i + 1;
                 }
             }
-            catch (UriFormatException ex)
+
+            // Add the last parameter
+            if (startIndex < queryMemory.Length)
             {
-                System.Diagnostics.Debug.WriteLine($"QueryParamPolicy failed to normalize the request query parameters: {ex}");
+                AddParameter(queryMemory.Slice(startIndex), segments);
+            }
+
+            // List<T>.Sort method is not stable. See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort
+            // Sort by lowercase name, preserving relative order for duplicates
+            segments.Sort((a, b) =>
+            {
+                int nameComparison = MemoryExtensions.CompareTo(
+                    a.Name.Span,
+                    b.Name.Span,
+                    StringComparison.OrdinalIgnoreCase);
+
+                if (nameComparison != 0)
+                {
+                    return nameComparison;
+                }
+                return a.Index.CompareTo(b.Index);
+            });
+
+            var sb = new StringBuilder();
+            sb.Append('?');
+
+            for (int i = 0; i < segments.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append('&');
+                }
+
+                ReadOnlySpan<char> nameSpan = segments[i].Name.Span;
+                for (int c = 0; c < nameSpan.Length; c++)
+                {
+                    sb.Append(char.ToLowerInvariant(nameSpan[c]));
+                }
+                sb.Append('=');
+                sb.Append(segments[i].Value);
+            }
+
+            string newQuery = sb.ToString();
+
+            if (!newQuery.Equals(originalQuery))
+            {
+                message.Request.Uri.Query = newQuery;
             }
         }
 
