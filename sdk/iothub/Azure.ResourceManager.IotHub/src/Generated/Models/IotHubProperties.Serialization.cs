@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.IotHub.Models
             string comments = default;
             IotHubPropertiesDeviceStreams deviceStreams = default;
             IotHubCapability? features = default;
-            EncryptionPropertiesDescription encryption = default;
+            IotHubEncryptionProperties encryption = default;
             IReadOnlyList<IotHubLocationDescription> locations = default;
             bool? enableDataResidency = default;
-            RootCertificateProperties rootCertificate = default;
-            IPVersion? ipVersion = default;
-            DeviceRegistry deviceRegistry = default;
+            IotHubRootCertificateProperties rootCertificate = default;
+            IotHubIPVersion? ipVersion = default;
+            IotHubDeviceRegistry deviceRegistry = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionPropertiesDescription.DeserializeEncryptionPropertiesDescription(property.Value, options);
+                    encryption = IotHubEncryptionProperties.DeserializeIotHubEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    rootCertificate = RootCertificateProperties.DeserializeRootCertificateProperties(property.Value, options);
+                    rootCertificate = IotHubRootCertificateProperties.DeserializeIotHubRootCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipVersion"u8))
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    ipVersion = new IPVersion(property.Value.GetString());
+                    ipVersion = new IotHubIPVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deviceRegistry"u8))
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    deviceRegistry = DeviceRegistry.DeserializeDeviceRegistry(property.Value, options);
+                    deviceRegistry = IotHubDeviceRegistry.DeserializeIotHubDeviceRegistry(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

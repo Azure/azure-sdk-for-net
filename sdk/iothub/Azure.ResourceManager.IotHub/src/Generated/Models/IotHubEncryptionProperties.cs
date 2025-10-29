@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
-    public partial class DeviceRegistry
+    /// <summary> The encryption properties for the IoT hub. </summary>
+    public partial class IotHubEncryptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,26 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistry"/>. </summary>
-        public DeviceRegistry()
+        /// <summary> Initializes a new instance of <see cref="IotHubEncryptionProperties"/>. </summary>
+        public IotHubEncryptionProperties()
         {
+            KeyVaultProperties = new ChangeTrackingList<IotHubKeyVaultKeyProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistry"/>. </summary>
-        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </param>
-        /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
+        /// <summary> Initializes a new instance of <see cref="IotHubEncryptionProperties"/>. </summary>
+        /// <param name="keySource"> The source of the key. </param>
+        /// <param name="keyVaultProperties"> The properties of the KeyVault key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistry(ResourceIdentifier namespaceResourceId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubEncryptionProperties(string keySource, IList<IotHubKeyVaultKeyProperties> keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NamespaceResourceId = namespaceResourceId;
-            IdentityResourceId = identityResourceId;
+            KeySource = keySource;
+            KeyVaultProperties = keyVaultProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </summary>
-        public ResourceIdentifier NamespaceResourceId { get; set; }
-        /// <summary> The identity used to manage the ADR namespace from the data plane. </summary>
-        public ResourceIdentifier IdentityResourceId { get; set; }
+        /// <summary> The source of the key. </summary>
+        public string KeySource { get; set; }
+        /// <summary> The properties of the KeyVault key. </summary>
+        public IList<IotHubKeyVaultKeyProperties> KeyVaultProperties { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, EncryptionPropertiesDescription encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, RootCertificateProperties rootCertificate, IPVersion? ipVersion, DeviceRegistry deviceRegistry, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, IotHubEncryptionProperties encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubDeviceRegistry deviceRegistry, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -181,16 +181,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The capabilities and features enabled for the IoT hub. </summary>
         public IotHubCapability? Features { get; set; }
         /// <summary> The encryption properties for the IoT hub. </summary>
-        public EncryptionPropertiesDescription Encryption { get; set; }
+        public IotHubEncryptionProperties Encryption { get; set; }
         /// <summary> Primary and secondary location for iot hub. </summary>
         public IReadOnlyList<IotHubLocationDescription> Locations { get; }
         /// <summary> This property when set to true, will enable data residency, thus, disabling disaster recovery. </summary>
         public bool? EnableDataResidency { get; set; }
         /// <summary> This property store root certificate related information. </summary>
-        public RootCertificateProperties RootCertificate { get; set; }
+        public IotHubRootCertificateProperties RootCertificate { get; set; }
         /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
-        public IPVersion? IPVersion { get; set; }
+        public IotHubIPVersion? IPVersion { get; set; }
         /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
-        public DeviceRegistry DeviceRegistry { get; set; }
+        public IotHubDeviceRegistry DeviceRegistry { get; set; }
     }
 }

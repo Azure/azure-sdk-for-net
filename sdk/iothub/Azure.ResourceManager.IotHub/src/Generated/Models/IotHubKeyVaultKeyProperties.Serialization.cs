@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class KeyVaultKeyProperties : IUtf8JsonSerializable, IJsonModel<KeyVaultKeyProperties>
+    public partial class IotHubKeyVaultKeyProperties : IUtf8JsonSerializable, IJsonModel<IotHubKeyVaultKeyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultKeyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubKeyVaultKeyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KeyVaultKeyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotHubKeyVaultKeyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubKeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultKeyProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubKeyVaultKeyProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(KeyIdentifier))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        KeyVaultKeyProperties IJsonModel<KeyVaultKeyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IotHubKeyVaultKeyProperties IJsonModel<IotHubKeyVaultKeyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubKeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultKeyProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubKeyVaultKeyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyVaultKeyProperties(document.RootElement, options);
+            return DeserializeIotHubKeyVaultKeyProperties(document.RootElement, options);
         }
 
-        internal static KeyVaultKeyProperties DeserializeKeyVaultKeyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IotHubKeyVaultKeyProperties DeserializeIotHubKeyVaultKeyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeyVaultKeyProperties(keyIdentifier, identity, serializedAdditionalRawData);
+            return new IotHubKeyVaultKeyProperties(keyIdentifier, identity, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyVaultKeyProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IotHubKeyVaultKeyProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubKeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultKeyProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubKeyVaultKeyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyVaultKeyProperties IPersistableModel<KeyVaultKeyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IotHubKeyVaultKeyProperties IPersistableModel<IotHubKeyVaultKeyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubKeyVaultKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKeyVaultKeyProperties(document.RootElement, options);
+                        return DeserializeIotHubKeyVaultKeyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultKeyProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubKeyVaultKeyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KeyVaultKeyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotHubKeyVaultKeyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

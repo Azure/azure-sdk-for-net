@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IEnumerable<string> deviceStreamsStreamingEndpoints = null, IotHubCapability? features = null, EncryptionPropertiesDescription encryption = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null, RootCertificateProperties rootCertificate = null, IPVersion? ipVersion = null, DeviceRegistry deviceRegistry = null)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IEnumerable<string> deviceStreamsStreamingEndpoints = null, IotHubCapability? features = null, IotHubEncryptionProperties encryption = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null, IotHubRootCertificateProperties rootCertificate = null, IotHubIPVersion? ipVersion = null, IotHubDeviceRegistry deviceRegistry = null)
         {
             authorizationPolicies ??= new List<SharedAccessSignatureAuthorizationRule>();
             allowedFqdns ??= new List<string>();
@@ -204,13 +204,13 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubLocationDescription(location, role, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RootCertificateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubRootCertificateProperties"/>. </summary>
         /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
         /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
-        /// <returns> A new <see cref="Models.RootCertificateProperties"/> instance for mocking. </returns>
-        public static RootCertificateProperties RootCertificateProperties(bool? isRootCertificateV2Enabled = null, DateTimeOffset? lastUpdatedOn = null)
+        /// <returns> A new <see cref="Models.IotHubRootCertificateProperties"/> instance for mocking. </returns>
+        public static IotHubRootCertificateProperties IotHubRootCertificateProperties(bool? isRootCertificateV2Enabled = null, DateTimeOffset? lastUpdatedOn = null)
         {
-            return new RootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, serializedAdditionalRawData: null);
+            return new IotHubRootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubSkuInfo"/>. </summary>

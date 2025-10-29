@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> This property store root certificate related information. </summary>
-    public partial class RootCertificateProperties
+    public partial class IotHubRootCertificateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RootCertificateProperties"/>. </summary>
-        public RootCertificateProperties()
+        /// <summary> Initializes a new instance of <see cref="IotHubRootCertificateProperties"/>. </summary>
+        public IotHubRootCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RootCertificateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubRootCertificateProperties"/>. </summary>
         /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
         /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RootCertificateProperties(bool? isRootCertificateV2Enabled, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubRootCertificateProperties(bool? isRootCertificateV2Enabled, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsRootCertificateV2Enabled = isRootCertificateV2Enabled;
             LastUpdatedOn = lastUpdatedOn;

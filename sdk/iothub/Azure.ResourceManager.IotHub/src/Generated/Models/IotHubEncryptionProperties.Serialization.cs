@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class EncryptionPropertiesDescription : IUtf8JsonSerializable, IJsonModel<EncryptionPropertiesDescription>
+    public partial class IotHubEncryptionProperties : IUtf8JsonSerializable, IJsonModel<IotHubEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionPropertiesDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubEncryptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EncryptionPropertiesDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotHubEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionPropertiesDescription)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(KeySource))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        EncryptionPropertiesDescription IJsonModel<EncryptionPropertiesDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IotHubEncryptionProperties IJsonModel<IotHubEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionPropertiesDescription)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionPropertiesDescription(document.RootElement, options);
+            return DeserializeIotHubEncryptionProperties(document.RootElement, options);
         }
 
-        internal static EncryptionPropertiesDescription DeserializeEncryptionPropertiesDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IotHubEncryptionProperties DeserializeIotHubEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string keySource = default;
-            IList<KeyVaultKeyProperties> keyVaultProperties = default;
+            IList<IotHubKeyVaultKeyProperties> keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    List<KeyVaultKeyProperties> array = new List<KeyVaultKeyProperties>();
+                    List<IotHubKeyVaultKeyProperties> array = new List<IotHubKeyVaultKeyProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultKeyProperties.DeserializeKeyVaultKeyProperties(item, options));
+                        array.Add(IotHubKeyVaultKeyProperties.DeserializeIotHubKeyVaultKeyProperties(item, options));
                     }
                     keyVaultProperties = array;
                     continue;
@@ -117,38 +117,38 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionPropertiesDescription(keySource, keyVaultProperties ?? new ChangeTrackingList<KeyVaultKeyProperties>(), serializedAdditionalRawData);
+            return new IotHubEncryptionProperties(keySource, keyVaultProperties ?? new ChangeTrackingList<IotHubKeyVaultKeyProperties>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EncryptionPropertiesDescription>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IotHubEncryptionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionPropertiesDescription)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EncryptionPropertiesDescription IPersistableModel<EncryptionPropertiesDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IotHubEncryptionProperties IPersistableModel<IotHubEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEncryptionPropertiesDescription(document.RootElement, options);
+                        return DeserializeIotHubEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionPropertiesDescription)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EncryptionPropertiesDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotHubEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // invoke the operation
             string resourceName = "testHub";
-            IotHubDescriptionData data = new IotHubDescriptionData(new AzureLocation("centraluseuap"), new IotHubSkuInfo(IotHubSku.GEN2)
+            IotHubDescriptionData data = new IotHubDescriptionData(new AzureLocation("centraluseuap"), new IotHubSkuInfo(IotHubSku.Gen2)
             {
                 Capacity = 1L,
             })
@@ -120,12 +120,12 @@ MaxDeliveryCount = 10,
                     },
                     Features = IotHubCapability.None,
                     EnableDataResidency = true,
-                    RootCertificate = new RootCertificateProperties
+                    RootCertificate = new IotHubRootCertificateProperties
                     {
                         IsRootCertificateV2Enabled = true,
                     },
-                    IPVersion = IPVersion.IPv4IPv6,
-                    DeviceRegistry = new DeviceRegistry
+                    IPVersion = IotHubIPVersion.IPv4IPv6,
+                    DeviceRegistry = new IotHubDeviceRegistry
                     {
                         NamespaceResourceId = new ResourceIdentifier("/subscriptions/ae24ff83-d2ca-4fc8-9717-05dae4bba489/resourceGroups/myResourceGroup/providers/Microsoft.DeviceRegistry/namespaces/testNamespace"),
                         IdentityResourceId = new ResourceIdentifier("/subscriptions/ae24ff83-d2ca-4fc8-9717-05dae4bba489/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity"),
@@ -245,11 +245,11 @@ MaxDeliveryCount = 10,
                     },
                     Features = IotHubCapability.None,
                     EnableDataResidency = true,
-                    RootCertificate = new RootCertificateProperties
+                    RootCertificate = new IotHubRootCertificateProperties
                     {
                         IsRootCertificateV2Enabled = true,
                     },
-                    IPVersion = IPVersion.IPv4IPv6,
+                    IPVersion = IotHubIPVersion.IPv4IPv6,
                 },
                 Tags = { },
             };

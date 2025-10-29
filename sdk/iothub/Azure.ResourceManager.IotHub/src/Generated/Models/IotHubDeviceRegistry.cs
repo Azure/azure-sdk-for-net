@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The properties of the KeyVault key. </summary>
-    public partial class KeyVaultKeyProperties
+    /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
+    public partial class IotHubDeviceRegistry
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,36 +46,25 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyProperties"/>. </summary>
-        public KeyVaultKeyProperties()
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
+        public IotHubDeviceRegistry()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyProperties"/>. </summary>
-        /// <param name="keyIdentifier"> The identifier of the key. </param>
-        /// <param name="identity"> Managed identity properties of KeyVault Key. </param>
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
+        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </param>
+        /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultKeyProperties(string keyIdentifier, ManagedIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            KeyIdentifier = keyIdentifier;
-            Identity = identity;
+            NamespaceResourceId = namespaceResourceId;
+            IdentityResourceId = identityResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identifier of the key. </summary>
-        public string KeyIdentifier { get; set; }
-        /// <summary> Managed identity properties of KeyVault Key. </summary>
-        internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
-        public ResourceIdentifier UserAssignedIdentity
-        {
-            get => Identity is null ? default : Identity.UserAssignedIdentity;
-            set
-            {
-                if (Identity is null)
-                    Identity = new ManagedIdentity();
-                Identity.UserAssignedIdentity = value;
-            }
-        }
+        /// <summary> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </summary>
+        public ResourceIdentifier NamespaceResourceId { get; set; }
+        /// <summary> The identity used to manage the ADR namespace from the data plane. </summary>
+        public ResourceIdentifier IdentityResourceId { get; set; }
     }
 }

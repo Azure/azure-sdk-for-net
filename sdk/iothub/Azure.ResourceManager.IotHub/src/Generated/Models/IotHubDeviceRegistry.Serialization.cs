@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class DeviceRegistry : IUtf8JsonSerializable, IJsonModel<DeviceRegistry>
+    public partial class IotHubDeviceRegistry : IUtf8JsonSerializable, IJsonModel<IotHubDeviceRegistry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubDeviceRegistry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeviceRegistry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotHubDeviceRegistry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDeviceRegistry)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(NamespaceResourceId))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        DeviceRegistry IJsonModel<DeviceRegistry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IotHubDeviceRegistry IJsonModel<IotHubDeviceRegistry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDeviceRegistry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeviceRegistry(document.RootElement, options);
+            return DeserializeIotHubDeviceRegistry(document.RootElement, options);
         }
 
-        internal static DeviceRegistry DeserializeDeviceRegistry(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IotHubDeviceRegistry DeserializeIotHubDeviceRegistry(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceRegistry(namespaceResourceId, identityResourceId, serializedAdditionalRawData);
+            return new IotHubDeviceRegistry(namespaceResourceId, identityResourceId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeviceRegistry>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IotHubDeviceRegistry>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDeviceRegistry)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeviceRegistry IPersistableModel<DeviceRegistry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IotHubDeviceRegistry IPersistableModel<IotHubDeviceRegistry>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubDeviceRegistry>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeviceRegistry(document.RootElement, options);
+                        return DeserializeIotHubDeviceRegistry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDeviceRegistry)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeviceRegistry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotHubDeviceRegistry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

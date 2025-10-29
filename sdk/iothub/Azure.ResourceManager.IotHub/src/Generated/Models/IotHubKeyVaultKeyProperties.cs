@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The encryption properties for the IoT hub. </summary>
-    public partial class EncryptionPropertiesDescription
+    /// <summary> The properties of the KeyVault key. </summary>
+    public partial class IotHubKeyVaultKeyProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,36 @@ namespace Azure.ResourceManager.IotHub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionPropertiesDescription"/>. </summary>
-        public EncryptionPropertiesDescription()
+        /// <summary> Initializes a new instance of <see cref="IotHubKeyVaultKeyProperties"/>. </summary>
+        public IotHubKeyVaultKeyProperties()
         {
-            KeyVaultProperties = new ChangeTrackingList<KeyVaultKeyProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionPropertiesDescription"/>. </summary>
-        /// <param name="keySource"> The source of the key. </param>
-        /// <param name="keyVaultProperties"> The properties of the KeyVault key. </param>
+        /// <summary> Initializes a new instance of <see cref="IotHubKeyVaultKeyProperties"/>. </summary>
+        /// <param name="keyIdentifier"> The identifier of the key. </param>
+        /// <param name="identity"> Managed identity properties of KeyVault Key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionPropertiesDescription(string keySource, IList<KeyVaultKeyProperties> keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotHubKeyVaultKeyProperties(string keyIdentifier, ManagedIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            KeySource = keySource;
-            KeyVaultProperties = keyVaultProperties;
+            KeyIdentifier = keyIdentifier;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The source of the key. </summary>
-        public string KeySource { get; set; }
-        /// <summary> The properties of the KeyVault key. </summary>
-        public IList<KeyVaultKeyProperties> KeyVaultProperties { get; }
+        /// <summary> The identifier of the key. </summary>
+        public string KeyIdentifier { get; set; }
+        /// <summary> Managed identity properties of KeyVault Key. </summary>
+        internal ManagedIdentity Identity { get; set; }
+        /// <summary> The user assigned identity. </summary>
+        public ResourceIdentifier UserAssignedIdentity
+        {
+            get => Identity is null ? default : Identity.UserAssignedIdentity;
+            set
+            {
+                if (Identity is null)
+                    Identity = new ManagedIdentity();
+                Identity.UserAssignedIdentity = value;
+            }
+        }
     }
 }
