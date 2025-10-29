@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual Operation<FullBackupDetailsInternal> FullBackup(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = FullBackup(waitUntil, azureStorageBlobContainerUri, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Operation<BinaryData> result = FullBackup(waitUntil, azureStorageBlobContainerUri, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual async Task<Operation<FullBackupDetailsInternal>> FullBackupAsync(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = await FullBackupAsync(waitUntil, azureStorageBlobContainerUri, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Operation<BinaryData> result = await FullBackupAsync(waitUntil, azureStorageBlobContainerUri, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync");
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual Operation<FullBackupDetailsInternal> PreFullBackup(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = PreFullBackup(waitUntil, preBackupOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Operation<BinaryData> result = PreFullBackup(waitUntil, preBackupOperationParameters, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
         }
 
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual async Task<Operation<FullBackupDetailsInternal>> PreFullBackupAsync(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = await PreFullBackupAsync(waitUntil, preBackupOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Operation<BinaryData> result = await PreFullBackupAsync(waitUntil, preBackupOperationParameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync");
         }
 
@@ -225,7 +225,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual Operation<RestoreDetailsInternal> FullRestoreOperation(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = FullRestoreOperation(waitUntil, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Operation<BinaryData> result = FullRestoreOperation(waitUntil, restoreBlobDetails, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual async Task<Operation<RestoreDetailsInternal>> FullRestoreOperationAsync(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = await FullRestoreOperationAsync(waitUntil, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Operation<BinaryData> result = await FullRestoreOperationAsync(waitUntil, restoreBlobDetails, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync");
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual Operation<RestoreDetailsInternal> PreFullRestoreOperation(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = PreFullRestoreOperation(waitUntil, preRestoreOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Operation<BinaryData> result = PreFullRestoreOperation(waitUntil, preRestoreOperationParameters, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
         }
 
@@ -297,7 +297,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual async Task<Operation<RestoreDetailsInternal>> PreFullRestoreOperationAsync(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = await PreFullRestoreOperationAsync(waitUntil, preRestoreOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Operation<BinaryData> result = await PreFullRestoreOperationAsync(waitUntil, preRestoreOperationParameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync");
         }
 
@@ -363,7 +363,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<FullBackupDetailsInternal> FullBackupStatus(string jobId, CancellationToken cancellationToken = default)
         {
-            Response result = FullBackupStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = FullBackupStatus(jobId, cancellationToken.ToRequestContext());
             return Response.FromValue((FullBackupDetailsInternal)result, result);
         }
 
@@ -373,7 +373,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            Response result = await FullBackupStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await FullBackupStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FullBackupDetailsInternal)result, result);
         }
 
@@ -439,7 +439,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<RestoreDetailsInternal> RestoreStatus(string jobId, CancellationToken cancellationToken = default)
         {
-            Response result = RestoreStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = RestoreStatus(jobId, cancellationToken.ToRequestContext());
             return Response.FromValue((RestoreDetailsInternal)result, result);
         }
 
@@ -449,7 +449,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<RestoreDetailsInternal>> RestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            Response result = await RestoreStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await RestoreStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RestoreDetailsInternal)result, result);
         }
 
@@ -515,7 +515,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreStatus(string jobId, CancellationToken cancellationToken = default)
         {
-            Response result = SelectiveKeyRestoreStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = SelectiveKeyRestoreStatus(jobId, cancellationToken.ToRequestContext());
             return Response.FromValue((SelectiveKeyRestoreDetailsInternal)result, result);
         }
 
@@ -525,7 +525,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            Response result = await SelectiveKeyRestoreStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await SelectiveKeyRestoreStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SelectiveKeyRestoreDetailsInternal)result, result);
         }
 
@@ -580,7 +580,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual Operation<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = SelectiveKeyRestoreOperation(waitUntil, keyName, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Operation<BinaryData> result = SelectiveKeyRestoreOperation(waitUntil, keyName, restoreBlobDetails, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
         }
 
@@ -591,7 +591,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         internal virtual async Task<Operation<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
-            Operation<BinaryData> result = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Operation<BinaryData> result = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, restoreBlobDetails, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync");
         }
 
@@ -715,7 +715,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<KeyVaultSetting> GetSetting(string settingName, CancellationToken cancellationToken = default)
         {
-            Response result = GetSetting(settingName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetSetting(settingName, cancellationToken.ToRequestContext());
             return Response.FromValue((KeyVaultSetting)result, result);
         }
 
@@ -725,7 +725,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<KeyVaultSetting>> GetSettingAsync(string settingName, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSettingAsync(settingName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetSettingAsync(settingName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KeyVaultSetting)result, result);
         }
 
@@ -788,7 +788,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
-            Response result = GetSettings(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetSettings(cancellationToken.ToRequestContext());
             return Response.FromValue((GetSettingsResult)result, result);
         }
 
@@ -797,7 +797,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetSettingsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetSettingsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((GetSettingsResult)result, result);
         }
     }

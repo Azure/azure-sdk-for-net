@@ -18,7 +18,7 @@ using Azure.ResourceManager.PineconeVectorDB.Models;
 namespace Azure.ResourceManager.PineconeVectorDB
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class PineconeVectorDBOrganizationData : IJsonModel<PineconeVectorDBOrganizationData>
+    public partial class PineconeVectorDBOrganizationData : TrackedResourceData, IJsonModel<PineconeVectorDBOrganizationData>
     {
         /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationData"/> for deserialization. </summary>
         internal PineconeVectorDBOrganizationData()

@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dell.Storage
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class DellFileSystemData : IJsonModel<DellFileSystemData>
+    public partial class DellFileSystemData : TrackedResourceData, IJsonModel<DellFileSystemData>
     {
         /// <summary> Initializes a new instance of <see cref="DellFileSystemData"/> for deserialization. </summary>
         internal DellFileSystemData()

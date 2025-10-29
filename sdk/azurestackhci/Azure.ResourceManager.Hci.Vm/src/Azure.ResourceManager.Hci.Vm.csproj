@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.Hci.Vm</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Hci.Vm.</Description>
     <PackageTags>azure;management;arm;resource manager;hci.vm</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

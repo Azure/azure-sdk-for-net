@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            EOUDetectionModel model = default;
+            EouDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             EouThresholdLevel? thresholdLevel = default;
             float? timeoutMs = default;
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = new EOUDetectionModel(prop.Value.GetString());
+                    model = new EouDetectionModel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threshold_level"u8))

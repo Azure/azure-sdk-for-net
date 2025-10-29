@@ -18,7 +18,7 @@ using Azure.ResourceManager.PortalServicesCopilot.Models;
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
     /// <summary> The copilot settings tenant resource definition. </summary>
-    public partial class PortalServicesCopilotSettingData : IJsonModel<PortalServicesCopilotSettingData>
+    public partial class PortalServicesCopilotSettingData : ResourceData, IJsonModel<PortalServicesCopilotSettingData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

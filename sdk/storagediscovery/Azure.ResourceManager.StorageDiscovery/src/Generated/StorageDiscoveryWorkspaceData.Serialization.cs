@@ -18,7 +18,7 @@ using Azure.ResourceManager.StorageDiscovery.Models;
 namespace Azure.ResourceManager.StorageDiscovery
 {
     /// <summary> A Storage Discovery Workspace resource. This resource configures the collection of storage account metrics. </summary>
-    public partial class StorageDiscoveryWorkspaceData : IJsonModel<StorageDiscoveryWorkspaceData>
+    public partial class StorageDiscoveryWorkspaceData : TrackedResourceData, IJsonModel<StorageDiscoveryWorkspaceData>
     {
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspaceData"/> for deserialization. </summary>
         internal StorageDiscoveryWorkspaceData()

@@ -1,7 +1,14 @@
 
+. (Join-Path $PSScriptRoot .. SemVer.ps1)
+
 $ReleaseDevOpsOrgParameters =  @("--organization", "https://dev.azure.com/azure-sdk")
 $ReleaseDevOpsCommonParameters =  $ReleaseDevOpsOrgParameters + @("--output", "json")
 $ReleaseDevOpsCommonParametersWithProject = $ReleaseDevOpsCommonParameters + @("--project", "Release")
+
+# This is used to determine whether or not the az login and azure-devops extension
+# install have already been completed.
+$global:AzLoginAndDevOpsExtensionInstallComplete = $false
+$global:HasDevOpsAccess = $false
 
 function Get-DevOpsRestHeaders()
 {
@@ -17,17 +24,44 @@ function Get-DevOpsRestHeaders()
   return $headers
 }
 
+# Function was created from the same code being in Update-DevOps-Release-WorkItem.ps1
+# and Validate-Package.ps1. The global variable is used to prevent az commands from
+# being rerun multiple times
+function CheckAzLoginAndDevOpsExtensionInstall()
+{
+  if (-not $global:AzLoginAndDevOpsExtensionInstallComplete) {
+    az account show *> $null
+    if (!$?) {
+      Write-Host 'Running az login...'
+      az login *> $null
+    }
+
+    az extension show -n azure-devops *> $null
+    if (!$?){
+      az extension add --name azure-devops
+    } else {
+      # Force update the extension to the latest version if it was already installed
+      # this is needed to ensure we have the authentication issue fixed from earlier versions
+      az extension update -n azure-devops *> $null
+    }
+    $global:AzLoginAndDevOpsExtensionInstallComplete = $true
+  }
+}
+
 function CheckDevOpsAccess()
 {
-  # Dummy test query to validate permissions
-  $query = "SELECT [System.ID] FROM WorkItems WHERE [Work Item Type] = 'Package' AND [Package] = 'azure-sdk-template'"
+  if (-not $global:HasDevOpsAccess) {
+    # Dummy test query to validate permissions
+    $query = "SELECT [System.ID] FROM WorkItems WHERE [Work Item Type] = 'Package' AND [Package] = 'azure-sdk-template'"
 
-  $response = Invoke-RestMethod -Method POST `
-    -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?api-version=6.0" `
-    -Headers (Get-DevOpsRestHeaders) -Body "{ ""query"": ""$query"" }" -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+    $response = Invoke-RestMethod -Method POST `
+      -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?api-version=6.0" `
+      -Headers (Get-DevOpsRestHeaders) -Body "{ ""query"": ""$query"" }" -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
 
-  if ($response -isnot [HashTable] -or !$response.ContainsKey("workItems")) {
-    throw "Failed to run test query against Azure DevOps. Please ensure you are logged into the public azure cloud. Consider running 'az logout' and then 'az login'."
+    if ($response -isnot [HashTable] -or !$response.ContainsKey("workItems")) {
+      throw "Failed to run test query against Azure DevOps. Please ensure you are logged into the public azure cloud. Consider running 'az logout' and then 'az login'."
+    }
+    $global:HasDevOpsAccess = $true
   }
 }
 
@@ -1016,10 +1050,9 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     return $true
 }
 
-
 function Get-LanguageDevOpsName($LanguageShort)
 {
-    switch ($LanguageShort.ToLower()) 
+    switch ($LanguageShort.ToLower())
     {
         "net" { return "Dotnet" }
         "js" { return "JavaScript" }
@@ -1058,7 +1091,7 @@ function Get-ReleasePlanForPackage($packageName)
 }
 
 function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $version)
-{  
+{
     $devopsFieldLanguage = Get-LanguageDevOpsName -LanguageShort $LanguageShort
     if (!$devopsFieldLanguage)
     {
@@ -1113,4 +1146,169 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
       return $null
   }
   return $workItem["fields"]
+}
+
+function Get-ReleasePlansForCPEXAttestation()
+{
+  $fields = @()
+  $fields += "Custom.ProductServiceTreeID"
+  $fields += "Custom.ReleasePlanType"
+  $fields += "Custom.ProductType"
+  $fields += "Custom.DataScope"
+  $fields += "Custom.MgmtScope"
+  $fields += "Custom.ProductName"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Release Plan'"
+  $query += " AND [System.State] = 'Finished'"
+  $query += " AND [Custom.AttestationStatus] IN ('', 'Pending')"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+  $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
+  $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
+  $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
+  $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
+  $query += " AND [Custom.ProductServiceTreeID] <> ''"
+  $query += " AND [Custom.ProductLifecycle] <> ''"
+  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+
+  $workItems = Invoke-Query $fields $query
+  return $workItems
+}
+
+function Get-TriagesForCPEXAttestation()
+{
+  $fields = @()
+  $fields += "Custom.ProductServiceTreeID"
+  $fields += "Custom.ProductType"
+  $fields += "Custom.ProductLifecycle"
+  $fields += "Custom.DataScope"
+  $fields += "Custom.MgmtScope"
+  $fields += "Custom.DataplaneAttestationStatus"
+  $fields += "Custom.ManagementPlaneAttestationStatus"
+  $fields += "Custom.ProductName"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage'"
+  $query += " AND ([Custom.DataplaneAttestationStatus] IN ('', 'Pending') OR [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending'))"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+  $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
+  $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
+  $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
+  $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
+  $query += " AND [Custom.ProductServiceTreeID] <> ''"
+  $query += " AND [Custom.ProductLifecycle] <> ''"
+  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+
+  $workItems = Invoke-Query $fields $query
+  return $workItems
+}
+
+function Update-AttestationStatusInWorkItem($workItemId, $fieldName, $status)
+{
+  $dateFieldName = $fieldName -replace 'Status$', 'Date'
+
+  $fields = @()
+  $fields += "`"${fieldName}=${status}`""
+  $fields += "`"${dateFieldName}=$(Get-Date)`""
+
+  Write-Host "Updating Work Item [$workItemId] with status [$status] for field [$fieldName]."
+  $workItem = UpdateWorkItem -id $workItemId -fields $fields
+  Write-Host "Updated attestation status for [$fieldName] in Work Item [$workItemId]"
+  return $true
+}
+
+# This function was originally the entirety of what was in Update-DevOps-Release-WorkItem.ps1
+# and has been converted to a function.
+function Update-DevOpsReleaseWorkItem {
+  param(
+    [Parameter(Mandatory=$true)]
+    [string]$language,
+    [Parameter(Mandatory=$true)]
+    [string]$packageName,
+    [Parameter(Mandatory=$true)]
+    [string]$version,
+    [string]$plannedDate,
+    [string]$serviceName = $null,
+    [string]$packageDisplayName = $null,
+    [string]$packageRepoPath = "NA",
+    [string]$packageType = "client",
+    [string]$packageNewLibrary = "true",
+    [string]$relatedWorkItemId = $null,
+    [string]$tag = $null,
+    [bool]$inRelease = $true
+  )
+
+  if (!(Get-Command az -ErrorAction SilentlyContinue)) {
+    Write-Error 'You must have the Azure CLI installed: https://aka.ms/azure-cli'
+    return $false
+  }
+
+  CheckAzLoginAndDevOpsExtensionInstall
+
+  CheckDevOpsAccess
+
+  $parsedNewVersion = [AzureEngSemanticVersion]::new($version)
+  $state = "In Release"
+  $releaseType = $parsedNewVersion.VersionType
+  $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
+
+  $packageInfo = [PSCustomObject][ordered]@{
+    Package = $packageName
+    DisplayName = $packageDisplayName
+    ServiceName = $serviceName
+    RepoPath = $packageRepoPath
+    Type = $packageType
+    New = $packageNewLibrary
+  };
+
+  if (!$plannedDate) {
+    $plannedDate = Get-Date -Format "MM/dd/yyyy"
+  }
+
+  $plannedVersions = @(
+    [PSCustomObject][ordered]@{
+      Type = $releaseType
+      Version = $version
+      Date = $plannedDate
+    }
+  )
+  $ignoreReleasePlannerTests = $true
+  if ($tag -and  $tag.Contains("Release Planner App Test")) {
+    $ignoreReleasePlannerTests = $false
+  }
+
+  $workItem = FindOrCreateClonePackageWorkItem $language $packageInfo $versionMajorMinor -allowPrompt $true -outputCommand $false -relatedId $relatedWorkItemId -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
+
+  if (!$workItem) {
+    Write-Host "Something failed as we don't have a work-item so exiting."
+    return $false
+  }
+
+  Write-Host "Updated or created a release work item for a package release with the following properties:"
+  Write-Host "  Language: $($workItem.fields['Custom.Language'])"
+  Write-Host "  Version: $($workItem.fields['Custom.PackageVersionMajorMinor'])"
+  Write-Host "  Package: $($workItem.fields['Custom.Package'])"
+  if ($workItem.fields['System.AssignedTo']) {
+    Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+  }
+  else {
+    Write-Host "  AssignedTo: unassigned"
+  }
+  Write-Host "  PackageDisplayName: $($workItem.fields['Custom.PackageDisplayName'])"
+  Write-Host "  ServiceName: $($workItem.fields['Custom.ServiceName'])"
+  Write-Host "  PackageType: $($workItem.fields['Custom.PackageType'])"
+  Write-Host ""
+  if ($inRelease)
+  {
+    Write-Host "Marking item [$($workItem.id)]$($workItem.fields['System.Title']) as '$state' for '$releaseType'"
+    $updatedWI = UpdatePackageWorkItemReleaseState -id $workItem.id -state "In Release" -releaseType $releaseType -outputCommand $false
+  }
+  $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions
+
+  Write-Host "Release tracking item is at https://dev.azure.com/azure-sdk/Release/_workitems/edit/$($updatedWI.id)/"
+  return $true
 }

@@ -92,75 +92,6 @@ namespace Azure.ResourceManager.Support
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SupportTicketNoSubCommunicationResources in the TenantSupportTicket. </summary>
-        /// <returns> An object representing collection of SupportTicketNoSubCommunicationResources and their operations over a SupportTicketNoSubCommunicationResource. </returns>
-        public virtual SupportTicketNoSubCommunicationCollection GetSupportTicketNoSubCommunications()
-        {
-            return GetCachedClient(client => new SupportTicketNoSubCommunicationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns communication details for a support ticket.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationsNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="communicationName"> Communication name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SupportTicketNoSubCommunicationResource>> GetSupportTicketNoSubCommunicationAsync(string communicationName, CancellationToken cancellationToken = default)
-        {
-            return await GetSupportTicketNoSubCommunications().GetAsync(communicationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns communication details for a support ticket.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunicationsNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="communicationName"> Communication name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunication(string communicationName, CancellationToken cancellationToken = default)
-        {
-            return GetSupportTicketNoSubCommunications().Get(communicationName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SupportTicketNoSubChatTranscriptResources in the TenantSupportTicket. </summary>
         /// <returns> An object representing collection of SupportTicketNoSubChatTranscriptResources and their operations over a SupportTicketNoSubChatTranscriptResource. </returns>
         public virtual SupportTicketNoSubChatTranscriptCollection GetSupportTicketNoSubChatTranscripts()
@@ -189,7 +120,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -220,7 +151,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -228,6 +159,75 @@ namespace Azure.ResourceManager.Support
         public virtual Response<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscript(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
             return GetSupportTicketNoSubChatTranscripts().Get(chatTranscriptName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SupportTicketNoSubCommunicationResources in the TenantSupportTicket. </summary>
+        /// <returns> An object representing collection of SupportTicketNoSubCommunicationResources and their operations over a SupportTicketNoSubCommunicationResource. </returns>
+        public virtual SupportTicketNoSubCommunicationCollection GetSupportTicketNoSubCommunications()
+        {
+            return GetCachedClient(client => new SupportTicketNoSubCommunicationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns communication details for a support ticket.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationName"> The name of the CommunicationDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SupportTicketNoSubCommunicationResource>> GetSupportTicketNoSubCommunicationAsync(string communicationName, CancellationToken cancellationToken = default)
+        {
+            return await GetSupportTicketNoSubCommunications().GetAsync(communicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns communication details for a support ticket.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationName"> The name of the CommunicationDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunication(string communicationName, CancellationToken cancellationToken = default)
+        {
+            return GetSupportTicketNoSubCommunications().Get(communicationName, cancellationToken);
         }
 
         /// <summary>
