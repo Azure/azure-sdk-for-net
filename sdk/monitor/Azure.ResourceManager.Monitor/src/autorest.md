@@ -552,6 +552,7 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-05-01/metrics_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2019-03-01/metricBaselines_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/metricAlert_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/19b9fa28a4ac7e156245fad3ee9700e253ee4d2b/specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/metricAlert_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/scheduledQueryRule_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/preview/2018-11-27-preview/vmInsightsOnboarding_API.json
