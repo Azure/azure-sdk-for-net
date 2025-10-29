@@ -76,6 +76,10 @@ Write-Host "Querying DevOps for the latest build for PR '$PRNumber'..."
 $BuildJson = (az pipelines build list --organization "https://dev.azure.com/azure-sdk" --project "internal" --branch "refs/pull/$PRNumber/merge" --top 1 --query "[0]" --output json | ConvertFrom-Json)
 Write-Host 'Done'
 
+if (-not $BuildJson) {
+    Write-Error "No build information found for PR '$PRNumber'. Ensure the PR has a build in Azure DevOps."
+    exit 1
+}
 # Construct version from build number and update props file
 Write-Host "Constructing version from build information..."
 try {
