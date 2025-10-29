@@ -18,7 +18,11 @@
 - **MessagingConnect API Changes**: Updated `MessagingConnectOptions` constructor and properties for better flexibility:
   - Constructor changed from `MessagingConnectOptions(string apiKey, string partner)` to `MessagingConnectOptions(string partner, object partnerParams)`
   - Property `ApiKey` replaced with `PartnerParams` to support various partner-specific parameters
-  - Customers should now pass partner parameters as: `new MessagingConnectOptions("PartnerName", new { ApiKey = "your-api-key" })`
+  - Added new `MessagingConnectPartnerParameters` class providing multiple convenient factory methods for creating partner parameters:
+    - `MessagingConnectPartnerParameters.Create(("key", "value"), ...)` - Clean tuple syntax (recommended)
+    - `MessagingConnectPartnerParameters.FromObject(new { Key = "value" })` - Familiar anonymous object syntax
+    - `MessagingConnectPartnerParameters.FromDictionary(dictionary)` - Dictionary-based creation
+  - **Migration**: Replace `new MessagingConnectOptions("your-api-key", "PartnerName")` with `new MessagingConnectOptions("PartnerName", MessagingConnectPartnerParameters.FromObject(new { ApiKey = "your-api-key" }))` or use the recommended tuple syntax: `MessagingConnectPartnerParameters.Create(("ApiKey", "your-api-key"))`
 
 ### Other Changes
 

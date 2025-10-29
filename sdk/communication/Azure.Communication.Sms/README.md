@@ -164,37 +164,53 @@ The delivery report also includes a `MessagingConnectPartnerMessageId` property 
 ### Messaging Connect Integration
 
 #### Send SMS through Messaging Connect Partners
-To send SMS messages through Messaging Connect partners, provide partner-specific configuration in the `MessagingConnect` options:
+To send SMS messages through Messaging Connect partners, provide partner-specific configuration using the generic `MessagingConnectPartnerParameters` class. This approach automatically supports any messaging partner without requiring SDK changes.
 
-**Using TelcoMessagingClient:**
+**Using TelcoMessagingClient (Recommended):**
 ```csharp
+// Option 1: Clean tuple syntax (recommended)
+var partnerParams = MessagingConnectPartnerParameters.Create(
+    ("ApiKey", "your-partner-api-key"),
+    ("CustomParam", "custom-value"));
+
 var response = await telcoMessagingClient.Sms.SendAsync(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number>" },
     message: "Hello via partner!",
     options: new SmsSendOptions(enableDeliveryReport: true)
     {
-        MessagingConnect = new MessagingConnectOptions(
-            partner: "YourPartnerName",
-            partnerParams: new {
-                ApiKey = "your-partner-api-key"
-            }
-        )
+        MessagingConnect = new MessagingConnectOptions("YourPartnerName", partnerParams)
+    });
+
+// Option 2: Familiar anonymous object syntax
+var partnerParams2 = MessagingConnectPartnerParameters.FromObject(new {
+    ApiKey = "your-partner-api-key",
+    CustomParam = "custom-value"
+});
+
+var response2 = await telcoMessagingClient.Sms.SendAsync(
+    from: "<from-phone-number>",
+    to: new string[] { "<to-phone-number>" },
+    message: "Hello via partner!",
+    options: new SmsSendOptions(enableDeliveryReport: true)
+    {
+        MessagingConnect = new MessagingConnectOptions("YourPartnerName", partnerParams2)
     });
 ```
 
-**Using SmsClient (deprecated):**
+**Using SmsClient (Legacy):**
 ```csharp
+var partnerParams = MessagingConnectPartnerParameters.Create(
+    ("ApiKey", "your-partner-api-key"),
+    ("CustomParam", "custom-value"));
+
 var response = await smsClient.SendAsync(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number>" },
     message: "Hello via partner!",
     options: new SmsSendOptions(enableDeliveryReport: true)
     {
-        MessagingConnect = new MessagingConnectOptions(
-            partner: "YourPartnerName",
-            partnerParams: new { ApiKey = "your-partner-api-key" }
-        )
+        MessagingConnect = new MessagingConnectOptions("YourPartnerName", partnerParams)
     });
 ```
 
