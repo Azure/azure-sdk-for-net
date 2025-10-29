@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// Migration state of a database.
     /// Serialized Name: MigrationDatabaseState
     /// </summary>
-    public readonly partial struct MigrationDatabaseState : IEquatable<MigrationDatabaseState>
+    public readonly partial struct MigrationDbState : IEquatable<MigrationDbState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDatabaseState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationDbState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MigrationDatabaseState(string value)
+        public MigrationDbState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -36,44 +36,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// InProgress
         /// Serialized Name: MigrationDatabaseState.InProgress
         /// </summary>
-        public static MigrationDatabaseState InProgress { get; } = new MigrationDatabaseState(InProgressValue);
+        public static MigrationDbState InProgress { get; } = new MigrationDbState(InProgressValue);
         /// <summary>
         /// WaitingForCutoverTrigger
         /// Serialized Name: MigrationDatabaseState.WaitingForCutoverTrigger
         /// </summary>
-        public static MigrationDatabaseState WaitingForCutoverTrigger { get; } = new MigrationDatabaseState(WaitingForCutoverTriggerValue);
+        public static MigrationDbState WaitingForCutoverTrigger { get; } = new MigrationDbState(WaitingForCutoverTriggerValue);
         /// <summary>
         /// Failed
         /// Serialized Name: MigrationDatabaseState.Failed
         /// </summary>
-        public static MigrationDatabaseState Failed { get; } = new MigrationDatabaseState(FailedValue);
+        public static MigrationDbState Failed { get; } = new MigrationDbState(FailedValue);
         /// <summary>
         /// Canceled
         /// Serialized Name: MigrationDatabaseState.Canceled
         /// </summary>
-        public static MigrationDatabaseState Canceled { get; } = new MigrationDatabaseState(CanceledValue);
+        public static MigrationDbState Canceled { get; } = new MigrationDbState(CanceledValue);
         /// <summary>
         /// Succeeded
         /// Serialized Name: MigrationDatabaseState.Succeeded
         /// </summary>
-        public static MigrationDatabaseState Succeeded { get; } = new MigrationDatabaseState(SucceededValue);
+        public static MigrationDbState Succeeded { get; } = new MigrationDbState(SucceededValue);
         /// <summary>
         /// Canceling
         /// Serialized Name: MigrationDatabaseState.Canceling
         /// </summary>
-        public static MigrationDatabaseState Canceling { get; } = new MigrationDatabaseState(CancelingValue);
-        /// <summary> Determines if two <see cref="MigrationDatabaseState"/> values are the same. </summary>
-        public static bool operator ==(MigrationDatabaseState left, MigrationDatabaseState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="MigrationDatabaseState"/> values are not the same. </summary>
-        public static bool operator !=(MigrationDatabaseState left, MigrationDatabaseState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationDatabaseState"/>. </summary>
-        public static implicit operator MigrationDatabaseState(string value) => new MigrationDatabaseState(value);
+        public static MigrationDbState Canceling { get; } = new MigrationDbState(CancelingValue);
+        /// <summary> Determines if two <see cref="MigrationDbState"/> values are the same. </summary>
+        public static bool operator ==(MigrationDbState left, MigrationDbState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MigrationDbState"/> values are not the same. </summary>
+        public static bool operator !=(MigrationDbState left, MigrationDbState right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationDbState"/>. </summary>
+        public static implicit operator MigrationDbState(string value) => new MigrationDbState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MigrationDatabaseState other && Equals(other);
+        public override bool Equals(object obj) => obj is MigrationDbState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(MigrationDatabaseState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MigrationDbState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

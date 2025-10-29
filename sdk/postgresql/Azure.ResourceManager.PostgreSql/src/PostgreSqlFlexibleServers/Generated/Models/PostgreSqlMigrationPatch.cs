@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: MigrationResourceForPatch.properties.migrationMode
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesAndPermission? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesEnum? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             SourceDbServerResourceId = sourceDbServerResourceId;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: MigrationResourceForPatch.properties.migrateRoles
         /// </summary>
         [WirePath("properties.migrateRoles")]
-        public MigrateRolesAndPermission? MigrateRoles { get; set; }
+        public MigrateRolesEnum? MigrateRoles { get; set; }
         /// <summary>
         /// Indicates if data migration must start right away.
         /// Serialized Name: MigrationResourceForPatch.properties.startDataMigration

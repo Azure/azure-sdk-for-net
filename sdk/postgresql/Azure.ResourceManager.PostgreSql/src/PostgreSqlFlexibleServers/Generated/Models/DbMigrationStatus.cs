@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// Migration state of a database.
     /// Serialized Name: DatabaseMigrationState
     /// </summary>
-    public partial class DatabaseMigrationState
+    public partial class DbMigrationStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationState"/>. </summary>
-        internal DatabaseMigrationState()
+        /// <summary> Initializes a new instance of <see cref="DbMigrationStatus"/>. </summary>
+        internal DbMigrationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DbMigrationStatus"/>. </summary>
         /// <param name="databaseName">
         /// Name of database.
         /// Serialized Name: DatabaseMigrationState.databaseName
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: DatabaseMigrationState.message
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseMigrationState(string databaseName, MigrationDatabaseState? migrationState, string migrationOperation, DateTimeOffset? startedOn, DateTimeOffset? endedOn, int? fullLoadQueuedTables, int? fullLoadErroredTables, int? fullLoadLoadingTables, int? fullLoadCompletedTables, int? cdcUpdateCounter, int? cdcDeleteCounter, int? cdcInsertCounter, int? appliedChanges, int? incomingChanges, int? latency, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DbMigrationStatus(string databaseName, MigrationDbState? migrationState, string migrationOperation, DateTimeOffset? startedOn, DateTimeOffset? endedOn, int? fullLoadQueuedTables, int? fullLoadErroredTables, int? fullLoadLoadingTables, int? fullLoadCompletedTables, int? cdcUpdateCounter, int? cdcDeleteCounter, int? cdcInsertCounter, int? appliedChanges, int? incomingChanges, int? latency, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             MigrationState = migrationState;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: DatabaseMigrationState.migrationState
         /// </summary>
         [WirePath("migrationState")]
-        public MigrationDatabaseState? MigrationState { get; }
+        public MigrationDbState? MigrationState { get; }
         /// <summary>
         /// Migration operation of a database.
         /// Serialized Name: DatabaseMigrationState.migrationOperation

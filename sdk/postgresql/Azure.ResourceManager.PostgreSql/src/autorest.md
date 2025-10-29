@@ -228,7 +228,7 @@ rename-mapping:
   Sku: PostgreSqlFlexibleServerSku
   Network: PostgreSqlFlexibleServerNetwork
   HighAvailability: PostgreSqlFlexibleServerHighAvailability
-  HighAvailabilityMode: PostgreSqlFlexibleServerComputeHighAvailabilityMode
+  HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
   ServerListResult: PostgreSqlFlexibleServerListResult
   ServerState: PostgreSqlFlexibleServerState
   FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
@@ -258,7 +258,7 @@ rename-mapping:
   StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
   ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
-  ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
+  MicrosoftEntraAuth: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
   AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
   DataEncryptionType: PostgreSqlFlexibleServerKeyType
   AuthConfig: PostgreSqlFlexibleServerAuthConfig
@@ -301,14 +301,12 @@ rename-mapping:
   EncryptionKeyStatus: PostgreSqlKeyStatus
   BackupsLongTermRetentionResponse: PostgreSqlFlexibleServerLtrBackupResult
   LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
-  LtrServerBackupOperation: PostgreSqlLtrServerBackupOperation
-  LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
   MigrationListFilter: PostgreSqlMigrationListFilter
   MigrationMode: PostgreSqlMigrationMode
   MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
   MigrationResourceListResult: PostgreSqlMigrationResourceListResult
-  MigrationNameAvailabilityResource: PostgreSqlCheckMigrationNameAvailabilityContent
-  MigrationNameAvailabilityResource.nameAvailable: IsNameAvailable
+  MigrationNameAvailability: PostgreSqlCheckMigrationNameAvailabilityContent
+  MigrationNameAvailability.nameAvailable: IsNameAvailable
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus
@@ -323,9 +321,13 @@ rename-mapping:
   DataEncryption.primaryUserAssignedIdentityId: -|arm-id
   AdvancedThreatProtectionSettingsModel: ServerThreatProtectionSettingsModel
   AdministratorMicrosoftEntra: PostgreSqlFlexibleServerActiveDirectoryAdministrator
-  BackupsLongTermRetentionOperation: PostgreSqlLtrServerBackupOperationResource
+  LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
+  BackupsLongTermRetentionOperation: PostgreSqlLtrServerBackupOperation
   VirtualEndpoint: VirtualEndpointResource
   ReadReplicaPromoteOption: ReplicationPromoteOption
+  MigrationDatabaseState: MigrationDbState
+  MigrateRolesAndPermissions: MigrateRolesEnum
+  DatabaseMigrationState: DbMigrationStatus
   TuningOption: FooTuningOption
   UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
 

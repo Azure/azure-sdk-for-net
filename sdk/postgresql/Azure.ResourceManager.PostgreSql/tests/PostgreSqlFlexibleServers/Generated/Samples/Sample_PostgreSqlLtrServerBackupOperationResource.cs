@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string backupName = "exampleltrbackup";
             ResourceIdentifier postgreSqlLtrServerBackupOperationResourceId = PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            PostgreSqlLtrServerBackupOperationResource postgreSqlLtrServerBackupOperationResource = client.GetPostgreSqlLtrServerBackupOperationResource(postgreSqlLtrServerBackupOperationResourceId);
+            PostgreSqlLtrServerBackupOperationResource postgreSqlLtrServerBackupOperation = client.GetPostgreSqlLtrServerBackupOperationResource(postgreSqlLtrServerBackupOperationResourceId);
 
             // invoke the operation
-            PostgreSqlLtrServerBackupOperationResource result = await postgreSqlLtrServerBackupOperationResource.GetAsync();
+            PostgreSqlLtrServerBackupOperationResource result = await postgreSqlLtrServerBackupOperation.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PostgreSqlLtrServerBackupOperationResourceData resourceData = result.Data;
+            PostgreSqlLtrServerBackupOperationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

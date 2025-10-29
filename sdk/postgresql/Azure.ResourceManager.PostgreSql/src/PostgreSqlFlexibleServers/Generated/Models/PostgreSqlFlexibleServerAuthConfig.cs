@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: AuthConfig.tenantId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerAuthConfig(MicrosoftEntraAuth? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveDirectoryAuth = activeDirectoryAuth;
             PasswordAuth = passwordAuth;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: AuthConfig.activeDirectoryAuth
         /// </summary>
         [WirePath("activeDirectoryAuth")]
-        public MicrosoftEntraAuth? ActiveDirectoryAuth { get; set; }
+        public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
         /// <summary>
         /// Indicates if the server supports password based authentication.
         /// Serialized Name: AuthConfig.passwordAuth

@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("examplesourcepassword", "exampletargetpassword")),
                 DbsToMigrate = { "exampledatabase1", "exampledatabase2", "exampledatabase3", "exampledatabase4" },
                 OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
-                MigrateRoles = MigrateRolesAndPermission.True,
+                MigrateRoles = MigrateRolesEnum.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;

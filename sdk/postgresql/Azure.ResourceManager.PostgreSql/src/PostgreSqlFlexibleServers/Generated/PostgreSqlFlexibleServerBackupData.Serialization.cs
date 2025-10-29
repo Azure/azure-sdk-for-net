@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            BackupType? backupType = default;
+            PostgreSqlFlexibleServerBackupOrigin? backupType = default;
             DateTimeOffset? completedTime = default;
             string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            backupType = new BackupType(property0.Value.GetString());
+                            backupType = new PostgreSqlFlexibleServerBackupOrigin(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("completedTime"u8))

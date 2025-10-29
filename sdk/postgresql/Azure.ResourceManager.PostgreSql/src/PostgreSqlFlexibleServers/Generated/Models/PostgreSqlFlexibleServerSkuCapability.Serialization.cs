@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             int? supportedIops = default;
             long? supportedMemoryPerVcoreMb = default;
             IReadOnlyList<string> supportedZones = default;
-            IReadOnlyList<PostgreSqlFlexibleServerComputeHighAvailabilityMode> supportedHaMode = default;
+            IReadOnlyList<PostgreSqlFlexibleServerHighAvailabilityMode> supportedHaMode = default;
             IReadOnlyList<SupportedFeature> supportedFeatures = default;
             string securityProfile = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerComputeHighAvailabilityMode> array = new List<PostgreSqlFlexibleServerComputeHighAvailabilityMode>();
+                    List<PostgreSqlFlexibleServerHighAvailabilityMode> array = new List<PostgreSqlFlexibleServerHighAvailabilityMode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new PostgreSqlFlexibleServerComputeHighAvailabilityMode(item.GetString()));
+                        array.Add(new PostgreSqlFlexibleServerHighAvailabilityMode(item.GetString()));
                     }
                     supportedHaMode = array;
                     continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedIops,
                 supportedMemoryPerVcoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
-                supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerComputeHighAvailabilityMode>(),
+                supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHighAvailabilityMode>(),
                 supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
                 securityProfile);
         }

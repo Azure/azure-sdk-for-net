@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 AuthConfig = new PostgreSqlFlexibleServerAuthConfig
                 {
-                    ActiveDirectoryAuth = MicrosoftEntraAuth.Enabled,
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
                     PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
                     TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
                 },

@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 AuthConfig = new AuthConfigForPatch
                 {
-                    ActiveDirectoryAuth = MicrosoftEntraAuth.Enabled,
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
                     PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
                     TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
                 },
@@ -706,8 +706,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
-            MigrationNameAvailability migrationNameAvailability = new MigrationNameAvailability("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
-            MigrationNameAvailability result = await postgreSqlFlexibleServer.CheckNameAvailabilityMigrationAsync(migrationNameAvailability);
+            PostgreSqlCheckMigrationNameAvailabilityContent content = new PostgreSqlCheckMigrationNameAvailabilityContent("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
+            PostgreSqlCheckMigrationNameAvailabilityContent result = await postgreSqlFlexibleServer.CheckNameAvailabilityMigrationAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

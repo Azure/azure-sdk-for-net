@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Serialized Name: BackupAutomaticAndOnDemand.properties.source
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupType? backupType, DateTimeOffset? completedOn, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerBackupOrigin? backupType, DateTimeOffset? completedOn, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupType = backupType;
             CompletedOn = completedOn;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Serialized Name: BackupAutomaticAndOnDemand.properties.backupType
         /// </summary>
         [WirePath("properties.backupType")]
-        public BackupType? BackupType { get; set; }
+        public PostgreSqlFlexibleServerBackupOrigin? BackupType { get; set; }
         /// <summary>
         /// Time(ISO8601 format) at which the backup was completed.
         /// Serialized Name: BackupAutomaticAndOnDemand.properties.completedTime

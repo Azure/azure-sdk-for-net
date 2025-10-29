@@ -14,11 +14,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the PostgreSqlLtrServerBackupOperationResource data model.
+    /// A class representing the PostgreSqlLtrServerBackupOperation data model.
     /// Response for the LTR backup Operation API call
     /// Serialized Name: BackupsLongTermRetentionOperation
     /// </summary>
-    public partial class PostgreSqlLtrServerBackupOperationResourceData : ResourceData
+    public partial class PostgreSqlLtrServerBackupOperationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationResourceData"/>. </summary>
-        public PostgreSqlLtrServerBackupOperationResourceData()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
+        public PostgreSqlLtrServerBackupOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlLtrServerBackupOperationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;

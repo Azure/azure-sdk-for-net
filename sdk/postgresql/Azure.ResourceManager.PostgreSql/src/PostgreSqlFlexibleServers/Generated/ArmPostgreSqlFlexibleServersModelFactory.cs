@@ -703,10 +703,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: ServerSkuCapability.securityProfile
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<PostgreSqlFlexibleServerComputeHighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
+        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<PostgreSqlFlexibleServerHighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
         {
             supportedZones ??= new List<string>();
-            supportedHaMode ??= new List<PostgreSqlFlexibleServerComputeHighAvailabilityMode>();
+            supportedHaMode ??= new List<PostgreSqlFlexibleServerHighAvailabilityMode>();
             supportedFeatures ??= new List<SupportedFeature>();
 
             return new PostgreSqlFlexibleServerSkuCapability(
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: BackupAutomaticAndOnDemand.properties.source
         /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerBackupData PostgreSqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null)
+        public static PostgreSqlFlexibleServerBackupData PostgreSqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerBackupOrigin? backupType = null, DateTimeOffset? completedOn = null, string source = null)
         {
             return new PostgreSqlFlexibleServerBackupData(
                 id,
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MigrationNameAvailability"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
         /// <param name="name">
         /// Name of the migration to check for validity and availability.
         /// Serialized Name: MigrationNameAvailability.name
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Type of resource.
         /// Serialized Name: MigrationNameAvailability.type
         /// </param>
-        /// <param name="nameAvailable">
+        /// <param name="isNameAvailable">
         /// Indicates if the migration name is available.
         /// Serialized Name: MigrationNameAvailability.nameAvailable
         /// </param>
@@ -1150,13 +1150,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Migration name availability message.
         /// Serialized Name: MigrationNameAvailability.message
         /// </param>
-        /// <returns> A new <see cref="Models.MigrationNameAvailability"/> instance for mocking. </returns>
-        public static MigrationNameAvailability MigrationNameAvailability(string name = null, ResourceType resourceType = default, bool? nameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/> instance for mocking. </returns>
+        public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = null, ResourceType resourceType = default, bool? isNameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
         {
-            return new MigrationNameAvailability(
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(
                 name,
                 resourceType,
-                nameAvailable,
+                isNameAvailable,
                 reason,
                 message,
                 serializedAdditionalRawData: null);
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1434,10 +1434,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// The error message.
         /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
         /// </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationResourceData"/> instance for mocking. </returns>
-        public static PostgreSqlLtrServerBackupOperationResourceData PostgreSqlLtrServerBackupOperationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/> instance for mocking. </returns>
+        public static PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new PostgreSqlLtrServerBackupOperationResourceData(
+            return new PostgreSqlLtrServerBackupOperationData(
                 id,
                 name,
                 resourceType,
@@ -1574,7 +1574,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: Migration.properties.dbsToCancelMigrationOn
         /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesAndPermission? migrateRoles = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesEnum? migrateRoles = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
         {
             tags ??= new Dictionary<string, string>();
             dbsToMigrate ??= new List<string>();
@@ -1649,14 +1649,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: MigrationSubstateDetails.validationDetails
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DatabaseMigrationState> dbDetails = null, PostgreSqlFlexibleServersValidationDetails validationDetails = null)
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = null, PostgreSqlFlexibleServersValidationDetails validationDetails = null)
         {
-            dbDetails ??= new Dictionary<string, DatabaseMigrationState>();
+            dbDetails ??= new Dictionary<string, DbMigrationStatus>();
 
             return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails, validationDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DbMigrationStatus"/>. </summary>
         /// <param name="databaseName">
         /// Name of database.
         /// Serialized Name: DatabaseMigrationState.databaseName
@@ -1721,10 +1721,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Error message, if any, for the migration state.
         /// Serialized Name: DatabaseMigrationState.message
         /// </param>
-        /// <returns> A new <see cref="Models.DatabaseMigrationState"/> instance for mocking. </returns>
-        public static DatabaseMigrationState DatabaseMigrationState(string databaseName = null, MigrationDatabaseState? migrationState = null, string migrationOperation = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, int? fullLoadQueuedTables = null, int? fullLoadErroredTables = null, int? fullLoadLoadingTables = null, int? fullLoadCompletedTables = null, int? cdcUpdateCounter = null, int? cdcDeleteCounter = null, int? cdcInsertCounter = null, int? appliedChanges = null, int? incomingChanges = null, int? latency = null, string message = null)
+        /// <returns> A new <see cref="Models.DbMigrationStatus"/> instance for mocking. </returns>
+        public static DbMigrationStatus DbMigrationStatus(string databaseName = null, MigrationDbState? migrationState = null, string migrationOperation = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, int? fullLoadQueuedTables = null, int? fullLoadErroredTables = null, int? fullLoadLoadingTables = null, int? fullLoadCompletedTables = null, int? cdcUpdateCounter = null, int? cdcDeleteCounter = null, int? cdcInsertCounter = null, int? appliedChanges = null, int? incomingChanges = null, int? latency = null, string message = null)
         {
-            return new DatabaseMigrationState(
+            return new DbMigrationStatus(
                 databaseName,
                 migrationState,
                 migrationOperation,

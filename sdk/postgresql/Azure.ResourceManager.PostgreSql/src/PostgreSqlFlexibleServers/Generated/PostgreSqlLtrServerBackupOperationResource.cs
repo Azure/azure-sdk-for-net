@@ -15,10 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a PostgreSqlLtrServerBackupOperationResource along with the instance operations that can be performed on it.
+    /// A Class representing a PostgreSqlLtrServerBackupOperation along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlLtrServerBackupOperationResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlLtrServerBackupOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlLtrServerBackupOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlLtrServerBackupOperation method.
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationResource : ArmResource
     {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics;
-        private readonly BackupsLongTermRetentionRestOperations _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient;
-        private readonly PostgreSqlLtrServerBackupOperationResourceData _data;
+        private readonly ClientDiagnostics _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics;
+        private readonly BackupsLongTermRetentionRestOperations _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient;
+        private readonly PostgreSqlLtrServerBackupOperationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations";
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlLtrServerBackupOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PostgreSqlLtrServerBackupOperationResource(ArmClient client, PostgreSqlLtrServerBackupOperationResourceData data) : this(client, data.Id)
+        internal PostgreSqlLtrServerBackupOperationResource(ArmClient client, PostgreSqlLtrServerBackupOperationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PostgreSqlLtrServerBackupOperationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionApiVersion);
-            _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient = new BackupsLongTermRetentionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionApiVersion);
+            _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string postgreSqlLtrServerBackupOperationBackupsLongTermRetentionApiVersion);
+            _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient = new BackupsLongTermRetentionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlLtrServerBackupOperationBackupsLongTermRetentionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PostgreSqlLtrServerBackupOperationResourceData Data
+        public virtual PostgreSqlLtrServerBackupOperationData Data
         {
             get
             {
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PostgreSqlLtrServerBackupOperationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlLtrServerBackupOperationResource.Get");
+            using var scope = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlLtrServerBackupOperationResource.Get");
             scope.Start();
             try
             {
-                var response = await _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PostgreSqlLtrServerBackupOperationResource(Client, response.Value), response.GetRawResponse());
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PostgreSqlLtrServerBackupOperationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlLtrServerBackupOperationResource.Get");
+            using var scope = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlLtrServerBackupOperationResource.Get");
             scope.Start();
             try
             {
-                var response = _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PostgreSqlLtrServerBackupOperationResource(Client, response.Value), response.GetRawResponse());

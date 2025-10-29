@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class MigrationNameAvailability : IUtf8JsonSerializable, IJsonModel<MigrationNameAvailability>
+    public partial class PostgreSqlCheckMigrationNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<PostgreSqlCheckMigrationNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationNameAvailability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlCheckMigrationNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MigrationNameAvailability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlCheckMigrationNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationNameAvailability)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlCheckMigrationNameAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType);
-            if (options.Format != "W" && Optional.IsDefined(NameAvailable))
+            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        MigrationNameAvailability IJsonModel<MigrationNameAvailability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlCheckMigrationNameAvailabilityContent IJsonModel<PostgreSqlCheckMigrationNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationNameAvailability)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlCheckMigrationNameAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationNameAvailability(document.RootElement, options);
+            return DeserializePostgreSqlCheckMigrationNameAvailabilityContent(document.RootElement, options);
         }
 
-        internal static MigrationNameAvailability DeserializeMigrationNameAvailability(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlCheckMigrationNameAvailabilityContent DeserializePostgreSqlCheckMigrationNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MigrationNameAvailability(
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(
                 name,
                 type,
                 nameAvailable,
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.AppendLine($"'{ResourceType.ToString()}'");
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameAvailable), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNameAvailable), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  nameAvailable: ");
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                if (Optional.IsDefined(NameAvailable))
+                if (Optional.IsDefined(IsNameAvailable))
                 {
                     builder.Append("  nameAvailable: ");
-                    var boolValue = NameAvailable.Value == true ? "true" : "false";
+                    var boolValue = IsNameAvailable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -252,9 +252,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<MigrationNameAvailability>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -263,26 +263,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationNameAvailability)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlCheckMigrationNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MigrationNameAvailability IPersistableModel<MigrationNameAvailability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlCheckMigrationNameAvailabilityContent IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrationNameAvailability(document.RootElement, options);
+                        return DeserializePostgreSqlCheckMigrationNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationNameAvailability)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlCheckMigrationNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrationNameAvailability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlCheckMigrationNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

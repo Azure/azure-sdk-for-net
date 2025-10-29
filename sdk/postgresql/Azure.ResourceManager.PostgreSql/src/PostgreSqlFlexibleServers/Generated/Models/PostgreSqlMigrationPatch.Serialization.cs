@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
             PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
             DateTimeOffset? migrationWindowStartTimeInUtc = default;
-            MigrateRolesAndPermission? migrateRoles = default;
+            MigrateRolesEnum? migrateRoles = default;
             PostgreSqlMigrationStartDataMigration? startDataMigration = default;
             PostgreSqlMigrationTriggerCutover? triggerCutover = default;
             IList<string> dbsToTriggerCutoverOn = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            migrateRoles = new MigrateRolesAndPermission(property0.Value.GetString());
+                            migrateRoles = new MigrateRolesEnum(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDataMigration"u8))

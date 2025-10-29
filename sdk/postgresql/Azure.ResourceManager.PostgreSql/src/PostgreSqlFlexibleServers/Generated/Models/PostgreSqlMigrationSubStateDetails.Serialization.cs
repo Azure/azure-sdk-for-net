@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationSubState? currentSubState = default;
-            IReadOnlyDictionary<string, DatabaseMigrationState> dbDetails = default;
+            IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default;
             PostgreSqlFlexibleServersValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    Dictionary<string, DatabaseMigrationState> dictionary = new Dictionary<string, DatabaseMigrationState>();
+                    Dictionary<string, DbMigrationStatus> dictionary = new Dictionary<string, DbMigrationStatus>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DatabaseMigrationState.DeserializeDatabaseMigrationState(property0.Value, options));
+                        dictionary.Add(property0.Name, DbMigrationStatus.DeserializeDbMigrationStatus(property0.Value, options));
                     }
                     dbDetails = dictionary;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DatabaseMigrationState>(), validationDetails, serializedAdditionalRawData);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DbMigrationStatus>(), validationDetails, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
