@@ -11,7 +11,6 @@ Check the validation checks for the SDK package by collecting the required infor
 
 2. **Execute Check**:
     - Use the `azsdk_package_run_check` tool with the package path and check type.
-    - If the package path is not provided, use the package name and language to determine the package path for each language and prompt the user to confirm the path before proceeding.
 
 3. **Present Results**:
     - If the package has passed all validation checks, highlight and finish
