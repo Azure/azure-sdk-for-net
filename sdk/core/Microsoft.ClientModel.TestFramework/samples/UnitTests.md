@@ -23,17 +23,17 @@ The Test Framework provides several mock implementations for unit testing:
 
 ```C# Snippet:BasicUnitTestSetup
 [TestFixture]
-public class SampleClientUnitTests
+public class MapsClientUnitTests
 {
     [Test]
     public void CanCreateClientWithMockCredential()
     {
         // Create a mock credential
-        var mockCredential = new MockCredential("test-token", DateTimeOffset.UtcNow.AddHours(1));
+        var mockCredential = new MockCredential("test-subscription-key", DateTimeOffset.UtcNow.AddHours(1));
 
         // Create client with mock credential
-        var client = new SampleClient(
-            new Uri("https://example.com"),
+        var client = new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
             mockCredential);
 
         Assert.That(client, Is.Not.Null);
@@ -42,7 +42,7 @@ public class SampleClientUnitTests
     [Test]
     public async Task MockCredentialProvidesToken()
     {
-        var expectedToken = "mock-access-token";
+        var expectedToken = "mock-subscription-key";
         var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
 
         var mockCredential = new MockCredential(expectedToken, expiresOn);
@@ -51,7 +51,7 @@ public class SampleClientUnitTests
         var tokenResult = await mockCredential.GetTokenAsync(
             new GetTokenOptions(new Dictionary<string, object>
             {
-                { GetTokenOptions.ScopesPropertyName, new string[] { "https://example.com/.default" } }
+                { GetTokenOptions.ScopesPropertyName, new string[] { "https://atlas.microsoft.com/.default" } }
             }),
             CancellationToken.None);
 
@@ -75,20 +75,21 @@ public class MockTransportTests
         // Create a mock transport that returns a 200 response
         var mockTransport = new MockPipelineTransport(_ =>
             new MockPipelineResponse(200)
-                .WithContent(System.Text.Encoding.UTF8.GetBytes("""{"id":"test","value":"data"}""")));
+                .WithContent(System.Text.Encoding.UTF8.GetBytes("""{"countryRegion":{"isoCode":"US"},"ipAddress":"8.8.8.8"}""")));
 
-        var options = new SampleClientOptions();
+        var options = new MapsClientOptions();
         options.Transport = mockTransport;
 
-        var client = new SampleClient(
-            new Uri("https://example.com"),
+        var client = new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
             new MockCredential(),
             options);
 
-        var result = await client.GetDataAsync("test-id");
+        var ipAddress = System.Net.IPAddress.Parse("8.8.8.8");
+        var result = await client.GetCountryCodeAsync(ipAddress);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That("test", Is.EqualTo(result.Value.Id));
+        Assert.That(result.Value.CountryRegion.IsoCode, Is.EqualTo("US"));
     }
 
     [Test]
@@ -96,21 +97,21 @@ public class MockTransportTests
     {
         // Create a mock transport that returns an error response
         var mockTransport = new MockPipelineTransport(_ =>
-            new MockPipelineResponse(404, "Not Found")
-                .WithContent(System.Text.Encoding.UTF8.GetBytes("""{"error":"Resource not found"}""")));
+            new MockPipelineResponse(401, "Unauthorized")
+                .WithContent(System.Text.Encoding.UTF8.GetBytes("""{"error":"Invalid subscription key"}""")));
 
-        var options = new SampleClientOptions();
+        var options = new MapsClientOptions();
         options.Transport = mockTransport;
 
-        var client = new SampleClient(
-            new Uri("https://example.com"),
+        var client = new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
             new MockCredential(),
             options);
 
         ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(
-            async () => await client.GetDataAsync("nonexistent"));
+            async () => await client.GetCountryCodeAsync("8.8.8.8"));
 
-        Assert.That(exception.Status, Is.EqualTo(404));
+        Assert.That(exception.Status, Is.EqualTo(401));
     }
 }
 ```
@@ -153,13 +154,14 @@ public class MultipleResponseTests
             new MockCredential(),
             options);
 
-        // First call - create resource
-        var createResult = await client.CreateResourceAsync(new SampleResource("new-resource"));
-        Assert.That(createResult.Value.Status, Is.EqualTo("created"));
+        // First call - process data
+        var inputData = new SampleData { Id = "new-data", Value = 42, Success = false };
+        var processResult = await client.ProcessDataAsync(inputData);
+        Assert.That(processResult.Value.Success, Is.True);
 
-        // Second call - get resource
-        var getResult = await client.GetResourceAsync("new-resource");
-        Assert.That(getResult.Value.Status, Is.EqualTo("active"));
+        // Second call - analyze data
+        var analyzeResult = await client.AnalyzeDataAsync("new-data");
+        Assert.That(analyzeResult.Value, Is.Not.Null);
 
         // Verify both requests were made
         Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
@@ -334,8 +336,8 @@ public class RequestValidationTests
             new MockCredential(),
             options);
 
-        var resource = new SampleResource("test-resource") { Name = "Test", Value = 42 };
-        await client.CreateResourceAsync(resource);
+        var inputData = new SampleData { Id = "test-data", Value = 42, Success = false };
+        await client.ProcessDataAsync(inputData);
 
         var request = mockTransport.Requests[0];
         Assert.That("POST", Is.EqualTo(request.Method));
@@ -343,9 +345,9 @@ public class RequestValidationTests
         // Validate request body
         var bodyContent = request.Content?.ToString();
         Assert.That(bodyContent, Is.Not.Null);
-        Assert.That(bodyContent.Contains("test-resource"), Is.True);
-        Assert.That(bodyContent.Contains("Test"), Is.True);
+        Assert.That(bodyContent.Contains("test-data"), Is.True);
         Assert.That(bodyContent.Contains("42"), Is.True);
+        Assert.That(bodyContent.Contains("false"), Is.True);
     }
 }
 ```
@@ -627,17 +629,17 @@ public class ModelSerializationTests
     [Test]
     public async Task ModelSerializationWorks()
     {
-        var originalResource = new SampleResource("test-id")
+        var originalData = new SampleData
         {
-            Name = "Test Resource",
+            Id = "test-id",
             Value = 42,
-            Tags = new Dictionary<string, string> { ["environment"] = "test", ["version"] = "1.0" }
+            Success = false
         };
 
         var mockTransport = new MockPipelineTransport(_ =>
-            new MockPipelineResponse(201)
+            new MockPipelineResponse(200)
                 .WithContent(System.Text.Encoding.UTF8.GetBytes(
-                    """{"id":"test-id","name":"Test Resource","value":42,"status":"created"}""")));
+                    """{"id":"test-id","value":42,"success":true}""")));
 
         var options = new SampleClientOptions();
         options.Transport = mockTransport;
@@ -647,20 +649,19 @@ public class ModelSerializationTests
             new MockCredential(),
             options);
 
-        var result = await client.CreateResourceAsync(originalResource);
+        var result = await client.ProcessDataAsync(originalData);
 
         // Validate request body contains serialized model
         var request = mockTransport.Requests[0];
         var requestBody = request.Content?.ToString();
         Assert.That(requestBody?.Contains("test-id"), Is.True);
-        Assert.That(requestBody?.Contains("Test Resource"), Is.True);
         Assert.That(requestBody?.Contains("42"), Is.True);
+        Assert.That(requestBody?.Contains("false"), Is.True);
 
         // Validate response deserialization
         Assert.That(result.Value.Id, Is.EqualTo("test-id"));
-        Assert.That(result.Value.Name, Is.EqualTo("Test Resource"));
         Assert.That(result.Value.Value, Is.EqualTo(42));
-        Assert.That(result.Value.Status, Is.EqualTo("created"));
+        Assert.That(result.Value.Success, Is.True);
     }
 }
 ```
@@ -759,18 +760,16 @@ public class WellOrganizedUnitTests
 public class ComprehensiveUnitTests
 {
     [Test]
-    public async Task TestAllCrudOperations()
+    public async Task TestAllDataOperations()
     {
         var responses = new[]
         {
-            // Create
-            new MockPipelineResponse(201).WithContent("""{"id":"1","status":"created"}"""),
-            // Read
-            new MockPipelineResponse(200).WithContent("""{"id":"1","status":"active"}"""),
-            // Update
-            new MockPipelineResponse(200).WithContent("""{"id":"1","status":"updated"}"""),
-            // Delete
-            new MockPipelineResponse(204)
+            // Process data
+            new MockPipelineResponse(200).WithContent("""{"id":"test-data","value":42,"success":true}"""),
+            // Analyze data
+            new MockPipelineResponse(200).WithContent("""{"dataId":"test-data","analysisResult":"complete","score":85.5}"""),
+            // Get processed data
+            new MockPipelineResponse(200).WithContent("""{"id":"test-data","value":42,"success":true}""")
         };
         var responseIndex = 0;
 
@@ -782,20 +781,19 @@ public class ComprehensiveUnitTests
             new MockCredential(),
             options);
 
-        // Test all CRUD operations
-        var created = await client.CreateResourceAsync(new SampleResource("test"));
-        Assert.That("created", Is.EqualTo(created.Value.Status));
+        // Test all data operations
+        var inputData = new SampleData { Id = "test-data", Value = 42, Success = false };
+        var processed = await client.ProcessDataAsync(inputData);
+        Assert.That(processed.Value.Success, Is.True);
 
-        var read = await client.GetResourceAsync("1");
-        Assert.That("active", Is.EqualTo(read.Value.Status));
+        var analyzed = await client.AnalyzeDataAsync("test-data");
+        Assert.That(analyzed.Value, Is.Not.Null);
 
-        var updated = await client.UpdateResourceAsync("1", "updated-name");
-        Assert.That("updated", Is.EqualTo(updated.Value.Status));
-
-        await client.DeleteResourceAsync("1");
+        var retrieved = await client.GetDataAsync("test-data");
+        Assert.That(retrieved.Value.Success, Is.True);
 
         // Verify all requests were made
-        Assert.That(4, Is.EqualTo(mockTransport.Requests.Count));
+        Assert.That(3, Is.EqualTo(mockTransport.Requests.Count));
     }
 }
 ```

@@ -9,197 +9,118 @@ using System.Collections.Generic;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using System.ClientModel.Primitives;
 using System.Threading;
+using Maps;
 
 namespace Microsoft.ClientModel.TestFramework.Tests.Samples;
 
 public class RecordedTestsSamples
 {
     #region Snippet:BasicRecordedTestSetup
-    public class SampleTestEnvironment : TestEnvironment
+    public class MapsTestEnvironment : TestEnvironment
     {
-        // Environment variables for connecting to the service
-        public string Endpoint => GetRecordedVariable("SAMPLE_ENDPOINT");
+        // Environment variables for connecting to the Azure Maps service
+        public string Endpoint => GetRecordedVariable("MAPS_ENDPOINT");
 
         // Secret values should be marked as such for sanitization
-        public string ApiKey => GetRecordedVariable("SAMPLE_API_KEY", options => options.IsSecret());
+        public string SubscriptionKey => GetRecordedVariable("MAPS_SUBSCRIPTION_KEY", options => options.IsSecret("subscription-key"));
 
         public override Dictionary<string, string> ParseEnvironmentFile()
         {
-            throw new NotImplementedException();
-        }
-
-        public override Task WaitForEnvironmentAsync()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    [ClientTestFixture]
-    public class SampleRecordedTests : RecordedTestBase<SampleTestEnvironment>
-    {
-        public SampleRecordedTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
-        public async Task CanCreateAndRetrieveResource()
-        {
-            // Create a client with instrumented options for recording
-            var options = InstrumentClientOptions(new SampleClientOptions());
-            var client = CreateProxyFromClient(new SampleClient(
-                new Uri(TestEnvironment.Endpoint),
-                new ApiKeyCredential(TestEnvironment.ApiKey),
-                options));
-
-            // Create a resource
-            var resource = new SampleResource("test-resource");
-            var createResult = await client.CreateResourceAsync(resource);
-
-            Assert.That(createResult, Is.Not.Null);
-            Assert.That("test-resource", Is.EqualTo(createResult.Value.Id));
-
-            // Retrieve the resource
-            var getResult = await client.GetResourceAsync(createResult.Value.Id);
-
-            Assert.That(getResult, Is.Not.Null);
-            Assert.That(createResult.Value.Id, Is.EqualTo(getResult.Value.Id));
-        }
-    }
-#endregion
-
-    #region Snippet:LiveModeExample
-    // Set via environment variable: SYSTEM_CLIENTMODEL_TEST_MODE=Live
-    // Or in constructor for development:
-    public class LiveModeTests : RecordedTestBase<SampleTestEnvironment>
-    {
-        public LiveModeTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
-        {
-        }
-    }
-    #endregion
-
-    #region Snippet:RecordModeExample
-    // Set via environment variable: SYSTEM_CLIENTMODEL_TEST_MODE=Record
-    // Or in constructor:
-    public class RecordModeTests : RecordedTestBase<SampleTestEnvironment>
-    {
-        public RecordModeTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
-        {
-        }
-    }
-    #endregion
-
-    #region Snippet:PlaybackModeExample
-    // Default mode - no configuration needed
-    // Set via environment variable: SYSTEM_CLIENTMODEL_TEST_MODE=Playback
-    public class PlaybackModeTests : RecordedTestBase<SampleTestEnvironment>
-    {
-        public PlaybackModeTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
-        {
-        }
-    }
-    #endregion
-
-    #region Snippet:AdvancedTestEnvironment
-    public class AdvancedTestEnvironment : TestEnvironment
-    {
-        // Basic variable
-        public string Endpoint => GetRecordedVariable("SERVICE_ENDPOINT");
-
-        // Secret variable (will be sanitized in recordings)
-        public string ApiKey => GetRecordedVariable("SERVICE_API_KEY", options => options.IsSecret());
-
-        // Base64 secret (uses Base64-compatible sanitized value)
-        public string Base64Secret => GetRecordedVariable("SERVICE_SECRET",
-            options => options.IsSecret(SanitizedValue.Base64));
-
-        // Optional variable with default
-        public string OptionalSetting => GetRecordedOptionalVariable("OPTIONAL_SETTING") ?? "default-value";
-
-        // Credential for authentication
-        public override AuthenticationTokenProvider Credential =>
-            new ApiKeyAuthenticationTokenProvider(new ApiKeyCredential(ApiKey));
-
-        public override Dictionary<string, string> ParseEnvironmentFile()
-        {
-            // Parse test.env file or return empty dictionary
+            // Read environment variables or parse from a .env file as needed
             return new Dictionary<string, string>
             {
-                { "SERVICE_ENDPOINT", "https://example.com" },
-                { "SERVICE_API_KEY", "test-key" },
-                { "SERVICE_SECRET", "test-secret" }
+                { "MAPS_ENDPOINT", Environment.GetEnvironmentVariable("MAPS_ENDPOINT") },
+                { "MAPS_SUBSCRIPTION_KEY", Environment.GetEnvironmentVariable("MAPS_SUBSCRIPTION_KEY") }
             };
         }
 
         public override Task WaitForEnvironmentAsync()
         {
-            // Wait for environment to be ready
+            // Add any environment readiness checks here if needed
             return Task.CompletedTask;
+        }
+    }
+
+    public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
+    {
+        public MapsRecordedTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        [RecordedTest]
+        public async Task CanGetCountryCode()
+        {
+            // Create a client with instrumented options for recording
+            var options = InstrumentClientOptions(new Maps.MapsClientOptions());
+            var client = CreateProxyFromClient(new Maps.MapsClient(
+                new Uri(TestEnvironment.Endpoint),
+                new ApiKeyCredential(TestEnvironment.SubscriptionKey),
+                options));
+
+            // Get country code for a known IP address
+            var ipAddress = System.Net.IPAddress.Parse("8.8.8.8");
+            var result = await client.GetCountryCodeAsync(ipAddress);
         }
     }
     #endregion
 
-    #region Snippet:EnvironmentReadinessCheck
-    public class ServiceTestEnvironment : TestEnvironment
+    #region Snippet:TestModeExample
+    public class TestModeExamples : RecordedTestBase<MapsTestEnvironment>
     {
-        public string Endpoint => GetRecordedVariable("SERVICE_ENDPOINT");
-        public string ApiKey => GetRecordedVariable("SERVICE_API_KEY", options => options.IsSecret());
-
-        public override Dictionary<string, string> ParseEnvironmentFile()
+        // Can explicitly specify a mode in the constructor
+        public TestModeExamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
-            // Parse test.env file or return empty dictionary
-            return new Dictionary<string, string>();
-        }
-
-        public override async Task WaitForEnvironmentAsync()
-        {
-            // Wait for environment to be ready
-            // This replaces the IsEnvironmentReadyAsync pattern from Azure.Core.TestFramework
-            try
-            {
-                var client = new SampleClient(new Uri(Endpoint), new ApiKeyCredential(ApiKey));
-                await client.HealthCheckAsync();
-            }
-            catch
-            {
-                // Environment not ready, but we'll continue anyway
-            }
         }
     }
     #endregion
 
     #region Snippet:CustomSanitization
-    public class CustomSanitizedTests : RecordedTestBase<SampleTestEnvironment>
+    public class CustomSanitizedTests : RecordedTestBase<MapsTestEnvironment>
     {
         public CustomSanitizedTests(bool isAsync) : base(isAsync)
         {
-            // Sanitize custom headers
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-custom-key") { Value = "SANITIZED" }));
+            // Sanitize subscription key headers
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("subscription-key") { Value = "SANITIZED" }));
 
-            // Sanitize parts of URIs
-            UriRegexSanitizers.Add(new UriRegexSanitizer(new UriRegexSanitizerBody("accounts/SANITIZED", @"accounts/[^/]+", null, null, null)));
+            // Sanitize parts of URIs containing account info
+            UriRegexSanitizers.Add(new UriRegexSanitizer(new UriRegexSanitizerBody("atlas.microsoft.com", @"[^.]+\.microsoft\.com", null, null, null)));
 
-            // Sanitize request/response bodies
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(new BodyRegexSanitizerBody(@"""id"": ""SANITIZED""", @"""id""\s*:\s*""[^""]+""", null, null, null)));
+            // Sanitize IP addresses in request/response bodies
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(new BodyRegexSanitizerBody(@"""ipAddress"": ""127.0.0.1""", @"""ipAddress""\s*:\s*""[^""]+""", null, null, null)));
+
+            // Sanitize specific keys in request/response bodies
+            BodyKeySanitizers.Add(new BodyKeySanitizer(new BodyKeySanitizerBody("subscriptionKey") { Value = "SANITIZED" }));
+        }
+    }
+    #endregion
+
+    #region Snippet:StandardSanitization
+    public class StandardSanitizedTests : RecordedTestBase<MapsTestEnvironment>
+    {
+        public StandardSanitizedTests(bool isAsync) : base(isAsync)
+        {
+            // Sanitize specific headers by name
+            SanitizedHeaders.Add("x-client-secret");
+            SanitizedQueryParameters.Add("client_secret");
         }
     }
     #endregion
 
     #region Snippet:JsonPathSanitization
-    public class JsonSanitizedTests : RecordedTestBase<SampleTestEnvironment>
+    public class JsonSanitizedTests : RecordedTestBase<MapsTestEnvironment>
     {
         public JsonSanitizedTests(bool isAsync) : base(isAsync)
         {
             // Sanitize specific JSON paths
-            JsonPathSanitizers.Add("$.connectionString");
-            JsonPathSanitizers.Add("$.keys[*].value");
-            JsonPathSanitizers.Add("$.properties.secrets");
+            JsonPathSanitizers.Add("$.subscriptionKey");
+            JsonPathSanitizers.Add("$.ipAddress");
+            JsonPathSanitizers.Add("$.countryRegion.isoCode");
         }
     }
     #endregion
 
     #region Snippet:RequestMatching
-    public class CustomMatchingTests : RecordedTestBase<SampleTestEnvironment>
+    public class CustomMatchingTests : RecordedTestBase<MapsTestEnvironment>
     {
         public CustomMatchingTests(bool isAsync) : base(isAsync)
         {
@@ -216,7 +137,7 @@ public class RecordedTestsSamples
     #endregion
 
     #region Snippet:DebugMode
-    public class DebuggingTests : RecordedTestBase<SampleTestEnvironment>
+    public class DebuggingTests : RecordedTestBase<MapsTestEnvironment>
     {
         public DebuggingTests(bool isAsync) : base(isAsync)
         {
@@ -228,7 +149,7 @@ public class RecordedTestsSamples
 
     #region Snippet:CustomSessionNames
     [TestFixture]
-    public class CustomSessionTests : RecordedTestBase<SampleTestEnvironment>
+    public class CustomSessionTests : RecordedTestBase<MapsTestEnvironment>
     {
         public CustomSessionTests(bool isAsync) : base(isAsync)
         {
@@ -243,48 +164,57 @@ public class RecordedTestsSamples
             // Recording names are derived from test method names automatically
 
             var client = CreateInstrumentedClient();
-            await client.PerformOperationAsync();
+            var result = await client.GetCountryCodeAsync("8.8.8.8");
+            Assert.That(result, Is.Not.Null);
         }
 
-        private SampleClient CreateInstrumentedClient()
+        private MapsClient CreateInstrumentedClient()
         {
-            var options = InstrumentClientOptions(new SampleClientOptions());
-            return CreateProxyFromClient(new SampleClient(
-                new Uri("https://example.com"),
-                new MockCredential()));
+            var options = InstrumentClientOptions(new MapsClientOptions());
+            return CreateProxyFromClient(new MapsClient(
+                new Uri(TestEnvironment.Endpoint),
+                new ApiKeyCredential(TestEnvironment.SubscriptionKey),
+                options));
         }
     }
     #endregion
 
     #region Snippet:LiveOnlyTests
     [LiveOnly]
-    public class LargeDataTests : RecordedTestBase<SampleTestEnvironment>
+    public class LargeDataTests : RecordedTestBase<MapsTestEnvironment>
     {
         public LargeDataTests(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
-        public async Task UploadLargeFile()
+        public async Task TestManyIpAddresses()
         {
-            // This test will only run in Live mode
+            // This test will only run in Live mode due to the volume of requests
             var client = CreateInstrumentedClient();
-            var largeData = new byte[1024 * 1024 * 100]; // 100MB
-            await client.UploadDataAsync(largeData);
+            
+            // Test multiple IP addresses (this would generate too many recordings)
+            var ipAddresses = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
+            
+            foreach (var ip in ipAddresses)
+            {
+                var result = await client.GetCountryCodeAsync(ip);
+                Assert.That(result, Is.Not.Null);
+            }
         }
 
-        private SampleClient CreateInstrumentedClient()
+        private MapsClient CreateInstrumentedClient()
         {
-            var options = InstrumentClientOptions(new SampleClientOptions());
-            return CreateProxyFromClient(new SampleClient(
+            var options = InstrumentClientOptions(new MapsClientOptions());
+            return CreateProxyFromClient(new MapsClient(
                 new Uri(TestEnvironment.Endpoint),
-                new ApiKeyCredential(TestEnvironment.ApiKey),
+                new ApiKeyCredential(TestEnvironment.SubscriptionKey),
                 options));
         }
     }
 
     // Or mark individual tests as live-only
-    public class MixedTests : RecordedTestBase<SampleTestEnvironment>
+    public class MixedTests : RecordedTestBase<MapsTestEnvironment>
     {
         public MixedTests(bool isAsync) : base(isAsync)
         {
@@ -295,24 +225,26 @@ public class RecordedTestsSamples
         {
             // This test can be recorded
             var client = CreateInstrumentedClient();
-            await client.GetDataAsync("test");
+            var result = await client.GetCountryCodeAsync("8.8.8.8");
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
         [LiveOnly]
         public async Task LiveOnlyTest()
         {
-            // This test will only run live
+            // This test will only run live - perhaps testing rate limits
             var client = CreateInstrumentedClient();
-            await client.GetDataAsync("live-only");
+            var result = await client.GetCountryCodeAsync("127.0.0.1");
+            Assert.That(result, Is.Not.Null);
         }
 
-        private SampleClient CreateInstrumentedClient()
+        private MapsClient CreateInstrumentedClient()
         {
-            var options = InstrumentClientOptions(new SampleClientOptions());
-            return CreateProxyFromClient(new SampleClient(
+            var options = InstrumentClientOptions(new MapsClientOptions());
+            return CreateProxyFromClient(new MapsClient(
                 new Uri(TestEnvironment.Endpoint),
-                new ApiKeyCredential(TestEnvironment.ApiKey),
+                new ApiKeyCredential(TestEnvironment.SubscriptionKey),
                 options));
         }
     }
@@ -322,19 +254,19 @@ public class RecordedTestsSamples
     public class WellOrganizedTestEnvironment : TestEnvironment
     {
         // Group related settings
-        public string ServiceEndpoint => GetRecordedVariable("SERVICE_ENDPOINT");
-        public string ServiceRegion => GetRecordedVariable("SERVICE_REGION");
+        public string MapsEndpoint => GetRecordedVariable("MAPS_ENDPOINT");
+        public string MapsRegion => GetRecordedVariable("MAPS_REGION");
 
         // Use descriptive names for secrets
-        public string ServicePrimaryKey => GetRecordedVariable("SERVICE_PRIMARY_KEY",
+        public string MapsPrimaryKey => GetRecordedVariable("MAPS_PRIMARY_KEY",
             options => options.IsSecret());
-        public string ServiceSecondaryKey => GetRecordedVariable("SERVICE_SECONDARY_KEY",
+        public string MapsSecondaryKey => GetRecordedVariable("MAPS_SECONDARY_KEY",
             options => options.IsSecret());
 
         // Provide helper methods for common client creation
-        public SampleClient CreateClient() => new SampleClient(
-            new Uri(ServiceEndpoint),
-            new ApiKeyCredential(ServicePrimaryKey)
+        public MapsClient CreateClient() => new MapsClient(
+            new Uri(MapsEndpoint),
+            new ApiKeyCredential(MapsPrimaryKey)
         );
 
         public override Dictionary<string, string> ParseEnvironmentFile()
@@ -350,9 +282,9 @@ public class RecordedTestsSamples
     #endregion
 
     #region Snippet:EfficientTestStructure
-    public class EfficientTests : RecordedTestBase<SampleTestEnvironment>
+    public class EfficientTests : RecordedTestBase<MapsTestEnvironment>
     {
-        private SampleClient _client;
+        private MapsClient _client;
 
         public EfficientTests(bool isAsync) : base(isAsync)
         {
@@ -361,10 +293,10 @@ public class RecordedTestsSamples
         [SetUp]
         public void Setup()
         {
-            var options = InstrumentClientOptions(new SampleClientOptions());
-            _client = CreateProxyFromClient(new SampleClient(
+            var options = InstrumentClientOptions(new MapsClientOptions());
+            _client = CreateProxyFromClient(new MapsClient(
                 new Uri(TestEnvironment.Endpoint),
-                new MockCredential("test-api-key", DateTimeOffset.UtcNow.AddHours(1)),
+                new ApiKeyCredential(TestEnvironment.SubscriptionKey),
                 options));
         }
 
@@ -372,19 +304,20 @@ public class RecordedTestsSamples
         public async Task MultipleOperationsTest()
         {
             // Group related operations in single test to reduce recording size
-            var resource = await _client.CreateResourceAsync(new SampleResource("test"));
-            var updated = await _client.UpdateResourceAsync(resource.Value.Id, "updated");
-            await _client.DeleteResourceAsync(updated.Value.Id);
+            var result1 = await _client.GetCountryCodeAsync("8.8.8.8");
+            var result2 = await _client.GetCountryCodeAsync("1.1.1.1");
 
-            // Verify the complete workflow
-            Assert.That(resource.Value, Is.Not.Null);
-            Assert.That(updated.Value.Name, Is.EqualTo("updated"));
+            // Verify both operations succeeded
+            Assert.That(result1.Value, Is.Not.Null);
+            Assert.That(result2.Value, Is.Not.Null);
+            Assert.That(result1.Value.CountryRegion, Is.Not.Null);
+            Assert.That(result2.Value.CountryRegion, Is.Not.Null);
         }
     }
     #endregion
 
     #region Snippet:DebuggingTechniques
-    public class DebuggingTechniquesTests : RecordedTestBase<SampleTestEnvironment>
+    public class DebuggingTechniquesTests : RecordedTestBase<MapsTestEnvironment>
     {
         public DebuggingTechniquesTests(bool isAsync) : base(isAsync)
         {
@@ -396,73 +329,37 @@ public class RecordedTestsSamples
             // Enable detailed logging
             UseLocalDebugProxy = true;
 
-            // Add custom diagnostics - sanitizers are configured through SanitizedHeaders property
-            // Recording?.AddSanitizer(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-debug-info") { Value = "DEBUG" }));
+            // Add custom diagnostics - sanitizers are configured through properties
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-debug-info") { Value = "DEBUG" }));
 
             var client = CreateInstrumentedClient();
 
             // Use recording's random for deterministic values
-            var randomValue = Recording?.Random?.Next(1000, 9999) ?? 1234;
+            var testIps = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
+            var randomIndex = Recording?.Random?.Next(0, testIps.Length) ?? 0;
+            var selectedIp = testIps[randomIndex];
 
-            await client.ProcessValueAsync(randomValue);
+            var result = await client.GetCountryCodeAsync(selectedIp);
+            Assert.That(result, Is.Not.Null);
         }
 
-        private SampleClient CreateInstrumentedClient()
+        private MapsClient CreateInstrumentedClient()
         {
-            var options = InstrumentClientOptions(new SampleClientOptions());
-            return CreateProxyFromClient(new SampleClient(
+            var options = InstrumentClientOptions(new MapsClientOptions());
+            return CreateProxyFromClient(new MapsClient(
                 new Uri(TestEnvironment.Endpoint),
-                new ApiKeyCredential(TestEnvironment.ApiKey),
+                new ApiKeyCredential(TestEnvironment.SubscriptionKey),
                 options));
         }
     }
     #endregion
 }
 
-// Extensions to support sample snippets
-public static class SampleClientExtensions
-{
-    public static async Task PerformOperationAsync(this SampleClient client)
-    {
-        await client.GetDataAsync("test");
-    }
+// Extensions to support sample snippets are no longer needed 
+// since we're using the real MapsClient with actual operations
 
-    public static async Task UploadDataAsync(this SampleClient client, byte[] data)
-    {
-        // Mock upload operation
-        await Task.Delay(10);
-    }
-
-    public static async Task ProcessValueAsync(this SampleClient client, int value)
-    {
-        await client.GetDataAsync(value.ToString());
-    }
-}
-
-public class ApiKeyCredential : AuthenticationTokenProvider
-{
-    private readonly string _key;
-
-    public ApiKeyCredential(string key)
-    {
-        _key = key;
-    }
-
-    public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken)
-    {
-        return new AuthenticationToken(_key, "Bearer", DateTimeOffset.UtcNow.AddHours(1));
-    }
-
-    public override ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken)
-    {
-        return new ValueTask<AuthenticationToken>(new AuthenticationToken(_key, "Bearer", DateTimeOffset.UtcNow.AddHours(1)));
-    }
-}
+// ApiKeyCredential is now provided by System.ClientModel
+// No need to define our own implementation
 
 public class ApiKeyAuthenticationTokenProvider : AuthenticationTokenProvider
 {

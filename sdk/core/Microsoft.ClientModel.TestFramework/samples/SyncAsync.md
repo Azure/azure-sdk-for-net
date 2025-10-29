@@ -16,9 +16,9 @@ The foundation is the `ClientTestBase` class with the `[ClientTestFixture]` attr
 
 ```C# Snippet:BasicSyncAsyncSetup
 [ClientTestFixture]
-public class SampleClientTests : ClientTestBase
+public class MapsClientTests : ClientTestBase
 {
-    public SampleClientTests(bool isAsync) : base(isAsync)
+    public MapsClientTests(bool isAsync) : base(isAsync)
     {
     }
 
@@ -26,16 +26,16 @@ public class SampleClientTests : ClientTestBase
     public async Task CanPerformBasicOperation()
     {
         // Create and instrument the client
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
             new ApiKeyCredential("test-key")));
 
         // Write the test using async methods - the framework will automatically
         // test both sync and async versions
-        var result = await client.GetDataAsync("test-id");
+        var result = await client.GetCountryCodeAsync("8.8.8.8");
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Value.Success, Is.True);
+        Assert.That(result.Value.CountryRegion, Is.Not.Null);
     }
 }
 ```
@@ -57,21 +57,20 @@ public class MechanismDemo : ClientTestBase
     [Test]
     public async Task DemonstrateCallForwarding()
     {
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key")));
 
         // This call will be:
-        // - Async mode: client.GetResourceAsync(id)
-        // - Sync mode: client.GetResource(id)
-        var resource = await client.GetResourceAsync("test-id");
+        // - Async mode: client.GetCountryCodeAsync(ipAddress)
+        // - Sync mode: client.GetCountryCode(ipAddress)
+        var ipAddress = System.Net.IPAddress.Parse("8.8.8.8");
+        var result = await client.GetCountryCodeAsync(ipAddress);
 
-        // This call will be:
-        // - Async mode: client.UpdateResourceAsync(resource)
-        // - Sync mode: client.UpdateResource(resource)
-        var updated = await client.UpdateResourceAsync(resource.Value.Id, "updated-name");
-
-        Assert.That(updated.Value.Id, Is.EqualTo(resource.Value.Id));
+        // Verify the result contains expected data
+        Assert.That(result.Value, Is.Not.Null);
+        Assert.That(result.Value.CountryRegion, Is.Not.Null);
+        Assert.That(result.Value.IpAddress, Is.EqualTo(ipAddress));
     }
 }
 ```
@@ -97,11 +96,11 @@ public class TestExplorerDemo : ClientTestBase
         // - TestExplorerDemo(True).ThisTestAppearsTwice
         // - TestExplorerDemo(False).ThisTestAppearsTwice
 
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key")));
 
-        var result = await client.ProcessDataAsync("test-data");
+        var result = await client.GetCountryCodeAsync("1.1.1.1");
         Assert.That(result, Is.Not.Null);
     }
 }
@@ -126,17 +125,17 @@ public class SpecializedTests : ClientTestBase
     public async Task AsyncOnlyFeature()
     {
         // This test only runs for async clients
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key")));
 
-        // Test async-specific functionality
-        await client.StreamDataAsync(HandleDataCallback);
-    }
+        // Test async-specific functionality - batch processing multiple IPs
+        var ipAddresses = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
+        var tasks = ipAddresses.Select(ip => client.GetCountryCodeAsync(ip));
+        var results = await Task.WhenAll(tasks);
 
-    private void HandleDataCallback(byte[] data)
-    {
-        // Handle streaming data
+        Assert.That(results.Length, Is.EqualTo(3));
+        Assert.That(results.All(r => r.Value != null), Is.True);
     }
 }
 ```
@@ -158,15 +157,16 @@ public class SyncSpecializedTests : ClientTestBase
     public async Task SyncOnlyFeature()
     {
         // This test only runs for sync clients
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key")));
 
-        // Test sync-specific behavior
-        var result = await client.GetDataAsync("test-id");
+        // Test sync-specific behavior - immediate response processing
+        var result = await client.GetCountryCodeAsync("8.8.8.8");
 
-        // Verify synchronous completion
-        Assert.That(result.GetRawResponse().Headers.Any(h => h.Key == "x-sync-processed"), Is.True);
+        // Verify we got a proper response
+        Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
+        Assert.That(result.Value.CountryRegion, Is.Not.Null);
     }
 }
 ```
@@ -189,36 +189,36 @@ public class CustomInstrumentationTests : ClientTestBase
     public async Task CustomClientCreation()
     {
         // Create client with custom configuration
-        var options = new SampleClientOptions();
-        // System.ClientModel.ClientPipelineOptions doesn't have Retry configuration
+        var options = new MapsClientOptions();
+        // Configure service version or other options as needed
 
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test"),
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key"),
             options));
 
         // Test with custom configuration
-        var result = await client.GetDataWithRetriesAsync();
+        var result = await client.GetCountryCodeAsync("8.8.8.8");
         Assert.That(result, Is.Not.Null);
     }
 
     [Test]
     public async Task MultipleClientTypes()
     {
-        // Test when using multiple client types
-        var dataClient = CreateProxyFromClient(new DataClient(
-            new Uri("https://data.example.com"),
-            new ApiKeyCredential("test")));
+        // Test when using multiple Maps client instances
+        var primaryMapsClient = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("primary-key")));
 
-        var configClient = CreateProxyFromClient(new ConfigurationClient(
-            new Uri("https://config.example.com"),
-            new ApiKeyCredential("test")));
+        var secondaryMapsClient = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("secondary-key")));
 
-        var data = await dataClient.GetDataAsync();
-        var config = await configClient.GetSettingsAsync();
+        var result1 = await primaryMapsClient.GetCountryCodeAsync("8.8.8.8");
+        var result2 = await secondaryMapsClient.GetCountryCodeAsync("1.1.1.1");
 
-        Assert.That(data, Is.Not.Null);
-        Assert.That(config, Is.Not.Null);
+        Assert.That(result1, Is.Not.Null);
+        Assert.That(result2, Is.Not.Null);
     }
 }
 ```
@@ -236,32 +236,32 @@ public class ErrorHandlingTests : ClientTestBase
     }
 
     [Test]
-    public void HandlesNotFoundError()
+    public void HandlesInvalidApiKey()
     {
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("invalid-key")));
 
         // Test error handling in both sync and async modes
         ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(
-            async () => await client.GetNonExistentResourceAsync("invalid"));
+            async () => await client.GetCountryCodeAsync("8.8.8.8"));
 
-        Assert.That(exception.Status, Is.EqualTo(404));
+        Assert.That(exception.Status, Is.EqualTo(401));
     }
 
     [Test]
     public void HandlesTimeout()
     {
-        var options = new SampleClientOptions();
+        var options = new MapsClientOptions();
         options.NetworkTimeout = TimeSpan.FromMilliseconds(100);
 
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://slow-endpoint.example.com"),
-            new ApiKeyCredential("test"),
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key"),
             options));
 
         TaskCanceledException exception = Assert.ThrowsAsync<TaskCanceledException>(
-            async () => await client.GetSlowDataAsync());
+            async () => await client.GetCountryCodeAsync("8.8.8.8"));
 
         Assert.That(exception, Is.Not.Null);
     }
@@ -274,7 +274,7 @@ Sync/async testing integrates seamlessly with recorded tests:
 
 ```C# Snippet:SyncAsyncWithRecording
 [ClientTestFixture]
-public class RecordedSyncAsyncTests : RecordedTestBase<SampleTestEnvironment>
+public class RecordedSyncAsyncTests : RecordedTestBase<MapsTestEnvironment>
 {
     public RecordedSyncAsyncTests(bool isAsync) : base(isAsync)
     {
@@ -284,17 +284,19 @@ public class RecordedSyncAsyncTests : RecordedTestBase<SampleTestEnvironment>
     public async Task RecordedSyncAsyncTest()
     {
         // Combine recording with sync/async testing
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        var client = CreateProxyFromClient(new SampleClient(
+        var options = InstrumentClientOptions(new MapsClientOptions());
+        var client = CreateProxyFromClient(new MapsClient(
             new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.ApiKey),
+            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
             options));
 
         // This will be recorded for both sync and async modes
-        var resource = await client.CreateResourceAsync(new SampleResource("test"));
-        var retrieved = await client.GetResourceAsync(resource.Value.Id);
+        var ipAddress = System.Net.IPAddress.Parse("8.8.8.8");
+        var result = await client.GetCountryCodeAsync(ipAddress);
 
-        Assert.That(retrieved.Value.Id, Is.EqualTo(resource.Value.Id));
+        Assert.That(result.Value, Is.Not.Null);
+        Assert.That(result.Value.CountryRegion, Is.Not.Null);
+        Assert.That(result.Value.IpAddress, Is.EqualTo(ipAddress));
     }
 }
 ```
@@ -314,24 +316,25 @@ public class PerformanceTests : ClientTestBase
     [Test]
     public async Task MeasureOperationPerformance()
     {
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key")));
 
         var stopwatch = Stopwatch.StartNew();
 
-        // Measure performance for both sync and async
-        var tasks = new List<Task<ClientResult<SampleData>>>();
-        for (int i = 0; i < 10; i++)
+        // Measure performance for both sync and async - test multiple IP lookups
+        var ipAddresses = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222", "4.4.4.4", "9.9.9.9" };
+        var tasks = new List<Task<ClientResult<IPAddressCountryPair>>>();
+        for (int i = 0; i < 5; i++)
         {
-            tasks.Add(client.GetDataAsync($"item-{i}"));
+            tasks.Add(client.GetCountryCodeAsync(ipAddresses[i]));
         }
 
         var results = await Task.WhenAll(tasks);
         stopwatch.Stop();
 
-        Assert.That(results.Length, Is.EqualTo(10));
-        Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(5000)); // Should complete within 5 seconds
+        Assert.That(results.Length, Is.EqualTo(5));
+        Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(10000)); // Should complete within 10 seconds
 
         // Log performance info for analysis
         TestContext.WriteLine($"Mode: {(IsAsync ? "Async" : "Sync")}, " +
@@ -349,29 +352,35 @@ For sync/async testing to work properly, your client must meet these requirement
 All async methods and properties must be marked as `virtual`:
 
 ```C# Snippet:VirtualMethodRequirement
-public class SampleClientVirtualMethods
+public class MapsClientVirtualMethods
 {
-    // ✅ Correct - virtual async method
-    public virtual async Task<ClientResult<SampleData>> GetDataAsync(string id)
+    // ✅ Correct - virtual async method (from actual MapsClient)
+    public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(System.Net.IPAddress ipAddress)
     {
         // Implementation
         await Task.Delay(10);
-        return ClientResult.FromValue(new SampleData { Id = id, Success = true }, null!);
+        return ClientResult.FromValue(
+            new IPAddressCountryPair(new CountryRegion("US"), ipAddress), 
+            null!);
     }
 
-    // ✅ Correct - virtual sync method
-    public virtual ClientResult<SampleData> GetData(string id)
+    // ✅ Correct - virtual sync method (from actual MapsClient)
+    public virtual ClientResult<IPAddressCountryPair> GetCountryCode(System.Net.IPAddress ipAddress)
     {
         // Implementation
-        return ClientResult.FromValue(new SampleData { Id = id, Success = true }, null!);
+        return ClientResult.FromValue(
+            new IPAddressCountryPair(new CountryRegion("US"), ipAddress), 
+            null!);
     }
 
     // ❌ Wrong - non-virtual method cannot be intercepted
-    public async Task<ClientResult<SampleData>> GetDataAsyncWrong(string id)
+    public async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsyncWrong(System.Net.IPAddress ipAddress)
     {
         // This won't work with sync/async testing
         await Task.Delay(10);
-        return ClientResult.FromValue(new SampleData { Id = id, Success = true }, null!);
+        return ClientResult.FromValue(
+            new IPAddressCountryPair(new CountryRegion("US"), ipAddress), 
+            null!);
     }
 }
 ```
@@ -421,7 +430,7 @@ public class SampleClientMethodPairs
 [ClientTestFixture]
 public class WellOrganizedTests : ClientTestBase
 {
-    private SampleClient _client;
+    private MapsClient _client;
 
     public WellOrganizedTests(bool isAsync) : base(isAsync)
     {
@@ -430,28 +439,29 @@ public class WellOrganizedTests : ClientTestBase
     [SetUp]
     public void Setup()
     {
-        _client = CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new ApiKeyCredential("test")));
+        _client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("test-key")));
     }
 
     [Test]
     public async Task BasicOperations()
     {
-        var result = await _client.GetDataAsync("test-id");
+        var result = await _client.GetCountryCodeAsync("8.8.8.8");
         Assert.That(result, Is.Not.Null);
     }
 
     [Test]
     public async Task ComplexOperations()
     {
-        var create = await _client.CreateResourceAsync(new SampleResource("test"));
-        var update = await _client.UpdateResourceAsync(create.Value.Id, "updated");
-        var delete = await _client.DeleteResourceAsync(update.Value.Id);
+        var ipAddresses = new[] { "8.8.8.8", "1.1.1.1" };
+        var result1 = await _client.GetCountryCodeAsync(ipAddresses[0]);
+        var result2 = await _client.GetCountryCodeAsync(ipAddresses[1]);
 
-        Assert.That(create.Value, Is.Not.Null);
-        Assert.That(update.Value, Is.Not.Null);
-        Assert.That(delete.GetRawResponse().Status, Is.EqualTo(200)); // Check HTTP status for delete operation
+        Assert.That(result1.Value, Is.Not.Null);
+        Assert.That(result2.Value, Is.Not.Null);
+        Assert.That(result1.Value.CountryRegion, Is.Not.Null);
+        Assert.That(result2.Value.CountryRegion, Is.Not.Null);
     }
 }
 ```

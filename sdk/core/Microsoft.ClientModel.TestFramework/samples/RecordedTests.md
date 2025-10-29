@@ -1,4 +1,4 @@
-# Recorded Tests with Microsoft.ClientModel.TestFramework
+# Recorded tests with Microsoft.ClientModel.TestFramework
 
 This sample demonstrates how to use the Test Framework's recording capabilities to create fast, deterministic tests that can run against live services or recorded interactions.
 
@@ -13,243 +13,152 @@ Under the hood, when tests are run in `Playback` or `Record` mode, requests are 
 
 By default tests are run in playback mode. To change the mode use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
-## Test Resource Setup
-
-In order to actually run recorded tests in `Live` or `Record` mode, you will need service resources that the test can run against. Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/main/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed.
-
-## Key Benefits
-
-Recorded tests allow you to:
-- Record HTTP interactions during live testing for later playback
-- Run tests quickly without making actual HTTP requests
-- Create deterministic tests that aren't affected by service availability
-- Sanitize sensitive data in recordings
-
-## Basic Recorded Test Setup
+## Basic recorded test setup
 
 The foundation of recorded testing is the `RecordedTestBase<T>` class and a custom `TestEnvironment` class:
 
 ```C# Snippet:BasicRecordedTestSetup
-public class SampleTestEnvironment : TestEnvironment
+public class MapsTestEnvironment : TestEnvironment
 {
-    // Environment variables for connecting to the service
-    public string Endpoint => GetRecordedVariable("SAMPLE_ENDPOINT");
+    // Environment variables for connecting to the Azure Maps service
+    public string Endpoint => GetRecordedVariable("MAPS_ENDPOINT");
 
     // Secret values should be marked as such for sanitization
-    public string ApiKey => GetRecordedVariable("SAMPLE_API_KEY", options => options.IsSecret());
+    public string SubscriptionKey => GetRecordedVariable("MAPS_SUBSCRIPTION_KEY", options => options.IsSecret("subscription-key"));
 
     public override Dictionary<string, string> ParseEnvironmentFile()
     {
-        throw new NotImplementedException();
-    }
-
-    public override Task WaitForEnvironmentAsync()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-[ClientTestFixture]
-public class SampleRecordedTests : RecordedTestBase<SampleTestEnvironment>
-{
-    public SampleRecordedTests(bool isAsync) : base(isAsync)
-    {
-    }
-
-    [Test]
-    public async Task CanCreateAndRetrieveResource()
-    {
-        // Create a client with instrumented options for recording
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        var client = CreateProxyFromClient(new SampleClient(
-            new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.ApiKey),
-            options));
-
-        // Create a resource
-        var resource = new SampleResource("test-resource");
-        var createResult = await client.CreateResourceAsync(resource);
-
-        Assert.That(createResult, Is.Not.Null);
-        Assert.That("test-resource", Is.EqualTo(createResult.Value.Id));
-
-        // Retrieve the resource
-        var getResult = await client.GetResourceAsync(createResult.Value.Id);
-
-        Assert.That(getResult, Is.Not.Null);
-        Assert.That(createResult.Value.Id, Is.EqualTo(getResult.Value.Id));
-    }
-}
-```
-
-## Test Modes
-
-The Test Framework supports three different modes for running recorded tests:
-
-### Live Mode
-Tests run against actual service endpoints with real HTTP requests.
-
-```C# Snippet:LiveModeExample
-// Set via environment variable: SYSTEM_CLIENTMODEL_TEST_MODE=Live
-// Or in constructor for development:
-public class LiveModeTests : RecordedTestBase<SampleTestEnvironment>
-{
-    public LiveModeTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
-    {
-    }
-}
-```
-
-### Record Mode
-Tests run against live services but HTTP interactions are saved for later playback.
-
-```C# Snippet:RecordModeExample
-// Set via environment variable: SYSTEM_CLIENTMODEL_TEST_MODE=Record
-// Or in constructor:
-public class RecordModeTests : RecordedTestBase<SampleTestEnvironment>
-{
-    public RecordModeTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
-    {
-    }
-}
-```
-
-### Playback Mode (Default)
-Tests use previously recorded interactions instead of making real HTTP requests.
-
-```C# Snippet:PlaybackModeExample
-// Default mode - no configuration needed
-// Set via environment variable: SYSTEM_CLIENTMODEL_TEST_MODE=Playback
-public class PlaybackModeTests : RecordedTestBase<SampleTestEnvironment>
-{
-    public PlaybackModeTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
-    {
-    }
-}
-```
-
-## Advanced Test Environment Features
-
-### Environment Variable Types
-
-```C# Snippet:AdvancedTestEnvironment
-public class AdvancedTestEnvironment : TestEnvironment
-{
-    // Basic variable
-    public string Endpoint => GetRecordedVariable("SERVICE_ENDPOINT");
-
-    // Secret variable (will be sanitized in recordings)
-    public string ApiKey => GetRecordedVariable("SERVICE_API_KEY", options => options.IsSecret());
-
-    // Base64 secret (uses Base64-compatible sanitized value)
-    public string Base64Secret => GetRecordedVariable("SERVICE_SECRET",
-        options => options.IsSecret(SanitizedValue.Base64));
-
-    // Optional variable with default
-    public string OptionalSetting => GetRecordedOptionalVariable("OPTIONAL_SETTING") ?? "default-value";
-
-    // Credential for authentication
-    public override AuthenticationTokenProvider Credential =>
-        new ApiKeyAuthenticationTokenProvider(new ApiKeyCredential(ApiKey));
-
-    public override Dictionary<string, string> ParseEnvironmentFile()
-    {
-        // Parse test.env file or return empty dictionary
+        // Read environment variables or parse from a .env file as needed
         return new Dictionary<string, string>
         {
-            { "SERVICE_ENDPOINT", "https://example.com" },
-            { "SERVICE_API_KEY", "test-key" },
-            { "SERVICE_SECRET", "test-secret" }
+            { "MAPS_ENDPOINT", Environment.GetEnvironmentVariable("MAPS_ENDPOINT") },
+            { "MAPS_SUBSCRIPTION_KEY", Environment.GetEnvironmentVariable("MAPS_SUBSCRIPTION_KEY") }
         };
     }
 
     public override Task WaitForEnvironmentAsync()
     {
-        // Wait for environment to be ready
+        // Add any environment readiness checks here if needed
         return Task.CompletedTask;
+    }
+}
+
+public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
+{
+    public MapsRecordedTests(bool isAsync) : base(isAsync)
+    {
+    }
+
+    [RecordedTest]
+    public async Task CanGetCountryCode()
+    {
+        // Create a client with instrumented options for recording
+        var options = InstrumentClientOptions(new Maps.MapsClientOptions());
+        var client = CreateProxyFromClient(new Maps.MapsClient(
+            new Uri(TestEnvironment.Endpoint),
+            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
+            options));
+
+        // Get country code for a known IP address
+        var ipAddress = System.Net.IPAddress.Parse("8.8.8.8");
+        var result = await client.GetCountryCodeAsync(ipAddress);
     }
 }
 ```
 
-### Environment Readiness Checking
+## Test modes
 
-For services that need time to become available after resource creation:
+By default tests are run in playback mode. To change the mode use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
-```C# Snippet:EnvironmentReadinessCheck
-public class ServiceTestEnvironment : TestEnvironment
+In development scenarios where it's required to change mode quickly without restarting Visual Studio, use the two-parameter constructor of `RecordedTestBase` to change the mode, or use the `.runsettings` file as described [here](#test-settings).
+
+Recorded tests can be attributed with the `RecordedTestAttribute` in lieu of the standard `TestAttribute` to enable functionality to automatically re-record tests that fail due to recording session file mismatches.
+Tests that are auto-rerecorded will fail with the following error and succeed if re-run.
+
+```text
+Error Message:
+   Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recording to SessionFiles.
+```
+
+```C# Snippet:TestModeExample
+public class TestModeExamples : RecordedTestBase<MapsTestEnvironment>
 {
-    public string Endpoint => GetRecordedVariable("SERVICE_ENDPOINT");
-    public string ApiKey => GetRecordedVariable("SERVICE_API_KEY", options => options.IsSecret());
-
-    public override Dictionary<string, string> ParseEnvironmentFile()
+    // Can explicitly specify a mode in the constructor
+    public TestModeExamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
     {
-        // Parse test.env file or return empty dictionary
-        return new Dictionary<string, string>();
-    }
-
-    public override async Task WaitForEnvironmentAsync()
-    {
-        // Wait for environment to be ready
-        // This replaces the IsEnvironmentReadyAsync pattern from Azure.Core.TestFramework
-        try
-        {
-            var client = new SampleClient(new Uri(Endpoint), new ApiKeyCredential(ApiKey));
-            await client.HealthCheckAsync();
-        }
-        catch
-        {
-            // Environment not ready, but we'll continue anyway
-        }
     }
 }
 ```
 
 ## Sanitization
 
-### Built-in Sanitizers
+### Built-in sanitizers
 
-The Test Framework automatically sanitizes common sensitive headers, but you can add custom sanitization:
+Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. Do not check session records containing secrets in to repositories. Common headers like Authentication are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of RecordedTestBase can be used to customize the sanitization process.
 
-```C# Snippet:CustomSanitization
-public class CustomSanitizedTests : RecordedTestBase<SampleTestEnvironment>
+### Standard custom sanitization
+
+```C# Snippet:StandardSanitization
+public class StandardSanitizedTests : RecordedTestBase<MapsTestEnvironment>
 {
-    public CustomSanitizedTests(bool isAsync) : base(isAsync)
+    public StandardSanitizedTests(bool isAsync) : base(isAsync)
     {
-        // Sanitize custom headers
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-custom-key") { Value = "SANITIZED" }));
-
-        // Sanitize parts of URIs
-        UriRegexSanitizers.Add(new UriRegexSanitizer(new UriRegexSanitizerBody("accounts/SANITIZED", @"accounts/[^/]+", null, null, null)));
-
-        // Sanitize request/response bodies
-        BodyRegexSanitizers.Add(new BodyRegexSanitizer(new BodyRegexSanitizerBody(@"""id"": ""SANITIZED""", @"""id""\s*:\s*""[^""]+""", null, null, null)));
+        // Sanitize specific headers by name
+        SanitizedHeaders.Add("x-client-secret");
+        SanitizedQueryParameters.Add("client_secret");
     }
 }
 ```
 
-### JSON Path Sanitizers
+### JSON path sanitizers
 
-For sanitizing specific JSON properties in request/response bodies:
+Another sanitization feature that is available involves sanitizing Json payloads. By adding a Json Path formatted string to the JsonPathSanitizers property, you can sanitize the value for a specific JSON property in request/response bodies.
 
 ```C# Snippet:JsonPathSanitization
-public class JsonSanitizedTests : RecordedTestBase<SampleTestEnvironment>
+public class JsonSanitizedTests : RecordedTestBase<MapsTestEnvironment>
 {
     public JsonSanitizedTests(bool isAsync) : base(isAsync)
     {
         // Sanitize specific JSON paths
-        JsonPathSanitizers.Add("$.connectionString");
-        JsonPathSanitizers.Add("$.keys[*].value");
-        JsonPathSanitizers.Add("$.properties.secrets");
+        JsonPathSanitizers.Add("$.subscriptionKey");
+        JsonPathSanitizers.Add("$.ipAddress");
+        JsonPathSanitizers.Add("$.countryRegion.isoCode");
     }
 }
 ```
 
-## Request Matching
+### Advanced sanitizers
+
+If more advanced sanitization is needed, you can use any of the regex-based sanitizer properties of RecordedTestBase.
+
+_Note that when using any of the regex sanitizers, you must take care to ensure that the regex is specific enough to not match unintended values. When a regex is too broad and matches unintended values, this can result in the request or response being corrupted which may manifest in a JsonReaderException._
+
+```C# Snippet:CustomSanitization
+public class CustomSanitizedTests : RecordedTestBase<MapsTestEnvironment>
+{
+    public CustomSanitizedTests(bool isAsync) : base(isAsync)
+    {
+        // Sanitize subscription key headers
+        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("subscription-key") { Value = "SANITIZED" }));
+
+        // Sanitize parts of URIs containing account info
+        UriRegexSanitizers.Add(new UriRegexSanitizer(new UriRegexSanitizerBody("atlas.microsoft.com", @"[^.]+\.microsoft\.com", null, null, null)));
+
+        // Sanitize IP addresses in request/response bodies
+        BodyRegexSanitizers.Add(new BodyRegexSanitizer(new BodyRegexSanitizerBody(@"""ipAddress"": ""127.0.0.1""", @"""ipAddress""\s*:\s*""[^""]+""", null, null, null)));
+
+        // Sanitize specific keys in request/response bodies
+        BodyKeySanitizers.Add(new BodyKeySanitizer(new BodyKeySanitizerBody("subscriptionKey") { Value = "SANITIZED" }));
+    }
+}
+```
+
+## Request matching
 
 Customize how recorded requests are matched during playback:
 
 ```C# Snippet:RequestMatching
-public class CustomMatchingTests : RecordedTestBase<SampleTestEnvironment>
+public class CustomMatchingTests : RecordedTestBase<MapsTestEnvironment>
 {
     public CustomMatchingTests(bool isAsync) : base(isAsync)
     {
@@ -267,12 +176,12 @@ public class CustomMatchingTests : RecordedTestBase<SampleTestEnvironment>
 
 ## Working with Test Proxy
 
-### Debug Mode
+### Debug mode
 
 Enable debug logging for troubleshooting recording issues:
 
 ```C# Snippet:DebugMode
-public class DebuggingTests : RecordedTestBase<SampleTestEnvironment>
+public class DebuggingTests : RecordedTestBase<MapsTestEnvironment>
 {
     public DebuggingTests(bool isAsync) : base(isAsync)
     {
@@ -282,13 +191,13 @@ public class DebuggingTests : RecordedTestBase<SampleTestEnvironment>
 }
 ```
 
-### Custom Recording Session Names
+### Custom recording session names
 
 Control how recording sessions are named:
 
 ```C# Snippet:CustomSessionNames
 [TestFixture]
-public class CustomSessionTests : RecordedTestBase<SampleTestEnvironment>
+public class CustomSessionTests : RecordedTestBase<MapsTestEnvironment>
 {
     public CustomSessionTests(bool isAsync) : base(isAsync)
     {
@@ -303,52 +212,61 @@ public class CustomSessionTests : RecordedTestBase<SampleTestEnvironment>
         // Recording names are derived from test method names automatically
 
         var client = CreateInstrumentedClient();
-        await client.PerformOperationAsync();
+        var result = await client.GetCountryCodeAsync("8.8.8.8");
+        Assert.That(result, Is.Not.Null);
     }
 
-    private SampleClient CreateInstrumentedClient()
+    private MapsClient CreateInstrumentedClient()
     {
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        return CreateProxyFromClient(new SampleClient(
-            new Uri("https://example.com"),
-            new MockCredential()));
+        var options = InstrumentClientOptions(new MapsClientOptions());
+        return CreateProxyFromClient(new MapsClient(
+            new Uri(TestEnvironment.Endpoint),
+            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
+            options));
     }
 }
 ```
 
-## Live-Only Tests
+## Live-Only tests
 
 Some tests should never be recorded (e.g., due to size or content):
 
 ```C# Snippet:LiveOnlyTests
 [LiveOnly]
-public class LargeDataTests : RecordedTestBase<SampleTestEnvironment>
+public class LargeDataTests : RecordedTestBase<MapsTestEnvironment>
 {
     public LargeDataTests(bool isAsync) : base(isAsync)
     {
     }
 
     [Test]
-    public async Task UploadLargeFile()
+    public async Task TestManyIpAddresses()
     {
-        // This test will only run in Live mode
+        // This test will only run in Live mode due to the volume of requests
         var client = CreateInstrumentedClient();
-        var largeData = new byte[1024 * 1024 * 100]; // 100MB
-        await client.UploadDataAsync(largeData);
+
+        // Test multiple IP addresses (this would generate too many recordings)
+        var ipAddresses = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
+
+        foreach (var ip in ipAddresses)
+        {
+            var result = await client.GetCountryCodeAsync(ip);
+            Assert.That(result, Is.Not.Null);
+        }
     }
 
-    private SampleClient CreateInstrumentedClient()
+    private MapsClient CreateInstrumentedClient()
     {
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        return CreateProxyFromClient(new SampleClient(
+        var options = InstrumentClientOptions(new MapsClientOptions());
+        return CreateProxyFromClient(new MapsClient(
             new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.ApiKey),
+            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
             options));
     }
 }
 
 // Or mark individual tests as live-only
-public class MixedTests : RecordedTestBase<SampleTestEnvironment>
+public class MixedTests : RecordedTestBase<MapsTestEnvironment>
 {
     public MixedTests(bool isAsync) : base(isAsync)
     {
@@ -359,113 +277,43 @@ public class MixedTests : RecordedTestBase<SampleTestEnvironment>
     {
         // This test can be recorded
         var client = CreateInstrumentedClient();
-        await client.GetDataAsync("test");
+        var result = await client.GetCountryCodeAsync("8.8.8.8");
+        Assert.That(result, Is.Not.Null);
     }
 
     [Test]
     [LiveOnly]
     public async Task LiveOnlyTest()
     {
-        // This test will only run live
+        // This test will only run live - perhaps testing rate limits
         var client = CreateInstrumentedClient();
-        await client.GetDataAsync("live-only");
+        var result = await client.GetCountryCodeAsync("127.0.0.1");
+        Assert.That(result, Is.Not.Null);
     }
 
-    private SampleClient CreateInstrumentedClient()
+    private MapsClient CreateInstrumentedClient()
     {
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        return CreateProxyFromClient(new SampleClient(
+        var options = InstrumentClientOptions(new MapsClientOptions());
+        return CreateProxyFromClient(new MapsClient(
             new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.ApiKey),
+            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
             options));
-    }
-}
-```
-
-## Best Practices
-
-### 1. Test Environment Organization
-
-```C# Snippet:TestEnvironmentBestPractices
-public class WellOrganizedTestEnvironment : TestEnvironment
-{
-    // Group related settings
-    public string ServiceEndpoint => GetRecordedVariable("SERVICE_ENDPOINT");
-    public string ServiceRegion => GetRecordedVariable("SERVICE_REGION");
-
-    // Use descriptive names for secrets
-    public string ServicePrimaryKey => GetRecordedVariable("SERVICE_PRIMARY_KEY",
-        options => options.IsSecret());
-    public string ServiceSecondaryKey => GetRecordedVariable("SERVICE_SECONDARY_KEY",
-        options => options.IsSecret());
-
-    // Provide helper methods for common client creation
-    public SampleClient CreateClient() => new SampleClient(
-        new Uri(ServiceEndpoint),
-        new ApiKeyCredential(ServicePrimaryKey)
-    );
-
-    public override Dictionary<string, string> ParseEnvironmentFile()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Task WaitForEnvironmentAsync()
-    {
-        throw new NotImplementedException();
-    }
-}
-```
-
-### 2. Efficient Test Structure
-
-```C# Snippet:EfficientTestStructure
-public class EfficientTests : RecordedTestBase<SampleTestEnvironment>
-{
-    private SampleClient _client;
-
-    public EfficientTests(bool isAsync) : base(isAsync)
-    {
-    }
-
-    [SetUp]
-    public void Setup()
-    {
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        _client = CreateProxyFromClient(new SampleClient(
-            new Uri(TestEnvironment.Endpoint),
-            new MockCredential("test-api-key", DateTimeOffset.UtcNow.AddHours(1)),
-            options));
-    }
-
-    [Test]
-    public async Task MultipleOperationsTest()
-    {
-        // Group related operations in single test to reduce recording size
-        var resource = await _client.CreateResourceAsync(new SampleResource("test"));
-        var updated = await _client.UpdateResourceAsync(resource.Value.Id, "updated");
-        await _client.DeleteResourceAsync(updated.Value.Id);
-
-        // Verify the complete workflow
-        Assert.That(resource.Value, Is.Not.Null);
-        Assert.That(updated.Value.Name, Is.EqualTo("updated"));
     }
 }
 ```
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 1. **Recording Mismatches**: Ensure sanitizers don't over-sanitize and break request matching
 2. **Credential Issues**: Use `TestEnvironment.Credential` for consistent authentication
 3. **Timing Issues**: Use `TestRandom` for deterministic values instead of `Random`
-4. **Large Recordings**: Consider splitting large tests or using `[LiveOnly]`
 
 ### Debug Techniques
 
 ```C# Snippet:DebuggingTechniques
-public class DebuggingTechniquesTests : RecordedTestBase<SampleTestEnvironment>
+public class DebuggingTechniquesTests : RecordedTestBase<MapsTestEnvironment>
 {
     public DebuggingTechniquesTests(bool isAsync) : base(isAsync)
     {
@@ -477,23 +325,26 @@ public class DebuggingTechniquesTests : RecordedTestBase<SampleTestEnvironment>
         // Enable detailed logging
         UseLocalDebugProxy = true;
 
-        // Add custom diagnostics - sanitizers are configured through SanitizedHeaders property
-        // Recording?.AddSanitizer(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-debug-info") { Value = "DEBUG" }));
+        // Add custom diagnostics - sanitizers are configured through properties
+        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-debug-info") { Value = "DEBUG" }));
 
         var client = CreateInstrumentedClient();
 
         // Use recording's random for deterministic values
-        var randomValue = Recording?.Random?.Next(1000, 9999) ?? 1234;
+        var testIps = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
+        var randomIndex = Recording?.Random?.Next(0, testIps.Length) ?? 0;
+        var selectedIp = testIps[randomIndex];
 
-        await client.ProcessValueAsync(randomValue);
+        var result = await client.GetCountryCodeAsync(selectedIp);
+        Assert.That(result, Is.Not.Null);
     }
 
-    private SampleClient CreateInstrumentedClient()
+    private MapsClient CreateInstrumentedClient()
     {
-        var options = InstrumentClientOptions(new SampleClientOptions());
-        return CreateProxyFromClient(new SampleClient(
+        var options = InstrumentClientOptions(new MapsClientOptions());
+        return CreateProxyFromClient(new MapsClient(
             new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.ApiKey),
+            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
             options));
     }
 }

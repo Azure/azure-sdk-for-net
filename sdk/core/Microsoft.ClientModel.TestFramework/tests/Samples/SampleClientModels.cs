@@ -72,13 +72,89 @@ public class SampleClient
         return ClientResult.FromValue(data, response);
     }
 
-    public virtual ClientResult<SampleResource> CreateResource(SampleResource resource, CancellationToken cancellationToken = default)
+    // Service method takes input data and processes it
+    // and returns `ClientResult<T>` holding the processed result
+    public virtual ClientResult<SampleData> ProcessData(SampleData input, CancellationToken cancellationToken = default)
+    {
+        // Create a message that can be sent via the client pipeline.
+        using PipelineMessage message = _pipeline.CreateMessage();
+
+        // Modify the request as needed to invoke the service operation.
+        PipelineRequest request = message.Request;
+        request.Method = "POST";
+        request.Uri = new Uri($"{_endpoint}/process");
+        request.Headers.Add("Accept", "application/json");
+
+        // Add request body content that will be written using methods
+        // defined by the model's implementation of the IJsonModel<T> interface.
+        request.Content = BinaryContent.Create(input);
+
+        // Send the message.
+        _pipeline.Send(message);
+
+        // Obtain the response from the message Response property.
+        PipelineResponse response = message.Response!;
+
+        // If the response is considered an error response, throw an
+        // exception that exposes the response details.
+        if (response.IsError)
+        {
+            throw new ClientResultException(response);
+        }
+
+        // Read the content from the response body and create an instance of
+        // a model from it, to include in the type returned by this method.
+        SampleData processed = ModelReaderWriter.Read<SampleData>(response.Content)!;
+
+        // Return a ClientResult<T> holding the model instance and the HTTP
+        // response details.
+        return ClientResult.FromValue(processed, response);
+    }
+
+    public virtual async Task<ClientResult<SampleData>> ProcessDataAsync(SampleData input, CancellationToken cancellationToken = default)
+    {
+        // Create a message that can be sent via the client pipeline.
+        using PipelineMessage message = _pipeline.CreateMessage();
+
+        // Modify the request as needed to invoke the service operation.
+        PipelineRequest request = message.Request;
+        request.Method = "POST";
+        request.Uri = new Uri($"{_endpoint}/process");
+        request.Headers.Add("Accept", "application/json");
+
+        // Add request body content that will be written using methods
+        // defined by the model's implementation of the IJsonModel<T> interface.
+        request.Content = BinaryContent.Create(input);
+
+        // Send the message.
+        await _pipeline.SendAsync(message);
+
+        // Obtain the response from the message Response property.
+        PipelineResponse response = message.Response!;
+
+        // If the response is considered an error response, throw an
+        // exception that exposes the response details.
+        if (response.IsError)
+        {
+            throw new ClientResultException(response);
+        }
+
+        // Read the content from the response body and create an instance of
+        // a model from it, to include in the type returned by this method.
+        SampleData processed = ModelReaderWriter.Read<SampleData>(response.Content)!;
+
+        // Return a ClientResult<T> holding the model instance and the HTTP
+        // response details.
+        return ClientResult.FromValue(processed, response);
+    }
+
+    public virtual ClientResult<SampleData> AnalyzeData(string dataId, CancellationToken cancellationToken = default)
     {
         using PipelineMessage message = _pipeline.CreateMessage();
         PipelineRequest request = message.Request;
         request.Method = "POST";
-        request.Uri = new Uri($"{_endpoint}/resources");
-        request.Content = BinaryContent.Create(resource);
+        request.Uri = new Uri($"{_endpoint}/analyze/{dataId}");
+        request.Headers.Add("Accept", "application/json");
 
         _pipeline.Send(message);
         PipelineResponse response = message.Response!;
@@ -88,17 +164,17 @@ public class SampleClient
             throw new ClientResultException(response);
         }
 
-        var created = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-        return ClientResult.FromValue(created, response);
+        var result = ModelReaderWriter.Read<SampleData>(response.Content)!;
+        return ClientResult.FromValue(result, response);
     }
 
-    public virtual async Task<ClientResult<SampleResource>> CreateResourceAsync(SampleResource resource, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<SampleData>> AnalyzeDataAsync(string dataId, CancellationToken cancellationToken = default)
     {
         using PipelineMessage message = _pipeline.CreateMessage();
         PipelineRequest request = message.Request;
         request.Method = "POST";
-        request.Uri = new Uri($"{_endpoint}/resources");
-        request.Content = BinaryContent.Create(resource);
+        request.Uri = new Uri($"{_endpoint}/analyze/{dataId}");
+        request.Headers.Add("Accept", "application/json");
 
         await _pipeline.SendAsync(message);
         PipelineResponse response = message.Response!;
@@ -108,122 +184,8 @@ public class SampleClient
             throw new ClientResultException(response);
         }
 
-        var created = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-        return ClientResult.FromValue(created, response);
-    }
-
-    public virtual ClientResult<SampleResource> GetResource(string id, CancellationToken cancellationToken = default)
-    {
-        using PipelineMessage message = _pipeline.CreateMessage();
-        PipelineRequest request = message.Request;
-        request.Method = "GET";
-        request.Uri = new Uri($"{_endpoint}/resources/{id}");
-
-        _pipeline.Send(message);
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError)
-        {
-            throw new ClientResultException(response);
-        }
-
-        var resource = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-        return ClientResult.FromValue(resource, response);
-    }
-
-    public virtual async Task<ClientResult<SampleResource>> GetResourceAsync(string id, CancellationToken cancellationToken = default)
-    {
-        using PipelineMessage message = _pipeline.CreateMessage();
-        PipelineRequest request = message.Request;
-        request.Method = "GET";
-        request.Uri = new Uri($"{_endpoint}/resources/{id}");
-
-        await _pipeline.SendAsync(message);
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError)
-        {
-            throw new ClientResultException(response);
-        }
-
-        var resource = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-        return ClientResult.FromValue(resource, response);
-    }
-
-    public virtual ClientResult<SampleResource> UpdateResource(string id, string name, CancellationToken cancellationToken = default)
-    {
-        using PipelineMessage message = _pipeline.CreateMessage();
-        PipelineRequest request = message.Request;
-        request.Method = "PUT";
-        request.Uri = new Uri($"{_endpoint}/resources/{id}");
-        request.Content = BinaryContent.Create(BinaryData.FromString($"{{\"name\":\"{name}\"}}"));
-
-        _pipeline.Send(message);
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError)
-        {
-            throw new ClientResultException(response);
-        }
-
-        var updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-        return ClientResult.FromValue(updated, response);
-    }
-
-    public virtual async Task<ClientResult<SampleResource>> UpdateResourceAsync(string id, string name, CancellationToken cancellationToken = default)
-    {
-        using PipelineMessage message = _pipeline.CreateMessage();
-        PipelineRequest request = message.Request;
-        request.Method = "PUT";
-        request.Uri = new Uri($"{_endpoint}/resources/{id}");
-        request.Content = BinaryContent.Create(BinaryData.FromString($"{{\"name\":\"{name}\"}}"));
-
-        await _pipeline.SendAsync(message);
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError)
-        {
-            throw new ClientResultException(response);
-        }
-
-        var updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-        return ClientResult.FromValue(updated, response);
-    }
-
-    public virtual ClientResult DeleteResource(string id, CancellationToken cancellationToken = default)
-    {
-        using PipelineMessage message = _pipeline.CreateMessage();
-        PipelineRequest request = message.Request;
-        request.Method = "DELETE";
-        request.Uri = new Uri($"{_endpoint}/resources/{id}");
-
-        _pipeline.Send(message);
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError)
-        {
-            throw new ClientResultException(response);
-        }
-
-        return ClientResult.FromResponse(response);
-    }
-
-    public virtual async Task<ClientResult> DeleteResourceAsync(string id, CancellationToken cancellationToken = default)
-    {
-        using PipelineMessage message = _pipeline.CreateMessage();
-        PipelineRequest request = message.Request;
-        request.Method = "DELETE";
-        request.Uri = new Uri($"{_endpoint}/resources/{id}");
-
-        await _pipeline.SendAsync(message);
-        PipelineResponse response = message.Response!;
-
-        if (response.IsError)
-        {
-            throw new ClientResultException(response);
-        }
-
-        return ClientResult.FromResponse(response);
+        var result = ModelReaderWriter.Read<SampleData>(response.Content)!;
+        return ClientResult.FromValue(result, response);
     }
 
     // Additional methods for specific samples

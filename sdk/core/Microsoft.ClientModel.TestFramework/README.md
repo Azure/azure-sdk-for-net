@@ -33,13 +33,13 @@ Without this attribute, the Test Framework falls back to using the assembly's ou
 
 ## Key Concepts
 
-**Sync/Async Testing**: Write async test methods and automatically test both sync and async versions of your client methods. The framework creates proxy classes that forward async calls to their sync overloads.
+**Sync/Async Testing**: Write async test methods and automatically test both sync and async versions of your client methods. The framework creates proxy classes that forward async calls to their sync overloads. **Note**: This works specifically for clients that follow the System.ClientModel pattern where methods are paired as `MethodName()` and `MethodNameAsync()` with identical parameter signatures.
 
 **Recorded Tests**: Functional tests that can run in three modes - Live (against real services), Record (capture HTTP interactions), and Playback (replay captured interactions). Uses the Azure SDK Test Proxy for HTTP recording and playback.
 
-**Test Environment**: Manages configuration variables and credentials for tests, with automatic sanitization of sensitive data during recording. Inherits from `TestEnvironment` base class.
+**Test Environment**: Manages configuration variables and credentials for tests, with automatic sanitization of sensitive data during recording.
 
-**Unit Testing**: Mock utilities for testing error scenarios and retry logic without requiring live services. Includes `MockPipelineTransport`, `MockPipelineResponse`, and `MockCredential` classes.
+**Unit Testing**: Mock utilities for unit testing without requiring live services. Includes `MockPipelineTransport`, `MockPipelineResponse`, and `MockCredential` classes.
 
 ## Examples
 
@@ -51,7 +51,7 @@ Additional samples with explanations can be found in this repository, these are 
 
 ### Recorded tests
 
-The bulk of the functionality of the Test Framework is around supporting the ability to run what we call recorded tests. This type of test can be thought of as a functional test as opposed to a unit test. A recorded test can be run in three different modes:
+The bulk of the functionality of the Test Framework is around supporting the ability to run recorded tests. This type of test can be thought of as a functional test as opposed to a unit test. A recorded test can be run in three different modes:
   - `Live` - The requests in the tests are run against live service resources.
   - `Record` - The requests in the tests are run against live resources and HTTP interactions are recorded for later playback.
   - `Playback` - The requests that your library generates when running a test are compared against the requests in the recording for that test. For each matched request, the corresponding response is extracted from the recording and "played back" as the response. The test will fail if a request issued by the library cannot be matched to the ones found in the session file, taking into account any sanitization or matching customizations that may have been applied to the request.
@@ -116,7 +116,7 @@ public class ConfigurationTests : RecordedTestBase<SampleTestEnvironment>
     {
     }
 
-    [Test]
+    [RecordedTest]
     public async Task CreateAndDeleteConfiguration()
     {
         var options = InstrumentClientOptions(new SampleClientOptions());
@@ -131,7 +131,9 @@ public class ConfigurationTests : RecordedTestBase<SampleTestEnvironment>
 }
 ```
 
-By default tests are run in playback mode. To change the mode use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
+By default tests are run in playback mode. You can change the mode in several ways, including:
+- Setting the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable to `Live`, `Playback`, or `Record`
+- Passing the mode directly in the test class constructor: `base(isAsync, RecordedTestMode.Record)`
 
 #### Sanitizing
 
@@ -145,8 +147,8 @@ public class ConfigurationTests : RecordedTestBase<SampleTestEnvironment>
 {
     public ConfigurationTests(bool isAsync) : base(isAsync)
     {
-        // Add custom sanitizers
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-custom-header", "SANITIZED"));
+        // Add custom header sanitization
+        SanitizedHeaders.Add(new HeaderRegexSanitizer("x-custom-header", "SANITIZED"));
     }
 }
 ```
@@ -219,10 +221,6 @@ public SampleTests(bool isAsync) : base(isAsync)
     UseLocalDebugProxy = true;
 }
 ```
-
-### Custom Response Classification
-
-When a service returns non-standard success codes, you can customize response classification by implementing a custom `PipelineMessageClassifier`.
 
 ## Contributing
 
