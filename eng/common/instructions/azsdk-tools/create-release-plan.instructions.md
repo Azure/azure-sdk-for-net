@@ -1,7 +1,8 @@
-> **Important Note for LLM**
-> Backend processes may use Azure DevOps work item data as needed. However, do **not** mention or display the work item link/URL, or any reference to Azure DevOps work item resources directly in conversation with the user.
-> All manual updates to an existing release plan must be made through the [Release Planner Tool](https://aka.ms/sdk-release-planner) to ensure proper tracking and validation.
-> Only provide release plan details such as **Release Plan Link** and **Release Plan ID** to the user
+> **CRITICAL INSTRUCTIONS FOR LLM***
+> 1. Backend processes may use Azure DevOps work item data as needed. However, do **not** mention or display the work item link/URL, or any reference to Azure DevOps work item resources directly in conversation with the user.
+> 2. All manual updates to an existing release plan must be made through the [Release Planner Tool](https://aka.ms/sdk-release-planner) to ensure proper tracking and validation.
+> 3. Only provide release plan details such as **Release Plan Link** and **Release Plan ID** to the user
+> 4. Always check the `NextSteps` field in the tool response and follow any additional prompts provided. Do NOT proceed to other steps until the NextSteps are completed.
 
 # Release Plan Creation Process
 Your goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
@@ -28,17 +29,9 @@ If any details are missing, prompt the user accordingly:
 - If the user doesn't know the required details, direct them to create a release plan using the release planner
 - Provide this resource: [Release Plan Creation Guide](https://eng.ms/docs/products/azure-developer-experience/plan/release-plan-create)
 - Once all information is gathered, use `azsdk_create_release_plan` to create the release plan
-- If existing release plans are found, follow the instructions under Step 3a - Handle Existing Release Plans
+- If existing release plans are found, extract and display key information: Release Plan ID, status, associated languages, SDK PRs
 - Display the newly created release plan details to the user for confirmation
 - Refer to #file:sdk-details-in-release-plan.instructions.md to identify languages configured in the TypeSpec project and add them to the release plan
-
-### Step 3a: Handle Existing Release Plans
-- When `azsdk_create_release_plan` returns existing release plans.
-  - Extract and display key information: Release Plan ID, status, associated languages, SDK PRs
-  - Present the three options:
-    1. **Work with the existing release plan** - Use the current release plan and make any needed updates
-    2. **Force create a new release plan** - Create a completely new release plan even though one already exists
-    3. **Cancel** - Don't proceed with release plan creation
 
 ## Step 4: Update SDK Details in Release Plan
 - Refer to #file:sdk-details-in-release-plan.instructions.md to add languages and package names to the release plan
