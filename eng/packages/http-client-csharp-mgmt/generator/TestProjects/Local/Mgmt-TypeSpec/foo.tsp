@@ -1,10 +1,12 @@
 import "@azure-tools/typespec-client-generator-core";
 import "@azure-tools/typespec-liftr-base";
+import "@azure-tools/typespec-azure-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
+using Azure.Core;
 using LiftrBase;
 
 namespace MgmtTypeSpec;
@@ -37,6 +39,9 @@ model FooProperties {
   prop2?: int32[];
 
   nestedProperty: NestedFooModel;
+
+  /** ETag property for testing etag parameter name generation */
+  etag?: Azure.Core.eTag;
 }
 
 model NestedFooModel {
@@ -54,6 +59,24 @@ interface Foos {
   list is ArmResourceListByParent<Foo>;
 
   listBySubscription is ArmListBySubscription<Foo>;
+
+  @action("exportDependencies")
+  fooAction is ArmResourceActionAsync<
+    Foo,
+    FooActionRequest,
+    FooActionResult,
+    LroHeaders = ArmAsyncOperationHeader<FinalResult = FooActionResult> &
+      ArmLroLocationHeader<FinalResult = FooActionResult> &
+      Azure.Core.Foundations.RetryAfterHeader
+  >;
+}
+
+model FooActionRequest {
+  id: string;
+}
+
+model FooActionResult {
+  msg: string;
 }
 
 @singleton
