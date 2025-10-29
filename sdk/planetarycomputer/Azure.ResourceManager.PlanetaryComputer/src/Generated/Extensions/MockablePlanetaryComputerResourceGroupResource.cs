@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             return GetCachedClient(client => new PlanetaryComputerGeoCatalogCollection(client, Id));
         }
 
-        /// <summary> Get a GeoCatalog. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             return await GetPlanetaryComputerGeoCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a GeoCatalog. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
