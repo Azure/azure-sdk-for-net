@@ -108,18 +108,24 @@ namespace Azure.AI.VoiceLive.Samples
             rootCommand.AddOption(useTokenCredentialOption);
             rootCommand.AddOption(verboseOption);
 
-            rootCommand.SetHandler(async (context) =>
+            rootCommand.SetHandler(async (
+                string? apiKey,
+                string endpoint,
+                string? agentId,
+                string? agentProjectName,
+                string voice,
+                bool useTokenCredential,
+                bool verbose) =>
             {
-                var apiKey = context.ParseResult.GetValueForOption(apiKeyOption);
-                var endpoint = context.ParseResult.GetValueForOption(endpointOption);
-                var agentId = context.ParseResult.GetValueForOption(agentIdOption);
-                var agentProjectName = context.ParseResult.GetValueForOption(agentProjectNameOption);
-                var voice = context.ParseResult.GetValueForOption(voiceOption);
-                var useTokenCredential = context.ParseResult.GetValueForOption(useTokenCredentialOption);
-                var verbose = context.ParseResult.GetValueForOption(verboseOption);
-
                 await RunVoiceAssistantAsync(apiKey, endpoint, agentId, agentProjectName, voice, useTokenCredential, verbose).ConfigureAwait(false);
-            });
+            },
+            apiKeyOption,
+            endpointOption,
+            agentIdOption,
+            agentProjectNameOption,
+            voiceOption,
+            useTokenCredentialOption,
+            verboseOption);
 
             return rootCommand;
         }
