@@ -64,7 +64,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return GetCachedClient(client => new DeviceRegistryBillingContainerCollection(client, Id));
         }
 
-        /// <summary> Get a BillingContainer. </summary>
+        /// <summary>
+        /// Get a BillingContainer
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
@@ -77,7 +93,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return await GetDeviceRegistryBillingContainers().GetAsync(billingContainerName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a BillingContainer. </summary>
+        /// <summary>
+        /// Get a BillingContainer
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
