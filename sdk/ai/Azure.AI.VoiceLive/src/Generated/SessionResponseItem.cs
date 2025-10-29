@@ -44,8 +44,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Id. </summary>
         public string Id { get; }
-
-        /// <summary> Gets the Object. </summary>
-        public string Object { get; }
     }
 }

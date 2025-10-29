@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSecurityPolicy()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyGet.json
+            // Generated from example definition: 2025-03-01-preview/SecurityPolicyGet.json
             // this example is just showing the usage of "SecurityPolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSecurityPolicy()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyDelete.json
+            // Generated from example definition: 2025-03-01-preview/SecurityPolicyDelete.json
             // this example is just showing the usage of "SecurityPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateSecurityPolicy()
+        public async Task Update_UpdateIpAccessRulesSecurityPolicy()
         {
-            // Generated from example definition: 2025-01-01/SecurityPolicyPatch.json
+            // Generated from example definition: 2025-03-01-preview/IpAccessRulesSecurityPolicyPatch.json
             // this example is just showing the usage of "SecurityPolicy_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,48 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // invoke the operation
             ApplicationGatewayForContainersSecurityPolicyPatch patch = new ApplicationGatewayForContainersSecurityPolicyPatch
             {
-                WafPolicyId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Networking/applicationGatewayWebApplicationFirewallPolicies/wp-0"),
+                Properties = new SecurityPolicyUpdateProperties
+                {
+                    Rules = { },
+                },
+            };
+            ApplicationGatewayForContainersSecurityPolicyResource result = await applicationGatewayForContainersSecurityPolicy.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApplicationGatewayForContainersSecurityPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateWAFSecurityPolicy()
+        {
+            // Generated from example definition: 2025-03-01-preview/WafSecurityPolicyPatch.json
+            // this example is just showing the usage of "SecurityPolicy_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApplicationGatewayForContainersSecurityPolicyResource created on azure
+            // for more information of creating ApplicationGatewayForContainersSecurityPolicyResource, please refer to the document of ApplicationGatewayForContainersSecurityPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string trafficControllerName = "tc1";
+            string securityPolicyName = "sp1";
+            ResourceIdentifier applicationGatewayForContainersSecurityPolicyResourceId = ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
+            ApplicationGatewayForContainersSecurityPolicyResource applicationGatewayForContainersSecurityPolicy = client.GetApplicationGatewayForContainersSecurityPolicyResource(applicationGatewayForContainersSecurityPolicyResourceId);
+
+            // invoke the operation
+            ApplicationGatewayForContainersSecurityPolicyPatch patch = new ApplicationGatewayForContainersSecurityPolicyPatch
+            {
+                Properties = new SecurityPolicyUpdateProperties
+                {
+                    WafPolicyId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies/wp-0"),
+                },
             };
             ApplicationGatewayForContainersSecurityPolicyResource result = await applicationGatewayForContainersSecurityPolicy.UpdateAsync(patch);
 
