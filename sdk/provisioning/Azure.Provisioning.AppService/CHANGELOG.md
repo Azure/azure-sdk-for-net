@@ -16,8 +16,6 @@
 
 - Property `Name` of `WebSiteSlot` is now settable. (#53508)
 
-### Other Changes
-
 ## 1.2.0 (2025-06-26)
 
 ### Features Added
