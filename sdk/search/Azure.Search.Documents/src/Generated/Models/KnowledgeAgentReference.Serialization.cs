@@ -41,6 +41,27 @@ namespace Azure.Search.Documents.Agents.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("activitySource"u8);
             writer.WriteNumberValue(ActivitySource);
+            if (Optional.IsCollectionDefined(SourceData))
+            {
+                writer.WritePropertyName("sourceData"u8);
+                writer.WriteStartObject();
+                foreach (var item in SourceData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<object>(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(RerankerScore))
+            {
+                writer.WritePropertyName("rerankerScore"u8);
+                writer.WriteNumberValue(RerankerScore.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,7 +103,8 @@ namespace Azure.Search.Documents.Agents.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureSearchDoc": return KnowledgeAgentAzureSearchDocReference.DeserializeKnowledgeAgentAzureSearchDocReference(element, options);
+                    case "azureBlob": return KnowledgeAgentAzureBlobReference.DeserializeKnowledgeAgentAzureBlobReference(element, options);
+                    case "searchIndex": return KnowledgeAgentSearchIndexReference.DeserializeKnowledgeAgentSearchIndexReference(element, options);
                 }
             }
             return UnknownKnowledgeAgentReference.DeserializeUnknownKnowledgeAgentReference(element, options);

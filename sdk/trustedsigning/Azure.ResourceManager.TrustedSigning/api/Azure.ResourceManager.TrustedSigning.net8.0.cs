@@ -29,7 +29,10 @@ namespace Azure.ResourceManager.TrustedSigning
         public System.Uri AccountUri { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? SkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -85,25 +88,19 @@ namespace Azure.ResourceManager.TrustedSigning
     {
         public TrustedSigningCertificateProfileData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate> Certificates { get { throw null; } }
-        public string City { get { throw null; } }
-        public string CommonName { get { throw null; } }
-        public string Country { get { throw null; } }
-        public string EnhancedKeyUsage { get { throw null; } }
         public string IdentityValidationId { get { throw null; } set { } }
         public bool? IncludeCity { get { throw null; } set { } }
         public bool? IncludeCountry { get { throw null; } set { } }
         public bool? IncludePostalCode { get { throw null; } set { } }
         public bool? IncludeState { get { throw null; } set { } }
         public bool? IncludeStreetAddress { get { throw null; } set { } }
-        public string Organization { get { throw null; } }
-        public string OrganizationUnit { get { throw null; } }
-        public string PostalCode { get { throw null; } }
-        public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType? ProfileType { get { throw null; } set { } }
+        public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType ProfileType { get { throw null; } set { } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? ProvisioningState { get { throw null; } }
-        public string State { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus? Status { get { throw null; } }
-        public string StreetAddress { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -173,10 +170,12 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public static partial class ArmTrustedSigningModelFactory
     {
         public static Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent RevokeCertificateContent(string serialNumber = null, string thumbprint = null, System.DateTimeOffset effectiveOn = default(System.DateTimeOffset), string reason = null, string remarks = null) { throw null; }
-        public static Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData TrustedSigningAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Uri accountUri = null, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? skuName = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName?), Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? provisioningState = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData TrustedSigningAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Uri accountUri = null, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? provisioningState = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState?), Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? skuName = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName?)) { throw null; }
+        public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent TrustedSigningAccountNameAvailabilityContent(Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), string name = null) { throw null; }
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult TrustedSigningAccountNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason? reason = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate TrustedSigningCertificate(string serialNumber = null, string subjectName = null, string thumbprint = null, System.DateTimeOffset? createOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus? status = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus?), System.DateTimeOffset? requestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string reason = null, string remarks = null, Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus? statusRevocationStatus = default(Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus?), string failureReason = null) { throw null; }
-        public static Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType? profileType = default(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType?), string commonName = null, string organization = null, string organizationUnit = null, string streetAddress = null, bool? includeStreetAddress = default(bool?), string city = null, bool? includeCity = default(bool?), string state = null, bool? includeState = default(bool?), string country = null, bool? includeCountry = default(bool?), string postalCode = null, bool? includePostalCode = default(bool?), string enhancedKeyUsage = null, string identityValidationId = null, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? provisioningState = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState?), Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus? status = default(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate> certificates = null) { throw null; }
+        public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch TrustedSigningAccountPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? skuName = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName?)) { throw null; }
+        public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate TrustedSigningCertificate(string serialNumber = null, string enhancedKeyUsage = null, string subjectName = null, string thumbprint = null, System.DateTimeOffset? createOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus? status = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus?), System.DateTimeOffset? requestedOn = default(System.DateTimeOffset?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string reason = null, string remarks = null, Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus? revocationStatus = default(Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus?), string failureReason = null) { throw null; }
+        public static Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType? profileType = default(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType?), bool? includeStreetAddress = default(bool?), bool? includeCity = default(bool?), bool? includeState = default(bool?), bool? includeCountry = default(bool?), bool? includePostalCode = default(bool?), string identityValidationId = null, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? provisioningState = default(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState?), Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus? status = default(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus?), System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate> certificates = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificateProfileStatus : System.IEquatable<Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus>
@@ -194,6 +193,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus left, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus left, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -215,6 +215,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType left, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType left, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -234,6 +235,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus left, Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus left, Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -245,7 +247,10 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public string Remarks { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } }
         public string Thumbprint { get { throw null; } }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -254,10 +259,13 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     }
     public partial class TrustedSigningAccountNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>
     {
-        public TrustedSigningAccountNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { }
+        public TrustedSigningAccountNameAvailabilityContent(Azure.Core.ResourceType resourceType, string name) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -270,7 +278,10 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -292,6 +303,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -300,7 +312,10 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public TrustedSigningAccountPatch() { }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -312,17 +327,21 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         internal TrustedSigningCertificate() { }
         public System.DateTimeOffset? CreateOn { get { throw null; } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } }
+        public string EnhancedKeyUsage { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string FailureReason { get { throw null; } }
         public string Reason { get { throw null; } }
         public string Remarks { get { throw null; } }
         public System.DateTimeOffset? RequestedOn { get { throw null; } }
+        public Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus? RevocationStatus { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus? Status { get { throw null; } }
-        public Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus? StatusRevocationStatus { get { throw null; } }
         public string SubjectName { get { throw null; } }
         public string Thumbprint { get { throw null; } }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -345,6 +364,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -367,6 +387,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -385,6 +406,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }

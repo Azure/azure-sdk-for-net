@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+
 ## 1.0.0 (2025-08-29)
 
 This release marks the general availability of the `Azure.Developer.Playwright` package.

@@ -78,17 +78,17 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 return null;
             }
-            IList<AIConversation> conversations = default;
+            IList<TextConversation> conversations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conversations"u8))
                 {
-                    List<AIConversation> array = new List<AIConversation>();
+                    List<TextConversation> array = new List<TextConversation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AIConversation.DeserializeAIConversation(item, options));
+                        array.Add(TextConversation.DeserializeTextConversation(item, options));
                     }
                     conversations = array;
                     continue;

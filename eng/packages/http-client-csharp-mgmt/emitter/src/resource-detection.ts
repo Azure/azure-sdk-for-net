@@ -13,6 +13,7 @@ import {
   convertResourceMetadataToArguments,
   NonResourceMethod,
   ResourceMetadata,
+  ResourceMethod,
   ResourceOperationKind,
   ResourceScope
 } from "./resource-metadata.js";
@@ -58,6 +59,9 @@ export async function updateClients(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
   const resourceModels = getAllResourceModels(codeModel);
+  const resourceModelMap = new Map<string, InputModelType>(
+    resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
+  );
 
   const resourceModelToMetadataMap = new Map<string, ResourceMetadata>(
     resourceModels.map((m) => [
@@ -68,9 +72,10 @@ export async function updateClients(
         singletonResourceName: getSingletonResource(
           m.decorators?.find((d) => d.name == singleton)
         ),
-        resourceScope: getResourceScope(m),
+        resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
         methods: [],
         parentResourceId: undefined, // this will be populated later
+        parentResourceModelId: undefined,
         resourceName: m.name
       } as ResourceMetadata
     ])
@@ -128,6 +133,7 @@ export async function updateClients(
       metadata.parentResourceId = resourceModelToMetadataMap.get(
         parentResourceModelId
       )?.resourceIdPattern;
+      metadata.parentResourceModelId = parentResourceModelId;
     }
 
     // figure out the resourceScope of all resource methods
@@ -136,6 +142,23 @@ export async function updateClients(
         method.operationPath,
         resourceModelToMetadataMap.values()
       );
+    }
+
+    // update the model's resourceScope based on resource scope decorator if it exists or based on the Get method's scope. If neither exist, it will be set to ResourceGroup by default
+    const model = resourceModelMap.get(modelId);
+    if (model) {
+      metadata.resourceScope = getResourceScope(model, metadata.methods);
+    }
+  }
+
+  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
+  for (const [modelId, metadata] of resourceModelToMetadataMap) {
+    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
+    if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
+      resourceModelToMetadataMap.get(metadata.parentResourceModelId)?.methods.push(
+        ...metadata.methods
+      );
+      resourceModelToMetadataMap.delete(modelId);
     }
   }
 
@@ -273,7 +296,6 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
     if (model.decorators?.some((d) => d.name == armResourceInternal)) {
-      model.crossLanguageDefinitionId;
       resourceModels.push(model);
     }
   }
@@ -290,7 +312,11 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 
-function getResourceScope(model: InputModelType): ResourceScope {
+function getResourceScope(
+  model: InputModelType,
+  methods?: ResourceMethod[]
+): ResourceScope {
+  // First, check for explicit scope decorators
   const decorators = model.decorators;
   if (decorators?.some((d) => d.name == tenantResource)) {
     return ResourceScope.Tenant;
@@ -299,6 +325,16 @@ function getResourceScope(model: InputModelType): ResourceScope {
   } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
     return ResourceScope.ResourceGroup;
   }
+
+  // Fall back to Get method's scope only if no scope decorators are found
+  if (methods) {
+    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Get);
+    if (getMethod) {
+      return getMethod.operationScope;
+    }
+  }
+
+  // Final fallback to ResourceGroup
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
 }
 

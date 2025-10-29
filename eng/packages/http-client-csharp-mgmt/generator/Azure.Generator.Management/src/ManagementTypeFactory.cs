@@ -51,12 +51,7 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
-            [
-                new("Azure.Core"),
-                new("Azure.ResourceManager"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
-            ];
+            [];
 
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
@@ -87,6 +82,10 @@ namespace Azure.Generator.Management
             {
                 return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
             }
+            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
+            {
+                return null;
+            }
             return base.CreateModelCore(model);
         }
 
@@ -108,8 +107,12 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element,
-            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(
+            Type valueType,
+            ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
+            ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
+            SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
@@ -138,7 +141,7 @@ namespace Azure.Generator.Management
                 return deserializationExpression(valueType, element, format);
             }
 
-            return base.DeserializeJsonValue(valueType, element, mrwOptionsParameter, format);
+            return base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
         }
 
         /// <inheritdoc/>

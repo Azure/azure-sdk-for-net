@@ -1,12 +1,19 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentInference.json#",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "baseName": {
+        "name": {
             "type": "string",
             "defaultValue": "[resourceGroup().name]",
             "metadata": {
-                "description": "The base resource name."
+                "description": "The base resource name for AI Services."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
             }
         },
         "tenantId": {
@@ -23,22 +30,131 @@
                 "description": "The client OID to grant access to test resources."
             }
         },
-        "location": {
+        "tagValues": {
+            "type": "object",
+            "defaultValue": {}
+        },
+        "allowProjectManagement": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "virtualNetworkType": {
             "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "The location of the resource. By default, this is the same as the resource group."
+            "defaultValue": "None"
+        },
+        "vnet": {
+            "type": "object",
+            "defaultValue": {}
+        },
+        "ipRules": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "privateEndpoints": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "privateDnsZone": {
+            "type": "string",
+            "defaultValue": "privatelink.aiservices.azure.com"
+        },
+        "resourceGroupName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]"
+        },
+        "resourceGroupId": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().id]"
+        },
+        "uniqueId": {
+            "type": "string",
+            "defaultValue": "[newGuid()]"
+        },
+        "defaultProjectName": {
+            "type": "string",
+            "defaultValue": "[concat(toLower(parameters('name')), '-ai-defaultproject')]"
+        },
+        "identity": {
+            "type": "object",
+            "defaultValue": {
+                "type": "SystemAssigned"
             }
+        },
+        "userAssignedIdentityName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "userIdentityResourceGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "identityType": {
+            "type": "string",
+            "defaultValue": "SystemAssigned"
+        },
+        "encryption_status": {
+            "type": "string",
+            "defaultValue": " "
+        },
+        "cmk_keyvault": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "resource_cmk_uri": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "userAssignedIdentityId": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "keyVaultLocation": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "keyVaultResourceGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "keyVersion": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "keyName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hasRoleAssignment": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "roleDefinitionId": {
+            "type": "string",
+            "defaultValue": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '53ca6127-db72-4b80-b1b0-d745d6d5456d')]"
+        },
+        "enableRbac": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "cryptoUserRoleAssignmentName": {
+            "type": "string",
+            "defaultValue": "[guid(concat(parameters('cmk_keyvault'), 'KeyVaultCryptoUser'))]"
         }
     },
     "variables": {
-        "secretValue": "Very secret value"
+        "secretValue": "Very secret value",
+        "testKeyVaultName": "[parameters('name')]",
+        "aiServicesName": "[concat(parameters('name'), '-ai')]"
     },
     "resources": [
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2016-10-01",
-            "name": "[parameters('baseName')]",
+            "name": "[variables('testKeyVaultName')]",
             "location": "[parameters('location')]",
             "properties": {
                 "sku": {
@@ -61,25 +177,440 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(parameters('baseName'), '/TestSecret')]",
+            "name": "[concat(variables('testKeyVaultName'), '/TestSecret')]",
             "apiVersion": "2016-10-01",
             "location": "[parameters('location')]",
             "dependsOn": [
-              "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
+                "[resourceId('Microsoft.KeyVault/vaults', variables('testKeyVaultName'))]"
             ],
             "properties": {
-              "value": "[variables('secretValue')]"
+                "value": "[variables('secretValue')]"
             }
-          }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "deployVnet",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/virtualNetworks",
+                            "apiVersion": "2020-04-01",
+                            "name": "[if(equals(parameters('virtualNetworkType'), 'External'), parameters('vnet').name, variables('defaultVNetName'))]",
+                            "location": "[parameters('location')]",
+                            "properties": {
+                                "addressSpace": {
+                                    "addressPrefixes": "[if(equals(parameters('virtualNetworkType'), 'External'), parameters('vnet').addressPrefixes, json(concat('[{\"', variables('defaultAddressPrefix'),'\"}]')))]"
+                                },
+                                "subnets": [
+                                    {
+                                        "name": "[if(equals(parameters('virtualNetworkType'), 'External'), parameters('vnet').subnets.subnet.name, variables('defaultSubnetName'))]",
+                                        "properties": {
+                                            "serviceEndpoints": [
+                                                {
+                                                    "service": "Microsoft.CognitiveServices",
+                                                    "locations": [
+                                                        "[parameters('location')]"
+                                                    ]
+                                                }
+                                            ],
+                                            "addressPrefix": "[if(equals(parameters('virtualNetworkType'), 'External'), parameters('vnet').subnets.subnet.addressPrefix, variables('defaultAddressPrefix'))]"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "parameters": {}
+            },
+            "condition": "[and(and(not(empty(parameters('vnet'))), equals(parameters('vnet').newOrExisting, 'new')), equals(parameters('virtualNetworkType'), 'External'))]"
+        },
+        {
+            "apiVersion": "2025-04-01-preview",
+            "name": "[variables('aiServicesName')]",
+            "location": "[parameters('location')]",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "kind": "AIServices",
+            "sku": {
+                "name": "S0"
+            },
+            "identity": "[parameters('identity')]",
+            "tags": "[if(contains(parameters('tagValues'), 'Microsoft.CognitiveServices/accounts'), parameters('tagValues')['Microsoft.CognitiveServices/accounts'], json('{}'))]",
+            "properties": {
+                "customSubDomainName": "[toLower(variables('aiServicesName'))]",
+                "defaultProjectName": "[toLower(variables('aiServicesName'))]",
+                "publicNetworkAccess": "[if(equals(parameters('virtualNetworkType'), 'Internal'), 'Disabled', 'Enabled')]",
+                "networkAcls": {
+                    "defaultAction": "[if(equals(parameters('virtualNetworkType'), 'External'), 'Deny', 'Allow')]",
+                    "virtualNetworkRules": "[if(equals(parameters('virtualNetworkType'), 'External'), json(concat('[{\"id\": \"', concat(subscription().id, '/resourceGroups/', parameters('vnet').resourceGroup, '/providers/Microsoft.Network/virtualNetworks/', parameters('vnet').name, '/subnets/', parameters('vnet').subnets.subnet.name), '\"}]')), json('[]'))]",
+                    "ipRules": "[if(or(empty(parameters('ipRules')), empty(parameters('ipRules')[0].value)), json('[]'), parameters('ipRules'))]"
+                },
+                "identity": "[parameters('identity')]",
+                "userAssignedIdentityName": "[if(equals(parameters('identity').type, 'UserAssigned'), parameters('userAssignedIdentityName'), json('null'))]",
+                "userIdentityResourceGroupName": "[if(equals(parameters('identity').type, 'UserAssigned'), parameters('userIdentityResourceGroupName'), json('null'))]",
+                "encryption_status": "[parameters('encryption_status')]",
+                "keyVaultName": "[parameters('keyVaultName')]",
+                "keyVaultLocation": "[parameters('keyVaultLocation')]",
+                "keyVaultResourceGroupName": "[parameters('keyVaultResourceGroupName')]",
+                "cmk_keyvault": "[parameters('cmk_keyvault')]",
+                "resource_cmk_uri": "[parameters('resource_cmk_uri')]",
+                "keyVersion": "[parameters('keyVersion')]",
+                "allowProjectManagement": "[parameters('allowProjectManagement')]"
+            },
+            "resources": [
+                {
+                    "type": "projects",
+                    "apiVersion": "2025-04-01-preview",
+                    "name": "[parameters('defaultProjectName')]",
+                    "location": "[parameters('location')]",
+                    "identity": {
+                        "type": "SystemAssigned"
+                    },
+                    "sku": {
+                        "name": "S0"
+                    },
+                    "properties": {
+                        "displayName": "[parameters('defaultProjectName')]",
+                        "description": "Default project created with the resource"
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]"
+                    ]
+                }
+            ],
+            "dependsOn": [
+                "[concat('Microsoft.Resources/deployments/', 'deployVnet')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat('patchAccessPolicy-', parameters('keyVaultName'))]",
+            "apiVersion": "2021-04-01",
+            "condition": "[and(equals(parameters('enableRbac'), bool('false')), equals(parameters('encryption_status'), 'Enabled'))]",
+            "resourceGroup": "[parameters('keyVaultResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.KeyVault/vaults/accessPolicies",
+                            "apiVersion": "2019-09-01",
+                            "name": "[concat(parameters('keyVaultName'), '/add')]",
+                            "properties": {
+                                "accessPolicies": [
+                                    {
+                                        "tenantId": "[subscription().tenantId]",
+                                        "objectId": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName')), '2025-04-01-preview', 'Full').identity.principalId]",
+                                        "permissions": {
+                                            "keys": [
+                                                "get",
+                                                "wrapKey",
+                                                "unwrapKey"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2022-04-01",
+            "name": "[guid(concat(parameters('cmk_keyvault'), '-', variables('aiServicesName'), 'KeyVaultCryptoUser'))]",
+            "scope": "[parameters('cmk_keyvault')]",
+            "condition": "[and(equals(parameters('hasRoleAssignment'), bool('true')), equals(parameters('enableRbac'), bool('true')))]",
+            "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '14b46e9e-c2b7-41b4-b07b-48a6ebf60603')]",
+                "principalId": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName')), '2025-04-01-preview', 'Full').identity.principalId]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "patchCMKEncryption",
+            "condition": "[and(equals(parameters('enableRbac'), bool('false')), equals(parameters('encryption_status'), 'Enabled'))]",
+            "dependsOn": [
+                "[concat('patchAccessPolicy-', parameters('keyVaultName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.CognitiveServices/accounts",
+                            "apiVersion": "2025-04-01-preview",
+                            "name": "[variables('aiServicesName')]",
+                            "location": "[parameters('location')]",
+                            "kind": "AIServices",
+                            "sku": {
+                                "name": "S0"
+                            },
+                            "properties": {
+                                "customSubDomainName": "[toLower(variables('aiServicesName'))]",
+                                "publicNetworkAccess": "[if(equals(parameters('virtualNetworkType'), 'Internal'), 'Disabled', 'Enabled')]",
+                                "networkAcls": {
+                                    "defaultAction": "[if(equals(parameters('virtualNetworkType'), 'External'), 'Deny', 'Allow')]",
+                                    "virtualNetworkRules": [],
+                                    "ipRules": []
+                                },
+                                "encryption": {
+                                    "status": "[parameters('encryption_status')]",
+                                    "keySource": "Microsoft.Keyvault",
+                                    "keyVaultProperties": {
+                                        "keyName": "[parameters('keyName')]",
+                                        "keyVersion": "[parameters('keyVersion')]",
+                                        "keyVaultUri": "[reference(parameters('cmk_keyvault'), '2021-04-01-preview').vaultUri]",
+                                        "identityClientId": "[json('null')]"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "patchCMKEncryptionWithRbac",
+            "condition": "[and(equals(parameters('enableRbac'), bool('true')), equals(parameters('encryption_status'), 'Enabled'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]",
+                "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'), '/providers/Microsoft.Authorization/roleAssignments/', guid(concat(parameters('cmk_keyvault'), '-', variables('aiServicesName'), 'KeyVaultCryptoUser')))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.CognitiveServices/accounts",
+                            "apiVersion": "2025-04-01-preview",
+                            "name": "[variables('aiServicesName')]",
+                            "location": "[parameters('location')]",
+                            "kind": "AIServices",
+                            "sku": {
+                                "name": "S0"
+                            },
+                            "properties": {
+                                "customSubDomainName": "[toLower(variables('aiServicesName'))]",
+                                "publicNetworkAccess": "[if(equals(parameters('virtualNetworkType'), 'Internal'), 'Disabled', 'Enabled')]",
+                                "networkAcls": {
+                                    "defaultAction": "[if(equals(parameters('virtualNetworkType'), 'External'), 'Deny', 'Allow')]",
+                                    "virtualNetworkRules": [],
+                                    "ipRules": []
+                                },
+                                "identity": {
+                                    "type": "SystemAssigned"
+                                },
+                                "encryption": {
+                                    "status": "[parameters('encryption_status')]",
+                                    "keySource": "Microsoft.Keyvault",
+                                    "keyVaultProperties": {
+                                        "keyName": "[parameters('keyName')]",
+                                        "keyVersion": "[parameters('keyVersion')]",
+                                        "keyVaultUri": "[reference(parameters('cmk_keyvault'), '2021-04-01-preview').vaultUri]",
+                                        "identityClientId": "[json('null')]"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2018-05-01",
+            "name": "[concat('deployPrivateEndpoint-', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name)]",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.resourceGroup.value.name]",
+            "subscriptionId": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.subscription.subscriptionId]",
+            "dependsOn": [
+                "[concat('Microsoft.CognitiveServices/accounts/', variables('aiServicesName'))]"
+            ],
+            "condition": "[equals(parameters('virtualNetworkType'), 'Internal')]",
+            "copy": {
+                "name": "privateendpointscopy",
+                "count": "[length(parameters('privateEndpoints'))]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "location": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.location]",
+                            "name": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name]",
+                            "type": "Microsoft.Network/privateEndpoints",
+                            "apiVersion": "2021-05-01",
+                            "properties": {
+                                "subnet": {
+                                    "id": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.properties.subnet.id]"
+                                },
+                                "privateLinkServiceConnections": [
+                                    {
+                                        "name": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name]",
+                                        "properties": {
+                                            "privateLinkServiceId": "[concat(parameters('resourceGroupId'), '/providers/Microsoft.CognitiveServices/accounts/', variables('aiServicesName'))]",
+                                            "groupIds": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.properties.privateLinkServiceConnections[0].properties.groupIds]"
+                                        }
+                                    }
+                                ],
+                                "customNetworkInterfaceName": "[concat(parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name, '-nic')]"
+                            },
+                            "tags": {}
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2018-05-01",
+            "name": "[concat('deployDnsZoneGroup-', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name)]",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.resourceGroup.value.name]",
+            "subscriptionId": "[parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.subscription.subscriptionId]",
+            "dependsOn": [
+                "[concat('deployPrivateEndpoint-', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name)]"
+            ],
+            "condition": "[and(equals(parameters('virtualNetworkType'), 'Internal'), parameters('privateEndpoints')[copyIndex()].privateDnsZoneConfiguration.integrateWithPrivateDnsZone)]",
+            "copy": {
+                "name": "privateendpointdnscopy",
+                "count": "[length(parameters('privateEndpoints'))]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/privateDnsZones",
+                            "apiVersion": "2018-09-01",
+                            "name": "[parameters('privateDnsZone')]",
+                            "location": "global",
+                            "tags": {},
+                            "properties": {}
+                        },
+                        {
+                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                            "apiVersion": "2018-09-01",
+                            "name": "[concat(parameters('privateDnsZone'), '/', replace(uniqueString(parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.properties.subnet.id), '/subnets/default', ''))]",
+                            "location": "global",
+                            "dependsOn": [
+                                "[parameters('privateDnsZone')]"
+                            ],
+                            "properties": {
+                                "virtualNetwork": {
+                                    "id": "[split(parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.properties.subnet.id, '/subnets/')[0]]"
+                                },
+                                "registrationEnabled": false
+                            }
+                        },
+                        {
+                            "apiVersion": "2017-05-10",
+                            "name": "[concat('EndpointDnsRecords-', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name)]",
+                            "type": "Microsoft.Resources/deployments",
+                            "dependsOn": [
+                                "[parameters('privateDnsZone')]"
+                            ],
+                            "properties": {
+                                "mode": "Incremental",
+                                "templatelink": {
+                                    "uri": "https://go.microsoft.com/fwlink/?linkid=2264916"
+                                },
+                                "parameters": {
+                                    "privateDnsName": {
+                                        "value": "[parameters('privateDnsZone')]"
+                                    },
+                                    "privateEndpointNicResourceId": {
+                                        "value": "[concat('/subscriptions/', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.subscription.subscriptionId, '/resourceGroups/', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.resourceGroup.value.name, '/providers/Microsoft.Network/networkInterfaces/', parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name, '-nic')]"
+                                    },
+                                    "nicRecordsTemplateUri": {
+                                        "value": "https://go.microsoft.com/fwlink/?linkid=2264719"
+                                    },
+                                    "ipConfigRecordsTemplateUri": {
+                                        "value": "https://go.microsoft.com/fwlink/?linkid=2265018"
+                                    },
+                                    "uniqueId": {
+                                        "value": "[parameters('uniqueId')]"
+                                    },
+                                    "existingRecords": {
+                                        "value": {}
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+                            "apiVersion": "2020-03-01",
+                            "name": "[concat(parameters('privateEndpoints')[copyIndex()].privateEndpointConfiguration.privateEndpoint.name, '/', 'default')]",
+                            "location": "[parameters('location')]",
+                            "dependsOn": [
+                                "[parameters('privateDnsZone')]"
+                            ],
+                            "properties": {
+                                "privateDnsZoneConfigs": [
+                                    {
+                                        "name": "privatelink-cognitiveservices",
+                                        "properties": {
+                                            "privateDnsZoneId": "[concat(parameters('resourceGroupId'), '/providers/Microsoft.Network/privateDnsZones/', parameters('privateDnsZone'))]"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     ],
     "outputs": {
+        "KEYVAULT_NAME": {
+            "type": "string",
+            "value": "[variables('testKeyVaultName')]"
+        },
         "KEYVAULT_URL": {
             "type": "string",
-            "value": "[reference(parameters('baseName')).vaultUri]"
+            "value": "[reference(variables('testKeyVaultName')).vaultUri]"
         },
         "KEYVAULT_SECRET": {
             "type": "string",
             "value": "[variables('secretValue')]"
+        },
+        "AI_SERVICES_NAME": {
+            "type": "string",
+            "value": "[variables('aiServicesName')]"
+        },
+        "AI_SERVICES_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))).endpoints['AI Foundry API']]"
+        },
+        "AI_SERVICES_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName')), '2025-04-01-preview').key1]"
         }
     }
 }

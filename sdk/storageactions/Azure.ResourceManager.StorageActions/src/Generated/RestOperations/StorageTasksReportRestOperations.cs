@@ -43,9 +43,6 @@ namespace Azure.ResourceManager.StorageActions
 
         internal HttpMessage CreateGetStorageTasksReportsRequest(Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -58,25 +55,28 @@ namespace Azure.ResourceManager.StorageActions
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateNextGetStorageTasksReportsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

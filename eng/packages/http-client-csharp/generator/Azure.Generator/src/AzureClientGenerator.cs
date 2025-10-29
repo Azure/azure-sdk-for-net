@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using Azure.Generator.Providers;
 
 namespace Azure.Generator;
 
@@ -27,6 +28,10 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     private AzureOutputLibrary? _azureOutputLibrary;
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
+
+    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition { get; } = new();
+
+    internal RequestHeaderExtensionsDefinition RequestHeaderExtensionsDefinition { get; } = new();
 
     /// <summary>
     /// Constructs the Azure client generator used to generate the Azure client SDK.
@@ -64,5 +69,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new MatchConditionsHeadersVisitor());
         AddVisitor(new RequestClientIdHeaderVisitor());
         AddVisitor(new SystemTextJsonConverterVisitor());
+        AddVisitor(new MultiPartFormDataVisitor());
+        AddVisitor(new InvokeDelimitedMethodVisitor());
     }
 }

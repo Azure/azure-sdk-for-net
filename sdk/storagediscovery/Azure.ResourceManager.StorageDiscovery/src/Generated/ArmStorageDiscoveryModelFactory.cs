@@ -10,55 +10,96 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmStorageDiscoveryModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="StorageDiscovery.StorageDiscoveryWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A Storage Discovery Workspace resource. This resource configures the collection of storage account metrics. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="StorageDiscovery.StorageDiscoveryWorkspaceData"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspaceData StorageDiscoveryWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StorageDiscoveryWorkspaceProperties properties = null)
+        public static StorageDiscoveryWorkspaceData StorageDiscoveryWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageDiscoveryWorkspaceProperties properties = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new StorageDiscoveryWorkspaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties,
-                serializedAdditionalRawData: null);
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StorageDiscoveryWorkspaceProperties"/>. </summary>
+        /// <summary> Storage Discovery Workspace Properties. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspaceProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku = null, string description = null, IEnumerable<ResourceIdentifier> workspaceRoots = null, IEnumerable<StorageDiscoveryScope> scopes = null, StorageDiscoveryProvisioningState? provisioningState = null)
+        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default, StorageDiscoveryProvisioningState? provisioningState = default)
         {
-            workspaceRoots ??= new List<ResourceIdentifier>();
-            scopes ??= new List<StorageDiscoveryScope>();
+            workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
+            scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
 
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
                 description,
-                workspaceRoots?.ToList(),
-                scopes?.ToList(),
+                workspaceRoots.ToList(),
+                scopes.ToList(),
                 provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Storage Discovery Scope. This had added validations. </summary>
+        /// <param name="displayName"> Display name of the collection. </param>
+        /// <param name="resourceTypes"> Resource types for the collection. </param>
+        /// <param name="tagKeysOnly"> The storage account tags keys to filter. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.StorageDiscoveryScope"/> instance for mocking. </returns>
+        public static StorageDiscoveryScope StorageDiscoveryScope(string displayName = default, IEnumerable<StorageDiscoveryResourceKind> resourceTypes = default, IEnumerable<string> tagKeysOnly = default, IDictionary<string, string> tags = default)
+        {
+            resourceTypes ??= new ChangeTrackingList<StorageDiscoveryResourceKind>();
+            tagKeysOnly ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageDiscoveryScope(displayName, resourceTypes.ToList(), tagKeysOnly.ToList(), tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The template for adding updateable properties. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatch"/> instance for mocking. </returns>
+        public static StorageDiscoveryWorkspacePatch StorageDiscoveryWorkspacePatch(IDictionary<string, string> tags = default, StorageDiscoveryWorkspacePatchProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageDiscoveryWorkspacePatch(tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The template for adding updateable properties. </summary>
+        /// <param name="sku"> The storage discovery sku. </param>
+        /// <param name="description"> The description of the storage discovery workspace. </param>
+        /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
+        /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
+        /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
+        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default)
+        {
+            workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
+            scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
+
+            return new StorageDiscoveryWorkspacePatchProperties(sku, description, workspaceRoots.ToList(), scopes.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

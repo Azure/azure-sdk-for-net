@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataBox
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataBoxJobJobsClientDiagnostics;
-        private readonly JobsRestOperations _dataBoxJobJobsRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly DataBoxManagementRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _dataBoxJobJobResourcesClientDiagnostics;
+        private readonly JobResourcesRestOperations _dataBoxJobJobResourcesRestClient;
+        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
+        private readonly DataBoxRestOperations _dataBoxClientRestClient;
         private readonly DataBoxJobData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataBoxJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataBoxJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataBoxJobJobsApiVersion);
-            _dataBoxJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobJobsApiVersion);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new DataBoxManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _dataBoxJobJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataBoxJobJobResourcesApiVersion);
+            _dataBoxJobJobResourcesRestClient = new JobResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobJobResourcesApiVersion);
+            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _dataBoxClientRestClient = new DataBoxRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataBoxJobResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Get");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataBoxJobResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Get");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Get");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Delete</description>
+        /// <description>JobResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Delete");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation(_dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataBoxJobJobResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxArmOperation(_dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Delete</description>
+        /// <description>JobResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Delete");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxArmOperation(_dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _dataBoxJobJobResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new DataBoxArmOperation(_dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Update</description>
+        /// <description>JobResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Update");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _dataBoxJobJobResourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,11 +317,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Update</description>
+        /// <description>JobResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,12 +338,12 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Update");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Update");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _dataBoxJobJobResourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -356,38 +356,34 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Request to mark devices for a given job as shipped
+        /// Request to mitigate for a given job
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/markDevicesShipped</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_MarkDevicesShipped</description>
+        /// <description>DataBox_Mitigate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxJobResource"/></description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Mark Devices Shipped Request. </param>
+        /// <param name="content"> Mitigation Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> MarkDevicesShippedAsync(MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MitigateAsync(MitigateJobContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.MarkDevicesShipped");
+            using var scope = _dataBoxClientClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.MarkDevicesShippedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxClientRestClient.MitigateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -398,38 +394,34 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Request to mark devices for a given job as shipped
+        /// Request to mitigate for a given job
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/markDevicesShipped</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_MarkDevicesShipped</description>
+        /// <description>DataBox_Mitigate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxJobResource"/></description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Mark Devices Shipped Request. </param>
+        /// <param name="content"> Mitigation Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response MarkDevicesShipped(MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
+        public virtual Response Mitigate(MitigateJobContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.MarkDevicesShipped");
+            using var scope = _dataBoxClientClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.MarkDevicesShipped(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _dataBoxClientRestClient.Mitigate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -448,11 +440,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_BookShipmentPickUp</description>
+        /// <description>JobResources_BookShipmentPickUp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,11 +459,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.BookShipmentPickUp");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.BookShipmentPickUp");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.BookShipmentPickUpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.BookShipmentPickUpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -490,11 +482,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_BookShipmentPickUp</description>
+        /// <description>JobResources_BookShipmentPickUp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -509,11 +501,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.BookShipmentPickUp");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.BookShipmentPickUp");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.BookShipmentPickUp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.BookShipmentPickUp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -532,11 +524,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Cancel</description>
+        /// <description>JobResources_Cancel</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,11 +543,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Cancel");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Cancel");
             scope.Start();
             try
             {
-                var response = await _dataBoxJobJobsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationReason, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationReason, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -574,11 +566,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Cancel</description>
+        /// <description>JobResources_Cancel</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -593,11 +585,11 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Cancel");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.Cancel");
             scope.Start();
             try
             {
-                var response = _dataBoxJobJobsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationReason, cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationReason, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -616,11 +608,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_ListCredentials</description>
+        /// <description>JobResources_ListCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -632,8 +624,9 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="UnencryptedCredentials"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -645,11 +638,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_ListCredentials</description>
+        /// <description>JobResources_ListCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -661,39 +654,44 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="UnencryptedCredentials"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UnencryptedCredentials> GetCredentials(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Request to mitigate for a given job
+        /// Request to mark devices for a given job as shipped
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/markDevicesShipped</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Mitigate</description>
+        /// <description>JobResources_MarkDevicesShipped</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="content"> Mark Devices Shipped Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> MitigateAsync(MitigateJobContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MarkDevicesShippedAsync(MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.MarkDevicesShipped");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.MitigateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _dataBoxJobJobResourcesRestClient.MarkDevicesShippedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -704,34 +702,38 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary>
-        /// Request to mitigate for a given job
+        /// Request to mark devices for a given job as shipped
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/mitigate</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/markDevicesShipped</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Mitigate</description>
+        /// <description>JobResources_MarkDevicesShipped</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Mitigation Request. </param>
+        /// <param name="content"> Mark Devices Shipped Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response Mitigate(MitigateJobContent content, CancellationToken cancellationToken = default)
+        public virtual Response MarkDevicesShipped(MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.MarkDevicesShipped");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.Mitigate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _dataBoxJobJobResourcesRestClient.MarkDevicesShipped(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -750,11 +752,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -771,7 +773,7 @@ namespace Azure.ResourceManager.DataBox
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.AddTag");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.AddTag");
             scope.Start();
             try
             {
@@ -780,7 +782,7 @@ namespace Azure.ResourceManager.DataBox
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DataBoxJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -812,11 +814,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -833,7 +835,7 @@ namespace Azure.ResourceManager.DataBox
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.AddTag");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.AddTag");
             scope.Start();
             try
             {
@@ -842,7 +844,7 @@ namespace Azure.ResourceManager.DataBox
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                    var originalResponse = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                     return Response.FromValue(new DataBoxJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -874,11 +876,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -893,7 +895,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.SetTags");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.SetTags");
             scope.Start();
             try
             {
@@ -903,7 +905,7 @@ namespace Azure.ResourceManager.DataBox
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DataBoxJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -931,11 +933,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -950,7 +952,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.SetTags");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.SetTags");
             scope.Start();
             try
             {
@@ -960,7 +962,7 @@ namespace Azure.ResourceManager.DataBox
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                    var originalResponse = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                     return Response.FromValue(new DataBoxJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -988,11 +990,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1007,7 +1009,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.RemoveTag");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1016,7 +1018,7 @@ namespace Azure.ResourceManager.DataBox
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _dataBoxJobJobResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new DataBoxJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1048,11 +1050,11 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Jobs_Get</description>
+        /// <description>JobResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1067,7 +1069,7 @@ namespace Azure.ResourceManager.DataBox
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.RemoveTag");
+            using var scope = _dataBoxJobJobResourcesClientDiagnostics.CreateScope("DataBoxJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1076,7 +1078,7 @@ namespace Azure.ResourceManager.DataBox
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                    var originalResponse = _dataBoxJobJobResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                     return Response.FromValue(new DataBoxJobResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

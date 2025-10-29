@@ -4,8 +4,10 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -30,6 +32,9 @@ namespace Azure.Generator.Management
         private ProviderConstantsProvider? _providerConstants;
         internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
 
+        private WirePathAttributeDefinition? _wirePathAttributeProvider;
+        internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
@@ -41,6 +46,9 @@ namespace Azure.Generator.Management
         private IReadOnlyList<MockableResourceProvider>? _mockableResources;
         private ExtensionProvider? _extensionProvider;
 
+        private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
+        internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+
         internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
         internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResources);
@@ -51,6 +59,13 @@ namespace Azure.Generator.Management
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
+
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
+        internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
+        private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
+            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
+                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
+                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
 
         private T GetValue<T>(ref T? field) where T : class
         {
@@ -187,19 +202,51 @@ namespace Azure.Generator.Management
 
         // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
-        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
-        internal HashSet<CSharpType> BuildModelFactoryModels()
+        private HashSet<CSharpType>? _allModelTypes;
+
+        private HashSet<CSharpType> ModelFactoryModels
         {
-            var result = new HashSet<CSharpType>();
+            get
+            {
+                BuildModelTypes();
+                return _modelFactoryModels!;
+            }
+        }
+
+        private HashSet<CSharpType> AllModelTypes
+        {
+            get
+            {
+                BuildModelTypes();
+                return _allModelTypes!;
+            }
+        }
+
+        private void BuildModelTypes()
+        {
+            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            {
+                return; // already built
+            }
+
+            var allModelTypes = new HashSet<CSharpType>();
+            var modelFactoryModels = new HashSet<CSharpType>();
+
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && IsModelFactoryModel(model))
+                if (model is not null)
                 {
-                    result.Add(model.Type);
+                    allModelTypes.Add(model.Type);
+                    if (IsModelFactoryModel(model))
+                    {
+                        modelFactoryModels.Add(model.Type);
+                    }
                 }
             }
-            return result;
+
+            _allModelTypes = allModelTypes;
+            _modelFactoryModels = modelFactoryModels;
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)
@@ -234,6 +281,8 @@ namespace Azure.Generator.Management
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
 
+        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type);
+
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
@@ -256,8 +305,10 @@ namespace Azure.Generator.Management
 
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
+                .. OperationSourceDict.Values,
                 ProviderConstants,
                 .. ResourceProviders,
                 .. ResourceCollectionProviders,
@@ -265,8 +316,48 @@ namespace Azure.Generator.Management
                 ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
-                .. ResourceProviders.Select(r => r.Source),
                 .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+        }
+
+        private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()
+        {
+            var operationSources = new Dictionary<CSharpType, OperationSourceProvider>();
+
+            foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
+            {
+                foreach (var resourceMethod in metadata.Methods)
+                {
+                    if (resourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
+                    {
+                        var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+                        if (returnType is InputModelType inputModelType)
+                        {
+                            var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                            if (returnCSharpType == null)
+                            {
+                                continue;
+                            }
+
+                            if (!operationSources.ContainsKey(returnCSharpType))
+                            {
+                                var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
+                                if (resourceProvider is not null)
+                                {
+                                    // This is a resource model - use the resource-based constructor
+                                    operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
+                                }
+                                else
+                                {
+                                    // This is a non-resource model - use the CSharpType-based constructor
+                                    operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return operationSources;
         }
 
         internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);

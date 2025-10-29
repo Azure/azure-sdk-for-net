@@ -46,7 +46,6 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
@@ -90,12 +89,6 @@ internal class NameVisitor : ScmLibraryVisitor
             newName = $"{enclosingResourceName}Patch";
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
-
-            _resourceUpdateModelTypes.Add(type.Type);
-            foreach (var serializationProvider in type.SerializationProviders)
-            {
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
-            }
         }
         return base.PreVisitModel(model, type);
     }
@@ -115,6 +108,8 @@ internal class NameVisitor : ScmLibraryVisitor
     {
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
+        DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
+        DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -148,24 +143,69 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
-    protected override MethodProvider? VisitMethod(MethodProvider method)
-    {
-        var parameterUpdated = false;
-        foreach (var parameter in method.Signature.Parameters)
+    // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
+    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
         {
-            if (_resourceUpdateModelTypes.Contains(parameter.Type))
+            {"Creation", "Created"},
+            {"Deletion", "Deleted"},
+            {"Expiration", "Expire"},
+            {"Modification", "Modified"},
+        };
+    private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && propertyProvider.Type.Equals(typeof(DateTimeOffset)))
+        {
+            var propertyName = propertyProvider.Name;
+            // Skip properties that are not following the pattern we want to change
+            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
+                propertyName.StartsWith("To", StringComparison.Ordinal) ||
+                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
             {
-                parameter.Update(name: "patch");
-                parameterUpdated = true;
+                return;
+            }
+
+            var lengthToCut = 0;
+            if (propertyName.Length > 8 &&
+                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
+            {
+                lengthToCut = 8;
+            }
+            else if (propertyName.Length > 4 &&
+                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
+                propertyName.EndsWith("Date", StringComparison.Ordinal)))
+            {
+                lengthToCut = 4;
+            }
+            else if (propertyName.Length > 2 &&
+                propertyName.EndsWith("At", StringComparison.Ordinal))
+            {
+                lengthToCut = 2;
+            }
+            if (lengthToCut > 0)
+            {
+                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
+                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
+                propertyProvider.Update(name: newPropertyName);
             }
         }
+    }
 
-        if (parameterUpdated)
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
         {
-            // This is required as a workaround to update documentation for the method signature
-            method.Update(signature: method.Signature);
-        }
+            {"Etag", "ETag"}
+        };
 
+    private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && _propertyNameRenamingMap.TryGetValue(propertyProvider.Name, out var newPropertyName))
+        {
+            propertyProvider.Update(name: newPropertyName);
+        }
+    }
+
+    protected override MethodProvider? VisitMethod(MethodProvider method)
+    {
         // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
         if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
         {

@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -17,6 +18,7 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
+            TypeProvider? enclosingTypeProvider,
             bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
@@ -36,21 +38,41 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                if (!contextualPath.TryGetContextualParameter(outputParameter, out _))
-                {
-                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                    {
-                        outputParameter.Update(name: "data");
-                    }
 
-                    if (parameter.IsRequired)
+                if (contextualPath.TryGetContextualParameter(outputParameter, out _))
+                {
+                    continue;
+                }
+
+                if (enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider &&
+                    collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
+                {
+                    continue;
+                }
+
+                if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                {
+                    outputParameter.Update(name: "data");
+                }
+
+                // Rename body parameters for resource/resourcecollection operations
+                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider) &&
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                {
+                    var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
+                    if (normalizedName != null)
                     {
-                        requiredParameters.Add(outputParameter);
+                        outputParameter.Update(name: normalizedName);
                     }
-                    else
-                    {
-                        optionalParameters.Add(outputParameter);
-                    }
+                }
+
+                if (parameter.IsRequired)
+                {
+                    requiredParameters.Add(outputParameter);
+                }
+                else
+                {
+                    optionalParameters.Add(outputParameter);
                 }
             }
 

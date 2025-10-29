@@ -8,59 +8,37 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Playwright;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Playwright.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePlaywrightResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePlaywrightResourceGroupResource for mocking. </summary>
         protected MockablePlaywrightResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePlaywrightResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePlaywrightResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of PlaywrightWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PlaywrightWorkspaceResources and their operations over a PlaywrightWorkspaceResource. </returns>
+        /// <summary> Gets a collection of PlaywrightWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PlaywrightWorkspaces and their operations over a PlaywrightWorkspaceResource. </returns>
         public virtual PlaywrightWorkspaceCollection GetPlaywrightWorkspaces()
         {
             return GetCachedClient(client => new PlaywrightWorkspaceCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -68,30 +46,12 @@ namespace Azure.ResourceManager.Playwright.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PlaywrightWorkspaceResource>> GetPlaywrightWorkspaceAsync(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
+
             return await GetPlaywrightWorkspaces().GetAsync(playwrightWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -99,6 +59,8 @@ namespace Azure.ResourceManager.Playwright.Mocking
         [ForwardsClientCalls]
         public virtual Response<PlaywrightWorkspaceResource> GetPlaywrightWorkspace(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
+
             return GetPlaywrightWorkspaces().Get(playwrightWorkspaceName, cancellationToken);
         }
     }

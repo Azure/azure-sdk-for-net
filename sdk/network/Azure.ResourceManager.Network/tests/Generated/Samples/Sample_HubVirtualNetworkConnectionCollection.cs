@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_HubVirtualNetworkConnectionPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/HubVirtualNetworkConnectionPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubVirtualNetworkConnectionPut.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ NextHopIPAddress = "10.0.0.65",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HubVirtualNetworkConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/HubVirtualNetworkConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubVirtualNetworkConnectionGet.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ NextHopIPAddress = "10.0.0.65",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_HubVirtualNetworkConnectionList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/HubVirtualNetworkConnectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubVirtualNetworkConnectionList.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ NextHopIPAddress = "10.0.0.65",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HubVirtualNetworkConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/HubVirtualNetworkConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubVirtualNetworkConnectionGet.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -193,7 +193,7 @@ NextHopIPAddress = "10.0.0.65",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HubVirtualNetworkConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/HubVirtualNetworkConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubVirtualNetworkConnectionGet.json
             // this example is just showing the usage of "HubVirtualNetworkConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

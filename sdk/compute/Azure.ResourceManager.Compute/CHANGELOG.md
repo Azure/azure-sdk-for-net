@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-04-01'
+- Added `VirtualMachineScaleSet.ScaleOut` Operation.
+- Added `Tags` to `VirtualMachineScaleSetNetworkConfiguration`, `VirtualMachineScaleSetIPConfiguration`, `VirtualMachineScaleSetPublicIPAddressConfiguration` and `VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings` classes.
+- Added `Placement` property to `VirtualMachineScaleSet` class.
+- Added `ZoneAllocationPolicy` property to `ResiliencyPolicy` class.
+- Added `MaxInstancePercentPerZonePolicy` property to `AutomaticZoneRebalancingPolicy` class.
+- Added `ReservationType` property to `CapacityReservationGroup` class.
+- Added `ScheduleProfile` property to `CapacityReservation` class.
+- Added `AddProxyAgentExtension` property to `ProxyAgentSettings` class.
+- Added `ScriptShellTypes` enum to `RunCommandScriptSource` class.
+- Added `GalleryScriptReferenceId` property to `RunCommandScriptSource` class.
+- Added `AllInstancesDown` property to `ScheduledEventsPolicy` class.
+- Added `ScheduledEventsApiVersion` property to `EventGridAndResourceGraph` class.
+- Added `AutomaticZoneRebalancing` property to `OrchetrationServiceNames` class.
+- Added `highSpeedInterconnectPlacement` property to `VirtualMachineScaleSetProperties` class.
+- Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
+
 
 ## 1.11.0 (2025-08-12)
 

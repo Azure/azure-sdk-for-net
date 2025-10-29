@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> and their operations.
-    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of the parent resource.
     /// </summary>
     public partial class ArizeAIObservabilityEvalOrganizationCollection : ArmCollection, IEnumerable<ArizeAIObservabilityEvalOrganizationResource>, IAsyncEnumerable<ArizeAIObservabilityEvalOrganizationResource>
     {
-        private readonly ClientDiagnostics _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics;
-        private readonly OrganizationsRestOperations _arizeAIObservabilityEvalOrganizationOrganizationsRestClient;
+        private readonly ClientDiagnostics _organizationsClientDiagnostics;
+        private readonly Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ArizeAIObservabilityEvalOrganizationCollection for mocking. </summary>
         protected ArizeAIObservabilityEvalOrganizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArizeAIObservabilityEvalOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", ArizeAIObservabilityEvalOrganizationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ArizeAIObservabilityEvalOrganizationResource.ResourceType, out string arizeAIObservabilityEvalOrganizationOrganizationsApiVersion);
-            _arizeAIObservabilityEvalOrganizationOrganizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, arizeAIObservabilityEvalOrganizationOrganizationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ArizeAIObservabilityEvalOrganizationResource.ResourceType, out string arizeAIObservabilityEvalOrganizationApiVersion);
+            _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", ArizeAIObservabilityEvalOrganizationResource.ResourceType.Namespace, Diagnostics);
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, arizeAIObservabilityEvalOrganizationApiVersion ?? "2024-10-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ArizeAIObservabilityEvalOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationname, ArizeAIObservabilityEvalOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(new ArizeAIObservabilityEvalOrganizationOperationSource(Client), _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics, Pipeline, _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource> operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(
+                    new ArizeAIObservabilityEvalOrganizationOperationSource(Client),
+                    _organizationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// Create a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ArizeAIObservabilityEvalOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationname, ArizeAIObservabilityEvalOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data, cancellationToken);
-                var operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(new ArizeAIObservabilityEvalOrganizationOperationSource(Client), _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics, Pipeline, _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationname, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource> operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(
+                    new ArizeAIObservabilityEvalOrganizationOperationSource(Client),
+                    _organizationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ArizeAIObservabilityEvalOrganizationResource>> GetAsync(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArizeAIObservabilityEvalOrganizationData> response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArizeAIObservabilityEvalOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ArizeAIObservabilityEvalOrganizationResource> Get(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArizeAIObservabilityEvalOrganizationData> response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArizeAIObservabilityEvalOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +269,78 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary>
-        /// List OrganizationResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArizeAIObservabilityEvalOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArizeAIObservabilityEvalOrganizationResource(Client, ArizeAIObservabilityEvalOrganizationData.DeserializeArizeAIObservabilityEvalOrganizationData(e)), _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics, Pipeline, "ArizeAIObservabilityEvalOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
-        /// <summary>
-        /// List OrganizationResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArizeAIObservabilityEvalOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArizeAIObservabilityEvalOrganizationResource(Client, ArizeAIObservabilityEvalOrganizationData.DeserializeArizeAIObservabilityEvalOrganizationData(e)), _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics, Pipeline, "ArizeAIObservabilityEvalOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ArizeAIObservabilityEvalOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArizeAIObservabilityEvalOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +351,53 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ArizeAIObservabilityEvalOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArizeAIObservabilityEvalOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +408,57 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ArizeAIObservabilityEvalOrganizationResource>> GetIfExistsAsync(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ArizeAIObservabilityEvalOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArizeAIObservabilityEvalOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ArizeAIObservabilityEvalOrganizationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArizeAIObservabilityEvalOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +469,57 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ArizeAIObservabilityEvalOrganizationResource> GetIfExists(string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
 
-            using var scope = _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("ArizeAIObservabilityEvalOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _arizeAIObservabilityEvalOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ArizeAIObservabilityEvalOrganizationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArizeAIObservabilityEvalOrganizationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ArizeAIObservabilityEvalOrganizationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArizeAIObservabilityEvalOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +539,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ArizeAIObservabilityEvalOrganizationResource> IAsyncEnumerable<ArizeAIObservabilityEvalOrganizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
