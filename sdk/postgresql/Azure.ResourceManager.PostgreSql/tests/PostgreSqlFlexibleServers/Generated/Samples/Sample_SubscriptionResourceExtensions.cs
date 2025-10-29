@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 ResourceType = new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers"),
             };
-            NameAvailabilityModel result = await subscriptionResource.CheckGloballyNameAvailabilityAsync(content);
+            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckGloballyNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 ResourceType = new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers"),
             };
-            NameAvailabilityModel result = await subscriptionResource.CheckWithLocationNameAvailabilityAsync(locationName, content);
+            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckWithLocationNameAvailabilityAsync(locationName, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

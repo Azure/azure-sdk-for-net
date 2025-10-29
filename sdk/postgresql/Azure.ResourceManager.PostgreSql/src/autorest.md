@@ -245,7 +245,7 @@ rename-mapping:
   CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityContent
   CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
   CheckNameAvailabilityReason: PostgreSqlFlexibleServerNameUnavailableReason
-  NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
+  NameAvailabilityModel: PostgreSqlFlexibleServerNameAvailabilityResult
   CreateMode: PostgreSqlFlexibleServerCreateMode
   SkuTier: PostgreSqlFlexibleServerSkuTier
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
@@ -266,13 +266,12 @@ rename-mapping:
   FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
   IdentityType: PostgreSqlFlexibleServerIdentityType
   Origin: PostgreSqlFlexibleServerBackupOrigin
-  PasswordAuthEnum: PostgreSqlFlexibleServerPasswordAuthEnum
+  PasswordBasedAuth: PostgreSqlFlexibleServerPasswordAuthEnum
   PrincipalType: PostgreSqlFlexibleServerPrincipalType
   ReplicationRole: PostgreSqlFlexibleServerReplicationRole
   BackupAutomaticAndOnDemand: PostgreSqlFlexibleServerBackup
   ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
   StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
-  UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
   AdminCredentials: PostgreSqlMigrationAdminCredentials
   BackupSettings: PostgreSqlFlexibleServerBackupSettings
   BackupStoreDetails: PostgreSqlFlexibleServerBackupStoreDetails
@@ -292,15 +291,15 @@ rename-mapping:
   HaMode: PostgreSqlFlexibleServerHAMode
   ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
   ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
-  StorageAutoGrowthSupportedEnum: PostgreSqlFlexibleServerStorageAutoGrowthSupported
-  OnlineResizeSupportedEnum: PostgreSqlFlexibleServerOnlineResizeSupported
+  StorageAutoGrowthSupport: PostgreSqlFlexibleServerStorageAutoGrowthSupported
+  OnlineStorageResizeSupport: PostgreSqlFlexibleServerOnlineResizeSupported
   LocationRestricted: PostgreSqlFlexibleServerZoneRedundantRestricted
   ServerSkuCapability: PostgreSqlFlexibleServerSkuCapability
   CapabilityBase.status: CapabilityStatus
   CapabilityBase: PostgreSqlBaseCapability
   ExecutionStatus: PostgreSqlExecutionStatus
   EncryptionKeyStatus: PostgreSqlKeyStatus
-  LtrBackupResponse: PostgreSqlFlexibleServerLtrBackupResult
+  BackupsLongTermRetentionResponse: PostgreSqlFlexibleServerLtrBackupResult
   LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
   LtrServerBackupOperation: PostgreSqlLtrServerBackupOperation
   LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
@@ -328,6 +327,7 @@ rename-mapping:
   VirtualEndpoint: VirtualEndpointResource
   ReadReplicaPromoteOption: ReplicationPromoteOption
   TuningOption: FooTuningOption
+  UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability

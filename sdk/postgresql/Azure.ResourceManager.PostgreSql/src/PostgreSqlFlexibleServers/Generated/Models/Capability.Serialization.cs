@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             GeographicallyRedundantBackupSupport? geoBackupSupported = default;
             PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = default;
             PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = default;
-            StorageAutoGrowthSupport? storageAutoGrowthSupported = default;
-            OnlineStorageResizeSupport? onlineResizeSupported = default;
+            PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = default;
+            PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = default;
             PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
             string reason = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    storageAutoGrowthSupported = new StorageAutoGrowthSupport(property.Value.GetString());
+                    storageAutoGrowthSupported = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onlineResizeSupported"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    onlineResizeSupported = new OnlineStorageResizeSupport(property.Value.GetString());
+                    onlineResizeSupported = new PostgreSqlFlexibleServerOnlineResizeSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("restricted"u8))

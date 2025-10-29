@@ -1736,7 +1736,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BackupsLongTermRetentionResponse>> StartBackupsLongTermRetentionAsync(WaitUntil waitUntil, BackupsLongTermRetentionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrBackupResult>> StartBackupsLongTermRetentionAsync(WaitUntil waitUntil, BackupsLongTermRetentionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1745,7 +1745,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<BackupsLongTermRetentionResponse>(new BackupsLongTermRetentionResponseOperationSource(), _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics, Pipeline, _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics, Pipeline, _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1782,7 +1782,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BackupsLongTermRetentionResponse> StartBackupsLongTermRetention(WaitUntil waitUntil, BackupsLongTermRetentionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> StartBackupsLongTermRetention(WaitUntil waitUntil, BackupsLongTermRetentionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1791,7 +1791,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new FlexibleServersArmOperation<BackupsLongTermRetentionResponse>(new BackupsLongTermRetentionResponseOperationSource(), _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics, Pipeline, _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionClientDiagnostics, Pipeline, _postgreSqlLtrServerBackupOperationResourceBackupsLongTermRetentionRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

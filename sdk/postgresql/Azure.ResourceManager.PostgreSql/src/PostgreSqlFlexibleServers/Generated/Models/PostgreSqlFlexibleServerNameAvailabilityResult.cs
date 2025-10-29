@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Availability of a name. </summary>
-    public partial class NameAvailabilityModel : PostgreSqlFlexibleServerNameAvailabilityResponse
+    public partial class PostgreSqlFlexibleServerNameAvailabilityResult : PostgreSqlFlexibleServerNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of <see cref="NameAvailabilityModel"/>. </summary>
-        internal NameAvailabilityModel()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
+        internal PostgreSqlFlexibleServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NameAvailabilityModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name for which validity and availability was checked. </param>
         /// <param name="resourceType"> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </param>
-        internal NameAvailabilityModel(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ResourceType? resourceType) : base(isNameAvailable, reason, message, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ResourceType? resourceType) : base(isNameAvailable, reason, message, serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;

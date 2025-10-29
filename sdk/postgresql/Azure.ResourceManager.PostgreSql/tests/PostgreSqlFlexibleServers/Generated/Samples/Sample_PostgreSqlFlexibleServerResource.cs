@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 AuthConfig = new AuthConfigForPatch
                 {
                     ActiveDirectoryAuth = MicrosoftEntraAuth.Enabled,
-                    PasswordAuth = PasswordBasedAuth.Enabled,
+                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
                     TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
                 },
                 CreateMode = CreateModeForPatch.Update,
@@ -790,8 +790,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation
             BackupsLongTermRetentionContent content = new BackupsLongTermRetentionContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
-            ArmOperation<BackupsLongTermRetentionResponse> lro = await postgreSqlFlexibleServer.StartBackupsLongTermRetentionAsync(WaitUntil.Completed, content);
-            BackupsLongTermRetentionResponse result = lro.Value;
+            ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> lro = await postgreSqlFlexibleServer.StartBackupsLongTermRetentionAsync(WaitUntil.Completed, content);
+            PostgreSqlFlexibleServerLtrBackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
