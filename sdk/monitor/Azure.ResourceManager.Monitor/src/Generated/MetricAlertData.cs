@@ -55,17 +55,16 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
+        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="criteria">
-        /// defines the specific alert criteria information.
+        /// Defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
-        public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
+        public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, MetricAlertCriteria criteria) : base(location)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
 
@@ -73,9 +72,10 @@ namespace Azure.ResourceManager.Monitor
             IsEnabled = isEnabled;
             Scopes = scopes.ToList();
             EvaluationFrequency = evaluationFrequency;
-            WindowSize = windowSize;
             Criteria = criteria;
             Actions = new ChangeTrackingList<MetricAlertAction>();
+            CustomProperties = new ChangeTrackingDictionary<string, string>();
+            ActionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
@@ -85,25 +85,29 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
-        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
+        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
         /// <param name="criteria">
-        /// defines the specific alert criteria information.
+        /// Defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
-        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
-        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
+        /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <param name="isMigrated"> The value indicating whether this alert rule is migrated. </param>
+        /// <param name="customProperties"> The properties of an alert payload. </param>
+        /// <param name="actionProperties"> The properties of an action properties. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Severity = severity;
@@ -115,9 +119,13 @@ namespace Azure.ResourceManager.Monitor
             TargetResourceRegion = targetResourceRegion;
             Criteria = criteria;
             IsAutoMitigateEnabled = isAutoMitigateEnabled;
+            ResolveConfiguration = resolveConfiguration;
             Actions = actions;
             LastUpdatedOn = lastUpdatedOn;
             IsMigrated = isMigrated;
+            CustomProperties = customProperties;
+            ActionProperties = actionProperties;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -126,35 +134,43 @@ namespace Azure.ResourceManager.Monitor
         {
         }
 
-        /// <summary> the description of the metric alert that will be included in the alert email. </summary>
+        /// <summary> The description of the metric alert that will be included in the alert email. </summary>
         public string Description { get; set; }
         /// <summary> Alert severity {0, 1, 2, 3, 4}. </summary>
         public int Severity { get; set; }
-        /// <summary> the flag that indicates whether the metric alert is enabled. </summary>
+        /// <summary> The flag that indicates whether the metric alert is enabled. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> the list of resource id's that this metric alert is scoped to. </summary>
+        /// <summary> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </summary>
         public IList<string> Scopes { get; }
-        /// <summary> how often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
+        /// <summary> How often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
         public TimeSpan EvaluationFrequency { get; set; }
-        /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
-        public TimeSpan WindowSize { get; set; }
-        /// <summary> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
+        /// <summary> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
+        public TimeSpan? WindowSize { get; set; }
+        /// <summary> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
         public ResourceType? TargetResourceType { get; set; }
-        /// <summary> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
+        /// <summary> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
         public AzureLocation? TargetResourceRegion { get; set; }
         /// <summary>
-        /// defines the specific alert criteria information.
+        /// Defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
-        /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
+        /// <summary> The flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
         public bool? IsAutoMitigateEnabled { get; set; }
-        /// <summary> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
+        /// <summary> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </summary>
+        public ResolveConfiguration ResolveConfiguration { get; set; }
+        /// <summary> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
         public IList<MetricAlertAction> Actions { get; }
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> the value indicating whether this alert rule is migrated. </summary>
+        /// <summary> The value indicating whether this alert rule is migrated. </summary>
         public bool? IsMigrated { get; }
+        /// <summary> The properties of an alert payload. </summary>
+        public IDictionary<string, string> CustomProperties { get; }
+        /// <summary> The properties of an action properties. </summary>
+        public IDictionary<string, string> ActionProperties { get; }
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

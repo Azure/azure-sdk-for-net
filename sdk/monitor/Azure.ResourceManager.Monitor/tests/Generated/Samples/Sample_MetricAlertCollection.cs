@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADynamicAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateDynamicMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateDynamicMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +49,6 @@ namespace Azure.ResourceManager.Monitor.Samples
                 true,
                 new string[] { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme1", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme2" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertMultipleResourceMultipleMetricCriteria
                 {
                     AllOf = {new DynamicMetricCriteria(
@@ -65,6 +65,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -93,7 +94,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADynamicAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateDynamicMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateDynamicMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +120,6 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertMultipleResourceMultipleMetricCriteria
                 {
                     AllOf = {new DynamicMetricCriteria(
@@ -137,6 +137,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -161,9 +162,304 @@ WebHookProperties =
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateAQueryBasedAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertQuery.json
+            // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            MetricAlertData data = new MetricAlertData(
+                new AzureLocation("eastus"),
+                3,
+                true,
+                new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/microsoft.monitor/accounts/gigwadme" },
+                XmlConvert.ToTimeSpan("PT1M"),
+                new PromQLCriteria
+                {
+                    FailingPeriodsFor = XmlConvert.ToTimeSpan("PT5M"),
+                    AllOf = { new StaticPromQLCriteria("Metric1", "avg({\"system.cpu.utilization\"}) > 90") },
+                })
+            {
+                Description = "This is the description of the rule1",
+                ResolveConfiguration = new ResolveConfiguration(true)
+                {
+                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
+                },
+                Actions = {new MetricAlertAction
+{
+ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourcegroups/gigtest/providers/microsoft.insights/actiongroups/group2"),
+}},
+                CustomProperties =
+{
+["key11"] = "value11",
+["key12"] = "value12"
+},
+                ActionProperties =
+{
+["Email.Sujbect"] = "my custom email subject"
+},
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
+},
+                },
+                Tags = { },
+            };
+            ArmOperation<MetricAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            MetricAlertResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MetricAlertData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateAQueryBasedAlertRuleWithDynamicThreshold()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertQueryDT.json
+            // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            MetricAlertData data = new MetricAlertData(
+                new AzureLocation("eastus"),
+                3,
+                true,
+                new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/microsoft.monitor/accounts/gigwadme" },
+                XmlConvert.ToTimeSpan("PT1M"),
+                new PromQLCriteria
+                {
+                    FailingPeriodsFor = XmlConvert.ToTimeSpan("PT5M"),
+                    AllOf = {new DynamicPromQLCriteria("Metric1", "avg({\"system.cpu.utilization\"})", DynamicThresholdOperator.LessThan, DynamicThresholdSensitivity.Medium)
+{
+IgnoreDataBefore = DateTimeOffset.Parse("2019-04-04T21:00:00.000Z"),
+}},
+                })
+            {
+                Description = "This is the description of the rule1",
+                ResolveConfiguration = new ResolveConfiguration(true)
+                {
+                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
+                },
+                Actions = {new MetricAlertAction
+{
+ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourcegroups/gigtest/providers/microsoft.insights/actiongroups/group2"),
+}},
+                CustomProperties =
+{
+["key11"] = "value11",
+["key12"] = "value12"
+},
+                ActionProperties =
+{
+["Email.Sujbect"] = "my custom email subject"
+},
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
+},
+                },
+                Tags = { },
+            };
+            ArmOperation<MetricAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            MetricAlertResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MetricAlertData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateAResourceCentricQueryBasedAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertQueryResourceCentric.json
+            // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            MetricAlertData data = new MetricAlertData(
+                new AzureLocation("eastus"),
+                3,
+                true,
+                new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/microsoft.compute/virtualMachines/myVmName" },
+                XmlConvert.ToTimeSpan("PT1M"),
+                new PromQLCriteria
+                {
+                    FailingPeriodsFor = XmlConvert.ToTimeSpan("PT5M"),
+                    AllOf = { new StaticPromQLCriteria("Metric1", "avg({\"system.cpu.utilization\"}) > 90") },
+                })
+            {
+                Description = "This is the description of the rule1",
+                ResolveConfiguration = new ResolveConfiguration(true)
+                {
+                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
+                },
+                Actions = {new MetricAlertAction
+{
+ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourcegroups/gigtest/providers/microsoft.insights/actiongroups/group2"),
+}},
+                CustomProperties =
+{
+["key11"] = "value11",
+["key12"] = "value12"
+},
+                ActionProperties =
+{
+["Email.Sujbect"] = "my custom email subject"
+},
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
+},
+                },
+                Tags = { },
+            };
+            ArmOperation<MetricAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            MetricAlertResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MetricAlertData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateAResourceCentricQueryBasedAlertRuleForMultipleResources()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertQueryMultiResource.json
+            // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            MetricAlertData data = new MetricAlertData(
+                new AzureLocation("eastus"),
+                3,
+                true,
+                new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7" },
+                XmlConvert.ToTimeSpan("PT1M"),
+                new PromQLCriteria
+                {
+                    FailingPeriodsFor = XmlConvert.ToTimeSpan("PT5M"),
+                    AllOf = { new StaticPromQLCriteria("Metric1", "avg({\"system.cpu.utilization\"}) by (\"microsoft.resourceid\") > 90") },
+                })
+            {
+                Description = "This is the description of the rule1",
+                ResolveConfiguration = new ResolveConfiguration(true)
+                {
+                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
+                },
+                Actions = {new MetricAlertAction
+{
+ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourcegroups/gigtest/providers/microsoft.insights/actiongroups/group2"),
+}},
+                CustomProperties =
+{
+["key11"] = "value11",
+["key12"] = "value12"
+},
+                ActionProperties =
+{
+["Email.Sujbect"] = "my custom email subject"
+},
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/2f1a501a-6e1d-4f37-a445-462d7f8a563d/resourceGroups/AdisTest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-euap")] = new UserAssignedIdentity()
+},
+                },
+                Tags = { },
+            };
+            ArmOperation<MetricAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            MetricAlertResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MetricAlertData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAWebTestAlertRule()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateWebTestMetricAlert.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateWebTestMetricAlert.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,10 +485,10 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/webtests/component-example", "/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/components/webtest-name-example" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new WebtestLocationAvailabilityCriteria(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/webtests/component-example"), new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/components/webtest-name-example"), 2))
             {
                 Description = "Automatically created alert rule for availability test \"component-example\" a",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 Actions = { },
                 Tags =
 {
@@ -214,7 +510,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleForMultipleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,7 +536,6 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme1", "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme2" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertMultipleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("High_CPU_80", "Percentage CPU", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.5)
@@ -251,6 +546,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -279,7 +575,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -305,7 +601,6 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertSingleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("High_CPU_80", "\\Processor(_Total)\\% Processor Time", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.5)
@@ -315,6 +610,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -341,7 +637,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleOnResourceGroupS()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertResourceGroup.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -367,7 +663,6 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest1", "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest2" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertMultipleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("High_CPU_80", "Percentage CPU", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.5)
@@ -378,6 +673,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -406,7 +702,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRuleOnSubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertSubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertSubscription.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -432,7 +728,6 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7" },
                 XmlConvert.ToTimeSpan("PT1M"),
-                XmlConvert.ToTimeSpan("PT15M"),
                 new MetricAlertMultipleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("High_CPU_80", "Percentage CPU", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.5)
@@ -443,6 +738,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -471,7 +767,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnAlertRulesWithDimensions()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/createOrUpdateMetricAlertWithDimensions.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/createOrUpdateMetricAlertWithDimensions.json
             // this example is just showing the usage of "MetricAlerts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -497,7 +793,6 @@ WebHookProperties =
                 true,
                 new string[] { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/Microsoft.KeyVault/vaults/keyVaultResource" },
                 XmlConvert.ToTimeSpan("PT1H"),
-                XmlConvert.ToTimeSpan("P1D"),
                 new MetricAlertMultipleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("Metric1", "Availability", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 55)
@@ -508,6 +803,7 @@ Dimensions = {new MetricDimension("ActivityName", "Include", new string[]{"*"}),
                 })
             {
                 Description = "This is the description of the rule1",
+                WindowSize = XmlConvert.ToTimeSpan("P1D"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -534,7 +830,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADynamicAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getDynamicMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -567,7 +863,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADynamicAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getDynamicMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -598,9 +894,42 @@ WebHookProperties =
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAQueryBasedAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertQuery.json
+            // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            MetricAlertResource result = await collection.GetAsync(ruleName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MetricAlertData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAWebTestAlertRule()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getWebTestMetricAlert.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getWebTestMetricAlert.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -633,7 +962,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -666,7 +995,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -699,7 +1028,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleOnResourceGroupS()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertResourceGroup.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -732,7 +1061,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAlertRuleOnSubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertSubscription.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -765,7 +1094,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListMetricAlertRules()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/listMetricAlert.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/listMetricAlert.json
             // this example is just showing the usage of "MetricAlerts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -800,7 +1129,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADynamicAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getDynamicMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -829,7 +1158,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADynamicAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getDynamicMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -856,9 +1185,38 @@ WebHookProperties =
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAQueryBasedAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertQuery.json
+            // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            bool result = await collection.ExistsAsync(ruleName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAWebTestAlertRule()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getWebTestMetricAlert.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getWebTestMetricAlert.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -887,7 +1245,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -916,7 +1274,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -945,7 +1303,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleOnResourceGroupS()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertResourceGroup.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -974,7 +1332,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnAlertRuleOnSubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertSubscription.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1003,7 +1361,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADynamicAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getDynamicMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1044,7 +1402,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADynamicAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getDynamicMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getDynamicMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1083,9 +1441,50 @@ WebHookProperties =
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAQueryBasedAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertQuery.json
+            // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string resourceGroupName = "gigtest";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MetricAlertResource
+            MetricAlertCollection collection = resourceGroupResource.GetMetricAlerts();
+
+            // invoke the operation
+            string ruleName = "chiricutin";
+            NullableResponse<MetricAlertResource> response = await collection.GetIfExistsAsync(ruleName);
+            MetricAlertResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MetricAlertData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAWebTestAlertRule()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getWebTestMetricAlert.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getWebTestMetricAlert.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1126,7 +1525,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleForMultipleResources()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertMultipleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertMultipleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1167,7 +1566,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSingleResource.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertSingleResource.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1208,7 +1607,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleOnResourceGroupS()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertResourceGroup.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1249,7 +1648,7 @@ WebHookProperties =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnAlertRuleOnSubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/examples/getMetricAlertSubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-03-01-preview/examples/getMetricAlertSubscription.json
             // this example is just showing the usage of "MetricAlerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

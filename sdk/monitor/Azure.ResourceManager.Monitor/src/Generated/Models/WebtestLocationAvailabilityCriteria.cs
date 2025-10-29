@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/>. </summary>
-        /// <param name="odataType"> specifies the type of the alert criteria. </param>
+        /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="webTestId"> The Application Insights web test Id. </param>
         /// <param name="componentId"> The Application Insights resource Id. </param>

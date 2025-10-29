@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An alert action. </summary>
-    public partial class MetricAlertAction
+    /// <summary> Configuration for failing periods in query-based alerts. </summary>
+    internal partial class QueryFailingPeriods
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,28 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
-        public MetricAlertAction()
+        /// <summary> Initializes a new instance of <see cref="QueryFailingPeriods"/>. </summary>
+        /// <param name="for"> The amount of time (in ISO 8601 duration format) alert must be active before firing. </param>
+        public QueryFailingPeriods(TimeSpan @for)
         {
-            WebHookProperties = new ChangeTrackingDictionary<string, string>();
+            For = @for;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
-        /// <param name="actionGroupId"> The id of the action group to use. </param>
-        /// <param name="webHookProperties"> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </param>
+        /// <summary> Initializes a new instance of <see cref="QueryFailingPeriods"/>. </summary>
+        /// <param name="for"> The amount of time (in ISO 8601 duration format) alert must be active before firing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertAction(ResourceIdentifier actionGroupId, IDictionary<string, string> webHookProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueryFailingPeriods(TimeSpan @for, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ActionGroupId = actionGroupId;
-            WebHookProperties = webHookProperties;
+            For = @for;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The id of the action group to use. </summary>
-        public ResourceIdentifier ActionGroupId { get; set; }
-        /// <summary> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </summary>
-        public IDictionary<string, string> WebHookProperties { get; }
+        /// <summary> Initializes a new instance of <see cref="QueryFailingPeriods"/> for deserialization. </summary>
+        internal QueryFailingPeriods()
+        {
+        }
+
+        /// <summary> The amount of time (in ISO 8601 duration format) alert must be active before firing. </summary>
+        public TimeSpan For { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertResourceCollection"/>. </summary>
-        /// <param name="value"> the values for the alert rule resources. </param>
+        /// <param name="value"> The values for the alert rule resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricAlertResourceCollection(IReadOnlyList<MetricAlertData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> the values for the alert rule resources. </summary>
+        /// <summary> The values for the alert rule resources. </summary>
         public IReadOnlyList<MetricAlertData> Value { get; }
     }
 }

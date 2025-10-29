@@ -799,29 +799,35 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
-        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
+        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
         /// <param name="criteria">
-        /// defines the specific alert criteria information.
+        /// Defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
-        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
-        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
+        /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <param name="isMigrated"> The value indicating whether this alert rule is migrated. </param>
+        /// <param name="customProperties"> The properties of an alert payload. </param>
+        /// <param name="actionProperties"> The properties of an action properties. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, int severity = default, bool isEnabled = default, IEnumerable<string> scopes = null, TimeSpan evaluationFrequency = default, TimeSpan windowSize = default, ResourceType? targetResourceType = null, AzureLocation? targetResourceRegion = null, MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = null, IEnumerable<MetricAlertAction> actions = null, DateTimeOffset? lastUpdatedOn = null, bool? isMigrated = null)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, int severity = default, bool isEnabled = default, IEnumerable<string> scopes = null, TimeSpan evaluationFrequency = default, TimeSpan? windowSize = null, ResourceType? targetResourceType = null, AzureLocation? targetResourceRegion = null, MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = null, ResolveConfiguration resolveConfiguration = null, IEnumerable<MetricAlertAction> actions = null, DateTimeOffset? lastUpdatedOn = null, bool? isMigrated = null, IDictionary<string, string> customProperties = null, IDictionary<string, string> actionProperties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             scopes ??= new List<string>();
             actions ??= new List<MetricAlertAction>();
+            customProperties ??= new Dictionary<string, string>();
+            actionProperties ??= new Dictionary<string, string>();
 
             return new MetricAlertData(
                 id,
@@ -840,40 +846,51 @@ namespace Azure.ResourceManager.Monitor.Models
                 targetResourceRegion,
                 criteria,
                 isAutoMitigateEnabled,
+                resolveConfiguration,
                 actions?.ToList(),
                 lastUpdatedOn,
                 isMigrated,
+                customProperties,
+                actionProperties,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
-        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. </param>
+        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
         /// <param name="criteria">
-        /// defines the specific alert criteria information.
+        /// Defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
-        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
-        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
+        /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <param name="isMigrated"> The value indicating whether this alert rule is migrated. </param>
+        /// <param name="customProperties"> The properties of an alert payload. </param>
+        /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <returns> A new <see cref="Models.MetricAlertPatch"/> instance for mocking. </returns>
-        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = null, string description = null, int? severity = null, bool? isEnabled = null, IEnumerable<string> scopes = null, TimeSpan? evaluationFrequency = null, TimeSpan? windowSize = null, ResourceType? targetResourceType = null, AzureLocation? targetResourceRegion = null, MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = null, IEnumerable<MetricAlertAction> actions = null, DateTimeOffset? lastUpdatedOn = null, bool? isMigrated = null)
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, string description = null, int? severity = null, bool? isEnabled = null, IEnumerable<string> scopes = null, TimeSpan? evaluationFrequency = null, TimeSpan? windowSize = null, ResourceType? targetResourceType = null, AzureLocation? targetResourceRegion = null, MetricAlertCriteria criteria = null, bool? isAutoMitigateEnabled = null, ResolveConfiguration resolveConfiguration = null, IEnumerable<MetricAlertAction> actions = null, DateTimeOffset? lastUpdatedOn = null, bool? isMigrated = null, IDictionary<string, string> customProperties = null, IDictionary<string, string> actionProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             scopes ??= new List<string>();
             actions ??= new List<MetricAlertAction>();
+            customProperties ??= new Dictionary<string, string>();
+            actionProperties ??= new Dictionary<string, string>();
 
             return new MetricAlertPatch(
                 tags,
+                identity,
                 description,
                 severity,
                 isEnabled,
@@ -884,9 +901,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 targetResourceRegion,
                 criteria,
                 isAutoMitigateEnabled,
+                resolveConfiguration,
                 actions?.ToList(),
                 lastUpdatedOn,
                 isMigrated,
+                customProperties,
+                actionProperties,
                 serializedAdditionalRawData: null);
         }
 
@@ -910,7 +930,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatusProperties"/>. </summary>
         /// <param name="dimensions"> An object describing the type of the dimensions. </param>
-        /// <param name="status"> status value. </param>
+        /// <param name="status"> Status value. </param>
         /// <param name="timestamp"> UTC time when the status was checked. </param>
         /// <returns> A new <see cref="Models.MetricAlertStatusProperties"/> instance for mocking. </returns>
         public static MetricAlertStatusProperties MetricAlertStatusProperties(IReadOnlyDictionary<string, string> dimensions = null, string status = null, DateTimeOffset? timestamp = null)
@@ -1704,6 +1724,63 @@ namespace Azure.ResourceManager.Monitor.Models
         public static NotificationContent NotificationContent(string alertType, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
         {
             return NotificationContent(alertType: alertType, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.MetricAlertData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
+        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="criteria">
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertCriteria" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertMultipleResourceMultipleMetricCriteria" />, <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertSingleResourceMultipleMetricCriteria" /> and <see cref="T:Azure.ResourceManager.Monitor.Models.WebtestLocationAvailabilityCriteria" />.
+        /// </param>
+        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.MetricAlertData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated)
+        {
+            return MetricAlertData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, description: description, severity: severity, isEnabled: isEnabled, scopes: scopes, evaluationFrequency: evaluationFrequency, windowSize: windowSize, targetResourceType: targetResourceType, targetResourceRegion: targetResourceRegion, criteria: criteria, isAutoMitigateEnabled: isAutoMitigateEnabled, resolveConfiguration: default, actions: actions, lastUpdatedOn: lastUpdatedOn, isMigrated: isMigrated, customProperties: default, actionProperties: default, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertPatch" />. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
+        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="criteria">
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertCriteria" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertMultipleResourceMultipleMetricCriteria" />, <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertSingleResourceMultipleMetricCriteria" /> and <see cref="T:Azure.ResourceManager.Monitor.Models.WebtestLocationAvailabilityCriteria" />.
+        /// </param>
+        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.Models.MetricAlertPatch" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags, string description, int? severity, bool? isEnabled, IEnumerable<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated)
+        {
+            return MetricAlertPatch(tags: tags, identity: default, description: description, severity: severity, isEnabled: isEnabled, scopes: scopes, evaluationFrequency: evaluationFrequency, windowSize: windowSize, targetResourceType: targetResourceType, targetResourceRegion: targetResourceRegion, criteria: criteria, isAutoMitigateEnabled: isAutoMitigateEnabled, resolveConfiguration: default, actions: actions, lastUpdatedOn: lastUpdatedOn, isMigrated: isMigrated, customProperties: default, actionProperties: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData" />. </summary>

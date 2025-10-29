@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Monitor
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -58,8 +63,11 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndArray();
             writer.WritePropertyName("evaluationFrequency"u8);
             writer.WriteStringValue(EvaluationFrequency, "P");
-            writer.WritePropertyName("windowSize"u8);
-            writer.WriteStringValue(WindowSize, "P");
+            if (Optional.IsDefined(WindowSize))
+            {
+                writer.WritePropertyName("windowSize"u8);
+                writer.WriteStringValue(WindowSize.Value, "P");
+            }
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
@@ -84,6 +92,11 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
+            if (Optional.IsDefined(ResolveConfiguration))
+            {
+                writer.WritePropertyName("resolveConfiguration"u8);
+                writer.WriteObjectValue(ResolveConfiguration, options);
+            }
             if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
@@ -103,6 +116,28 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WritePropertyName("isMigrated"u8);
                 writer.WriteBooleanValue(IsMigrated.Value);
+            }
+            if (Optional.IsCollectionDefined(CustomProperties))
+            {
+                writer.WritePropertyName("customProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(ActionProperties))
+            {
+                writer.WritePropertyName("actionProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ActionProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
@@ -127,6 +162,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -138,18 +174,30 @@ namespace Azure.ResourceManager.Monitor
             bool enabled = default;
             IList<string> scopes = default;
             TimeSpan evaluationFrequency = default;
-            TimeSpan windowSize = default;
+            TimeSpan? windowSize = default;
             ResourceType? targetResourceType = default;
             AzureLocation? targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             bool? autoMitigate = default;
+            ResolveConfiguration resolveConfiguration = default;
             IList<MetricAlertAction> actions = default;
             DateTimeOffset? lastUpdatedTime = default;
             bool? isMigrated = default;
+            IDictionary<string, string> customProperties = default;
+            IDictionary<string, string> actionProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMonitorContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -234,6 +282,10 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("windowSize"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             windowSize = property0.Value.GetTimeSpan("P");
                             continue;
                         }
@@ -274,6 +326,15 @@ namespace Azure.ResourceManager.Monitor
                             autoMitigate = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("resolveConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resolveConfiguration = ResolveConfiguration.DeserializeResolveConfiguration(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("actions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -306,6 +367,34 @@ namespace Azure.ResourceManager.Monitor
                             isMigrated = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("customProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            customProperties = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("actionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            actionProperties = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -332,9 +421,13 @@ namespace Azure.ResourceManager.Monitor
                 targetResourceRegion,
                 criteria,
                 autoMitigate,
+                resolveConfiguration,
                 actions ?? new ChangeTrackingList<MetricAlertAction>(),
                 lastUpdatedTime,
                 isMigrated,
+                customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                actionProperties ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
                 serializedAdditionalRawData);
         }
 
