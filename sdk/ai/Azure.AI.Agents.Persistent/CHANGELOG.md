@@ -1,14 +1,25 @@
 # Release History
 
-## 1.2.0-beta.6 (Unreleased)
-
-### Features Added
+## 1.2.0-beta.7 (2025-10-28)
 
 ### Breaking Changes
+- The `trust` parameter for `MCPApproval` constructor was renamed to `requireApproval`.
 
 ### Bugs Fixed
+- Relax the validation of previous conversation in the `PersistentAgentsChatClient`.
 
 ### Other Changes
+- Expand AIFunction support to also include any AIFunctionDeclaration.
+- Add an extension AsAITool method that makes it easy to add any persistent ToolDefinition to ChatOptions.Tools.
+- Add HostedMcpServerTool support for `PersistentAgentsChatClient`.
+
+## 1.2.0-beta.6 (2025-10-10)
+
+### Bugs Fixed
+- Fix the issue on calculating hash of `FunctionToolDefinition`. See [issue](https://github.com/Azure/azure-sdk-for-net/issues/53043).
+- Expose the `ServerLabel` on `SubmitToolApprovalUpdate` See [issue](https://github.com/Azure/azure-sdk-for-net/issues/53001).
+- Fix naming of MCPApproval see [issue](https://github.com/Azure/azure-sdk-for-net/issues/53000)
+- Fix issue with image block serialization in async scenarios [issue](https://github.com/Azure/azure-sdk-for-net/issues/52671)
 
 ## 1.2.0-beta.5 (2025-09-18)
 

@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.MongoCluster
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
         }
 
         MongoClusterData IJsonModel<MongoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.MongoCluster
                 return null;
             }
             MongoClusterProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -83,6 +89,15 @@ namespace Azure.ResourceManager.MongoCluster
                         continue;
                     }
                     properties = MongoClusterProperties.DeserializeMongoClusterProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerMongoClusterContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -142,6 +157,7 @@ namespace Azure.ResourceManager.MongoCluster
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 serializedAdditionalRawData);
         }
 
