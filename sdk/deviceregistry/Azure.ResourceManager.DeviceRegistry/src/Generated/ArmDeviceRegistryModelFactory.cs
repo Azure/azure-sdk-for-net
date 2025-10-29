@@ -373,13 +373,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespacePatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
-        /// <returns> A new <see cref="Models.NamespaceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceUpdateProperties NamespaceUpdateProperties(IDictionary<string, MessagingEndpoint> messagingEndpoints = default)
-        {
-            return new NamespaceUpdateProperties(messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
         /// <param name="scope"> Scope of the migrate resources operation. </param>
         /// <param name="resourceIds"> List of asset resources to be migrated. </param>
