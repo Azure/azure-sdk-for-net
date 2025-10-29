@@ -22,7 +22,6 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceClientProvider? _resource;
         private readonly CSharpType _resultType;
         private readonly CSharpType _operationSourceInterface;
-        private readonly bool _isResourceType;
 
         private readonly FieldProvider? _clientField;
 
@@ -31,7 +30,6 @@ namespace Azure.Generator.Management.Providers
         {
             _resource = resource;
             _resultType = resource.Type;
-            _isResourceType = true;
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ArmClient), "_client", this);
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
@@ -41,14 +39,13 @@ namespace Azure.Generator.Management.Providers
         {
             _resource = null;
             _resultType = resultType;
-            _isResourceType = false;
             _clientField = null;
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
 
         protected override string BuildName()
         {
-            if (_isResourceType && _resource != null)
+            if (_resource != null)
             {
                 return $"{_resource.ResourceName}OperationSource";
             }
@@ -82,7 +79,7 @@ namespace Azure.Generator.Management.Providers
 
             MethodBodyStatement[] body;
 
-            if (_isResourceType && _resource != null)
+            if (_resource != null)
             {
                 // Resource type: deserialize and wrap in resource
                 body = new MethodBodyStatement[]
@@ -119,7 +116,7 @@ namespace Azure.Generator.Management.Providers
 
             MethodBodyStatement[] body;
 
-            if (_isResourceType && _resource != null)
+            if (_resource != null)
             {
                 // Resource type: deserialize and wrap in resource
                 body = new MethodBodyStatement[]
@@ -152,7 +149,7 @@ namespace Azure.Generator.Management.Providers
 
         private ConstructorProvider BuildInitializationConstructor()
         {
-            if (_isResourceType)
+            if (_resource != null)
             {
                 var clientParameter = new ParameterProvider("client", $"", typeof(ArmClient));
                 var signature = new ConstructorSignature(Type, $"", MethodSignatureModifiers.Internal, [clientParameter]);
