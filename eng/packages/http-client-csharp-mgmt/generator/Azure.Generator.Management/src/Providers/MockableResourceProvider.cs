@@ -233,10 +233,19 @@ namespace Azure.Generator.Management.Providers
                         resource.Type,
                         This.As<ArmResource>().Client(),
                         BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
-                yield return new MethodProvider(
+                var method = new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
                     this);
+
+                // Copy the enhanced XML documentation from the singleton resource's Get method if available
+                var getMethod = resource.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
+                if (getMethod?.XmlDocs?.Summary != null)
+                {
+                    method.XmlDocs?.Update(summary: getMethod.XmlDocs.Summary);
+                }
+
+                yield return method;
             }
             else
             {
