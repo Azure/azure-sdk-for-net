@@ -4744,7 +4744,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedEnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxNumberOfWorkers { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OutboundIPAddresses { get { throw null; } }
         public Azure.Provisioning.AppService.OutboundVnetRouting OutboundVnetRouting { get { throw null; } set { } }
         public Azure.Provisioning.AppService.WebSite? Parent { get { throw null; } set { } }
