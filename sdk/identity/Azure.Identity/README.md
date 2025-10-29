@@ -107,6 +107,45 @@ While `DefaultAzureCredential` is generally the quickest way to authenticate app
 
 As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token-caching).
 
+## Identity binding mode (WorkloadIdentityCredential)
+
+`WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `AzureKubernetesTokenProxy` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
+
+**Note:** This feature is only available when using `WorkloadIdentityCredential` directly. It is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
+
+### Usage
+
+```csharp
+var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+{
+    AzureKubernetesTokenProxy = true  // Enable identity binding mode
+});
+```
+
+When enabled, the credential reads these environment variables (typically configured by AKS):
+
+* `AZURE_KUBERNETES_TOKEN_PROXY` - Base HTTPS URL for the proxy endpoint
+* `AZURE_KUBERNETES_CA_FILE` - Path to PEM bundle with proxy CA certificates
+* `AZURE_KUBERNETES_CA_DATA` - PEM-encoded CA bundle (mutually exclusive with `CA_FILE`)
+* `AZURE_KUBERNETES_SNI_NAME` - TLS Server Name Indication (optional)
+
+The credential validates the configuration at construction time and throws `InvalidOperationException` if the configuration is invalid or incomplete.
+
+### Migration from ManagedIdentityCredential
+
+If you're currently using `ManagedIdentityCredential` for workload identity in AKS and need to use identity binding mode, migrate to `WorkloadIdentityCredential`:
+
+```csharp
+// Before (no identity binding support):
+// var credential = new ManagedIdentityCredential();
+
+// After (with identity binding support):
+var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+{
+    AzureKubernetesTokenProxy = true
+});
+```
+
 ## Sovereign cloud configuration
 
 By default, credentials authenticate to the Microsoft Entra endpoint for the Azure Public Cloud. To access resources in other clouds, such as Azure US Government or a private cloud, use one of the following solutions:
@@ -142,7 +181,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-|-|
 |[`EnvironmentCredential`][ref_EnvironmentCredential]|Authenticates a service principal or user via credential information specified in [environment variables](#environment-variables).||
 |[`ManagedIdentityCredential`][ref_ManagedIdentityCredential]|Authenticates the managed identity of an Azure resource.|[user-assigned managed identity][uami_doc]<br>[system-assigned managed identity][sami_doc]|
-|[`WorkloadIdentityCredential`][ref_WorkloadIdentityCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview) on Kubernetes.||
+|[`WorkloadIdentityCredential`][ref_WorkloadIdentityCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview) on Kubernetes. Supports [identity binding mode](#identity-binding-mode-workloadidentitycredential) to work around FIC limits in AKS.||
 
 ### Authenticate service principals
 

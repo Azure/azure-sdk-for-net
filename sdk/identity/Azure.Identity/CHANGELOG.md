@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added Kubernetes token proxy support (identity binding mode) to `WorkloadIdentityCredential`. When enabled via the `AzureKubernetesTokenProxy` option, the credential redirects token requests to an AKS-provided proxy to work around Entra ID's limit on federated identity credentials per managed identity. This feature is opt-in and only available when using `WorkloadIdentityCredential` directly (not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`).
+
 ### Breaking Changes
 
 ### Bugs Fixed
