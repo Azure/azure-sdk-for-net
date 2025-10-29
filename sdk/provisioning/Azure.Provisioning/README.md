@@ -247,8 +247,6 @@ StorageSku sku = new() { Name = StorageSkuName.StandardLrs };
 ```
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use `azd` to deploy your infrastructure to Azure directly without needing to write or maintain `bicep` or arm templates.
 
-
-
 ## Examples
 
 ### Create Basic Infrastructure
