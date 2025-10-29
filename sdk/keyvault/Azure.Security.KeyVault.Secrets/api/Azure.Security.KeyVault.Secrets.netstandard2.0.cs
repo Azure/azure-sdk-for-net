@@ -25,6 +25,7 @@ namespace Azure.Security.KeyVault.Secrets
         public KeyVaultSecret(string name, string value) { }
         public System.Uri Id { get { throw null; } }
         public string Name { get { throw null; } }
+        public string ProperlySpelledProperty { get { throw null; } }
         public Azure.Security.KeyVault.Secrets.SecretProperties Properties { get { throw null; } }
         public string Value { get { throw null; } }
     }

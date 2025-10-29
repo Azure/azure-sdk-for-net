@@ -36,10 +36,9 @@ foreach ($file in $apiListingFiles) {
 }
 
 if ($SpellCheckPublicApiSurface) {
-    Write-Host "Spell check public API surface"
+    Write-Host "Spell check public API surface (found $($apiListingFiles.Count) files)"
     &"$PSScriptRoot/../common/spelling/Invoke-Cspell.ps1" `
-        -CSpellConfigPath "$PSScriptRoot/../../.vscode/cspell.json" `
-        -ScanGlobs "sdk/$ServiceDirectory/*/api/*.cs"
+        -FileList $apiListingFiles.FullName
 
     if ($LASTEXITCODE) {
         Write-Host "##vso[task.LogIssue type=error;]Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
