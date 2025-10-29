@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Cluster properties of a server. </summary>
+    /// <summary>
+    /// Cluster properties of a server.
+    /// Serialized Name: Cluster
+    /// </summary>
     public partial class Cluster
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Cluster"/>. </summary>
-        /// <param name="clusterSize"> Number of nodes assigned to the elastic cluster. </param>
-        /// <param name="defaultDatabaseName"> Default database name for the elastic cluster. </param>
+        /// <param name="clusterSize">
+        /// Number of nodes assigned to the elastic cluster.
+        /// Serialized Name: Cluster.clusterSize
+        /// </param>
+        /// <param name="defaultDatabaseName">
+        /// Default database name for the elastic cluster.
+        /// Serialized Name: Cluster.defaultDatabaseName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Cluster(int? clusterSize, string defaultDatabaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Number of nodes assigned to the elastic cluster. </summary>
+        /// <summary>
+        /// Number of nodes assigned to the elastic cluster.
+        /// Serialized Name: Cluster.clusterSize
+        /// </summary>
         [WirePath("clusterSize")]
         public int? ClusterSize { get; set; }
-        /// <summary> Default database name for the elastic cluster. </summary>
+        /// <summary>
+        /// Default database name for the elastic cluster.
+        /// Serialized Name: Cluster.defaultDatabaseName
+        /// </summary>
         [WirePath("defaultDatabaseName")]
         public string DefaultDatabaseName { get; set; }
     }

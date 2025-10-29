@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Data encryption type used by a server. </summary>
+    /// <summary>
+    /// Data encryption type used by a server.
+    /// Serialized Name: DataEncryptionType
+    /// </summary>
     public readonly partial struct DataEncryptionType : IEquatable<DataEncryptionType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string SystemManagedValue = "SystemManaged";
         private const string AzureKeyVaultValue = "AzureKeyVault";
 
-        /// <summary> SystemManaged. </summary>
+        /// <summary>
+        /// SystemManaged
+        /// Serialized Name: DataEncryptionType.SystemManaged
+        /// </summary>
         public static DataEncryptionType SystemManaged { get; } = new DataEncryptionType(SystemManagedValue);
-        /// <summary> AzureKeyVault. </summary>
+        /// <summary>
+        /// AzureKeyVault
+        /// Serialized Name: DataEncryptionType.AzureKeyVault
+        /// </summary>
         public static DataEncryptionType AzureKeyVault { get; } = new DataEncryptionType(AzureKeyVaultValue);
         /// <summary> Determines if two <see cref="DataEncryptionType"/> values are the same. </summary>
         public static bool operator ==(DataEncryptionType left, DataEncryptionType right) => left.Equals(right);

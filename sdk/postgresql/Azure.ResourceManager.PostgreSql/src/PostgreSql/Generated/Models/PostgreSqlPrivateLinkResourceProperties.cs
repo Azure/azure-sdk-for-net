@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Properties of a private link resource. </summary>
+    /// <summary>
+    /// Properties of a private link resource.
+    /// Serialized Name: PrivateLinkResourceProperties
+    /// </summary>
     public partial class PostgreSqlPrivateLinkResourceProperties
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="groupId">
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResourceProperties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private link resource group id. </summary>
+        /// <summary>
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResourceProperties.groupId
+        /// </summary>
         [WirePath("groupId")]
         public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
+        /// <summary>
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
+        /// </summary>
         [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
     }

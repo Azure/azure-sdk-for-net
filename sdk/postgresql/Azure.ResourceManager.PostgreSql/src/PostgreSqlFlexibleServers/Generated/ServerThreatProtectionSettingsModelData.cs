@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the ServerThreatProtectionSettingsModel data model.
     /// Advanced threat protection settings of the server.
+    /// Serialized Name: AdvancedThreatProtectionSettingsModel
     /// </summary>
     public partial class ServerThreatProtectionSettingsModelData : ResourceData
     {
@@ -61,8 +62,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </param>
-        /// <param name="createdOn"> Specifies the creation time (UTC) of the policy. </param>
+        /// <param name="state">
+        /// Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server.
+        /// Serialized Name: AdvancedThreatProtectionSettingsModel.properties.state
+        /// </param>
+        /// <param name="createdOn">
+        /// Specifies the creation time (UTC) of the policy.
+        /// Serialized Name: AdvancedThreatProtectionSettingsModel.properties.creationTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerThreatProtectionSettingsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatProtectionState? state, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,10 +78,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </summary>
+        /// <summary>
+        /// Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server.
+        /// Serialized Name: AdvancedThreatProtectionSettingsModel.properties.state
+        /// </summary>
         [WirePath("properties.state")]
         public ThreatProtectionState? State { get; set; }
-        /// <summary> Specifies the creation time (UTC) of the policy. </summary>
+        /// <summary>
+        /// Specifies the creation time (UTC) of the policy.
+        /// Serialized Name: AdvancedThreatProtectionSettingsModel.properties.creationTime
+        /// </summary>
         [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn { get; }
     }

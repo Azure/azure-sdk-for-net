@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Database server metadata. </summary>
+    /// <summary>
+    /// Database server metadata.
+    /// Serialized Name: DbServerMetadata
+    /// </summary>
     public partial class PostgreSqlServerMetadata
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerMetadata"/>. </summary>
-        /// <param name="location"> Location of database server. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="storageMb"> Storage size (in MB) for database server. </param>
-        /// <param name="sku"> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </param>
+        /// <param name="location">
+        /// Location of database server.
+        /// Serialized Name: DbServerMetadata.location
+        /// </param>
+        /// <param name="version">
+        /// Major version of PostgreSQL database engine.
+        /// Serialized Name: DbServerMetadata.version
+        /// </param>
+        /// <param name="storageMb">
+        /// Storage size (in MB) for database server.
+        /// Serialized Name: DbServerMetadata.storageMb
+        /// </param>
+        /// <param name="sku">
+        /// Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server.
+        /// Serialized Name: DbServerMetadata.sku
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerMetadata(AzureLocation? location, string version, int? storageMb, PostgreSqlFlexibleServersServerSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Location of database server. </summary>
+        /// <summary>
+        /// Location of database server.
+        /// Serialized Name: DbServerMetadata.location
+        /// </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Major version of PostgreSQL database engine. </summary>
+        /// <summary>
+        /// Major version of PostgreSQL database engine.
+        /// Serialized Name: DbServerMetadata.version
+        /// </summary>
         [WirePath("version")]
         public string Version { get; }
-        /// <summary> Storage size (in MB) for database server. </summary>
+        /// <summary>
+        /// Storage size (in MB) for database server.
+        /// Serialized Name: DbServerMetadata.storageMb
+        /// </summary>
         [WirePath("storageMb")]
         public int? StorageMb { get; }
-        /// <summary> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </summary>
+        /// <summary>
+        /// Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server.
+        /// Serialized Name: DbServerMetadata.sku
+        /// </summary>
         [WirePath("sku")]
         public PostgreSqlFlexibleServersServerSku Sku { get; }
     }

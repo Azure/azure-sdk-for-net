@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Represents a resource name availability. </summary>
+    /// <summary>
+    /// Represents a resource name availability.
+    /// Serialized Name: NameAvailability
+    /// </summary>
     public partial class PostgreSqlNameAvailabilityResult
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityResult"/>. </summary>
-        /// <param name="message"> Error Message. </param>
-        /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
-        /// <param name="reason"> Reason for name being unavailable. </param>
+        /// <param name="message">
+        /// Error Message.
+        /// Serialized Name: NameAvailability.message
+        /// </param>
+        /// <param name="isNameAvailable">
+        /// Indicates whether the resource name is available.
+        /// Serialized Name: NameAvailability.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// Reason for name being unavailable.
+        /// Serialized Name: NameAvailability.reason
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlNameAvailabilityResult(string message, bool? isNameAvailable, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error Message. </summary>
+        /// <summary>
+        /// Error Message.
+        /// Serialized Name: NameAvailability.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; }
-        /// <summary> Indicates whether the resource name is available. </summary>
+        /// <summary>
+        /// Indicates whether the resource name is available.
+        /// Serialized Name: NameAvailability.nameAvailable
+        /// </summary>
         [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
-        /// <summary> Reason for name being unavailable. </summary>
+        /// <summary>
+        /// Reason for name being unavailable.
+        /// Serialized Name: NameAvailability.reason
+        /// </summary>
         [WirePath("reason")]
         public string Reason { get; }
     }

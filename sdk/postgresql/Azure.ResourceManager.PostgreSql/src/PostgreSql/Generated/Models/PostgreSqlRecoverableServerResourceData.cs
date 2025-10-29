@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A recoverable server resource. </summary>
+    /// <summary>
+    /// A recoverable server resource.
+    /// Serialized Name: RecoverableServerResource
+    /// </summary>
     public partial class PostgreSqlRecoverableServerResourceData : ResourceData
     {
         /// <summary>
@@ -57,12 +60,30 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastAvailableBackupOn"> The last available backup date time. </param>
-        /// <param name="serviceLevelObjective"> The service level objective. </param>
-        /// <param name="edition"> Edition of the performance tier. </param>
-        /// <param name="vCores"> vCore associated with the service level objective. </param>
-        /// <param name="hardwareGeneration"> Hardware generation associated with the service level objective. </param>
-        /// <param name="version"> The PostgreSQL version. </param>
+        /// <param name="lastAvailableBackupOn">
+        /// The last available backup date time.
+        /// Serialized Name: RecoverableServerResource.properties.lastAvailableBackupDateTime
+        /// </param>
+        /// <param name="serviceLevelObjective">
+        /// The service level objective
+        /// Serialized Name: RecoverableServerResource.properties.serviceLevelObjective
+        /// </param>
+        /// <param name="edition">
+        /// Edition of the performance tier.
+        /// Serialized Name: RecoverableServerResource.properties.edition
+        /// </param>
+        /// <param name="vCores">
+        /// vCore associated with the service level objective
+        /// Serialized Name: RecoverableServerResource.properties.vCore
+        /// </param>
+        /// <param name="hardwareGeneration">
+        /// Hardware generation associated with the service level objective
+        /// Serialized Name: RecoverableServerResource.properties.hardwareGeneration
+        /// </param>
+        /// <param name="version">
+        /// The PostgreSQL version
+        /// Serialized Name: RecoverableServerResource.properties.version
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlRecoverableServerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastAvailableBackupOn, string serviceLevelObjective, string edition, int? vCores, string hardwareGeneration, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,22 +96,40 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The last available backup date time. </summary>
+        /// <summary>
+        /// The last available backup date time.
+        /// Serialized Name: RecoverableServerResource.properties.lastAvailableBackupDateTime
+        /// </summary>
         [WirePath("properties.lastAvailableBackupDateTime")]
         public DateTimeOffset? LastAvailableBackupOn { get; }
-        /// <summary> The service level objective. </summary>
+        /// <summary>
+        /// The service level objective
+        /// Serialized Name: RecoverableServerResource.properties.serviceLevelObjective
+        /// </summary>
         [WirePath("properties.serviceLevelObjective")]
         public string ServiceLevelObjective { get; }
-        /// <summary> Edition of the performance tier. </summary>
+        /// <summary>
+        /// Edition of the performance tier.
+        /// Serialized Name: RecoverableServerResource.properties.edition
+        /// </summary>
         [WirePath("properties.edition")]
         public string Edition { get; }
-        /// <summary> vCore associated with the service level objective. </summary>
+        /// <summary>
+        /// vCore associated with the service level objective
+        /// Serialized Name: RecoverableServerResource.properties.vCore
+        /// </summary>
         [WirePath("properties.vCore")]
         public int? VCores { get; }
-        /// <summary> Hardware generation associated with the service level objective. </summary>
+        /// <summary>
+        /// Hardware generation associated with the service level objective
+        /// Serialized Name: RecoverableServerResource.properties.hardwareGeneration
+        /// </summary>
         [WirePath("properties.hardwareGeneration")]
         public string HardwareGeneration { get; }
-        /// <summary> The PostgreSQL version. </summary>
+        /// <summary>
+        /// The PostgreSQL version
+        /// Serialized Name: RecoverableServerResource.properties.version
+        /// </summary>
         [WirePath("properties.version")]
         public string Version { get; }
     }

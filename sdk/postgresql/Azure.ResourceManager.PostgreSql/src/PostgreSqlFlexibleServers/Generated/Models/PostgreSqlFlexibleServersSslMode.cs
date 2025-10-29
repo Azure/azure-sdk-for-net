@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </summary>
+    /// <summary>
+    /// SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'.
+    /// Serialized Name: SslMode
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServersSslMode : IEquatable<PostgreSqlFlexibleServersSslMode>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string VerifyCAValue = "VerifyCA";
         private const string VerifyFullValue = "VerifyFull";
 
-        /// <summary> Prefer. </summary>
+        /// <summary>
+        /// Prefer
+        /// Serialized Name: SslMode.Prefer
+        /// </summary>
         public static PostgreSqlFlexibleServersSslMode Prefer { get; } = new PostgreSqlFlexibleServersSslMode(PreferValue);
-        /// <summary> Require. </summary>
+        /// <summary>
+        /// Require
+        /// Serialized Name: SslMode.Require
+        /// </summary>
         public static PostgreSqlFlexibleServersSslMode Require { get; } = new PostgreSqlFlexibleServersSslMode(RequireValue);
-        /// <summary> VerifyCA. </summary>
+        /// <summary>
+        /// VerifyCA
+        /// Serialized Name: SslMode.VerifyCA
+        /// </summary>
         public static PostgreSqlFlexibleServersSslMode VerifyCA { get; } = new PostgreSqlFlexibleServersSslMode(VerifyCAValue);
-        /// <summary> VerifyFull. </summary>
+        /// <summary>
+        /// VerifyFull
+        /// Serialized Name: SslMode.VerifyFull
+        /// </summary>
         public static PostgreSqlFlexibleServersSslMode VerifyFull { get; } = new PostgreSqlFlexibleServersSslMode(VerifyFullValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersSslMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersSslMode left, PostgreSqlFlexibleServersSslMode right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Modes of high availability supported for this compute. </summary>
+    /// <summary>
+    /// Modes of high availability supported for this compute.
+    /// Serialized Name: HighAvailabilityMode
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerComputeHighAvailabilityMode : IEquatable<PostgreSqlFlexibleServerComputeHighAvailabilityMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string SameZoneValue = "SameZone";
 
-        /// <summary> ZoneRedundant. </summary>
+        /// <summary>
+        /// ZoneRedundant
+        /// Serialized Name: HighAvailabilityMode.ZoneRedundant
+        /// </summary>
         public static PostgreSqlFlexibleServerComputeHighAvailabilityMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerComputeHighAvailabilityMode(ZoneRedundantValue);
-        /// <summary> SameZone. </summary>
+        /// <summary>
+        /// SameZone
+        /// Serialized Name: HighAvailabilityMode.SameZone
+        /// </summary>
         public static PostgreSqlFlexibleServerComputeHighAvailabilityMode SameZone { get; } = new PostgreSqlFlexibleServerComputeHighAvailabilityMode(SameZoneValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerComputeHighAvailabilityMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerComputeHighAvailabilityMode left, PostgreSqlFlexibleServerComputeHighAvailabilityMode right) => left.Equals(right);

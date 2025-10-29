@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Compute information of a server. </summary>
+    /// <summary>
+    /// Compute information of a server.
+    /// Serialized Name: Sku
+    /// </summary>
     public partial class PostgreSqlFlexibleServerSku
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <param name="name">
+        /// Name by which is known a given compute size assigned to a server.
+        /// Serialized Name: Sku.name
+        /// </param>
+        /// <param name="tier">
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: Sku.tier
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlFlexibleServerSku(string name, PostgreSqlFlexibleServerSkuTier tier)
         {
@@ -58,8 +67,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <param name="name">
+        /// Name by which is known a given compute size assigned to a server.
+        /// Serialized Name: Sku.name
+        /// </param>
+        /// <param name="tier">
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: Sku.tier
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,10 +88,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary> Name by which is known a given compute size assigned to a server. </summary>
+        /// <summary>
+        /// Name by which is known a given compute size assigned to a server.
+        /// Serialized Name: Sku.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Tier of the compute assigned to a server. </summary>
+        /// <summary>
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: Sku.tier
+        /// </summary>
         [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
     }

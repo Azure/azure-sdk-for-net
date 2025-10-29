@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Compute information of a server. </summary>
+    /// <summary>
+    /// Compute information of a server.
+    /// Serialized Name: SkuForPatch
+    /// </summary>
     public partial class SkuForPatch
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SkuForPatch"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <param name="name">
+        /// Name by which is known a given compute size assigned to a server.
+        /// Serialized Name: SkuForPatch.name
+        /// </param>
+        /// <param name="tier">
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: SkuForPatch.tier
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SkuForPatch(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name by which is known a given compute size assigned to a server. </summary>
+        /// <summary>
+        /// Name by which is known a given compute size assigned to a server.
+        /// Serialized Name: SkuForPatch.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Tier of the compute assigned to a server. </summary>
+        /// <summary>
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: SkuForPatch.tier
+        /// </summary>
         [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier? Tier { get; set; }
     }

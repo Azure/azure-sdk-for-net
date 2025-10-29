@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class BackupsLongTermRetentionContent : IUtf8JsonSerializable, IJsonModel<BackupsLongTermRetentionContent>
+    public partial class PostgreSqlFlexibleServerLtrBackupContent : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupsLongTermRetentionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BackupsLongTermRetentionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupsLongTermRetentionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupsLongTermRetentionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteObjectValue(TargetDetails, options);
         }
 
-        BackupsLongTermRetentionContent IJsonModel<BackupsLongTermRetentionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerLtrBackupContent IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupsLongTermRetentionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupsLongTermRetentionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupsLongTermRetentionContent(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerLtrBackupContent(document.RootElement, options);
         }
 
-        internal static BackupsLongTermRetentionContent DeserializeBackupsLongTermRetentionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerLtrBackupContent DeserializePostgreSqlFlexibleServerLtrBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,38 +81,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackupsLongTermRetentionContent(backupSettings, serializedAdditionalRawData, targetDetails);
+            return new PostgreSqlFlexibleServerLtrBackupContent(backupSettings, serializedAdditionalRawData, targetDetails);
         }
 
-        BinaryData IPersistableModel<BackupsLongTermRetentionContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupsLongTermRetentionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BackupsLongTermRetentionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BackupsLongTermRetentionContent IPersistableModel<BackupsLongTermRetentionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerLtrBackupContent IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupsLongTermRetentionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBackupsLongTermRetentionContent(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerLtrBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupsLongTermRetentionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BackupsLongTermRetentionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

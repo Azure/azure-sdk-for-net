@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlServer data model.
     /// Represents a server.
+    /// Serialized Name: Server
     /// </summary>
     public partial class PostgreSqlServerData : TrackedResourceData
     {
@@ -65,23 +66,74 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
-        /// <param name="version"> Server version. </param>
-        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
-        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
-        /// <param name="byokEnforcement"> Status showing whether the server data encryption is enabled with customer-managed keys. </param>
-        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
-        /// <param name="userVisibleState"> A state of a server that is visible to user. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
-        /// <param name="earliestRestoreOn"> Earliest restore point creation time (ISO8601 format). </param>
-        /// <param name="storageProfile"> Storage profile of a server. </param>
-        /// <param name="replicationRole"> The replication role of the server. </param>
-        /// <param name="masterServerId"> The master server id of a replica server. </param>
-        /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Serialized Name: Server.identity. Current supported identity types: SystemAssigned
+        /// </param>
+        /// <param name="sku">
+        /// The SKU (pricing tier) of the server.
+        /// Serialized Name: Server.sku
+        /// </param>
+        /// <param name="administratorLogin">
+        /// The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation).
+        /// Serialized Name: Server.properties.administratorLogin
+        /// </param>
+        /// <param name="version">
+        /// Server version.
+        /// Serialized Name: Server.properties.version
+        /// </param>
+        /// <param name="sslEnforcement">
+        /// Enable ssl enforcement or not when connect to server.
+        /// Serialized Name: Server.properties.sslEnforcement
+        /// </param>
+        /// <param name="minimalTlsVersion">
+        /// Enforce a minimal Tls version for the server.
+        /// Serialized Name: Server.properties.minimalTlsVersion
+        /// </param>
+        /// <param name="byokEnforcement">
+        /// Status showing whether the server data encryption is enabled with customer-managed keys.
+        /// Serialized Name: Server.properties.byokEnforcement
+        /// </param>
+        /// <param name="infrastructureEncryption">
+        /// Status showing whether the server enabled infrastructure encryption.
+        /// Serialized Name: Server.properties.infrastructureEncryption
+        /// </param>
+        /// <param name="userVisibleState">
+        /// A state of a server that is visible to user.
+        /// Serialized Name: Server.properties.userVisibleState
+        /// </param>
+        /// <param name="fullyQualifiedDomainName">
+        /// The fully qualified domain name of a server.
+        /// Serialized Name: Server.properties.fullyQualifiedDomainName
+        /// </param>
+        /// <param name="earliestRestoreOn">
+        /// Earliest restore point creation time (ISO8601 format)
+        /// Serialized Name: Server.properties.earliestRestoreDate
+        /// </param>
+        /// <param name="storageProfile">
+        /// Storage profile of a server.
+        /// Serialized Name: Server.properties.storageProfile
+        /// </param>
+        /// <param name="replicationRole">
+        /// The replication role of the server.
+        /// Serialized Name: Server.properties.replicationRole
+        /// </param>
+        /// <param name="masterServerId">
+        /// The master server id of a replica server.
+        /// Serialized Name: Server.properties.masterServerId
+        /// </param>
+        /// <param name="replicaCapacity">
+        /// The maximum number of replicas that a master server can have.
+        /// Serialized Name: Server.properties.replicaCapacity
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
+        /// Serialized Name: Server.properties.publicNetworkAccess
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// List of private endpoint connections on a server
+        /// Serialized Name: Server.properties.privateEndpointConnections
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, PostgreSqlSku sku, string administratorLogin, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, PostgreSqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<PostgreSqlServerPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -110,55 +162,106 @@ namespace Azure.ResourceManager.PostgreSql
         {
         }
 
-        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// The Azure Active Directory identity of the server.
+        /// Serialized Name: Server.identity. Current supported identity types: SystemAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The SKU (pricing tier) of the server. </summary>
+        /// <summary>
+        /// The SKU (pricing tier) of the server.
+        /// Serialized Name: Server.sku
+        /// </summary>
         [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
-        /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        /// <summary>
+        /// The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation).
+        /// Serialized Name: Server.properties.administratorLogin
+        /// </summary>
         [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
-        /// <summary> Server version. </summary>
+        /// <summary>
+        /// Server version.
+        /// Serialized Name: Server.properties.version
+        /// </summary>
         [WirePath("properties.version")]
         public PostgreSqlServerVersion? Version { get; set; }
-        /// <summary> Enable ssl enforcement or not when connect to server. </summary>
+        /// <summary>
+        /// Enable ssl enforcement or not when connect to server.
+        /// Serialized Name: Server.properties.sslEnforcement
+        /// </summary>
         [WirePath("properties.sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
-        /// <summary> Enforce a minimal Tls version for the server. </summary>
+        /// <summary>
+        /// Enforce a minimal Tls version for the server.
+        /// Serialized Name: Server.properties.minimalTlsVersion
+        /// </summary>
         [WirePath("properties.minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
-        /// <summary> Status showing whether the server data encryption is enabled with customer-managed keys. </summary>
+        /// <summary>
+        /// Status showing whether the server data encryption is enabled with customer-managed keys.
+        /// Serialized Name: Server.properties.byokEnforcement
+        /// </summary>
         [WirePath("properties.byokEnforcement")]
         public string ByokEnforcement { get; }
-        /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
+        /// <summary>
+        /// Status showing whether the server enabled infrastructure encryption.
+        /// Serialized Name: Server.properties.infrastructureEncryption
+        /// </summary>
         [WirePath("properties.infrastructureEncryption")]
         public PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
-        /// <summary> A state of a server that is visible to user. </summary>
+        /// <summary>
+        /// A state of a server that is visible to user.
+        /// Serialized Name: Server.properties.userVisibleState
+        /// </summary>
         [WirePath("properties.userVisibleState")]
         public PostgreSqlServerState? UserVisibleState { get; set; }
-        /// <summary> The fully qualified domain name of a server. </summary>
+        /// <summary>
+        /// The fully qualified domain name of a server.
+        /// Serialized Name: Server.properties.fullyQualifiedDomainName
+        /// </summary>
         [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; set; }
-        /// <summary> Earliest restore point creation time (ISO8601 format). </summary>
+        /// <summary>
+        /// Earliest restore point creation time (ISO8601 format)
+        /// Serialized Name: Server.properties.earliestRestoreDate
+        /// </summary>
         [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; set; }
-        /// <summary> Storage profile of a server. </summary>
+        /// <summary>
+        /// Storage profile of a server.
+        /// Serialized Name: Server.properties.storageProfile
+        /// </summary>
         [WirePath("properties.storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
-        /// <summary> The replication role of the server. </summary>
+        /// <summary>
+        /// The replication role of the server.
+        /// Serialized Name: Server.properties.replicationRole
+        /// </summary>
         [WirePath("properties.replicationRole")]
         public string ReplicationRole { get; set; }
-        /// <summary> The master server id of a replica server. </summary>
+        /// <summary>
+        /// The master server id of a replica server.
+        /// Serialized Name: Server.properties.masterServerId
+        /// </summary>
         [WirePath("properties.masterServerId")]
         public ResourceIdentifier MasterServerId { get; set; }
-        /// <summary> The maximum number of replicas that a master server can have. </summary>
+        /// <summary>
+        /// The maximum number of replicas that a master server can have.
+        /// Serialized Name: Server.properties.replicaCapacity
+        /// </summary>
         [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity { get; set; }
-        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        /// <summary>
+        /// Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'
+        /// Serialized Name: Server.properties.publicNetworkAccess
+        /// </summary>
         [WirePath("properties.publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
-        /// <summary> List of private endpoint connections on a server. </summary>
+        /// <summary>
+        /// List of private endpoint connections on a server
+        /// Serialized Name: Server.properties.privateEndpointConnections
+        /// </summary>
         [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<PostgreSqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
     }

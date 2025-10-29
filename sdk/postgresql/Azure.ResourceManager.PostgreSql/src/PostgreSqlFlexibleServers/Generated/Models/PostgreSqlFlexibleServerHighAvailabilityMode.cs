@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> High availability mode for a server. </summary>
+    /// <summary>
+    /// High availability mode for a server.
+    /// Serialized Name: PostgreSqlFlexibleServerHighAvailabilityMode
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerHighAvailabilityMode : IEquatable<PostgreSqlFlexibleServerHighAvailabilityMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string SameZoneValue = "SameZone";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: PostgreSqlFlexibleServerHighAvailabilityMode.Disabled
+        /// </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode Disabled { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(DisabledValue);
-        /// <summary> ZoneRedundant. </summary>
+        /// <summary>
+        /// ZoneRedundant
+        /// Serialized Name: PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant
+        /// </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(ZoneRedundantValue);
-        /// <summary> SameZone. </summary>
+        /// <summary>
+        /// SameZone
+        /// Serialized Name: PostgreSqlFlexibleServerHighAvailabilityMode.SameZone
+        /// </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode SameZone { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(SameZoneValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerHighAvailabilityMode left, PostgreSqlFlexibleServerHighAvailabilityMode right) => left.Equals(right);

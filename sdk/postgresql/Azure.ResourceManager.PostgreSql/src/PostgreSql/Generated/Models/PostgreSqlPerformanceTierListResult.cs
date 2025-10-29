@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A list of performance tiers. </summary>
+    /// <summary>
+    /// A list of performance tiers.
+    /// Serialized Name: PerformanceTierListResult
+    /// </summary>
     internal partial class PostgreSqlPerformanceTierListResult
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierListResult"/>. </summary>
-        /// <param name="value"> The list of performance tiers. </param>
+        /// <param name="value">
+        /// The list of performance tiers
+        /// Serialized Name: PerformanceTierListResult.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPerformanceTierListResult(IReadOnlyList<PostgreSqlPerformanceTierProperties> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of performance tiers. </summary>
+        /// <summary>
+        /// The list of performance tiers
+        /// Serialized Name: PerformanceTierListResult.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlPerformanceTierProperties> Value { get; }
     }
 }

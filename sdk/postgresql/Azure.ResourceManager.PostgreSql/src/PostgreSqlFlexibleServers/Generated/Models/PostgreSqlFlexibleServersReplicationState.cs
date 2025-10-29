@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating. </summary>
+    /// <summary>
+    /// Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating
+    /// Serialized Name: ReplicationState
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServersReplicationState : IEquatable<PostgreSqlFlexibleServersReplicationState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string BrokenValue = "Broken";
         private const string ReconfiguringValue = "Reconfiguring";
 
-        /// <summary> The read replica server is fully synchronized and actively replicating data from the primary server. </summary>
+        /// <summary>
+        /// The read replica server is fully synchronized and actively replicating data from the primary server.
+        /// Serialized Name: ReplicationState.Active
+        /// </summary>
         public static PostgreSqlFlexibleServersReplicationState Active { get; } = new PostgreSqlFlexibleServersReplicationState(ActiveValue);
-        /// <summary> The read replica server is behind the primary server and is currently catching up with pending changes. </summary>
+        /// <summary>
+        /// The read replica server is behind the primary server and is currently catching up with pending changes.
+        /// Serialized Name: ReplicationState.Catchup
+        /// </summary>
         public static PostgreSqlFlexibleServersReplicationState Catchup { get; } = new PostgreSqlFlexibleServersReplicationState(CatchupValue);
-        /// <summary> The read replica server is being created and is in process of getting initialized. </summary>
+        /// <summary>
+        /// The read replica server is being created and is in process of getting initialized.
+        /// Serialized Name: ReplicationState.Provisioning
+        /// </summary>
         public static PostgreSqlFlexibleServersReplicationState Provisioning { get; } = new PostgreSqlFlexibleServersReplicationState(ProvisioningValue);
-        /// <summary> The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
+        /// <summary>
+        /// The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server.
+        /// Serialized Name: ReplicationState.Updating
+        /// </summary>
         public static PostgreSqlFlexibleServersReplicationState Updating { get; } = new PostgreSqlFlexibleServersReplicationState(UpdatingValue);
-        /// <summary> Replication has failed or been interrupted. </summary>
+        /// <summary>
+        /// Replication has failed or been interrupted.
+        /// Serialized Name: ReplicationState.Broken
+        /// </summary>
         public static PostgreSqlFlexibleServersReplicationState Broken { get; } = new PostgreSqlFlexibleServersReplicationState(BrokenValue);
-        /// <summary> The read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
+        /// <summary>
+        /// The read replica server is being reconfigured, possibly due to changes in source or settings.
+        /// Serialized Name: ReplicationState.Reconfiguring
+        /// </summary>
         public static PostgreSqlFlexibleServersReplicationState Reconfiguring { get; } = new PostgreSqlFlexibleServersReplicationState(ReconfiguringValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersReplicationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersReplicationState left, PostgreSqlFlexibleServersReplicationState right) => left.Equals(right);

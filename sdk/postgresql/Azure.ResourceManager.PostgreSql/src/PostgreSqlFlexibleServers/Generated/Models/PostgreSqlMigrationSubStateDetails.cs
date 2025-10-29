@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Details of migration substate. </summary>
+    /// <summary>
+    /// Details of migration substate.
+    /// Serialized Name: MigrationSubstateDetails
+    /// </summary>
     public partial class PostgreSqlMigrationSubStateDetails
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
-        /// <param name="currentSubState"> Substate of migration. </param>
-        /// <param name="dbDetails"> Dictionary of &lt;DatabaseMigrationState&gt;. </param>
-        /// <param name="validationDetails"> Details for the validation for migration. </param>
+        /// <param name="currentSubState">
+        /// Substate of migration.
+        /// Serialized Name: MigrationSubstateDetails.currentSubState
+        /// </param>
+        /// <param name="dbDetails">
+        /// Dictionary of &lt;DatabaseMigrationState&gt;
+        /// Serialized Name: MigrationSubstateDetails.dbDetails
+        /// </param>
+        /// <param name="validationDetails">
+        /// Details for the validation for migration.
+        /// Serialized Name: MigrationSubstateDetails.validationDetails
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DatabaseMigrationState> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Substate of migration. </summary>
+        /// <summary>
+        /// Substate of migration.
+        /// Serialized Name: MigrationSubstateDetails.currentSubState
+        /// </summary>
         [WirePath("currentSubState")]
         public PostgreSqlMigrationSubState? CurrentSubState { get; }
-        /// <summary> Dictionary of &lt;DatabaseMigrationState&gt;. </summary>
+        /// <summary>
+        /// Dictionary of &lt;DatabaseMigrationState&gt;
+        /// Serialized Name: MigrationSubstateDetails.dbDetails
+        /// </summary>
         [WirePath("dbDetails")]
         public IReadOnlyDictionary<string, DatabaseMigrationState> DbDetails { get; }
-        /// <summary> Details for the validation for migration. </summary>
+        /// <summary>
+        /// Details for the validation for migration.
+        /// Serialized Name: MigrationSubstateDetails.validationDetails
+        /// </summary>
         [WirePath("validationDetails")]
         public PostgreSqlFlexibleServersValidationDetails ValidationDetails { get; }
     }

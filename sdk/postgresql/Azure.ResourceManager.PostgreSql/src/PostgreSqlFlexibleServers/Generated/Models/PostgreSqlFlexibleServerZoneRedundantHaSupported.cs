@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </summary>
+    /// <summary>
+    /// Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'.
+    /// Serialized Name: ZoneRedundantHighAvailabilitySupport
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaSupported : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaSupported>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ZoneRedundantHighAvailabilitySupport.Enabled
+        /// </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaSupported Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaSupported(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ZoneRedundantHighAvailabilitySupport.Disabled
+        /// </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaSupported Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaSupported(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaSupported"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantHaSupported left, PostgreSqlFlexibleServerZoneRedundantHaSupported right) => left.Equals(right);

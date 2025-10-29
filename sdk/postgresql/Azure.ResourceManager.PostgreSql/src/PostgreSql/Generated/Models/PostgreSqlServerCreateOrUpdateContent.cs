@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Represents a server to be created. </summary>
+    /// <summary>
+    /// Represents a server to be created.
+    /// Serialized Name: ServerForCreate
+    /// </summary>
     public partial class PostgreSqlServerCreateOrUpdateContent
     {
         /// <summary>
@@ -50,10 +53,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerCreateOrUpdateContent"/>. </summary>
         /// <param name="properties">
         /// Properties of the server.
+        /// Serialized Name: ServerForCreate.properties
         /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
         /// </param>
-        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="location">
+        /// The location the resource resides in.
+        /// Serialized Name: ServerForCreate.location
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public PostgreSqlServerCreateOrUpdateContent(PostgreSqlServerPropertiesForCreate properties, AzureLocation location)
         {
@@ -65,15 +72,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerCreateOrUpdateContent"/>. </summary>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
-        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Serialized Name: ServerForCreate.identity. Current supported identity types: SystemAssigned
+        /// </param>
+        /// <param name="sku">
+        /// The SKU (pricing tier) of the server.
+        /// Serialized Name: ServerForCreate.sku
+        /// </param>
         /// <param name="properties">
         /// Properties of the server.
+        /// Serialized Name: ServerForCreate.properties
         /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
         /// </param>
-        /// <param name="location"> The location the resource resides in. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="location">
+        /// The location the resource resides in.
+        /// Serialized Name: ServerForCreate.location
+        /// </param>
+        /// <param name="tags">
+        /// Application-specific metadata in the form of key-value pairs.
+        /// Serialized Name: ServerForCreate.tags
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerCreateOrUpdateContent(ManagedServiceIdentity identity, PostgreSqlSku sku, PostgreSqlServerPropertiesForCreate properties, AzureLocation location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,23 +110,36 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
         }
 
-        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// The Azure Active Directory identity of the server.
+        /// Serialized Name: ServerForCreate.identity. Current supported identity types: SystemAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The SKU (pricing tier) of the server. </summary>
+        /// <summary>
+        /// The SKU (pricing tier) of the server.
+        /// Serialized Name: ServerForCreate.sku
+        /// </summary>
         [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
         /// <summary>
         /// Properties of the server.
+        /// Serialized Name: ServerForCreate.properties
         /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
         /// </summary>
         [WirePath("properties")]
         public PostgreSqlServerPropertiesForCreate Properties { get; }
-        /// <summary> The location the resource resides in. </summary>
+        /// <summary>
+        /// The location the resource resides in.
+        /// Serialized Name: ServerForCreate.location
+        /// </summary>
         [WirePath("location")]
         public AzureLocation Location { get; }
-        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        /// <summary>
+        /// Application-specific metadata in the form of key-value pairs.
+        /// Serialized Name: ServerForCreate.tags
+        /// </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }

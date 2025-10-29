@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
+    /// <summary>
+    /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
+    /// Serialized Name: HighAvailabilityState
+    /// </summary>
     public readonly partial struct HighAvailabilityState : IEquatable<HighAvailabilityState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string HealthyValue = "Healthy";
         private const string RemovingStandbyValue = "RemovingStandby";
 
-        /// <summary> NotEnabled. </summary>
+        /// <summary>
+        /// NotEnabled
+        /// Serialized Name: HighAvailabilityState.NotEnabled
+        /// </summary>
         public static HighAvailabilityState NotEnabled { get; } = new HighAvailabilityState(NotEnabledValue);
-        /// <summary> CreatingStandby. </summary>
+        /// <summary>
+        /// CreatingStandby
+        /// Serialized Name: HighAvailabilityState.CreatingStandby
+        /// </summary>
         public static HighAvailabilityState CreatingStandby { get; } = new HighAvailabilityState(CreatingStandbyValue);
-        /// <summary> ReplicatingData. </summary>
+        /// <summary>
+        /// ReplicatingData
+        /// Serialized Name: HighAvailabilityState.ReplicatingData
+        /// </summary>
         public static HighAvailabilityState ReplicatingData { get; } = new HighAvailabilityState(ReplicatingDataValue);
-        /// <summary> FailingOver. </summary>
+        /// <summary>
+        /// FailingOver
+        /// Serialized Name: HighAvailabilityState.FailingOver
+        /// </summary>
         public static HighAvailabilityState FailingOver { get; } = new HighAvailabilityState(FailingOverValue);
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: HighAvailabilityState.Healthy
+        /// </summary>
         public static HighAvailabilityState Healthy { get; } = new HighAvailabilityState(HealthyValue);
-        /// <summary> RemovingStandby. </summary>
+        /// <summary>
+        /// RemovingStandby
+        /// Serialized Name: HighAvailabilityState.RemovingStandby
+        /// </summary>
         public static HighAvailabilityState RemovingStandby { get; } = new HighAvailabilityState(RemovingStandbyValue);
         /// <summary> Determines if two <see cref="HighAvailabilityState"/> values are the same. </summary>
         public static bool operator ==(HighAvailabilityState left, HighAvailabilityState right) => left.Equals(right);

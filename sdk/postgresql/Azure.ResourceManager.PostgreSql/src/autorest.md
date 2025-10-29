@@ -13,8 +13,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 batch:
   - tag: package-2020-01-01
@@ -260,7 +260,7 @@ rename-mapping:
   ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
   ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
   AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
-  ArmServerKeyType: PostgreSqlFlexibleServerKeyType
+  ServerKeyType: PostgreSqlFlexibleServerKeyType
   AuthConfig: PostgreSqlFlexibleServerAuthConfig
   DataEncryption: PostgreSqlFlexibleServerDataEncryption
   FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
@@ -316,7 +316,7 @@ rename-mapping:
   MigrationSubstateDetails: PostgreSqlMigrationSubStateDetails
   BackupRequestBase: PostgreSqlBackupContent
   AzureManagedDiskPerformanceTier: PostgreSqlManagedDiskPerformanceTier
-  LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
+  BackupsLongTermRetentionRequest: PostgreSqlFlexibleServerLtrBackupContent
   LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
   Migration: PostgreSqlMigration
   AdministratorMicrosoftEntra.properties.objectId: -|uuid

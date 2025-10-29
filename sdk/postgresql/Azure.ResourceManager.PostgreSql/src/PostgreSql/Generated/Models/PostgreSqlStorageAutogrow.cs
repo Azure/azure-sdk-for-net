@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Enable Storage Auto Grow. </summary>
+    /// <summary>
+    /// Enable Storage Auto Grow.
+    /// Serialized Name: StorageAutogrow
+    /// </summary>
     public readonly partial struct PostgreSqlStorageAutogrow : IEquatable<PostgreSqlStorageAutogrow>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: StorageAutogrow.Enabled
+        /// </summary>
         public static PostgreSqlStorageAutogrow Enabled { get; } = new PostgreSqlStorageAutogrow(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: StorageAutogrow.Disabled
+        /// </summary>
         public static PostgreSqlStorageAutogrow Disabled { get; } = new PostgreSqlStorageAutogrow(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlStorageAutogrow"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlStorageAutogrow left, PostgreSqlStorageAutogrow right) => left.Equals(right);

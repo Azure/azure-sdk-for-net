@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Add a second layer of encryption for your data using new encryption algorithm which gives additional data protection. Value is optional but if passed in, must be 'Disabled' or 'Enabled'. </summary>
+    /// <summary>
+    /// Add a second layer of encryption for your data using new encryption algorithm which gives additional data protection. Value is optional but if passed in, must be 'Disabled' or 'Enabled'.
+    /// Serialized Name: InfrastructureEncryption
+    /// </summary>
     public readonly partial struct PostgreSqlInfrastructureEncryption : IEquatable<PostgreSqlInfrastructureEncryption>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Default value for single layer of encryption for data at rest. </summary>
+        /// <summary>
+        /// Default value for single layer of encryption for data at rest.
+        /// Serialized Name: InfrastructureEncryption.Enabled
+        /// </summary>
         public static PostgreSqlInfrastructureEncryption Enabled { get; } = new PostgreSqlInfrastructureEncryption(EnabledValue);
-        /// <summary> Additional (2nd) layer of encryption for data at rest. </summary>
+        /// <summary>
+        /// Additional (2nd) layer of encryption for data at rest
+        /// Serialized Name: InfrastructureEncryption.Disabled
+        /// </summary>
         public static PostgreSqlInfrastructureEncryption Disabled { get; } = new PostgreSqlInfrastructureEncryption(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlInfrastructureEncryption"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlInfrastructureEncryption left, PostgreSqlInfrastructureEncryption right) => left.Equals(right);

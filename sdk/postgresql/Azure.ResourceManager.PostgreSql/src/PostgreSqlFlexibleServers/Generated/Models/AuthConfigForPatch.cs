@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Authentication configuration properties of a server. </summary>
+    /// <summary>
+    /// Authentication configuration properties of a server.
+    /// Serialized Name: AuthConfigForPatch
+    /// </summary>
     public partial class AuthConfigForPatch
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthConfigForPatch"/>. </summary>
-        /// <param name="activeDirectoryAuth"> Indicates if the server supports Microsoft Entra authentication. </param>
-        /// <param name="passwordAuth"> Indicates if the server supports password based authentication. </param>
-        /// <param name="tenantId"> Identifier of the tenant of the delegated resource. </param>
+        /// <param name="activeDirectoryAuth">
+        /// Indicates if the server supports Microsoft Entra authentication.
+        /// Serialized Name: AuthConfigForPatch.activeDirectoryAuth
+        /// </param>
+        /// <param name="passwordAuth">
+        /// Indicates if the server supports password based authentication.
+        /// Serialized Name: AuthConfigForPatch.passwordAuth
+        /// </param>
+        /// <param name="tenantId">
+        /// Identifier of the tenant of the delegated resource.
+        /// Serialized Name: AuthConfigForPatch.tenantId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AuthConfigForPatch(MicrosoftEntraAuth? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
+        /// <summary>
+        /// Indicates if the server supports Microsoft Entra authentication.
+        /// Serialized Name: AuthConfigForPatch.activeDirectoryAuth
+        /// </summary>
         [WirePath("activeDirectoryAuth")]
         public MicrosoftEntraAuth? ActiveDirectoryAuth { get; set; }
-        /// <summary> Indicates if the server supports password based authentication. </summary>
+        /// <summary>
+        /// Indicates if the server supports password based authentication.
+        /// Serialized Name: AuthConfigForPatch.passwordAuth
+        /// </summary>
         [WirePath("passwordAuth")]
         public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
-        /// <summary> Identifier of the tenant of the delegated resource. </summary>
+        /// <summary>
+        /// Identifier of the tenant of the delegated resource.
+        /// Serialized Name: AuthConfigForPatch.tenantId
+        /// </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }

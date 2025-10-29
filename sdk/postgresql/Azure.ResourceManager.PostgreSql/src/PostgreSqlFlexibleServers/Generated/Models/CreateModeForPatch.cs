@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Update mode of an existing server. </summary>
+    /// <summary>
+    /// Update mode of an existing server.
+    /// Serialized Name: CreateModeForPatch
+    /// </summary>
     public readonly partial struct CreateModeForPatch : IEquatable<CreateModeForPatch>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string DefaultValue = "Default";
         private const string UpdateValue = "Update";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: CreateModeForPatch.Default
+        /// </summary>
         public static CreateModeForPatch Default { get; } = new CreateModeForPatch(DefaultValue);
-        /// <summary> Update. </summary>
+        /// <summary>
+        /// Update
+        /// Serialized Name: CreateModeForPatch.Update
+        /// </summary>
         public static CreateModeForPatch Update { get; } = new CreateModeForPatch(UpdateValue);
         /// <summary> Determines if two <see cref="CreateModeForPatch"/> values are the same. </summary>
         public static bool operator ==(CreateModeForPatch left, CreateModeForPatch right) => left.Equals(right);

@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
-            BackupsLongTermRetentionContent content = new BackupsLongTermRetentionContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
+            PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
             ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> lro = await postgreSqlFlexibleServer.StartBackupsLongTermRetentionAsync(WaitUntil.Completed, content);
             PostgreSqlFlexibleServerLtrBackupResult result = lro.Value;
 

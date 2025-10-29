@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if data migration must start right away. </summary>
+    /// <summary>
+    /// Indicates if data migration must start right away.
+    /// Serialized Name: StartDataMigration
+    /// </summary>
     public readonly partial struct PostgreSqlMigrationStartDataMigration : IEquatable<PostgreSqlMigrationStartDataMigration>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary>
+        /// True
+        /// Serialized Name: StartDataMigration.True
+        /// </summary>
         public static PostgreSqlMigrationStartDataMigration True { get; } = new PostgreSqlMigrationStartDataMigration(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary>
+        /// False
+        /// Serialized Name: StartDataMigration.False
+        /// </summary>
         public static PostgreSqlMigrationStartDataMigration False { get; } = new PostgreSqlMigrationStartDataMigration(FalseValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationStartDataMigration"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationStartDataMigration left, PostgreSqlMigrationStartDataMigration right) => left.Equals(right);

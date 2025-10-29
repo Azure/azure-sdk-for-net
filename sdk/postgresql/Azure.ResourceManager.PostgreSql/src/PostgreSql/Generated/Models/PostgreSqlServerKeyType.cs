@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> The key type like 'AzureKeyVault'. </summary>
+    /// <summary>
+    /// The key type like 'AzureKeyVault'.
+    /// Serialized Name: ServerKeyType
+    /// </summary>
     public readonly partial struct PostgreSqlServerKeyType : IEquatable<PostgreSqlServerKeyType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         private const string AzureKeyVaultValue = "AzureKeyVault";
 
-        /// <summary> AzureKeyVault. </summary>
+        /// <summary>
+        /// AzureKeyVault
+        /// Serialized Name: ServerKeyType.AzureKeyVault
+        /// </summary>
         public static PostgreSqlServerKeyType AzureKeyVault { get; } = new PostgreSqlServerKeyType(AzureKeyVaultValue);
         /// <summary> Determines if two <see cref="PostgreSqlServerKeyType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlServerKeyType left, PostgreSqlServerKeyType right) => left.Equals(right);

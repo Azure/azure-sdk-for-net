@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
+    /// <summary>
+    /// Indicates if the server is configured to create geographically redundant backups.
+    /// Serialized Name: GeographicallyRedundantBackup
+    /// </summary>
     public readonly partial struct GeographicallyRedundantBackup : IEquatable<GeographicallyRedundantBackup>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: GeographicallyRedundantBackup.Enabled
+        /// </summary>
         public static GeographicallyRedundantBackup Enabled { get; } = new GeographicallyRedundantBackup(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: GeographicallyRedundantBackup.Disabled
+        /// </summary>
         public static GeographicallyRedundantBackup Disabled { get; } = new GeographicallyRedundantBackup(DisabledValue);
         /// <summary> Determines if two <see cref="GeographicallyRedundantBackup"/> values are the same. </summary>
         public static bool operator ==(GeographicallyRedundantBackup left, GeographicallyRedundantBackup right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if storage autogrow is supported in this location. 'Enabled' means storage autogrow is supported. 'Disabled' stands for storage autogrow is not supported. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'. </summary>
+    /// <summary>
+    /// Indicates if storage autogrow is supported in this location. 'Enabled' means storage autogrow is supported. 'Disabled' stands for storage autogrow is not supported. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'.
+    /// Serialized Name: StorageAutoGrowthSupport
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerStorageAutoGrowthSupported : IEquatable<PostgreSqlFlexibleServerStorageAutoGrowthSupported>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: StorageAutoGrowthSupport.Enabled
+        /// </summary>
         public static PostgreSqlFlexibleServerStorageAutoGrowthSupported Enabled { get; } = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: StorageAutoGrowthSupport.Disabled
+        /// </summary>
         public static PostgreSqlFlexibleServerStorageAutoGrowthSupported Disabled { get; } = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerStorageAutoGrowthSupported left, PostgreSqlFlexibleServerStorageAutoGrowthSupported right) => left.Equals(right);

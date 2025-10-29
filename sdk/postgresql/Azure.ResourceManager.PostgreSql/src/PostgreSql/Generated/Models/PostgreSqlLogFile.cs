@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Represents a log file. </summary>
+    /// <summary>
+    /// Represents a log file.
+    /// Serialized Name: LogFile
+    /// </summary>
     public partial class PostgreSqlLogFile : ResourceData
     {
         /// <summary>
@@ -57,11 +60,26 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sizeInKB"> Size of the log file. </param>
-        /// <param name="createdOn"> Creation timestamp of the log file. </param>
-        /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
-        /// <param name="logFileType"> Type of the log file. </param>
-        /// <param name="uri"> The url to download the log file from. </param>
+        /// <param name="sizeInKB">
+        /// Size of the log file.
+        /// Serialized Name: LogFile.properties.sizeInKB
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation timestamp of the log file.
+        /// Serialized Name: LogFile.properties.createdTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Last modified timestamp of the log file.
+        /// Serialized Name: LogFile.properties.lastModifiedTime
+        /// </param>
+        /// <param name="logFileType">
+        /// Type of the log file.
+        /// Serialized Name: LogFile.properties.type
+        /// </param>
+        /// <param name="uri">
+        /// The url to download the log file from.
+        /// Serialized Name: LogFile.properties.url
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string logFileType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,19 +91,34 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Size of the log file. </summary>
+        /// <summary>
+        /// Size of the log file.
+        /// Serialized Name: LogFile.properties.sizeInKB
+        /// </summary>
         [WirePath("properties.sizeInKB")]
         public long? SizeInKB { get; set; }
-        /// <summary> Creation timestamp of the log file. </summary>
+        /// <summary>
+        /// Creation timestamp of the log file.
+        /// Serialized Name: LogFile.properties.createdTime
+        /// </summary>
         [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Last modified timestamp of the log file. </summary>
+        /// <summary>
+        /// Last modified timestamp of the log file.
+        /// Serialized Name: LogFile.properties.lastModifiedTime
+        /// </summary>
         [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Type of the log file. </summary>
+        /// <summary>
+        /// Type of the log file.
+        /// Serialized Name: LogFile.properties.type
+        /// </summary>
         [WirePath("properties.type")]
         public string LogFileType { get; set; }
-        /// <summary> The url to download the log file from. </summary>
+        /// <summary>
+        /// The url to download the log file from.
+        /// Serialized Name: LogFile.properties.url
+        /// </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
     }

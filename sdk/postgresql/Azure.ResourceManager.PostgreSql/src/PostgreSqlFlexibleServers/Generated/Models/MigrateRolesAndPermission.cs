@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if roles and permissions must be migrated. </summary>
+    /// <summary>
+    /// Indicates if roles and permissions must be migrated.
+    /// Serialized Name: MigrateRolesAndPermissions
+    /// </summary>
     public readonly partial struct MigrateRolesAndPermission : IEquatable<MigrateRolesAndPermission>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary>
+        /// True
+        /// Serialized Name: MigrateRolesAndPermissions.True
+        /// </summary>
         public static MigrateRolesAndPermission True { get; } = new MigrateRolesAndPermission(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary>
+        /// False
+        /// Serialized Name: MigrateRolesAndPermissions.False
+        /// </summary>
         public static MigrateRolesAndPermission False { get; } = new MigrateRolesAndPermission(FalseValue);
         /// <summary> Determines if two <see cref="MigrateRolesAndPermission"/> values are the same. </summary>
         public static bool operator ==(MigrateRolesAndPermission left, MigrateRolesAndPermission right) => left.Equals(right);

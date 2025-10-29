@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The check availability request body. </summary>
+    /// <summary>
+    /// The check availability request body.
+    /// Serialized Name: CheckNameAvailabilityRequest
+    /// </summary>
     public partial class PostgreSqlFlexibleServerNameAvailabilityContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="name">
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlFlexibleServerNameAvailabilityContent(string name)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="name">
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type.
+        /// Serialized Name: CheckNameAvailabilityRequest.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,10 +84,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        /// <summary>
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The resource type. </summary>
+        /// <summary>
+        /// The resource type.
+        /// Serialized Name: CheckNameAvailabilityRequest.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }

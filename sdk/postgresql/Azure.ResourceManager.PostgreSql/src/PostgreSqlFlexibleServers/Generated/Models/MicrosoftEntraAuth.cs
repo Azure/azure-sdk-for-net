@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
+    /// <summary>
+    /// Indicates if the server supports Microsoft Entra authentication.
+    /// Serialized Name: MicrosoftEntraAuth
+    /// </summary>
     public readonly partial struct MicrosoftEntraAuth : IEquatable<MicrosoftEntraAuth>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: MicrosoftEntraAuth.Enabled
+        /// </summary>
         public static MicrosoftEntraAuth Enabled { get; } = new MicrosoftEntraAuth(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: MicrosoftEntraAuth.Disabled
+        /// </summary>
         public static MicrosoftEntraAuth Disabled { get; } = new MicrosoftEntraAuth(DisabledValue);
         /// <summary> Determines if two <see cref="MicrosoftEntraAuth"/> values are the same. </summary>
         public static bool operator ==(MicrosoftEntraAuth left, MicrosoftEntraAuth right) => left.Equals(right);
