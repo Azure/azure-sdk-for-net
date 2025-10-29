@@ -498,9 +498,9 @@ namespace Azure.Identity
     {
         public WorkloadIdentityCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public bool AzureKubernetesTokenProxy { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public bool IsAzureKubernetesTokenProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
     }

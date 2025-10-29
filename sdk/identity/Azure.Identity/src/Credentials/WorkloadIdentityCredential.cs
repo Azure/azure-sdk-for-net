@@ -48,7 +48,7 @@ namespace Azure.Identity
                 clientAssertionCredentialOptions.MsalClient = options.MsalClient;
 
                 // Configure Kubernetes token proxy if user opted in
-                if (options.AzureKubernetesTokenProxy)
+                if (options.IsAzureKubernetesTokenProxyEnabled)
                 {
                     var proxyConfig = KubernetesProxyConfig.TryCreate();
                     if (proxyConfig != null)

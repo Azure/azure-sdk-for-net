@@ -89,7 +89,7 @@ namespace Azure.Identity.Tests
                 TenantId = TestEnvironment.ServicePrincipalTenantId,
                 ClientId = TestEnvironment.ServicePrincipalClientId,
                 TokenFilePath = _tempFiles.GetTempFilePath(),
-                AzureKubernetesTokenProxy = true // Enable proxy support
+                IsAzureKubernetesTokenProxyEnabled = true // Enable proxy support
             };
 
             var certificatePath = TestEnvironment.ServicePrincipalCertificatePfxPath;
@@ -143,7 +143,7 @@ namespace Azure.Identity.Tests
                 TenantId = TestEnvironment.ServicePrincipalTenantId,
                 ClientId = TestEnvironment.ServicePrincipalClientId,
                 TokenFilePath = _tempFiles.GetTempFilePath(),
-                AzureKubernetesTokenProxy = true // Enable proxy support
+                IsAzureKubernetesTokenProxyEnabled = true // Enable proxy support
             };
 
             var certificatePath = TestEnvironment.ServicePrincipalCertificatePfxPath;
@@ -199,7 +199,7 @@ namespace Azure.Identity.Tests
                 TenantId = TestEnvironment.ServicePrincipalTenantId,
                 ClientId = TestEnvironment.ServicePrincipalClientId,
                 TokenFilePath = _tempFiles.GetTempFilePath(),
-                AzureKubernetesTokenProxy = true // Enable proxy support
+                IsAzureKubernetesTokenProxyEnabled = true // Enable proxy support
             };
 
             var certificatePath = TestEnvironment.ServicePrincipalCertificatePfxPath;
