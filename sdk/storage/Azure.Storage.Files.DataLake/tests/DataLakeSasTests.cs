@@ -490,7 +490,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileClient identitySasFile = InstrumentClient(new DataLakeFileClient(dataLakeUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
 
-            // Act
+            // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasFile.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));

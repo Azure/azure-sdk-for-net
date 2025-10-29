@@ -285,7 +285,7 @@ namespace Azure.Storage.Queues.Test
 
             QueueClient identityQueueClient = InstrumentClient(new QueueClient(uriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
 
-            // Act
+            // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identityQueueClient.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));

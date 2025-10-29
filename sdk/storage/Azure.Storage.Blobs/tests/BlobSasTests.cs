@@ -390,7 +390,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
 
-            // Act
+            // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasBlob.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));

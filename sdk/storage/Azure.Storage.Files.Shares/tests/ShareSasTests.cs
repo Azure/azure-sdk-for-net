@@ -1083,7 +1083,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
 
-            // Act
+            // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sasShare.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
