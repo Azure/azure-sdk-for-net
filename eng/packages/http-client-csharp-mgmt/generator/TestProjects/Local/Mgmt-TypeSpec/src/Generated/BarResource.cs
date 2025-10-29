@@ -111,7 +111,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bars_delete. </description>
+        /// <description> Bars_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -160,7 +160,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bars_delete. </description>
+        /// <description> Bars_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -209,7 +209,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bars_get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +257,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bars_get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -305,7 +305,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bars_update. </description>
+        /// <description> Bars_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -357,7 +357,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bars_update. </description>
+        /// <description> Bars_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

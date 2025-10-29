@@ -129,7 +129,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     // Take the last two parts: ResourceClient and OperationName
                     var resourceOrClientName = parts[^2];  // Second to last
                     var methodName = parts[^1];            // Last
-                    operationId = $"{resourceOrClientName}_{methodName}";
+                    operationId = $"{resourceOrClientName}_{methodName.FirstCharToUpperCase()}";
                 }
             }
             listItems.Add(new XmlDocStatement("item", [],
