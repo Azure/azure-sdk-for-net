@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -87,6 +88,21 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+        }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="clientConnection"></param>
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public ArmClient(ClientConnection clientConnection)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+            : this((TokenCredential)clientConnection.Credential, clientConnection.Configuration["DefaultSubscriptionId"], ArmClientOptions.Create(clientConnection))
+        {
+            if (clientConnection.Configuration is not null)
+            {
+                RegisterConfigReload(clientConnection.Configuration);
+            }
         }
 
         internal void RegisterConfigReload(IConfiguration configuration)

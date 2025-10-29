@@ -10,6 +10,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public readonly struct ClientConnection
 {
+    private static readonly HashSet<string> s_firstClassProperties = ["CredentialSource", "Key", "KEY", "Endpoint"];
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with a token credential.
     /// </summary>
@@ -17,7 +19,7 @@ public readonly struct ClientConnection
     /// <param name="locator">The endpoint or resource identifier.</param>
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client.</param>
-    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind): this(id: id, locator: locator, credentialKind: credentialKind, credential: credential, metadata: null)
+    public ClientConnection(string id, string? locator, object credential, CredentialKind credentialKind): this(id: id, locator: locator, credentialKind: credentialKind, credential: credential, metadata: null)
     {}
 
     /// <summary>
@@ -25,7 +27,7 @@ public readonly struct ClientConnection
     /// </summary>
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
-    public ClientConnection(string id, string locator) : this(id: id, locator: locator, credentialKind: CredentialKind.None, credential: null, metadata: null)
+    public ClientConnection(string id, string? locator) : this(id: id, locator: locator, credentialKind: CredentialKind.None, credential: null, metadata: null)
     {}
 
     /// <summary>
@@ -35,7 +37,7 @@ public readonly struct ClientConnection
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
     /// <param name="credentialKind">The kind of connection used by the client</param>
-    internal ClientConnection(string id, string locator, CredentialKind credentialKind)
+    internal ClientConnection(string id, string? locator, CredentialKind credentialKind)
     {
         Id = id;
         Locator = locator;
@@ -52,8 +54,8 @@ public readonly struct ClientConnection
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client</param>
     /// <param name="metadata">The connection metadata.</param>
-    public ClientConnection(string id, string locator, object? credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
-        : this(id, locator, credential, credentialKind, metadata, configurationSection: null)
+    public ClientConnection(string id, string? locator, object? credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata)
+        : this(id, locator, credential, credentialKind, [], null)
     {
     }
 
@@ -65,28 +67,24 @@ public readonly struct ClientConnection
     /// <param name="locator">The endpoint or resource identifier.</param>
     /// <param name="credential">The client credential.</param>
     /// <param name="credentialKind">The kind of connection used by the client</param>
-    /// <param name="metadata">The connection metadata.</param>
     /// <param name="configurationSection">The <see cref="IConfigurationSection"/> used to construct this instance.</param>
-    public ClientConnection(string id, string locator, object? credential, CredentialKind credentialKind, IReadOnlyDictionary<string, string>? metadata, IConfigurationSection? configurationSection)
+    public ClientConnection(string id, string? locator, object? credential, CredentialKind credentialKind, IConfigurationSection configurationSection)
+        : this(id, locator, credential, credentialKind, GetMetadataDictionary(configurationSection), configurationSection)
+    {
+    }
+
+    private ClientConnection(string id, string? locator, object? credential, CredentialKind credentialKind, Dictionary<string, string> metadata, IConfigurationSection? configurationSection)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
         }
-        if (string.IsNullOrWhiteSpace(locator))
-        {
-            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-        }
         if (credential is null && credentialKind != CredentialKind.None)
         {
             throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
         }
-        if (metadata is null)
-        {
-            Metadata = new Dictionary<string, string>();
-        }
-        else
-            Metadata = metadata;
+
+        Metadata = metadata;
         Id = id;
         Locator = locator;
         Credential = credential;
@@ -102,7 +100,7 @@ public readonly struct ClientConnection
     /// <summary>
     /// This is either URI, name, or something similar.
     /// </summary>
-    public string Locator { get; }
+    public string? Locator { get; }
 
     /// <summary>
     /// Gets the credential.
@@ -137,4 +135,21 @@ public readonly struct ClientConnection
 
     /// <summary> Metadata of the connection. </summary>
     public IReadOnlyDictionary<string, string> Metadata { get; }
+
+    internal static Dictionary<string, string> GetMetadataDictionary(IConfigurationSection? section)
+    {
+        Dictionary<string, string> metadata = [];
+        if (section is null)
+            return metadata;
+
+        foreach (var child in section.GetChildren())
+        {
+            if (!s_firstClassProperties.Contains(child.Key) && !string.IsNullOrEmpty(child.Value))
+            {
+                metadata ??= new Dictionary<string, string>();
+                metadata[child.Key] = child.Value!;
+            }
+        }
+        return metadata;
+    }
 }

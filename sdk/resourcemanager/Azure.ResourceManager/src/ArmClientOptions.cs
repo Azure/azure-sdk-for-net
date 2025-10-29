@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.ResourceManager
 {
@@ -76,6 +77,19 @@ namespace Azure.ResourceManager
                     }
                 }
             }
+        }
+
+        internal static ArmClientOptions Create(ClientConnection clientConnection)
+        {
+            ArmClientOptions options = new();
+            if (clientConnection.Configuration is not null)
+            {
+                if (clientConnection.Configuration.GetSection("Environment").Exists())
+                {
+                    options.Environment = new ArmEnvironment(new Uri(clientConnection.Configuration["Environment:Endpoint"]), clientConnection.Configuration["Environment:Audience"]);
+                }
+            }
+            return options;
         }
     }
 }

@@ -11,8 +11,6 @@ namespace System.ClientModel;
 /// </summary>
 public static class ConfigurationManagerExtensions
 {
-    private static readonly HashSet<string> FirstClassProperties = new() { "CredentialSource", "Key", "KEY", "Endpoint" };
-
     /// <summary>
     /// .
     /// </summary>
@@ -30,16 +28,7 @@ public static class ConfigurationManagerExtensions
     public static ClientConnection GetConnection(this IConfigurationSection section)
     {
         var credential = CreateCredentials(section);
-        Dictionary<string, string>? metadata = null;
-        foreach (var child in section.GetChildren())
-        {
-            if (!FirstClassProperties.Contains(child.Key) && !string.IsNullOrEmpty(child.Value))
-            {
-                metadata ??= new Dictionary<string, string>();
-                metadata[child.Key] = child.Value!;
-            }
-        }
-        return new ClientConnection(section.Key, section["Endpoint"] ?? "$auto", credential.Credential, credential.Kind, metadata, section);
+        return new ClientConnection(section.Key, section["Endpoint"], credential.Credential, credential.Kind, section);
     }
 
     internal static (object? Credential, CredentialKind Kind) CreateCredentials(IConfigurationSection section)
