@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             return GetCachedClient(client => new AgricultureServiceCollection(client, Id));
         }
 
-        /// <summary> Get a AgriServiceResource. </summary>
+        /// <summary>
+        /// Get a AgriServiceResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             return await GetAgricultureServices().GetAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a AgriServiceResource. </summary>
+        /// <summary>
+        /// Get a AgriServiceResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
