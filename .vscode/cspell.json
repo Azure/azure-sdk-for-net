@@ -1228,6 +1228,13 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/Azure.Provisioning.Dns/**/*.cs",
+      "words": [
+        "naptr",
+        "tlsa"
+      ]
+    },
+    {
       "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
       "words": [
         "apacheavro",
