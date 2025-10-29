@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: CapturedLogList.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CapturedLogList(IEnumerable<CapturedLog> value)
+        internal CapturedLogList(IEnumerable<PostgreSqlFlexibleServerLogFile> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: CapturedLogList.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapturedLogList(IReadOnlyList<CapturedLog> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapturedLogList(IReadOnlyList<PostgreSqlFlexibleServerLogFile> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// The CapturedLog items on this page
         /// Serialized Name: CapturedLogList.value
         /// </summary>
-        public IReadOnlyList<CapturedLog> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerLogFile> Value { get; }
         /// <summary>
         /// The link to the next page of items
         /// Serialized Name: CapturedLogList.nextLink

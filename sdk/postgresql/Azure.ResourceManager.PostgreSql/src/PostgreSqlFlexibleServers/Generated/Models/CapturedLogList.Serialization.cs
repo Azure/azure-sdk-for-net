@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<CapturedLog> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerLogFile> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CapturedLog> array = new List<CapturedLog>();
+                    List<PostgreSqlFlexibleServerLogFile> array = new List<PostgreSqlFlexibleServerLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapturedLog.DeserializeCapturedLog(item, options));
+                        array.Add(PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(item, options));
                     }
                     value = array;
                     continue;

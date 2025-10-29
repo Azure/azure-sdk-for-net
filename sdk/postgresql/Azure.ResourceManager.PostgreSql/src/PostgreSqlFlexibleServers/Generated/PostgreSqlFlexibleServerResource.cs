@@ -1593,12 +1593,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapturedLog"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapturedLog> GetCapturedLogsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerLogFile> GetCapturedLogsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capturedLogsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capturedLogsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CapturedLog.DeserializeCapturedLog(e), _capturedLogsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapturedLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _capturedLogsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapturedLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1619,12 +1619,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapturedLog"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapturedLog> GetCapturedLogs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerLogFile> GetCapturedLogs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capturedLogsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capturedLogsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CapturedLog.DeserializeCapturedLog(e), _capturedLogsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapturedLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _capturedLogsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapturedLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

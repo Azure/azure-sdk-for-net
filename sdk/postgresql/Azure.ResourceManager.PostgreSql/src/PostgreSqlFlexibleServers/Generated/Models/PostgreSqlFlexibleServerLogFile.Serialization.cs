@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class CapturedLog : IUtf8JsonSerializable, IJsonModel<CapturedLog>
+    public partial class PostgreSqlFlexibleServerLogFile : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerLogFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapturedLog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerLogFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CapturedLog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServerLogFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapturedLog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapturedLog)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLogFile)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteEndObject();
         }
 
-        CapturedLog IJsonModel<CapturedLog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerLogFile IJsonModel<PostgreSqlFlexibleServerLogFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapturedLog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapturedLog)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLogFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapturedLog(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServerLogFile(document.RootElement, options);
         }
 
-        internal static CapturedLog DeserializeCapturedLog(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServerLogFile DeserializePostgreSqlFlexibleServerLogFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CapturedLog(
+            return new PostgreSqlFlexibleServerLogFile(
                 id,
                 name,
                 type,
@@ -352,9 +352,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<CapturedLog>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerLogFile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapturedLog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -363,26 +363,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CapturedLog)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLogFile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CapturedLog IPersistableModel<CapturedLog>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServerLogFile IPersistableModel<PostgreSqlFlexibleServerLogFile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapturedLog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLogFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCapturedLog(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServerLogFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapturedLog)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLogFile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CapturedLog>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServerLogFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

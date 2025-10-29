@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// Log file.
     /// Serialized Name: CapturedLog
     /// </summary>
-    public partial class CapturedLog : ResourceData
+    public partial class PostgreSqlFlexibleServerLogFile : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CapturedLog"/>. </summary>
-        public CapturedLog()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
+        public PostgreSqlFlexibleServerLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapturedLog"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: CapturedLog.properties.url
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapturedLog(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PostgreSqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;

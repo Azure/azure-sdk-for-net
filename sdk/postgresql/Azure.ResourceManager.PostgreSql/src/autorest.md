@@ -217,7 +217,7 @@ rename-mapping:
   CreateModeForUpdate: PostgreSqlFlexibleServerCreateModeForUpdate
   FailoverMode: PostgreSqlFlexibleServerFailoverMode
   FlexibleServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
-  GeoRedundantBackupEnum: PostgreSqlFlexibleServerGeoRedundantBackupEnum
+  GeographicallyRedundantBackup: PostgreSqlFlexibleServerGeoRedundantBackupEnum
   Database: PostgreSqlFlexibleServerDatabase
   FirewallRule: PostgreSqlFlexibleServerFirewallRule
   Server: PostgreSqlFlexibleServer
@@ -253,14 +253,14 @@ rename-mapping:
   StorageMbCapability.storageSizeMb: StorageSizeInMB
   StorageMbCapability: PostgreSqlFlexibleServerStorageCapability
   RestartParameter: PostgreSqlFlexibleServerRestartParameter
-  ServerHAState: PostgreSqlFlexibleServerHAState
+  HighAvailabilityState: PostgreSqlFlexibleServerHAState
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
   ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
   ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
   AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
-  ServerKeyType: PostgreSqlFlexibleServerKeyType
+  DataEncryptionType: PostgreSqlFlexibleServerKeyType
   AuthConfig: PostgreSqlFlexibleServerAuthConfig
   DataEncryption: PostgreSqlFlexibleServerDataEncryption
   FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
@@ -285,10 +285,10 @@ rename-mapping:
   FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupported
   FlexibleServerCapability.fastProvisioningSupported: SupportFastProvisioning
   FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
-  LogFile: PostgreSqlFlexibleServerLogFile
+  CapturedLog: PostgreSqlFlexibleServerLogFile
   LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
   GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupported
-  HaMode: PostgreSqlFlexibleServerHAMode
+  PostgreSqlFlexibleServerHighAvailabilityMode: PostgreSqlFlexibleServerHAMode
   ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
   ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
   StorageAutoGrowthSupport: PostgreSqlFlexibleServerStorageAutoGrowthSupported

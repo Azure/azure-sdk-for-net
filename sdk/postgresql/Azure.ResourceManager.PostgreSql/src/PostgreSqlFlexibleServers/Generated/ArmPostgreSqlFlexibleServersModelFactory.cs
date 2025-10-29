@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups.
         /// Serialized Name: DataEncryption.geoBackupUserAssignedIdentityId
         /// </param>
-        /// <param name="dataEncryptionType">
+        /// <param name="keyType">
         /// Data encryption type used by a server.
         /// Serialized Name: DataEncryption.type
         /// </param>
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: DataEncryption.geoBackupEncryptionKeyStatus
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDataEncryption"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerDataEncryption PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri geoBackupKeyUri = null, string geoBackupUserAssignedIdentityId = null, DataEncryptionType? dataEncryptionType = null, PostgreSqlKeyStatus? primaryEncryptionKeyStatus = null, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = null)
+        public static PostgreSqlFlexibleServerDataEncryption PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri geoBackupKeyUri = null, string geoBackupUserAssignedIdentityId = null, PostgreSqlFlexibleServerKeyType? keyType = null, PostgreSqlKeyStatus? primaryEncryptionKeyStatus = null, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = null)
         {
             return new PostgreSqlFlexibleServerDataEncryption(
                 primaryKeyUri,
                 primaryUserAssignedIdentityId,
                 geoBackupKeyUri,
                 geoBackupUserAssignedIdentityId,
-                dataEncryptionType,
+                keyType,
                 primaryEncryptionKeyStatus,
                 geoBackupEncryptionKeyStatus,
                 serializedAdditionalRawData: null);
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: HighAvailability.standbyAvailabilityZone
         /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, HighAvailabilityState? state = null, string standbyAvailabilityZone = null)
+        public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHAMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
         {
             return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, serializedAdditionalRawData: null);
         }
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// Serialized Name: HighAvailabilityForPatch.standbyAvailabilityZone
         /// </param>
         /// <returns> A new <see cref="Models.HighAvailabilityForPatch"/> instance for mocking. </returns>
-        public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, HighAvailabilityState? state = null, string standbyAvailabilityZone = null)
+        public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHAMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
         {
             return new HighAvailabilityForPatch(mode, state, standbyAvailabilityZone, serializedAdditionalRawData: null);
         }
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CapturedLog"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1373,10 +1373,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// URL to download the log file from.
         /// Serialized Name: CapturedLog.properties.url
         /// </param>
-        /// <returns> A new <see cref="Models.CapturedLog"/> instance for mocking. </returns>
-        public static CapturedLog CapturedLog(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
         {
-            return new CapturedLog(
+            return new PostgreSqlFlexibleServerLogFile(
                 id,
                 name,
                 resourceType,

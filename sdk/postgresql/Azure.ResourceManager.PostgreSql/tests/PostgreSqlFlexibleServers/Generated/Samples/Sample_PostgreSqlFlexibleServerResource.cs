@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 CreateMode = CreateModeForPatch.Update,
             };
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 CreateMode = CreateModeForPatch.Update,
             };
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CapturedLog item in postgreSqlFlexibleServer.GetCapturedLogsAsync())
+            await foreach (PostgreSqlFlexibleServerLogFile item in postgreSqlFlexibleServer.GetCapturedLogsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

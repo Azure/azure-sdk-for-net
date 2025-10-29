@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled,
+                    Mode = PostgreSqlFlexibleServerHAMode.Disabled,
                 },
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 Cluster = new Cluster
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
+                    Mode = PostgreSqlFlexibleServerHAMode.ZoneRedundant,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.SameZone,
+                    Mode = PostgreSqlFlexibleServerHAMode.SameZone,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/examplesourceserver"),
                 PointInTimeUtc = DateTimeOffset.Parse("2025-06-01T18:35:22.123456Z"),
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/examplesourceserver"),
                 PointInTimeUtc = DateTimeOffset.Parse("2025-06-01T18:35:22.123456Z"),
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
-                    DataEncryptionType = DataEncryptionType.SystemManaged,
+                    KeyType = PostgreSqlFlexibleServerKeyType.SystemManaged,
                 },
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled,
+                    Mode = PostgreSqlFlexibleServerHAMode.Disabled,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri(""),
                     GeoBackupUserAssignedIdentityId = "",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
+                    Mode = PostgreSqlFlexibleServerHAMode.ZoneRedundant,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri(""),
                     GeoBackupUserAssignedIdentityId = "",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
+                    Mode = PostgreSqlFlexibleServerHAMode.ZoneRedundant,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri(""),
                     GeoBackupUserAssignedIdentityId = "",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/examplesourceserver"),
                 PointInTimeUtc = DateTimeOffset.Parse("2025-06-01T18:35:22.123456Z"),

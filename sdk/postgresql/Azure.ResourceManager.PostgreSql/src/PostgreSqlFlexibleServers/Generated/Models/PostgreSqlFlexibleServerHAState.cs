@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
     /// Serialized Name: HighAvailabilityState
     /// </summary>
-    public readonly partial struct HighAvailabilityState : IEquatable<HighAvailabilityState>
+    public readonly partial struct PostgreSqlFlexibleServerHAState : IEquatable<PostgreSqlFlexibleServerHAState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="HighAvailabilityState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HighAvailabilityState(string value)
+        public PostgreSqlFlexibleServerHAState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -36,44 +36,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// NotEnabled
         /// Serialized Name: HighAvailabilityState.NotEnabled
         /// </summary>
-        public static HighAvailabilityState NotEnabled { get; } = new HighAvailabilityState(NotEnabledValue);
+        public static PostgreSqlFlexibleServerHAState NotEnabled { get; } = new PostgreSqlFlexibleServerHAState(NotEnabledValue);
         /// <summary>
         /// CreatingStandby
         /// Serialized Name: HighAvailabilityState.CreatingStandby
         /// </summary>
-        public static HighAvailabilityState CreatingStandby { get; } = new HighAvailabilityState(CreatingStandbyValue);
+        public static PostgreSqlFlexibleServerHAState CreatingStandby { get; } = new PostgreSqlFlexibleServerHAState(CreatingStandbyValue);
         /// <summary>
         /// ReplicatingData
         /// Serialized Name: HighAvailabilityState.ReplicatingData
         /// </summary>
-        public static HighAvailabilityState ReplicatingData { get; } = new HighAvailabilityState(ReplicatingDataValue);
+        public static PostgreSqlFlexibleServerHAState ReplicatingData { get; } = new PostgreSqlFlexibleServerHAState(ReplicatingDataValue);
         /// <summary>
         /// FailingOver
         /// Serialized Name: HighAvailabilityState.FailingOver
         /// </summary>
-        public static HighAvailabilityState FailingOver { get; } = new HighAvailabilityState(FailingOverValue);
+        public static PostgreSqlFlexibleServerHAState FailingOver { get; } = new PostgreSqlFlexibleServerHAState(FailingOverValue);
         /// <summary>
         /// Healthy
         /// Serialized Name: HighAvailabilityState.Healthy
         /// </summary>
-        public static HighAvailabilityState Healthy { get; } = new HighAvailabilityState(HealthyValue);
+        public static PostgreSqlFlexibleServerHAState Healthy { get; } = new PostgreSqlFlexibleServerHAState(HealthyValue);
         /// <summary>
         /// RemovingStandby
         /// Serialized Name: HighAvailabilityState.RemovingStandby
         /// </summary>
-        public static HighAvailabilityState RemovingStandby { get; } = new HighAvailabilityState(RemovingStandbyValue);
-        /// <summary> Determines if two <see cref="HighAvailabilityState"/> values are the same. </summary>
-        public static bool operator ==(HighAvailabilityState left, HighAvailabilityState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="HighAvailabilityState"/> values are not the same. </summary>
-        public static bool operator !=(HighAvailabilityState left, HighAvailabilityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HighAvailabilityState"/>. </summary>
-        public static implicit operator HighAvailabilityState(string value) => new HighAvailabilityState(value);
+        public static PostgreSqlFlexibleServerHAState RemovingStandby { get; } = new PostgreSqlFlexibleServerHAState(RemovingStandbyValue);
+        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are the same. </summary>
+        public static bool operator ==(PostgreSqlFlexibleServerHAState left, PostgreSqlFlexibleServerHAState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are not the same. </summary>
+        public static bool operator !=(PostgreSqlFlexibleServerHAState left, PostgreSqlFlexibleServerHAState right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
+        public static implicit operator PostgreSqlFlexibleServerHAState(string value) => new PostgreSqlFlexibleServerHAState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HighAvailabilityState other && Equals(other);
+        public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerHAState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(HighAvailabilityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PostgreSqlFlexibleServerHAState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
