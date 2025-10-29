@@ -12,6 +12,7 @@ internal class BasicLiveDnsTests(bool async)
 {
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/azure-dns-new-zone/main.bicep")]
+    [LiveOnly]
     public async Task CreateAzureDnsNewZone()
     {
         await using Trycep test = BasicDnsTests.CreateAzureDnsNewZoneTest();
