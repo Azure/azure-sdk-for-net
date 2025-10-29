@@ -16,48 +16,15 @@ namespace Azure.AI.Translation.Text
     /// </summary>
     public partial class TranslationLanguage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="nativeName"/> is null. </exception>
         internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(nativeName, nameof(nativeName));
-
             Name = name;
             NativeName = nativeName;
             Directionality = directionality;
@@ -67,24 +34,21 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             NativeName = nativeName;
             Directionality = directionality;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/> for deserialization. </summary>
-        internal TranslationLanguage()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Display name of the language in the locale requested via Accept-Language header. </summary>
         public string Name { get; }
+
         /// <summary> Display name of the language in the locale native for this language. </summary>
         public string NativeName { get; }
+
         /// <summary> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </summary>
         public LanguageDirectionality Directionality { get; }
     }

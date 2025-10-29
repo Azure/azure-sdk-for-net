@@ -5,25 +5,23 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Client options for TextTranslationClient. </summary>
+    /// <summary> Client options for <see cref="TextTranslationClient"/>. </summary>
     public partial class TextTranslationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_10_01_Preview;
 
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "3.0". </summary>
-            V3_0 = 1,
-            /// <summary> Service version "2025-10-01-preview". </summary>
-            V2025_10_01_Preview = 2,
+            /// <summary> Version 2025-10-01. </summary>
+            V2025_10_01_Preview = 1
         }
-
-        internal string Version { get; }
     }
 }

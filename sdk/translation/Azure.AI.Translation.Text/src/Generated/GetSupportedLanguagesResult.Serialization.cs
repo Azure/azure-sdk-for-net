@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class GetSupportedLanguagesResult : IUtf8JsonSerializable, IJsonModel<GetSupportedLanguagesResult>
+    /// <summary> Response for the languages API. </summary>
+    public partial class GetSupportedLanguagesResult : IJsonModel<GetSupportedLanguagesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSupportedLanguagesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GetSupportedLanguagesResult"/> for deserialization. </summary>
+        internal GetSupportedLanguagesResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetSupportedLanguagesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetSupportedLanguagesResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Translation))
             {
                 writer.WritePropertyName("translation"u8);
@@ -63,19 +68,24 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Models)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -84,88 +94,109 @@ namespace Azure.AI.Translation.Text
             }
         }
 
-        GetSupportedLanguagesResult IJsonModel<GetSupportedLanguagesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetSupportedLanguagesResult IJsonModel<GetSupportedLanguagesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetSupportedLanguagesResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetSupportedLanguagesResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGetSupportedLanguagesResult(document.RootElement, options);
         }
 
-        internal static GetSupportedLanguagesResult DeserializeGetSupportedLanguagesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetSupportedLanguagesResult DeserializeGetSupportedLanguagesResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyDictionary<string, TranslationLanguage> translation = default;
-            IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
-            IReadOnlyDictionary<string, string> models = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string requestId = default;
+            string etag = default;
+            IDictionary<string, TranslationLanguage> translation = default;
+            IDictionary<string, TransliterationLanguage> transliteration = default;
+            IDictionary<string, string> models = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("translation"u8))
+                if (prop.NameEquals("translation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, TranslationLanguage> dictionary = new Dictionary<string, TranslationLanguage>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value, options));
+                        dictionary.Add(prop0.Name, TranslationLanguage.DeserializeTranslationLanguage(prop0.Value, options));
                     }
                     translation = dictionary;
                     continue;
                 }
-                if (property.NameEquals("transliteration"u8))
+                if (prop.NameEquals("transliteration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, TransliterationLanguage> dictionary = new Dictionary<string, TransliterationLanguage>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value, options));
+                        dictionary.Add(prop0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(prop0.Value, options));
                     }
                     transliteration = dictionary;
                     continue;
                 }
-                if (property.NameEquals("models"u8))
+                if (prop.NameEquals("models"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     models = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GetSupportedLanguagesResult(translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(), transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(), models ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new GetSupportedLanguagesResult(
+                requestId,
+                etag,
+                translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(),
+                transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(),
+                models ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<GetSupportedLanguagesResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetSupportedLanguagesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -175,15 +206,20 @@ namespace Azure.AI.Translation.Text
             }
         }
 
-        GetSupportedLanguagesResult IPersistableModel<GetSupportedLanguagesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetSupportedLanguagesResult IPersistableModel<GetSupportedLanguagesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetSupportedLanguagesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetSupportedLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGetSupportedLanguagesResult(document.RootElement, options);
                     }
                 default:
@@ -191,22 +227,15 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GetSupportedLanguagesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static GetSupportedLanguagesResult FromResponse(Response response)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GetSupportedLanguagesResult"/> from. </param>
+        public static explicit operator GetSupportedLanguagesResult(Response result)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGetSupportedLanguagesResult(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeGetSupportedLanguagesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

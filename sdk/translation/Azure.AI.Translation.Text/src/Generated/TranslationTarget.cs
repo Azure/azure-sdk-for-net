@@ -13,42 +13,13 @@ namespace Azure.AI.Translation.Text
     /// <summary> Target language and translation configuration parameters. </summary>
     public partial class TranslationTarget
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="language">
-        /// Specifies the language of the output text. The target language must be one of the supported languages included
-        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including 
         /// multiple string values in the targetsLanguage array.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
@@ -62,8 +33,8 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="language">
-        /// Specifies the language of the output text. The target language must be one of the supported languages included
-        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including 
         /// multiple string values in the targetsLanguage array.
         /// </param>
         /// <param name="script"> Specifies the script of the translated text. </param>
@@ -73,29 +44,29 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="profanityMarker">
         /// Specifies how profanities should be marked in translations.
-        /// Possible values are: Asterisk (default) or Tag.
+        /// Possible values are: Asterisk (default) or Tag. 
         /// </param>
         /// <param name="deploymentName">
         /// Default is 'general', which uses NMT system.
         /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
         /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
-        ///
+        /// 
         /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
         /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
-        ///
+        /// 
         /// </param>
         /// <param name="allowFallback">
         /// In the case where a custom system is being used, specifies that the service is allowed to fall back to a
-        /// general system when a custom system doesn't exist.
+        /// general system when a custom system doesn't exist. 
         /// In the case where a Large Language Model is being used, specifies that the service is allowed to fall
         /// back to a Small Language Model if an error occurs.
         /// Possible values are: true (default) or false.
-        ///
-        /// allowFallback=false specifies that the translation should only use systems trained for the category specified
-        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
-        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
-        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true
+        /// 
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
         /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
         /// </param>
         /// <param name="grade"> Defines complexity of LLM prompts to provide high accuracy translation. </param>
@@ -103,8 +74,8 @@ namespace Azure.AI.Translation.Text
         /// <param name="gender"> Desired gender of target translation. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, string grade, string tone, string gender, string adaptiveDatasetId, IList<ReferenceTextPair> referenceTextPairs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationTarget(string language, string script, ProfanityAction? profanityAction, ProfanityMarker? profanityMarker, string deploymentName, bool? allowFallback, string grade, string tone, string gender, string adaptiveDatasetId, IList<ReferenceTextPair> referenceTextPairs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
             Script = script;
@@ -117,65 +88,70 @@ namespace Azure.AI.Translation.Text
             Gender = gender;
             AdaptiveDatasetId = adaptiveDatasetId;
             ReferenceTextPairs = referenceTextPairs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/> for deserialization. </summary>
-        internal TranslationTarget()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
-        /// Specifies the language of the output text. The target language must be one of the supported languages included
-        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including 
         /// multiple string values in the targetsLanguage array.
         /// </summary>
         public string Language { get; }
+
         /// <summary> Specifies the script of the translated text. </summary>
         public string Script { get; set; }
+
         /// <summary>
         /// Specifies how profanities should be treated in translations.
         /// Possible values are: NoAction (default), Marked or Deleted.
         /// </summary>
         public ProfanityAction? ProfanityAction { get; set; }
+
         /// <summary>
         /// Specifies how profanities should be marked in translations.
-        /// Possible values are: Asterisk (default) or Tag.
+        /// Possible values are: Asterisk (default) or Tag. 
         /// </summary>
         public ProfanityMarker? ProfanityMarker { get; set; }
+
         /// <summary>
         /// Default is 'general', which uses NMT system.
         /// 'abc-inc-gpt-4o', and 'abc-inc-gpt-4o-mini' are examples of deployment names which use GPT-4o uses or
         /// GPT-4o-mini model. 'gpt-4o' uses GPT-4o model.
-        ///
+        /// 
         /// '&lt;custom model id&gt;' uses the custom NMT model tuned by customer.
         /// 'best' system determines which is the best model to use for the request. This intelligence could be introduced
         /// in future. Customer should have deployed it in their resource.
-        ///
+        /// 
         /// </summary>
         public string DeploymentName { get; set; }
+
         /// <summary>
         /// In the case where a custom system is being used, specifies that the service is allowed to fall back to a
-        /// general system when a custom system doesn't exist.
+        /// general system when a custom system doesn't exist. 
         /// In the case where a Large Language Model is being used, specifies that the service is allowed to fall
         /// back to a Small Language Model if an error occurs.
         /// Possible values are: true (default) or false.
-        ///
-        /// allowFallback=false specifies that the translation should only use systems trained for the category specified
-        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
-        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
-        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true
+        /// 
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
         /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
         /// </summary>
         public bool? AllowFallback { get; set; }
+
         /// <summary> Defines complexity of LLM prompts to provide high accuracy translation. </summary>
         public string Grade { get; set; }
+
         /// <summary> Desired tone of target translation. </summary>
         public string Tone { get; set; }
+
         /// <summary> Desired gender of target translation. </summary>
         public string Gender { get; set; }
+
         /// <summary> Reference dataset ID having sentence pair to generate adaptive customized translation. </summary>
         public string AdaptiveDatasetId { get; set; }
+
         /// <summary> Reference text pairs to generate adaptive customized translation. </summary>
         public IList<ReferenceTextPair> ReferenceTextPairs { get; }
     }
