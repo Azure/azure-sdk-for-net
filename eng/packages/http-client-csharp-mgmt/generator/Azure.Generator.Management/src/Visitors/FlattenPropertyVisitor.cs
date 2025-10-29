@@ -397,6 +397,11 @@ namespace Azure.Generator.Management.Visitors
                 }
                 // make the internalized properties internal
                 internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
+                if (internalProperty.Body.HasSetter is false)
+                {
+                    // if the internal property is read-only, we need to make it private set to allow setting the value from constructor
+                    internalProperty.Update(body: new AutoPropertyBody(true));
+                }
             }
 
             return isFlattened;
