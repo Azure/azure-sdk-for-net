@@ -79,8 +79,6 @@ namespace Azure.Generator.Management.Providers
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
 
-        internal InputModelType InputModel => _inputModel;
-
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 

@@ -316,7 +316,6 @@ namespace Azure.Generator.Management
                 ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
-                // .. OperationSourceDict.Values,
                 .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
         }
 
