@@ -59,6 +59,24 @@ interface Foos {
   list is ArmResourceListByParent<Foo>;
 
   listBySubscription is ArmListBySubscription<Foo>;
+
+  @action("exportDependencies")
+  fooAction is ArmResourceActionAsync<
+    Foo,
+    FooActionRequest,
+    FooActionResult,
+    LroHeaders = ArmAsyncOperationHeader<FinalResult = FooActionResult> &
+      ArmLroLocationHeader<FinalResult = FooActionResult> &
+      Azure.Core.Foundations.RetryAfterHeader
+  >;
+}
+
+model FooActionRequest {
+  id: string;
+}
+
+model FooActionResult {
+  msg: string;
 }
 
 @singleton

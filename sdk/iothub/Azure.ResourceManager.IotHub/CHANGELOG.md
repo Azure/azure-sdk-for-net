@@ -1,14 +1,16 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2025-10-29)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2023-06' to 'package-preview-2025-08'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/72cee8dc40fe3bc4b7956c87f269f5a363411913/specification/iothub/resource-manager/Microsoft.Devices/IoTHub/readme.md.
+- Make `Azure.ResourceManager.IotHub` AOT-compatible.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.44.1 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
 
 ## 1.2.0-beta.1 (2024-10-15)
 

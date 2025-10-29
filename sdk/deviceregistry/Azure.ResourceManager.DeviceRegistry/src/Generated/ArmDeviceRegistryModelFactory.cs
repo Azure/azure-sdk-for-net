@@ -1293,7 +1293,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <param name="inbound"> Set of endpoints to connect to the device. </param>
         /// <param name="outboundAssigned"> Endpoints the device can connect to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundAssigned"/> is null. </exception>
         /// <returns> A new <see cref="Models.DiscoveredMessagingEndpoints"/> instance for mocking. </returns>
         public static DiscoveredMessagingEndpoints DiscoveredMessagingEndpoints(IDictionary<string, DiscoveredInboundEndpoints> inbound = default, IDictionary<string, DeviceMessagingEndpoint> outboundAssigned = default)
         {
