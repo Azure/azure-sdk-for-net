@@ -181,6 +181,3 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
-
-# Appsettings files
-appsettings.json

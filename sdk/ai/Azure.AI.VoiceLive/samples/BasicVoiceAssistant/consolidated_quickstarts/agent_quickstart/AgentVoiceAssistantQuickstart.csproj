@@ -5,7 +5,7 @@
     <TargetFrameworks>net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>BasicVoiceAssistantConsolidated</AssemblyName>
+    <AssemblyName>AgentVoiceAssistantQuickstart</AssemblyName>
     <RootNamespace>Azure.AI.VoiceLive.Samples</RootNamespace>
     <IsSamplesProject>true</IsSamplesProject>
     <SupportsNetStandard20>false</SupportsNetStandard20>
@@ -13,17 +13,16 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.12.1"/>
-    <PackageReference Include="NAudio" Version="2.2.1"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.1"/>
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-    <PackageReference Include="System.Threading.Channels" Version="8.0.0"/>
+    <PackageReference Include="NAudio" VersionOverride="2.2.1"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="8.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" VersionOverride="8.0.0"/>
+    <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.Threading.Channels" VersionOverride="9.0.8"/>
   </ItemGroup>
 
-  <!-- Use project reference (works in the repository context) -->
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Azure.AI.VoiceLive.csproj" />
   </ItemGroup>
