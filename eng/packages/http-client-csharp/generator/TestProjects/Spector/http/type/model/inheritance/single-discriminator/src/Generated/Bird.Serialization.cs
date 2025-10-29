@@ -39,6 +39,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         /// <param name="bird"> The <see cref="Bird"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Bird bird) => throw null;
 
-        public static explicit operator Bird(Response result) => throw null;
+        public static explicit operator Bird(Response response) => throw null;
     }
 }

@@ -39,6 +39,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="isUnknownAdditionalPropertiesDiscriminated"> The <see cref="IsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsUnknownAdditionalPropertiesDiscriminated isUnknownAdditionalPropertiesDiscriminated) => throw null;
 
-        public static explicit operator IsUnknownAdditionalPropertiesDiscriminated(Response result) => throw null;
+        public static explicit operator IsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
     }
 }

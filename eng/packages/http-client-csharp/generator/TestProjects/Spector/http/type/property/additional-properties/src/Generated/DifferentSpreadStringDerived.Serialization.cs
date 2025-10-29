@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="differentSpreadStringDerived"> The <see cref="DifferentSpreadStringDerived"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadStringDerived differentSpreadStringDerived) => throw null;
 
-        public static explicit operator DifferentSpreadStringDerived(Response result) => throw null;
+        public static explicit operator DifferentSpreadStringDerived(Response response) => throw null;
     }
 }

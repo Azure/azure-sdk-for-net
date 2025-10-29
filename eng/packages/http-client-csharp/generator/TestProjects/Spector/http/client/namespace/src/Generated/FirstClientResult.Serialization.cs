@@ -34,6 +34,6 @@ namespace client.clientnamespace.first
 
         string IPersistableModel<FirstClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator FirstClientResult(Response result) => throw null;
+        public static explicit operator FirstClientResult(Response response) => throw null;
     }
 }
