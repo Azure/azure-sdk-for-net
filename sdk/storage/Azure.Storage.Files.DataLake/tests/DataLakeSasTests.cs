@@ -499,19 +499,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
-                { "foo", new List<string>{ "bar" } },
-                { "company", new List<string>{ "msft" } },
-                { "city", new List<string>{ "redmond", "atlanta", "reston" } },
-                { "state", new List<string>{ "washington", "georgia" } }
+                { "foo", "bar" },
+                { "company", "msft" },
+                { "city", "redmond,atlanta,reston" }
             };
 
-            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName", new List<string>{ "john", "Tim" } },
-                { "lastName", new List<string>{ "Smith", "jones" } },
-                { "abra", new List<string>{ "cadabra" } }
+                { "firstName", "john,Tim"},
+                { "abra", "cadabra" }
             };
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
@@ -532,12 +530,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Send the request headers based on 'requestHeaders' Dictionary
             foreach (var header in requestHeaders)
             {
-                if (!string.IsNullOrEmpty(header.Key))
+                if (header.Key != null)
                 {
-                    foreach (string value in header.Value)
-                    {
-                        customRequestPolicy.AddRequestHeader(header.Key, value);
-                    }
+                    customRequestPolicy.AddRequestHeader(header.Key, header.Value);
                 }
             }
 
@@ -546,10 +541,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 if (param.Key != null)
                 {
-                    foreach (string value in param.Value)
-                    {
-                        customRequestPolicy.AddQueryParameter(param.Key, value);
-                    }
+                    customRequestPolicy.AddQueryParameter(param.Key, param.Value);
                 }
             }
 
@@ -583,14 +575,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
-                { "foo", new List<string>{ "bar" } },
+                { "foo", "bar" },
+                { "company", "msft" },
+                { "city", "redmond,atlanta,reston" }
             };
 
-            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "abra", new List<string>{ "cadabra" } }
+                { "firstName", "john,Tim"},
+                { "abra", "cadabra" }
             };
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
@@ -636,18 +631,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
-                { "foo", new List<string>{ "bar" } },
-                { "city", new List<string>{ "redmond", "atlanta" } },
-                { "state", new List<string>{ "washington", "georgia" } }
+                { "foo", "bar" },
+                { "company", "msft" },
+                { "city", "redmond,atlanta,reston" }
             };
 
-            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName", new List<string>{ "john", "Tim" } },
-                { "lastName", new List<string>{ "Smith", "jones" } },
-                { "abra", new List<string>{ "cadabra" } }
+                { "firstName", "john,Tim"},
+                { "abra", "cadabra" }
             };
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))

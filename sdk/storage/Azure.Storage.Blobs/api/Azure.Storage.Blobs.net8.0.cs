@@ -2001,8 +2001,8 @@ namespace Azure.Storage.Sas
         public string Permissions { get { throw null; } }
         public string PreauthorizedAgentObjectId { get { throw null; } set { } }
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
-        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> RequestHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> RequestQueryParameters { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<string, string> RequestHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<string, string> RequestQueryParameters { get { throw null; } set { } }
         public string Resource { get { throw null; } set { } }
         public string Snapshot { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }

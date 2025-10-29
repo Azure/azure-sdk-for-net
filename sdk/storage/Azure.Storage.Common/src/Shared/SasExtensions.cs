@@ -188,7 +188,7 @@ namespace Azure.Storage.Sas
             // "yyyy-MM-ddTHH:mm:ssZ"
             (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
-        internal static string FormatRequestHeadersForSasSigning(Dictionary<string, List<string>> requestHeaders)
+        internal static string FormatRequestHeadersForSasSigning(Dictionary<string, string> requestHeaders)
         {
             if (requestHeaders == null || requestHeaders.Count == 0)
             {
@@ -200,13 +200,13 @@ namespace Azure.Storage.Sas
                 sb
                 .Append(entry.Key)
                 .Append(':')
-                .Append(string.Join(", ", entry.Value))
+                .Append(entry.Value)
                 .Append('\n');
             }
             return sb.ToString();
         }
 
-        internal static string FormatRequestQueryParametersForSasSigning(Dictionary<string, List<string>> requestQueryParameters)
+        internal static string FormatRequestQueryParametersForSasSigning(Dictionary<string, string> requestQueryParameters)
         {
             if (requestQueryParameters == null || requestQueryParameters.Count == 0)
             {
@@ -219,12 +219,12 @@ namespace Azure.Storage.Sas
                 .Append('\n')
                 .Append(entry.Key)
                 .Append(':')
-                .Append(string.Join(",", entry.Value));
+                .Append(entry.Value);
             }
             return sb.ToString();
         }
 
-        internal static List<string> ConvertRequestDictToKeyList(Dictionary<string, List<string>> dict)
+        internal static List<string> ConvertRequestDictToKeyList(Dictionary<string, string> dict)
         {
             if (dict == null)
             {
