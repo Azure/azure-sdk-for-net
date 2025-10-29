@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityData"/>. </summary>
-        internal MySqlFlexibleServersCapabilityData()
+        public MySqlFlexibleServersCapabilityData()
         {
             SupportedGeoBackupRegions = new ChangeTrackingList<string>();
             SupportedFlexibleServerEditions = new ChangeTrackingList<ServerEditionCapabilityV2>();

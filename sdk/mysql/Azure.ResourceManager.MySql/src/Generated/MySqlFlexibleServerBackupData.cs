@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupData"/>. </summary>
-        internal MySqlFlexibleServerBackupData()
+        public MySqlFlexibleServerBackupData()
         {
         }
 
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Backup type. </summary>
-        public string BackupType { get; }
+        public string BackupType { get; set; }
         /// <summary> Backup completed time (ISO8601 format). </summary>
-        public DateTimeOffset? CompletedOn { get; }
+        public DateTimeOffset? CompletedOn { get; set; }
         /// <summary> Backup source. </summary>
-        public string Source { get; }
+        public string Source { get; set; }
     }
 }

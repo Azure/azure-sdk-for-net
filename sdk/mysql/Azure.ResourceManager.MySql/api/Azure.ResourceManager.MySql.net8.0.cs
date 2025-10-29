@@ -961,10 +961,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     }
     public partial class MySqlFlexibleServerBackupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>
     {
-        internal MySqlFlexibleServerBackupData() { }
-        public string BackupType { get { throw null; } }
-        public System.DateTimeOffset? CompletedOn { get { throw null; } }
-        public string Source { get { throw null; } }
+        public MySqlFlexibleServerBackupData() { }
+        public string BackupType { get { throw null; } set { } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1265,14 +1265,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     }
     public partial class MySqlFlexibleServerMaintenanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>
     {
-        internal MySqlFlexibleServerMaintenanceData() { }
+        public MySqlFlexibleServerMaintenanceData() { }
         public System.DateTimeOffset? MaintenanceAvailableScheduleMaxOn { get { throw null; } }
         public System.DateTimeOffset? MaintenanceAvailableScheduleMinOn { get { throw null; } }
         public string MaintenanceDescription { get { throw null; } }
         public System.DateTimeOffset? MaintenanceEndOn { get { throw null; } }
         public System.DateTimeOffset? MaintenanceExecutionEndOn { get { throw null; } }
         public System.DateTimeOffset? MaintenanceExecutionStartOn { get { throw null; } }
-        public System.DateTimeOffset? MaintenanceStartOn { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState? MaintenanceState { get { throw null; } }
         public string MaintenanceTitle { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType? MaintenanceType { get { throw null; } }
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     }
     public partial class MySqlFlexibleServersCapabilityData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>
     {
-        internal MySqlFlexibleServersCapabilityData() { }
+        public MySqlFlexibleServersCapabilityData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFeatureProperty> SupportedFeatures { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedGeoBackupRegions { get { throw null; } }
@@ -1788,15 +1788,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     }
     public partial class MySqlFlexibleServerBackupAndExportResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>
     {
-        internal MySqlFlexibleServerBackupAndExportResult() { }
-        public string BackupMetadata { get { throw null; } }
-        public long? DatasourceSizeInBytes { get { throw null; } }
-        public long? DataTransferredInBytes { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResponseError Error { get { throw null; } }
-        public double? PercentComplete { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportOperationStatus? Status { get { throw null; } }
+        public MySqlFlexibleServerBackupAndExportResult() { }
+        public string BackupMetadata { get { throw null; } set { } }
+        public long? DatasourceSizeInBytes { get { throw null; } set { } }
+        public long? DataTransferredInBytes { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResponseError Error { get { throw null; } set { } }
+        public double? PercentComplete { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportOperationStatus? Status { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2250,11 +2250,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     }
     public partial class MySqlFlexibleServerLogFile : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>
     {
-        internal MySqlFlexibleServerLogFile() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public long? SizeInKB { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
+        public MySqlFlexibleServerLogFile() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
+        public long? SizeInKB { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

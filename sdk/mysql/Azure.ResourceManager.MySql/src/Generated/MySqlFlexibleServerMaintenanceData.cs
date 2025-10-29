@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
-        internal MySqlFlexibleServerMaintenanceData()
+        public MySqlFlexibleServerMaintenanceData()
         {
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> A string describes the maintenance status. </summary>
         public MySqlFlexibleServerMaintenanceState? MaintenanceState { get; }
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn { get; }
+        public DateTimeOffset? MaintenanceStartOn { get; set; }
         /// <summary> The end time for a maintenance. </summary>
         public DateTimeOffset? MaintenanceEndOn { get; }
         /// <summary> The start time for a maintenance execution. </summary>
