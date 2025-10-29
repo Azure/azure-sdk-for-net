@@ -207,13 +207,13 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Optional. Custom Request Headers to include in the SAS. Any usage of the SAS must
-        /// include these headers and values in the request. A header may have multiple values.
+        /// include these headers and values in the request.
         /// </summary>
         public Dictionary<string, string> RequestHeaders { get; set; }
 
         /// <summary>
         /// Optional. Custom Request Query Parameters to include in the SAS. Any usage of the SAS must
-        /// include these query parameters and values in the request. A query parameter may have multiple values.
+        /// include these query parameters and values in the request.
         /// </summary>
         public Dictionary<string, string> RequestQueryParameters { get; set; }
 
