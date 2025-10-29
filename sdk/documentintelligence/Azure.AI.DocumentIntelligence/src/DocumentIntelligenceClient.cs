@@ -73,7 +73,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = AnalyzeDocument(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
@@ -118,7 +118,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> result = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (AnalyzeResult)response, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
+            using RequestContent content = options;
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = ClassifyDocument(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
@@ -266,7 +266,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,IEnumerable{AnalyzeOutputOption},RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -276,7 +275,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeDocumentRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -340,7 +339,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeDocumentRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -404,7 +403,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeBatchDocumentsRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -468,7 +467,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeBatchDocumentsRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -584,7 +583,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateClassifyDocumentRequest(classifierId, content, stringIndexType, split, pages, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -793,7 +792,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeResultFigureRequest(modelId, resultId, figureId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -836,7 +835,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeResultFigureRequest(modelId, resultId, figureId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -873,7 +872,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeResultRequest(modelId, resultId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -910,7 +909,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeResultRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -947,7 +946,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeBatchResultRequest(modelId, resultId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -984,7 +983,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeBatchResultRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1098,7 +1097,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeBatchResultRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1128,7 +1127,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateGetAnalyzeResultFigureRequest(string modelId, string resultId, string figureId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1148,7 +1147,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateDeleteAnalyzeResultRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1166,7 +1165,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateDeleteAnalyzeBatchResultRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1184,7 +1183,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateGetAnalyzeBatchResultRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1208,7 +1207,7 @@ namespace Azure.AI.DocumentIntelligence
         private AnalyzeResult FetchAnalyzeResultFromAnalyzeOperation(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("analyzeResult");
-            return AnalyzeResult.DeserializeAnalyzeResult(resultJsonElement);
+            return AnalyzeResult.DeserializeAnalyzeResult(resultJsonElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
