@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+* Added `files` samples for operations create, delete, list, retrieve and download.
 
 ## 1.0.0 (2025-10-01)
 

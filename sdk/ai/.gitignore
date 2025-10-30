@@ -1,0 +1,4 @@
+# Runsetting files
+Azure.AI.Projects/**/.runsettings
+Azure.AI.Agents/**/.runsettings
+Azure.AI.Agents.Persistent/**/.runsettings

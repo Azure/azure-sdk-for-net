@@ -203,6 +203,14 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Agents'))">
+    <PackageReference Update="OpenAI" Version="[2.5.0,3.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Projects'))">
+    <PackageReference Update="OpenAI" Version="[2.5.0,3.0)" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
     <PackageReference Update="OpenAI" Version="2.5.0" />
   </ItemGroup>

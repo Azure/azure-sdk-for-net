@@ -235,7 +235,7 @@ namespace Azure.AI.Projects
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AIProjectConnection"/> from. </param>
         public static explicit operator AIProjectConnection(ClientResult result)
         {
-            PipelineResponse response = result.GetRawResponse();
+            using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAIProjectConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

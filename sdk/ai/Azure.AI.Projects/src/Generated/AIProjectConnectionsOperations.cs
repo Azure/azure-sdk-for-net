@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult<AIProjectConnection> GetConnection(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetConnection(name, clientRequestId, cancellationToken.ToRequestOptions());
+            ClientResult result = GetConnection(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetConnectionAsync(name, clientRequestId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetConnectionAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult<AIProjectConnection> GetConnectionWithCredentials(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetConnectionWithCredentials(name, clientRequestId, cancellationToken.ToRequestOptions());
+            ClientResult result = GetConnectionWithCredentials(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
@@ -151,7 +151,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<AIProjectConnection>> GetConnectionWithCredentialsAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetConnectionWithCredentialsAsync(name, clientRequestId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetConnectionWithCredentialsAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<AIProjectConnection> GetConnections(ConnectionType? connectionType = default, bool? defaultConnection = default, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, clientRequestId, cancellationToken.ToRequestOptions());
+            return new AIProjectConnectionsOperationsGetConnectionsCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List all connections in the project, without populating connection credentials. </summary>
@@ -212,7 +212,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<AIProjectConnection> GetConnectionsAsync(ConnectionType? connectionType = default, bool? defaultConnection = default, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, clientRequestId, cancellationToken.ToRequestOptions());
+            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
     }
 }

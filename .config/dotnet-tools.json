@@ -13,6 +13,13 @@
       "commands": [
         "reportgenerator"
       ]
+    },
+    "azure.sdk.tools.testproxy": {
+      "version": "1.0.0-dev.20250922.2",
+      "commands": [
+        "test-proxy"
+      ],
+      "rollForward": false
     }
   }
 }

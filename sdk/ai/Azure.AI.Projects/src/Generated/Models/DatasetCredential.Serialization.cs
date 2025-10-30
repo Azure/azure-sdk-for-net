@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DatasetCredential"/> from. </param>
         public static explicit operator DatasetCredential(ClientResult result)
         {
-            PipelineResponse response = result.GetRawResponse();
+            using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeDatasetCredential(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

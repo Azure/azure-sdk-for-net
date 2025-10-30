@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.Projects.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.Agents\src\Azure.AI.Agents.csproj" />
   </ItemGroup>
   
   <ItemGroup>

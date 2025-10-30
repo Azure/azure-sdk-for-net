@@ -167,7 +167,7 @@ namespace Azure.AI.Projects
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PendingUploadResult"/> from. </param>
         public static explicit operator PendingUploadResult(ClientResult result)
         {
-            PipelineResponse response = result.GetRawResponse();
+            using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePendingUploadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

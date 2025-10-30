@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetDeployment(name, clientRequestId, cancellationToken.ToRequestOptions());
+            ClientResult result = GetDeployment(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
         }
 
@@ -107,7 +107,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetDeploymentAsync(name, clientRequestId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetDeploymentAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
         }
 
@@ -178,7 +178,7 @@ namespace Azure.AI.Projects
                 modelName,
                 deploymentType?.ToString(),
                 clientRequestId,
-                cancellationToken.ToRequestOptions());
+                cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List all deployed models in the project. </summary>
@@ -196,7 +196,7 @@ namespace Azure.AI.Projects
                 modelName,
                 deploymentType?.ToString(),
                 clientRequestId,
-                cancellationToken.ToRequestOptions());
+                cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
     }
 }

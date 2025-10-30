@@ -166,7 +166,7 @@ namespace Azure.Core
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedIndex"/> from. </param>
         public static explicit operator PagedIndex(ClientResult result)
         {
-            PipelineResponse response = result.GetRawResponse();
+            using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePagedIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

@@ -29,6 +29,8 @@ namespace Azure.AI.Projects
         private const string ApplicationInsightsValue = "AppInsights";
         /// <summary> Custom Keys. </summary>
         private const string CustomValue = "CustomKeys";
+        /// <summary> Remote tool. </summary>
+        private const string RemoteToolValue = "RemoteTool";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -66,6 +68,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Custom Keys. </summary>
         public static ConnectionType Custom { get; } = new ConnectionType(CustomValue);
+
+        /// <summary> Remote tool. </summary>
+        public static ConnectionType RemoteTool { get; } = new ConnectionType(RemoteToolValue);
 
         /// <summary> Determines if two <see cref="ConnectionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
