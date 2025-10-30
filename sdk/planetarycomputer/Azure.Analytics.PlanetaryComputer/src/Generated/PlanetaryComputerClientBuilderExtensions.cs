@@ -15,27 +15,27 @@ namespace Microsoft.Extensions.Azure
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class PlanetaryComputerClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="PlanetaryComputerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="PlanetaryComputerProClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<PlanetaryComputerClient, PlanetaryComputerClientOptions> AddPlanetaryComputerClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<PlanetaryComputerProClient, PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<PlanetaryComputerClient, PlanetaryComputerClientOptions>((options, credential) => new PlanetaryComputerClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<PlanetaryComputerProClient, PlanetaryComputerProClientOptions>((options, credential) => new PlanetaryComputerProClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="PlanetaryComputerClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="PlanetaryComputerProClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<PlanetaryComputerClient, PlanetaryComputerClientOptions> AddPlanetaryComputerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<PlanetaryComputerProClient, PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<PlanetaryComputerClient, PlanetaryComputerClientOptions>(configuration);
+            return builder.RegisterClientFactory<PlanetaryComputerProClient, PlanetaryComputerProClientOptions>(configuration);
         }
     }
 }

@@ -13,11 +13,7 @@ using Azure;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary>
-    /// Point model.
-    /// 
-    /// response model for `/point` endpointsResponse model for point query operations providing values at a specific location
-    /// </summary>
+    /// <summary> Response model for point query operations providing values at a specific location. </summary>
     public partial class TilerCoreModelsResponsesPoint : IJsonModel<TilerCoreModelsResponsesPoint>
     {
         /// <summary> Initializes a new instance of <see cref="TilerCoreModelsResponsesPoint"/> for deserialization. </summary>

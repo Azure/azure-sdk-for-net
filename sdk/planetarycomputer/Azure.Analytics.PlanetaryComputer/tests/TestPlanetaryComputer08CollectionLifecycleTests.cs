@@ -74,10 +74,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var spatialExtent = new StacExtensionSpatialExtent();
             spatialExtent.BoundingBox.Add(new List<float> { -180.0f, -90.0f, 180.0f, 90.0f });
 
-            IList<DateTimeOffset> temporalInterval = new List<DateTimeOffset>
+            IList<string> temporalInterval = new List<string>
             {
-                DateTimeOffset.Parse("2018-01-01T00:00:00Z"),
-                DateTimeOffset.Parse("2018-12-31T23:59:59Z")
+                "2018-01-01T00:00:00Z",
+                "2018-12-31T23:59:59Z"
             };
 
             var temporalExtent = new StacCollectionTemporalExtent(new[] { temporalInterval });

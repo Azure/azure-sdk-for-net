@@ -15,16 +15,16 @@ using Azure.Core;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion creation model. </summary>
-    public partial class IngestionDefinition : IJsonModel<IngestionDefinition>
+    public partial class IngestionInformation : IJsonModel<IngestionInformation>
     {
-        /// <summary> Initializes a new instance of <see cref="IngestionDefinition"/> for deserialization. </summary>
-        internal IngestionDefinition()
+        /// <summary> Initializes a new instance of <see cref="IngestionInformation"/> for deserialization. </summary>
+        internal IngestionInformation()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IngestionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IngestionInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +35,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionInformation)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -96,24 +96,24 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionDefinition IJsonModel<IngestionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IngestionInformation IJsonModel<IngestionInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IngestionDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IngestionInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionInformation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIngestionDefinition(document.RootElement, options);
+            return DeserializeIngestionInformation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IngestionDefinition DeserializeIngestionDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static IngestionInformation DeserializeIngestionInformation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IngestionDefinition(
+            return new IngestionInformation(
                 id,
                 importType,
                 displayName,
@@ -200,63 +200,63 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IngestionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IngestionInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IngestionDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionDefinition IPersistableModel<IngestionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IngestionInformation IPersistableModel<IngestionInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IngestionDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IngestionInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeIngestionDefinition(document.RootElement, options);
+                        return DeserializeIngestionInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IngestionDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IngestionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IngestionInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="ingestionDefinition"> The <see cref="IngestionDefinition"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(IngestionDefinition ingestionDefinition)
+        /// <param name="ingestionInformation"> The <see cref="IngestionInformation"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(IngestionInformation ingestionInformation)
         {
-            if (ingestionDefinition == null)
+            if (ingestionInformation == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ingestionDefinition, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(ingestionInformation, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="IngestionDefinition"/> from. </param>
-        public static explicit operator IngestionDefinition(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="IngestionInformation"/> from. </param>
+        public static explicit operator IngestionInformation(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeIngestionDefinition(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIngestionInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

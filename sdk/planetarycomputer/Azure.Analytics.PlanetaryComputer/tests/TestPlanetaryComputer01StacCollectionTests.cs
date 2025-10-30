@@ -32,7 +32,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test01_01_ListCollections()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
 
             TestContext.WriteLine("Testing GetCollections (list all STAC collections)");
@@ -92,7 +92,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test01_03_GetCollection()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
             string collectionId = TestEnvironment.CollectionId;
 

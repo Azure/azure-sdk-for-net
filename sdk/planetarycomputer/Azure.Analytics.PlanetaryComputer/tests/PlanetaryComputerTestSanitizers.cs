@@ -34,6 +34,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             testBase.SanitizersToRemove.Add("AZSDK3493"); // Removes "name" fields
             testBase.SanitizersToRemove.Add("AZSDK3430"); // Removes "id" fields
             testBase.SanitizersToRemove.Add("AZSDK2003"); // Default hostname sanitizer that reduces URLs to "Sanitized.com"
+            testBase.SanitizersToRemove.Add("AZSDK4001"); // Replaces entire host name in URL - we use custom hostname sanitizer
+            testBase.SanitizersToRemove.Add("AZSDK3447"); // Don't sanitize path segments - collection IDs are public
 
             // Credential sanitizers using JSONPath - these values should always be sanitized
             testBase.JsonPathSanitizers.Add("$..access_token");

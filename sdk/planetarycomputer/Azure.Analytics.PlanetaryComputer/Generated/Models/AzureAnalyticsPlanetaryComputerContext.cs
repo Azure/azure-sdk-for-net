@@ -21,7 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
     [ModelReaderWriterBuildable(typeof(GeoJsonGeometry))]
     [ModelReaderWriterBuildable(typeof(ImageParameters))]
     [ModelReaderWriterBuildable(typeof(ImageResponse))]
-    [ModelReaderWriterBuildable(typeof(IngestionDefinition))]
+    [ModelReaderWriterBuildable(typeof(IngestionInformation))]
     [ModelReaderWriterBuildable(typeof(IngestionRun))]
     [ModelReaderWriterBuildable(typeof(IngestionRunInformation))]
     [ModelReaderWriterBuildable(typeof(IngestionSource))]

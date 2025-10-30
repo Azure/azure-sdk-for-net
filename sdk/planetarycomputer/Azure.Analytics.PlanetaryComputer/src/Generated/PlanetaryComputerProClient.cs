@@ -12,8 +12,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary> The PlanetaryComputerClient. </summary>
-    public partial class PlanetaryComputerClient
+    /// <summary> The PlanetaryComputerProClient. </summary>
+    public partial class PlanetaryComputerProClient
     {
         private readonly Uri _endpoint;
         /// <summary> A credential used to authenticate to the service. </summary>
@@ -25,30 +25,30 @@ namespace Azure.Analytics.PlanetaryComputer
         private TilerClient _cachedTilerClient;
         private ManagedStorageSharedAccessSignatureClient _cachedManagedStorageSharedAccessSignatureClient;
 
-        /// <summary> Initializes a new instance of PlanetaryComputerClient for mocking. </summary>
-        protected PlanetaryComputerClient()
+        /// <summary> Initializes a new instance of PlanetaryComputerProClient for mocking. </summary>
+        protected PlanetaryComputerProClient()
         {
         }
 
-        /// <summary> Initializes a new instance of PlanetaryComputerClient. </summary>
+        /// <summary> Initializes a new instance of PlanetaryComputerProClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PlanetaryComputerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PlanetaryComputerClientOptions())
+        public PlanetaryComputerProClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PlanetaryComputerProClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of PlanetaryComputerClient. </summary>
+        /// <summary> Initializes a new instance of PlanetaryComputerProClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PlanetaryComputerClient(Uri endpoint, TokenCredential credential, PlanetaryComputerClientOptions options)
+        public PlanetaryComputerProClient(Uri endpoint, TokenCredential credential, PlanetaryComputerProClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new PlanetaryComputerClientOptions();
+            options ??= new PlanetaryComputerProClientOptions();
 
             _endpoint = endpoint;
             _tokenCredential = credential;

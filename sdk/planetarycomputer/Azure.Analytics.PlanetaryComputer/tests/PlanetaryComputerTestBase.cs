@@ -31,15 +31,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// This method ensures the client uses the test proxy for recording and playback.
         /// </summary>
         /// <param name="options">Optional client options. If null, default instrumented options will be used.</param>
-        /// <returns>An instrumented PlanetaryComputerClient instance ready for testing.</returns>
-        protected PlanetaryComputerClient GetTestClient(PlanetaryComputerClientOptions options = null)
+        /// <returns>An instrumented PlanetaryComputerProClient instance ready for testing.</returns>
+        protected PlanetaryComputerProClient GetTestClient(PlanetaryComputerProClientOptions options = null)
         {
-            options ??= InstrumentClientOptions(new PlanetaryComputerClientOptions());
+            options ??= InstrumentClientOptions(new PlanetaryComputerProClientOptions());
 
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var credential = TestEnvironment.Credential;
 
-            var client = new PlanetaryComputerClient(endpoint, credential, options);
+            var client = new PlanetaryComputerProClient(endpoint, credential, options);
 
             return InstrumentClient(client);
         }

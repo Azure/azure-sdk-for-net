@@ -128,10 +128,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
         /// <param name="creationTime"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.IngestionDefinition"/> instance for mocking. </returns>
-        public static IngestionDefinition IngestionDefinition(Guid id = default, IngestionType importType = default, string displayName = default, Uri sourceCatalogUrl = default, bool? skipExistingItems = default, bool? keepOriginalAssets = default, DateTimeOffset creationTime = default, IngestionStatus status = default)
+        /// <returns> A new <see cref="PlanetaryComputer.IngestionInformation"/> instance for mocking. </returns>
+        public static IngestionInformation IngestionInformation(Guid id = default, IngestionType importType = default, string displayName = default, Uri sourceCatalogUrl = default, bool? skipExistingItems = default, bool? keepOriginalAssets = default, DateTimeOffset creationTime = default, IngestionStatus status = default)
         {
-            return new IngestionDefinition(
+            return new IngestionInformation(
                 id,
                 importType,
                 displayName,
@@ -473,7 +473,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="interval"> Array of time intervals in format [[start_datetime, end_datetime]]. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacCollectionTemporalExtent"/> instance for mocking. </returns>
-        public static StacCollectionTemporalExtent StacCollectionTemporalExtent(IEnumerable<IList<DateTimeOffset?>> interval = default)
+        public static StacCollectionTemporalExtent StacCollectionTemporalExtent(IEnumerable<IList<DateTimeOffset>> interval = default)
         {
             interval ??= new ChangeTrackingList<IList<DateTimeOffset>>();
 

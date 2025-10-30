@@ -41,7 +41,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IngestionDefinition item in Value)
+            foreach (IngestionInformation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -93,17 +93,17 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            IList<IngestionDefinition> value = default;
+            IList<IngestionInformation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IngestionDefinition> array = new List<IngestionDefinition>();
+                    List<IngestionInformation> array = new List<IngestionInformation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IngestionDefinition.DeserializeIngestionDefinition(item, options));
+                        array.Add(IngestionInformation.DeserializeIngestionInformation(item, options));
                     }
                     value = array;
                     continue;

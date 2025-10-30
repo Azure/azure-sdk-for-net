@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary> Client options for <see cref="PlanetaryComputerClient"/>. </summary>
-    public partial class PlanetaryComputerClientOptions : ClientOptions
+    /// <summary> Client options for <see cref="PlanetaryComputerProClient"/>. </summary>
+    public partial class PlanetaryComputerProClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_04_30_Preview;
 
-        /// <summary> Initializes a new instance of PlanetaryComputerClientOptions. </summary>
+        /// <summary> Initializes a new instance of PlanetaryComputerProClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public PlanetaryComputerClientOptions(ServiceVersion version = LatestVersion)
+        public PlanetaryComputerProClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

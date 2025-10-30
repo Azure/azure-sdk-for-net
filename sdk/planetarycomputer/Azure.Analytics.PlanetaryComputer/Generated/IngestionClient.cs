@@ -779,13 +779,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionDefinition> Create(string collectionId, IngestionDefinition body, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionInformation> Create(string collectionId, IngestionInformation body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = Create(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((IngestionDefinition)result, result);
+            return Response.FromValue((IngestionInformation)result, result);
         }
 
         /// <summary> Create a new ingestion. </summary>
@@ -795,13 +795,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionDefinition>> CreateAsync(string collectionId, IngestionDefinition body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionInformation>> CreateAsync(string collectionId, IngestionInformation body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await CreateAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((IngestionDefinition)result, result);
+            return Response.FromValue((IngestionInformation)result, result);
         }
 
         /// <summary> Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued. </summary>
@@ -963,13 +963,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionDefinition> Get(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionInformation> Get(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = Get(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((IngestionDefinition)result, result);
+            return Response.FromValue((IngestionInformation)result, result);
         }
 
         /// <summary> Get the definition of an ingestion. </summary>
@@ -979,13 +979,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionDefinition>> GetAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionInformation>> GetAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = await GetAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((IngestionDefinition)result, result);
+            return Response.FromValue((IngestionInformation)result, result);
         }
 
         /// <summary>
@@ -1062,7 +1062,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionDefinition> GetAll(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionInformation> GetAll(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -1077,7 +1077,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionDefinition> GetAllAsync(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionInformation> GetAllAsync(string collectionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 

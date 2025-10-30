@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test04_01_GetConformanceClass()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
 
             TestContext.WriteLine("Testing GetConformanceClass (STAC API conformance)");
@@ -97,7 +97,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test04_04_GetCollection_SpecificationCompliance()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
             string collectionId = TestEnvironment.CollectionId;
 

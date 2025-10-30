@@ -25,7 +25,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         [Category("Collections")]
         public async Task GetCollectionsTest()
         {
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
 
             // Call GetCollections async - instrumentation automatically calls sync version when IsAsync=false

@@ -12,7 +12,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Legend type to make, one of: `continuous`, `classmap`, `interval` or `none`
-    /// (note, `none` is a string literal).Defines the legend configuration types for data visualization.
+    /// (note, `none` is a string literal).
     /// </summary>
     public readonly partial struct LegendConfigType : IEquatable<LegendConfigType>
     {

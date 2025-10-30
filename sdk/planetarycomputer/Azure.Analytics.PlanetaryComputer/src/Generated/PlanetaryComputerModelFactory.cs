@@ -473,9 +473,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="interval"> Array of time intervals in format [[start_datetime, end_datetime]]. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacCollectionTemporalExtent"/> instance for mocking. </returns>
-        public static StacCollectionTemporalExtent StacCollectionTemporalExtent(IEnumerable<IList<DateTimeOffset>> interval = default)
+        public static StacCollectionTemporalExtent StacCollectionTemporalExtent(IEnumerable<IList<string>> interval = default)
         {
-            interval ??= new ChangeTrackingList<IList<DateTimeOffset>>();
+            interval ??= new ChangeTrackingList<IList<string>>();
 
             return new StacCollectionTemporalExtent(interval.ToList(), additionalBinaryDataProperties: null);
         }
@@ -552,8 +552,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </param>
         /// <param name="type"> The type of rendering to apply (raster or vector). </param>
         /// <param name="options">
-        /// A URL query-string encoded string of TiTiler rendering options. Valid only for
-        /// `raster-tile` types.
+        /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
         /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </param>
@@ -1400,11 +1399,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Point model.
-        /// 
-        /// response model for `/point` endpointsResponse model for point query operations providing values at a specific location
-        /// </summary>
+        /// <summary> Response model for point query operations providing values at a specific location. </summary>
         /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
         /// <param name="values"> Array of pixel values at the queried point for each band. </param>
         /// <param name="bandNames"> Names of each band in the raster data. </param>
@@ -1463,9 +1458,9 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// TileJSON model.
+        /// TileJSON metadata describing a tile set according to the TileJSON specification
         /// 
-        /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0TileJSON metadata describing a tile set according to the TileJSON specification
+        /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0
         /// </summary>
         /// <param name="tileJson"> TileJson. </param>
         /// <param name="name"> Human-readable name of the tile set. </param>
@@ -1540,10 +1535,10 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// PgSTAC Search entry.
+        /// Stored search query
         /// 
-        /// ref:
-        /// https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915Stored search query in the PgSTAC database
+        /// See:
+        /// https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915
         /// </summary>
         /// <param name="hash"> Unique hash identifier for the search query. </param>
         /// <param name="search"> Search. </param>

@@ -35,7 +35,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test02_01_ListManagedIdentities()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             TestContext.WriteLine("Testing GetManagedIdentities (list all managed identities)");
@@ -103,7 +103,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test02_ListSources()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             TestContext.WriteLine("Testing GetSources (list all ingestion sources)");
@@ -143,7 +143,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test02_07_ListOperations()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             IngestionClient ingestionClient = client.GetIngestionClient();
 
             TestContext.WriteLine("Testing GetOperations (list all operations)");

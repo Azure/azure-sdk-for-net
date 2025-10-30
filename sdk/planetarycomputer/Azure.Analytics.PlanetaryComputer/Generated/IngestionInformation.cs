@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion creation model. </summary>
-    public partial class IngestionDefinition
+    public partial class IngestionInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
         /// <param name="importType"> Ingestion type. </param>
-        public IngestionDefinition(IngestionType importType)
+        public IngestionInformation(IngestionType importType)
         {
             ImportType = importType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
         /// <param name="id"> Ingestion id. </param>
         /// <param name="importType"> Ingestion type. </param>
         /// <param name="displayName"> Ingestion name. </param>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="creationTime"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionDefinition(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionInformation(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ImportType = importType;

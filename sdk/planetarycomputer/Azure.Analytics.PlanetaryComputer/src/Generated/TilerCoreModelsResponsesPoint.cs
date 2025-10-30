@@ -11,11 +11,7 @@ using System.Linq;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary>
-    /// Point model.
-    /// 
-    /// response model for `/point` endpointsResponse model for point query operations providing values at a specific location
-    /// </summary>
+    /// <summary> Response model for point query operations providing values at a specific location. </summary>
     public partial class TilerCoreModelsResponsesPoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

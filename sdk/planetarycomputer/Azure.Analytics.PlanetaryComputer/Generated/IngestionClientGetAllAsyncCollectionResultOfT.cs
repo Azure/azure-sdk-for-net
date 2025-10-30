@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    internal partial class IngestionClientGetAllAsyncCollectionResultOfT : AsyncPageable<IngestionDefinition>
+    internal partial class IngestionClientGetAllAsyncCollectionResultOfT : AsyncPageable<IngestionInformation>
     {
         private readonly IngestionClient _client;
         private readonly string _collectionId;
@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of IngestionClientGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<IngestionDefinition>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<IngestionInformation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     yield break;
                 }
                 PageIngestionDefinition result = (PageIngestionDefinition)response;
-                yield return Page<IngestionDefinition>.FromValues((IReadOnlyList<IngestionDefinition>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<IngestionInformation>.FromValues((IReadOnlyList<IngestionInformation>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

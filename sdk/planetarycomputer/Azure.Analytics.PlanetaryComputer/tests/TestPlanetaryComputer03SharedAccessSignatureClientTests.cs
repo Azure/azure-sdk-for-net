@@ -34,7 +34,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test03_01_GetTokenWithDefaultDuration()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             string collectionId = TestEnvironment.CollectionId;
 
@@ -103,7 +103,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public async Task Test03_02_GetTokenWithCustomDuration()
         {
             // Arrange
-            PlanetaryComputerClient client = GetTestClient();
+            PlanetaryComputerProClient client = GetTestClient();
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             string collectionId = TestEnvironment.CollectionId;
             int customDuration = 60; // 60 minutes

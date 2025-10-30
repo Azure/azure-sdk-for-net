@@ -39,8 +39,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </param>
         /// <param name="type"> The type of rendering to apply (raster or vector). </param>
         /// <param name="options">
-        /// A URL query-string encoded string of TiTiler rendering options. Valid only for
-        /// `raster-tile` types.
+        /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
         /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </param>
@@ -85,8 +84,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public RenderOptionType? Type { get; set; }
 
         /// <summary>
-        /// A URL query-string encoded string of TiTiler rendering options. Valid only for
-        /// `raster-tile` types.
+        /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
         /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </summary>

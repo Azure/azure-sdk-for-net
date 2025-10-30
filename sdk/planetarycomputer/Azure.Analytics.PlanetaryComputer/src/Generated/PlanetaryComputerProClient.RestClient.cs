@@ -8,7 +8,7 @@
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary></summary>
-    public partial class PlanetaryComputerClient
+    public partial class PlanetaryComputerProClient
     {
     }
 }

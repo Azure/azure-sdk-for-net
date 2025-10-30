@@ -958,25 +958,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public static bool operator !=(Azure.Analytics.PlanetaryComputer.PixelSelection left, Azure.Analytics.PlanetaryComputer.PixelSelection right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PlanetaryComputerClient
-    {
-        protected PlanetaryComputerClient() { }
-        public PlanetaryComputerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public PlanetaryComputerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.PlanetaryComputer.PlanetaryComputerClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Analytics.PlanetaryComputer.IngestionClient GetIngestionClient() { throw null; }
-        public virtual Azure.Analytics.PlanetaryComputer.ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient() { throw null; }
-        public virtual Azure.Analytics.PlanetaryComputer.StacClient GetStacClient() { throw null; }
-        public virtual Azure.Analytics.PlanetaryComputer.TilerClient GetTilerClient() { throw null; }
-    }
-    public partial class PlanetaryComputerClientOptions : Azure.Core.ClientOptions
-    {
-        public PlanetaryComputerClientOptions(Azure.Analytics.PlanetaryComputer.PlanetaryComputerClientOptions.ServiceVersion version = Azure.Analytics.PlanetaryComputer.PlanetaryComputerClientOptions.ServiceVersion.V2025_04_30_Preview) { }
-        public enum ServiceVersion
-        {
-            V2025_04_30_Preview = 1,
-        }
-    }
     public static partial class PlanetaryComputerModelFactory
     {
         public static Azure.Analytics.PlanetaryComputer.BandStatistics BandStatistics(float minimum = 0f, float maximum = 0f, float mean = 0f, float count = 0f, float sum = 0f, float std = 0f, float median = 0f, float majority = 0f, float minority = 0f, float unique = 0f, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<float>> histogram = null, float validPercent = 0f, float maskedPixels = 0f, float validPixels = 0f, float percentile2 = 0f, float percentile98 = 0f) { throw null; }
@@ -1016,7 +997,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.StacAsset StacAsset(string platform = null, System.Collections.Generic.IEnumerable<string> instruments = null, string constellation = null, string mission = null, System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacProvider> providers = null, float? gsd = default(float?), System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updated = default(System.DateTimeOffset?), string title = null, string description = null, string href = null, string type = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.StacCatalogCollections StacCatalogCollections(System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacLink> links = null, System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacCollectionResource> collections = null) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.StacCollectionResource StacCollectionResource(string createdOn = null, string updatedOn = null, string shortDescription = null, System.Collections.Generic.IEnumerable<string> stacExtensions = null, string id = null, string description = null, string stacVersion = null, System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacLink> links = null, string title = null, string type = null, System.Collections.Generic.IDictionary<string, Azure.Analytics.PlanetaryComputer.StacAsset> assets = null, System.Collections.Generic.IDictionary<string, Azure.Analytics.PlanetaryComputer.StacItemAsset> itemAssets = null, string license = null, Azure.Analytics.PlanetaryComputer.StacExtensionExtent extent = null, System.Collections.Generic.IEnumerable<string> keywords = null, System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacProvider> providers = null, System.Collections.Generic.IDictionary<string, System.BinaryData> summaries = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
-        public static Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent StacCollectionTemporalExtent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.DateTimeOffset>> interval = null) { throw null; }
+        public static Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent StacCollectionTemporalExtent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> interval = null) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.StacConformanceClasses StacConformanceClasses(System.Collections.Generic.IEnumerable<System.Uri> conformsTo = null) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.StacContextExtension StacContextExtension(int returned = 0, int? limit = default(int?), int? matched = default(int?)) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.StacExtensionExtent StacExtensionExtent(Azure.Analytics.PlanetaryComputer.StacExtensionSpatialExtent spatial = null, Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent temporal = null) { throw null; }
@@ -1052,6 +1033,25 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.TileSettings TileSettings(int minZoom = 0, int maxItemsPerTile = 0, Azure.Analytics.PlanetaryComputer.DefaultLocation defaultLocation = null) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.UserCollectionSettings UserCollectionSettings(Azure.Analytics.PlanetaryComputer.TileSettings tileSettings = null, Azure.Analytics.PlanetaryComputer.StacMosaicConfiguration mosaicConfiguration = null) { throw null; }
         public static Azure.Analytics.PlanetaryComputer.VariableMatrixWidth VariableMatrixWidth(int coalesce = 0, int minTileRow = 0, int maxTileRow = 0) { throw null; }
+    }
+    public partial class PlanetaryComputerProClient
+    {
+        protected PlanetaryComputerProClient() { }
+        public PlanetaryComputerProClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PlanetaryComputerProClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Analytics.PlanetaryComputer.IngestionClient GetIngestionClient() { throw null; }
+        public virtual Azure.Analytics.PlanetaryComputer.ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient() { throw null; }
+        public virtual Azure.Analytics.PlanetaryComputer.StacClient GetStacClient() { throw null; }
+        public virtual Azure.Analytics.PlanetaryComputer.TilerClient GetTilerClient() { throw null; }
+    }
+    public partial class PlanetaryComputerProClientOptions : Azure.Core.ClientOptions
+    {
+        public PlanetaryComputerProClientOptions(Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions.ServiceVersion version = Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions.ServiceVersion.V2025_04_30_Preview) { }
+        public enum ServiceVersion
+        {
+            V2025_04_30_Preview = 1,
+        }
     }
     public partial class PointGeometry : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.PointGeometry>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.PointGeometry>
     {
@@ -1528,8 +1528,8 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class StacCollectionTemporalExtent : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent>
     {
-        public StacCollectionTemporalExtent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.DateTimeOffset>> interval) { }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<System.DateTimeOffset>> Interval { get { throw null; } }
+        public StacCollectionTemporalExtent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> interval) { }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Interval { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Analytics.PlanetaryComputer.StacCollectionTemporalExtent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2531,8 +2531,8 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class PlanetaryComputerClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerClientOptions> AddPlanetaryComputerClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerClientOptions> AddPlanetaryComputerClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClient, Azure.Analytics.PlanetaryComputer.PlanetaryComputerProClientOptions> AddPlanetaryComputerProClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
