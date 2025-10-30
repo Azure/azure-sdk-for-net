@@ -36,6 +36,6 @@ namespace _Type.Model.Empty
         /// <param name="emptyInputOutput"> The <see cref="EmptyInputOutput"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(EmptyInputOutput emptyInputOutput) => throw null;
 
-        public static explicit operator EmptyInputOutput(Response result) => throw null;
+        public static explicit operator EmptyInputOutput(Response response) => throw null;
     }
 }

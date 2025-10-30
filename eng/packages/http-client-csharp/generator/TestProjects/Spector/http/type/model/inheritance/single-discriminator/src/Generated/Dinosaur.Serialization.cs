@@ -35,6 +35,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 
         string IPersistableModel<Dinosaur>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator Dinosaur(Response result) => throw null;
+        public static explicit operator Dinosaur(Response response) => throw null;
     }
 }

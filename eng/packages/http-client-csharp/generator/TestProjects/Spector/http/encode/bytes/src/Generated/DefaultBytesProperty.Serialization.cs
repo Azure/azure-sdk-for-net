@@ -38,6 +38,6 @@ namespace Encode.Bytes
         /// <param name="defaultBytesProperty"> The <see cref="DefaultBytesProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DefaultBytesProperty defaultBytesProperty) => throw null;
 
-        public static explicit operator DefaultBytesProperty(Response result) => throw null;
+        public static explicit operator DefaultBytesProperty(Response response) => throw null;
     }
 }

@@ -38,6 +38,6 @@ namespace _Type.Model.Visibility
         /// <param name="visibilityModel"> The <see cref="VisibilityModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(VisibilityModel visibilityModel) => throw null;
 
-        public static explicit operator VisibilityModel(Response result) => throw null;
+        public static explicit operator VisibilityModel(Response response) => throw null;
     }
 }
