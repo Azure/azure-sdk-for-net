@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services CustomVision Training SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Training APIs.</Description>
@@ -13,6 +13,7 @@
       2) Added more information about exportable models.
     ]]>
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>

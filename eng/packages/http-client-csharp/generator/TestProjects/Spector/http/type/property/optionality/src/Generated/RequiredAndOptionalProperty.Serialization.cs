@@ -38,6 +38,6 @@ namespace _Type.Property.Optional
         /// <param name="requiredAndOptionalProperty"> The <see cref="RequiredAndOptionalProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(RequiredAndOptionalProperty requiredAndOptionalProperty) => throw null;
 
-        public static explicit operator RequiredAndOptionalProperty(Response result) => throw null;
+        public static explicit operator RequiredAndOptionalProperty(Response response) => throw null;
     }
 }

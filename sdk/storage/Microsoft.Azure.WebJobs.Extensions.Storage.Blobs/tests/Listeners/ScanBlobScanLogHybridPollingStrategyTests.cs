@@ -73,10 +73,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 {
                     return new TestAsyncPageable<BlobItem>(_blobItems);
                 });
+            _blobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    return new TestAsyncPageable<BlobItem>(_blobItems);
+                });
             _secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                  .Returns(() =>
                  {
                      return new TestAsyncPageable<BlobItem>(_secondBlobItems);
+                 });
+            _secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(_secondBlobItems);
+                 });
+            _logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(new List<BlobItem>());
                  });
             _logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                  .Returns(() =>

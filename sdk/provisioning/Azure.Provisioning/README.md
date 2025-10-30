@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning makes it easy to declaratively specify Azure infrastructure natively in .NET.
+`Azure.Provisioning` makes it easy to declaratively specify Azure infrastructure natively in .NET.
 
 ## Getting started
 
@@ -20,13 +20,120 @@ dotnet add package Azure.Provisioning
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use `azd` to deploy your infrastructure to Azure directly without needing to write or maintain `bicep` or arm templates.
+
+### `BicepValue` types
+
+`BicepValue` types are the foundation of `Azure.Provisioning`, providing a flexible type system that can represent literal .NET values, Bicep expressions, or unset properties. These types enable strongly-typed infrastructure definition while maintaining the flexibility needed for dynamic resource configuration.
+
+#### Core `BicepValue` Types
+
+**`BicepValue<T>`** - Represents a strongly-typed value that can be:
+- A literal .NET value of type `T`
+- A Bicep expression that evaluates to type `T`
+- An unset value (usually one should get this state from the property of a constructed resource/construct)
+
+```csharp
+// Literal value
+BicepValue<string> literalName = "my-storage-account";
+
+// Expression value
+BicepValue<string> expressionName = BicepFunction.CreateGuid();
+
+// Unset value (can be assigned later)
+BicepValue<string> unsetName = storageAccount.Name;
+```
+
+**`BicepList<T>`** - Represents a collection of `BicepValue<T>` items that can be:
+- A list of literal values
+- A Bicep expression that evaluates to an array
+- An unset list (usually one should get this state from the property of a constructed resource/construct)
+
+```csharp
+// Literal list
+BicepList<string> tagNames = new() { "Environment", "Project", "Owner" };
+
+// Expression list (referencing a parameter)
+BicepList<string> dynamicTags = parameterReference;
+
+// Adding items
+tagNames.Add("CostCenter");
+```
+
+**`BicepDictionary<T>`** - Represents a key-value collection where values are `BicepValue<T>`:
+- A dictionary of literal key-value pairs
+- A Bicep expression that evaluates to an object
+- An unset dictionary (usually one should get this state from the property of a constructed resource/construct)
+
+```csharp
+// Literal dictionary
+BicepDictionary<string> tags = new()
+{
+    ["Environment"] = "Production",
+    ["Project"] = "WebApp",
+    ["Owner"] = "DevTeam"
+};
+
+// Expression dictionary
+BicepDictionary<string> dynamicTags = parameterReference;
+
+// Accessing values
+tags["CostCenter"] = "12345";
+```
+
+#### Working with Azure Resources
+
+**`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualMachine`, `AppService`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
+
+**`ProvisionableConstruct`** - Base class for infrastructure components that group related properties and resources. Most users will work with concrete implementations like `StorageAccountSku`, `VirtualNetworkIPConfiguration`, etc. An instance of type `ProvisionableConstruct` usually corresponds to an object definition statement in `bicep` language.
+
+Here's how you use the provided Azure resource classes:
+
+```csharp
+// Create a storage account with BicepValue properties
+StorageAccount storage = new("myStorage", StorageAccount.ResourceVersions.V2023_01_01)
+{
+    // Set literal values
+    Name = "mystorageaccount",
+    Kind = StorageKind.StorageV2,
+
+    // Use BicepValue for dynamic configuration
+    Location = locationParameter, // Reference a parameter
+
+    // Configure nested properties
+    Sku = new StorageSku
+    {
+        Name = StorageSkuName.StandardLrs
+    },
+
+    // Use BicepList for collections
+    Tags = new BicepDictionary<string>
+    {
+        ["Environment"] = "Production",
+        ["Project"] = environmentParameter // Mix literal and dynamic values
+    }
+};
+
+// Access output properties (these are BicepValue<T> that reference the deployed resource)
+BicepValue<string> storageAccountId = storage.Id;
+BicepValue<Uri> primaryBlobEndpoint = storage.PrimaryEndpoints.BlobUri;
+
+// Reference properties in other resources
+var appService = new AppService("myApp")
+{
+    // Reference the storage account's connection string
+    ConnectionStrings = new BicepDictionary<string>
+    {
+        ["Storage"] = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};AccountKey={storage.GetKeys().Value[0].Value}")
+    }
+};
+```
 
 ## Examples
 
 ### Create Basic Infrastructure
 
-This example demonstrates how to create basic Azure infrastructure using the Azure Provisioning framework, including a storage account with blob services and output values.
+This example demonstrates how to create basic Azure infrastructure using the `Azure.Provisioning` framework, including a storage account with blob services and output values.
 
 ```C# Snippet:ProvisioningBasic
 Infrastructure infra = new();

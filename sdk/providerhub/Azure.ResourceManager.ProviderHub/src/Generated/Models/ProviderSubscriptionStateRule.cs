@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionStateRule"/>. </summary>
-        /// <param name="state"></param>
-        /// <param name="allowedActions"></param>
+        /// <param name="state"> The subscription state. </param>
+        /// <param name="allowedActions"> The allowed actions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProviderSubscriptionStateRule(ProviderSubscriptionState? state, IList<string> allowedActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the state. </summary>
+        /// <summary> The subscription state. </summary>
         public ProviderSubscriptionState? State { get; set; }
-        /// <summary> Gets the allowed actions. </summary>
+        /// <summary> The allowed actions. </summary>
         public IList<string> AllowedActions { get; }
     }
 }

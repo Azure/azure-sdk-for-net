@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.HybridNetwork</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider HybridNetwork.</Description>
     <PackageTags>azure;management;arm;resource manager;hybridnetwork</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

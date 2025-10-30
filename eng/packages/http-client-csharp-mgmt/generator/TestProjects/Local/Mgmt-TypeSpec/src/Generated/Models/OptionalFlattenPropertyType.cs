@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The OptionalFlattenPropertyType. </summary>
     internal partial class OptionalFlattenPropertyType
@@ -38,6 +38,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the RandomCollectionProp. </summary>
+        [WirePath("randomCollectionProp")]
         public IList<string> RandomCollectionProp { get; }
     }
 }

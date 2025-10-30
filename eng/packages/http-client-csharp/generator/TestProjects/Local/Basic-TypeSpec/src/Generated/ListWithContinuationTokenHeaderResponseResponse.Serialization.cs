@@ -150,10 +150,9 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListWithContinuationTokenHeaderResponseResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ListWithContinuationTokenHeaderResponseResponse"/> from. </param>
-        public static explicit operator ListWithContinuationTokenHeaderResponseResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListWithContinuationTokenHeaderResponseResponse"/> from. </param>
+        public static explicit operator ListWithContinuationTokenHeaderResponseResponse(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeListWithContinuationTokenHeaderResponseResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

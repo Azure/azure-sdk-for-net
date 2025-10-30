@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Nginx</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Nginx.NginxPlus.</Description>
     <PackageTags>azure;management;arm;resource manager;nginx</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

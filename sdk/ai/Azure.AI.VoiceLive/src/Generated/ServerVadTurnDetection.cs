@@ -22,8 +22,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"> Gets or sets the PrefixPaddingMs. </param>
-        /// <param name="silenceDurationMs"> Gets or sets the SilenceDurationMs. </param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
         /// <param name="endOfUtteranceDetection"></param>
         /// <param name="autoTruncate"></param>
         /// <param name="createResponse"></param>

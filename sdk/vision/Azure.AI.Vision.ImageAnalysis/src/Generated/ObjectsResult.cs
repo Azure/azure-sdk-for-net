@@ -14,60 +14,23 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a list of physical object detected in an image and their location. </summary>
     public partial class ObjectsResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal ObjectsResult(IEnumerable<DetectedObject> values)
         {
-            Argument.AssertNotNull(values, nameof(values));
-
             Values = values.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectsResult"/>. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectsResult(IReadOnlyList<DetectedObject> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ObjectsResult(IReadOnlyList<DetectedObject> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ObjectsResult"/> for deserialization. </summary>
-        internal ObjectsResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of physical object detected in an image and their location. </summary>

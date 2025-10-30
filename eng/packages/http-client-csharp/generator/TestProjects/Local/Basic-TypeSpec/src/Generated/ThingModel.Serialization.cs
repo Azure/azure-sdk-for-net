@@ -62,17 +62,17 @@ namespace BasicTypeSpec
             if (Optional.IsDefined(OptionalLiteralString))
             {
                 writer.WritePropertyName("optionalLiteralString"u8);
-                writer.WriteStringValue(OptionalLiteralString);
+                writer.WriteStringValue(OptionalLiteralString.Value.ToString());
             }
             if (Optional.IsDefined(OptionalLiteralInt))
             {
                 writer.WritePropertyName("optionalLiteralInt"u8);
-                writer.WriteNumberValue(OptionalLiteralInt.Value);
+                writer.WriteNumberValue(OptionalLiteralInt.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(OptionalLiteralFloat))
             {
                 writer.WritePropertyName("optionalLiteralFloat"u8);
-                writer.WriteNumberValue(OptionalLiteralFloat.Value);
+                writer.WriteNumberValue(OptionalLiteralFloat.Value.ToSerialSingle());
             }
             if (Optional.IsDefined(OptionalLiteralBool))
             {
@@ -153,9 +153,9 @@ namespace BasicTypeSpec
             int requiredLiteralInt = default;
             float requiredLiteralFloat = default;
             bool requiredLiteralBool = default;
-            string optionalLiteralString = default;
-            int? optionalLiteralInt = default;
-            float? optionalLiteralFloat = default;
+            ThingModelOptionalLiteralString? optionalLiteralString = default;
+            ThingModelOptionalLiteralInt? optionalLiteralInt = default;
+            ThingModelOptionalLiteralFloat? optionalLiteralFloat = default;
             bool? optionalLiteralBool = default;
             string requiredBadDescription = default;
             IList<int> optionalNullableList = default;
@@ -195,7 +195,11 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("optionalLiteralString"u8))
                 {
-                    optionalLiteralString = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    optionalLiteralString = new ThingModelOptionalLiteralString(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("optionalLiteralInt"u8))
@@ -204,7 +208,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    optionalLiteralInt = prop.Value.GetInt32();
+                    optionalLiteralInt = new ThingModelOptionalLiteralInt(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("optionalLiteralFloat"u8))
@@ -213,7 +217,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    optionalLiteralFloat = prop.Value.GetSingle();
+                    optionalLiteralFloat = new ThingModelOptionalLiteralFloat(prop.Value.GetSingle());
                     continue;
                 }
                 if (prop.NameEquals("optionalLiteralBool"u8))
@@ -333,10 +337,9 @@ namespace BasicTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
-        public static explicit operator ThingModel(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
+        public static explicit operator ThingModel(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
