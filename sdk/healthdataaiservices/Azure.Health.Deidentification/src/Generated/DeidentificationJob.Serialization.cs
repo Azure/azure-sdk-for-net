@@ -293,10 +293,9 @@ namespace Azure.Health.Deidentification
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationJob"/> from. </param>
-        public static explicit operator DeidentificationJob(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationJob"/> from. </param>
+        public static explicit operator DeidentificationJob(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeDeidentificationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

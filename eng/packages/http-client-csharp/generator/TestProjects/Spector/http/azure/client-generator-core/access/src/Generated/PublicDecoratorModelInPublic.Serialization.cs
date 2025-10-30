@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation
 
         string IPersistableModel<PublicDecoratorModelInPublic>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator PublicDecoratorModelInPublic(Response result) => throw null;
+        public static explicit operator PublicDecoratorModelInPublic(Response response) => throw null;
     }
 }

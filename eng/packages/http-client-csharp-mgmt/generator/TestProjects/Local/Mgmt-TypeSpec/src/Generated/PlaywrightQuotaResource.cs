@@ -101,7 +101,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

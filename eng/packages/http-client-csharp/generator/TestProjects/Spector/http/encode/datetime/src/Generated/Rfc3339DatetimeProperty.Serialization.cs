@@ -38,6 +38,6 @@ namespace Encode.Datetime
         /// <param name="rfc3339DatetimeProperty"> The <see cref="Rfc3339DatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Rfc3339DatetimeProperty rfc3339DatetimeProperty) => throw null;
 
-        public static explicit operator Rfc3339DatetimeProperty(Response result) => throw null;
+        public static explicit operator Rfc3339DatetimeProperty(Response response) => throw null;
     }
 }

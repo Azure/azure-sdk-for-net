@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="isFloatAdditionalProperties"> The <see cref="IsFloatAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsFloatAdditionalProperties isFloatAdditionalProperties) => throw null;
 
-        public static explicit operator IsFloatAdditionalProperties(Response result) => throw null;
+        public static explicit operator IsFloatAdditionalProperties(Response response) => throw null;
     }
 }
