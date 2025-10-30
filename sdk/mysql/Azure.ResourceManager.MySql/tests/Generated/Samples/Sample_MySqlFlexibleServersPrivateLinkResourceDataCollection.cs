@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAPrivateLinkResourceForMySQL()
         {
-            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesGet.json
+            // Generated from example definition: 2024-12-30/PrivateLinkResourcesGet.json
             // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsPrivateLinkResourcesForMySQL()
         {
-            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesList.json
+            // Generated from example definition: 2024-12-30/PrivateLinkResourcesList.json
             // this example is just showing the usage of "PrivateLinkResource_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAPrivateLinkResourceForMySQL()
         {
-            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesGet.json
+            // Generated from example definition: 2024-12-30/PrivateLinkResourcesGet.json
             // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAPrivateLinkResourceForMySQL()
         {
-            // Generated from example definition: 2024-12-01-preview/PrivateLinkResourcesGet.json
+            // Generated from example definition: 2024-12-30/PrivateLinkResourcesGet.json
             // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

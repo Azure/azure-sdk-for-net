@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseGet.json
+            // Generated from example definition: 2024-12-30/DatabaseGet.json
             // this example is just showing the usage of "Database_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseDelete.json
+            // Generated from example definition: 2024-12-30/DatabaseDelete.json
             // this example is just showing the usage of "Database_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseCreate.json
+            // Generated from example definition: 2024-12-30/DatabaseCreate.json
             // this example is just showing the usage of "Database_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

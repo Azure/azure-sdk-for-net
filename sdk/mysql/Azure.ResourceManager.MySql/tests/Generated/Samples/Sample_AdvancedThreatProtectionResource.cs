@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: 2024-12-01-preview/AdvancedThreatProtectionSettingsGet.json
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsGet.json
             // this example is just showing the usage of "AdvancedThreatProtection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DisableAServerSAdvancedThreatProtectionSettingsWithAllParameters()
         {
-            // Generated from example definition: 2024-12-01-preview/AdvancedThreatProtectionSettingsPatchDisabled.json
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsPatchDisabled.json
             // this example is just showing the usage of "AdvancedThreatProtection_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_EnableAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: 2024-12-01-preview/AdvancedThreatProtectionSettingsPatchEnabled.json
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsPatchEnabled.json
             // this example is just showing the usage of "AdvancedThreatProtection_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

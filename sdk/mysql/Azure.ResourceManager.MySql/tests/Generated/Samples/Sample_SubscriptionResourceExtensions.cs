@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMySqlFlexibleServers_ListServersInASubscription()
         {
-            // Generated from example definition: 2024-12-01-preview/ServersList.json
+            // Generated from example definition: 2024-12-30/ServersList.json
             // this example is just showing the usage of "Server_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLocationBasedCapabilities_CapabilitiesList()
         {
-            // Generated from example definition: 2024-12-01-preview/CapabilitiesByLocationList.json
+            // Generated from example definition: 2024-12-30/CapabilitiesByLocationList.json
             // this example is just showing the usage of "LocationBasedCapabilities_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ExecuteCheckVirtualNetworkSubnetUsage_CheckVirtualNetworkSubnetUsage()
         {
-            // Generated from example definition: 2024-12-01-preview/CheckVirtualNetworkSubnetUsage.json
+            // Generated from example definition: 2024-12-30/CheckVirtualNetworkSubnetUsage.json
             // this example is just showing the usage of "CheckVirtualNetworkSubnetUsage_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckMySqlFlexibleServerNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: 2024-12-01-preview/CheckNameAvailability.json
+            // Generated from example definition: 2024-12-30/CheckNameAvailability.json
             // this example is just showing the usage of "CheckNameAvailability_CheckMySqlFlexibleServerNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckMySqlFlexibleServerNameAvailabilityWithoutLocation_CheckNameAvailability()
         {
-            // Generated from example definition: 2024-12-01-preview/CheckNameAvailabilityWithoutLocation.json
+            // Generated from example definition: 2024-12-30/CheckNameAvailabilityWithoutLocation.json
             // this example is just showing the usage of "CheckNameAvailabilityWithoutLocation_CheckMySqlFlexibleServerNameAvailabilityWithoutLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

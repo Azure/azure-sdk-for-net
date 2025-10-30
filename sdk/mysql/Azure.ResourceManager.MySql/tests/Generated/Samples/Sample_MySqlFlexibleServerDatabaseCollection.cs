@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseCreate.json
+            // Generated from example definition: 2024-12-30/DatabaseCreate.json
             // this example is just showing the usage of "Database_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseGet.json
+            // Generated from example definition: 2024-12-30/DatabaseGet.json
             // this example is just showing the usage of "Database_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDatabasesInAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabasesListByServer.json
+            // Generated from example definition: 2024-12-30/DatabasesListByServer.json
             // this example is just showing the usage of "Database_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseGet.json
+            // Generated from example definition: 2024-12-30/DatabaseGet.json
             // this example is just showing the usage of "Database_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADatabase()
         {
-            // Generated from example definition: 2024-12-01-preview/DatabaseGet.json
+            // Generated from example definition: 2024-12-30/DatabaseGet.json
             // this example is just showing the usage of "Database_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

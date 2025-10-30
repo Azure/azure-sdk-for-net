@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerGet.json
+            // Generated from example definition: 2024-12-30/ServerGet.json
             // this example is just showing the usage of "Server_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerWithVnet()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerGetWithVnet.json
+            // Generated from example definition: 2024-12-30/ServerGetWithVnet.json
             // this example is just showing the usage of "Server_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerDelete.json
+            // Generated from example definition: 2024-12-30/ServerDelete.json
             // this example is just showing the usage of "Server_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerToOptInVirtualCanary()
         {
-            // Generated from example definition: 2024-12-01-preview/MaintenancePolicyPatchOptInVirtualCanary.json
+            // Generated from example definition: 2024-12-30/MaintenancePolicyPatchOptInVirtualCanary.json
             // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerToOptOutVirtualCanary()
         {
-            // Generated from example definition: 2024-12-01-preview/MaintenancePolicyPatchOptOutVirtualCanary.json
+            // Generated from example definition: 2024-12-30/MaintenancePolicyPatchOptOutVirtualCanary.json
             // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerUpdate.json
+            // Generated from example definition: 2024-12-30/ServerUpdate.json
             // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerWithByok()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerUpdateWithBYOK.json
+            // Generated from example definition: 2024-12-30/ServerUpdateWithBYOK.json
             // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerCustomerMaintenanceWindow()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerUpdateWithCustomerMaintenanceWindow.json
+            // Generated from example definition: 2024-12-30/ServerUpdateWithCustomerMaintenanceWindow.json
             // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Failover_RestartAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerFailover.json
+            // Generated from example definition: 2024-12-30/ServerFailover.json
             // this example is just showing the usage of "Servers_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateEstimateHighAvailability_ValidateAValidationAndEstimationOfHighAvailability()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerValidateEstimateHighAvailability.json
+            // Generated from example definition: 2024-12-30/ServerValidateEstimateHighAvailability.json
             // this example is just showing the usage of "Servers_ValidateEstimateHighAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerRestart.json
+            // Generated from example definition: 2024-12-30/ServerRestart.json
             // this example is just showing the usage of "Servers_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerStart.json
+            // Generated from example definition: 2024-12-30/ServerStart.json
             // this example is just showing the usage of "Servers_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Stop_StopAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerStop.json
+            // Generated from example definition: 2024-12-30/ServerStop.json
             // this example is just showing the usage of "Servers_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetGtid_ResetGTIDOnAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerResetGtid.json
+            // Generated from example definition: 2024-12-30/ServerResetGtid.json
             // this example is just showing the usage of "Servers_ResetGtid" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DetachVnet_DetachVNetOnAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/ServerDetachVNet.json
+            // Generated from example definition: 2024-12-30/ServerDetachVNet.json
             // this example is just showing the usage of "Servers_DetachVnet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateBackupAndExport_CreateAndExportBackup()
         {
-            // Generated from example definition: 2024-12-01-preview/BackupAndExport.json
+            // Generated from example definition: 2024-12-30/BackupAndExport.json
             // this example is just showing the usage of "BackupAndExport_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateBackup_ValidateBackup()
         {
-            // Generated from example definition: 2024-12-01-preview/ValidateBackup.json
+            // Generated from example definition: 2024-12-30/ValidateBackup.json
             // this example is just showing the usage of "BackupAndExport_ValidateBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogFiles_ListAllServerLogFilesForAServer()
         {
-            // Generated from example definition: 2024-12-01-preview/LogFilesListByServer.json
+            // Generated from example definition: 2024-12-30/LogFilesListByServer.json
             // this example is just showing the usage of "LogFiles_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CutoverMigrationServersMigration_CutoverMigrationForMySQLImport()
         {
-            // Generated from example definition: 2024-12-01-preview/CutoverMigration.json
+            // Generated from example definition: 2024-12-30/CutoverMigration.json
             // this example is just showing the usage of "ServersMigration_CutoverMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateConfigurations_ConfigurationList()
         {
-            // Generated from example definition: 2024-12-01-preview/ConfigurationsBatchUpdate.json
+            // Generated from example definition: 2024-12-30/ConfigurationsBatchUpdate.json
             // this example is just showing the usage of "Configurations_UpdateConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
