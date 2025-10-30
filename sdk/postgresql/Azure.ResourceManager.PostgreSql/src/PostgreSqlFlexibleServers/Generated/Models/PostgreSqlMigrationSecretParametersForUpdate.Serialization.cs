@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class MigrationSecretParametersForPatch : IUtf8JsonSerializable, IJsonModel<MigrationSecretParametersForPatch>
+    public partial class PostgreSqlMigrationSecretParametersForUpdate : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationSecretParametersForUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationSecretParametersForPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationSecretParametersForUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MigrationSecretParametersForPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlMigrationSecretParametersForUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSecretParametersForPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationSecretParametersForPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParametersForUpdate)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(AdminCredentials))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        MigrationSecretParametersForPatch IJsonModel<MigrationSecretParametersForPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlMigrationSecretParametersForUpdate IJsonModel<PostgreSqlMigrationSecretParametersForUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSecretParametersForPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationSecretParametersForPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParametersForUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationSecretParametersForPatch(document.RootElement, options);
+            return DeserializePostgreSqlMigrationSecretParametersForUpdate(document.RootElement, options);
         }
 
-        internal static MigrationSecretParametersForPatch DeserializeMigrationSecretParametersForPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlMigrationSecretParametersForUpdate DeserializePostgreSqlMigrationSecretParametersForUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -118,38 +118,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MigrationSecretParametersForPatch(adminCredentials, sourceServerUsername, targetServerUsername, serializedAdditionalRawData);
+            return new PostgreSqlMigrationSecretParametersForUpdate(adminCredentials, sourceServerUsername, targetServerUsername, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MigrationSecretParametersForPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSecretParametersForPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationSecretParametersForPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParametersForUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MigrationSecretParametersForPatch IPersistableModel<MigrationSecretParametersForPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlMigrationSecretParametersForUpdate IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationSecretParametersForPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrationSecretParametersForPatch(document.RootElement, options);
+                        return DeserializePostgreSqlMigrationSecretParametersForUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationSecretParametersForPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParametersForUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrationSecretParametersForPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlMigrationSecretParametersForUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

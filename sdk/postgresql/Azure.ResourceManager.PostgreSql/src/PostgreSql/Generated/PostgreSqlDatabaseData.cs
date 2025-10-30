@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlDatabase data model.
     /// Represents a Database.
+    /// Serialized Name: Database
     /// </summary>
     public partial class PostgreSqlDatabaseData : ResourceData
     {
@@ -60,8 +61,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="charset"> The charset of the database. </param>
-        /// <param name="collation"> The collation of the database. </param>
+        /// <param name="charset">
+        /// The charset of the database.
+        /// Serialized Name: Database.properties.charset
+        /// </param>
+        /// <param name="collation">
+        /// The collation of the database.
+        /// Serialized Name: Database.properties.collation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string charset, string collation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -70,10 +77,16 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The charset of the database. </summary>
+        /// <summary>
+        /// The charset of the database.
+        /// Serialized Name: Database.properties.charset
+        /// </summary>
         [WirePath("properties.charset")]
         public string Charset { get; set; }
-        /// <summary> The collation of the database. </summary>
+        /// <summary>
+        /// The collation of the database.
+        /// Serialized Name: Database.properties.collation
+        /// </summary>
         [WirePath("properties.collation")]
         public string Collation { get; set; }
     }

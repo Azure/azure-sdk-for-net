@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlVirtualNetworkRule data model.
     /// A virtual network rule.
+    /// Serialized Name: VirtualNetworkRule
     /// </summary>
     public partial class PostgreSqlVirtualNetworkRuleData : ResourceData
     {
@@ -61,9 +62,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualNetworkSubnetId"> The ARM resource id of the virtual network subnet. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
-        /// <param name="state"> Virtual Network Rule State. </param>
+        /// <param name="virtualNetworkSubnetId">
+        /// The ARM resource id of the virtual network subnet.
+        /// Serialized Name: VirtualNetworkRule.properties.virtualNetworkSubnetId
+        /// </param>
+        /// <param name="ignoreMissingVnetServiceEndpoint">
+        /// Create firewall rule before the virtual network has vnet service endpoint enabled.
+        /// Serialized Name: VirtualNetworkRule.properties.ignoreMissingVnetServiceEndpoint
+        /// </param>
+        /// <param name="state">
+        /// Virtual Network Rule State
+        /// Serialized Name: VirtualNetworkRule.properties.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, PostgreSqlVirtualNetworkRuleState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,13 +83,22 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ARM resource id of the virtual network subnet. </summary>
+        /// <summary>
+        /// The ARM resource id of the virtual network subnet.
+        /// Serialized Name: VirtualNetworkRule.properties.virtualNetworkSubnetId
+        /// </summary>
         [WirePath("properties.virtualNetworkSubnetId")]
         public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
-        /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
+        /// <summary>
+        /// Create firewall rule before the virtual network has vnet service endpoint enabled.
+        /// Serialized Name: VirtualNetworkRule.properties.ignoreMissingVnetServiceEndpoint
+        /// </summary>
         [WirePath("properties.ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
-        /// <summary> Virtual Network Rule State. </summary>
+        /// <summary>
+        /// Virtual Network Rule State
+        /// Serialized Name: VirtualNetworkRule.properties.state
+        /// </summary>
         [WirePath("properties.state")]
         public PostgreSqlVirtualNetworkRuleState? State { get; }
     }

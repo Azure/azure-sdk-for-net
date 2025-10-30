@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Migration state of a database. </summary>
+    /// <summary>
+    /// Migration state of a database.
+    /// Serialized Name: MigrationDatabaseState
+    /// </summary>
     public readonly partial struct MigrationDbState : IEquatable<MigrationDbState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string SucceededValue = "Succeeded";
         private const string CancelingValue = "Canceling";
 
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: MigrationDatabaseState.InProgress
+        /// </summary>
         public static MigrationDbState InProgress { get; } = new MigrationDbState(InProgressValue);
-        /// <summary> WaitingForCutoverTrigger. </summary>
+        /// <summary>
+        /// WaitingForCutoverTrigger
+        /// Serialized Name: MigrationDatabaseState.WaitingForCutoverTrigger
+        /// </summary>
         public static MigrationDbState WaitingForCutoverTrigger { get; } = new MigrationDbState(WaitingForCutoverTriggerValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: MigrationDatabaseState.Failed
+        /// </summary>
         public static MigrationDbState Failed { get; } = new MigrationDbState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: MigrationDatabaseState.Canceled
+        /// </summary>
         public static MigrationDbState Canceled { get; } = new MigrationDbState(CanceledValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: MigrationDatabaseState.Succeeded
+        /// </summary>
         public static MigrationDbState Succeeded { get; } = new MigrationDbState(SucceededValue);
-        /// <summary> Canceling. </summary>
+        /// <summary>
+        /// Canceling
+        /// Serialized Name: MigrationDatabaseState.Canceling
+        /// </summary>
         public static MigrationDbState Canceling { get; } = new MigrationDbState(CancelingValue);
         /// <summary> Determines if two <see cref="MigrationDbState"/> values are the same. </summary>
         public static bool operator ==(MigrationDbState left, MigrationDbState right) => left.Equals(right);

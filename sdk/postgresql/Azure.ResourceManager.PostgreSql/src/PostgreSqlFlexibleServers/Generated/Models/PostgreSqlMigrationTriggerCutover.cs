@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if cutover must be triggered for the entire migration. </summary>
+    /// <summary>
+    /// Indicates if cutover must be triggered for the entire migration.
+    /// Serialized Name: TriggerCutover
+    /// </summary>
     public readonly partial struct PostgreSqlMigrationTriggerCutover : IEquatable<PostgreSqlMigrationTriggerCutover>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary>
+        /// True
+        /// Serialized Name: TriggerCutover.True
+        /// </summary>
         public static PostgreSqlMigrationTriggerCutover True { get; } = new PostgreSqlMigrationTriggerCutover(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary>
+        /// False
+        /// Serialized Name: TriggerCutover.False
+        /// </summary>
         public static PostgreSqlMigrationTriggerCutover False { get; } = new PostgreSqlMigrationTriggerCutover(FalseValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationTriggerCutover"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationTriggerCutover left, PostgreSqlMigrationTriggerCutover right) => left.Equals(right);

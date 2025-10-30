@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Credentials of administrator users for source and target servers. </summary>
+    /// <summary>
+    /// Credentials of administrator users for source and target servers.
+    /// Serialized Name: AdminCredentialsForPatch
+    /// </summary>
     public partial class AdminCredentialsForPatch
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdminCredentialsForPatch"/>. </summary>
-        /// <param name="sourceServerPassword"> Password for the user of the source server. </param>
-        /// <param name="targetServerPassword"> Password for the user of the target server. </param>
+        /// <param name="sourceServerPassword">
+        /// Password for the user of the source server.
+        /// Serialized Name: AdminCredentialsForPatch.sourceServerPassword
+        /// </param>
+        /// <param name="targetServerPassword">
+        /// Password for the user of the target server.
+        /// Serialized Name: AdminCredentialsForPatch.targetServerPassword
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdminCredentialsForPatch(string sourceServerPassword, string targetServerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Password for the user of the source server. </summary>
+        /// <summary>
+        /// Password for the user of the source server.
+        /// Serialized Name: AdminCredentialsForPatch.sourceServerPassword
+        /// </summary>
         [WirePath("sourceServerPassword")]
         public string SourceServerPassword { get; set; }
-        /// <summary> Password for the user of the target server. </summary>
+        /// <summary>
+        /// Password for the user of the target server.
+        /// Serialized Name: AdminCredentialsForPatch.targetServerPassword
+        /// </summary>
         [WirePath("targetServerPassword")]
         public string TargetServerPassword { get; set; }
     }

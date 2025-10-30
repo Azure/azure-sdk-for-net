@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Storage Profile properties of a server. </summary>
+    /// <summary>
+    /// Storage Profile properties of a server
+    /// Serialized Name: StorageProfile
+    /// </summary>
     public partial class PostgreSqlStorageProfile
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
-        /// <param name="storageInMB"> Max storage allowed for a server. </param>
-        /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
+        /// <param name="backupRetentionDays">
+        /// Backup retention days for the server.
+        /// Serialized Name: StorageProfile.backupRetentionDays
+        /// </param>
+        /// <param name="geoRedundantBackup">
+        /// Enable Geo-redundant or not for server backup.
+        /// Serialized Name: StorageProfile.geoRedundantBackup
+        /// </param>
+        /// <param name="storageInMB">
+        /// Max storage allowed for a server.
+        /// Serialized Name: StorageProfile.storageMB
+        /// </param>
+        /// <param name="storageAutogrow">
+        /// Enable Storage Auto Grow.
+        /// Serialized Name: StorageProfile.storageAutogrow
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlStorageProfile(int? backupRetentionDays, PostgreSqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, PostgreSqlStorageAutogrow? storageAutogrow, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Backup retention days for the server. </summary>
+        /// <summary>
+        /// Backup retention days for the server.
+        /// Serialized Name: StorageProfile.backupRetentionDays
+        /// </summary>
         [WirePath("backupRetentionDays")]
         public int? BackupRetentionDays { get; set; }
-        /// <summary> Enable Geo-redundant or not for server backup. </summary>
+        /// <summary>
+        /// Enable Geo-redundant or not for server backup.
+        /// Serialized Name: StorageProfile.geoRedundantBackup
+        /// </summary>
         [WirePath("geoRedundantBackup")]
         public PostgreSqlGeoRedundantBackup? GeoRedundantBackup { get; set; }
-        /// <summary> Max storage allowed for a server. </summary>
+        /// <summary>
+        /// Max storage allowed for a server.
+        /// Serialized Name: StorageProfile.storageMB
+        /// </summary>
         [WirePath("storageMB")]
         public int? StorageInMB { get; set; }
-        /// <summary> Enable Storage Auto Grow. </summary>
+        /// <summary>
+        /// Enable Storage Auto Grow.
+        /// Serialized Name: StorageProfile.storageAutogrow
+        /// </summary>
         [WirePath("storageAutogrow")]
         public PostgreSqlStorageAutogrow? StorageAutogrow { get; set; }
     }

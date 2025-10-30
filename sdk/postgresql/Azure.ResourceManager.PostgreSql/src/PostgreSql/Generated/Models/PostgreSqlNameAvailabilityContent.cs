@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Request from client to check resource name availability. </summary>
+    /// <summary>
+    /// Request from client to check resource name availability.
+    /// Serialized Name: NameAvailabilityRequest
+    /// </summary>
     public partial class PostgreSqlNameAvailabilityContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="name">
+        /// Resource name to verify.
+        /// Serialized Name: NameAvailabilityRequest.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlNameAvailabilityContent(string name)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="name">
+        /// Resource name to verify.
+        /// Serialized Name: NameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: NameAvailabilityRequest.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,10 +84,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
         }
 
-        /// <summary> Resource name to verify. </summary>
+        /// <summary>
+        /// Resource name to verify.
+        /// Serialized Name: NameAvailabilityRequest.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Resource type used for verification. </summary>
+        /// <summary>
+        /// Resource type used for verification.
+        /// Serialized Name: NameAvailabilityRequest.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }

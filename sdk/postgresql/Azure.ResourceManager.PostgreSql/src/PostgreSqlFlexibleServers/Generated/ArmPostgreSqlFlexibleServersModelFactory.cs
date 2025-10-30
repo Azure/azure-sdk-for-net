@@ -18,8 +18,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="name">
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type.
+        /// Serialized Name: CheckNameAvailabilityRequest.type
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityContent"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerNameAvailabilityContent PostgreSqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
         {
@@ -27,11 +33,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <param name="name"> Name for which validity and availability was checked. </param>
-        /// <param name="resourceType"> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </param>
+        /// <param name="isNameAvailable">
+        /// Indicates if the resource name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the given name is not available.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Detailed reason why the given name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
+        /// <param name="name">
+        /// Name for which validity and availability was checked.
+        /// Serialized Name: NameAvailabilityModel.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'.
+        /// Serialized Name: NameAvailabilityModel.type
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null, string name = null, ResourceType? resourceType = null)
         {
@@ -45,9 +66,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/>. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <param name="isNameAvailable">
+        /// Indicates if the resource name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the given name is not available.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Detailed reason why the given name is available.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null)
         {
@@ -61,30 +91,102 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
-        /// <param name="state"> Possible states of a server. </param>
-        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
-        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
-        /// <param name="availabilityZone"> Availability zone of a server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="createMode"> Creation mode of a new server. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <param name="sku">
+        /// Compute tier and size of a server.
+        /// Serialized Name: Server.sku
+        /// </param>
+        /// <param name="identity">
+        /// User assigned managed identities assigned to the server.
+        /// Serialized Name: Server.identity
+        /// </param>
+        /// <param name="administratorLogin">
+        /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
+        /// Serialized Name: Server.properties.administratorLogin
+        /// </param>
+        /// <param name="administratorLoginPassword">
+        /// Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time.
+        /// Serialized Name: Server.properties.administratorLoginPassword
+        /// </param>
+        /// <param name="version">
+        /// Major version of PostgreSQL database engine.
+        /// Serialized Name: Server.properties.version
+        /// </param>
+        /// <param name="minorVersion">
+        /// Minor version of PostgreSQL database engine.
+        /// Serialized Name: Server.properties.minorVersion
+        /// </param>
+        /// <param name="state">
+        /// Possible states of a server.
+        /// Serialized Name: Server.properties.state
+        /// </param>
+        /// <param name="fullyQualifiedDomainName">
+        /// Fully qualified domain name of a server.
+        /// Serialized Name: Server.properties.fullyQualifiedDomainName
+        /// </param>
+        /// <param name="storage">
+        /// Storage properties of a server.
+        /// Serialized Name: Server.properties.storage
+        /// </param>
+        /// <param name="authConfig">
+        /// Authentication configuration properties of a server.
+        /// Serialized Name: Server.properties.authConfig
+        /// </param>
+        /// <param name="dataEncryption">
+        /// Data encryption properties of a server.
+        /// Serialized Name: Server.properties.dataEncryption
+        /// </param>
+        /// <param name="backup">
+        /// Backup properties of a server.
+        /// Serialized Name: Server.properties.backup
+        /// </param>
+        /// <param name="network">
+        /// Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer.
+        /// Serialized Name: Server.properties.network
+        /// </param>
+        /// <param name="highAvailability">
+        /// High availability properties of a server.
+        /// Serialized Name: Server.properties.highAvailability
+        /// </param>
+        /// <param name="maintenanceWindow">
+        /// Maintenance window properties of a server.
+        /// Serialized Name: Server.properties.maintenanceWindow
+        /// </param>
+        /// <param name="sourceServerResourceId">
+        /// Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica.
+        /// Serialized Name: Server.properties.sourceServerResourceId
+        /// </param>
+        /// <param name="pointInTimeUtc">
+        /// Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'.
+        /// Serialized Name: Server.properties.pointInTimeUTC
+        /// </param>
+        /// <param name="availabilityZone">
+        /// Availability zone of a server.
+        /// Serialized Name: Server.properties.availabilityZone
+        /// </param>
+        /// <param name="replicationRole">
+        /// Role of the server in a replication set.
+        /// Serialized Name: Server.properties.replicationRole
+        /// </param>
+        /// <param name="replicaCapacity">
+        /// Maximum number of read replicas allowed for a server.
+        /// Serialized Name: Server.properties.replicaCapacity
+        /// </param>
+        /// <param name="replica">
+        /// Read replica properties of a server. Required only in case that you want to promote a server.
+        /// Serialized Name: Server.properties.replica
+        /// </param>
+        /// <param name="createMode">
+        /// Creation mode of a new server.
+        /// Serialized Name: Server.properties.createMode
+        /// </param>
+        /// <param name="privateEndpointConnections">
+        /// List of private endpoint connections associated with the specified server.
+        /// Serialized Name: Server.properties.privateEndpointConnections
+        /// </param>
+        /// <param name="cluster">
+        /// Cluster properties of a server.
+        /// Serialized Name: Server.properties.cluster
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServersSku sku = null, ManagedServiceIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, Backup backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerCreateMode? createMode = null, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null, Cluster cluster = null)
         {
@@ -126,13 +228,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerDataEncryption"/>. </summary>
-        /// <param name="primaryKeyUri"> URI of the key in Azure Key Vault used for data encryption of the primary storage associated to a server. </param>
-        /// <param name="primaryUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the primary storage associated to a server. </param>
-        /// <param name="geoBackupKeyUri"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
-        /// <param name="geoBackupUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
-        /// <param name="keyType"> Data encryption type used by a server. </param>
-        /// <param name="primaryEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </param>
-        /// <param name="geoBackupEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </param>
+        /// <param name="primaryKeyUri">
+        /// URI of the key in Azure Key Vault used for data encryption of the primary storage associated to a server.
+        /// Serialized Name: DataEncryption.primaryKeyURI
+        /// </param>
+        /// <param name="primaryUserAssignedIdentityId">
+        /// Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the primary storage associated to a server.
+        /// Serialized Name: DataEncryption.primaryUserAssignedIdentityId
+        /// </param>
+        /// <param name="geoBackupKeyUri">
+        /// Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups.
+        /// Serialized Name: DataEncryption.geoBackupKeyURI
+        /// </param>
+        /// <param name="geoBackupUserAssignedIdentityId">
+        /// Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups.
+        /// Serialized Name: DataEncryption.geoBackupUserAssignedIdentityId
+        /// </param>
+        /// <param name="keyType">
+        /// Data encryption type used by a server.
+        /// Serialized Name: DataEncryption.type
+        /// </param>
+        /// <param name="primaryEncryptionKeyStatus">
+        /// Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server.
+        /// Serialized Name: DataEncryption.primaryEncryptionKeyStatus
+        /// </param>
+        /// <param name="geoBackupEncryptionKeyStatus">
+        /// Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups.
+        /// Serialized Name: DataEncryption.geoBackupEncryptionKeyStatus
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDataEncryption"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerDataEncryption PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri geoBackupKeyUri = null, string geoBackupUserAssignedIdentityId = null, PostgreSqlFlexibleServerKeyType? keyType = null, PostgreSqlKeyStatus? primaryEncryptionKeyStatus = null, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = null)
         {
@@ -148,9 +271,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Backup"/>. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
-        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
+        /// <param name="backupRetentionDays">
+        /// Backup retention days for the server.
+        /// Serialized Name: Backup.backupRetentionDays
+        /// </param>
+        /// <param name="geoRedundantBackup">
+        /// Indicates if the server is configured to create geographically redundant backups.
+        /// Serialized Name: Backup.geoRedundantBackup
+        /// </param>
+        /// <param name="earliestRestoreOn">
+        /// Earliest restore point time (ISO8601 format) for a server.
+        /// Serialized Name: Backup.earliestRestoreDate
+        /// </param>
         /// <returns> A new <see cref="Models.Backup"/> instance for mocking. </returns>
         public static Backup Backup(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
@@ -158,9 +290,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/>. </summary>
-        /// <param name="mode"> High availability mode for a server. </param>
-        /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
-        /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
+        /// <param name="mode">
+        /// High availability mode for a server.
+        /// Serialized Name: HighAvailability.mode
+        /// </param>
+        /// <param name="state">
+        /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
+        /// Serialized Name: HighAvailability.state
+        /// </param>
+        /// <param name="standbyAvailabilityZone">
+        /// Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant.
+        /// Serialized Name: HighAvailability.standbyAvailabilityZone
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
         {
@@ -168,11 +309,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersReplica"/>. </summary>
-        /// <param name="role"> Role of the server in a replication set. </param>
-        /// <param name="capacity"> Maximum number of read replicas allowed for a server. </param>
-        /// <param name="replicationState"> Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating. </param>
-        /// <param name="promoteMode"> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </param>
-        /// <param name="promoteOption"> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </param>
+        /// <param name="role">
+        /// Role of the server in a replication set.
+        /// Serialized Name: Replica.role
+        /// </param>
+        /// <param name="capacity">
+        /// Maximum number of read replicas allowed for a server.
+        /// Serialized Name: Replica.capacity
+        /// </param>
+        /// <param name="replicationState">
+        /// Indicates the replication state of a read replica. This property is returned only when the target server is a read replica. Possible  values are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating
+        /// Serialized Name: Replica.replicationState
+        /// </param>
+        /// <param name="promoteMode">
+        /// Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server.
+        /// Serialized Name: Replica.promoteMode
+        /// </param>
+        /// <param name="promoteOption">
+        /// Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only.
+        /// Serialized Name: Replica.promoteOption
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersReplica"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersReplica PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role = null, int? capacity = null, PostgreSqlFlexibleServersReplicationState? replicationState = null, ReadReplicaPromoteMode? promoteMode = null, ReplicationPromoteOption? promoteOption = null)
         {
@@ -190,10 +346,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="groupIds">
+        /// The group ids for the private endpoint resource.
+        /// Serialized Name: PrivateEndpointConnection.properties.groupIds
+        /// </param>
+        /// <param name="privateEndpointId">
+        /// The private endpoint resource.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </param>
+        /// <param name="connectionState">
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the private endpoint connection resource.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionData PostgreSqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, PostgreSqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
@@ -212,10 +380,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
-        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
-        /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
-        /// <param name="identityType"> Types of identities associated with a server. </param>
-        /// <param name="tenantId"> Identifier of the tenant of a server. </param>
+        /// <param name="userAssignedIdentities">
+        /// Map of user assigned managed identities.
+        /// Serialized Name: UserAssignedIdentity.userAssignedIdentities
+        /// </param>
+        /// <param name="principalId">
+        /// Identifier of the object of the service principal associated to the user assigned managed identity.
+        /// Serialized Name: UserAssignedIdentity.principalId
+        /// </param>
+        /// <param name="identityType">
+        /// Types of identities associated with a server.
+        /// Serialized Name: UserAssignedIdentity.type
+        /// </param>
+        /// <param name="tenantId">
+        /// Identifier of the tenant of a server.
+        /// Serialized Name: UserAssignedIdentity.tenantId
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null, string principalId = null, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
         {
@@ -225,20 +405,62 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Name of flexible servers capabilities. </param>
-        /// <param name="supportedServerEditions"> List of supported compute tiers. </param>
-        /// <param name="supportedServerVersions"> List of supported major versions of PostgreSQL database engine. </param>
-        /// <param name="supportedFeatures"> Features supported. </param>
-        /// <param name="supportFastProvisioning"> Indicates if fast provisioning is supported. 'Enabled' means fast provisioning is supported. 'Disabled' stands for fast provisioning is not supported. Will be deprecated in the future. Look to Supported Features for 'FastProvisioning'. </param>
-        /// <param name="supportedFastProvisioningEditions"> List of compute tiers supporting fast provisioning. </param>
-        /// <param name="geoBackupSupported"> Indicates if geographically redundant backups are supported in this location. 'Enabled' means geographically redundant backups are supported. 'Disabled' stands for geographically redundant backup is not supported. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'. </param>
-        /// <param name="zoneRedundantHaSupported"> Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </param>
-        /// <param name="zoneRedundantHaAndGeoBackupSupported"> Indicates if high availability with zone redundancy is supported in conjunction with geographically redundant backups in this location. 'Enabled' means high availability with zone redundancy is supported in conjunction with geographically redundant backups is supported. 'Disabled' stands for high availability with zone redundancy is supported in conjunction with geographically redundant backups is not supported. Will be deprecated in the future. Look to Supported Features for 'ZoneRedundantHaAndGeoBackup'. </param>
-        /// <param name="storageAutoGrowthSupported"> Indicates if storage autogrow is supported in this location. 'Enabled' means storage autogrow is supported. 'Disabled' stands for storage autogrow is not supported. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'. </param>
-        /// <param name="onlineResizeSupported"> Indicates if resizing the storage, without interrupting the operation of the database engine, is supported in this location for the given subscription. 'Enabled' means resizing the storage without interrupting the operation of the database engine is supported. 'Disabled' means resizing the storage without interrupting the operation of the database engine is not supported. Will be deprecated in the future. Look to Supported Features for 'OnlineResize'. </param>
-        /// <param name="restricted"> Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="name">
+        /// Name of flexible servers capabilities.
+        /// Serialized Name: Capability.name
+        /// </param>
+        /// <param name="supportedServerEditions">
+        /// List of supported compute tiers.
+        /// Serialized Name: Capability.supportedServerEditions
+        /// </param>
+        /// <param name="supportedServerVersions">
+        /// List of supported major versions of PostgreSQL database engine.
+        /// Serialized Name: Capability.supportedServerVersions
+        /// </param>
+        /// <param name="supportedFeatures">
+        /// Features supported.
+        /// Serialized Name: Capability.supportedFeatures
+        /// </param>
+        /// <param name="supportFastProvisioning">
+        /// Indicates if fast provisioning is supported. 'Enabled' means fast provisioning is supported. 'Disabled' stands for fast provisioning is not supported. Will be deprecated in the future. Look to Supported Features for 'FastProvisioning'.
+        /// Serialized Name: Capability.fastProvisioningSupported
+        /// </param>
+        /// <param name="supportedFastProvisioningEditions">
+        /// List of compute tiers supporting fast provisioning.
+        /// Serialized Name: Capability.supportedFastProvisioningEditions
+        /// </param>
+        /// <param name="geoBackupSupported">
+        /// Indicates if geographically redundant backups are supported in this location. 'Enabled' means geographically redundant backups are supported. 'Disabled' stands for geographically redundant backup is not supported. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'.
+        /// Serialized Name: Capability.geoBackupSupported
+        /// </param>
+        /// <param name="zoneRedundantHaSupported">
+        /// Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'.
+        /// Serialized Name: Capability.zoneRedundantHaSupported
+        /// </param>
+        /// <param name="zoneRedundantHaAndGeoBackupSupported">
+        /// Indicates if high availability with zone redundancy is supported in conjunction with geographically redundant backups in this location. 'Enabled' means high availability with zone redundancy is supported in conjunction with geographically redundant backups is supported. 'Disabled' stands for high availability with zone redundancy is supported in conjunction with geographically redundant backups is not supported. Will be deprecated in the future. Look to Supported Features for 'ZoneRedundantHaAndGeoBackup'.
+        /// Serialized Name: Capability.zoneRedundantHaAndGeoBackupSupported
+        /// </param>
+        /// <param name="storageAutoGrowthSupported">
+        /// Indicates if storage autogrow is supported in this location. 'Enabled' means storage autogrow is supported. 'Disabled' stands for storage autogrow is not supported. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'.
+        /// Serialized Name: Capability.storageAutoGrowthSupported
+        /// </param>
+        /// <param name="onlineResizeSupported">
+        /// Indicates if resizing the storage, without interrupting the operation of the database engine, is supported in this location for the given subscription. 'Enabled' means resizing the storage without interrupting the operation of the database engine is supported. 'Disabled' means resizing the storage without interrupting the operation of the database engine is not supported. Will be deprecated in the future. Look to Supported Features for 'OnlineResize'.
+        /// Serialized Name: Capability.onlineResizeSupported
+        /// </param>
+        /// <param name="restricted">
+        /// Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'.
+        /// Serialized Name: Capability.restricted
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, IEnumerable<SupportedFeature> supportedFeatures = null, PostgreSqlFlexibleServerFastProvisioningSupported? supportFastProvisioning = null, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = null, PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = null, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = null, PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = null, PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = null, PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = null)
         {
@@ -266,12 +488,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Name of compute tier. </param>
-        /// <param name="defaultSkuName"> Default compute name (SKU) for this computer tier. </param>
-        /// <param name="supportedStorageEditions"> List of storage editions supported by this compute tier and compute name. </param>
-        /// <param name="supportedServerSkus"> List of supported compute names (SKUs). </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="name">
+        /// Name of compute tier.
+        /// Serialized Name: ServerEditionCapability.name
+        /// </param>
+        /// <param name="defaultSkuName">
+        /// Default compute name (SKU) for this computer tier.
+        /// Serialized Name: ServerEditionCapability.defaultSkuName
+        /// </param>
+        /// <param name="supportedStorageEditions">
+        /// List of storage editions supported by this compute tier and compute name.
+        /// Serialized Name: ServerEditionCapability.supportedStorageEditions
+        /// </param>
+        /// <param name="supportedServerSkus">
+        /// List of supported compute names (SKUs).
+        /// Serialized Name: ServerEditionCapability.supportedServerSkus
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerEditionCapability PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, string defaultSkuName = null, IEnumerable<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions = null, IEnumerable<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus = null)
         {
@@ -289,11 +529,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Name of storage tier. </param>
-        /// <param name="defaultStorageSizeMb"> Default storage size (in MB) for this storage tier. </param>
-        /// <param name="supportedStorageCapabilities"> Configurations of storage supported for this storage tier. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="name">
+        /// Name of storage tier.
+        /// Serialized Name: StorageEditionCapability.name
+        /// </param>
+        /// <param name="defaultStorageSizeMb">
+        /// Default storage size (in MB) for this storage tier.
+        /// Serialized Name: StorageEditionCapability.defaultStorageSizeMb
+        /// </param>
+        /// <param name="supportedStorageCapabilities">
+        /// Configurations of storage supported for this storage tier.
+        /// Serialized Name: StorageEditionCapability.supportedStorageMb
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerStorageEditionCapability PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, long? defaultStorageSizeMb = null, IEnumerable<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities = null)
         {
@@ -309,16 +564,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="supportedIops"> Minimum IOPS supported by the storage size. </param>
-        /// <param name="supportedMaximumIops"> Maximum IOPS supported by the storage size. </param>
-        /// <param name="storageSizeInMB"> Minimum supported size (in MB) of storage. </param>
-        /// <param name="maximumStorageSizeMb"> Maximum supported size (in MB) of storage. </param>
-        /// <param name="supportedThroughput"> Minimum supported throughput (in MB/s) of storage. </param>
-        /// <param name="supportedMaximumThroughput"> Maximum supported throughput (in MB/s) of storage. </param>
-        /// <param name="defaultIopsTier"> Default IOPS for this tier and storage size. </param>
-        /// <param name="supportedIopsTiers"> List of all supported storage tiers for this tier and storage size. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="supportedIops">
+        /// Minimum IOPS supported by the storage size.
+        /// Serialized Name: StorageMbCapability.supportedIops
+        /// </param>
+        /// <param name="supportedMaximumIops">
+        /// Maximum IOPS supported by the storage size.
+        /// Serialized Name: StorageMbCapability.supportedMaximumIops
+        /// </param>
+        /// <param name="storageSizeInMB">
+        /// Minimum supported size (in MB) of storage.
+        /// Serialized Name: StorageMbCapability.storageSizeMb
+        /// </param>
+        /// <param name="maximumStorageSizeMb">
+        /// Maximum supported size (in MB) of storage.
+        /// Serialized Name: StorageMbCapability.maximumStorageSizeMb
+        /// </param>
+        /// <param name="supportedThroughput">
+        /// Minimum supported throughput (in MB/s) of storage.
+        /// Serialized Name: StorageMbCapability.supportedThroughput
+        /// </param>
+        /// <param name="supportedMaximumThroughput">
+        /// Maximum supported throughput (in MB/s) of storage.
+        /// Serialized Name: StorageMbCapability.supportedMaximumThroughput
+        /// </param>
+        /// <param name="defaultIopsTier">
+        /// Default IOPS for this tier and storage size.
+        /// Serialized Name: StorageMbCapability.defaultIopsTier
+        /// </param>
+        /// <param name="supportedIopsTiers">
+        /// List of all supported storage tiers for this tier and storage size.
+        /// Serialized Name: StorageMbCapability.supportedIopsTiers
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, long? supportedIops = null, int? supportedMaximumIops = null, long? storageSizeInMB = null, long? maximumStorageSizeMb = null, int? supportedThroughput = null, int? supportedMaximumThroughput = null, string defaultIopsTier = null, IEnumerable<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = null)
         {
@@ -339,10 +624,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Name of the storage tier. </param>
-        /// <param name="iops"> Supported IOPS for the storage tier. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="name">
+        /// Name of the storage tier.
+        /// Serialized Name: StorageTierCapability.name
+        /// </param>
+        /// <param name="iops">
+        /// Supported IOPS for the storage tier.
+        /// Serialized Name: StorageTierCapability.iops
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, long? iops = null)
         {
@@ -350,8 +647,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlBaseCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlBaseCapability"/> instance for mocking. </returns>
         public static PostgreSqlBaseCapability PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null)
         {
@@ -359,16 +662,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Name of the compute (SKU). </param>
-        /// <param name="vCores"> vCores available for this compute. </param>
-        /// <param name="supportedIops"> Maximum IOPS supported by this compute. </param>
-        /// <param name="supportedMemoryPerVcoreMb"> Supported memory (in MB) per virtual core assigned to this compute. </param>
-        /// <param name="supportedZones"> List of supported availability zones. E.g. '1', '2', '3'. </param>
-        /// <param name="supportedHaMode"> Modes of high availability supported for this compute. </param>
-        /// <param name="supportedFeatures"> Features supported. </param>
-        /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="name">
+        /// Name of the compute (SKU).
+        /// Serialized Name: ServerSkuCapability.name
+        /// </param>
+        /// <param name="vCores">
+        /// vCores available for this compute.
+        /// Serialized Name: ServerSkuCapability.vCores
+        /// </param>
+        /// <param name="supportedIops">
+        /// Maximum IOPS supported by this compute.
+        /// Serialized Name: ServerSkuCapability.supportedIops
+        /// </param>
+        /// <param name="supportedMemoryPerVcoreMb">
+        /// Supported memory (in MB) per virtual core assigned to this compute.
+        /// Serialized Name: ServerSkuCapability.supportedMemoryPerVcoreMb
+        /// </param>
+        /// <param name="supportedZones">
+        /// List of supported availability zones. E.g. '1', '2', '3'
+        /// Serialized Name: ServerSkuCapability.supportedZones
+        /// </param>
+        /// <param name="supportedHaMode">
+        /// Modes of high availability supported for this compute.
+        /// Serialized Name: ServerSkuCapability.supportedHaMode
+        /// </param>
+        /// <param name="supportedFeatures">
+        /// Features supported.
+        /// Serialized Name: ServerSkuCapability.supportedFeatures
+        /// </param>
+        /// <param name="securityProfile">
+        /// Security profile of the compute. Indicates if it's a Confidential Compute virtual machine.
+        /// Serialized Name: ServerSkuCapability.securityProfile
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<HighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
         {
@@ -391,8 +724,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SupportedFeature"/>. </summary>
-        /// <param name="name"> Name of the feature. </param>
-        /// <param name="status"> Status of the feature. Indicates if the feature is enabled or not. </param>
+        /// <param name="name">
+        /// Name of the feature.
+        /// Serialized Name: SupportedFeature.name
+        /// </param>
+        /// <param name="status">
+        /// Status of the feature. Indicates if the feature is enabled or not.
+        /// Serialized Name: SupportedFeature.status
+        /// </param>
         /// <returns> A new <see cref="Models.SupportedFeature"/> instance for mocking. </returns>
         public static SupportedFeature SupportedFeature(string name = null, FeatureStatus? status = null)
         {
@@ -400,11 +739,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="name"> Major version of PostgreSQL database engine. </param>
-        /// <param name="supportedVersionsToUpgrade"> Major versions of PostgreSQL database engine to which this version can be automatically upgraded. </param>
-        /// <param name="supportedFeatures"> Features supported. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="name">
+        /// Major version of PostgreSQL database engine.
+        /// Serialized Name: ServerVersionCapability.name
+        /// </param>
+        /// <param name="supportedVersionsToUpgrade">
+        /// Major versions of PostgreSQL database engine to which this version can be automatically upgraded.
+        /// Serialized Name: ServerVersionCapability.supportedVersionsToUpgrade
+        /// </param>
+        /// <param name="supportedFeatures">
+        /// Features supported.
+        /// Serialized Name: ServerVersionCapability.supportedFeatures
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, IEnumerable<string> supportedVersionsToUpgrade = null, IEnumerable<SupportedFeature> supportedFeatures = null)
         {
@@ -421,13 +775,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="supportedTier"> Compute tier supporting fast provisioning. </param>
-        /// <param name="supportedSku"> Compute name (SKU) supporting fast provisioning. </param>
-        /// <param name="supportedStorageGb"> Storage size (in GB) supporting fast provisioning. </param>
-        /// <param name="supportedServerVersions"> Major version of PostgreSQL database engine supporting fast provisioning. </param>
-        /// <param name="serverCount"> Count of servers in cache matching this specification. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
+        /// <param name="supportedTier">
+        /// Compute tier supporting fast provisioning.
+        /// Serialized Name: FastProvisioningEditionCapability.supportedTier
+        /// </param>
+        /// <param name="supportedSku">
+        /// Compute name (SKU) supporting fast provisioning.
+        /// Serialized Name: FastProvisioningEditionCapability.supportedSku
+        /// </param>
+        /// <param name="supportedStorageGb">
+        /// Storage size (in GB) supporting fast provisioning.
+        /// Serialized Name: FastProvisioningEditionCapability.supportedStorageGb
+        /// </param>
+        /// <param name="supportedServerVersions">
+        /// Major version of PostgreSQL database engine supporting fast provisioning.
+        /// Serialized Name: FastProvisioningEditionCapability.supportedServerVersions
+        /// </param>
+        /// <param name="serverCount">
+        /// Count of servers in cache matching this specification.
+        /// Serialized Name: FastProvisioningEditionCapability.serverCount
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerFastProvisioningEditionCapability PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string supportedTier = null, string supportedSku = null, long? supportedStorageGb = null, string supportedServerVersions = null, int? serverCount = null)
         {
@@ -443,9 +818,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
-        /// <param name="delegatedSubnetsUsage"></param>
-        /// <param name="location"> location of the delegated subnet usage. </param>
-        /// <param name="subscriptionId"> subscriptionId of the delegated subnet usage. </param>
+        /// <param name="delegatedSubnetsUsage"> Serialized Name: VirtualNetworkSubnetUsageModel.delegatedSubnetsUsage. </param>
+        /// <param name="location">
+        /// location of the delegated subnet usage
+        /// Serialized Name: VirtualNetworkSubnetUsageModel.location
+        /// </param>
+        /// <param name="subscriptionId">
+        /// subscriptionId of the delegated subnet usage
+        /// Serialized Name: VirtualNetworkSubnetUsageModel.subscriptionId
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(IEnumerable<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = null, AzureLocation? location = null, string subscriptionId = null)
         {
@@ -455,8 +836,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
-        /// <param name="subnetName"> Name of the delegated subnet for which IP addresses are in use. </param>
-        /// <param name="usage"> Number of IP addresses used by the delegated subnet. </param>
+        /// <param name="subnetName">
+        /// Name of the delegated subnet for which IP addresses are in use
+        /// Serialized Name: DelegatedSubnetUsage.subnetName
+        /// </param>
+        /// <param name="usage">
+        /// Number of IP addresses used by the delegated subnet
+        /// Serialized Name: DelegatedSubnetUsage.usage
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDelegatedSubnetUsage"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerDelegatedSubnetUsage PostgreSqlFlexibleServerDelegatedSubnetUsage(string subnetName = null, long? usage = null)
         {
@@ -464,11 +851,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaUsage"/>. </summary>
-        /// <param name="name"> Name of quota usage for servers. </param>
-        /// <param name="limit"> Quota limit. </param>
-        /// <param name="unit"> Quota unit. </param>
-        /// <param name="currentValue"> Current Quota usage value. </param>
-        /// <param name="id"> Fully qualified ARM resource Id. </param>
+        /// <param name="name">
+        /// Name of quota usage for servers
+        /// Serialized Name: QuotaUsage.name
+        /// </param>
+        /// <param name="limit">
+        /// Quota limit
+        /// Serialized Name: QuotaUsage.limit
+        /// </param>
+        /// <param name="unit">
+        /// Quota unit
+        /// Serialized Name: QuotaUsage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// Current Quota usage value
+        /// Serialized Name: QuotaUsage.currentValue
+        /// </param>
+        /// <param name="id">
+        /// Fully qualified ARM resource Id
+        /// Serialized Name: QuotaUsage.id
+        /// </param>
         /// <returns> A new <see cref="Models.QuotaUsage"/> instance for mocking. </returns>
         public static QuotaUsage QuotaUsage(NameProperty name = null, long? limit = null, string unit = null, long? currentValue = null, string id = null)
         {
@@ -482,8 +884,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NameProperty"/>. </summary>
-        /// <param name="value"> Name value. </param>
-        /// <param name="localizedValue"> Localized name. </param>
+        /// <param name="value">
+        /// Name value
+        /// Serialized Name: NameProperty.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// Localized name
+        /// Serialized Name: NameProperty.localizedValue
+        /// </param>
         /// <returns> A new <see cref="Models.NameProperty"/> instance for mocking. </returns>
         public static NameProperty NameProperty(string value = null, string localizedValue = null)
         {
@@ -491,24 +899,78 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerPatch"/>. </summary>
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="createMode"> Update mode of an existing server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
-        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="sku">
+        /// Compute tier and size of a server.
+        /// Serialized Name: ServerForPatch.sku
+        /// </param>
+        /// <param name="identity">
+        /// Describes the identity of the application.
+        /// Serialized Name: ServerForPatch.identity
+        /// </param>
+        /// <param name="tags">
+        /// Application-specific metadata in the form of key-value pairs.
+        /// Serialized Name: ServerForPatch.tags
+        /// </param>
+        /// <param name="administratorLogin">
+        /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
+        /// Serialized Name: ServerForPatch.properties.administratorLogin
+        /// </param>
+        /// <param name="administratorLoginPassword">
+        /// Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time.
+        /// Serialized Name: ServerForPatch.properties.administratorLoginPassword
+        /// </param>
+        /// <param name="version">
+        /// Major version of PostgreSQL database engine.
+        /// Serialized Name: ServerForPatch.properties.version
+        /// </param>
+        /// <param name="storage">
+        /// Storage properties of a server.
+        /// Serialized Name: ServerForPatch.properties.storage
+        /// </param>
+        /// <param name="backup">
+        /// Backup properties of a server.
+        /// Serialized Name: ServerForPatch.properties.backup
+        /// </param>
+        /// <param name="highAvailability">
+        /// High availability properties of a server.
+        /// Serialized Name: ServerForPatch.properties.highAvailability
+        /// </param>
+        /// <param name="maintenanceWindow">
+        /// Maintenance window properties of a server.
+        /// Serialized Name: ServerForPatch.properties.maintenanceWindow
+        /// </param>
+        /// <param name="authConfig">
+        /// Authentication configuration properties of a server.
+        /// Serialized Name: ServerForPatch.properties.authConfig
+        /// </param>
+        /// <param name="dataEncryption">
+        /// Data encryption properties of a server.
+        /// Serialized Name: ServerForPatch.properties.dataEncryption
+        /// </param>
+        /// <param name="createMode">
+        /// Update mode of an existing server.
+        /// Serialized Name: ServerForPatch.properties.createMode
+        /// </param>
+        /// <param name="replicationRole">
+        /// Role of the server in a replication set.
+        /// Serialized Name: ServerForPatch.properties.replicationRole
+        /// </param>
+        /// <param name="replica">
+        /// Read replica properties of a server. Required only in case that you want to promote a server.
+        /// Serialized Name: ServerForPatch.properties.replica
+        /// </param>
+        /// <param name="network">
+        /// Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer.
+        /// Serialized Name: ServerForPatch.properties.network
+        /// </param>
+        /// <param name="cluster">
+        /// Cluster properties of a server.
+        /// Serialized Name: ServerForPatch.properties.cluster
+        /// </param>
+        /// <param name="location">
+        /// The location the resource resides in.
+        /// Serialized Name: ServerForPatch.properties.location
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerBackupProperties backup = null, HighAvailabilityForPatch highAvailability = null, MaintenanceWindowForPatch maintenanceWindow = null, AuthConfigForPatch authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerNetwork network = null, Cluster cluster = null, AzureLocation? location = null)
         {
@@ -537,9 +999,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/>. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
-        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
+        /// <param name="backupRetentionDays">
+        /// Backup retention days for the server.
+        /// Serialized Name: BackupForPatch.backupRetentionDays
+        /// </param>
+        /// <param name="geoRedundantBackup">
+        /// Indicates if the server is configured to create geographically redundant backups.
+        /// Serialized Name: BackupForPatch.geoRedundantBackup
+        /// </param>
+        /// <param name="earliestRestoreOn">
+        /// Earliest restore point time (ISO8601 format) for a server.
+        /// Serialized Name: BackupForPatch.earliestRestoreDate
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
@@ -547,9 +1018,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HighAvailabilityForPatch"/>. </summary>
-        /// <param name="mode"> High availability mode for a server. </param>
-        /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
-        /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
+        /// <param name="mode">
+        /// High availability mode for a server.
+        /// Serialized Name: HighAvailabilityForPatch.mode
+        /// </param>
+        /// <param name="state">
+        /// Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant.
+        /// Serialized Name: HighAvailabilityForPatch.state
+        /// </param>
+        /// <param name="standbyAvailabilityZone">
+        /// Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant.
+        /// Serialized Name: HighAvailabilityForPatch.standbyAvailabilityZone
+        /// </param>
         /// <returns> A new <see cref="Models.HighAvailabilityForPatch"/> instance for mocking. </returns>
         public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
         {
@@ -561,10 +1041,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
-        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
-        /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
-        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
+        /// <param name="principalType">
+        /// Type of Microsoft Entra principal to which the server administrator is associated.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.principalType
+        /// </param>
+        /// <param name="principalName">
+        /// Name of the Microsoft Entra principal.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.principalName
+        /// </param>
+        /// <param name="objectId">
+        /// Object identifier of the Microsoft Entra principal.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.objectId
+        /// </param>
+        /// <param name="tenantId">
+        /// Identifier of the tenant in which the Microsoft Entra principal exists.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.tenantId
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerActiveDirectoryAdministratorData PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerPrincipalType? principalType = null, string principalName = null, Guid? objectId = null, Guid? tenantId = null)
         {
@@ -585,8 +1077,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </param>
-        /// <param name="createdOn"> Specifies the creation time (UTC) of the policy. </param>
+        /// <param name="state">
+        /// Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server.
+        /// Serialized Name: AdvancedThreatProtectionSettingsModel.properties.state
+        /// </param>
+        /// <param name="createdOn">
+        /// Specifies the creation time (UTC) of the policy.
+        /// Serialized Name: AdvancedThreatProtectionSettingsModel.properties.creationTime
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.ServerThreatProtectionSettingsModelData"/> instance for mocking. </returns>
         public static ServerThreatProtectionSettingsModelData ServerThreatProtectionSettingsModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
         {
@@ -605,9 +1103,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupType"> Type of backup. </param>
-        /// <param name="completedOn"> Time(ISO8601 format) at which the backup was completed. </param>
-        /// <param name="source"> Source of the backup. </param>
+        /// <param name="backupType">
+        /// Type of backup.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.backupType
+        /// </param>
+        /// <param name="completedOn">
+        /// Time(ISO8601 format) at which the backup was completed.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.completedTime
+        /// </param>
+        /// <param name="source">
+        /// Source of the backup.
+        /// Serialized Name: BackupAutomaticAndOnDemand.properties.source
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerBackupData PostgreSqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerBackupOrigin? backupType = null, DateTimeOffset? completedOn = null, string source = null)
         {
@@ -623,11 +1130,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Name of the migration to check for validity and availability. </param>
-        /// <param name="resourceType"> Type of resource. </param>
-        /// <param name="isNameAvailable"> Indicates if the migration name is available. </param>
-        /// <param name="reason"> Migration name availability reason. </param>
-        /// <param name="message"> Migration name availability message. </param>
+        /// <param name="name">
+        /// Name of the migration to check for validity and availability.
+        /// Serialized Name: MigrationNameAvailability.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Type of resource.
+        /// Serialized Name: MigrationNameAvailability.type
+        /// </param>
+        /// <param name="isNameAvailable">
+        /// Indicates if the migration name is available.
+        /// Serialized Name: MigrationNameAvailability.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// Migration name availability reason.
+        /// Serialized Name: MigrationNameAvailability.reason
+        /// </param>
+        /// <param name="message">
+        /// Migration name availability message.
+        /// Serialized Name: MigrationNameAvailability.message
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/> instance for mocking. </returns>
         public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = null, ResourceType resourceType = default, bool? isNameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
         {
@@ -645,17 +1167,50 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
-        /// <param name="description"> Description of the configuration (also known as server parameter). </param>
-        /// <param name="defaultValue"> Value assigned by default to the configuration (also known as server parameter). </param>
-        /// <param name="dataType"> Data type of the configuration (also known as server parameter). </param>
-        /// <param name="allowedValues"> Allowed values of the configuration (also known as server parameter). </param>
-        /// <param name="source"> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
-        /// <param name="isDynamicConfig"> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </param>
-        /// <param name="isReadOnly"> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </param>
-        /// <param name="isConfigPendingRestart"> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </param>
-        /// <param name="unit"> Units in which the configuration (also known as server parameter) value is expressed. </param>
-        /// <param name="documentationLink"> Link pointing to the documentation of the configuration (also known as server parameter). </param>
+        /// <param name="value">
+        /// Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
+        /// Serialized Name: Configuration.properties.value
+        /// </param>
+        /// <param name="description">
+        /// Description of the configuration (also known as server parameter).
+        /// Serialized Name: Configuration.properties.description
+        /// </param>
+        /// <param name="defaultValue">
+        /// Value assigned by default to the configuration (also known as server parameter).
+        /// Serialized Name: Configuration.properties.defaultValue
+        /// </param>
+        /// <param name="dataType">
+        /// Data type of the configuration (also known as server parameter).
+        /// Serialized Name: Configuration.properties.dataType
+        /// </param>
+        /// <param name="allowedValues">
+        /// Allowed values of the configuration (also known as server parameter).
+        /// Serialized Name: Configuration.properties.allowedValues
+        /// </param>
+        /// <param name="source">
+        /// Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
+        /// Serialized Name: Configuration.properties.source
+        /// </param>
+        /// <param name="isDynamicConfig">
+        /// Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect.
+        /// Serialized Name: Configuration.properties.isDynamicConfig
+        /// </param>
+        /// <param name="isReadOnly">
+        /// Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter).
+        /// Serialized Name: Configuration.properties.isReadOnly
+        /// </param>
+        /// <param name="isConfigPendingRestart">
+        /// Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect.
+        /// Serialized Name: Configuration.properties.isConfigPendingRestart
+        /// </param>
+        /// <param name="unit">
+        /// Units in which the configuration (also known as server parameter) value is expressed.
+        /// Serialized Name: Configuration.properties.unit
+        /// </param>
+        /// <param name="documentationLink">
+        /// Link pointing to the documentation of the configuration (also known as server parameter).
+        /// Serialized Name: Configuration.properties.documentationLink
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerConfigurationData PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
         {
@@ -679,17 +1234,50 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent"/>. </summary>
-        /// <param name="value"> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
-        /// <param name="description"> Description of the configuration (also known as server parameter). </param>
-        /// <param name="defaultValue"> Value assigned by default to the configuration (also known as server parameter). </param>
-        /// <param name="dataType"> Data type of the configuration (also known as server parameter). </param>
-        /// <param name="allowedValues"> Allowed values of the configuration (also known as server parameter). </param>
-        /// <param name="source"> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
-        /// <param name="isDynamicConfig"> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </param>
-        /// <param name="isReadOnly"> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </param>
-        /// <param name="isConfigPendingRestart"> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </param>
-        /// <param name="unit"> Units in which the configuration (also known as server parameter) value is expressed. </param>
-        /// <param name="documentationLink"> Link pointing to the documentation of the configuration (also known as server parameter). </param>
+        /// <param name="value">
+        /// Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
+        /// Serialized Name: ConfigurationForUpdate.properties.value
+        /// </param>
+        /// <param name="description">
+        /// Description of the configuration (also known as server parameter).
+        /// Serialized Name: ConfigurationForUpdate.properties.description
+        /// </param>
+        /// <param name="defaultValue">
+        /// Value assigned by default to the configuration (also known as server parameter).
+        /// Serialized Name: ConfigurationForUpdate.properties.defaultValue
+        /// </param>
+        /// <param name="dataType">
+        /// Data type of the configuration (also known as server parameter).
+        /// Serialized Name: ConfigurationForUpdate.properties.dataType
+        /// </param>
+        /// <param name="allowedValues">
+        /// Allowed values of the configuration (also known as server parameter).
+        /// Serialized Name: ConfigurationForUpdate.properties.allowedValues
+        /// </param>
+        /// <param name="source">
+        /// Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration.
+        /// Serialized Name: ConfigurationForUpdate.properties.source
+        /// </param>
+        /// <param name="isDynamicConfig">
+        /// Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect.
+        /// Serialized Name: ConfigurationForUpdate.properties.isDynamicConfig
+        /// </param>
+        /// <param name="isReadOnly">
+        /// Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter).
+        /// Serialized Name: ConfigurationForUpdate.properties.isReadOnly
+        /// </param>
+        /// <param name="isConfigPendingRestart">
+        /// Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect.
+        /// Serialized Name: ConfigurationForUpdate.properties.isConfigPendingRestart
+        /// </param>
+        /// <param name="unit">
+        /// Units in which the configuration (also known as server parameter) value is expressed.
+        /// Serialized Name: ConfigurationForUpdate.properties.unit
+        /// </param>
+        /// <param name="documentationLink">
+        /// Link pointing to the documentation of the configuration (also known as server parameter).
+        /// Serialized Name: ConfigurationForUpdate.properties.documentationLink
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent(string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
         {
@@ -713,8 +1301,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="charset"> Character set of the database. </param>
-        /// <param name="collation"> Collation of the database. </param>
+        /// <param name="charset">
+        /// Character set of the database.
+        /// Serialized Name: Database.properties.charset
+        /// </param>
+        /// <param name="collation">
+        /// Collation of the database.
+        /// Serialized Name: Database.properties.collation
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerDatabaseData PostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
         {
@@ -733,8 +1327,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startIPAddress"> IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </param>
-        /// <param name="endIPAddress"> IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </param>
+        /// <param name="startIPAddress">
+        /// IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format.
+        /// Serialized Name: FirewallRule.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format.
+        /// Serialized Name: FirewallRule.properties.endIpAddress
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerFirewallRuleData PostgreSqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
@@ -753,11 +1353,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> Creation timestamp of the log file. </param>
-        /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
-        /// <param name="sizeInKb"> Size (in KB) of the log file. </param>
-        /// <param name="typePropertiesType"> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </param>
-        /// <param name="uri"> URL to download the log file from. </param>
+        /// <param name="createdOn">
+        /// Creation timestamp of the log file.
+        /// Serialized Name: CapturedLog.properties.createdTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// Last modified timestamp of the log file.
+        /// Serialized Name: CapturedLog.properties.lastModifiedTime
+        /// </param>
+        /// <param name="sizeInKb">
+        /// Size (in KB) of the log file.
+        /// Serialized Name: CapturedLog.properties.sizeInKb
+        /// </param>
+        /// <param name="typePropertiesType">
+        /// Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'.
+        /// Serialized Name: CapturedLog.properties.type
+        /// </param>
+        /// <param name="uri">
+        /// URL to download the log file from.
+        /// Serialized Name: CapturedLog.properties.url
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
         {
@@ -779,16 +1394,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
-        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
-        /// <param name="backupName"> Name of Backup operation. </param>
-        /// <param name="backupMetadata"> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </param>
-        /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
-        /// <param name="startOn"> Start time of the operation. </param>
-        /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="percentComplete"> PercentageCompleted. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="datasourceSizeInBytes">
+        /// Size of datasource in bytes
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.datasourceSizeInBytes
+        /// </param>
+        /// <param name="dataTransferredInBytes">
+        /// Data transferred in bytes
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.dataTransferredInBytes
+        /// </param>
+        /// <param name="backupName">
+        /// Name of Backup operation
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupName
+        /// </param>
+        /// <param name="backupMetadata">
+        /// Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupMetadata
+        /// </param>
+        /// <param name="status">
+        /// Service-set extensible enum indicating the status of operation
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.status
+        /// </param>
+        /// <param name="startOn">
+        /// Start time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.endTime
+        /// </param>
+        /// <param name="percentComplete">
+        /// PercentageCompleted
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.percentComplete
+        /// </param>
+        /// <param name="errorCode">
+        /// The error code.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message.
+        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/> instance for mocking. </returns>
         public static PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
@@ -811,7 +1456,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
-        /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
+        /// <param name="numberOfContainers">
+        /// Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc.
+        /// Serialized Name: LtrPreBackupResponse.properties.numberOfContainers
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers = default)
         {
@@ -825,31 +1473,106 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="migrationId"> Identifier of a migration. </param>
-        /// <param name="currentStatus"> Current status of a migration. </param>
-        /// <param name="migrationInstanceResourceId"> Identifier of the private endpoint migration instance. </param>
-        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
-        /// <param name="migrationOption"> Supported option for a migration. </param>
-        /// <param name="sourceType"> Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer, PostgreSQLSingleServer, or Supabase_PostgreSQL. </param>
-        /// <param name="sslMode"> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </param>
-        /// <param name="sourceDbServerMetadata"> Metadata of source database server. </param>
-        /// <param name="targetDbServerMetadata"> Metadata of target database server. </param>
-        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
-        /// <param name="targetDbServerResourceId"> Identifier of the target database server resource. </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
-        /// <param name="secretParameters"> Migration secret parameters. </param>
-        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
-        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
-        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
-        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
-        /// <param name="migrationWindowEndTimeInUtc"> End time (UTC) for migration window. </param>
-        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
-        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
-        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
-        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
-        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <param name="migrationId">
+        /// Identifier of a migration.
+        /// Serialized Name: Migration.properties.migrationId
+        /// </param>
+        /// <param name="currentStatus">
+        /// Current status of a migration.
+        /// Serialized Name: Migration.properties.currentStatus
+        /// </param>
+        /// <param name="migrationInstanceResourceId">
+        /// Identifier of the private endpoint migration instance.
+        /// Serialized Name: Migration.properties.migrationInstanceResourceId
+        /// </param>
+        /// <param name="migrationMode">
+        /// Mode used to perform the migration: Online or Offline.
+        /// Serialized Name: Migration.properties.migrationMode
+        /// </param>
+        /// <param name="migrationOption">
+        /// Supported option for a migration.
+        /// Serialized Name: Migration.properties.migrationOption
+        /// </param>
+        /// <param name="sourceType">
+        /// Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer, PostgreSQLSingleServer, or Supabase_PostgreSQL
+        /// Serialized Name: Migration.properties.sourceType
+        /// </param>
+        /// <param name="sslMode">
+        /// SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'.
+        /// Serialized Name: Migration.properties.sslMode
+        /// </param>
+        /// <param name="sourceDbServerMetadata">
+        /// Metadata of source database server.
+        /// Serialized Name: Migration.properties.sourceDbServerMetadata
+        /// </param>
+        /// <param name="targetDbServerMetadata">
+        /// Metadata of target database server.
+        /// Serialized Name: Migration.properties.targetDbServerMetadata
+        /// </param>
+        /// <param name="sourceDbServerResourceId">
+        /// Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username.
+        /// Serialized Name: Migration.properties.sourceDbServerResourceId
+        /// </param>
+        /// <param name="sourceDbServerFullyQualifiedDomainName">
+        /// Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server.
+        /// Serialized Name: Migration.properties.sourceDbServerFullyQualifiedDomainName
+        /// </param>
+        /// <param name="targetDbServerResourceId">
+        /// Identifier of the target database server resource.
+        /// Serialized Name: Migration.properties.targetDbServerResourceId
+        /// </param>
+        /// <param name="targetDbServerFullyQualifiedDomainName">
+        /// Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server.
+        /// Serialized Name: Migration.properties.targetDbServerFullyQualifiedDomainName
+        /// </param>
+        /// <param name="secretParameters">
+        /// Migration secret parameters.
+        /// Serialized Name: Migration.properties.secretParameters
+        /// </param>
+        /// <param name="dbsToMigrate">
+        /// Names of databases to migrate.
+        /// Serialized Name: Migration.properties.dbsToMigrate
+        /// </param>
+        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded">
+        /// Indicates whether to setup logical replication on source server, if needed.
+        /// Serialized Name: Migration.properties.setupLogicalReplicationOnSourceDbIfNeeded
+        /// </param>
+        /// <param name="overwriteDbsInTarget">
+        /// Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation.
+        /// Serialized Name: Migration.properties.overwriteDbsInTarget
+        /// </param>
+        /// <param name="migrationWindowStartTimeInUtc">
+        /// Start time (UTC) for migration window.
+        /// Serialized Name: Migration.properties.migrationWindowStartTimeInUtc
+        /// </param>
+        /// <param name="migrationWindowEndTimeInUtc">
+        /// End time (UTC) for migration window.
+        /// Serialized Name: Migration.properties.migrationWindowEndTimeInUtc
+        /// </param>
+        /// <param name="migrateRoles">
+        /// Indicates if roles and permissions must be migrated.
+        /// Serialized Name: Migration.properties.migrateRoles
+        /// </param>
+        /// <param name="startDataMigration">
+        /// Indicates if data migration must start right away.
+        /// Serialized Name: Migration.properties.startDataMigration
+        /// </param>
+        /// <param name="triggerCutover">
+        /// Indicates if cutover must be triggered for the entire migration.
+        /// Serialized Name: Migration.properties.triggerCutover
+        /// </param>
+        /// <param name="dbsToTriggerCutoverOn">
+        /// When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array.
+        /// Serialized Name: Migration.properties.dbsToTriggerCutoverOn
+        /// </param>
+        /// <param name="cancel">
+        /// Indicates if cancel must be triggered for the entire migration.
+        /// Serialized Name: Migration.properties.cancel
+        /// </param>
+        /// <param name="dbsToCancelMigrationOn">
+        /// When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array.
+        /// Serialized Name: Migration.properties.dbsToCancelMigrationOn
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
         public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesEnum? migrateRoles = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
         {
@@ -894,9 +1617,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationStatus"/>. </summary>
-        /// <param name="state"> State of migration. </param>
-        /// <param name="error"> Error message, if any, for the migration state. </param>
-        /// <param name="currentSubStateDetails"> Current migration sub state details. </param>
+        /// <param name="state">
+        /// State of migration.
+        /// Serialized Name: MigrationStatus.state
+        /// </param>
+        /// <param name="error">
+        /// Error message, if any, for the migration state.
+        /// Serialized Name: MigrationStatus.error
+        /// </param>
+        /// <param name="currentSubStateDetails">
+        /// Current migration sub state details.
+        /// Serialized Name: MigrationStatus.currentSubStateDetails
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationStatus"/> instance for mocking. </returns>
         public static PostgreSqlMigrationStatus PostgreSqlMigrationStatus(PostgreSqlMigrationState? state = null, string error = null, PostgreSqlMigrationSubStateDetails currentSubStateDetails = null)
         {
@@ -904,9 +1636,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationSubStateDetails"/>. </summary>
-        /// <param name="currentSubState"> Substate of migration. </param>
-        /// <param name="dbDetails"> Dictionary of &lt;DatabaseMigrationState&gt;. </param>
-        /// <param name="validationDetails"> Details for the validation for migration. </param>
+        /// <param name="currentSubState">
+        /// Substate of migration.
+        /// Serialized Name: MigrationSubstateDetails.currentSubState
+        /// </param>
+        /// <param name="dbDetails">
+        /// Dictionary of &lt;DatabaseMigrationState&gt;
+        /// Serialized Name: MigrationSubstateDetails.dbDetails
+        /// </param>
+        /// <param name="validationDetails">
+        /// Details for the validation for migration.
+        /// Serialized Name: MigrationSubstateDetails.validationDetails
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
         public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = null, PostgreSqlFlexibleServersValidationDetails validationDetails = null)
         {
@@ -916,22 +1657,70 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DbMigrationStatus"/>. </summary>
-        /// <param name="databaseName"> Name of database. </param>
-        /// <param name="migrationState"> Migration state of a database. </param>
-        /// <param name="migrationOperation"> Migration operation of a database. </param>
-        /// <param name="startedOn"> Start time of a migration state. </param>
-        /// <param name="endedOn"> End time of a migration state. </param>
-        /// <param name="fullLoadQueuedTables"> Number of tables queued for the migration of a database. </param>
-        /// <param name="fullLoadErroredTables"> Number of tables encountering errors during the migration of a database. </param>
-        /// <param name="fullLoadLoadingTables"> Number of tables loading during the migration of a database. </param>
-        /// <param name="fullLoadCompletedTables"> Number of tables loaded during the migration of a database. </param>
-        /// <param name="cdcUpdateCounter"> Change Data Capture update counter. </param>
-        /// <param name="cdcDeleteCounter"> Change Data Capture delete counter. </param>
-        /// <param name="cdcInsertCounter"> Change Data Capture insert counter. </param>
-        /// <param name="appliedChanges"> Change Data Capture applied changes counter. </param>
-        /// <param name="incomingChanges"> Change Data Capture incoming changes counter. </param>
-        /// <param name="latency"> Lag in seconds between source and target during online phase. </param>
-        /// <param name="message"> Error message, if any, for the migration state. </param>
+        /// <param name="databaseName">
+        /// Name of database.
+        /// Serialized Name: DatabaseMigrationState.databaseName
+        /// </param>
+        /// <param name="migrationState">
+        /// Migration state of a database.
+        /// Serialized Name: DatabaseMigrationState.migrationState
+        /// </param>
+        /// <param name="migrationOperation">
+        /// Migration operation of a database.
+        /// Serialized Name: DatabaseMigrationState.migrationOperation
+        /// </param>
+        /// <param name="startedOn">
+        /// Start time of a migration state.
+        /// Serialized Name: DatabaseMigrationState.startedOn
+        /// </param>
+        /// <param name="endedOn">
+        /// End time of a migration state.
+        /// Serialized Name: DatabaseMigrationState.endedOn
+        /// </param>
+        /// <param name="fullLoadQueuedTables">
+        /// Number of tables queued for the migration of a database.
+        /// Serialized Name: DatabaseMigrationState.fullLoadQueuedTables
+        /// </param>
+        /// <param name="fullLoadErroredTables">
+        /// Number of tables encountering errors during the migration of a database.
+        /// Serialized Name: DatabaseMigrationState.fullLoadErroredTables
+        /// </param>
+        /// <param name="fullLoadLoadingTables">
+        /// Number of tables loading during the migration of a database.
+        /// Serialized Name: DatabaseMigrationState.fullLoadLoadingTables
+        /// </param>
+        /// <param name="fullLoadCompletedTables">
+        /// Number of tables loaded during the migration of a database.
+        /// Serialized Name: DatabaseMigrationState.fullLoadCompletedTables
+        /// </param>
+        /// <param name="cdcUpdateCounter">
+        /// Change Data Capture update counter.
+        /// Serialized Name: DatabaseMigrationState.cdcUpdateCounter
+        /// </param>
+        /// <param name="cdcDeleteCounter">
+        /// Change Data Capture delete counter.
+        /// Serialized Name: DatabaseMigrationState.cdcDeleteCounter
+        /// </param>
+        /// <param name="cdcInsertCounter">
+        /// Change Data Capture insert counter.
+        /// Serialized Name: DatabaseMigrationState.cdcInsertCounter
+        /// </param>
+        /// <param name="appliedChanges">
+        /// Change Data Capture applied changes counter.
+        /// Serialized Name: DatabaseMigrationState.appliedChanges
+        /// </param>
+        /// <param name="incomingChanges">
+        /// Change Data Capture incoming changes counter.
+        /// Serialized Name: DatabaseMigrationState.incomingChanges
+        /// </param>
+        /// <param name="latency">
+        /// Lag in seconds between source and target during online phase.
+        /// Serialized Name: DatabaseMigrationState.latency
+        /// </param>
+        /// <param name="message">
+        /// Error message, if any, for the migration state.
+        /// Serialized Name: DatabaseMigrationState.message
+        /// </param>
         /// <returns> A new <see cref="Models.DbMigrationStatus"/> instance for mocking. </returns>
         public static DbMigrationStatus DbMigrationStatus(string databaseName = null, MigrationDbState? migrationState = null, string migrationOperation = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, int? fullLoadQueuedTables = null, int? fullLoadErroredTables = null, int? fullLoadLoadingTables = null, int? fullLoadCompletedTables = null, int? cdcUpdateCounter = null, int? cdcDeleteCounter = null, int? cdcInsertCounter = null, int? appliedChanges = null, int? incomingChanges = null, int? latency = null, string message = null)
         {
@@ -956,11 +1745,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/>. </summary>
-        /// <param name="status"> Validation status for migration. </param>
-        /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
-        /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
-        /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
-        /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
+        /// <param name="status">
+        /// Validation status for migration.
+        /// Serialized Name: ValidationDetails.status
+        /// </param>
+        /// <param name="validationStartTimeInUtc">
+        /// Start time (UTC) for validation.
+        /// Serialized Name: ValidationDetails.validationStartTimeInUtc
+        /// </param>
+        /// <param name="validationEndTimeInUtc">
+        /// End time (UTC) for validation.
+        /// Serialized Name: ValidationDetails.validationEndTimeInUtc
+        /// </param>
+        /// <param name="serverLevelValidationDetails">
+        /// Details of server level validations.
+        /// Serialized Name: ValidationDetails.serverLevelValidationDetails
+        /// </param>
+        /// <param name="dbLevelValidationDetails">
+        /// Details of server level validations.
+        /// Serialized Name: ValidationDetails.dbLevelValidationDetails
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = null, DateTimeOffset? validationStartTimeInUtc = null, DateTimeOffset? validationEndTimeInUtc = null, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = null, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = null)
         {
@@ -977,9 +1781,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidationSummaryItem"/>. </summary>
-        /// <param name="validationSummaryItemType"> Validation type. </param>
-        /// <param name="state"> Validation status for migration. </param>
-        /// <param name="messages"> Validation messages. </param>
+        /// <param name="validationSummaryItemType">
+        /// Validation type.
+        /// Serialized Name: ValidationSummaryItem.type
+        /// </param>
+        /// <param name="state">
+        /// Validation status for migration.
+        /// Serialized Name: ValidationSummaryItem.state
+        /// </param>
+        /// <param name="messages">
+        /// Validation messages.
+        /// Serialized Name: ValidationSummaryItem.messages
+        /// </param>
         /// <returns> A new <see cref="Models.ValidationSummaryItem"/> instance for mocking. </returns>
         public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, PostgreSqlFlexibleServersValidationState? state = null, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messages = null)
         {
@@ -989,8 +1802,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/>. </summary>
-        /// <param name="state"> Severity of validation message. </param>
-        /// <param name="message"> Validation message string. </param>
+        /// <param name="state">
+        /// Severity of validation message.
+        /// Serialized Name: ValidationMessage.state
+        /// </param>
+        /// <param name="message">
+        /// Validation message string.
+        /// Serialized Name: ValidationMessage.message
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersValidationMessage PostgreSqlFlexibleServersValidationMessage(PostgreSqlFlexibleServersValidationState? state = null, string message = null)
         {
@@ -998,10 +1817,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DbLevelValidationStatus"/>. </summary>
-        /// <param name="databaseName"> Name of database. </param>
-        /// <param name="startedOn"> Start time of a database level validation. </param>
-        /// <param name="endedOn"> End time of a database level validation. </param>
-        /// <param name="summary"> Summary of database level validations. </param>
+        /// <param name="databaseName">
+        /// Name of database.
+        /// Serialized Name: DbLevelValidationStatus.databaseName
+        /// </param>
+        /// <param name="startedOn">
+        /// Start time of a database level validation.
+        /// Serialized Name: DbLevelValidationStatus.startedOn
+        /// </param>
+        /// <param name="endedOn">
+        /// End time of a database level validation.
+        /// Serialized Name: DbLevelValidationStatus.endedOn
+        /// </param>
+        /// <param name="summary">
+        /// Summary of database level validations.
+        /// Serialized Name: DbLevelValidationStatus.summary
+        /// </param>
         /// <returns> A new <see cref="Models.DbLevelValidationStatus"/> instance for mocking. </returns>
         public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, IEnumerable<ValidationSummaryItem> summary = null)
         {
@@ -1011,10 +1842,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerMetadata"/>. </summary>
-        /// <param name="location"> Location of database server. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="storageMb"> Storage size (in MB) for database server. </param>
-        /// <param name="sku"> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </param>
+        /// <param name="location">
+        /// Location of database server.
+        /// Serialized Name: DbServerMetadata.location
+        /// </param>
+        /// <param name="version">
+        /// Major version of PostgreSQL database engine.
+        /// Serialized Name: DbServerMetadata.version
+        /// </param>
+        /// <param name="storageMb">
+        /// Storage size (in MB) for database server.
+        /// Serialized Name: DbServerMetadata.storageMb
+        /// </param>
+        /// <param name="sku">
+        /// Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server.
+        /// Serialized Name: DbServerMetadata.sku
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlServerMetadata"/> instance for mocking. </returns>
         public static PostgreSqlServerMetadata PostgreSqlServerMetadata(AzureLocation? location = null, string version = null, int? storageMb = null, PostgreSqlFlexibleServersServerSku sku = null)
         {
@@ -1022,8 +1865,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersServerSku"/>. </summary>
-        /// <param name="name"> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <param name="name">
+        /// Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server.
+        /// Serialized Name: ServerSku.name
+        /// </param>
+        /// <param name="tier">
+        /// Tier of the compute assigned to a server.
+        /// Serialized Name: ServerSku.tier
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersServerSku"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersServerSku PostgreSqlFlexibleServersServerSku(string name = null, PostgreSqlFlexibleServerSkuTier? tier = null)
         {
@@ -1035,9 +1884,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <param name="groupId">
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </param>
+        /// <param name="requiredZoneNames">
+        /// The private link resource private link DNS zone name.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateLinkResourceData"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServersPrivateLinkResourceData PostgreSqlFlexibleServersPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
@@ -1056,16 +1914,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
-        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
-        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
-        /// <param name="backupName"> Name of Backup operation. </param>
-        /// <param name="backupMetadata"> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </param>
-        /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
-        /// <param name="startOn"> Start time of the operation. </param>
-        /// <param name="endOn"> End time of the operation. </param>
-        /// <param name="percentComplete"> PercentageCompleted. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="datasourceSizeInBytes">
+        /// Size of datasource in bytes
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.datasourceSizeInBytes
+        /// </param>
+        /// <param name="dataTransferredInBytes">
+        /// Data transferred in bytes
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.dataTransferredInBytes
+        /// </param>
+        /// <param name="backupName">
+        /// Name of Backup operation
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.backupName
+        /// </param>
+        /// <param name="backupMetadata">
+        /// Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.backupMetadata
+        /// </param>
+        /// <param name="status">
+        /// Service-set extensible enum indicating the status of operation
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.status
+        /// </param>
+        /// <param name="startOn">
+        /// Start time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time of the operation.
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.endTime
+        /// </param>
+        /// <param name="percentComplete">
+        /// PercentageCompleted
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.percentComplete
+        /// </param>
+        /// <param name="errorCode">
+        /// The error code.
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.errorCode
+        /// </param>
+        /// <param name="errorMessage">
+        /// The error message.
+        /// Serialized Name: BackupsLongTermRetentionResponse.properties.errorMessage
+        /// </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrBackupResult PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
@@ -1099,18 +1987,54 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Always empty. </param>
-        /// <param name="initialRecommendedOn"> Creation time (UTC) of this recommendation. </param>
-        /// <param name="lastRecommendedOn"> Last time (UTC) that this recommendation was produced. </param>
-        /// <param name="timesRecommended"> Number of times this recommendation has been produced. </param>
-        /// <param name="improvedQueryIds"> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </param>
-        /// <param name="recommendationReason"> Reason for this recommendation. </param>
-        /// <param name="currentState"> Current state. </param>
-        /// <param name="recommendationType"> Type for this recommendation. </param>
-        /// <param name="implementationDetails"> Implementation details for the recommended action. </param>
-        /// <param name="analyzedWorkload"> Workload information for the recommended action. </param>
-        /// <param name="estimatedImpact"> Estimated impact of this recommended action. </param>
-        /// <param name="details"> Recommendation details for the recommended action. </param>
+        /// <param name="kind">
+        /// Always empty.
+        /// Serialized Name: ObjectRecommendation.kind
+        /// </param>
+        /// <param name="initialRecommendedOn">
+        /// Creation time (UTC) of this recommendation.
+        /// Serialized Name: ObjectRecommendation.properties.initialRecommendedTime
+        /// </param>
+        /// <param name="lastRecommendedOn">
+        /// Last time (UTC) that this recommendation was produced.
+        /// Serialized Name: ObjectRecommendation.properties.lastRecommendedTime
+        /// </param>
+        /// <param name="timesRecommended">
+        /// Number of times this recommendation has been produced.
+        /// Serialized Name: ObjectRecommendation.properties.timesRecommended
+        /// </param>
+        /// <param name="improvedQueryIds">
+        /// List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations.
+        /// Serialized Name: ObjectRecommendation.properties.improvedQueryIds
+        /// </param>
+        /// <param name="recommendationReason">
+        /// Reason for this recommendation.
+        /// Serialized Name: ObjectRecommendation.properties.recommendationReason
+        /// </param>
+        /// <param name="currentState">
+        /// Current state.
+        /// Serialized Name: ObjectRecommendation.properties.currentState
+        /// </param>
+        /// <param name="recommendationType">
+        /// Type for this recommendation.
+        /// Serialized Name: ObjectRecommendation.properties.recommendationType
+        /// </param>
+        /// <param name="implementationDetails">
+        /// Implementation details for the recommended action.
+        /// Serialized Name: ObjectRecommendation.properties.implementationDetails
+        /// </param>
+        /// <param name="analyzedWorkload">
+        /// Workload information for the recommended action.
+        /// Serialized Name: ObjectRecommendation.properties.analyzedWorkload
+        /// </param>
+        /// <param name="estimatedImpact">
+        /// Estimated impact of this recommended action.
+        /// Serialized Name: ObjectRecommendation.properties.estimatedImpact
+        /// </param>
+        /// <param name="details">
+        /// Recommendation details for the recommended action.
+        /// Serialized Name: ObjectRecommendation.properties.details
+        /// </param>
         /// <returns> A new <see cref="Models.ObjectRecommendation"/> instance for mocking. </returns>
         public static ObjectRecommendation ObjectRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, DateTimeOffset? initialRecommendedOn = null, DateTimeOffset? lastRecommendedOn = null, int? timesRecommended = null, IEnumerable<long> improvedQueryIds = null, string recommendationReason = null, string currentState = null, RecommendationType? recommendationType = null, ObjectRecommendationPropertiesImplementationDetails implementationDetails = null, ObjectRecommendationPropertiesAnalyzedWorkload analyzedWorkload = null, IEnumerable<ImpactRecord> estimatedImpact = null, ObjectRecommendationDetails details = null)
         {
@@ -1138,10 +2062,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImpactRecord"/>. </summary>
-        /// <param name="dimensionName"> Dimension name. </param>
-        /// <param name="unit"> Dimension unit. </param>
-        /// <param name="queryId"> Optional property that can be used to store the identifier of the query, if the metric is for a specific query. </param>
-        /// <param name="absoluteValue"> Absolute value. </param>
+        /// <param name="dimensionName">
+        /// Dimension name.
+        /// Serialized Name: ImpactRecord.dimensionName
+        /// </param>
+        /// <param name="unit">
+        /// Dimension unit.
+        /// Serialized Name: ImpactRecord.unit
+        /// </param>
+        /// <param name="queryId">
+        /// Optional property that can be used to store the identifier of the query, if the metric is for a specific query.
+        /// Serialized Name: ImpactRecord.queryId
+        /// </param>
+        /// <param name="absoluteValue">
+        /// Absolute value.
+        /// Serialized Name: ImpactRecord.absoluteValue
+        /// </param>
         /// <returns> A new <see cref="Models.ImpactRecord"/> instance for mocking. </returns>
         public static ImpactRecord ImpactRecord(string dimensionName = null, string unit = null, long? queryId = null, double? absoluteValue = null)
         {
@@ -1149,13 +2085,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ObjectRecommendationDetails"/>. </summary>
-        /// <param name="databaseName"> Database name. </param>
-        /// <param name="schema"> Schema name. </param>
-        /// <param name="table"> Table name. </param>
-        /// <param name="indexType"> Index type. </param>
-        /// <param name="indexName"> Index name. </param>
-        /// <param name="indexColumns"> Index columns. </param>
-        /// <param name="includedColumns"> Index included columns. </param>
+        /// <param name="databaseName">
+        /// Database name.
+        /// Serialized Name: ObjectRecommendationDetails.databaseName
+        /// </param>
+        /// <param name="schema">
+        /// Schema name.
+        /// Serialized Name: ObjectRecommendationDetails.schema
+        /// </param>
+        /// <param name="table">
+        /// Table name.
+        /// Serialized Name: ObjectRecommendationDetails.table
+        /// </param>
+        /// <param name="indexType">
+        /// Index type.
+        /// Serialized Name: ObjectRecommendationDetails.indexType
+        /// </param>
+        /// <param name="indexName">
+        /// Index name.
+        /// Serialized Name: ObjectRecommendationDetails.indexName
+        /// </param>
+        /// <param name="indexColumns">
+        /// Index columns.
+        /// Serialized Name: ObjectRecommendationDetails.indexColumns
+        /// </param>
+        /// <param name="includedColumns">
+        /// Index included columns.
+        /// Serialized Name: ObjectRecommendationDetails.includedColumns
+        /// </param>
         /// <returns> A new <see cref="Models.ObjectRecommendationDetails"/> instance for mocking. </returns>
         public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = null, string schema = null, string table = null, string indexType = null, string indexName = null, IEnumerable<string> indexColumns = null, IEnumerable<string> includedColumns = null)
         {
@@ -1178,9 +2135,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
-        /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
-        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
+        /// <param name="endpointType">
+        /// Type of endpoint for the virtual endpoints.
+        /// Serialized Name: VirtualEndpoint.properties.endpointType
+        /// </param>
+        /// <param name="members">
+        /// List of servers that one of the virtual endpoints can refer to.
+        /// Serialized Name: VirtualEndpoint.properties.members
+        /// </param>
+        /// <param name="virtualEndpoints">
+        /// List of virtual endpoints for a server.
+        /// Serialized Name: VirtualEndpoint.properties.virtualEndpoints
+        /// </param>
         /// <returns> A new <see cref="FlexibleServers.VirtualEndpointResourceData"/> instance for mocking. </returns>
         public static VirtualEndpointResourceData VirtualEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
         {
@@ -1199,9 +2165,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualEndpointResourcePatch"/>. </summary>
-        /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
-        /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
-        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
+        /// <param name="endpointType">
+        /// Type of endpoint for the virtual endpoints.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.endpointType
+        /// </param>
+        /// <param name="members">
+        /// List of servers that one of the virtual endpoints can refer to.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.members
+        /// </param>
+        /// <param name="virtualEndpoints">
+        /// List of virtual endpoints for a server.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.virtualEndpoints
+        /// </param>
         /// <returns> A new <see cref="Models.VirtualEndpointResourcePatch"/> instance for mocking. </returns>
         public static VirtualEndpointResourcePatch VirtualEndpointResourcePatch(VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
         {

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
+    /// <summary>
+    /// Type of Microsoft Entra principal to which the server administrator is associated.
+    /// Serialized Name: PrincipalType
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerPrincipalType : IEquatable<PostgreSqlFlexibleServerPrincipalType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string GroupValue = "Group";
         private const string ServicePrincipalValue = "ServicePrincipal";
 
-        /// <summary> The principal type is not known or not specified. </summary>
+        /// <summary>
+        /// The principal type is not known or not specified.
+        /// Serialized Name: PrincipalType.Unknown
+        /// </summary>
         public static PostgreSqlFlexibleServerPrincipalType Unknown { get; } = new PostgreSqlFlexibleServerPrincipalType(UnknownValue);
-        /// <summary> A Microsoft Entra user. </summary>
+        /// <summary>
+        /// A Microsoft Entra user.
+        /// Serialized Name: PrincipalType.User
+        /// </summary>
         public static PostgreSqlFlexibleServerPrincipalType User { get; } = new PostgreSqlFlexibleServerPrincipalType(UserValue);
-        /// <summary> A Microsoft Entra group. </summary>
+        /// <summary>
+        /// A Microsoft Entra group.
+        /// Serialized Name: PrincipalType.Group
+        /// </summary>
         public static PostgreSqlFlexibleServerPrincipalType Group { get; } = new PostgreSqlFlexibleServerPrincipalType(GroupValue);
-        /// <summary> A Microsoft Entra service principal, typically representing an application or service identity. </summary>
+        /// <summary>
+        /// A Microsoft Entra service principal, typically representing an application or service identity
+        /// Serialized Name: PrincipalType.ServicePrincipal
+        /// </summary>
         public static PostgreSqlFlexibleServerPrincipalType ServicePrincipal { get; } = new PostgreSqlFlexibleServerPrincipalType(ServicePrincipalValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPrincipalType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPrincipalType left, PostgreSqlFlexibleServerPrincipalType right) => left.Equals(right);

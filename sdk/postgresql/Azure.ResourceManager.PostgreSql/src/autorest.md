@@ -15,8 +15,8 @@ modelerfour:
 #   prenamer: true
 use-model-reader-writer: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 batch:
   - tag: package-2020-01-01

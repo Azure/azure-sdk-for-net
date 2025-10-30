@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A state of a server that is visible to user. </summary>
+    /// <summary>
+    /// A state of a server that is visible to user.
+    /// Serialized Name: ServerState
+    /// </summary>
     public readonly partial struct PostgreSqlServerState : IEquatable<PostgreSqlServerState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string DisabledValue = "Disabled";
         private const string InaccessibleValue = "Inaccessible";
 
-        /// <summary> Ready. </summary>
+        /// <summary>
+        /// Ready
+        /// Serialized Name: ServerState.Ready
+        /// </summary>
         public static PostgreSqlServerState Ready { get; } = new PostgreSqlServerState(ReadyValue);
-        /// <summary> Dropping. </summary>
+        /// <summary>
+        /// Dropping
+        /// Serialized Name: ServerState.Dropping
+        /// </summary>
         public static PostgreSqlServerState Dropping { get; } = new PostgreSqlServerState(DroppingValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ServerState.Disabled
+        /// </summary>
         public static PostgreSqlServerState Disabled { get; } = new PostgreSqlServerState(DisabledValue);
-        /// <summary> Inaccessible. </summary>
+        /// <summary>
+        /// Inaccessible
+        /// Serialized Name: ServerState.Inaccessible
+        /// </summary>
         public static PostgreSqlServerState Inaccessible { get; } = new PostgreSqlServerState(InaccessibleValue);
         /// <summary> Determines if two <see cref="PostgreSqlServerState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlServerState left, PostgreSqlServerState right) => left.Equals(right);

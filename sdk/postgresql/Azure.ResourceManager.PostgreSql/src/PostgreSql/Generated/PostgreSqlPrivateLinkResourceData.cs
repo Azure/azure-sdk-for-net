@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary>
     /// A class representing the PostgreSqlPrivateLinkResource data model.
     /// A private link resource
+    /// Serialized Name: PrivateLinkResource
     /// </summary>
     public partial class PostgreSqlPrivateLinkResourceData : ResourceData
     {
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The private link resource group id. </param>
+        /// <param name="properties">
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +73,10 @@ namespace Azure.ResourceManager.PostgreSql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private link resource group id. </summary>
+        /// <summary>
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties
+        /// </summary>
         [WirePath("properties")]
         public PostgreSqlPrivateLinkResourceProperties Properties { get; }
     }

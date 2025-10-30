@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Implementation details for the recommended action. </summary>
+    /// <summary>
+    /// Implementation details for the recommended action.
+    /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails
+    /// </summary>
     public partial class ObjectRecommendationPropertiesImplementationDetails
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationPropertiesImplementationDetails"/>. </summary>
-        /// <param name="method"> Method of implementation for recommended action. </param>
-        /// <param name="script"> Implementation script for the recommended action. </param>
+        /// <param name="method">
+        /// Method of implementation for recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.method
+        /// </param>
+        /// <param name="script">
+        /// Implementation script for the recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.script
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ObjectRecommendationPropertiesImplementationDetails(string method, string script, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Method of implementation for recommended action. </summary>
+        /// <summary>
+        /// Method of implementation for recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.method
+        /// </summary>
         [WirePath("method")]
         public string Method { get; set; }
-        /// <summary> Implementation script for the recommended action. </summary>
+        /// <summary>
+        /// Implementation script for the recommended action.
+        /// Serialized Name: ObjectRecommendationPropertiesImplementationDetails.script
+        /// </summary>
         [WirePath("script")]
         public string Script { get; set; }
     }

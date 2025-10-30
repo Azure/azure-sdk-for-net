@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Performance tier properties. </summary>
+    /// <summary>
+    /// Performance tier properties
+    /// Serialized Name: PerformanceTierProperties
+    /// </summary>
     public partial class PostgreSqlPerformanceTierProperties
     {
         /// <summary>
@@ -52,14 +55,38 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierProperties"/>. </summary>
-        /// <param name="id"> ID of the performance tier. </param>
-        /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
-        /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
-        /// <param name="maxStorageInMB"> Max storage allowed for a server. </param>
-        /// <param name="minLargeStorageInMB"> Max storage allowed for a server. </param>
-        /// <param name="maxLargeStorageInMB"> Max storage allowed for a server. </param>
-        /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
-        /// <param name="serviceLevelObjectives"> Service level objectives associated with the performance tier. </param>
+        /// <param name="id">
+        /// ID of the performance tier.
+        /// Serialized Name: PerformanceTierProperties.id
+        /// </param>
+        /// <param name="maxBackupRetentionDays">
+        /// Maximum Backup retention in days for the performance tier edition
+        /// Serialized Name: PerformanceTierProperties.maxBackupRetentionDays
+        /// </param>
+        /// <param name="minBackupRetentionDays">
+        /// Minimum Backup retention in days for the performance tier edition
+        /// Serialized Name: PerformanceTierProperties.minBackupRetentionDays
+        /// </param>
+        /// <param name="maxStorageInMB">
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.maxStorageMB
+        /// </param>
+        /// <param name="minLargeStorageInMB">
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.minLargeStorageMB
+        /// </param>
+        /// <param name="maxLargeStorageInMB">
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.maxLargeStorageMB
+        /// </param>
+        /// <param name="minStorageInMB">
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.minStorageMB
+        /// </param>
+        /// <param name="serviceLevelObjectives">
+        /// Service level objectives associated with the performance tier
+        /// Serialized Name: PerformanceTierProperties.serviceLevelObjectives
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPerformanceTierProperties(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,28 +101,52 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ID of the performance tier. </summary>
+        /// <summary>
+        /// ID of the performance tier.
+        /// Serialized Name: PerformanceTierProperties.id
+        /// </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary> Maximum Backup retention in days for the performance tier edition. </summary>
+        /// <summary>
+        /// Maximum Backup retention in days for the performance tier edition
+        /// Serialized Name: PerformanceTierProperties.maxBackupRetentionDays
+        /// </summary>
         [WirePath("maxBackupRetentionDays")]
         public int? MaxBackupRetentionDays { get; }
-        /// <summary> Minimum Backup retention in days for the performance tier edition. </summary>
+        /// <summary>
+        /// Minimum Backup retention in days for the performance tier edition
+        /// Serialized Name: PerformanceTierProperties.minBackupRetentionDays
+        /// </summary>
         [WirePath("minBackupRetentionDays")]
         public int? MinBackupRetentionDays { get; }
-        /// <summary> Max storage allowed for a server. </summary>
+        /// <summary>
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.maxStorageMB
+        /// </summary>
         [WirePath("maxStorageMB")]
         public int? MaxStorageInMB { get; }
-        /// <summary> Max storage allowed for a server. </summary>
+        /// <summary>
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.minLargeStorageMB
+        /// </summary>
         [WirePath("minLargeStorageMB")]
         public int? MinLargeStorageInMB { get; }
-        /// <summary> Max storage allowed for a server. </summary>
+        /// <summary>
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.maxLargeStorageMB
+        /// </summary>
         [WirePath("maxLargeStorageMB")]
         public int? MaxLargeStorageInMB { get; }
-        /// <summary> Max storage allowed for a server. </summary>
+        /// <summary>
+        /// Max storage allowed for a server.
+        /// Serialized Name: PerformanceTierProperties.minStorageMB
+        /// </summary>
         [WirePath("minStorageMB")]
         public int? MinStorageInMB { get; }
-        /// <summary> Service level objectives associated with the performance tier. </summary>
+        /// <summary>
+        /// Service level objectives associated with the performance tier
+        /// Serialized Name: PerformanceTierProperties.serviceLevelObjectives
+        /// </summary>
         [WirePath("serviceLevelObjectives")]
         public IReadOnlyList<PostgreSqlPerformanceTierServiceLevelObjectives> ServiceLevelObjectives { get; }
     }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServerDatabase data model.
     /// Represents a database.
+    /// Serialized Name: Database
     /// </summary>
     public partial class PostgreSqlFlexibleServerDatabaseData : ResourceData
     {
@@ -60,8 +61,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="charset"> Character set of the database. </param>
-        /// <param name="collation"> Collation of the database. </param>
+        /// <param name="charset">
+        /// Character set of the database.
+        /// Serialized Name: Database.properties.charset
+        /// </param>
+        /// <param name="collation">
+        /// Collation of the database.
+        /// Serialized Name: Database.properties.collation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string charset, string collation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -70,10 +77,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Character set of the database. </summary>
+        /// <summary>
+        /// Character set of the database.
+        /// Serialized Name: Database.properties.charset
+        /// </summary>
         [WirePath("properties.charset")]
         public string Charset { get; set; }
-        /// <summary> Collation of the database. </summary>
+        /// <summary>
+        /// Collation of the database.
+        /// Serialized Name: Database.properties.collation
+        /// </summary>
         [WirePath("properties.collation")]
         public string Collation { get; set; }
     }
