@@ -57,7 +57,7 @@ namespace Azure.AI.Translation.Text
             }
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
-            foreach (TranslationTarget item in Targets)
+            foreach (TranslationTarget item in TranslationTargets)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -108,7 +108,7 @@ namespace Azure.AI.Translation.Text
             string script = default;
             string language = default;
             TextType? textType = default;
-            IList<TranslationTarget> targets = default;
+            IList<TranslationTarget> translationTargets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.Translation.Text
                     {
                         array.Add(TranslationTarget.DeserializeTranslationTarget(item, options));
                     }
-                    targets = array;
+                    translationTargets = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.AI.Translation.Text
                 script,
                 language,
                 textType,
-                targets,
+                translationTargets,
                 additionalBinaryDataProperties);
         }
 

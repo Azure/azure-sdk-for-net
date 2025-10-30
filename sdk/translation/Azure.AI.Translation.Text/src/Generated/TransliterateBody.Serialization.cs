@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Request data for transliterate. </summary>
-    public partial class TransliterateInputs : IJsonModel<TransliterateInputs>
+    internal partial class TransliterateBody : IJsonModel<TransliterateBody>
     {
-        /// <summary> Initializes a new instance of <see cref="TransliterateInputs"/> for deserialization. </summary>
-        internal TransliterateInputs()
+        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/> for deserialization. </summary>
+        internal TransliterateBody()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TransliterateInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TransliterateBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +34,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterateInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransliterateBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransliterateInputs)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TransliterateBody)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
@@ -65,24 +65,24 @@ namespace Azure.AI.Translation.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TransliterateInputs IJsonModel<TransliterateInputs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TransliterateBody IJsonModel<TransliterateBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TransliterateInputs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TransliterateBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterateInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransliterateBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransliterateInputs)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TransliterateBody)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTransliterateInputs(document.RootElement, options);
+            return DeserializeTransliterateBody(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TransliterateInputs DeserializeTransliterateInputs(JsonElement element, ModelReaderWriterOptions options)
+        internal static TransliterateBody DeserializeTransliterateBody(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,58 +107,58 @@ namespace Azure.AI.Translation.Text
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TransliterateInputs(inputs, additionalBinaryDataProperties);
+            return new TransliterateBody(inputs, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TransliterateInputs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TransliterateBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterateInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransliterateBody>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TransliterateInputs)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransliterateBody)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TransliterateInputs IPersistableModel<TransliterateInputs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TransliterateBody IPersistableModel<TransliterateBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TransliterateInputs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TransliterateBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TransliterateInputs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TransliterateBody>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeTransliterateInputs(document.RootElement, options);
+                        return DeserializeTransliterateBody(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransliterateInputs)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransliterateBody)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TransliterateInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TransliterateBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="transliterateInputs"> The <see cref="TransliterateInputs"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TransliterateInputs transliterateInputs)
+        /// <param name="transliterateBody"> The <see cref="TransliterateBody"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TransliterateBody transliterateBody)
         {
-            if (transliterateInputs == null)
+            if (transliterateBody == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transliterateInputs, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(transliterateBody, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

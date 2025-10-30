@@ -11,32 +11,32 @@ using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Request data for transliterate. </summary>
-    public partial class TransliterateInputs
+    /// <summary> Request data for translate. </summary>
+    internal partial class TranslateBody
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TransliterateInputs"/>. </summary>
-        /// <param name="inputs"> Array of the input text elements to transliterate. </param>
+        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
+        /// <param name="inputs"> Array of the input text elements to translate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public TransliterateInputs(IEnumerable<InputTextItem> inputs)
+        public TranslateBody(IEnumerable<TranslateInputItem> inputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransliterateInputs"/>. </summary>
-        /// <param name="inputs"> Array of the input text elements to transliterate. </param>
+        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
+        /// <param name="inputs"> Array of the input text elements to translate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransliterateInputs(IList<InputTextItem> inputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslateBody(IList<TranslateInputItem> inputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Inputs = inputs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Array of the input text elements to transliterate. </summary>
-        public IList<InputTextItem> Inputs { get; }
+        /// <summary> Array of the input text elements to translate. </summary>
+        public IList<TranslateInputItem> Inputs { get; }
     }
 }
