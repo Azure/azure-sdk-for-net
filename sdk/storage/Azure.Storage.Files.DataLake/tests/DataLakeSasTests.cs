@@ -501,14 +501,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
-                { "foo", "bar" },
+                { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city", "redmond,atlanta,reston" }
+                { "city$", "redmond*,atlanta*,reston*" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName", "john,Tim"},
+                { "firstName/", "john/,Tim/"},
                 { "abra", "cadabra" }
             };
 
@@ -577,14 +577,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
-                { "foo", "bar" },
+                { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city", "redmond,atlanta,reston" }
+                { "city$", "redmond*,atlanta*,reston*" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName", "john,Tim"},
+                { "firstName/", "john/,Tim/"},
                 { "abra", "cadabra" }
             };
 
@@ -633,14 +633,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
-                { "foo", "bar" },
+                { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city", "redmond,atlanta,reston" }
+                { "city$", "redmond*,atlanta*,reston*" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName", "john,Tim"},
+                { "firstName/", "john/,Tim/"},
                 { "abra", "cadabra" }
             };
 
