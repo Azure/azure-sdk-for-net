@@ -46,10 +46,13 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="models"> LLM models supported for translation. </param>
         /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
-        public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = default)
+        public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = default, IDictionary<string, string> models = default)
         {
-            return new TranslationLanguage(name, nativeName, directionality, additionalBinaryDataProperties: null);
+            models ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TranslationLanguage(name, nativeName, directionality, models, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

@@ -22,5 +22,12 @@ namespace Azure.AI.Translation.Text
             };
             Diagnostics.LoggedHeaderNames.Add("X-RequestId");
         }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Version 2025-10-01-preview. </summary>
+            V2025_10_01_Preview = 1
+        }
     }
 }

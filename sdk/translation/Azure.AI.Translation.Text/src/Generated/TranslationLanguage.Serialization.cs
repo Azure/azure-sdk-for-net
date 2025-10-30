@@ -47,6 +47,19 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
             writer.WriteStringValue(Directionality.ToSerialString());
+            writer.WritePropertyName("models"u8);
+            writer.WriteStartObject();
+            foreach (var item in Models)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -92,6 +105,7 @@ namespace Azure.AI.Translation.Text
             string name = default;
             string nativeName = default;
             LanguageDirectionality directionality = default;
+            IDictionary<string, string> models = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -110,12 +124,29 @@ namespace Azure.AI.Translation.Text
                     directionality = prop.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
+                if (prop.NameEquals("models"u8))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    models = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TranslationLanguage(name, nativeName, directionality, additionalBinaryDataProperties);
+            return new TranslationLanguage(name, nativeName, directionality, models, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
