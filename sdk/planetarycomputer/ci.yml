@@ -33,3 +33,7 @@ extends:
     Artifacts:
     - name: Azure.Analytics.PlanetaryComputer
       safeName: AzureAnalyticsPlanetaryComputer
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.Analytics.PlanetaryComputer
+      ExpectedWarningsFilepath: "Azure.Analytics.PlanetaryComputer/tests/compatibility/ExpectedAotWarnings.txt"

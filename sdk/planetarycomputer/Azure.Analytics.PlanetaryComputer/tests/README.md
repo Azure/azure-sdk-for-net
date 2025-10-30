@@ -1,78 +1,116 @@
-# Azure Planetary Computer SDK Tests
+# Azure Planetary Computer client library tests for .NET
 
 This directory contains tests for the Azure Planetary Computer .NET SDK.
 
-## Test Configuration
+## Getting started
 
-Tests use environment variables for configuration. You can set these in two ways:
+### Install the package
 
-### Option 1: Using .env file (Recommended for local development)
+The tests reference the Azure Planetary Computer client library:
 
-1. Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
+```dotnetcli
+dotnet add package Azure.Analytics.PlanetaryComputer --prerelease
+```
 
-2. Edit `.env` with your actual values
+### Prerequisites
 
-3. The test framework will automatically load variables from the `.env` file
+- An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+- Access to Azure Planetary Computer service
+- [.NET SDK](https://dotnet.microsoft.com/download) 8.0 or higher
 
-### Option 2: Using system environment variables
+### Authenticate the client
 
-Set the environment variables directly in your system or CI/CD pipeline.
+Tests use Azure credential-based authentication. You can authenticate using:
 
-## Required Environment Variables
+- Azure CLI: `az login`
+- PowerShell: `Connect-AzAccount`
+- Azure Developer CLI: `azd auth login`
 
-### Core Configuration
-- `PLANETARYCOMPUTER_ENDPOINT` - The endpoint URL for the Planetary Computer service
-- `PLANETARYCOMPUTER_COLLECTION_ID` - STAC Collection ID for testing (e.g., "naip-atl")
-- `PLANETARYCOMPUTER_ITEM_ID` - STAC Item ID for testing
+Set `AZURE_TEST_USE_CLI_AUTH=true` (or `AZURE_TEST_USE_PWSH_AUTH` or `AZURE_TEST_USE_AZD_AUTH`) to use the respective authentication method.
 
-### Authentication
-- `GEOCATALOG_SCOPE` - OAuth scope for authentication (default: `https://geocatalog.spatio.azure.com/.default`)
-- `AZURE_TEST_USE_CLI_AUTH` - Set to `true` to use Azure CLI authentication
-- `AZURE_TEST_USE_PWSH_AUTH` - Set to `true` to use PowerShell authentication
-- `AZURE_TEST_USE_AZD_AUTH` - Set to `true` to use Azure Developer CLI authentication
+## Key concepts
 
-### Ingestion Testing
-- `PLANETARYCOMPUTER_INGESTION_CONTAINER_URI` - Azure Blob Storage container URI for ingestion tests
-- `PLANETARYCOMPUTER_INGESTION_CATALOG_URL` - URL to a STAC catalog JSON for ingestion tests
-- `PLANETARYCOMPUTER_MANAGED_IDENTITY_OBJECT_ID` - Managed Identity Object ID for ingestion
+The tests verify the functionality of:
 
-### SAS Token Ingestion (Optional)
-- `PLANETARYCOMPUTER_INGESTION_SAS_CONTAINER_URI` - Container URI with SAS token for ingestion
-- `PLANETARYCOMPUTER_INGESTION_SAS_TOKEN` - SAS token for container access
+- **STAC Client**: Testing STAC catalog, collection, and item operations
+- **Tiler Client**: Testing map tile and rendering operations
+- **Ingestion Client**: Testing data ingestion workflows
 
-## Running Tests
+Tests are built using:
 
-### Run all tests
+- **NUnit** as the test framework
+- **Azure.Core.TestFramework** for recording and playback
+- **Environment variables** for configuration
+
+### Test modes
+
+Tests support three modes:
+
+- **Live**: Executes against real Azure services
+- **Record**: Executes live and saves HTTP interactions
+- **Playback**: Uses recorded interactions (default)
+
+## Examples
+
+### Running tests in playback mode
+
 ```bash
 dotnet test
 ```
 
-### Run in Live mode (requires valid Azure credentials)
+### Running tests in live mode
+
 ```bash
-$env:AZURE_TEST_RUN_LIVE = "true"
+$env:AZURE_TEST_MODE="Live"
 dotnet test
 ```
 
-### Run in Playback mode (uses recorded sessions)
+### Recording new test sessions
+
 ```bash
-$env:AZURE_TEST_RUN_LIVE = "false"
+$env:AZURE_TEST_MODE="Record"
 dotnet test
 ```
 
-## Recording Tests
+### Configuration using .env file
 
-To record new test sessions:
+Create a `.env` file based on `.env.example`:
 
-1. Set `AZURE_TEST_RUN_LIVE=true`
-2. Ensure you have valid Azure credentials configured
-3. Run the tests - recordings will be saved to `SessionRecords/`
-4. Commit the recorded sessions to the repository
+```bash
+cp .env.example .env
+```
 
-## Notes
+Required variables:
 
-- The `.env` file is ignored by git to prevent accidental credential commits
-- Always use `.env.example` as a template for required variables
-- Sensitive values in recordings are automatically sanitized by the test framework
+- `PLANETARYCOMPUTER_ENDPOINT` - Service endpoint URL
+- `PLANETARYCOMPUTER_COLLECTION_ID` - Test STAC collection ID
+- `PLANETARYCOMPUTER_ITEM_ID` - Test STAC item ID
+- `GEOCATALOG_SCOPE` - OAuth authentication scope
+
+## Troubleshooting
+
+### Authentication failures
+
+Ensure you're logged in with Azure CLI, PowerShell, or Azure Developer CLI before running live tests.
+
+### Recording failures
+
+If recordings fail to sanitize properly, check `PlanetaryComputerTestSanitizers.cs` for the correct sanitization rules.
+
+### Missing environment variables
+
+If tests fail due to missing configuration, ensure all required variables are set in `.env` or your environment.
+
+## Next steps
+
+- Review the [Azure Planetary Computer documentation](https://planetarycomputer.microsoft.com/docs/overview/)
+- See the [samples directory](../samples) for usage examples
+- Check the [main README](../README.md) for client library documentation
+
+## Contributing
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit <https://cla.microsoft.com>.
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
