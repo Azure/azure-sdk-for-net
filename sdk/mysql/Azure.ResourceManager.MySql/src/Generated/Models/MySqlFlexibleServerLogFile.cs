@@ -59,13 +59,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sizeInKB"> The size in kb of the logFile. </param>
         /// <param name="createdOn"> Creation timestamp of the log file. </param>
+        /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, string typePropertiesType, DateTimeOffset? lastModifiedOn, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SizeInKB = sizeInKB;
             CreatedOn = createdOn;
+            TypePropertiesType = typePropertiesType;
             LastModifiedOn = lastModifiedOn;
             Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -75,6 +77,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public long? SizeInKB { get; set; }
         /// <summary> Creation timestamp of the log file. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
+        /// <summary> Type of the log file. </summary>
+        public string TypePropertiesType { get; set; }
         /// <summary> Last modified timestamp of the log file. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
         /// <summary> The url to download the log file from. </summary>

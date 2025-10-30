@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
+            if (Optional.IsDefined(TypePropertiesType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypePropertiesType);
+            }
             if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             SystemData systemData = default;
             long? sizeInKB = default;
             DateTimeOffset? createdTime = default;
+            string type0 = default;
             DateTimeOffset? lastModifiedTime = default;
             Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,6 +151,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            type0 = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -179,6 +190,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 systemData,
                 sizeInKB,
                 createdTime,
+                type0,
                 lastModifiedTime,
                 url,
                 serializedAdditionalRawData);

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    internal partial class UnknownMySqlFlexibleServerBackupStoreDetails : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupStoreDetails>
+    internal partial class UnknownBackupStoreDetails : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupStoreDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerBackupStoreDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return DeserializeMySqlFlexibleServerBackupStoreDetails(document.RootElement, options);
         }
 
-        internal static UnknownMySqlFlexibleServerBackupStoreDetails DeserializeUnknownMySqlFlexibleServerBackupStoreDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownBackupStoreDetails DeserializeUnknownBackupStoreDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMySqlFlexibleServerBackupStoreDetails(objectType, serializedAdditionalRawData);
+            return new UnknownBackupStoreDetails(objectType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupStoreDetails>.Write(ModelReaderWriterOptions options)

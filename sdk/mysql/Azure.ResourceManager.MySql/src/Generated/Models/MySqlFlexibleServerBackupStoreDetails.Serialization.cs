@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    [PersistableModelProxy(typeof(UnknownMySqlFlexibleServerBackupStoreDetails))]
+    [PersistableModelProxy(typeof(UnknownBackupStoreDetails))]
     public partial class MySqlFlexibleServerBackupStoreDetails : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupStoreDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerBackupStoreDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     case "FullBackupStoreDetails": return MySqlFlexibleServerFullBackupStoreDetails.DeserializeMySqlFlexibleServerFullBackupStoreDetails(element, options);
                 }
             }
-            return UnknownMySqlFlexibleServerBackupStoreDetails.DeserializeUnknownMySqlFlexibleServerBackupStoreDetails(element, options);
+            return UnknownBackupStoreDetails.DeserializeUnknownBackupStoreDetails(element, options);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupStoreDetails>.Write(ModelReaderWriterOptions options)

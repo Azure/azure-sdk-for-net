@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated.")]
         public virtual Task<Response<OperationStatusExtendedResult>> GetOperationResultAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is deprecated.")]
         public virtual Response<OperationStatusExtendedResult> GetOperationResult(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();

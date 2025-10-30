@@ -249,10 +249,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sizeInKB"> The size in kb of the logFile. </param>
         /// <param name="createdOn"> Creation timestamp of the log file. </param>
+        /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerLogFile"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, Uri uri = null)
+        public static MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, string typePropertiesType = null, DateTimeOffset? lastModifiedOn = null, Uri uri = null)
         {
             return new MySqlFlexibleServerLogFile(
                 id,
@@ -261,6 +262,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 systemData,
                 sizeInKB,
                 createdOn,
+                typePropertiesType,
                 lastModifiedOn,
                 uri,
                 serializedAdditionalRawData: null);
@@ -353,14 +355,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerConfigurations"/>. </summary>
-        /// <param name="value"> The Configuration items on this page. </param>
+        /// <param name="values"> The Configuration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerConfigurations"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(IEnumerable<MySqlFlexibleServerConfigurationData> value = null, Uri nextLink = null)
+        public static MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(IEnumerable<MySqlFlexibleServerConfigurationData> values = null, Uri nextLink = null)
         {
-            value ??= new List<MySqlFlexibleServerConfigurationData>();
+            values ??= new List<MySqlFlexibleServerConfigurationData>();
 
-            return new MySqlFlexibleServerConfigurations(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+            return new MySqlFlexibleServerConfigurations(values?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerDatabaseData"/>. </summary>
