@@ -44,10 +44,10 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Optional.IsDefined(Top))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             if (Optional.IsDefined(UserId))
             {

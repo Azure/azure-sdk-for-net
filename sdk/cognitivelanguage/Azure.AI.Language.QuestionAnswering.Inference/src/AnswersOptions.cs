@@ -29,5 +29,11 @@ namespace Azure.AI.Language.QuestionAnswering
             QnaId = qnaId;
             return this;
         }
+
+        /// <summary>
+        /// Maximum number of answers to be returned for the question.
+        /// </summary>
+        [CodeGenMember("Top")]
+        public int? Size { get; set; }
     }
 }

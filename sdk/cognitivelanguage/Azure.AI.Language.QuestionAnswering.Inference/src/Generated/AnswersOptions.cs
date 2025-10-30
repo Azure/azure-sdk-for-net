@@ -56,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// question.
         /// </param>
         /// <param name="question"> User question to query against the knowledge base. </param>
-        /// <param name="top"> Max number of answers to be returned for the question. </param>
+        /// <param name="size"> Max number of answers to be returned for the question. </param>
         /// <param name="userId"> Unique identifier for the user. </param>
         /// <param name="confidenceThreshold"> Minimum threshold score for answers, value ranges from 0 to 1. </param>
         /// <param name="answerContext"> Context object with previous QnA's information. </param>
@@ -66,11 +66,11 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
         /// <param name="queryPreferences"> To fine tune query results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnswersOptions(int? qnaId, string question, int? top, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources, QueryPreferences queryPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnswersOptions(int? qnaId, string question, int? size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources, QueryPreferences queryPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QnaId = qnaId;
             Question = question;
-            Top = top;
+            Size = size;
             UserId = userId;
             ConfidenceThreshold = confidenceThreshold;
             AnswerContext = answerContext;
@@ -89,8 +89,6 @@ namespace Azure.AI.Language.QuestionAnswering
         public int? QnaId { get; set; }
         /// <summary> User question to query against the knowledge base. </summary>
         public string Question { get; set; }
-        /// <summary> Max number of answers to be returned for the question. </summary>
-        public int? Top { get; set; }
         /// <summary> Unique identifier for the user. </summary>
         public string UserId { get; set; }
         /// <summary> Minimum threshold score for answers, value ranges from 0 to 1. </summary>
