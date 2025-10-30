@@ -3,9 +3,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>5.3.7</Version>
+    <Version>5.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.3.6</ApiCompatVersion>
+    <ApiCompatVersion>5.3.7</ApiCompatVersion>
     <RunApiCompat>false</RunApiCompat>
     <Description>This extension adds bindings for Storage</Description>
     <!-- This package is a metapackage. The flag below makes sure it doesn't include any DLL-->
