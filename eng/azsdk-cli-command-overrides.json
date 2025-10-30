@@ -1,0 +1,8 @@
+// This config file enables the azsdk cli/mcp tool to call script overrides for various operations
+// See https://github.com/azure/azure-sdk-tools/blob/main/tools/azsdk-cli/docs/specs/7-repo-tooling-contract.md
+[
+  {
+    "tags": [ "CodeChecks" ],
+    "command": "eng/scripts/CodeChecks.ps1"
+  }
+]
