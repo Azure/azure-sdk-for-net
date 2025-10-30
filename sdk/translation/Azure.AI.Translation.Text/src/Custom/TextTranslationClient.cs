@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Text
             options ??= new TextTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -83,7 +83,7 @@ namespace Azure.AI.Translation.Text
                 authenticationPolicies.Add(new TranslatorRegionalEndpointAuthenticationPolicy(region));
             }
 
-            this._pipeline = HttpPipelineBuilder.Build(options, authenticationPolicies.ToArray(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.Pipeline = HttpPipelineBuilder.Build(options, authenticationPolicies.ToArray(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
 
             if (endpoint.IsPlatformHost())
             {
@@ -112,7 +112,7 @@ namespace Azure.AI.Translation.Text
             var policy = new BearerTokenAuthenticationPolicy(credential, tokenScope);
             options = options ?? new TextTranslationClientOptions();
 
-            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.Pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
 
             if (endpoint.IsPlatformHost())
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.Translation.Text
             var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
             options = options ?? new TextTranslationClientOptions();
 
-            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.Pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.AI.Translation.Text
             var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
             options = options ?? new TextTranslationClientOptions();
 
-            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            this.Pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary> Translate Text. </summary>

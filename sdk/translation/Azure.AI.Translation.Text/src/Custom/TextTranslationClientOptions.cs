@@ -17,7 +17,6 @@ namespace Azure.AI.Translation.Text
         {
             Version = version switch
             {
-                ServiceVersion.V3_0 => "3.0",
                 ServiceVersion.V2025_10_01_Preview => "2025-10-01-preview",
                 _ => throw new NotSupportedException()
             };
