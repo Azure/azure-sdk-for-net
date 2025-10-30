@@ -203,10 +203,9 @@ namespace Azure.AI.DocumentIntelligence
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ClassifierCopyAuthorization"/> from. </param>
-        public static explicit operator ClassifierCopyAuthorization(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ClassifierCopyAuthorization"/> from. </param>
+        public static explicit operator ClassifierCopyAuthorization(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeClassifierCopyAuthorization(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

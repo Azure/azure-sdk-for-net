@@ -229,7 +229,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = GetModel(modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetModel(modelId, cancellationToken.ToRequestContext());
             return Response.FromValue((DocumentModelDetails)result, result);
         }
 
@@ -243,7 +243,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = await GetModelAsync(modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DocumentModelDetails)result, result);
         }
 
@@ -304,7 +304,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List all document models. </summary>
@@ -312,7 +312,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return DeleteModel(modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteModel(modelId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes document model. </summary>
@@ -402,7 +402,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return await DeleteModelAsync(modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<DocumentIntelligenceResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
         {
-            Response result = GetResourceDetails(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetResourceDetails(cancellationToken.ToRequestContext());
             return Response.FromValue((DocumentIntelligenceResourceDetails)result, result);
         }
 
@@ -473,7 +473,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetResourceDetailsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetResourceDetailsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DocumentIntelligenceResourceDetails)result, result);
         }
 
@@ -551,7 +551,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = GetOperation(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
             return Response.FromValue((DocumentIntelligenceOperationDetails)result, result);
         }
 
@@ -565,7 +565,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = await GetOperationAsync(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DocumentIntelligenceOperationDetails)result, result);
         }
 
@@ -626,7 +626,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists all operations. </summary>
@@ -634,7 +634,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -775,7 +775,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            Response result = GetClassifier(classifierId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetClassifier(classifierId, cancellationToken.ToRequestContext());
             return Response.FromValue((DocumentClassifierDetails)result, result);
         }
 
@@ -789,7 +789,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            Response result = await GetClassifierAsync(classifierId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DocumentClassifierDetails)result, result);
         }
 
@@ -850,7 +850,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -858,7 +858,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -935,7 +935,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            return DeleteClassifier(classifierId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteClassifier(classifierId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes document classifier. </summary>
@@ -948,7 +948,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            return await DeleteClassifierAsync(classifierId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

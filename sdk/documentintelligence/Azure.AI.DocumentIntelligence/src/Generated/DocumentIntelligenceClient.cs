@@ -162,7 +162,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List batch document analysis results. </summary>
@@ -175,7 +175,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
         }
     }
 }

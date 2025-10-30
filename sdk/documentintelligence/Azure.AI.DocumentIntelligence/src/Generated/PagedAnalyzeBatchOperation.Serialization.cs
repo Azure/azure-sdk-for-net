@@ -165,10 +165,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedAnalyzeBatchOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PagedAnalyzeBatchOperation"/> from. </param>
-        public static explicit operator PagedAnalyzeBatchOperation(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedAnalyzeBatchOperation"/> from. </param>
+        public static explicit operator PagedAnalyzeBatchOperation(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePagedAnalyzeBatchOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

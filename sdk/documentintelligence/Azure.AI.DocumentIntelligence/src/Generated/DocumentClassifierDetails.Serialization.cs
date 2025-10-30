@@ -262,10 +262,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DocumentClassifierDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DocumentClassifierDetails"/> from. </param>
-        public static explicit operator DocumentClassifierDetails(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DocumentClassifierDetails"/> from. </param>
+        public static explicit operator DocumentClassifierDetails(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentClassifierDetails(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
         }
