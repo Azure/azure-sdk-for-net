@@ -153,10 +153,9 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BatchResponse"/> from. </param>
-        public static explicit operator BatchResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchResponse"/> from. </param>
+        public static explicit operator BatchResponse(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeBatchResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
