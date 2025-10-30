@@ -8,7 +8,7 @@ csharp: true
 library-name: PaloAltoNetworks.Ngfw
 namespace: Azure.ResourceManager.PaloAltoNetworks.Ngfw
 require: https://github.com/Azure/azure-rest-api-specs/blob/a65ba8751a75cf016f477ed6cff8062347879047/specification/paloaltonetworks/resource-manager/readme.md
-#tag: package-2023-09-01
+#tag: package-2025-10-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
