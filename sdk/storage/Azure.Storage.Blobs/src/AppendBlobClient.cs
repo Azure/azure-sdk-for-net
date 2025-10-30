@@ -892,7 +892,9 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions:
                         BlobRequestConditionProperty.IfAppendPositionEqual
-                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual,
+                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(AppendBlobClient.Create),
                     parameterName: nameof(conditions));
 
@@ -1260,9 +1262,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
 
-                // All AppendBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(AppendBlobClient.AppendBlock),
                     parameterName: nameof(conditions));
 
@@ -1693,9 +1696,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
 
-                // All destination AppendBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(AppendBlobClient.AppendBlockFromUri),
                     parameterName: nameof(conditions));
 
@@ -1704,7 +1708,9 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobRequestConditionProperty.LeaseId
                         | BlobRequestConditionProperty.TagConditions
                         | BlobRequestConditionProperty.IfAppendPositionEqual
-                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual,
+                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(AppendBlobClient.AppendBlockFromUri),
                     parameterName: nameof(sourceConditions));
 
@@ -1888,7 +1894,9 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions:
                         BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
-                        | BlobRequestConditionProperty.TagConditions,
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(AppendBlobClient.Seal),
                     parameterName: nameof(conditions));
 

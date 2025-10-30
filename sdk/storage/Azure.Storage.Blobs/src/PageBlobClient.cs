@@ -1004,7 +1004,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.Create),
                     parameterName: nameof(conditions));
 
@@ -1401,9 +1403,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPages)}");
 
-                // All PageBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.UploadPages),
                     parameterName: nameof(conditions));
 
@@ -1638,9 +1641,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(ClearPages)}");
 
-                // All PageBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.ClearPages),
                     parameterName: nameof(conditions));
 
@@ -1866,7 +1870,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.GetPageRanges),
                     parameterName: nameof(conditions));
 
@@ -2090,7 +2096,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.GetPageRanges),
                     parameterName: nameof(conditions));
 
@@ -2337,7 +2345,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.GetPageRanges),
                     parameterName: nameof(conditions));
 
@@ -2617,7 +2627,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.GetPageRangesDiff),
                     parameterName: nameof(conditions));
 
@@ -2960,7 +2972,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.Resize),
                     parameterName: nameof(conditions));
 
@@ -3217,7 +3231,9 @@ namespace Azure.Storage.Blobs.Specialized
                     invalidConditions:
                         BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.UpdateSequenceNumber),
                     parameterName: nameof(conditions));
 
@@ -3615,7 +3631,9 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobRequestConditionProperty.LeaseId
                         | BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
-                        | BlobRequestConditionProperty.IfSequenceNumberEqual,
+                        | BlobRequestConditionProperty.IfSequenceNumberEqual
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.StartCopyIncremental),
                     parameterName: nameof(conditions));
 
@@ -4062,9 +4080,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}");
 
-                // All destination PageBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.UploadPagesFromUri),
                     parameterName: nameof(conditions));
 
@@ -4074,7 +4093,9 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfSequenceNumberLessThanOrEqual
                         | BlobRequestConditionProperty.IfSequenceNumberLessThan
                         | BlobRequestConditionProperty.IfSequenceNumberEqual
-                        | BlobRequestConditionProperty.TagConditions,
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(PageBlobClient.UploadPagesFromUri),
                     parameterName: nameof(sourceConditions));
 
