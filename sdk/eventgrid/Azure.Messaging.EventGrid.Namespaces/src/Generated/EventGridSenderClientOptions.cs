@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Client options for <see cref="EventGridSenderClient"/>. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class EventGridSenderClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_06_01;
