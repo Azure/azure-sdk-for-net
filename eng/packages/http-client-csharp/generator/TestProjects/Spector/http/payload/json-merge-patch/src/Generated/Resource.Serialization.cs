@@ -38,6 +38,6 @@ namespace Payload.JsonMergePatch
         /// <param name="resource"> The <see cref="Resource"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Resource resource) => throw null;
 
-        public static explicit operator Resource(Response result) => throw null;
+        public static explicit operator Resource(Response response) => throw null;
     }
 }

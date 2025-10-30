@@ -165,10 +165,9 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListWithNextLinkResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ListWithNextLinkResponse"/> from. </param>
-        public static explicit operator ListWithNextLinkResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListWithNextLinkResponse"/> from. </param>
+        public static explicit operator ListWithNextLinkResponse(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeListWithNextLinkResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

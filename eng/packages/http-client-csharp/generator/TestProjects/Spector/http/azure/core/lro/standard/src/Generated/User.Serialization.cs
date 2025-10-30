@@ -38,6 +38,6 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(User user) => throw null;
 
-        public static explicit operator User(Response result) => throw null;
+        public static explicit operator User(Response response) => throw null;
     }
 }
