@@ -19,6 +19,8 @@ namespace Azure.Identity
         private HttpClientHandler _innerHandler;
         private byte[] _lastCaData;
         private readonly object _lock = new object();
+        private SemaphoreSlim _requestSemaphore;
+        private int _requestCount;
 
         public KubernetesProxyHttpHandler(KubernetesProxyConfig config)
         {
@@ -27,36 +29,54 @@ namespace Azure.Identity
             // Create the initial handler
             _innerHandler = CreateHandler();
             InnerHandler = _innerHandler;
+            _requestSemaphore = new SemaphoreSlim(1, 1);
+            _requestCount = 0;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            // Check if we need to reload the CA file and recreate the handler
-            if (ShouldReloadHandler())
-            {
-                lock (_lock)
-                {
-                    if (ShouldReloadHandler())
-                    {
-                        var oldHandler = _innerHandler;
-                        _innerHandler = CreateHandler();
-                        InnerHandler = _innerHandler;
+            // Increment request count to track in-flight requests
+            Interlocked.Increment(ref _requestCount);
 
-                        // Dispose old handler (but not immediately, allow in-flight requests to complete)
-                        Task.Run(() =>
+            try
+            {
+                // Check if we need to reload the CA file and recreate the handler
+                if (ShouldReloadHandler())
+                {
+                    lock (_lock)
+                    {
+                        if (ShouldReloadHandler())
                         {
-                            Thread.Sleep(1000); // Give in-flight requests time to complete
-                            oldHandler?.Dispose();
-                        });
+                            var oldHandler = _innerHandler;
+                            var oldSemaphore = _requestSemaphore;
+
+                            _innerHandler = CreateHandler();
+                            InnerHandler = _innerHandler;
+                            _requestSemaphore = new SemaphoreSlim(1, 1);
+
+                            // Dispose old handler deterministically after all in-flight requests complete
+                            Task.Run(async () =>
+                            {
+                                // Wait until all requests using the old handler complete
+                                await oldSemaphore.WaitAsync().ConfigureAwait(false);
+                                oldHandler?.Dispose();
+                                oldSemaphore?.Dispose();
+                            });
+                        }
                     }
                 }
+
+                RewriteRequestUrl(request);
+
+                return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
-
-            // Rewrite the request URL to point to the proxy
-            RewriteRequestUrl(request);
-
-            // Send the request through the inner handler
-            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            finally
+            {
+                if (Interlocked.Decrement(ref _requestCount) == 0)
+                {
+                    _requestSemaphore?.Release();
+                }
+            }
         }
 
         private void RewriteRequestUrl(HttpRequestMessage request)
@@ -280,6 +300,7 @@ namespace Azure.Identity
             if (disposing)
             {
                 _innerHandler?.Dispose();
+                _requestSemaphore?.Dispose();
             }
             base.Dispose(disposing);
         }
