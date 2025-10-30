@@ -104,8 +104,8 @@ If tests fail due to missing configuration, ensure all required variables are se
 ## Next steps
 
 - Review the [Azure Planetary Computer documentation](https://planetarycomputer.microsoft.com/docs/overview/)
-- See the [samples directory](../samples) for usage examples
-- Check the [main README](../README.md) for client library documentation
+- See the samples directory for usage examples
+- Check the main README for client library documentation
 
 ## Contributing
 
