@@ -503,13 +503,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city$", "redmond*,atlanta*,reston*" }
+                { "city", "redmond,atlanta,reston" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName/", "john/,Tim/"},
-                { "abra", "cadabra" }
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
             };
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
@@ -579,13 +580,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city$", "redmond*,atlanta*,reston*" }
+                { "city", "redmond,atlanta,reston" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName/", "john/,Tim/"},
-                { "abra", "cadabra" }
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
             };
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
@@ -635,13 +637,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city$", "redmond*,atlanta*,reston*" }
+                { "city", "redmond,atlanta,reston" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName/", "john/,Tim/"},
-                { "abra", "cadabra" }
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
             };
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))

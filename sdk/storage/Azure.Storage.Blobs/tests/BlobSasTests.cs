@@ -402,13 +402,14 @@ namespace Azure.Storage.Blobs.Test
             {
                 { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city$", "redmond*,atlanta*,reston*" }
+                { "city", "redmond,atlanta,reston" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName/", "john/,Tim/"},
-                { "abra", "cadabra" }
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
             };
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
@@ -476,13 +477,14 @@ namespace Azure.Storage.Blobs.Test
             {
                 { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city$", "redmond*,atlanta*,reston*" }
+                { "city", "redmond,atlanta,reston" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName/", "john/,Tim/"},
-                { "abra", "cadabra" }
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
             };
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
@@ -531,13 +533,14 @@ namespace Azure.Storage.Blobs.Test
             {
                 { "foo$", "bar!" },
                 { "company", "msft" },
-                { "city$", "redmond*,atlanta*,reston*" }
+                { "city", "redmond,atlanta,reston" }
             };
 
             Dictionary<string, string> requestQueryParameters = new Dictionary<string, string>()
             {
-                { "firstName/", "john/,Tim/"},
-                { "abra", "cadabra" }
+                { "hello$", "world!" },
+                { "abra", "cadabra" },
+                { "firstName", "john,Tim"}
             };
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
