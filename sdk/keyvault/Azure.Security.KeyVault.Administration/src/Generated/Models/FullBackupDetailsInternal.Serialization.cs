@@ -230,10 +230,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FullBackupDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FullBackupDetailsInternal"/> from. </param>
-        public static explicit operator FullBackupDetailsInternal(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FullBackupDetailsInternal"/> from. </param>
+        public static explicit operator FullBackupDetailsInternal(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeFullBackupDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

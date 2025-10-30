@@ -181,10 +181,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcknowledgeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AcknowledgeResult"/> from. </param>
-        public static explicit operator AcknowledgeResult(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AcknowledgeResult"/> from. </param>
+        public static explicit operator AcknowledgeResult(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAcknowledgeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
