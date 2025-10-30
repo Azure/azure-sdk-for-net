@@ -2,7 +2,7 @@
 description: 'Check if the package validation checks have passed for the SDK package.'
 ---
 ## Goal
-Check the validation checks for the SDK package by collecting the required information from the user and executing the azsdk_package_run_check command.
+Check the validation checks for the SDK package by collecting the required information from the user and executing the `azsdk_package_run_check` tool.
 
 ## Instructions
 1. **Collect Required Information**:
