@@ -152,10 +152,9 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GetSettingsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GetSettingsResult"/> from. </param>
-        public static explicit operator GetSettingsResult(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetSettingsResult"/> from. </param>
+        public static explicit operator GetSettingsResult(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeGetSettingsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
