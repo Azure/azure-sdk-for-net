@@ -66,7 +66,7 @@ namespace Azure.AI.Translation.Text.Tests
                 "Dies ist ein Test."
             };
             TextTranslationClient client = GetClient();
-            var response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+            var response = await client.TranslateAsync(inputText, targetLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(3, response.Value.Count);
@@ -90,7 +90,7 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
             IEnumerable<string> inputText = new[] { "This is a test." };
             TextTranslationClient client = GetClient();
-            TranslateInputItem input = new TranslateInputItem("This is a test.", targetLanguages.Select(lang => new TranslateTarget(lang)));
+            TranslateInputItem input = new TranslateInputItem("This is a test.", targetLanguages.Select(lang => new TranslationTarget(lang)));
             var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -138,7 +138,7 @@ namespace Azure.AI.Translation.Text.Tests
 
             TextTranslationClient client = GetClient(token: token);
             IEnumerable<string> inputText = new[] { "This is a test." };
-            var translate = await client.TranslateAsync("cs" , inputText).ConfigureAwait(false);
+            var translate = await client.TranslateAsync(inputText, "cs").ConfigureAwait(false);
 
             Assert.AreEqual(200, translate.GetRawResponse().Status);
             Assert.AreEqual(1, translate.Value.Count);

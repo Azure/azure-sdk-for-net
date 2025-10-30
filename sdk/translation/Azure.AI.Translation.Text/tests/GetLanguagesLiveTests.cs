@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
+            Assert.Greater(response.Value.Models.Count, 0);
         }
 
         [RecordedTest]
@@ -46,7 +46,7 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.IsTrue(response.Value.Translation.TryGetValue("af", out TranslationLanguage translationLanguage));
-            Assert.NotNull(translationLanguage.Dir);
+            Assert.NotNull(translationLanguage.Directionality);
             Assert.NotNull(translationLanguage.Name);
             Assert.NotNull(translationLanguage.NativeName);
         }
@@ -67,14 +67,14 @@ namespace Azure.AI.Translation.Text.Tests
 
             Assert.Greater(transliterationLanguage.Scripts.Count, 0);
             Assert.NotNull(transliterationLanguage.Scripts[0].Code);
-            Assert.NotNull(transliterationLanguage.Scripts[0].Dir);
+            Assert.NotNull(transliterationLanguage.Scripts[0].Directionality);
             Assert.NotNull(transliterationLanguage.Scripts[0].Name);
             Assert.NotNull(transliterationLanguage.Scripts[0].NativeName);
             Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts);
 
             Assert.Greater(transliterationLanguage.Scripts[0].ToScripts.Count, 0);
             Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Code);
-            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Dir);
+            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Directionality);
             Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Name);
             Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].NativeName);
         }
@@ -99,43 +99,6 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
-        public async Task GetSupportedLanguagesDictionaryScope()
-        {
-            TextTranslationClient client = GetClient();
-            Response<GetSupportedLanguagesResult> response =
-                await client.GetSupportedLanguagesAsync(scope: "dictionary", cancellationToken: CancellationToken.None).ConfigureAwait(false);
-
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
-            Assert.IsTrue(response.Value.Dictionary.TryGetValue("de", out SourceDictionaryLanguage dictionaryLanguage));
-            Assert.NotNull(dictionaryLanguage.Dir);
-            Assert.NotNull(dictionaryLanguage.Name);
-            Assert.NotNull(dictionaryLanguage.NativeName);
-
-            Assert.Greater(dictionaryLanguage.Translations.Count, 0);
-            Assert.NotNull(dictionaryLanguage.Translations[0].Code);
-            Assert.NotNull(dictionaryLanguage.Translations[0].Dir);
-            Assert.NotNull(dictionaryLanguage.Translations[0].Name);
-            Assert.NotNull(dictionaryLanguage.Translations[0].NativeName);
-        }
-
-        [RecordedTest]
-        public async Task GetSupportedLanguagesDictionaryScopeMultipleTranslations()
-        {
-            TextTranslationClient client = GetClient();
-            Response<GetSupportedLanguagesResult> response =
-                await client.GetSupportedLanguagesAsync(scope: "dictionary", cancellationToken: CancellationToken.None).ConfigureAwait(false);
-
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
-            Assert.IsTrue(response.Value.Dictionary.TryGetValue("en", out SourceDictionaryLanguage dictionaryLanguage));
-            Assert.NotNull(dictionaryLanguage.Dir);
-            Assert.NotNull(dictionaryLanguage.Name);
-            Assert.NotNull(dictionaryLanguage.NativeName);
-            Assert.Greater(dictionaryLanguage.Translations.Count, 1);
-        }
-
-        [RecordedTest]
         public async Task GetSupportedLanguagesWithCulture()
         {
             TextTranslationClient client = GetClient();
@@ -145,9 +108,8 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.Greater(response.Value.Translation.Count, 0);
             Assert.Greater(response.Value.Transliteration.Count, 0);
-            Assert.Greater(response.Value.Dictionary.Count, 0);
             Assert.IsTrue(response.Value.Translation.TryGetValue("en", out TranslationLanguage language));
-            Assert.NotNull(language.Dir);
+            Assert.NotNull(language.Directionality);
             Assert.NotNull(language.Name);
             Assert.NotNull(language.NativeName);
         }

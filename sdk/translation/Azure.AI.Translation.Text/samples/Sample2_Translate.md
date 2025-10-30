@@ -42,8 +42,8 @@ try
     Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText);
     TranslatedTextItem translation = response.Value;
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -65,7 +65,7 @@ try
     string toLanguage = "zh-Hans";
     string inputText = "hudha akhtabar.";
 
-    TranslateTarget target = new TranslateTarget(toLanguage, script: toScript);
+    TranslationTarget target = new TranslationTarget(toLanguage, script: toScript);
     TranslateInputItem inputItem = new TranslateInputItem(inputText, [target], language: fromLanguage, script: fromScript);
 
     Response<TranslatedTextItem> response = client.Translate(inputItem);
@@ -97,7 +97,7 @@ try
         "Dies ist ein Test."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputTextElements);
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(inputTextElements, targetLanguage);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)
@@ -123,7 +123,7 @@ try
     IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
     string inputText = "This is a test.";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, targetLanguages.Select(lang => new TranslateTarget(lang)));
+    TranslateInputItem input = new TranslateInputItem(inputText, targetLanguages.Select(lang => new TranslationTarget(lang)));
     Response<TranslatedTextItem> response = client.Translate(input);
     IReadOnlyList<TranslationText> translations = response.Value.Translations;
 
@@ -149,7 +149,7 @@ try
     string targetLanguage = "cs";
     string inputText = "<html><body>This <b>is</b> a test.</body></html>";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)], textType: TextType.Html);
+    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], textType: TextType.Html);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -176,7 +176,7 @@ try
     string targetLanguage = "cs";
     string inputText = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
+    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -199,13 +199,13 @@ If you already know the translation you want to apply to a word or a phrase, you
 > Note You must include the From parameter in your API translation request instead of using the autodetect feature.
 
 ```C# Snippet:GetTextTranslationMarkup
- try
+try
 {
     string sourceLanguage = "en";
     string targetLanguage = "cs";
     string inputText = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
+    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -236,7 +236,7 @@ try
     string targetLanguage = "cs";
     string inputText = "This is ***.";
 
-    TranslateTarget target = new TranslateTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
+    TranslationTarget target = new TranslationTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
     TranslateInputItem input = new TranslateInputItem(inputText, [target]);
 
     Response<TranslatedTextItem> response = client.Translate(input);
@@ -268,7 +268,7 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    TranslateTarget target = new TranslateTarget(targetLanguage, deploymentName: category, allowFallback: true);
+    TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: category, allowFallback: true);
     TranslateInputItem input = new TranslateInputItem(inputText, [target]);
 
     Response<TranslatedTextItem> response = client.Translate(input);
@@ -296,7 +296,7 @@ try
     string llmModelname = "gpt-4o-mini";
     string inputText = "This is a test.";
 
-    TranslateTarget target = new TranslateTarget(targetLanguage, deploymentName: llmModelname);
+    TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: llmModelname);
     TranslateInputItem input = new TranslateInputItem(inputText, [target]);
 
     Response<TranslatedTextItem> response = client.Translate(input);
