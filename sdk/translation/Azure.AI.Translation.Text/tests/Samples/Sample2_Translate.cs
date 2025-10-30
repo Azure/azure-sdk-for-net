@@ -107,7 +107,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string llmModelname = "gpt-4o-mini";
                 string inputText = "This is a test.";
 
-                TranslateTarget target = new TranslateTarget(targetLanguage, deploymentName: llmModelname);
+                TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: llmModelname);
                 TranslateInputItem input = new TranslateInputItem(inputText, [target]);
 
                 Response<TranslatedTextItem> response = client.Translate(input);
@@ -140,7 +140,7 @@ namespace Azure.AI.Translation.Text.Samples
                     "Dies ist ein Test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputTextElements);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(inputTextElements, targetLanguage);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
                 foreach (TranslatedTextItem translation in translations)
@@ -168,7 +168,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
                 string inputText = "This is a test.";
 
-                TranslateInputItem input = new TranslateInputItem(inputText, targetLanguages.Select(lang => new TranslateTarget(lang)));
+                TranslateInputItem input = new TranslateInputItem(inputText, targetLanguages.Select(lang => new TranslationTarget(lang)));
                 Response<TranslatedTextItem> response = client.Translate(input);
                 IReadOnlyList<TranslationText> translations = response.Value.Translations;
 
@@ -196,7 +196,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "<html><body>This <b>is</b> a test.</body></html>";
 
-                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)], textType: TextType.Html);
+                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], textType: TextType.Html);
 
                 Response<TranslatedTextItem> response = client.Translate(input);
                 TranslatedTextItem translation = response.Value;
@@ -225,7 +225,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>";
 
-                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
+                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
 
                 Response<TranslatedTextItem> response = client.Translate(input);
                 TranslatedTextItem translation = response.Value;
@@ -254,7 +254,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.";
 
-                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
+                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
 
                 Response<TranslatedTextItem> response = client.Translate(input);
                 TranslatedTextItem translation = response.Value;
@@ -285,7 +285,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is ***.";
 
-                TranslateTarget target = new TranslateTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
+                TranslationTarget target = new TranslationTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
                 TranslateInputItem input = new TranslateInputItem(inputText, [target]);
 
                 Response<TranslatedTextItem> response = client.Translate(input);
@@ -317,7 +317,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string toLanguage = "zh-Hans";
                 string inputText = "hudha akhtabar.";
 
-                TranslateTarget target = new TranslateTarget(toLanguage, script: toScript);
+                TranslationTarget target = new TranslationTarget(toLanguage, script: toScript);
                 TranslateInputItem inputItem = new TranslateInputItem(inputText, [target], language: fromLanguage, script: fromScript);
 
                 Response<TranslatedTextItem> response = client.Translate(inputItem);
@@ -347,7 +347,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                TranslateTarget target = new TranslateTarget(targetLanguage, deploymentName: category, allowFallback: true);
+                TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: category, allowFallback: true);
                 TranslateInputItem input = new TranslateInputItem(inputText, [target]);
 
                 Response<TranslatedTextItem> response = client.Translate(input);

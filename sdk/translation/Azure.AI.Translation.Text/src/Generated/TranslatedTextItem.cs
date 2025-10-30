@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
@@ -18,13 +17,9 @@ namespace Azure.AI.Translation.Text
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/>. </summary>
-        /// <param name="translations">
-        /// An array of translation results. The size of the array matches the number of target 
-        /// languages specified through the to query parameter.
-        /// </param>
-        internal TranslatedTextItem(IEnumerable<TranslationText> translations)
+        internal TranslatedTextItem()
         {
-            Translations = translations.ToList();
+            Translations = new ChangeTrackingList<TranslationText>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/>. </summary>
@@ -34,7 +29,7 @@ namespace Azure.AI.Translation.Text
         /// languages specified through the to query parameter.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IList<TranslationText> translations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<TranslationText> translations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DetectedLanguage = detectedLanguage;
             Translations = translations;
@@ -48,6 +43,6 @@ namespace Azure.AI.Translation.Text
         /// An array of translation results. The size of the array matches the number of target 
         /// languages specified through the to query parameter.
         /// </summary>
-        public IList<TranslationText> Translations { get; }
+        public IReadOnlyList<TranslationText> Translations { get; }
     }
 }

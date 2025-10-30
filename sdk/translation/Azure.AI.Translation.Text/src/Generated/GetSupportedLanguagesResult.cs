@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Text
             Etag = etag;
             Translation = new ChangeTrackingDictionary<string, TranslationLanguage>();
             Transliteration = new ChangeTrackingDictionary<string, TransliterationLanguage>();
-            Models = new ChangeTrackingDictionary<string, string>();
+            Models = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetSupportedLanguagesResult"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="models"> LLM models supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSupportedLanguagesResult(string requestId, string etag, IDictionary<string, TranslationLanguage> translation, IDictionary<string, TransliterationLanguage> transliteration, IDictionary<string, string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSupportedLanguagesResult(string requestId, string etag, IDictionary<string, TranslationLanguage> translation, IDictionary<string, TransliterationLanguage> transliteration, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             Etag = etag;
@@ -70,6 +70,6 @@ namespace Azure.AI.Translation.Text
         public IDictionary<string, TransliterationLanguage> Transliteration { get; }
 
         /// <summary> LLM models supported. </summary>
-        public IDictionary<string, string> Models { get; }
+        public IReadOnlyList<string> Models { get; }
     }
 }

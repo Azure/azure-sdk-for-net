@@ -15,11 +15,6 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the translated text. </summary>
     public partial class TranslatedTextItem : IJsonModel<TranslatedTextItem>
     {
-        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/> for deserialization. </summary>
-        internal TranslatedTextItem()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranslatedTextItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -43,13 +38,16 @@ namespace Azure.AI.Translation.Text
                 writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteObjectValue(DetectedLanguage, options);
             }
-            writer.WritePropertyName("translations"u8);
-            writer.WriteStartArray();
-            foreach (TranslationText item in Translations)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("translations"u8);
+                writer.WriteStartArray();
+                foreach (TranslationText item in Translations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -93,7 +91,7 @@ namespace Azure.AI.Translation.Text
                 return null;
             }
             DetectedLanguage detectedLanguage = default;
-            IList<TranslationText> translations = default;
+            IReadOnlyList<TranslationText> translations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -23,13 +23,12 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="models"> LLM models supported for translation. </param>
-        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, string> models)
+        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality)
         {
             Name = name;
             NativeName = nativeName;
             Directionality = directionality;
-            Models = models;
+            Models = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
@@ -38,7 +37,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="models"> LLM models supported for translation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationLanguage(string name, string nativeName, LanguageDirectionality directionality, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             NativeName = nativeName;
@@ -57,6 +56,6 @@ namespace Azure.AI.Translation.Text
         public LanguageDirectionality Directionality { get; }
 
         /// <summary> LLM models supported for translation. </summary>
-        public IDictionary<string, string> Models { get; }
+        public IReadOnlyList<string> Models { get; }
     }
 }

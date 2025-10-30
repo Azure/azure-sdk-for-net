@@ -47,19 +47,21 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
             writer.WriteStringValue(Directionality.ToSerialString());
-            writer.WritePropertyName("models"u8);
-            writer.WriteStartObject();
-            foreach (var item in Models)
+            if (options.Format != "W")
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("models"u8);
+                writer.WriteStartArray();
+                foreach (string item in Models)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndArray();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -105,7 +107,7 @@ namespace Azure.AI.Translation.Text
             string name = default;
             string nativeName = default;
             LanguageDirectionality directionality = default;
-            IDictionary<string, string> models = default;
+            IReadOnlyList<string> models = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -126,19 +128,19 @@ namespace Azure.AI.Translation.Text
                 }
                 if (prop.NameEquals("models"u8))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            array.Add(null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                            array.Add(item.GetString());
                         }
                     }
-                    models = dictionary;
+                    models = array;
                     continue;
                 }
                 if (options.Format != "W")

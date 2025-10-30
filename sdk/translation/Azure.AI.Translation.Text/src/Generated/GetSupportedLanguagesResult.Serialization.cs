@@ -61,21 +61,20 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Models))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Models))
             {
                 writer.WritePropertyName("models"u8);
-                writer.WriteStartObject();
-                foreach (var item in Models)
+                writer.WriteStartArray();
+                foreach (string item in Models)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -123,7 +122,7 @@ namespace Azure.AI.Translation.Text
             string etag = default;
             IDictionary<string, TranslationLanguage> translation = default;
             IDictionary<string, TransliterationLanguage> transliteration = default;
-            IDictionary<string, string> models = default;
+            IReadOnlyList<string> models = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,19 +160,19 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            array.Add(null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                            array.Add(item.GetString());
                         }
                     }
-                    models = dictionary;
+                    models = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +185,7 @@ namespace Azure.AI.Translation.Text
                 etag,
                 translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(),
                 transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(),
-                models ?? new ChangeTrackingDictionary<string, string>(),
+                models ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
 

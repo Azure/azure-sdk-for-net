@@ -24,18 +24,18 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="models"> LLM models supported. </param>
         /// <returns> A new <see cref="Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
-        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = default, string etag = default, IDictionary<string, TranslationLanguage> translation = default, IDictionary<string, TransliterationLanguage> transliteration = default, IDictionary<string, string> models = default)
+        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = default, string etag = default, IDictionary<string, TranslationLanguage> translation = default, IDictionary<string, TransliterationLanguage> transliteration = default, IEnumerable<string> models = default)
         {
             translation ??= new ChangeTrackingDictionary<string, TranslationLanguage>();
             transliteration ??= new ChangeTrackingDictionary<string, TransliterationLanguage>();
-            models ??= new ChangeTrackingDictionary<string, string>();
+            models ??= new ChangeTrackingList<string>();
 
             return new GetSupportedLanguagesResult(
                 requestId,
                 etag,
                 translation,
                 transliteration,
-                models,
+                models.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -48,11 +48,11 @@ namespace Azure.AI.Translation.Text
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="models"> LLM models supported for translation. </param>
         /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
-        public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = default, IDictionary<string, string> models = default)
+        public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = default, IEnumerable<string> models = default)
         {
-            models ??= new ChangeTrackingDictionary<string, string>();
+            models ??= new ChangeTrackingList<string>();
 
-            return new TranslationLanguage(name, nativeName, directionality, models, additionalBinaryDataProperties: null);
+            return new TranslationLanguage(name, nativeName, directionality, models.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
