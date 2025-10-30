@@ -17,13 +17,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Based on Python test: test_planetary_computer_02_ingestion_management.py
     /// Tests managed identities, sources, ingestion definitions, runs, and operations.
     /// </summary>
+    [AsyncOnly]
     public class TestPlanetaryComputer02IngestionManagementTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer02IngestionManagementTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer02IngestionManagementTests() : base(true)
         {
         }
 
@@ -32,7 +29,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_01_list_managed_identities
         /// C# method: GetManagedIdentities() - returns Pageable<BinaryData>
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("Ingestion")]
         [Category("ManagedIdentity")]
         public async Task Test02_01_ListManagedIdentities()
@@ -100,7 +97,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_02_create_and_list_ingestion_sources (list portion)
         /// C# method: GetSources(top, skip) - returns Pageable<BinaryData>
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("Ingestion")]
         [Category("Sources")]
         public async Task Test02_ListSources()
@@ -140,7 +137,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_07_list_operations
         /// C# method: GetOperations() - returns Pageable<BinaryData>
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("Ingestion")]
         [Category("Operations")]
         public async Task Test02_07_ListOperations()

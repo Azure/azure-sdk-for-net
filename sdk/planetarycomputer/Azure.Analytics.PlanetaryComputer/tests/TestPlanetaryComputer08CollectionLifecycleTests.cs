@@ -21,6 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     [Category("Collections")]
     [Category("Lifecycle")]
     [Category("LRO")]
+    [AsyncOnly]
     public class TestPlanetaryComputer08CollectionLifecycleTests : PlanetaryComputerTestBase
     {
         private const string TestCollectionId = "test-collection-lifecycle";
@@ -29,15 +30,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
         }
 
-        public TestPlanetaryComputer08CollectionLifecycleTests() : base(true)
-        {
-        }
-
         /// <summary>
         /// Tests creating a new STAC collection using Long-Running Operation (LRO).
         /// Maps to Python test: test_01_begin_create_collection
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("CreateCollection")]
         public async Task Test08_01_BeginCreateCollection()
         {
@@ -133,7 +130,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Assert.That(idElement.GetString(), Is.EqualTo(TestCollectionId), "Collection ID should match");
 
             Assert.That(root.TryGetProperty("title", out JsonElement titleElement), Is.True);
-            Assert.That(titleElement.GetString(), Is.EqualTo("Test Collection Lifecycle"), "Title should match");
+            Assert.That(titleElement.GetString(), Is.EqualTo("Example Collection"), "Title should match");
 
             Assert.That(root.TryGetProperty("type", out JsonElement typeElement), Is.True);
             Assert.That(typeElement.GetString(), Is.EqualTo("Collection"), "Type should be Collection");
@@ -145,7 +142,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests updating a collection using create or replace operation.
         /// Maps to Python test: test_02_create_or_replace_collection
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("UpdateCollection")]
         public async Task Test08_02_CreateOrReplaceCollection()
         {
@@ -204,7 +201,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests deleting a STAC collection using Long-Running Operation (LRO).
         /// Maps to Python test: test_03_begin_delete_collection
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("DeleteCollection")]
         public async Task Test08_03_BeginDeleteCollection()
         {

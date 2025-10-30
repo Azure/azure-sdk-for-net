@@ -231,6 +231,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             {
                 Value = @"""$1-00000000"""
             });
+
+            // DO NOT sanitize collection names in URL paths - they are public identifiers
+            // This ensures that test collection names like "test-collection-lifecycle" are preserved
+            // in recordings for proper playback matching
+            testBase.SanitizersToRemove.Add("AZSDK3447"); // Don't sanitize path segments
         }
     }
 }

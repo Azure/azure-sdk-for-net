@@ -14,13 +14,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Based on Python test: test_planetary_computer_01_stac_collection.py
     /// Complements existing StacClientTests.cs with collection listing and metadata operations.
     /// </summary>
+    [AsyncOnly]
     public class TestPlanetaryComputer01StacCollectionTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer01StacCollectionTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer01StacCollectionTests() : base(true)
         {
         }
 
@@ -29,7 +26,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_01_list_collections
         /// C# method: GetCollections(sign=null, durationInMinutes=null)
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("STAC")]
         [Category("Collections")]
         public async Task Test01_01_ListCollections()
@@ -89,7 +86,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_03_get_collection
         /// C# method: GetCollection(collectionId, sign=null, durationInMinutes=null)
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("STAC")]
         [Category("GetCollection")]
         public async Task Test01_03_GetCollection()

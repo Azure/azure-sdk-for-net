@@ -16,13 +16,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Tests for Shared Access Signature (SAS) operations.
     /// Based on Python test: test_planetary_computer_03_shared_access_signature.py
     /// </summary>
+    [AsyncOnly]
     public class TestPlanetaryComputer03SharedAccessSignatureClientTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer03SharedAccessSignatureClientTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer03SharedAccessSignatureClientTests() : base(true)
         {
         }
 
@@ -31,7 +28,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_01_get_token_with_default_duration
         /// C# method: GetToken(collectionId, durationInMinutes=null)
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("SAS")]
         [Category("SharedAccessSignature")]
         public async Task Test03_01_GetTokenWithDefaultDuration()
@@ -100,7 +97,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_02_get_token_with_custom_duration
         /// C# method: GetToken(collectionId, durationInMinutes=60)
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("SAS")]
         [Category("SharedAccessSignature")]
         public async Task Test03_02_GetTokenWithCustomDuration()

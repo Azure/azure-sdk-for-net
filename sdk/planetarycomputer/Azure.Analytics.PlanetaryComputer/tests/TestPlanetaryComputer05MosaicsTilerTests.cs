@@ -16,13 +16,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// </summary>
     [Category("Tiler")]
     [Category("Mosaics")]
+    [AsyncOnly]
     public class TestPlanetaryComputer05MosaicsTilerTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer05MosaicsTilerTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer05MosaicsTilerTests() : base(true)
         {
         }
 
@@ -30,7 +27,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests registering a mosaics search with STAC search parameters.
         /// Maps to Python test: test_01_register_mosaics_search
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("RegisterSearch")]
         public async Task Test05_01_RegisterMosaicsSearch()
         {
@@ -83,7 +80,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests getting mosaics search info after registration.
         /// Maps to Python test: test_02_get_mosaics_search_info
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("SearchInfo")]
         public async Task Test05_02_GetMosaicsSearchInfo()
         {

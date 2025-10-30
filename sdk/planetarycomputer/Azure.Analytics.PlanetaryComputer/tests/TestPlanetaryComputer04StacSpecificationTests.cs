@@ -15,13 +15,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Based on Python test: test_planetary_computer_04_stac_specification.py
     /// Tests STAC API conformance, collection/item retrieval, and search operations.
     /// </summary>
+    [AsyncOnly]
     public class TestPlanetaryComputer04StacSpecificationTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer04StacSpecificationTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer04StacSpecificationTests() : base(true)
         {
         }
 
@@ -30,7 +27,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_01_get_conformance_class
         /// C# method: GetConformanceClass()
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("STAC")]
         [Category("Conformance")]
         public async Task Test04_01_GetConformanceClass()
@@ -94,7 +91,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Python equivalent: test_04_get_collection
         /// C# method: GetCollection(collectionId)
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("STAC")]
         [Category("Specification")]
         public async Task Test04_04_GetCollection_SpecificationCompliance()

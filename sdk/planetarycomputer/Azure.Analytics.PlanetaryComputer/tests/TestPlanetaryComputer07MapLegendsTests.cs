@@ -18,13 +18,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// </summary>
     [Category("Tiler")]
     [Category("Legends")]
+    [AsyncOnly]
     public class TestPlanetaryComputer07MapLegendsTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer07MapLegendsTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer07MapLegendsTests() : base(true)
         {
         }
 
@@ -32,7 +29,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests getting a class map legend (categorical color map) for MTBS Severity.
         /// Maps to Python test: test_01_get_class_map_legend
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("ClassMapLegend")]
         public async Task Test07_01_GetClassMapLegend()
         {
@@ -138,7 +135,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests getting an interval legend (continuous color map).
         /// Maps to Python test: test_02_get_interval_legend
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("IntervalLegend")]
         public async Task Test07_02_GetIntervalLegend()
         {

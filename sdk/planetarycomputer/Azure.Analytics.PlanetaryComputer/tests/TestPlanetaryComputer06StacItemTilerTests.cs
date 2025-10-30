@@ -16,13 +16,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Tests are mapped from Python tests in test_planetary_computer_06_stac_item_tiler.py.
     /// </summary>
     [Category("Tiler")]
+    [AsyncOnly]
     public class TestPlanetaryComputer06StacItemTilerTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer06StacItemTilerTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        public TestPlanetaryComputer06StacItemTilerTests() : base(true)
         {
         }
 
@@ -30,7 +27,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests getting tile matrix definitions for a specific tile matrix set (WebMercatorQuad).
         /// Maps to Python test: test_01_get_tile_matrix_definitions
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("TileMatrices")]
         [Category("TileMatrixDefinitions")]
         public async Task Test06_01_GetTileMatrixDefinitions()
@@ -91,7 +88,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests listing all available tile matrix set IDs.
         /// Maps to Python test: test_02_list_tile_matrices
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("TileMatrices")]
         public async Task Test06_02_ListTileMatrices()
         {
@@ -122,7 +119,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Tests listing available assets for a STAC item.
         /// Maps to Python test: test_03_list_available_assets
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("Assets")]
         public async Task Test06_03_ListAvailableAssets()
         {

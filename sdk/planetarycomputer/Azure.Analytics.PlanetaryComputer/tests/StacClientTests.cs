@@ -20,7 +20,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Tests the GetCollections operation to retrieve all available STAC collections.
         /// </summary>
-        [RecordedTest]
+        [Test]
         [Category("STAC")]
         [Category("Collections")]
         public async Task GetCollectionsTest()
