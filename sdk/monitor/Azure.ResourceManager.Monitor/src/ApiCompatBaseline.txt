@@ -1,0 +1,2 @@
+MembersMustExist : Member 'public System.TimeSpan Azure.ResourceManager.Monitor.MetricAlertData.WindowSize.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Monitor.MetricAlertData.WindowSize.set(System.TimeSpan)' does not exist in the implementation but it does exist in the contract.
