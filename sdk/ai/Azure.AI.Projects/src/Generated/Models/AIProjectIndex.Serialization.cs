@@ -177,7 +177,7 @@ namespace Azure.AI.Projects
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AIProjectIndex"/> from. </param>
         public static explicit operator AIProjectIndex(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAIProjectIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
