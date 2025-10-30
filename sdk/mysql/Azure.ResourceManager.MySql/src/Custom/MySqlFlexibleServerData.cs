@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     {
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? RestorePointInTime { get => RestorePointInTime; set => RestorePointInTime = value; }
+        public DateTimeOffset? RestorePointInTime { get => RestorePointInOn; set => RestorePointInOn = value; }
 
         /// <summary> PrivateEndpointConnections related properties of a server. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
