@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+                Response<TranslatedTextItem> response = await client.TranslateAsync(inputText, targetLanguage, inputText).ConfigureAwait(false);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -56,7 +56,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage: sourceLanguage).ConfigureAwait(false);
+                Response<TranslatedTextItem> response = await client.TranslateAsync(inputText, targetLanguage, sourceLanguage: sourceLanguage).ConfigureAwait(false);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+                Response<TranslatedTextItem> response = await client.TranslateAsync(inputText, targetLanguage).ConfigureAwait(false);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");

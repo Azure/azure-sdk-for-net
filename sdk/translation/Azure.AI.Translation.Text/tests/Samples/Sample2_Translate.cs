@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText);
+                Response<TranslatedTextItem> response = client.Translate(inputText, targetLanguage);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -56,7 +56,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText, sourceLanguage: sourceLanguage);
+                Response<TranslatedTextItem> response = client.Translate(inputText, targetLanguage, sourceLanguage: sourceLanguage);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText);
+                Response<TranslatedTextItem> response = client.Translate(inputText, targetLanguage);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
