@@ -1,4 +1,4 @@
-# Azure Planetary Computer client library tests for .NET
+# Azure Planetary Computer client library for .NET - Tests
 
 This directory contains tests for the Azure Planetary Computer .NET SDK.
 
