@@ -1685,58 +1685,6 @@
             ]
           },
           {
-            "id": "test-partition-type-collection",
-            "type": "Collection",
-            "links": [
-              {
-                "rel": "items",
-                "type": "application/geo+json",
-                "href": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/stac/collections/test-partition-type-collection/items"
-              },
-              {
-                "rel": "parent",
-                "type": "application/json",
-                "href": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/stac/"
-              },
-              {
-                "rel": "root",
-                "type": "application/json",
-                "href": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/stac/"
-              },
-              {
-                "rel": "self",
-                "type": "application/json",
-                "href": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/stac/collections/test-partition-type-collection"
-              }
-            ],
-            "title": "Test Partition Type Collection",
-            "extent": {
-              "spatial": {
-                "bbox": [
-                  [
-                    -180,
-                    -90,
-                    180,
-                    90
-                  ]
-                ]
-              },
-              "temporal": {
-                "interval": [
-                  [
-                    "2020-01-01T00:00:00Z",
-                    "2099-12-31T23:59:59Z"
-                  ]
-                ]
-              }
-            },
-            "license": "proprietary",
-            "description": "Temporary collection for partition type testing",
-            "stac_version": "1.0.0",
-            "msft:_created": "2025-10-30T11:56:46.8809943Z",
-            "msft:_updated": "2025-10-30T11:56:46.8809943Z"
-          },
-          {
             "id": "python-sdk-sentinel-3",
             "type": "Collection",
             "links": [
@@ -1985,6 +1933,6 @@
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "2054078046"
+    "RandomSeed": "616324229"
   }
 }
