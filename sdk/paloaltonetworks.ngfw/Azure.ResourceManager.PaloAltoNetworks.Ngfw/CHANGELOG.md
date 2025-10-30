@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Upgraded api-version tag to `package-2025-10-08`, details please check https://github.com/Azure/azure-rest-api-specs/blob/dbd27c2a6be4ecbd2a43833ab48e5046c3b8b03f/specification/paloaltonetworks/resource-manager/readme.md .
+
 ### Breaking Changes
 
 ### Bugs Fixed
