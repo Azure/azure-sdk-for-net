@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             return GetCachedClient(client => new InformaticaOrganizationCollection(client, Id));
         }
 
-        /// <summary> Get a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             return await GetInformaticaOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
