@@ -101,13 +101,10 @@ namespace Azure.Identity
             }
 
             // Basic validation for CA data if specified (detailed validation happens at use time)
-            if (!string.IsNullOrEmpty(caData))
+            if (!string.IsNullOrEmpty(caData) && string.IsNullOrWhiteSpace(caData))
             {
-                if (string.IsNullOrWhiteSpace(caData))
-                {
-                    throw new InvalidOperationException(
-                        "AZURE_KUBERNETES_CA_DATA is empty or contains only whitespace.");
-                }
+                throw new InvalidOperationException(
+                    "AZURE_KUBERNETES_CA_DATA is empty or contains only whitespace.");
             }
 
             return new KubernetesProxyConfig
