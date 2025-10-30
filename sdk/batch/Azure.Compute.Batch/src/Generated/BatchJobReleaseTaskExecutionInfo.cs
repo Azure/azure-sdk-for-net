@@ -16,37 +16,8 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchJobReleaseTaskExecutionInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobReleaseTaskExecutionInfo"/>. </summary>
         /// <param name="startTime"> The time at which the Task started running. If the Task has been restarted or retried, this is the most recent time at which the Task started running. </param>
@@ -67,8 +38,8 @@ namespace Azure.Compute.Batch
         /// <param name="containerInfo"> Information about the container under which the Task is executing. This property is set only if the Task runs in a container context. </param>
         /// <param name="failureInfo"> Information describing the Task failure, if any. This property is set only if the Task is in the completed state and encountered a failure. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobReleaseTaskExecutionInfo(DateTimeOffset startTime, DateTimeOffset? endTime, BatchJobReleaseTaskState state, string taskRootDirectory, Uri taskRootDirectoryUri, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchJobReleaseTaskExecutionInfo(DateTimeOffset startTime, DateTimeOffset? endTime, BatchJobReleaseTaskState state, string taskRootDirectory, Uri taskRootDirectoryUri, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -79,30 +50,33 @@ namespace Azure.Compute.Batch
             ContainerInfo = containerInfo;
             FailureInfo = failureInfo;
             Result = result;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchJobReleaseTaskExecutionInfo"/> for deserialization. </summary>
-        internal BatchJobReleaseTaskExecutionInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time at which the Task started running. If the Task has been restarted or retried, this is the most recent time at which the Task started running. </summary>
         public DateTimeOffset StartTime { get; }
+
         /// <summary> The time at which the Job Release Task completed. This property is set only if the Task is in the Completed state. </summary>
         public DateTimeOffset? EndTime { get; }
+
         /// <summary> The current state of the Job Release Task on the Compute Node. </summary>
         public BatchJobReleaseTaskState State { get; }
+
         /// <summary> The root directory of the Job Release Task on the Compute Node. You can use this path to retrieve files created by the Task, such as log files. </summary>
         public string TaskRootDirectory { get; }
+
         /// <summary> The URL to the root directory of the Job Release Task on the Compute Node. </summary>
         public Uri TaskRootDirectoryUri { get; }
+
         /// <summary> The exit code of the program specified on the Task command line. This parameter is returned only if the Task is in the completed state. The exit code for a process reflects the specific convention implemented by the application developer for that process. If you use the exit code value to make decisions in your code, be sure that you know the exit code convention used by the application process. Note that the exit code may also be generated by the Compute Node operating system, such as when a process is forcibly terminated. </summary>
         public int? ExitCode { get; }
+
         /// <summary> Information about the container under which the Task is executing. This property is set only if the Task runs in a container context. </summary>
         public BatchTaskContainerExecutionInfo ContainerInfo { get; }
+
         /// <summary> Information describing the Task failure, if any. This property is set only if the Task is in the completed state and encountered a failure. </summary>
         public BatchTaskFailureInfo FailureInfo { get; }
+
         /// <summary> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </summary>
         public BatchTaskExecutionResult? Result { get; }
     }

@@ -16,37 +16,8 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class UserAccount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserAccount"/>. </summary>
         /// <param name="name"> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </param>
@@ -67,30 +38,29 @@ namespace Azure.Compute.Batch
         /// <param name="elevationLevel"> The elevation level of the user Account. The default value is nonAdmin. </param>
         /// <param name="linuxUserConfiguration"> The Linux-specific user configuration for the user Account. This property is ignored if specified on a Windows Pool. If not specified, the user is created with the default options. </param>
         /// <param name="windowsUserConfiguration"> The Windows-specific user configuration for the user Account. This property can only be specified if the user is on a Windows Pool. If not specified and on a Windows Pool, the user is created with the default options. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserAccount(string name, string password, ElevationLevel? elevationLevel, LinuxUserConfiguration linuxUserConfiguration, WindowsUserConfiguration windowsUserConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserAccount(string name, string password, ElevationLevel? elevationLevel, LinuxUserConfiguration linuxUserConfiguration, WindowsUserConfiguration windowsUserConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Password = password;
             ElevationLevel = elevationLevel;
             LinuxUserConfiguration = linuxUserConfiguration;
             WindowsUserConfiguration = windowsUserConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserAccount"/> for deserialization. </summary>
-        internal UserAccount()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </summary>
         public string Name { get; set; }
+
         /// <summary> The password for the user Account. </summary>
         public string Password { get; set; }
+
         /// <summary> The elevation level of the user Account. The default value is nonAdmin. </summary>
         public ElevationLevel? ElevationLevel { get; set; }
+
         /// <summary> The Linux-specific user configuration for the user Account. This property is ignored if specified on a Windows Pool. If not specified, the user is created with the default options. </summary>
         public LinuxUserConfiguration LinuxUserConfiguration { get; set; }
+
         /// <summary> The Windows-specific user configuration for the user Account. This property can only be specified if the user is on a Windows Pool. If not specified and on a Windows Pool, the user is created with the default options. </summary>
         public WindowsUserConfiguration WindowsUserConfiguration { get; set; }
     }

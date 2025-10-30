@@ -10,14 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchNode : IUtf8JsonSerializable, IJsonModel<BatchNode>
+    /// <summary> A Compute Node in the Batch service. </summary>
+    public partial class BatchNode : IJsonModel<BatchNode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +30,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("recentTasks"u8);
                 writer.WriteStartArray();
-                foreach (var item in RecentTasks)
+                foreach (BatchTaskInfo item in RecentTasks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -129,7 +129,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("certificateReferences"u8);
                 writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
+                foreach (BatchCertificateReference item in CertificateReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (var item in Errors)
+                foreach (BatchNodeError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -165,15 +165,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("virtualMachineInfo"u8);
                 writer.WriteObjectValue(VirtualMachineInfo, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -182,28 +182,33 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchNode IJsonModel<BatchNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchNode IJsonModel<BatchNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchNode JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchNode)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchNode(document.RootElement, options);
         }
 
-        internal static BatchNode DeserializeBatchNode(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchNode DeserializeBatchNode(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            Uri url = default;
+            Uri uri = default;
             BatchNodeState? state = default;
             SchedulingState? schedulingState = default;
             DateTimeOffset? stateTransitionTime = default;
@@ -216,238 +221,236 @@ namespace Azure.Compute.Batch
             int? runningTasksCount = default;
             int? runningTaskSlotsCount = default;
             int? totalTasksSucceeded = default;
-            IReadOnlyList<BatchTaskInfo> recentTasks = default;
+            IList<BatchTaskInfo> recentTasks = default;
             BatchStartTask startTask = default;
             BatchStartTaskInfo startTaskInfo = default;
-            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
-            IReadOnlyList<BatchNodeError> errors = default;
+            IList<BatchCertificateReference> certificateReferences = default;
+            IList<BatchNodeError> errors = default;
             bool? isDedicated = default;
             BatchNodeEndpointConfiguration endpointConfiguration = default;
             BatchNodeAgentInfo nodeAgentInfo = default;
             VirtualMachineInfo virtualMachineInfo = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new BatchNodeState(property.Value.GetString());
+                    state = new BatchNodeState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("schedulingState"u8))
+                if (prop.NameEquals("schedulingState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    schedulingState = new SchedulingState(property.Value.GetString());
+                    schedulingState = new SchedulingState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stateTransitionTime"u8))
+                if (prop.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    stateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastBootTime"u8))
+                if (prop.NameEquals("lastBootTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastBootTime = property.Value.GetDateTimeOffset("O");
+                    lastBootTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("allocationTime"u8))
+                if (prop.NameEquals("allocationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allocationTime = property.Value.GetDateTimeOffset("O");
+                    allocationTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("affinityId"u8))
+                if (prop.NameEquals("affinityId"u8))
                 {
-                    affinityId = property.Value.GetString();
+                    affinityId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmSize"u8))
+                if (prop.NameEquals("vmSize"u8))
                 {
-                    vmSize = property.Value.GetString();
+                    vmSize = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalTasksRun"u8))
+                if (prop.NameEquals("totalTasksRun"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalTasksRun = property.Value.GetInt32();
+                    totalTasksRun = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runningTasksCount"u8))
+                if (prop.NameEquals("runningTasksCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runningTasksCount = property.Value.GetInt32();
+                    runningTasksCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runningTaskSlotsCount"u8))
+                if (prop.NameEquals("runningTaskSlotsCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runningTaskSlotsCount = property.Value.GetInt32();
+                    runningTaskSlotsCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalTasksSucceeded"u8))
+                if (prop.NameEquals("totalTasksSucceeded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalTasksSucceeded = property.Value.GetInt32();
+                    totalTasksSucceeded = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recentTasks"u8))
+                if (prop.NameEquals("recentTasks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchTaskInfo> array = new List<BatchTaskInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchTaskInfo.DeserializeBatchTaskInfo(item, options));
                     }
                     recentTasks = array;
                     continue;
                 }
-                if (property.NameEquals("startTask"u8))
+                if (prop.NameEquals("startTask"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
+                    startTask = BatchStartTask.DeserializeBatchStartTask(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("startTaskInfo"u8))
+                if (prop.NameEquals("startTaskInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
+                    startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
+                if (prop.NameEquals("certificateReferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
                     }
                     certificateReferences = array;
                     continue;
                 }
-                if (property.NameEquals("errors"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchNodeError> array = new List<BatchNodeError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchNodeError.DeserializeBatchNodeError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("isDedicated"u8))
+                if (prop.NameEquals("isDedicated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDedicated = property.Value.GetBoolean();
+                    isDedicated = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("endpointConfiguration"u8))
+                if (prop.NameEquals("endpointConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointConfiguration = BatchNodeEndpointConfiguration.DeserializeBatchNodeEndpointConfiguration(property.Value, options);
+                    endpointConfiguration = BatchNodeEndpointConfiguration.DeserializeBatchNodeEndpointConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodeAgentInfo"u8))
+                if (prop.NameEquals("nodeAgentInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeAgentInfo = BatchNodeAgentInfo.DeserializeBatchNodeAgentInfo(property.Value, options);
+                    nodeAgentInfo = BatchNodeAgentInfo.DeserializeBatchNodeAgentInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("virtualMachineInfo"u8))
+                if (prop.NameEquals("virtualMachineInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(property.Value, options);
+                    virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchNode(
                 id,
-                url,
+                uri,
                 state,
                 schedulingState,
                 stateTransitionTime,
@@ -469,13 +472,16 @@ namespace Azure.Compute.Batch
                 endpointConfiguration,
                 nodeAgentInfo,
                 virtualMachineInfo,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchNode>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchNode>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -485,15 +491,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchNode IPersistableModel<BatchNode>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchNode IPersistableModel<BatchNode>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchNode PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchNode>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchNode(document.RootElement, options);
                     }
                 default:
@@ -501,22 +512,15 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchNode FromResponse(Response response)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BatchNode"/> from. </param>
+        public static explicit operator BatchNode(Response result)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchNode(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchNode(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

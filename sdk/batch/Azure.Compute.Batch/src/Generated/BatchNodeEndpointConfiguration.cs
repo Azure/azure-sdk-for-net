@@ -14,63 +14,26 @@ namespace Azure.Compute.Batch
     /// <summary> The endpoint configuration for the Compute Node. </summary>
     public partial class BatchNodeEndpointConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeEndpointConfiguration"/>. </summary>
         /// <param name="inboundEndpoints"> The list of inbound endpoints that are accessible on the Compute Node. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpoints"/> is null. </exception>
         internal BatchNodeEndpointConfiguration(IEnumerable<InboundEndpoint> inboundEndpoints)
         {
-            Argument.AssertNotNull(inboundEndpoints, nameof(inboundEndpoints));
-
             InboundEndpoints = inboundEndpoints.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeEndpointConfiguration"/>. </summary>
         /// <param name="inboundEndpoints"> The list of inbound endpoints that are accessible on the Compute Node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeEndpointConfiguration(IReadOnlyList<InboundEndpoint> inboundEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNodeEndpointConfiguration(IList<InboundEndpoint> inboundEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InboundEndpoints = inboundEndpoints;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchNodeEndpointConfiguration"/> for deserialization. </summary>
-        internal BatchNodeEndpointConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of inbound endpoints that are accessible on the Compute Node. </summary>
-        public IReadOnlyList<InboundEndpoint> InboundEndpoints { get; }
+        public IList<InboundEndpoint> InboundEndpoints { get; }
     }
 }

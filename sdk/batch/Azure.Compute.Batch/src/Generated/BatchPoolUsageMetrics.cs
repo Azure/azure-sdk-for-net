@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Usage metrics for a Pool across an aggregation interval. </summary>
     public partial class BatchPoolUsageMetrics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolUsageMetrics"/>. </summary>
         /// <param name="poolId"> The ID of the Pool whose metrics are aggregated in this entry. </param>
@@ -51,12 +22,8 @@ namespace Azure.Compute.Batch
         /// <param name="endTime"> The end time of the aggregation interval covered by this entry. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalCoreHours"> The total core hours used in the Pool during this aggregation interval. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="vmSize"/> is null. </exception>
         internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours)
         {
-            Argument.AssertNotNull(poolId, nameof(poolId));
-            Argument.AssertNotNull(vmSize, nameof(vmSize));
-
             PoolId = poolId;
             StartTime = startTime;
             EndTime = endTime;
@@ -70,30 +37,29 @@ namespace Azure.Compute.Batch
         /// <param name="endTime"> The end time of the aggregation interval covered by this entry. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalCoreHours"> The total core hours used in the Pool during this aggregation interval. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PoolId = poolId;
             StartTime = startTime;
             EndTime = endTime;
             VmSize = vmSize;
             TotalCoreHours = totalCoreHours;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageMetrics"/> for deserialization. </summary>
-        internal BatchPoolUsageMetrics()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the Pool whose metrics are aggregated in this entry. </summary>
         public string PoolId { get; }
+
         /// <summary> The start time of the aggregation interval covered by this entry. </summary>
         public DateTimeOffset StartTime { get; }
+
         /// <summary> The end time of the aggregation interval covered by this entry. </summary>
         public DateTimeOffset EndTime { get; }
+
         /// <summary> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </summary>
         public string VmSize { get; }
+
         /// <summary> The total core hours used in the Pool during this aggregation interval. </summary>
         public float TotalCoreHours { get; }
     }

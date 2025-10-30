@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Information about the Compute Node on which a Task ran. </summary>
     public partial class BatchNodeInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeInfo"/>. </summary>
         internal BatchNodeInfo()
@@ -57,8 +28,8 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node on which the Task ran. </param>
         /// <param name="taskRootDirectory"> The root directory of the Task on the Compute Node. </param>
         /// <param name="taskRootDirectoryUri"> The URL to the root directory of the Task on the Compute Node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeInfo(string affinityId, Uri nodeUri, string poolId, string nodeId, string taskRootDirectory, Uri taskRootDirectoryUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNodeInfo(string affinityId, Uri nodeUri, string poolId, string nodeId, string taskRootDirectory, Uri taskRootDirectoryUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AffinityId = affinityId;
             NodeUri = nodeUri;
@@ -66,19 +37,24 @@ namespace Azure.Compute.Batch
             NodeId = nodeId;
             TaskRootDirectory = taskRootDirectory;
             TaskRootDirectoryUri = taskRootDirectoryUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An identifier for the Node on which the Task ran, which can be passed when adding a Task to request that the Task be scheduled on this Compute Node. </summary>
         public string AffinityId { get; }
+
         /// <summary> The URL of the Compute Node on which the Task ran. </summary>
         public Uri NodeUri { get; }
+
         /// <summary> The ID of the Pool on which the Task ran. </summary>
         public string PoolId { get; }
+
         /// <summary> The ID of the Compute Node on which the Task ran. </summary>
         public string NodeId { get; }
+
         /// <summary> The root directory of the Task on the Compute Node. </summary>
         public string TaskRootDirectory { get; }
+
         /// <summary> The URL to the root directory of the Task on the Compute Node. </summary>
         public Uri TaskRootDirectoryUri { get; }
     }

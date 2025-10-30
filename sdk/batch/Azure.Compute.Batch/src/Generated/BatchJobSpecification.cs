@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Specifies details of the Jobs to be created on a schedule. </summary>
     public partial class BatchJobSpecification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/>. </summary>
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
@@ -73,8 +44,8 @@ namespace Azure.Compute.Batch
         /// <param name="commonEnvironmentSettings"> A list of common environment variable settings. These environment variables are set for all Tasks in Jobs created under this schedule (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </param>
         /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
         /// <param name="metadata"> A list of name-value pairs associated with each Job created under this schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSpecification(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, string displayName, bool? usesTaskDependencies, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchJobSpecification(int? priority, bool? allowTaskPreemption, int? maxParallelTasks, string displayName, bool? usesTaskDependencies, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, IList<BatchMetadataItem> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             AllowTaskPreemption = allowTaskPreemption;
@@ -91,42 +62,51 @@ namespace Azure.Compute.Batch
             CommonEnvironmentSettings = commonEnvironmentSettings;
             PoolInfo = poolInfo;
             Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/> for deserialization. </summary>
-        internal BatchJobSpecification()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The priority of Jobs created under this schedule. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0. This priority is used as the default for all Jobs under the Job Schedule. You can update a Job's priority after it has been created using by using the update Job API. </summary>
         public int? Priority { get; set; }
+
         /// <summary> Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </summary>
         public bool? AllowTaskPreemption { get; set; }
+
         /// <summary> The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </summary>
         public int? MaxParallelTasks { get; set; }
+
         /// <summary> The display name for Jobs created under this schedule. The name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Whether Tasks in the Job can define dependencies on each other. The default is false. </summary>
         public bool? UsesTaskDependencies { get; set; }
+
         /// <summary> The action the Batch service should take when all Tasks in a Job created under this schedule are in the completed state. Note that if a Job contains no Tasks, then all Tasks are considered complete. This option is therefore most commonly used with a Job Manager task; if you want to use automatic Job termination without a Job Manager, you should initially set onAllTasksComplete to noaction and update the Job properties to set onAllTasksComplete to terminatejob once you have finished adding Tasks. The default is noaction. </summary>
         public BatchAllTasksCompleteMode? AllTasksCompleteMode { get; set; }
+
         /// <summary> The action the Batch service should take when any Task fails in a Job created under this schedule. A Task is considered to have failed if it have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </summary>
         public BatchTaskFailureMode? TaskFailureMode { get; set; }
+
         /// <summary> The network configuration for the Job. </summary>
         public BatchJobNetworkConfiguration NetworkConfiguration { get; set; }
+
         /// <summary> The execution constraints for Jobs created under this schedule. </summary>
         public BatchJobConstraints Constraints { get; set; }
+
         /// <summary> The details of a Job Manager Task to be launched when a Job is started under this schedule. If the Job does not specify a Job Manager Task, the user must explicitly add Tasks to the Job using the Task API. If the Job does specify a Job Manager Task, the Batch service creates the Job Manager Task when the Job is created, and will try to schedule the Job Manager Task before scheduling other Tasks in the Job. </summary>
         public BatchJobManagerTask JobManagerTask { get; set; }
+
         /// <summary> The Job Preparation Task for Jobs created under this schedule. If a Job has a Job Preparation Task, the Batch service will run the Job Preparation Task on a Node before starting any Tasks of that Job on that Compute Node. </summary>
         public BatchJobPreparationTask JobPreparationTask { get; set; }
+
         /// <summary> The Job Release Task for Jobs created under this schedule. The primary purpose of the Job Release Task is to undo changes to Nodes made by the Job Preparation Task. Example activities include deleting local files, or shutting down services that were started as part of Job preparation. A Job Release Task cannot be specified without also specifying a Job Preparation Task for the Job. The Batch service runs the Job Release Task on the Compute Nodes that have run the Job Preparation Task. </summary>
         public BatchJobReleaseTask JobReleaseTask { get; set; }
+
         /// <summary> A list of common environment variable settings. These environment variables are set for all Tasks in Jobs created under this schedule (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </summary>
         public IList<EnvironmentSetting> CommonEnvironmentSettings { get; }
+
         /// <summary> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </summary>
         public BatchPoolInfo PoolInfo { get; set; }
+
         /// <summary> A list of name-value pairs associated with each Job created under this schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
         public IList<BatchMetadataItem> Metadata { get; }
     }
