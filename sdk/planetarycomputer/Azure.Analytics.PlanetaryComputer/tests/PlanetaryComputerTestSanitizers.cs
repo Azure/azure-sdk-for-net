@@ -15,10 +15,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         // UUID pattern for various IDs
         private const string UUID_PATTERN = @"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
 
-        // Replacement values
+        // Replacement values - matching Python SDK patterns
         private const string SANITIZED_ZERO_UUID = "00000000-0000-0000-0000-000000000000";
+        private const string SANITIZED_ZERO_UUID_32 = "00000000000000000000000000000000"; // 32 chars without hyphens
         private const string SANITIZED_HOST = "SANITIZED";
         private const string REDACTED = "REDACTED";
+        private const string SANITIZED_DATE = "Mon, 01 Jan 2024 00:00:00 GMT";
+        private const string SANITIZED_TRACEPARENT = "00-00000000000000000000000000000000-0000000000000000-00";
+        private const string SANITIZED_COOKIE = "cookie;";
+        private const string SANITIZED_SET_COOKIE = "[set-cookie;]";
+        private const string SANITIZED_SERVER_TIMING = "total;dur=0.0";
+        private const string SANITIZED_ACCESS_TOKEN = "access_token";
 
         public static void ApplySanitizers(PlanetaryComputerTestBase testBase)
         {
@@ -36,18 +43,21 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             testBase.JsonPathSanitizers.Add("$..client_id");
             testBase.JsonPathSanitizers.Add("$..client_secret");
 
-            // Header sanitizers - remove or sanitize sensitive headers
-            testBase.SanitizedHeaders.Add("Set-Cookie");
-            testBase.SanitizedHeaders.Add("Cookie");
-            testBase.SanitizedHeaders.Add("X-Request-ID");
-            testBase.SanitizedHeaders.Add("Date");
-            testBase.SanitizedHeaders.Add("Server-Timing");
-            testBase.SanitizedHeaders.Add("traceparent");
+            // Header sanitizers - matching Python SDK patterns exactly
+            // Note: Don't specify Regex property - default behavior replaces entire header value
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Set-Cookie") { Value = SANITIZED_SET_COOKIE });
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Cookie") { Value = SANITIZED_COOKIE });
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("X-Request-ID") { Value = SANITIZED_ZERO_UUID_32 });
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Date") { Value = SANITIZED_DATE });
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Server-Timing") { Value = SANITIZED_SERVER_TIMING });
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("traceparent") { Value = SANITIZED_TRACEPARENT });
+
+            // Additional header sanitizers for Azure-specific headers
             testBase.SanitizedHeaders.Add("operation-location");
             testBase.SanitizedHeaders.Add("Location");
             testBase.SanitizedHeaders.Add("mise-correlation-id");
 
-            // UUID-based headers
+            // UUID-based headers (for Azure-specific headers with UUIDs)
             testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("apim-request-id")
             {
                 Regex = UUID_PATTERN,
@@ -197,6 +207,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"(?<=""containerUri"":"")[^""]+")
             {
                 Value = $"https://{SANITIZED_HOST}.blob.core.windows.net/{SANITIZED_HOST}"
+            });
+
+            // Sanitize access_token in response bodies - matching Python pattern
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"""access_token""\s*:\s*""[^""]+""")
+            {
+                Value = $@"""access_token"": ""{SANITIZED_ACCESS_TOKEN}"""
             });
 
             // Collection ID sanitizers

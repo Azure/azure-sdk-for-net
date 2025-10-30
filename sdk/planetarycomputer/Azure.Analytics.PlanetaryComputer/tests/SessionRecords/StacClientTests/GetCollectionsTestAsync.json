@@ -21,14 +21,14 @@
         "Access-Control-Max-Age": "1728000",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Sanitized",
+        "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "traceparent": "Sanitized",
+        "traceparent": "00-00000000000000000000000000000000-0000000000000000-00",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
         "x-azure-ref": "Sanitized",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Request-ID": "Sanitized"
+        "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
         "collections": [
@@ -1933,6 +1933,6 @@
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "616324229"
+    "RandomSeed": "1001174105"
   }
 }
