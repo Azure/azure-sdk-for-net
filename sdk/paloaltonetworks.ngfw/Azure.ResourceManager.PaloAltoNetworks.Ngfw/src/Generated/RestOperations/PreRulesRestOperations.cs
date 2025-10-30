@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-07-preview";
+            _apiVersion = apiVersion ?? "2025-10-08";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

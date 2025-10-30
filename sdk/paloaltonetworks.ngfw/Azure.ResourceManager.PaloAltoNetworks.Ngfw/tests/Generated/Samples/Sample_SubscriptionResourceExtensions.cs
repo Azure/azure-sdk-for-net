@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateProductSerialNumberPaloAltoNetworksCloudngfwOperation_PaloAltoNetworksCloudngfwOperationsCreateProductSerialNumberMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_createProductSerialNumber_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_createProductSerialNumber_MaximumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_CreateProductSerialNumber" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateProductSerialNumberPaloAltoNetworksCloudngfwOperation_PaloAltoNetworksCloudngfwOperationsCreateProductSerialNumberMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_createProductSerialNumber_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_createProductSerialNumber_MinimumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_CreateProductSerialNumber" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCloudManagerTenantsPaloAltoNetworksCloudngfwOperations_PaloAltoNetworksCloudngfwOperationsListCloudManagerTenantsMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_listCloudManagerTenants_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_listCloudManagerTenants_MaximumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_ListCloudManagerTenants" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCloudManagerTenantsPaloAltoNetworksCloudngfwOperations_PaloAltoNetworksCloudngfwOperationsListCloudManagerTenantsMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_listCloudManagerTenants_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_listCloudManagerTenants_MinimumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_ListCloudManagerTenants" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetProductSerialNumberStatusPaloAltoNetworksCloudngfwOperation_PaloAltoNetworksCloudngfwOperationsListProductSerialNumberStatusMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_listProductSerialNumberStatus_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_listProductSerialNumberStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_ListProductSerialNumberStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetProductSerialNumberStatusPaloAltoNetworksCloudngfwOperation_PaloAltoNetworksCloudngfwOperationsListProductSerialNumberStatusMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_listProductSerialNumberStatus_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_listProductSerialNumberStatus_MinimumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_ListProductSerialNumberStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfoPaloAltoNetworksCloudngfwOperation_PaloAltoNetworksCloudngfwOperationsListSupportInfoMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_listSupportInfo_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_listSupportInfo_MaximumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_ListSupportInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfoPaloAltoNetworksCloudngfwOperation_PaloAltoNetworksCloudngfwOperationsListSupportInfoMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/PaloAltoNetworksCloudngfwOperations_listSupportInfo_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/PaloAltoNetworksCloudngfwOperations_listSupportInfo_MinimumSet_Gen.json
             // this example is just showing the usage of "PaloAltoNetworksCloudngfwOperations_ListSupportInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPaloAltoNetworksFirewalls_FirewallsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/Firewalls_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPaloAltoNetworksFirewalls_FirewallsListBySubscriptionMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/Firewalls_ListBySubscription_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/LocalRulestacks_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/LocalRulestacks_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/preview/2025-07-07-preview/examples/LocalRulestacks_ListBySubscription_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/LocalRulestacks_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
