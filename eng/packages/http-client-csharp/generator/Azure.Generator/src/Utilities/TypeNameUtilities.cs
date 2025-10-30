@@ -4,7 +4,7 @@
 using Microsoft.TypeSpec.Generator;
 using System.Linq;
 
-namespace Azure.Generator.Visitors.Utilities
+namespace Azure.Generator.Utilities
 {
     internal static class TypeNameUtilities
     {
