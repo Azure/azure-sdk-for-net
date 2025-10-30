@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MetricAlertData
     {
-        // Backing field for WindowSize to handle both nullable and non-nullable access
-        private TimeSpan? _windowSizeValue;
-
         /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
@@ -30,7 +27,12 @@ namespace Azure.ResourceManager.Monitor
         public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria)
             : this(location, severity, isEnabled, scopes, evaluationFrequency, criteria)
         {
-            _windowSizeValue = windowSize;
+            WindowSize = GetWindowSizeOrDefault(windowSize);
+        }
+
+        private TimeSpan GetWindowSizeOrDefault(TimeSpan defaultValue = default)
+        {
+            return WindowSize ?? defaultValue;
         }
     }
 }
