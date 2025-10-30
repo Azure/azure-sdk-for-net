@@ -366,7 +366,7 @@ namespace Azure.Generator.Management.Visitors
                     var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
                     var flattenPropertyBody = new MethodPropertyBody(
                         PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                        !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
+                        !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
                     );
 
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
@@ -397,11 +397,6 @@ namespace Azure.Generator.Management.Visitors
                 }
                 // make the internalized properties internal
                 internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
-                if (internalProperty.Body.HasSetter is false)
-                {
-                    // if the internal property is read-only, we need to make it private set to allow setting the value from constructor
-                    internalProperty.Update(body: new AutoPropertyBody(true));
-                }
             }
 
             return isFlattened;
