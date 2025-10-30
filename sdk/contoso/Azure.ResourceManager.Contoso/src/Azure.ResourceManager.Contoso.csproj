@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Contoso.</Description>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>azure;management;arm;resource manager;contoso</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <PackageId>Azure.ResourceManager.Contoso</PackageId>
+  </PropertyGroup>
+</Project>
