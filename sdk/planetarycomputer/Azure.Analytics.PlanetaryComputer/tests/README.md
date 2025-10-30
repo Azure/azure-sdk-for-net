@@ -14,7 +14,7 @@ dotnet add package Azure.Analytics.PlanetaryComputer --prerelease
 
 ### Prerequisites
 
-- An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
+- An [Azure subscription](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account)
 - Access to Azure Planetary Computer service
 - [.NET SDK](https://dotnet.microsoft.com/download) 8.0 or higher
 
