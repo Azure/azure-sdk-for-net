@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return new DeletedKeyVaultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="KeyVaultPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            KeyVaultPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new KeyVaultPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ManagedHsmResource"/> along with the instance operations that can be performed on it but with no data. </summary>

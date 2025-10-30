@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KeyVault
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetByResourceRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

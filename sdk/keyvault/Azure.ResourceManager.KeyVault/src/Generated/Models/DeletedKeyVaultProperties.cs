@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The resource id of the original vault. </summary>
+        [WirePath("vaultId")]
         public ResourceIdentifier VaultId { get; }
 
         /// <summary> The location of the original vault. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> The deleted date. </summary>
+        [WirePath("deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The scheduled purged date. </summary>
+        [WirePath("scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; }
 
         /// <summary> Tags of the original vault. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> Purge protection status of the original vault. </summary>
+        [WirePath("purgeProtectionEnabled")]
         public bool? PurgeProtectionEnabled { get; }
     }
 }

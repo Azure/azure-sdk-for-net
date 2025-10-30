@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Full identifier of the private endpoint resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
     }
 }

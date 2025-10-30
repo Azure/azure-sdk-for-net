@@ -43,15 +43,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal KeyVaultPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> Azure location of the key vault resource. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Tags assigned to the key vault resource. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> Group identifier of private link resource. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Required member names of private link resource. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Required DNS zone names of the the private link resource. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames
         {
             get

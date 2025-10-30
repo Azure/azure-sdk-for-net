@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<KeyVaultPrivateEndpointConnectionData>
+    public partial class KeyVaultPrivateEndpointConnectionResource : IJsonModel<KeyVaultPrivateEndpointConnectionData>
     {
         private static IJsonModel<KeyVaultPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

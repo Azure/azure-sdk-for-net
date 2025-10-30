@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="parameters"> Parameters to create or update the secret. </param>
+        /// <param name="secretCreateOrUpdateParameters"> Parameters to create or update the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secretCreateOrUpdateParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<KeyVaultSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KeyVaultSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretName, SecretCreateOrUpdateParameters secretCreateOrUpdateParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(secretCreateOrUpdateParameters, nameof(secretCreateOrUpdateParameters));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, SecretCreateOrUpdateParameters.ToRequestContent(parameters), context);
+                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, SecretCreateOrUpdateParameters.ToRequestContent(secretCreateOrUpdateParameters), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="parameters"> Parameters to create or update the secret. </param>
+        /// <param name="secretCreateOrUpdateParameters"> Parameters to create or update the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secretCreateOrUpdateParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<KeyVaultSecretResource> CreateOrUpdate(WaitUntil waitUntil, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KeyVaultSecretResource> CreateOrUpdate(WaitUntil waitUntil, string secretName, SecretCreateOrUpdateParameters secretCreateOrUpdateParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(secretCreateOrUpdateParameters, nameof(secretCreateOrUpdateParameters));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, SecretCreateOrUpdateParameters.ToRequestContent(parameters), context);
+                HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, SecretCreateOrUpdateParameters.ToRequestContent(secretCreateOrUpdateParameters), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

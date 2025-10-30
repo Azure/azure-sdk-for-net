@@ -7203,7 +7203,7 @@
     {
       "$id": "576",
       "kind": "model",
-      "name": "PrivateEndpointConnection",
+      "name": "KeyVaultPrivateEndpointConnection",
       "namespace": "Azure.ResourceManager.KeyVault",
       "crossLanguageDefinitionId": "Microsoft.KeyVault.PrivateEndpointConnection",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -7262,7 +7262,7 @@
             ],
             "resourceScope": "ResourceGroup",
             "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}",
-            "resourceName": "PrivateEndpointConnection"
+            "resourceName": "KeyVaultPrivateEndpointConnection"
           }
         }
       ],

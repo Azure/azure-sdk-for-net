@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> SKU Family of the managed HSM Pool. </summary>
+        [WirePath("family")]
         public ManagedHsmSkuFamily Family { get; set; }
 
         /// <summary> SKU of the managed HSM Pool. </summary>
+        [WirePath("name")]
         public ManagedHsmSkuName Name { get; set; }
     }
 }

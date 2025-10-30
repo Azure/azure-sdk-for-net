@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary></summary>
-    internal partial class PrivateEndpointConnectionOperationSource : IOperationSource<PrivateEndpointConnectionResource>
+    internal partial class KeyVaultPrivateEndpointConnectionOperationSource : IOperationSource<KeyVaultPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal PrivateEndpointConnectionOperationSource(ArmClient client)
+        internal KeyVaultPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        PrivateEndpointConnectionResource IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KeyVaultPrivateEndpointConnectionResource IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             KeyVaultPrivateEndpointConnectionData data = KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PrivateEndpointConnectionResource(_client, data);
+            return new KeyVaultPrivateEndpointConnectionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<PrivateEndpointConnectionResource> IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KeyVaultPrivateEndpointConnectionResource> IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             KeyVaultPrivateEndpointConnectionData data = KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PrivateEndpointConnectionResource(_client, data);
+            return new KeyVaultPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Activation Status. </summary>
+        [WirePath("activationStatus")]
         public ManagedHSMSecurityDomainActivationStatus? ActivationStatus { get; }
 
         /// <summary> Activation Status Message. </summary>
+        [WirePath("activationStatusMessage")]
         public string ActivationStatusMessage { get; }
     }
 }

@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.KeyVault
             return GetMockableKeyVaultArmClient(client).GetDeletedKeyVaultResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="KeyVaultPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource"/> object. </returns>
+        public static KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableKeyVaultArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableKeyVaultArmClient(client).GetKeyVaultPrivateEndpointConnectionResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="ManagedHsmResource"/> along with the instance operations that can be performed on it but with no data. </summary>

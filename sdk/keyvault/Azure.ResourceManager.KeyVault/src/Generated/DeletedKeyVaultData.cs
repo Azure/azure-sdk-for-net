@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the vault. </summary>
+        [WirePath("properties")]
         public DeletedKeyVaultProperties Properties { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </summary>
+        [WirePath("status")]
         public ManagedHsmPrivateEndpointServiceConnectionStatus? Status { get; set; }
 
         /// <summary> The reason for approval or rejection. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        [WirePath("actionsRequired")]
         public ManagedHsmActionsRequiredMessage? ActionsRequired { get; set; }
     }
 }

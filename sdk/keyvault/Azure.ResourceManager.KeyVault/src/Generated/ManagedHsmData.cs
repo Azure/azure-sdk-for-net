@@ -47,18 +47,23 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the managed HSM. </summary>
+        [WirePath("properties")]
         public ManagedHsmProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
 
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
 
         /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

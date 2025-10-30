@@ -45,12 +45,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The supported Azure location where the key vault should be created. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
 
         /// <summary> The tags that will be assigned to the key vault. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Properties of the vault. </summary>
+        [WirePath("properties")]
         public KeyVaultProperties Properties { get; }
     }
 }

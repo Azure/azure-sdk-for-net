@@ -43,18 +43,23 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </summary>
+        [WirePath("bypass")]
         public ManagedHsmNetworkRuleBypassOption? Bypass { get; set; }
 
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
+        [WirePath("defaultAction")]
         public ManagedHsmNetworkRuleAction? DefaultAction { get; set; }
 
         /// <summary> The list of IP address rules. </summary>
+        [WirePath("ipRules")]
         public IList<ManagedHsmIPRule> IpRules { get; }
 
         /// <summary> The list of service tags. </summary>
+        [WirePath("serviceTags")]
         public IList<ManagedHsmServiceTagRule> ServiceTags { get; }
 
         /// <summary> The list of virtual network rules. </summary>
+        [WirePath("virtualNetworkRules")]
         public IList<ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get; }
     }
 }

@@ -46,18 +46,23 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Azure location of the key vault resource. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Tags assigned to the key vault resource. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
 
         /// <summary> Approval state of the private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public KeyVaultPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Provisioning state of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Full identifier of the private endpoint resource. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

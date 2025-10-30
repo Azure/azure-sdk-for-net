@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.KeyVault
                 throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyVaultPrivateEndpointConnection(document.RootElement, options);
+            return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeyVaultPrivateEndpointConnectionData DeserializeKeyVaultPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyVaultPrivateEndpointConnectionData DeserializeKeyVaultPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.KeyVault
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeKeyVaultPrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -47,7 +47,23 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return GetCachedClient(client => new KeyVaultCollection(client, Id));
         }
 
-        /// <summary> Gets the specified Azure key vault. </summary>
+        /// <summary>
+        /// Gets the specified Azure key vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
@@ -60,7 +76,23 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return await GetKeyVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the specified Azure key vault. </summary>
+        /// <summary>
+        /// Gets the specified Azure key vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
@@ -80,7 +112,23 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return GetCachedClient(client => new ManagedHsmCollection(client, Id));
         }
 
-        /// <summary> Gets the specified managed HSM Pool. </summary>
+        /// <summary>
+        /// Gets the specified managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -93,7 +141,23 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             return await GetManagedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the specified managed HSM Pool. </summary>
+        /// <summary>
+        /// Gets the specified managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

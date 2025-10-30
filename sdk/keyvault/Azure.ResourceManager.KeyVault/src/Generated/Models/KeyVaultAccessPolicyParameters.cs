@@ -46,21 +46,27 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The resource id of the access policy. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The resource name of the access policy. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The resource name of the access policy. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The resource type of the access policy. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Properties of the access policy. </summary>
+        [WirePath("properties")]
         internal KeyVaultAccessPolicyProperties Properties { get; set; }
 
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
+        [WirePath("properties.accessPolicies")]
         public IList<KeyVaultAccessPolicy> AccessPolicies
         {
             get

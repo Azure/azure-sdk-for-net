@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The managed hsm name. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

@@ -50,24 +50,31 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal ManagedHsmPrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
 
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
 
         /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
 
         /// <summary> Approval state of the private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
@@ -85,6 +92,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Provisioning state of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -94,6 +102,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Full identifier of the private endpoint resource. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

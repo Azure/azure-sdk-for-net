@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Name of the service tag. </summary>
+        [WirePath("tag")]
         public string Tag { get; set; }
     }
 }

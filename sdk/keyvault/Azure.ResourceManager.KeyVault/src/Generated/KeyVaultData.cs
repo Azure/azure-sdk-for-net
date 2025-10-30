@@ -45,12 +45,15 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the vault. </summary>
+        [WirePath("properties")]
         public Models.KeyVaultProperties Properties { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

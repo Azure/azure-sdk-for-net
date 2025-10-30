@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -44,15 +45,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal MhsmPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public ManagedHsmSku Sku { get; }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public ManagedHsmProvisioningState? ProvisioningState
         {
             get
@@ -62,6 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Group identifier of private link resource. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Required member names of private link resource. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers
         {
             get
@@ -80,6 +87,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Required DNS zone names of the the private link resource. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames
         {
             get

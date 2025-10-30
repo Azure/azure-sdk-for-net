@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="PrivateEndpointConnectionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PrivateEndpointConnectionCollection"/> instance call the GetPrivateEndpointConnections method from an instance of the parent resource.
+    /// A class representing a collection of <see cref="KeyVaultPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="KeyVaultPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="KeyVaultPrivateEndpointConnectionCollection"/> instance call the GetKeyVaultPrivateEndpointConnections method from an instance of the parent resource.
     /// </summary>
-    public partial class PrivateEndpointConnectionCollection : ArmCollection, IEnumerable<PrivateEndpointConnectionResource>, IAsyncEnumerable<PrivateEndpointConnectionResource>
+    public partial class KeyVaultPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<KeyVaultPrivateEndpointConnectionResource>, IAsyncEnumerable<KeyVaultPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection for mocking. </summary>
-        protected PrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionCollection for mocking. </summary>
+        protected KeyVaultPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal KeyVaultPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2025-05-01");
+            TryGetApiVersion(KeyVaultPrivateEndpointConnectionResource.ResourceType, out string keyVaultPrivateEndpointConnectionApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", KeyVaultPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, keyVaultPrivateEndpointConnectionApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KeyVaultPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault
                 Response<KeyVaultPrivateEndpointConnectionData> response = Response.FromValue(KeyVaultPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                KeyVaultArmOperation<PrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<PrivateEndpointConnectionResource>(Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KeyVaultPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault
                 Response<KeyVaultPrivateEndpointConnectionData> response = Response.FromValue(KeyVaultPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                KeyVaultArmOperation<PrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<PrivateEndpointConnectionResource>(Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyVaultPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<KeyVaultPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,26 +264,26 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KeyVaultPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KeyVaultPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultPrivateEndpointConnectionData, KeyVaultPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KeyVaultPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KeyVaultPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KeyVaultPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultPrivateEndpointConnectionData, PrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<KeyVaultPrivateEndpointConnectionData, KeyVaultPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByResourceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new KeyVaultPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<KeyVaultPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<KeyVaultPrivateEndpointConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -482,11 +482,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<KeyVaultPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<KeyVaultPrivateEndpointConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        IEnumerator<PrivateEndpointConnectionResource> IEnumerable<PrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<KeyVaultPrivateEndpointConnectionResource> IEnumerable<KeyVaultPrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PrivateEndpointConnectionResource> IAsyncEnumerable<PrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<KeyVaultPrivateEndpointConnectionResource> IAsyncEnumerable<KeyVaultPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

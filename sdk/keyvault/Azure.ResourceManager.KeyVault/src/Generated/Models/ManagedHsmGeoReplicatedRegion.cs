@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Name of the geo replicated region. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Provisioning state of the geo replicated region. </summary>
+        [WirePath("provisioningState")]
         public ManagedHsmGeoReplicatedRegionProvisioningState? ProvisioningState { get; }
 
         /// <summary> A boolean value that indicates whether the region is the primary region or a secondary region. </summary>
+        [WirePath("isPrimary")]
         public bool? IsPrimary { get; set; }
     }
 }

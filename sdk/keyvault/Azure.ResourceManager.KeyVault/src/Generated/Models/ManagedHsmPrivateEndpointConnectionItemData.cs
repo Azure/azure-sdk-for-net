@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -37,32 +38,29 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Id of private endpoint connection. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> Private endpoint connection properties. </summary>
+        [WirePath("properties")]
         internal ManagedHsmPrivateEndpointConnectionProperties Properties { get; }
 
         /// <summary> Approval state of the private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
             {
                 return Properties.PrivateLinkServiceConnectionState;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    this.Properties = new ManagedHsmPrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateLinkServiceConnectionState = value;
-            }
         }
 
         /// <summary> Provisioning state of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -72,6 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Full identifier of the private endpoint resource. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

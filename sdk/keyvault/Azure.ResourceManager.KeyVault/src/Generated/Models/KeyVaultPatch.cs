@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The tags that will be assigned to the key vault. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Properties of the vault. </summary>
+        [WirePath("properties")]
         public KeyVaultPatchProperties Properties { get; set; }
     }
 }

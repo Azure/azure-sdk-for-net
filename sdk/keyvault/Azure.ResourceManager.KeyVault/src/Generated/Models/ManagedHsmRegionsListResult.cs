@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The MhsmGeoReplicatedRegion items on this page. </summary>
+        [WirePath("value")]
         public IList<ManagedHsmGeoReplicatedRegion> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

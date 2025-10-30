@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public ManagedHsmProvisioningState? ProvisioningState { get; }
 
         /// <summary> Group identifier of private link resource. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> Required member names of private link resource. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Required DNS zone names of the the private link resource. </summary>
+        [WirePath("requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }
