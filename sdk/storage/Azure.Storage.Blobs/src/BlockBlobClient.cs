@@ -866,9 +866,10 @@ namespace Azure.Storage.Blobs.Specialized
             operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
-            // All BlobRequestConditions are valid.
             conditions.ValidateConditionsNotPresent(
-                invalidConditions: BlobRequestConditionProperty.None,
+                invalidConditions:
+                    BlobRequestConditionProperty.AccessTierIfModifiedSince
+                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                 operationName: nameof(BlockBlobClient.Upload),
                 parameterName: nameof(conditions));
 
@@ -1320,7 +1321,9 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.TagConditions
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.StageBlock),
                     parameterName: nameof(conditions));
 
@@ -1785,7 +1788,9 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.TagConditions
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.StageBlockFromUri),
                     parameterName: nameof(conditions));
 
@@ -2241,9 +2246,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
 
-                // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.CommitBlockList),
                     parameterName: nameof(conditions));
 
@@ -2511,7 +2517,9 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobRequestConditionProperty.IfModifiedSince
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.GetBlockList),
                     parameterName: nameof(conditions));
 
@@ -2678,9 +2686,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
 
-                // All BlobRequestConditions are valid.
                 options?.Conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.Query),
                     parameterName: nameof(BlobQueryOptions.Conditions));
 
@@ -3156,14 +3165,18 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
 
-                // All BlobRequestConditions are valid for options.DestinationConditions.
                 options?.DestinationConditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.SyncUploadFromUri),
                     parameterName: nameof(BlobSyncUploadFromUriOptions.DestinationConditions));
 
                 options?.SourceConditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.LeaseId,
+                    invalidConditions:
+                        BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlockBlobClient.SyncUploadFromUri),
                     parameterName: nameof(BlobSyncUploadFromUriOptions.SourceConditions));
 
