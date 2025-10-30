@@ -38,7 +38,7 @@ function LogWarning {
     Write-Host ("::warning::$args" -replace "`n", "%0D%0A")
   }
   else {
-    Write-Warning "$args"
+    Write-Host "$args" -ForegroundColor Yellow
   }
 }
 
@@ -59,7 +59,7 @@ function LogErrorForFile($file, $errorString)
     Write-Host ("::error file=$file,line=1,col=1::$errorString" -replace "`n", "%0D%0A")
   }
   else {
-    Write-Error "[Error in file $file]$errorString"
+    Write-Host "[Error in file $file]$errorString" -ForegroundColor Red
   }
 }
 
@@ -71,7 +71,7 @@ function LogError {
     Write-Host ("::error::$args" -replace "`n", "%0D%0A")
   }
   else {
-    Write-Error "$args"
+    Write-Host "$args" -ForegroundColor Red
   }
 }
 
@@ -114,11 +114,11 @@ function LogJobFailure() {
 
 function ProcessMsBuildLogLine($line) {
   if (Test-SupportsDevOpsLogging) {
-    if ($line -like "*: warning*") {
-      return ("##vso[task.LogIssue type=warning;]$line" -replace "`n", "%0D%0A")
-    }
-    elseif ($line -like "*: error*") {
+    if ($line -like "*: error*") {
       return ("##vso[task.LogIssue type=error;]$line" -replace "`n", "%0D%0A")
+    }
+    elseif ($line -like "*: warning*") {
+      return ("##vso[task.LogIssue type=warning;]$line" -replace "`n", "%0D%0A")
     }
   }
   return $line

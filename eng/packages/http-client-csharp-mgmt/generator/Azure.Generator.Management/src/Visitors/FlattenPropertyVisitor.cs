@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -11,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -47,15 +49,32 @@ namespace Azure.Generator.Management.Visitors
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
-                if (returnType is not null && _flattenedModelTypes.TryGetValue(returnType, out var value))
+                if (returnType is not null && TryGetFlattenPropertyInfo(returnType, out var propertyNameMap))
                 {
-                    var (propertyNameMap, _) = value;
-                    UpdateModelFactoryMethod(method, returnType, propertyNameMap);
+                    UpdateModelFactoryMethod(method, propertyNameMap);
                 }
             }
         }
 
-        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
+        private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
+        {
+            propertyNameMap = null;
+            if (_flattenedModelTypes.TryGetValue(returnType, out var value))
+            {
+                propertyNameMap = value.Item1;
+                return true;
+            }
+            // handle the case where the return type is a derived type of a flattened model type
+            // we only deal with single level inheritance here to avoid complexity
+            else if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(returnType, out var typeProvider) && typeProvider is ModelProvider model && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
+            {
+                propertyNameMap = value.Item1;
+                return true;
+            }
+            return false;
+        }
+
+        private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
         {
             var parameterMap = new Dictionary<ParameterProvider, ParameterProvider>();
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
@@ -353,13 +372,15 @@ namespace Azure.Generator.Management.Visitors
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
                     var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
                     var flattenedProperty =
-                        new PropertyProvider(
+                        new FlattenedPropertyProvider(
                             innerProperty.Description,
                             innerProperty.Modifiers,
                             innerProperty.Type,
                             flattenPropertyName,
                             flattenPropertyBody,
                             model,
+                            internalProperty,
+                            innerProperty,
                             innerProperty.ExplicitInterface,
                             innerProperty.WireInfo,
                             innerProperty.IsRef,
@@ -398,15 +419,17 @@ namespace Azure.Generator.Management.Visitors
             // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
             var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
             var flattenedProperty =
-                new PropertyProvider(
+                new FlattenedPropertyProvider(
                     innerProperty.Description,
                     innerProperty.Modifiers,
                     isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
                     flattenPropertyName,
                     flattenPropertyBody,
                     model,
+                    internalProperty,
+                    innerProperty,
                     innerProperty.ExplicitInterface,
-                    null,
+                    innerProperty.WireInfo,
                     innerProperty.IsRef,
                     innerProperty.Attributes);
 

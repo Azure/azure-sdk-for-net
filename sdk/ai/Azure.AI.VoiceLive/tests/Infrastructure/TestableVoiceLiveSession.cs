@@ -24,6 +24,12 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
             : base(client, endpoint, credential)
         {
         }
+        public TestableVoiceLiveSession(VoiceLiveClient client, AzureKeyCredential credential)
+            : this(client, client.Endpoint, credential)
+        {
+        }
+
+        public TestableVoiceLiveSession(VoiceLiveClient client, Uri endpoint, TokenCredential credential) : base(client, endpoint, credential) { }
 
         /// <summary>
         /// Sets the WebSocket instance for testing. This allows injection of a <see cref="FakeWebSocket"/>

@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Core.Lro.Rpc
 
         string IPersistableModel<GenerationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator GenerationResult(Response result) => throw null;
+        public static explicit operator GenerationResult(Response response) => throw null;
     }
 }

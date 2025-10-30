@@ -8,11 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MgmtTypeSpec;
+using Azure;
+using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooProperties. </summary>
     [JsonConverter(typeof(FooPropertiesConverter))]
@@ -47,7 +50,7 @@ namespace MgmtTypeSpec.Models
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             writer.WritePropertyName("something"u8);
-            writer.WriteStringValue(Something);
+            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options);
             if (Optional.IsDefined(BoolValue))
             {
                 writer.WritePropertyName("boolValue"u8);
@@ -87,6 +90,11 @@ namespace MgmtTypeSpec.Models
             }
             writer.WritePropertyName("nestedProperty"u8);
             writer.WriteObjectValue(NestedProperty, options);
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,13 +138,14 @@ namespace MgmtTypeSpec.Models
                 return null;
             }
             Uri serviceUri = default;
-            string something = default;
+            ManagedServiceIdentity something = default;
             bool? boolValue = default;
             float? floatValue = default;
             double? doubleValue = default;
             IList<string> prop1 = default;
             IList<int> prop2 = default;
             NestedFooModel nestedProperty = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +160,7 @@ namespace MgmtTypeSpec.Models
                 }
                 if (prop.NameEquals("something"u8))
                 {
-                    something = prop.Value.GetString();
+                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolValue"u8))
@@ -217,6 +226,15 @@ namespace MgmtTypeSpec.Models
                     nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -231,6 +249,7 @@ namespace MgmtTypeSpec.Models
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
+                eTag,
                 additionalBinaryDataProperties);
         }
 
@@ -244,7 +263,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{options.Format}' format.");
             }

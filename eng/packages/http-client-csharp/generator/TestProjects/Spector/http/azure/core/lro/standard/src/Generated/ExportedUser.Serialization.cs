@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Core.Lro.Standard
 
         string IPersistableModel<ExportedUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator ExportedUser(Response result) => throw null;
+        public static explicit operator ExportedUser(Response response) => throw null;
     }
 }

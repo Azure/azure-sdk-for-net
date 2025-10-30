@@ -194,8 +194,30 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var method in _nonResourceMethods)
             {
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                // Process both async and sync method variants
+                var methodsToProcess = new[] {
+                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
+                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
+                };
+                foreach (var m in methodsToProcess)
+                {
+                    methods.Add(m);
+                    var updated = false;
+                    foreach (var p in m.Signature.Parameters)
+                    {
+                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
+                        if (normalizedName != null)
+                        {
+                            p.Update(name: normalizedName);
+                            updated = true;
+                        }
+                    }
+                    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+                    if (updated)
+                    {
+                        m.Update(signature: m.Signature);
+                    }
+                }
             }
 
             return [.. methods];
@@ -211,10 +233,19 @@ namespace Azure.Generator.Management.Providers
                         resource.Type,
                         This.As<ArmResource>().Client(),
                         BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
-                yield return new MethodProvider(
+                var method = new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
                     this);
+
+                // Copy the enhanced XML documentation from the singleton resource's Get method if available
+                var getMethod = resource.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
+                if (getMethod?.XmlDocs?.Summary != null)
+                {
+                    method.XmlDocs?.Update(summary: getMethod.XmlDocs.Summary);
+                }
+
+                yield return method;
             }
             else
             {
@@ -256,11 +287,19 @@ namespace Azure.Generator.Management.Providers
                         [.. pathParameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
-                    return new MethodProvider(
+                    var method = new MethodProvider(
                         signature,
                         // invoke on a MethodSignature would handle the async extra calls and keyword automatically
                         Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
                         enclosingType);
+
+                    // Copy the enhanced XML documentation from the collection's Get method
+                    if (resourceGetMethod.XmlDocs?.Summary != null)
+                    {
+                        method.XmlDocs?.Update(summary: resourceGetMethod.XmlDocs.Summary);
+                    }
+
+                    return method;
                 }
             }
         }

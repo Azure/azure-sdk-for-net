@@ -142,9 +142,14 @@ namespace Azure.Generator.Management.Providers
         protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
-            _getAll is null
+            ShouldSkipIEnumerableImplementation()
             ? []
             : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
+
+        private bool ShouldSkipIEnumerableImplementation()
+        {
+            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
+        }
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -196,7 +201,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [ .. fields, .. _pathParameterMap.Values];
+            return [.. fields, .. _pathParameterMap.Values];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -249,10 +254,15 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        // TODO -- this expression currently is incorrect. Maybe we need to leave an API in OutputLibrary for us to query the parent resource, because when construct the collection, we do not know it yet.
         private static CSharpType GetParentResourceType(ResourceMetadata resourceMetadata, ResourceClientProvider resource)
         {
-            // TODO -- implement this to be more accurate when we implement the parent of resources.
+            // First check if the resource has a parent resource
+            if (resourceMetadata.ParentResourceId is not null)
+            {
+                return resource.TypeOfParentResource;
+            }
+
+            // Fallback to scope-based resource type
             switch (resourceMetadata.ResourceScope)
             {
                 case ResourceScope.ResourceGroup:
@@ -294,7 +304,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider[] BuildEnumeratorMethods()
         {
-            if (_getAll is null)
+            if (ShouldSkipIEnumerableImplementation())
             {
                 return [];
             }
@@ -328,7 +338,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
-                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
+                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
                 result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
@@ -338,7 +348,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(ResourceMethod getAll, bool isAsync)
         {
             var restClientInfo = _clientInfos[getAll.InputClient];
-            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),

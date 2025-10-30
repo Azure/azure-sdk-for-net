@@ -54,6 +54,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(AuthorizationOwners))
+            {
+                writer.WritePropertyName("authorizationOwners"u8);
+                writer.WriteStartArray();
+                foreach (var item in AuthorizationOwners)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(IncidentRoutingService))
             {
                 writer.WritePropertyName("incidentRoutingService"u8);
@@ -84,27 +94,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceAccessPolicy"u8);
                 writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(ResourceAccessRoles))
+            if (Optional.IsCollectionDefined(ResourceAccessRoleList))
             {
                 writer.WritePropertyName("resourceAccessRoles"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceAccessRoles)
+                foreach (var item in ResourceAccessRoleList)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExpeditedRolloutSubmitters))
+            {
+                writer.WritePropertyName("expeditedRolloutSubmitters"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpeditedRolloutSubmitters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ErrorResponseMessageOptions))
+            {
+                writer.WritePropertyName("errorResponseMessageOptions"u8);
+                writer.WriteObjectValue(ErrorResponseMessageOptions, options);
+            }
+            if (Optional.IsDefined(ExpeditedRolloutMetadata))
+            {
+                writer.WritePropertyName("expeditedRolloutMetadata"u8);
+                writer.WriteObjectValue(ExpeditedRolloutMetadata, options);
+            }
+            if (Optional.IsCollectionDefined(CanaryManifestOwners))
+            {
+                writer.WritePropertyName("canaryManifestOwners"u8);
+                writer.WriteStartArray();
+                foreach (var item in CanaryManifestOwners)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ProfitCenterCode))
+            {
+                writer.WritePropertyName("pcCode"u8);
+                writer.WriteStringValue(ProfitCenterCode);
+            }
+            if (Optional.IsDefined(ProfitCenterProgramId))
+            {
+                writer.WritePropertyName("profitCenterProgramId"u8);
+                writer.WriteStringValue(ProfitCenterProgramId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,12 +183,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             IList<string> schemaOwners = default;
             IList<string> manifestOwners = default;
+            IList<string> authorizationOwners = default;
             string incidentRoutingService = default;
             string incidentRoutingTeam = default;
             string incidentContactEmail = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
             ResourceAccessPolicy? resourceAccessPolicy = default;
-            IList<BinaryData> resourceAccessRoles = default;
+            IList<ResourceAccessRole> resourceAccessRoles = default;
+            IList<string> expeditedRolloutSubmitters = default;
+            ResourceProviderErrorResponseMessageOptions errorResponseMessageOptions = default;
+            ExpeditedRolloutMetadata expeditedRolloutMetadata = default;
+            IList<string> canaryManifestOwners = default;
+            string pcCode = default;
+            string profitCenterProgramId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,6 +226,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(item.GetString());
                     }
                     manifestOwners = array;
+                    continue;
+                }
+                if (property.NameEquals("authorizationOwners"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    authorizationOwners = array;
                     continue;
                 }
                 if (property.NameEquals("incidentRoutingService"u8))
@@ -227,19 +286,68 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    List<BinaryData> array = new List<BinaryData>();
+                    List<ResourceAccessRole> array = new List<ResourceAccessRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
+                        array.Add(ResourceAccessRole.DeserializeResourceAccessRole(item, options));
                     }
                     resourceAccessRoles = array;
+                    continue;
+                }
+                if (property.NameEquals("expeditedRolloutSubmitters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    expeditedRolloutSubmitters = array;
+                    continue;
+                }
+                if (property.NameEquals("errorResponseMessageOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorResponseMessageOptions = ResourceProviderErrorResponseMessageOptions.DeserializeResourceProviderErrorResponseMessageOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("expeditedRolloutMetadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expeditedRolloutMetadata = ExpeditedRolloutMetadata.DeserializeExpeditedRolloutMetadata(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("canaryManifestOwners"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    canaryManifestOwners = array;
+                    continue;
+                }
+                if (property.NameEquals("pcCode"u8))
+                {
+                    pcCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("profitCenterProgramId"u8))
+                {
+                    profitCenterProgramId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -251,12 +359,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderManagement(
                 schemaOwners ?? new ChangeTrackingList<string>(),
                 manifestOwners ?? new ChangeTrackingList<string>(),
+                authorizationOwners ?? new ChangeTrackingList<string>(),
                 incidentRoutingService,
                 incidentRoutingTeam,
                 incidentContactEmail,
                 serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 resourceAccessPolicy,
-                resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
+                resourceAccessRoles ?? new ChangeTrackingList<ResourceAccessRole>(),
+                expeditedRolloutSubmitters ?? new ChangeTrackingList<string>(),
+                errorResponseMessageOptions,
+                expeditedRolloutMetadata,
+                canaryManifestOwners ?? new ChangeTrackingList<string>(),
+                pcCode,
+                profitCenterProgramId,
                 serializedAdditionalRawData);
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRemediationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_GetResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Remediations_GetResourceScope.json
             // this example is just showing the usage of "Remediations_GetAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteRemediationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_DeleteResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Remediations_DeleteResourceScope.json
             // this example is just showing the usage of "Remediations_DeleteAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateRemediationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_CreateResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Remediations_CreateResourceScope.json
             // this example is just showing the usage of "Remediations_CreateOrUpdateAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDeployments_ListDeploymentsForARemediationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_ListDeploymentsResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Remediations_ListDeploymentsResourceScope.json
             // this example is just showing the usage of "Remediations_ListDeploymentsAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Cancel_CancelARemediationAtIndividualResourceScope()
         {
-            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2021-10-01/examples/Remediations_CancelResourceScope.json
+            // Generated from example definition: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/stable/2024-10-01/examples/Remediations_CancelResourceScope.json
             // this example is just showing the usage of "Remediations_CancelAtResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -92,9 +92,6 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
 
-        private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
-
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
 
@@ -156,8 +153,9 @@ namespace Azure.Generator.Management.Providers
             {
                 // we have the collection, we are not a singleton resource
                 var pluralOfResourceName = ResourceName.Pluralize();
+                var methodName = BuildFactoryMethodName();
                 return new MethodSignature(
-                    $"Get{pluralOfResourceName}",
+                    methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     ResourceCollection.Type,
@@ -176,6 +174,22 @@ namespace Azure.Generator.Management.Providers
                     $"Returns a {Type:C} object.",
                     []
                     );
+            }
+        }
+
+        // TODO: Temporary workaround for recent breaking changes in converting Playwright service.
+        // This special-casing will be replaced by a generalized naming strategy in a follow-up PR.
+        private string BuildFactoryMethodName()
+        {
+            var ResourceNamesHavingIrregularPlural = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "PlaywrightQuota", "PlaywrightWorkspaceQuota" };
+
+            if (ResourceNamesHavingIrregularPlural.Contains(ResourceName))
+            {
+                return $"GetAll{ResourceName}";
+            }
+            else
+            {
+                return $"Get{ResourceName.Pluralize()}";
             }
         }
 
@@ -397,11 +411,6 @@ namespace Azure.Generator.Management.Providers
                 var methodKind = resourceMethod.Kind;
                 var method = resourceMethod.InputMethod;
                 var inputClient = resourceMethod.InputClient;
-                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
-                if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
-                {
-                    continue;
-                }
 
                 var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
 
@@ -414,8 +423,8 @@ namespace Azure.Generator.Management.Providers
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true)));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
 
                     continue;
                 }
@@ -425,17 +434,17 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, methodKind);
                     operationMethods.Add(updateAsyncMethodProvider);
 
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodKind);
                     operationMethods.Add(updateMethodProvider);
                 }
                 else
                 {
-                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
+                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
                     operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
-                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
                     operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
                 }
             }

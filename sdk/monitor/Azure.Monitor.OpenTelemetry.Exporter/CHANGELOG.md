@@ -1,6 +1,19 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
+
+### Features Added
+
+* Enabled resource metrics export by default.
+  ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0-beta.1 (2025-10-16)
 
 ### Features Added
 
@@ -19,12 +32,6 @@
 
 * Added handling of stable database client span semantic conventions
   ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.4.0 (2025-05-08)
 

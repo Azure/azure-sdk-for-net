@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="spreadRecordForUnion"> The <see cref="SpreadRecordForUnion"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SpreadRecordForUnion spreadRecordForUnion) => throw null;
 
-        public static explicit operator SpreadRecordForUnion(Response result) => throw null;
+        public static explicit operator SpreadRecordForUnion(Response response) => throw null;
     }
 }

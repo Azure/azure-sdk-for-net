@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="isUnknownAdditionalPropertiesDerived"> The <see cref="IsUnknownAdditionalPropertiesDerived"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsUnknownAdditionalPropertiesDerived isUnknownAdditionalPropertiesDerived) => throw null;
 
-        public static explicit operator IsUnknownAdditionalPropertiesDerived(Response result) => throw null;
+        public static explicit operator IsUnknownAdditionalPropertiesDerived(Response response) => throw null;
     }
 }
