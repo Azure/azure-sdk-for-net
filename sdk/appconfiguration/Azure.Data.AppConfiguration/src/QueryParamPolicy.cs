@@ -9,9 +9,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
+    /// <summary>
+    /// Policy that lowercases and sorts outgoing request query parameters.
+    /// </summary>
     internal class QueryParamPolicy : HttpPipelineSynchronousPolicy
     {
-        private struct QueryParameterEntry
+        private struct QueryParamEntry
         {
             public ReadOnlyMemory<char> Name { get; set; }
             public ReadOnlyMemory<char> Value { get; set; }
@@ -34,7 +37,7 @@ namespace Azure.Data.AppConfiguration
                 queryMemory = queryMemory.Slice(1);
             }
 
-            var segments = new List<QueryParameterEntry>();
+            var segments = new List<QueryParamEntry>();
             int startIndex = 0;
 
             for (int i = 0; i < queryMemory.Length; i++)
@@ -98,7 +101,7 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private static void AddParameter(ReadOnlyMemory<char> parameter, List<QueryParameterEntry> segments)
+        private static void AddParameter(ReadOnlyMemory<char> parameter, List<QueryParamEntry> segments)
         {
             if (parameter.IsEmpty)
             {
@@ -113,7 +116,7 @@ namespace Azure.Data.AppConfiguration
             name = equalsIndex >= 0 ? parameter.Slice(0, equalsIndex) : parameter;
             value = equalsIndex >= 0 ? parameter.Slice(equalsIndex + 1) : ReadOnlyMemory<char>.Empty;
 
-            segments.Add(new QueryParameterEntry
+            segments.Add(new QueryParamEntry
             {
                 Name = name,
                 Value = value,
