@@ -17,7 +17,6 @@ Check the validation checks for the SDK package by collecting the required infor
     - If the package is not ready, display the specific check types that need to be fixed for each language.
 
 ## Expected User Interaction Flow
-1. Ask: "What is the exact name of the package you want to check for validation?"
-2. Ask: "Please select the programming language for this package: Python, Java, JavaScript, .NET, Go, or All"
+1. Ask: "What is the exact path of the package you want to check for validation?"
 3. Execute the check using the provided information
 4. Display results and next steps
