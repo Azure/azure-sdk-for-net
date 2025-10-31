@@ -74,7 +74,7 @@ public abstract class PipelineRequest : IDisposable
     private string? _clientRequestId;
 
     /// <summary>
-    /// Gets or sets the client request id that was sent to the server.
+    /// Gets or sets the client request id to send to the server.
     /// The value is used to correlate the request with server logs and can be sent
     /// to the service via custom policies.
     /// If not set, a value is automatically generated on first access using
