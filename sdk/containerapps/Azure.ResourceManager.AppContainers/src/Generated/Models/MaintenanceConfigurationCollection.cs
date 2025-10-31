@@ -10,13 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MaintenancePolicy.cs
-    /// <summary> Maintenance policy of a server. </summary>
-    internal partial class MaintenancePolicy
-========
     /// <summary> The response of list maintenance configuration resources. </summary>
     internal partial class MaintenanceConfigurationCollection
->>>>>>>> main:sdk/containerapps/Azure.ResourceManager.AppContainers/src/Generated/Models/MaintenanceConfigurationCollection.cs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,24 +45,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MaintenancePolicy.cs
-        /// <summary> Initializes a new instance of <see cref="MaintenancePolicy"/>. </summary>
-        public MaintenancePolicy()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MaintenancePolicy"/>. </summary>
-        /// <param name="patchStrategy"> The patch strategy of this server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenancePolicy(MySqlFlexibleServerPatchStrategy? patchStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            PatchStrategy = patchStrategy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> The patch strategy of this server. </summary>
-        public MySqlFlexibleServerPatchStrategy? PatchStrategy { get; set; }
-========
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCollection"/>. </summary>
         internal MaintenanceConfigurationCollection()
         {
@@ -89,6 +66,5 @@ namespace Azure.ResourceManager.AppContainers.Models
         public IReadOnlyList<ContainerAppMaintenanceConfigurationData> Value { get; }
         /// <summary> Link for next page of results. </summary>
         public string NextLink { get; }
->>>>>>>> main:sdk/containerapps/Azure.ResourceManager.AppContainers/src/Generated/Models/MaintenanceConfigurationCollection.cs
     }
 }

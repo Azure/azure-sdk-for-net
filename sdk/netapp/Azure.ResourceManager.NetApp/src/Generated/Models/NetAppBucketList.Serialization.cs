@@ -13,19 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-    internal partial class MySqlFlexibleServersPrivateLinkResourceListResult : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServersPrivateLinkResourceListResult>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServersPrivateLinkResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<MySqlFlexibleServersPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
     internal partial class NetAppBucketList : IUtf8JsonSerializable, IJsonModel<NetAppBucketList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBucketList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppBucketList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,17 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateLinkResourceListResult)} does not support writing '{format}' format.");
-========
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppBucketList)} does not support writing '{format}' format.");
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -58,6 +43,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,21 +66,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-        MySqlFlexibleServersPrivateLinkResourceListResult IJsonModel<MySqlFlexibleServersPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateLinkResourceListResult)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMySqlFlexibleServersPrivateLinkResourceListResult(document.RootElement, options);
-        }
-
-        internal static MySqlFlexibleServersPrivateLinkResourceListResult DeserializeMySqlFlexibleServersPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
-========
         NetAppBucketList IJsonModel<NetAppBucketList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketList>)this).GetFormatFromOptions(options) : options.Format;
@@ -104,7 +79,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         internal static NetAppBucketList DeserializeNetAppBucketList(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,12 +86,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-            IReadOnlyList<MySqlFlexibleServersPrivateLinkResourceDataData> value = default;
-========
             IReadOnlyList<NetAppBucketData> value = default;
             string nextLink = default;
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,19 +98,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-                    List<MySqlFlexibleServersPrivateLinkResourceDataData> array = new List<MySqlFlexibleServersPrivateLinkResourceDataData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(MySqlFlexibleServersPrivateLinkResourceDataData.DeserializeMySqlFlexibleServersPrivateLinkResourceDataData(item, options));
-========
                     List<NetAppBucketData> array = new List<NetAppBucketData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(NetAppBucketData.DeserializeNetAppBucketData(item, options));
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
                     }
                     value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,36 +117,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-            return new MySqlFlexibleServersPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MySqlFlexibleServersPrivateLinkResourceDataData>(), serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new NetAppBucketList(value ?? new ChangeTrackingList<NetAppBucketData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppBucketList>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketList>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MySqlFlexibleServersPrivateLinkResourceListResult IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(NetAppBucketList)} does not support writing '{options.Format}' format.");
             }
         }
@@ -186,23 +136,12 @@ namespace Azure.ResourceManager.NetApp.Models
         NetAppBucketList IPersistableModel<NetAppBucketList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketList>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-<<<<<<<< HEAD:sdk/mysql/Azure.ResourceManager.MySql/src/Generated/Models/MySqlFlexibleServersPrivateLinkResourceListResult.Serialization.cs
-                        return DeserializeMySqlFlexibleServersPrivateLinkResourceListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MySqlFlexibleServersPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-========
                         return DeserializeNetAppBucketList(document.RootElement, options);
                     }
                 default:
@@ -211,6 +150,5 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         string IPersistableModel<NetAppBucketList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
->>>>>>>> main:sdk/netapp/Azure.ResourceManager.NetApp/src/Generated/Models/NetAppBucketList.Serialization.cs
     }
 }
