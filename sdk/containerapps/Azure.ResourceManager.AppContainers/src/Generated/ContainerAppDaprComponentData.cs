@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
         /// <param name="serviceComponentBind"> List of container app services that are bound to the Dapr component. </param>
+        /// <param name="provisioningState"> Provisioning state of the Connected Environment Dapr Component. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IList<DaprComponentServiceBinding> serviceComponentBind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IList<DaprComponentServiceBinding> serviceComponentBind, DaprComponentProvisioningState? provisioningState, string deploymentErrors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
@@ -86,6 +88,8 @@ namespace Azure.ResourceManager.AppContainers
             Metadata = metadata;
             Scopes = scopes;
             ServiceComponentBind = serviceComponentBind;
+            ProvisioningState = provisioningState;
+            DeploymentErrors = deploymentErrors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -116,5 +120,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> List of container app services that are bound to the Dapr component. </summary>
         [WirePath("properties.serviceComponentBind")]
         public IList<DaprComponentServiceBinding> ServiceComponentBind { get; }
+        /// <summary> Provisioning state of the Connected Environment Dapr Component. </summary>
+        [WirePath("properties.provisioningState")]
+        public DaprComponentProvisioningState? ProvisioningState { get; }
+        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("properties.deploymentErrors")]
+        public string DeploymentErrors { get; }
     }
 }

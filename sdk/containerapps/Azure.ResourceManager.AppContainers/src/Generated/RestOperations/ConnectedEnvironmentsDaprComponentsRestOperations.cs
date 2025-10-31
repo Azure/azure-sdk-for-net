@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectedEnvironmentDaprComponentsCollection>> ListAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<DaprComponentsCollection>> ListAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ConnectedEnvironmentDaprComponentsCollection value = default;
+                        DaprComponentsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
+                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectedEnvironmentDaprComponentsCollection> List(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public Response<DaprComponentsCollection> List(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ConnectedEnvironmentDaprComponentsCollection value = default;
+                        DaprComponentsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
+                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectedEnvironmentDaprComponentData>> GetAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppDaprComponentData>> GetAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ConnectedEnvironmentDaprComponentData value = default;
+                        ContainerAppDaprComponentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectedEnvironmentDaprComponentData.DeserializeConnectedEnvironmentDaprComponentData(document.RootElement);
+                        value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectedEnvironmentDaprComponentData)null, message.Response);
+                    return Response.FromValue((ContainerAppDaprComponentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectedEnvironmentDaprComponentData> Get(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
+        public Response<ContainerAppDaprComponentData> Get(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ConnectedEnvironmentDaprComponentData value = default;
+                        ContainerAppDaprComponentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectedEnvironmentDaprComponentData.DeserializeConnectedEnvironmentDaprComponentData(document.RootElement);
+                        value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectedEnvironmentDaprComponentData)null, message.Response);
+                    return Response.FromValue((ContainerAppDaprComponentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/>, <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/>, <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectedEnvironmentDaprComponentsCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<DaprComponentsCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -571,9 +571,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ConnectedEnvironmentDaprComponentsCollection value = default;
+                        DaprComponentsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
+                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectedEnvironmentDaprComponentsCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public Response<DaprComponentsCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -602,9 +602,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ConnectedEnvironmentDaprComponentsCollection value = default;
+                        DaprComponentsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
+                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

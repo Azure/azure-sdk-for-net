@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public BuilderResourceData(AzureLocation location) : base(location)
         {
-            ContainerRegistries = new ChangeTrackingList<ContainerRegistry>();
+            ContainerRegistries = new ChangeTrackingList<ContainerAppContainerRegistry>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BuilderResourceData"/>. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="environmentId"> Resource ID of the container apps environment that the builder is associated with. </param>
         /// <param name="containerRegistries"> List of mappings of container registries and the managed identity used to connect to it. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuilderResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, BuilderProvisioningState? provisioningState, ResourceIdentifier environmentId, IList<ContainerRegistry> containerRegistries, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal BuilderResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, BuilderProvisioningState? provisioningState, ResourceIdentifier environmentId, IList<ContainerAppContainerRegistry> containerRegistries, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -95,6 +95,6 @@ namespace Azure.ResourceManager.AppContainers
         public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> List of mappings of container registries and the managed identity used to connect to it. </summary>
         [WirePath("properties.containerRegistries")]
-        public IList<ContainerRegistry> ContainerRegistries { get; }
+        public IList<ContainerAppContainerRegistry> ContainerRegistries { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeter"/>. </summary>
-        internal ContainerAppBillingMeter()
+        public ContainerAppBillingMeter()
         {
         }
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Region for the billing meter. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Revision resource specific properties. </summary>
         [WirePath("properties")]
-        public ContainerAppBillingMeterProperties Properties { get; }
+        public ContainerAppBillingMeterProperties Properties { get; set; }
     }
 }

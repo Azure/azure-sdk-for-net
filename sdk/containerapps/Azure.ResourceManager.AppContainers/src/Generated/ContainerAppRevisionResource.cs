@@ -92,6 +92,75 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ContainerAppRevisionFunctionResources in the ContainerAppRevision. </summary>
+        /// <returns> An object representing collection of ContainerAppRevisionFunctionResources and their operations over a ContainerAppRevisionFunctionResource. </returns>
+        public virtual ContainerAppRevisionFunctionCollection GetContainerAppRevisionFunctions()
+        {
+            return GetCachedClient(client => new ContainerAppRevisionFunctionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific function of a Container App Revision.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/functions/{functionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisionFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppRevisionFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionName"> Name of the Function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppRevisionFunctionResource>> GetContainerAppRevisionFunctionAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppRevisionFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific function of a Container App Revision.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/functions/{functionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisionFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppRevisionFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionName"> Name of the Function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppRevisionFunctionResource> GetContainerAppRevisionFunction(string functionName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppRevisionFunctions().Get(functionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppReplicaResources in the ContainerAppRevision. </summary>
         /// <returns> An object representing collection of ContainerAppReplicaResources and their operations over a ContainerAppReplicaResource. </returns>
         public virtual ContainerAppReplicaCollection GetContainerAppReplicas()

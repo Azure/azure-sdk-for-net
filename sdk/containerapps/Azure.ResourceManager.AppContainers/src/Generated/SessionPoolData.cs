@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="poolManagementEndpoint"> The endpoint to manage the pool. </param>
         /// <param name="provisioningState"> Provisioning state of the session pool. </param>
         /// <param name="managedIdentitySettings"> Optional settings for a Managed Identity that is assigned to the Session pool. </param>
-        /// <param name="mcpServerSettings"> The MCP server settings of the session pool. </param>
+        /// <param name="mcpServerSettings"> The MCP (Model Context Protocol) server settings of the session pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, SessionPoolScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, TemplateUpdateStatus templateUpdateStatus, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IList<SessionPoolManagedIdentitySetting> managedIdentitySettings, McpServerSettings mcpServerSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Optional settings for a Managed Identity that is assigned to the Session pool. </summary>
         [WirePath("properties.managedIdentitySettings")]
         public IList<SessionPoolManagedIdentitySetting> ManagedIdentitySettings { get; }
-        /// <summary> The MCP server settings of the session pool. </summary>
+        /// <summary> The MCP (Model Context Protocol) server settings of the session pool. </summary>
         [WirePath("properties.mcpServerSettings")]
         public McpServerSettings McpServerSettings { get; set; }
     }

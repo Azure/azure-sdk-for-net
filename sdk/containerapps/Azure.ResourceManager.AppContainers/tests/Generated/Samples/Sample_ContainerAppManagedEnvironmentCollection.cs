@@ -200,11 +200,6 @@ MaximumNodeCount = 6,
                 IngressConfiguration = new ManagedEnvironmentIngressConfiguration
                 {
                     WorkloadProfileName = "My-CO-01",
-                    Scale = new IngressConfigurationScale
-                    {
-                        MinReplicas = 2,
-                        MaxReplicas = 4,
-                    },
                     TerminationGracePeriodSeconds = 3600,
                     HeaderCountLimit = 30,
                     RequestIdleTimeout = 5,

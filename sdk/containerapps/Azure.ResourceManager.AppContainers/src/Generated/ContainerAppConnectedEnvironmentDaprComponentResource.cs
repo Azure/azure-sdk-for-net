@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics;
         private readonly ConnectedEnvironmentsDaprComponentsRestOperations _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient;
-        private readonly ConnectedEnvironmentDaprComponentData _data;
+        private readonly ContainerAppDaprComponentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments/daprComponents";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppConnectedEnvironmentDaprComponentResource(ArmClient client, ConnectedEnvironmentDaprComponentData data) : this(client, data.Id)
+        internal ContainerAppConnectedEnvironmentDaprComponentResource(ArmClient client, ContainerAppDaprComponentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ConnectedEnvironmentDaprComponentData Data
+        public virtual ContainerAppDaprComponentData Data
         {
             get
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>> UpdateAsync(WaitUntil waitUntil, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> Update(WaitUntil waitUntil, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> Update(WaitUntil waitUntil, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

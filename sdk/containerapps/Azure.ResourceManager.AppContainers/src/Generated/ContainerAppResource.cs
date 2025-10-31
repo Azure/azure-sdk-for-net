@@ -305,6 +305,75 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppsBuildResources().Get(buildName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerAppFunctionResources in the ContainerApp. </summary>
+        /// <returns> An object representing collection of ContainerAppFunctionResources and their operations over a ContainerAppFunctionResource. </returns>
+        public virtual ContainerAppFunctionCollection GetContainerAppFunctions()
+        {
+            return GetCachedClient(client => new ContainerAppFunctionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific function of a Container App from the latest Revision.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/functions/{functionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionName"> Name of the Function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppFunctionResource>> GetContainerAppFunctionAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific function of a Container App from the latest Revision.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/functions/{functionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionName"> Name of the Function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppFunctionResource> GetContainerAppFunction(string functionName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppFunctions().Get(functionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of LabelHistoryResources in the ContainerApp. </summary>
         /// <returns> An object representing collection of LabelHistoryResources and their operations over a LabelHistoryResource. </returns>
         public virtual LabelHistoryCollection GetLabelHistories()

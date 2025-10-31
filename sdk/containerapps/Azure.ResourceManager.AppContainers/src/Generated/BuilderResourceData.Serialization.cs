@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers
             SystemData systemData = default;
             BuilderProvisioningState? provisioningState = default;
             ResourceIdentifier environmentId = default;
-            IList<ContainerRegistry> containerRegistries = default;
+            IList<ContainerAppContainerRegistry> containerRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            List<ContainerRegistry> array = new List<ContainerRegistry>();
+                            List<ContainerAppContainerRegistry> array = new List<ContainerAppContainerRegistry>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerRegistry.DeserializeContainerRegistry(item, options));
+                                array.Add(ContainerAppContainerRegistry.DeserializeContainerAppContainerRegistry(item, options));
                             }
                             containerRegistries = array;
                             continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppContainers
                 identity,
                 provisioningState,
                 environmentId,
-                containerRegistries ?? new ChangeTrackingList<ContainerRegistry>(),
+                containerRegistries ?? new ChangeTrackingList<ContainerAppContainerRegistry>(),
                 serializedAdditionalRawData);
         }
 

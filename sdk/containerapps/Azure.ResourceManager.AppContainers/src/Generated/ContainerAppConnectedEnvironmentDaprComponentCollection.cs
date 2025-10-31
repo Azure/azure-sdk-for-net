@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, ConnectedEnvironmentDaprComponentData.DeserializeConnectedEnvironmentDaprComponentData(e)), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, ConnectedEnvironmentDaprComponentData.DeserializeConnectedEnvironmentDaprComponentData(e)), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (options.Format != "W" && Optional.IsDefined(McpServerEndpoint))
             {
                 writer.WritePropertyName("mcpServerEndpoint"u8);
-                writer.WriteStringValue(McpServerEndpoint);
+                writer.WriteStringValue(McpServerEndpoint.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             bool? isMcpServerEnabled = default;
             bool? isMcpServerApiKeyDisabled = default;
-            string mcpServerEndpoint = default;
+            Uri mcpServerEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("mcpServerEndpoint"u8))
                 {
-                    mcpServerEndpoint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mcpServerEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,15 +184,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (Optional.IsDefined(McpServerEndpoint))
                 {
                     builder.Append("  mcpServerEndpoint: ");
-                    if (McpServerEndpoint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{McpServerEndpoint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{McpServerEndpoint}'");
-                    }
+                    builder.AppendLine($"'{McpServerEndpoint.AbsoluteUri}'");
                 }
             }
 

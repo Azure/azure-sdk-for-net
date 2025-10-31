@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Metadata used to render different experiences for resources of the same type; e.g. WorkflowApp is a kind of Microsoft.App/ContainerApps type. If supported, the resource provider must validate and persist this value. </summary>
+    /// <summary> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </summary>
     public readonly partial struct ContainerAppKind : IEquatable<ContainerAppKind>
     {
         private readonly string _value;
@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         private const string WorkflowappValue = "workflowapp";
+        private const string FunctionappValue = "functionapp";
 
         /// <summary> workflowapp. </summary>
         public static ContainerAppKind Workflowapp { get; } = new ContainerAppKind(WorkflowappValue);
+        /// <summary> functionapp. </summary>
+        public static ContainerAppKind Functionapp { get; } = new ContainerAppKind(FunctionappValue);
         /// <summary> Determines if two <see cref="ContainerAppKind"/> values are the same. </summary>
         public static bool operator ==(ContainerAppKind left, ContainerAppKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppKind"/> values are not the same. </summary>

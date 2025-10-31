@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The settings of the MCP server for this session pool. </summary>
+    /// <summary> The settings of the MCP (Model Context Protocol) server for this session pool. </summary>
     public partial class McpServerSettings
     {
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isMcpServerApiKeyDisabled"> Indicates whether the MCP server API key is disabled. </param>
         /// <param name="mcpServerEndpoint"> The endpoint of the MCP server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerSettings(bool? isMcpServerEnabled, bool? isMcpServerApiKeyDisabled, string mcpServerEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal McpServerSettings(bool? isMcpServerEnabled, bool? isMcpServerApiKeyDisabled, Uri mcpServerEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsMcpServerEnabled = isMcpServerEnabled;
             IsMcpServerApiKeyDisabled = isMcpServerApiKeyDisabled;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public bool? IsMcpServerApiKeyDisabled { get; set; }
         /// <summary> The endpoint of the MCP server. </summary>
         [WirePath("mcpServerEndpoint")]
-        public string McpServerEndpoint { get; }
+        public Uri McpServerEndpoint { get; }
     }
 }

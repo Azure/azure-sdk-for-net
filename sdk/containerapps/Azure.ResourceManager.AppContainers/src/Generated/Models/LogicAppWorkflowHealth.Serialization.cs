@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             LogicAppWorkflowHealthState state = default;
-            ResponseError error = default;
+            WorkflowErrorEntity error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppContainersContext.Default);
+                    error = WorkflowErrorEntity.DeserializeWorkflowErrorEntity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

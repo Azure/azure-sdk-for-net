@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used to render different experiences for resources of the same type; e.g. WorkflowApp is a kind of Microsoft.App/ContainerApps type. If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="kind"> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </param>
         /// <param name="provisioningState"> Provisioning state of the Container App. </param>
         /// <param name="runningStatus"> Running status of the Container App. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
         [WirePath("managedBy")]
         public string ManagedBy { get; set; }
-        /// <summary> Metadata used to render different experiences for resources of the same type; e.g. WorkflowApp is a kind of Microsoft.App/ContainerApps type. If supported, the resource provider must validate and persist this value. </summary>
+        /// <summary> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </summary>
         [WirePath("kind")]
         public ContainerAppKind? Kind { get; set; }
         /// <summary> Provisioning state of the Container App. </summary>

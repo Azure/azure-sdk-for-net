@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppConnectedEnvironmentDaprComponentResource IOperationSource<ContainerAppConnectedEnvironmentDaprComponentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedEnvironmentDaprComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            var data = ModelReaderWriter.Read<ContainerAppDaprComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppConnectedEnvironmentDaprComponentResource(_client, data);
         }
 
         async ValueTask<ContainerAppConnectedEnvironmentDaprComponentResource> IOperationSource<ContainerAppConnectedEnvironmentDaprComponentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedEnvironmentDaprComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            var data = ModelReaderWriter.Read<ContainerAppDaprComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return await Task.FromResult(new ContainerAppConnectedEnvironmentDaprComponentResource(_client, data)).ConfigureAwait(false);
         }
     }

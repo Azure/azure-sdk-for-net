@@ -41,12 +41,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Properties))
             {
@@ -75,8 +70,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            string kind = default;
-            AzureLocation? location = default;
+            LogicAppWorkflowKind? kind = default;
             LogicAppWorkflowEnvelopeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -88,16 +82,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    kind = new LogicAppWorkflowKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -145,7 +134,6 @@ namespace Azure.ResourceManager.AppContainers
                 type,
                 systemData,
                 kind,
-                location,
                 properties,
                 serializedAdditionalRawData);
         }
@@ -184,21 +172,6 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -210,15 +183,7 @@ namespace Azure.ResourceManager.AppContainers
                 if (Optional.IsDefined(Kind))
                 {
                     builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 

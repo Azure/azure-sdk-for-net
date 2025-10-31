@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppContainers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppContainers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:

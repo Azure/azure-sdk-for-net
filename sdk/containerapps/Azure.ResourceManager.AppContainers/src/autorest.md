@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/444c6266f5941ca6c52845b3586f54a6314bd5ba/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md
-#tag: package-2025-10-02-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/1696c86b135235733c6cb62b11617dadefdd267a/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md
+tag: package-preview-2025-10-02-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -112,6 +112,7 @@ rename-mapping:
   ContainerAppProbeHttpGetHttpHeadersItem: ContainerAppHttpHeaderInfo
   ContainerAppProbeTcpSocket: ContainerAppTcpSocketRequestInfo
   ContainerResources: AppContainerResources
+  ContainerRegistry: ContainerAppContainerRegistry
   CookieExpiration: ContainerAppCookieExpiration
   CookieExpirationConvention: ContainerAppCookieExpirationConvention
   CorsPolicy: ContainerAppCorsPolicy

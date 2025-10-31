@@ -131,6 +131,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppConnectedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -176,6 +188,30 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppsBuildResource.ValidateResourceId(id);
             return new ContainerAppsBuildResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppRevisionFunctionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppRevisionFunctionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppRevisionFunctionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppRevisionFunctionResource"/> object. </returns>
+        public virtual ContainerAppRevisionFunctionResource GetContainerAppRevisionFunctionResource(ResourceIdentifier id)
+        {
+            ContainerAppRevisionFunctionResource.ValidateResourceId(id);
+            return new ContainerAppRevisionFunctionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppFunctionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppFunctionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppFunctionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppFunctionResource"/> object. </returns>
+        public virtual ContainerAppFunctionResource GetContainerAppFunctionResource(ResourceIdentifier id)
+        {
+            ContainerAppFunctionResource.ValidateResourceId(id);
+            return new ContainerAppFunctionResource(Client, id);
         }
 
         /// <summary>
@@ -416,18 +452,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             DaprComponentResiliencyPolicyResource.ValidateResourceId(id);
             return new DaprComponentResiliencyPolicyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
         }
 
         /// <summary>

@@ -106,6 +106,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             writer.WriteEndObject();
         }
 
@@ -142,6 +152,8 @@ namespace Azure.ResourceManager.AppContainers
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
             IList<DaprComponentServiceBinding> serviceComponentBind = default;
+            DaprComponentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,6 +276,20 @@ namespace Azure.ResourceManager.AppContainers
                             serviceComponentBind = array;
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DaprComponentProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deploymentErrors"u8))
+                        {
+                            deploymentErrors = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -287,6 +313,8 @@ namespace Azure.ResourceManager.AppContainers
                 metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
                 scopes ?? new ChangeTrackingList<string>(),
                 serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>(),
+                provisioningState,
+                deploymentErrors,
                 serializedAdditionalRawData);
         }
 
@@ -565,6 +593,44 @@ namespace Azure.ResourceManager.AppContainers
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    serviceComponentBind: ");
                         }
                         builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deploymentErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentErrors))
+                {
+                    builder.Append("    deploymentErrors: ");
+                    if (DeploymentErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentErrors}'");
                     }
                 }
             }

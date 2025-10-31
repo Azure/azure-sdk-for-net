@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // invoke the operation
             string componentName = "reddog";
-            ConnectedEnvironmentDaprComponentData data = new ConnectedEnvironmentDaprComponentData
+            ContainerAppDaprComponentData data = new ContainerAppDaprComponentData
             {
                 ComponentType = "state.azure.cosmosdb",
                 Version = "v1",
@@ -86,7 +86,7 @@ Value = "redis-bind",
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConnectedEnvironmentDaprComponentData resourceData = result.Data;
+            ContainerAppDaprComponentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -120,7 +120,7 @@ Value = "redis-bind",
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ConnectedEnvironmentDaprComponentData resourceData = result.Data;
+            ContainerAppDaprComponentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -153,7 +153,7 @@ Value = "redis-bind",
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConnectedEnvironmentDaprComponentData resourceData = item.Data;
+                ContainerAppDaprComponentData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -227,7 +227,7 @@ Value = "redis-bind",
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ConnectedEnvironmentDaprComponentData resourceData = result.Data;
+                ContainerAppDaprComponentData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

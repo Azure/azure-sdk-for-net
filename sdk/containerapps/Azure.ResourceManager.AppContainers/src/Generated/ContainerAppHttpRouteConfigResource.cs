@@ -198,9 +198,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppHttpRouteConfigHttpRouteConfigRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation(response, rehydrationToken);
+                var operation = new AppContainersArmOperation(_containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics, Pipeline, _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,9 +240,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppHttpRouteConfigHttpRouteConfigRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation(response, rehydrationToken);
+                var operation = new AppContainersArmOperation(_containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics, Pipeline, _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

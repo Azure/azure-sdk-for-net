@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowEnvelopeProperties"/>. </summary>
-        internal LogicAppWorkflowEnvelopeProperties()
+        public LogicAppWorkflowEnvelopeProperties()
         {
         }
 
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </para>
         /// </summary>
         [WirePath("files")]
-        public BinaryData Files { get; }
+        public BinaryData Files { get; set; }
         /// <summary> Gets or sets the state of the workflow. </summary>
         [WirePath("flowState")]
-        public LogicAppWorkflowState? FlowState { get; }
+        public LogicAppWorkflowState? FlowState { get; set; }
         /// <summary> Gets or sets workflow health. </summary>
         [WirePath("health")]
-        public LogicAppWorkflowHealth Health { get; }
+        public LogicAppWorkflowHealth Health { get; set; }
     }
 }
