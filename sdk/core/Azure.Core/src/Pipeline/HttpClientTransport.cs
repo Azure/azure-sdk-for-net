@@ -104,6 +104,11 @@ namespace Azure.Core.Pipeline
                 var handler = _handlerFactory(options);
                 newClient = new HttpClient(handler);
             }
+            else
+            {
+                // No factory to create a new client, so we cannot update. Log?
+                return;
+            }
 
             var oldClient = Interlocked.Exchange(ref _client!, newClient);
             oldClient!.Dispose();
