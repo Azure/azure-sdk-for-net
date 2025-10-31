@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallNetworkProfile : IUtf8JsonSerializable, IJsonModel<FirewallNetworkProfile>
+    /// <summary> Network settings for Firewall. </summary>
+    public partial class FirewallNetworkProfile : IJsonModel<FirewallNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/> for deserialization. </summary>
+        internal FirewallNetworkProfile()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
@@ -48,18 +53,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStringValue(NetworkType.ToString());
             writer.WritePropertyName("publicIps"u8);
             writer.WriteStartArray();
-            foreach (var item in PublicIPs)
+            foreach (IPAddressInfo item in PublicIps)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (Optional.IsCollectionDefined(EgressNatIP))
+            if (Optional.IsCollectionDefined(EgressNatIp))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
-                foreach (var item in EgressNatIP)
+                foreach (IPAddressInfo item in EgressNatIp)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -69,8 +74,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 writer.WritePropertyName("trustedRanges"u8);
                 writer.WriteStartArray();
-                foreach (var item in TrustedRanges)
+                foreach (string item in TrustedRanges)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -79,21 +89,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 writer.WritePropertyName("privateSourceNatRulesDestination"u8);
                 writer.WriteStartArray();
-                foreach (var item in PrivateSourceNatRulesDestination)
+                foreach (string item in PrivateSourceNatRulesDestination)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,22 +117,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallNetworkProfile IJsonModel<FirewallNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallNetworkProfile IJsonModel<FirewallNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallNetworkProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFirewallNetworkProfile(document.RootElement, options);
         }
 
-        internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,117 +145,132 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FirewallVnetConfiguration vnetConfiguration = default;
             FirewallVwanConfiguration vwanConfiguration = default;
             FirewallNetworkType networkType = default;
-            IList<IPAddressInfo> publicIPs = default;
+            IList<IPAddressInfo> publicIps = default;
             AllowEgressNatType enableEgressNat = default;
-            IList<IPAddressInfo> egressNatIP = default;
+            IList<IPAddressInfo> egressNatIp = default;
             IList<string> trustedRanges = default;
             IList<string> privateSourceNatRulesDestination = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vnetConfiguration"u8))
+                if (prop.NameEquals("vnetConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(property.Value, options);
+                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vwanConfiguration"u8))
+                if (prop.NameEquals("vwanConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(property.Value, options);
+                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("networkType"u8))
+                if (prop.NameEquals("networkType"u8))
                 {
-                    networkType = new FirewallNetworkType(property.Value.GetString());
+                    networkType = new FirewallNetworkType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIps"u8))
+                if (prop.NameEquals("publicIps"u8))
                 {
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
-                    publicIPs = array;
+                    publicIps = array;
                     continue;
                 }
-                if (property.NameEquals("enableEgressNat"u8))
+                if (prop.NameEquals("enableEgressNat"u8))
                 {
-                    enableEgressNat = new AllowEgressNatType(property.Value.GetString());
+                    enableEgressNat = new AllowEgressNatType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("egressNatIp"u8))
+                if (prop.NameEquals("egressNatIp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
-                    egressNatIP = array;
+                    egressNatIp = array;
                     continue;
                 }
-                if (property.NameEquals("trustedRanges"u8))
+                if (prop.NameEquals("trustedRanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     trustedRanges = array;
                     continue;
                 }
-                if (property.NameEquals("privateSourceNatRulesDestination"u8))
+                if (prop.NameEquals("privateSourceNatRulesDestination"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     privateSourceNatRulesDestination = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallNetworkProfile(
                 vnetConfiguration,
                 vwanConfiguration,
                 networkType,
-                publicIPs,
+                publicIps,
                 enableEgressNat,
-                egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
+                egressNatIp ?? new ChangeTrackingList<IPAddressInfo>(),
                 trustedRanges ?? new ChangeTrackingList<string>(),
                 privateSourceNatRulesDestination ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FirewallNetworkProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FirewallNetworkProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -245,15 +280,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallNetworkProfile IPersistableModel<FirewallNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallNetworkProfile IPersistableModel<FirewallNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirewallNetworkProfile(document.RootElement, options);
                     }
                 default:
@@ -261,6 +301,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FirewallNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

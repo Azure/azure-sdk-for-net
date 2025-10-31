@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallHealthStatus : IEquatable<FirewallHealthStatus>
     {
         private readonly string _value;
+        private const string GREENValue = "GREEN";
+        private const string YELLOWValue = "YELLOW";
+        private const string RedValue = "RED";
+        private const string INITIALIZINGValue = "INITIALIZING";
 
         /// <summary> Initializes a new instance of <see cref="FirewallHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallHealthStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string GreenValue = "GREEN";
-        private const string YellowValue = "YELLOW";
-        private const string RedValue = "RED";
-        private const string InitializingValue = "INITIALIZING";
+        /// <summary> Gets the GREEN. </summary>
+        public static FirewallHealthStatus GREEN { get; } = new FirewallHealthStatus(GREENValue);
 
-        /// <summary> GREEN. </summary>
-        public static FirewallHealthStatus Green { get; } = new FirewallHealthStatus(GreenValue);
-        /// <summary> YELLOW. </summary>
-        public static FirewallHealthStatus Yellow { get; } = new FirewallHealthStatus(YellowValue);
-        /// <summary> RED. </summary>
+        /// <summary> Gets the YELLOW. </summary>
+        public static FirewallHealthStatus YELLOW { get; } = new FirewallHealthStatus(YELLOWValue);
+
+        /// <summary> Gets the Red. </summary>
         public static FirewallHealthStatus Red { get; } = new FirewallHealthStatus(RedValue);
-        /// <summary> INITIALIZING. </summary>
-        public static FirewallHealthStatus Initializing { get; } = new FirewallHealthStatus(InitializingValue);
+
+        /// <summary> Gets the INITIALIZING. </summary>
+        public static FirewallHealthStatus INITIALIZING { get; } = new FirewallHealthStatus(INITIALIZINGValue);
+
         /// <summary> Determines if two <see cref="FirewallHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallHealthStatus left, FirewallHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallHealthStatus left, FirewallHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallHealthStatus(string value) => new FirewallHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallHealthStatus?(string value) => value == null ? null : new FirewallHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

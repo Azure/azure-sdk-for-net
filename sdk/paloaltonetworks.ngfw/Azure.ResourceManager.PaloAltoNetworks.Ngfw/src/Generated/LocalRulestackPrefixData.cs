@@ -7,96 +7,105 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the LocalRulestackPrefix data model.
-    /// LocalRulestack prefixList
-    /// </summary>
+    /// <summary> LocalRulestack prefixList. </summary>
     public partial class LocalRulestackPrefixData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixData"/>. </summary>
-        /// <param name="prefixList"> prefix list. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prefixList"/> is null. </exception>
-        public LocalRulestackPrefixData(IEnumerable<string> prefixList)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal LocalRulestackPrefixData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrefixObject properties) : base(id, name, resourceType, systemData)
         {
-            Argument.AssertNotNull(prefixList, nameof(prefixList));
-
-            PrefixList = prefixList.ToList();
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> prefix description. </param>
-        /// <param name="prefixList"> prefix list. </param>
-        /// <param name="etag"> etag info. </param>
-        /// <param name="auditComment"> comment for this object. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalRulestackPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> prefixList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            Description = description;
-            PrefixList = prefixList;
-            ETag = etag;
-            AuditComment = auditComment;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixData"/> for deserialization. </summary>
-        internal LocalRulestackPrefixData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal PrefixObject Properties { get; set; }
 
         /// <summary> prefix description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrefixObject();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> prefix list. </summary>
-        public IList<string> PrefixList { get; }
+        public IList<string> PrefixList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrefixObject();
+                }
+                return Properties.PrefixList;
+            }
+        }
+
         /// <summary> etag info. </summary>
-        public ETag? ETag { get; set; }
+        public string ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrefixObject();
+                }
+                Properties.ETag = value;
+            }
+        }
+
         /// <summary> comment for this object. </summary>
-        public string AuditComment { get; set; }
+        public string AuditComment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuditComment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrefixObject();
+                }
+                Properties.AuditComment = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningState? ProvisioningState { get; }
+        public FirewallProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

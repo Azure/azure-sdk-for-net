@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,50 +15,71 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallLogType : IEquatable<FirewallLogType>
     {
         private readonly string _value;
+        private const string TRAFFICValue = "TRAFFIC";
+        private const string THREATValue = "THREAT";
+        private const string DECRYPTIONValue = "DECRYPTION";
+        private const string WILDFIREValue = "WILDFIRE";
+        private const string DlpValue = "DLP";
+        private const string AUDITValue = "AUDIT";
 
         /// <summary> Initializes a new instance of <see cref="FirewallLogType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallLogType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrafficValue = "TRAFFIC";
-        private const string ThreatValue = "THREAT";
-        private const string DecryptionValue = "DECRYPTION";
-        private const string WildfireValue = "WILDFIRE";
-        private const string DlpValue = "DLP";
-        private const string AuditValue = "AUDIT";
+        /// <summary> Gets the TRAFFIC. </summary>
+        public static FirewallLogType TRAFFIC { get; } = new FirewallLogType(TRAFFICValue);
 
-        /// <summary> TRAFFIC. </summary>
-        public static FirewallLogType Traffic { get; } = new FirewallLogType(TrafficValue);
-        /// <summary> THREAT. </summary>
-        public static FirewallLogType Threat { get; } = new FirewallLogType(ThreatValue);
-        /// <summary> DECRYPTION. </summary>
-        public static FirewallLogType Decryption { get; } = new FirewallLogType(DecryptionValue);
-        /// <summary> WILDFIRE. </summary>
-        public static FirewallLogType Wildfire { get; } = new FirewallLogType(WildfireValue);
-        /// <summary> DLP. </summary>
+        /// <summary> Gets the THREAT. </summary>
+        public static FirewallLogType THREAT { get; } = new FirewallLogType(THREATValue);
+
+        /// <summary> Gets the DECRYPTION. </summary>
+        public static FirewallLogType DECRYPTION { get; } = new FirewallLogType(DECRYPTIONValue);
+
+        /// <summary> Gets the WILDFIRE. </summary>
+        public static FirewallLogType WILDFIRE { get; } = new FirewallLogType(WILDFIREValue);
+
+        /// <summary> Gets the Dlp. </summary>
         public static FirewallLogType Dlp { get; } = new FirewallLogType(DlpValue);
-        /// <summary> AUDIT. </summary>
-        public static FirewallLogType Audit { get; } = new FirewallLogType(AuditValue);
+
+        /// <summary> Gets the AUDIT. </summary>
+        public static FirewallLogType AUDIT { get; } = new FirewallLogType(AUDITValue);
+
         /// <summary> Determines if two <see cref="FirewallLogType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallLogType left, FirewallLogType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallLogType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallLogType left, FirewallLogType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallLogType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallLogType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallLogType(string value) => new FirewallLogType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallLogType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallLogType?(string value) => value == null ? null : new FirewallLogType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallLogType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallLogType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

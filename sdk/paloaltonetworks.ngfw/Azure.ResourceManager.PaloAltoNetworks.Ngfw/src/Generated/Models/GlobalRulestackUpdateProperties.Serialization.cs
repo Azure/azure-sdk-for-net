@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class GlobalRulestackUpdateProperties : IUtf8JsonSerializable, IJsonModel<GlobalRulestackUpdateProperties>
+    /// <summary> The updatable properties of the GlobalRulestackResource. </summary>
+    public partial class GlobalRulestackUpdateProperties : IJsonModel<GlobalRulestackUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalRulestackUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GlobalRulestackUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,21 +29,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(PanETag))
+            if (Optional.IsDefined(PanEtag))
             {
                 writer.WritePropertyName("panEtag"u8);
-                writer.WriteStringValue(PanETag.Value.ToString());
+                writer.WriteStringValue(PanEtag);
             }
             if (Optional.IsDefined(PanLocation))
             {
                 writer.WritePropertyName("panLocation"u8);
-                writer.WriteStringValue(PanLocation.Value);
+                writer.WriteStringValue(PanLocation);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -53,8 +53,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in AssociatedSubscriptions)
+                foreach (string item in AssociatedSubscriptions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -79,15 +84,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("securityServices"u8);
                 writer.WriteObjectValue(SecurityServices, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,115 +101,117 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        GlobalRulestackUpdateProperties IJsonModel<GlobalRulestackUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GlobalRulestackUpdateProperties IJsonModel<GlobalRulestackUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GlobalRulestackUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGlobalRulestackUpdateProperties(document.RootElement, options);
         }
 
-        internal static GlobalRulestackUpdateProperties DeserializeGlobalRulestackUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GlobalRulestackUpdateProperties DeserializeGlobalRulestackUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? panETag = default;
-            AzureLocation? panLocation = default;
+            string panEtag = default;
+            string panLocation = default;
             RulestackScopeType? scope = default;
             IList<string> associatedSubscriptions = default;
             string description = default;
             RuleCreationDefaultMode? defaultMode = default;
             string minAppIdVersion = default;
             RulestackSecurityServices securityServices = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("panEtag"u8))
+                if (prop.NameEquals("panEtag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    panEtag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("panLocation"u8))
+                {
+                    panLocation = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("scope"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    panETag = new ETag(property.Value.GetString());
+                    scope = new RulestackScopeType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("panLocation"u8))
+                if (prop.NameEquals("associatedSubscriptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    panLocation = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scope"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    scope = new RulestackScopeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("associatedSubscriptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     associatedSubscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultMode"u8))
+                if (prop.NameEquals("defaultMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultMode = new RuleCreationDefaultMode(property.Value.GetString());
+                    defaultMode = new RuleCreationDefaultMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minAppIdVersion"u8))
+                if (prop.NameEquals("minAppIdVersion"u8))
                 {
-                    minAppIdVersion = property.Value.GetString();
+                    minAppIdVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityServices"u8))
+                if (prop.NameEquals("securityServices"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value, options);
+                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GlobalRulestackUpdateProperties(
-                panETag,
+                panEtag,
                 panLocation,
                 scope,
                 associatedSubscriptions ?? new ChangeTrackingList<string>(),
@@ -212,13 +219,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 defaultMode,
                 minAppIdVersion,
                 securityServices,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<GlobalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GlobalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -228,15 +238,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        GlobalRulestackUpdateProperties IPersistableModel<GlobalRulestackUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GlobalRulestackUpdateProperties IPersistableModel<GlobalRulestackUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GlobalRulestackUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGlobalRulestackUpdateProperties(document.RootElement, options);
                     }
                 default:
@@ -244,6 +259,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GlobalRulestackUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

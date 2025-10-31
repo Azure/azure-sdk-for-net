@@ -9,14 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class SupportInfoModel : IUtf8JsonSerializable, IJsonModel<SupportInfoModel>
+    /// <summary> Support information for the service. </summary>
+    public partial class SupportInfoModel : IJsonModel<SupportInfoModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportInfoModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SupportInfoModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SupportInfoModel)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ProductSku))
             {
                 writer.WritePropertyName("productSku"u8);
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(HubUri))
             {
                 writer.WritePropertyName("hubUrl"u8);
-                writer.WriteStringValue(HubUri.AbsoluteUri);
+                writer.WriteStringValue(HubUri);
             }
             if (Optional.IsDefined(Credits))
             {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("endDateForCredits"u8);
                 writer.WriteStringValue(EndDateForCredits);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,22 +127,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        SupportInfoModel IJsonModel<SupportInfoModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SupportInfoModel IJsonModel<SupportInfoModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SupportInfoModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SupportInfoModel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSupportInfoModel(document.RootElement, options);
         }
 
-        internal static SupportInfoModel DeserializeSupportInfoModel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SupportInfoModel DeserializeSupportInfoModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -156,124 +162,118 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             string helpURL = default;
             string supportURL = default;
             string registerURL = default;
-            Uri hubUrl = default;
+            string hubUri = default;
             int? credits = default;
             int? monthlyCreditLeft = default;
             string startDateForCredits = default;
             string endDateForCredits = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("productSku"u8))
+                if (prop.NameEquals("productSku"u8))
                 {
-                    productSku = property.Value.GetString();
+                    productSku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productSerial"u8))
+                if (prop.NameEquals("productSerial"u8))
                 {
-                    productSerial = property.Value.GetString();
+                    productSerial = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountRegistrationStatus"u8))
+                if (prop.NameEquals("accountRegistrationStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accountRegistrationStatus = new AccountRegistrationStatus(property.Value.GetString());
+                    accountRegistrationStatus = new AccountRegistrationStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accountId"u8))
+                if (prop.NameEquals("accountId"u8))
                 {
-                    accountId = property.Value.GetString();
+                    accountId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("freeTrial"u8))
+                if (prop.NameEquals("freeTrial"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    freeTrial = new FreeTrialEnableStatus(property.Value.GetString());
+                    freeTrial = new FreeTrialEnableStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("freeTrialDaysLeft"u8))
+                if (prop.NameEquals("freeTrialDaysLeft"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    freeTrialDaysLeft = property.Value.GetInt32();
+                    freeTrialDaysLeft = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("freeTrialCreditLeft"u8))
+                if (prop.NameEquals("freeTrialCreditLeft"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    freeTrialCreditLeft = property.Value.GetInt32();
+                    freeTrialCreditLeft = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("helpURL"u8))
+                if (prop.NameEquals("helpURL"u8))
                 {
-                    helpURL = property.Value.GetString();
+                    helpURL = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportURL"u8))
+                if (prop.NameEquals("supportURL"u8))
                 {
-                    supportURL = property.Value.GetString();
+                    supportURL = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registerURL"u8))
+                if (prop.NameEquals("registerURL"u8))
                 {
-                    registerURL = property.Value.GetString();
+                    registerURL = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hubUrl"u8))
+                if (prop.NameEquals("hubUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    hubUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("credits"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hubUrl = new Uri(property.Value.GetString());
+                    credits = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("credits"u8))
+                if (prop.NameEquals("monthlyCreditLeft"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credits = property.Value.GetInt32();
+                    monthlyCreditLeft = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monthlyCreditLeft"u8))
+                if (prop.NameEquals("startDateForCredits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    monthlyCreditLeft = property.Value.GetInt32();
+                    startDateForCredits = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startDateForCredits"u8))
+                if (prop.NameEquals("endDateForCredits"u8))
                 {
-                    startDateForCredits = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("endDateForCredits"u8))
-                {
-                    endDateForCredits = property.Value.GetString();
+                    endDateForCredits = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SupportInfoModel(
                 productSku,
                 productSerial,
@@ -285,18 +285,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 helpURL,
                 supportURL,
                 registerURL,
-                hubUrl,
+                hubUri,
                 credits,
                 monthlyCreditLeft,
                 startDateForCredits,
                 endDateForCredits,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SupportInfoModel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SupportInfoModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -306,15 +309,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        SupportInfoModel IPersistableModel<SupportInfoModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SupportInfoModel IPersistableModel<SupportInfoModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SupportInfoModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SupportInfoModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSupportInfoModel(document.RootElement, options);
                     }
                 default:
@@ -322,6 +330,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SupportInfoModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SupportInfoModel"/> from. </param>
+        internal static SupportInfoModel FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeSupportInfoModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    /// <summary></summary>
     public partial class MetricsObjectFirewallResource : IJsonModel<MetricsObjectFirewallData>
     {
-        private static MetricsObjectFirewallData s_dataDeserializationInstance;
-        private static MetricsObjectFirewallData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MetricsObjectFirewallData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MetricsObjectFirewallData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MetricsObjectFirewallData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricsObjectFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetricsObjectFirewallData>)Data).Write(writer, options);
 
-        MetricsObjectFirewallData IJsonModel<MetricsObjectFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetricsObjectFirewallData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricsObjectFirewallData IJsonModel<MetricsObjectFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MetricsObjectFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricsObjectFirewallData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MetricsObjectFirewallData IPersistableModel<MetricsObjectFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricsObjectFirewallData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<MetricsObjectFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetricsObjectFirewallData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MetricsObjectFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

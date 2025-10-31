@@ -1,3 +1,4 @@
 directory: specification/paloaltonetworks/PaloAltoNetworks.Management
-commit: a90e7587fec5c33bf4a794555d7ce663991867f6
+commit: deb06f85f066118ab38df4e8d6717ba481f8db67
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

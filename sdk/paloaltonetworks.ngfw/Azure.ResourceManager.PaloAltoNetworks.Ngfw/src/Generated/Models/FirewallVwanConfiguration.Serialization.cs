@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallVwanConfiguration : IUtf8JsonSerializable, IJsonModel<FirewallVwanConfiguration>
+    /// <summary> VwanInfo for Firewall Networking. </summary>
+    public partial class FirewallVwanConfiguration : IJsonModel<FirewallVwanConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallVwanConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FirewallVwanConfiguration"/> for deserialization. </summary>
+        internal FirewallVwanConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallVwanConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NetworkVirtualApplianceId))
             {
                 writer.WritePropertyName("networkVirtualApplianceId"u8);
@@ -51,20 +56,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("unTrustSubnet"u8);
                 writer.WriteObjectValue(UnTrustSubnet, options);
             }
-            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
+            if (Optional.IsDefined(IpOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue(IPOfTrustSubnetForUdr, options);
+                writer.WriteObjectValue(IpOfTrustSubnetForUdr, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,91 +78,97 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallVwanConfiguration IJsonModel<FirewallVwanConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallVwanConfiguration IJsonModel<FirewallVwanConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallVwanConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFirewallVwanConfiguration(document.RootElement, options);
         }
 
-        internal static FirewallVwanConfiguration DeserializeFirewallVwanConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FirewallVwanConfiguration DeserializeFirewallVwanConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string networkVirtualApplianceId = default;
-            IPAddressSpaceInfo vHub = default;
+            IPAddressSpaceInfo vhub = default;
             IPAddressSpaceInfo trustSubnet = default;
             IPAddressSpaceInfo unTrustSubnet = default;
             IPAddressInfo ipOfTrustSubnetForUdr = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("networkVirtualApplianceId"u8))
+                if (prop.NameEquals("networkVirtualApplianceId"u8))
                 {
-                    networkVirtualApplianceId = property.Value.GetString();
+                    networkVirtualApplianceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vHub"u8))
+                if (prop.NameEquals("vHub"u8))
                 {
-                    vHub = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
+                    vhub = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("trustSubnet"u8))
+                if (prop.NameEquals("trustSubnet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
+                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("unTrustSubnet"u8))
+                if (prop.NameEquals("unTrustSubnet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
+                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ipOfTrustSubnetForUdr"u8))
+                if (prop.NameEquals("ipOfTrustSubnetForUdr"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value, options);
+                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallVwanConfiguration(
                 networkVirtualApplianceId,
-                vHub,
+                vhub,
                 trustSubnet,
                 unTrustSubnet,
                 ipOfTrustSubnetForUdr,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FirewallVwanConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FirewallVwanConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -167,15 +178,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallVwanConfiguration IPersistableModel<FirewallVwanConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallVwanConfiguration IPersistableModel<FirewallVwanConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallVwanConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirewallVwanConfiguration(document.RootElement, options);
                     }
                 default:
@@ -183,6 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FirewallVwanConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

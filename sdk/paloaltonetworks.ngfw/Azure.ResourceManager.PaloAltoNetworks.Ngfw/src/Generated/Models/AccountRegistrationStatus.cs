@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct AccountRegistrationStatus : IEquatable<AccountRegistrationStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AccountRegistrationStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AccountRegistrationStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegisteredValue = "Registered";
         private const string NotRegisteredValue = "Not Registered";
 
-        /// <summary> Registered. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountRegistrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AccountRegistrationStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Registered. </summary>
         public static AccountRegistrationStatus Registered { get; } = new AccountRegistrationStatus(RegisteredValue);
-        /// <summary> Not Registered. </summary>
+
+        /// <summary> Gets the NotRegistered. </summary>
         public static AccountRegistrationStatus NotRegistered { get; } = new AccountRegistrationStatus(NotRegisteredValue);
+
         /// <summary> Determines if two <see cref="AccountRegistrationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccountRegistrationStatus left, AccountRegistrationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccountRegistrationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccountRegistrationStatus left, AccountRegistrationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccountRegistrationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccountRegistrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccountRegistrationStatus(string value) => new AccountRegistrationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AccountRegistrationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AccountRegistrationStatus?(string value) => value == null ? null : new AccountRegistrationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccountRegistrationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccountRegistrationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

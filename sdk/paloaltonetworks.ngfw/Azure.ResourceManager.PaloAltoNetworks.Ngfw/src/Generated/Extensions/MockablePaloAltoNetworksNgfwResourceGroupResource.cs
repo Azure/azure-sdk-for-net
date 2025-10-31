@@ -8,59 +8,37 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePaloAltoNetworksNgfwResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePaloAltoNetworksNgfwResourceGroupResource for mocking. </summary>
         protected MockablePaloAltoNetworksNgfwResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePaloAltoNetworksNgfwResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of PaloAltoNetworksFirewallResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PaloAltoNetworksFirewallResources and their operations over a PaloAltoNetworksFirewallResource. </returns>
+        /// <summary> Gets a collection of PaloAltoNetworksFirewalls in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PaloAltoNetworksFirewalls and their operations over a PaloAltoNetworksFirewallResource. </returns>
         public virtual PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls()
         {
             return GetCachedClient(client => new PaloAltoNetworksFirewallCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get a FirewallResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firewalls_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FirewallResource. </summary>
         /// <param name="firewallName"> Firewall resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
@@ -68,30 +46,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(string firewallName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
             return await GetPaloAltoNetworksFirewalls().GetAsync(firewallName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a FirewallResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Firewalls_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FirewallResource. </summary>
         /// <param name="firewallName"> Firewall resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
@@ -99,37 +59,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         [ForwardsClientCalls]
         public virtual Response<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewall(string firewallName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(firewallName, nameof(firewallName));
+
             return GetPaloAltoNetworksFirewalls().Get(firewallName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocalRulestackResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LocalRulestackResources and their operations over a LocalRulestackResource. </returns>
+        /// <summary> Gets a collection of LocalRulestacks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of LocalRulestacks and their operations over a LocalRulestackResource. </returns>
         public virtual LocalRulestackCollection GetLocalRulestacks()
         {
             return GetCachedClient(client => new LocalRulestackCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get a LocalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a LocalRulestackResource. </summary>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
@@ -137,30 +79,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalRulestackResource>> GetLocalRulestackAsync(string localRulestackName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+
             return await GetLocalRulestacks().GetAsync(localRulestackName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a LocalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalRulestacks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a LocalRulestackResource. </summary>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
@@ -168,6 +92,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         [ForwardsClientCalls]
         public virtual Response<LocalRulestackResource> GetLocalRulestack(string localRulestackName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+
             return GetLocalRulestacks().Get(localRulestackName, cancellationToken);
         }
     }

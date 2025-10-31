@@ -7,96 +7,105 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the GlobalRulestackFqdn data model.
-    /// GlobalRulestack fqdnList
-    /// </summary>
+    /// <summary> GlobalRulestack fqdnList. </summary>
     public partial class GlobalRulestackFqdnData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/>. </summary>
-        /// <param name="fqdnList"> fqdn list. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
-        public GlobalRulestackFqdnData(IEnumerable<string> fqdnList)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal GlobalRulestackFqdnData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FqdnObject properties) : base(id, name, resourceType, systemData)
         {
-            Argument.AssertNotNull(fqdnList, nameof(fqdnList));
-
-            FqdnList = fqdnList.ToList();
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> fqdn object description. </param>
-        /// <param name="fqdnList"> fqdn list. </param>
-        /// <param name="etag"> etag info. </param>
-        /// <param name="auditComment"> comment for this object. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            Description = description;
-            FqdnList = fqdnList;
-            ETag = etag;
-            AuditComment = auditComment;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/> for deserialization. </summary>
-        internal GlobalRulestackFqdnData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FqdnObject Properties { get; set; }
 
         /// <summary> fqdn object description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FqdnObject();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> fqdn list. </summary>
-        public IList<string> FqdnList { get; }
+        public IList<string> FqdnList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FqdnObject();
+                }
+                return Properties.FqdnList;
+            }
+        }
+
         /// <summary> etag info. </summary>
-        public ETag? ETag { get; set; }
+        public string ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FqdnObject();
+                }
+                Properties.ETag = value;
+            }
+        }
+
         /// <summary> comment for this object. </summary>
-        public string AuditComment { get; set; }
+        public string AuditComment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuditComment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FqdnObject();
+                }
+                Properties.AuditComment = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningState? ProvisioningState { get; }
+        public FirewallProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

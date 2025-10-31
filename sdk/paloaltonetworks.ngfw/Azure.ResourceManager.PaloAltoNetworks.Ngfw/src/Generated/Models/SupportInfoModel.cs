@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Support information for the service. </summary>
     public partial class SupportInfoModel
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportInfoModel"/>. </summary>
         internal SupportInfoModel()
@@ -66,8 +37,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="monthlyCreditLeft"> monthly credit is computed as credits * days in calendar month. </param>
         /// <param name="startDateForCredits"> date in format yyyy-mm-dd. </param>
         /// <param name="endDateForCredits"> date in format yyyy-mm-dd. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportInfoModel(string productSku, string productSerial, AccountRegistrationStatus? accountRegistrationStatus, string accountId, FreeTrialEnableStatus? freeTrial, int? freeTrialDaysLeft, int? freeTrialCreditLeft, string helpURL, string supportURL, string registerURL, Uri hubUri, int? credits, int? monthlyCreditLeft, string startDateForCredits, string endDateForCredits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SupportInfoModel(string productSku, string productSerial, AccountRegistrationStatus? accountRegistrationStatus, string accountId, FreeTrialEnableStatus? freeTrial, int? freeTrialDaysLeft, int? freeTrialCreditLeft, string helpURL, string supportURL, string registerURL, string hubUri, int? credits, int? monthlyCreditLeft, string startDateForCredits, string endDateForCredits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProductSku = productSku;
             ProductSerial = productSerial;
@@ -84,37 +55,51 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             MonthlyCreditLeft = monthlyCreditLeft;
             StartDateForCredits = startDateForCredits;
             EndDateForCredits = endDateForCredits;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> product SKU associated with given resource. </summary>
         public string ProductSku { get; }
+
         /// <summary> product Serial associated with given resource. </summary>
         public string ProductSerial { get; }
+
         /// <summary> account registered in Customer Support Portal. </summary>
         public AccountRegistrationStatus? AccountRegistrationStatus { get; }
+
         /// <summary> Support account associated with given resource. </summary>
         public string AccountId { get; }
+
         /// <summary> Product usage is in free trial period. </summary>
         public FreeTrialEnableStatus? FreeTrial { get; }
+
         /// <summary> Free trial days remaining. </summary>
         public int? FreeTrialDaysLeft { get; }
+
         /// <summary> Free trial credit remaining. </summary>
         public int? FreeTrialCreditLeft { get; }
+
         /// <summary> URL for paloaltonetworks live community. </summary>
         public string HelpURL { get; }
+
         /// <summary> URL for paloaltonetworks Customer Service Portal. </summary>
         public string SupportURL { get; }
+
         /// <summary> URL for registering product in paloaltonetworks Customer Service Portal. </summary>
         public string RegisterURL { get; }
+
         /// <summary> URL for Strata Cloud Manager. </summary>
-        public Uri HubUri { get; }
+        public string HubUri { get; }
+
         /// <summary> credits purchased, unit per hour. </summary>
         public int? Credits { get; }
+
         /// <summary> monthly credit is computed as credits * days in calendar month. </summary>
         public int? MonthlyCreditLeft { get; }
+
         /// <summary> date in format yyyy-mm-dd. </summary>
         public string StartDateForCredits { get; }
+
         /// <summary> date in format yyyy-mm-dd. </summary>
         public string EndDateForCredits { get; }
     }

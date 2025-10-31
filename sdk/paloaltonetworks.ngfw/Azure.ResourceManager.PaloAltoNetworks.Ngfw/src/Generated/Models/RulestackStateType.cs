@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct RulestackStateType : IEquatable<RulestackStateType>
     {
         private readonly string _value;
+        private const string DISABLEDValue = "DISABLED";
+        private const string ENABLEDValue = "ENABLED";
 
         /// <summary> Initializes a new instance of <see cref="RulestackStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RulestackStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DisabledValue = "DISABLED";
-        private const string EnabledValue = "ENABLED";
+        /// <summary> Gets the DISABLED. </summary>
+        public static RulestackStateType DISABLED { get; } = new RulestackStateType(DISABLEDValue);
 
-        /// <summary> DISABLED. </summary>
-        public static RulestackStateType Disabled { get; } = new RulestackStateType(DisabledValue);
-        /// <summary> ENABLED. </summary>
-        public static RulestackStateType Enabled { get; } = new RulestackStateType(EnabledValue);
+        /// <summary> Gets the ENABLED. </summary>
+        public static RulestackStateType ENABLED { get; } = new RulestackStateType(ENABLEDValue);
+
         /// <summary> Determines if two <see cref="RulestackStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RulestackStateType left, RulestackStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RulestackStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RulestackStateType left, RulestackStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RulestackStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RulestackStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RulestackStateType(string value) => new RulestackStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RulestackStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RulestackStateType?(string value) => value == null ? null : new RulestackStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RulestackStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RulestackStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

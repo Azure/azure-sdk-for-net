@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct RuleCreationDefaultMode : IEquatable<RuleCreationDefaultMode>
     {
         private readonly string _value;
+        private const string IPSValue = "IPS";
+        private const string FIREWALLValue = "FIREWALL";
+        private const string NONEValue = "NONE";
 
         /// <summary> Initializes a new instance of <see cref="RuleCreationDefaultMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuleCreationDefaultMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IPSValue = "IPS";
-        private const string FirewallValue = "FIREWALL";
-        private const string NoneValue = "NONE";
-
-        /// <summary> IPS. </summary>
+        /// <summary> Gets the IPS. </summary>
         public static RuleCreationDefaultMode IPS { get; } = new RuleCreationDefaultMode(IPSValue);
-        /// <summary> FIREWALL. </summary>
-        public static RuleCreationDefaultMode Firewall { get; } = new RuleCreationDefaultMode(FirewallValue);
-        /// <summary> NONE. </summary>
-        public static RuleCreationDefaultMode None { get; } = new RuleCreationDefaultMode(NoneValue);
+
+        /// <summary> Gets the FIREWALL. </summary>
+        public static RuleCreationDefaultMode FIREWALL { get; } = new RuleCreationDefaultMode(FIREWALLValue);
+
+        /// <summary> Gets the NONE. </summary>
+        public static RuleCreationDefaultMode NONE { get; } = new RuleCreationDefaultMode(NONEValue);
+
         /// <summary> Determines if two <see cref="RuleCreationDefaultMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuleCreationDefaultMode left, RuleCreationDefaultMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RuleCreationDefaultMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuleCreationDefaultMode left, RuleCreationDefaultMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleCreationDefaultMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RuleCreationDefaultMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RuleCreationDefaultMode(string value) => new RuleCreationDefaultMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RuleCreationDefaultMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RuleCreationDefaultMode?(string value) => value == null ? null : new RuleCreationDefaultMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuleCreationDefaultMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RuleCreationDefaultMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

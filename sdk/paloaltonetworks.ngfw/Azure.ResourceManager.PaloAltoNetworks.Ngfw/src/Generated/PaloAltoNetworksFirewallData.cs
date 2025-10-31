@@ -13,141 +13,248 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the PaloAltoNetworksFirewall data model.
-    /// PaloAltoNetworks Firewall
-    /// </summary>
+    /// <summary> PaloAltoNetworks Firewall. </summary>
     public partial class PaloAltoNetworksFirewallData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkProfile"/>, <paramref name="dnsSettings"/>, <paramref name="planData"/> or <paramref name="marketplaceDetails"/> is null. </exception>
-        public PaloAltoNetworksFirewallData(AzureLocation location, FirewallNetworkProfile networkProfile, FirewallDnsSettings dnsSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails) : base(location)
+        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkProfile"/>, <paramref name="dnsSettings"/>, <paramref name="planData"/>, <paramref name="marketplaceDetails"/> or <paramref name="cloudManagerName"/> is null. </exception>
+        public PaloAltoNetworksFirewallData(AzureLocation location, FirewallNetworkProfile networkProfile, FirewallDnsSettings dnsSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, string cloudManagerName) : base(location)
         {
             Argument.AssertNotNull(networkProfile, nameof(networkProfile));
             Argument.AssertNotNull(dnsSettings, nameof(dnsSettings));
             Argument.AssertNotNull(planData, nameof(planData));
             Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
+            Argument.AssertNotNull(cloudManagerName, nameof(cloudManagerName));
 
             NetworkProfile = networkProfile;
             DnsSettings = dnsSettings;
-            FrontEndSettings = new ChangeTrackingList<FirewallFrontendSetting>();
             PlanData = planData;
             MarketplaceDetails = marketplaceDetails;
+            CloudManagerName = cloudManagerName;
         }
 
         /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="panETag"> panEtag info. </param>
-        /// <param name="networkProfile"> Network settings. </param>
-        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
-        /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
-        /// <param name="panoramaConfig"> Panorama Configuration. </param>
-        /// <param name="strataCloudManagerConfig"> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </param>
-        /// <param name="associatedRulestack"> Associated Rulestack. </param>
-        /// <param name="dnsSettings"> DNS settings for Firewall. </param>
-        /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="planData"> Billing plan information. </param>
-        /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, StrataCloudManagerConfig strataCloudManagerConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PaloAltoNetworksFirewallData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FirewallDeploymentProperties properties, AzureResourceManagerManagedIdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            PanETag = panETag;
-            NetworkProfile = networkProfile;
-            IsPanoramaManaged = isPanoramaManaged;
-            IsStrataCloudManaged = isStrataCloudManaged;
-            PanoramaConfig = panoramaConfig;
-            StrataCloudManagerConfig = strataCloudManagerConfig;
-            AssociatedRulestack = associatedRulestack;
-            DnsSettings = dnsSettings;
-            FrontEndSettings = frontEndSettings;
-            ProvisioningState = provisioningState;
-            PlanData = planData;
-            MarketplaceDetails = marketplaceDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/> for deserialization. </summary>
-        internal PaloAltoNetworksFirewallData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FirewallDeploymentProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public AzureResourceManagerManagedIdentityProperties Identity { get; set; }
+
         /// <summary> panEtag info. </summary>
-        public ETag? PanETag { get; set; }
-        /// <summary> Network settings. </summary>
-        public FirewallNetworkProfile NetworkProfile { get; set; }
-        /// <summary> Panorama Managed: Default is False. Default will be CloudSec managed. </summary>
-        public FirewallBooleanType? IsPanoramaManaged { get; set; }
-        /// <summary> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </summary>
-        public FirewallBooleanType? IsStrataCloudManaged { get; set; }
-        /// <summary> Panorama Configuration. </summary>
-        public FirewallPanoramaConfiguration PanoramaConfig { get; set; }
-        /// <summary> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </summary>
-        internal StrataCloudManagerConfig StrataCloudManagerConfig { get; set; }
-        /// <summary> Strata Cloud Manager name which is intended to manage the policy for this firewall. </summary>
-        public string CloudManagerName
+        public string PanEtag
         {
-            get => StrataCloudManagerConfig is null ? default : StrataCloudManagerConfig.CloudManagerName;
-            set => StrataCloudManagerConfig = new StrataCloudManagerConfig(value);
+            get
+            {
+                return Properties is null ? default : Properties.PanEtag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.PanEtag = value;
+            }
+        }
+
+        /// <summary> Network settings. </summary>
+        public FirewallNetworkProfile NetworkProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
+        }
+
+        /// <summary> Panorama Managed: Default is False. Default will be CloudSec managed. </summary>
+        public FirewallBooleanType? IsPanoramaManaged
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPanoramaManaged;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.IsPanoramaManaged = value.Value;
+            }
+        }
+
+        /// <summary> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </summary>
+        public FirewallBooleanType? IsStrataCloudManaged
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsStrataCloudManaged;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.IsStrataCloudManaged = value.Value;
+            }
+        }
+
+        /// <summary> Panorama Configuration. </summary>
+        public FirewallPanoramaConfiguration PanoramaConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PanoramaConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.PanoramaConfig = value;
+            }
         }
 
         /// <summary> Associated Rulestack. </summary>
-        public RulestackDetails AssociatedRulestack { get; set; }
+        public RulestackDetails AssociatedRulestack
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssociatedRulestack;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.AssociatedRulestack = value;
+            }
+        }
+
         /// <summary> DNS settings for Firewall. </summary>
-        public FirewallDnsSettings DnsSettings { get; set; }
+        public FirewallDnsSettings DnsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.DnsSettings = value;
+            }
+        }
+
         /// <summary> Frontend settings for Firewall. </summary>
-        public IList<FirewallFrontendSetting> FrontEndSettings { get; }
+        public IList<FirewallFrontendSetting> FrontEndSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                return Properties.FrontEndSettings;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningState? ProvisioningState { get; }
+        public FirewallProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Billing plan information. </summary>
-        public FirewallBillingPlanInfo PlanData { get; set; }
+        public FirewallBillingPlanInfo PlanData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.PlanData = value;
+            }
+        }
+
         /// <summary> Marketplace details. </summary>
-        public PanFirewallMarketplaceDetails MarketplaceDetails { get; set; }
+        public PanFirewallMarketplaceDetails MarketplaceDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.MarketplaceDetails = value;
+            }
+        }
+
+        /// <summary> Strata Cloud Manager name which is intended to manage the policy for this firewall. </summary>
+        public string CloudManagerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudManagerName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.CloudManagerName = value;
+            }
+        }
     }
 }

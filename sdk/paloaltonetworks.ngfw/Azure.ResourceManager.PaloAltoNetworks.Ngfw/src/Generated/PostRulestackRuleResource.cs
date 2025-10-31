@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A Class representing a PostRulestackRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostRulestackRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPostRulestackRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetPostRulestackRule method.
+    /// A class representing a PostRulestackRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostRulestackRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetPostRulestackRules method.
     /// </summary>
     public partial class PostRulestackRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PostRulestackRuleResource"/> instance. </summary>
-        /// <param name="globalRulestackName"> The globalRulestackName. </param>
-        /// <param name="priority"> The priority. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string priority)
-        {
-            var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _postRulestackRulePostRulesClientDiagnostics;
-        private readonly PostRulesRestOperations _postRulestackRulePostRulesRestClient;
+        private readonly ClientDiagnostics _postRulesClientDiagnostics;
+        private readonly PostRules _postRulesRestClient;
         private readonly PostRulestackRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/postRules";
 
-        /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PostRulestackRuleResource for mocking. </summary>
         protected PostRulestackRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostRulestackRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostRulestackRuleResource(ArmClient client, PostRulestackRuleData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PostRulestackRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostRulestackRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PostRulestackRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _postRulestackRulePostRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string postRulestackRulePostRulesApiVersion);
-            _postRulestackRulePostRulesRestClient = new PostRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postRulestackRulePostRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string postRulestackRuleApiVersion);
+            _postRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
+            _postRulesRestClient = new PostRules(_postRulesClientDiagnostics, Pipeline, Endpoint, postRulestackRuleApiVersion ?? "2025-10-08");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PostRulestackRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="priority"> The priority. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string priority)
+        {
+            string resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a PostRulesResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PostRulestackRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Get");
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _postRulestackRulePostRulesRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PostRulestackRuleData> response = Response.FromValue(PostRulestackRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostRulestackRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a PostRulesResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PostRulestackRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Get");
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _postRulestackRulePostRulesRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PostRulestackRuleData> response = Response.FromValue(PostRulestackRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostRulestackRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Delete a PostRulesResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,14 +211,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Delete");
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _postRulestackRulePostRulesRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NgfwArmOperation operation = new NgfwArmOperation(_postRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -213,20 +239,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Delete a PostRulesResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,15 +260,306 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Delete");
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _postRulestackRulePostRulesRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NgfwArmOperation operation = new NgfwArmOperation(_postRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateGetCountersRequest(Id.Parent.Name, Id.Name, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<FirewallRuleCounter> GetCounters(string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.GetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateGetCountersRequest(Id.Parent.Name, Id.Name, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RefreshCountersAsync(string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateRefreshCountersRequest(Id.Parent.Name, Id.Name, firewallName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RefreshCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RefreshCounters(string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.RefreshCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateRefreshCountersRequest(Id.Parent.Name, Id.Name, firewallName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateResetCountersRequest(Id.Parent.Name, Id.Name, firewallName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reset counters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResetCounters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firewallName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<FirewallRuleResetConter> ResetCounters(string firewallName = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.ResetCounters");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateResetCountersRequest(Id.Parent.Name, Id.Name, firewallName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -255,20 +572,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Create a PostRulesResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,14 +597,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Update");
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _postRulestackRulePostRulesRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<PostRulestackRuleResource>(new PostRulestackRuleOperationSource(Client), _postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, PostRulestackRuleData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
+                    new PostRulestackRuleOperationSource(Client),
+                    _postRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,20 +631,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Create a PostRulesResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostRulestackRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,249 +656,28 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Update");
+            using DiagnosticScope scope = _postRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _postRulestackRulePostRulesRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NgfwArmOperation<PostRulestackRuleResource>(new PostRulestackRuleOperationSource(Client), _postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, PostRulestackRuleData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
+                    new PostRulestackRuleOperationSource(Client),
+                    _postRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get counters
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_GetCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.GetCounters");
-            scope.Start();
-            try
-            {
-                var response = await _postRulestackRulePostRulesRestClient.GetCountersAsync(Id.Parent.Name, Id.Name, firewallName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get counters
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/getCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_GetCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirewallRuleCounter> GetCounters(string firewallName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.GetCounters");
-            scope.Start();
-            try
-            {
-                var response = _postRulestackRulePostRulesRestClient.GetCounters(Id.Parent.Name, Id.Name, firewallName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Refresh counters
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_RefreshCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RefreshCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.RefreshCounters");
-            scope.Start();
-            try
-            {
-                var response = await _postRulestackRulePostRulesRestClient.RefreshCountersAsync(Id.Parent.Name, Id.Name, firewallName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Refresh counters
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/refreshCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_RefreshCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RefreshCounters(string firewallName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.RefreshCounters");
-            scope.Start();
-            try
-            {
-                var response = _postRulestackRulePostRulesRestClient.RefreshCounters(Id.Parent.Name, Id.Name, firewallName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reset counters
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_ResetCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.ResetCounters");
-            scope.Start();
-            try
-            {
-                var response = await _postRulestackRulePostRulesRestClient.ResetCountersAsync(Id.Parent.Name, Id.Name, firewallName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reset counters
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}/resetCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_ResetCounters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="firewallName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirewallRuleResetConter> ResetCounters(string firewallName = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleResource.ResetCounters");
-            scope.Start();
-            try
-            {
-                var response = _postRulestackRulePostRulesRestClient.ResetCounters(Id.Parent.Name, Id.Name, firewallName, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

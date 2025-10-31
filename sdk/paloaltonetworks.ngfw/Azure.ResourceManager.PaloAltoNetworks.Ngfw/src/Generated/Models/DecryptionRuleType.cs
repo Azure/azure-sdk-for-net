@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    /// <summary> The DecryptionRuleType. </summary>
+    /// <summary></summary>
     public readonly partial struct DecryptionRuleType : IEquatable<DecryptionRuleType>
     {
         private readonly string _value;
+        private const string SSLOutboundInspectionValue = "SSLOutboundInspection";
+        private const string SSLInboundInspectionValue = "SSLInboundInspection";
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="DecryptionRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DecryptionRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SslOutboundInspectionValue = "SSLOutboundInspection";
-        private const string SslInboundInspectionValue = "SSLInboundInspection";
-        private const string NoneValue = "None";
+        /// <summary> Gets the SSLOutboundInspection. </summary>
+        public static DecryptionRuleType SSLOutboundInspection { get; } = new DecryptionRuleType(SSLOutboundInspectionValue);
 
-        /// <summary> SSLOutboundInspection. </summary>
-        public static DecryptionRuleType SslOutboundInspection { get; } = new DecryptionRuleType(SslOutboundInspectionValue);
-        /// <summary> SSLInboundInspection. </summary>
-        public static DecryptionRuleType SslInboundInspection { get; } = new DecryptionRuleType(SslInboundInspectionValue);
-        /// <summary> None. </summary>
+        /// <summary> Gets the SSLInboundInspection. </summary>
+        public static DecryptionRuleType SSLInboundInspection { get; } = new DecryptionRuleType(SSLInboundInspectionValue);
+
+        /// <summary> Gets the None. </summary>
         public static DecryptionRuleType None { get; } = new DecryptionRuleType(NoneValue);
+
         /// <summary> Determines if two <see cref="DecryptionRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DecryptionRuleType left, DecryptionRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DecryptionRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DecryptionRuleType left, DecryptionRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DecryptionRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DecryptionRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DecryptionRuleType(string value) => new DecryptionRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DecryptionRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DecryptionRuleType?(string value) => value == null ? null : new DecryptionRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DecryptionRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DecryptionRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

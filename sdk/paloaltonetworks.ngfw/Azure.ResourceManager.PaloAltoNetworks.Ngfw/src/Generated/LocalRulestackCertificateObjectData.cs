@@ -13,90 +13,128 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the LocalRulestackCertificateObject data model.
-    /// LocalRulestack Certificate Object
-    /// </summary>
+    /// <summary> LocalRulestack Certificate Object. </summary>
     public partial class LocalRulestackCertificateObjectData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/>. </summary>
         /// <param name="certificateSelfSigned"> use certificate self signed. </param>
         public LocalRulestackCertificateObjectData(FirewallBooleanType certificateSelfSigned)
         {
+
             CertificateSelfSigned = certificateSelfSigned;
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="certificateSignerResourceId"> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </param>
-        /// <param name="certificateSelfSigned"> use certificate self signed. </param>
-        /// <param name="auditComment"> comment for this object. </param>
-        /// <param name="description"> user description for this object. </param>
-        /// <param name="etag"> read only string representing last create or update. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment, string description, ETag? etag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal LocalRulestackCertificateObjectData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CertificateObject properties) : base(id, name, resourceType, systemData)
         {
-            CertificateSignerResourceId = certificateSignerResourceId;
-            CertificateSelfSigned = certificateSelfSigned;
-            AuditComment = auditComment;
-            Description = description;
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/> for deserialization. </summary>
-        internal LocalRulestackCertificateObjectData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal CertificateObject Properties { get; set; }
 
         /// <summary> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </summary>
-        public string CertificateSignerResourceId { get; set; }
+        public string CertificateSignerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateSignerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateObject();
+                }
+                Properties.CertificateSignerResourceId = value;
+            }
+        }
+
         /// <summary> use certificate self signed. </summary>
-        public FirewallBooleanType CertificateSelfSigned { get; set; }
+        public FirewallBooleanType CertificateSelfSigned
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateSelfSigned;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateObject();
+                }
+                Properties.CertificateSelfSigned = value;
+            }
+        }
+
         /// <summary> comment for this object. </summary>
-        public string AuditComment { get; set; }
+        public string AuditComment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuditComment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateObject();
+                }
+                Properties.AuditComment = value;
+            }
+        }
+
         /// <summary> user description for this object. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateObject();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> read only string representing last create or update. </summary>
-        public ETag? ETag { get; set; }
+        public string ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateObject();
+                }
+                Properties.ETag = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningState? ProvisioningState { get; }
+        public FirewallProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

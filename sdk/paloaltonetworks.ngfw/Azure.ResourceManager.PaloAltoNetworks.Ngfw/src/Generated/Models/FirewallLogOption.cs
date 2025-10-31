@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallLogOption : IEquatable<FirewallLogOption>
     {
         private readonly string _value;
+        private const string SAMEDESTINATIONValue = "SAME_DESTINATION";
+        private const string INDIVIDUALDESTINATIONValue = "INDIVIDUAL_DESTINATION";
 
         /// <summary> Initializes a new instance of <see cref="FirewallLogOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallLogOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SameDestinationValue = "SAME_DESTINATION";
-        private const string IndividualDestinationValue = "INDIVIDUAL_DESTINATION";
+        /// <summary> Gets the SAMEDESTINATION. </summary>
+        public static FirewallLogOption SAMEDESTINATION { get; } = new FirewallLogOption(SAMEDESTINATIONValue);
 
-        /// <summary> SAME_DESTINATION. </summary>
-        public static FirewallLogOption SameDestination { get; } = new FirewallLogOption(SameDestinationValue);
-        /// <summary> INDIVIDUAL_DESTINATION. </summary>
-        public static FirewallLogOption IndividualDestination { get; } = new FirewallLogOption(IndividualDestinationValue);
+        /// <summary> Gets the INDIVIDUALDESTINATION. </summary>
+        public static FirewallLogOption INDIVIDUALDESTINATION { get; } = new FirewallLogOption(INDIVIDUALDESTINATIONValue);
+
         /// <summary> Determines if two <see cref="FirewallLogOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallLogOption left, FirewallLogOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallLogOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallLogOption left, FirewallLogOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallLogOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallLogOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallLogOption(string value) => new FirewallLogOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallLogOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallLogOption?(string value) => value == null ? null : new FirewallLogOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallLogOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallLogOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

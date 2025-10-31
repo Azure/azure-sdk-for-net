@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A class representing a collection of <see cref="GlobalRulestackCertificateObjectResource"/> and their operations.
-    /// Each <see cref="GlobalRulestackCertificateObjectResource"/> in the collection will belong to the same instance of <see cref="GlobalRulestackResource"/>.
-    /// To get a <see cref="GlobalRulestackCertificateObjectCollection"/> instance call the GetGlobalRulestackCertificateObjects method from an instance of <see cref="GlobalRulestackResource"/>.
+    /// Each <see cref="GlobalRulestackCertificateObjectResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="GlobalRulestackCertificateObjectCollection"/> instance call the GetGlobalRulestackCertificateObjects method from an instance of the parent resource.
     /// </summary>
     public partial class GlobalRulestackCertificateObjectCollection : ArmCollection, IEnumerable<GlobalRulestackCertificateObjectResource>, IAsyncEnumerable<GlobalRulestackCertificateObjectResource>
     {
-        private readonly ClientDiagnostics _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics;
-        private readonly CertificateObjectGlobalRulestackRestOperations _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient;
+        private readonly ClientDiagnostics _certificateObjectGlobalRulestackClientDiagnostics;
+        private readonly CertificateObjectGlobalRulestack _certificateObjectGlobalRulestackRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackCertificateObjectCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestackCertificateObjectCollection for mocking. </summary>
         protected GlobalRulestackCertificateObjectCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackCertificateObjectCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackCertificateObjectCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GlobalRulestackCertificateObjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", GlobalRulestackCertificateObjectResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GlobalRulestackCertificateObjectResource.ResourceType, out string globalRulestackCertificateObjectCertificateObjectGlobalRulestackApiVersion);
-            _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient = new CertificateObjectGlobalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackCertificateObjectCertificateObjectGlobalRulestackApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(GlobalRulestackCertificateObjectResource.ResourceType, out string globalRulestackCertificateObjectApiVersion);
+            _certificateObjectGlobalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", GlobalRulestackCertificateObjectResource.ResourceType.Namespace, Diagnostics);
+            _certificateObjectGlobalRulestackRestClient = new CertificateObjectGlobalRulestack(_certificateObjectGlobalRulestackClientDiagnostics, Pipeline, Endpoint, globalRulestackCertificateObjectApiVersion ?? "2025-10-08");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != GlobalRulestackResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> certificate name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<GlobalRulestackCertificateObjectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, GlobalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateOrUpdateAsync(Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(new GlobalRulestackCertificateObjectOperationSource(Client), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NgfwArmOperation<GlobalRulestackCertificateObjectResource> operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(
+                    new GlobalRulestackCertificateObjectOperationSource(Client),
+                    _certificateObjectGlobalRulestackClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Create a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> certificate name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<GlobalRulestackCertificateObjectResource> CreateOrUpdate(WaitUntil waitUntil, string name, GlobalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateOrUpdate(Id.Name, name, data, cancellationToken);
-                var operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(new GlobalRulestackCertificateObjectOperationSource(Client), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NgfwArmOperation<GlobalRulestackCertificateObjectResource> operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(
+                    new GlobalRulestackCertificateObjectOperationSource(Client),
+                    _certificateObjectGlobalRulestackClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<GlobalRulestackCertificateObjectResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Get");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Get");
             scope.Start();
             try
             {
-                var response = await _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.GetAsync(Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GlobalRulestackCertificateObjectData> response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<GlobalRulestackCertificateObjectResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Get");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Get");
             scope.Start();
             try
             {
-                var response = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.Get(Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GlobalRulestackCertificateObjectData> response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,100 +268,78 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary>
-        /// List CertificateObjectGlobalRulestackResource resources by Tenant
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List CertificateObjectGlobalRulestackResource resources by Tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GlobalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GlobalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackCertificateObjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackCertificateObjectResource(Client, GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(e)), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllAsyncCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
-        /// <summary>
-        /// List CertificateObjectGlobalRulestackResource resources by Tenant
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List CertificateObjectGlobalRulestackResource resources by Tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackCertificateObjectResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackCertificateObjectResource(Client, GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(e)), _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Exists");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.GetAsync(Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GlobalRulestackCertificateObjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GlobalRulestackCertificateObjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,39 +350,53 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Exists");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.Exists");
             scope.Start();
             try
             {
-                var response = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.Get(Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GlobalRulestackCertificateObjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GlobalRulestackCertificateObjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,41 +407,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<GlobalRulestackCertificateObjectResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.GetIfExists");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.GetAsync(Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GlobalRulestackCertificateObjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GlobalRulestackCertificateObjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GlobalRulestackCertificateObjectResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,41 +468,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a CertificateObjectGlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<GlobalRulestackCertificateObjectResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.GetIfExists");
+            using DiagnosticScope scope = _certificateObjectGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackCertificateObjectCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient.Get(Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GlobalRulestackCertificateObjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GlobalRulestackCertificateObjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GlobalRulestackCertificateObjectResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +538,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<GlobalRulestackCertificateObjectResource> IAsyncEnumerable<GlobalRulestackCertificateObjectResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
