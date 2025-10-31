@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PortalServicesCopilotSettingPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="PortalServicesCopilotSettingPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PortalServicesCopilotSettingPatch patch)
+        /// <param name="portalServicesCopilotSettingPatch"> The <see cref="PortalServicesCopilotSettingPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PortalServicesCopilotSettingPatch portalServicesCopilotSettingPatch)
         {
-            if (patch == null)
+            if (portalServicesCopilotSettingPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(portalServicesCopilotSettingPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

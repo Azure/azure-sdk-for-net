@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> StorageTasks_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> StorageTasks_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
