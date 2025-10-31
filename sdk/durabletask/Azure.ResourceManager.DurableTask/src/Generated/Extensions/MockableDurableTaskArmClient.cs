@@ -35,39 +35,39 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SchedulerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchedulerResource.CreateResourceIdentifier" /> to create a <see cref="SchedulerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DurableTaskSchedulerResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskSchedulerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SchedulerResource"/> object. </returns>
-        public virtual SchedulerResource GetSchedulerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DurableTaskSchedulerResource"/> object. </returns>
+        public virtual DurableTaskSchedulerResource GetDurableTaskSchedulerResource(ResourceIdentifier id)
         {
-            SchedulerResource.ValidateResourceId(id);
-            return new SchedulerResource(Client, id);
+            DurableTaskSchedulerResource.ValidateResourceId(id);
+            return new DurableTaskSchedulerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SchedulerTaskHubResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SchedulerTaskHubResource.CreateResourceIdentifier" /> to create a <see cref="SchedulerTaskHubResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DurableTaskHubResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskHubResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SchedulerTaskHubResource"/> object. </returns>
-        public virtual SchedulerTaskHubResource GetSchedulerTaskHubResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DurableTaskHubResource"/> object. </returns>
+        public virtual DurableTaskHubResource GetDurableTaskHubResource(ResourceIdentifier id)
         {
-            SchedulerTaskHubResource.ValidateResourceId(id);
-            return new SchedulerTaskHubResource(Client, id);
+            DurableTaskHubResource.ValidateResourceId(id);
+            return new DurableTaskHubResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RetentionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DurableTaskRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskRetentionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RetentionPolicyResource"/> object. </returns>
-        public virtual RetentionPolicyResource GetRetentionPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
+        public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(ResourceIdentifier id)
         {
-            RetentionPolicyResource.ValidateResourceId(id);
-            return new RetentionPolicyResource(Client, id);
+            DurableTaskRetentionPolicyResource.ValidateResourceId(id);
+            return new DurableTaskRetentionPolicyResource(Client, id);
         }
     }
 }
