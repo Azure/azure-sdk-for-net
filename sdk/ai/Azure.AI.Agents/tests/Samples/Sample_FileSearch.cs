@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -35,33 +36,32 @@ public class Sample_FileSearch : AgentsTestBase
         #endregion
         #region Snippet:Sample_UploadFile_FileSearch_Async
         string filePath = "sample_file_for_upload.txt";
-        System.IO.File.WriteAllText(
+        File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
         OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-        System.IO.File.Delete(filePath);
+        File.Delete(filePath);
         #endregion
         #region Snippet:Sample_CreateVectorStore_FileSearch_Async
         VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-        VectorStoreCreationOptions vctOptions = new()
+        VectorStoreCreationOptions options = new()
         {
             Name = "MySampleStore",
             FileIds = { uploadedFile.Id }
         };
-        VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(vctOptions);
+        VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
         #endregion
         #region Snippet:Sample_CreateAgent_FileSearch_Async
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
-            Tools = {
-                ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]),
-            }
+            Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: "myAgent",
-            definition: agentDefinition, options: null);
+            definition: agentDefinition,
+            options: null);
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Async
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
@@ -109,33 +109,32 @@ public class Sample_FileSearch : AgentsTestBase
 
         #region Snippet:Sample_UploadFile_FileSearch_Sync
         string filePath = "sample_file_for_upload.txt";
-        System.IO.File.WriteAllText(
+        File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
         OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-        System.IO.File.Delete(filePath);
+        File.Delete(filePath);
         #endregion
         #region Snippet:Sample_CreateVectorStore_FileSearch_Sync
         VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-        VectorStoreCreationOptions vctOptions = new()
+        VectorStoreCreationOptions options = new()
         {
             Name = "MySampleStore",
             FileIds = { uploadedFile.Id }
         };
-        VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: vctOptions);
+        VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: options);
         #endregion
         #region Snippet:Sample_CreateAgent_FileSearch_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
-            Tools = {
-                ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]),
-            }
+            Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
         AgentVersion agentVersion = client.CreateAgentVersion(
             agentName: "myAgent",
-            definition: agentDefinition, options: null);
+            definition: agentDefinition,
+            options: null);
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
