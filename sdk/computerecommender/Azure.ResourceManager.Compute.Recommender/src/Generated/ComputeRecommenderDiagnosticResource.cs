@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ComputeDiagnosticBases_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ComputeDiagnosticBases_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Generate. </description>
+        /// <description> ComputeDiagnosticBases_Post. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="spotPlacementScoresInput"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="spotPlacementScoresInput"/> is null. </exception>
-        public virtual async Task<Response<ComputeRecommenderGenerateResult>> GenerateAsync(ComputeRecommenderGenerateContent spotPlacementScoresInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ComputeRecommenderGenerateResult>> GenerateAsync(ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(spotPlacementScoresInput, nameof(spotPlacementScoresInput));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Generate");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ComputeRecommenderGenerateContent.ToRequestContent(spotPlacementScoresInput), context);
+                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Generate. </description>
+        /// <description> ComputeDiagnosticBases_Post. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -260,12 +260,12 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="spotPlacementScoresInput"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="spotPlacementScoresInput"/> is null. </exception>
-        public virtual Response<ComputeRecommenderGenerateResult> Generate(ComputeRecommenderGenerateContent spotPlacementScoresInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ComputeRecommenderGenerateResult> Generate(ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(spotPlacementScoresInput, nameof(spotPlacementScoresInput));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Generate");
             scope.Start();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ComputeRecommenderGenerateContent.ToRequestContent(spotPlacementScoresInput), context);
+                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
