@@ -74,19 +74,14 @@ public abstract class PipelineRequest : IDisposable
     private string? _clientRequestId;
 
     /// <summary>
-    /// Gets or sets the client request id used for logging.
+    /// Gets the client request id used for logging.
     /// Custom policies can optionally send this value to the service.
-    /// If not set, a value is automatically generated on first access using
+    /// A value is automatically generated on first access using
     /// <see cref="Activity.Current"/>?.Id if available, otherwise a new <see cref="Guid"/>.
     /// </summary>
     public virtual string ClientRequestId
     {
         get => _clientRequestId ??= Activity.Current?.Id ?? Guid.NewGuid().ToString();
-        set
-        {
-            Argument.AssertNotNull(value, nameof(value));
-            _clientRequestId = value;
-        }
     }
 
     /// <inheritdoc/>

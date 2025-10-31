@@ -43,18 +43,19 @@ public class PipelineRequestTests
     }
 
     [Test]
-    public void ClientRequestId_CanBeSetExplicitly()
+    public void ClientRequestId_IsReadOnly()
     {
         // Arrange
         ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
-        string customRequestId = "custom-request-id-12345";
 
-        // Act - Set ClientRequestId explicitly
-        message.Request.ClientRequestId = customRequestId;
+        // Act - Access ClientRequestId
+        string clientRequestId = message.Request.ClientRequestId;
 
-        // Assert - Should return the set value
-        Assert.AreEqual(customRequestId, message.Request.ClientRequestId);
+        // Assert - Should be auto-generated and consistent
+        Assert.IsNotNull(clientRequestId);
+        Assert.IsNotEmpty(clientRequestId);
+        Assert.AreEqual(clientRequestId, message.Request.ClientRequestId);
     }
 
     [Test]
@@ -72,17 +73,6 @@ public class PipelineRequestTests
 
         // Assert - Should use Activity.Current.Id
         Assert.AreEqual(Activity.Current?.Id, clientRequestId);
-    }
-
-    [Test]
-    public void ClientRequestId_ThrowsOnNullValue()
-    {
-        // Arrange
-        ClientPipeline pipeline = ClientPipeline.Create();
-        PipelineMessage message = pipeline.CreateMessage();
-
-        // Act & Assert - Should throw ArgumentNullException when setting null
-        Assert.Throws<ArgumentNullException>(() => message.Request.ClientRequestId = null!);
     }
 
     [Test]
@@ -107,26 +97,6 @@ public class PipelineRequestTests
         Assert.AreEqual(message.Request.ClientRequestId, capturedRequestId);
     }
 
-    [Test]
-    public void ClientRequestId_CanBeSetByCustomPolicy()
-    {
-        // Arrange
-        string customId = "policy-set-id-67890";
-
-        ClientPipelineOptions options = new();
-        options.Transport = new ObservableTransport("Transport");
-        options.AddPolicy(new TestClientRequestIdSetterPolicy(customId), PipelinePosition.PerCall);
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        PipelineMessage message = pipeline.CreateMessage();
-
-        // Act - Send message through pipeline
-        pipeline.Send(message);
-
-        // Assert - ClientRequestId should be set by the custom policy
-        Assert.AreEqual(customId, message.Request.ClientRequestId);
-    }
-
     #region Helper Classes
 
     private class TestClientRequestIdPolicy : PipelinePolicy
@@ -147,28 +117,6 @@ public class PipelineRequestTests
         public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             _onClientRequestId(message.Request.ClientRequestId);
-            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-        }
-    }
-
-    private class TestClientRequestIdSetterPolicy : PipelinePolicy
-    {
-        private readonly string _clientRequestId;
-
-        public TestClientRequestIdSetterPolicy(string clientRequestId)
-        {
-            _clientRequestId = clientRequestId;
-        }
-
-        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-        {
-            message.Request.ClientRequestId = _clientRequestId;
-            ProcessNext(message, pipeline, currentIndex);
-        }
-
-        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-        {
-            message.Request.ClientRequestId = _clientRequestId;
             await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
         }
     }
