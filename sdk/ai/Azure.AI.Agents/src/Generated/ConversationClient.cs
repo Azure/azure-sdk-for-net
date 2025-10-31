@@ -180,7 +180,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            ClientResult result = GetConversation(conversationId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetConversation(conversationId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentConversation)result, result.GetRawResponse());
         }
 
@@ -194,7 +194,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            ClientResult result = await GetConversationAsync(conversationId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentConversation)result, result.GetRawResponse());
         }
 
@@ -252,7 +252,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            ClientResult result = DeleteConversation(conversationId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteConversation(conversationId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentConversationDeletionResult)result, result.GetRawResponse());
         }
 
@@ -266,7 +266,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            ClientResult result = await DeleteConversationAsync(conversationId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentConversationDeletionResult)result, result.GetRawResponse());
         }
 
@@ -386,7 +386,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = GetConversationItem(conversationId, itemId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetConversationItem(conversationId, itemId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentResponseItem)result, result.GetRawResponse());
         }
 
@@ -402,7 +402,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = await GetConversationItemAsync(conversationId, itemId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetConversationItemAsync(conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentResponseItem)result, result.GetRawResponse());
         }
 
@@ -466,7 +466,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = DeleteConversationItem(conversationId, itemId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteConversationItem(conversationId, itemId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentConversation)result, result.GetRawResponse());
         }
 
@@ -482,7 +482,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = await DeleteConversationItemAsync(conversationId, itemId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteConversationItemAsync(conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentConversation)result, result.GetRawResponse());
         }
     }

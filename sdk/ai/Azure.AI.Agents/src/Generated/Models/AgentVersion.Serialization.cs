@@ -243,7 +243,7 @@ namespace Azure.AI.Agents
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentVersion"/> from. </param>
         public static explicit operator AgentVersion(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAgentVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

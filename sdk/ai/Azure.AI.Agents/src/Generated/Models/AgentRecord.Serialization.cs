@@ -164,7 +164,7 @@ namespace Azure.AI.Agents
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentRecord"/> from. </param>
         public static explicit operator AgentRecord(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAgentRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

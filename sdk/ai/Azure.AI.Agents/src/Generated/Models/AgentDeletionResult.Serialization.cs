@@ -156,7 +156,7 @@ namespace Azure.AI.Agents
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentDeletionResult"/> from. </param>
         public static explicit operator AgentDeletionResult(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAgentDeletionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

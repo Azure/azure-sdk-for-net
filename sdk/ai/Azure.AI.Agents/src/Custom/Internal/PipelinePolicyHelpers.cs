@@ -7,10 +7,14 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using Azure.Core;
 using OpenAI;
+using OpenAI.Files;
 
 namespace Azure.AI.Agents;
+
+#pragma warning disable CS0618
 
 internal static partial class PipelinePolicyHelpers
 {
@@ -161,5 +165,73 @@ internal static partial class PipelinePolicyHelpers
                     }),
                     PipelinePosition.PerTry);
         }
+
+        public static void AddAzureFinetuningParityPolicy(OpenAIClientOptions options)
+        {
+            options.AddPolicy(
+                new GenericActionPipelinePolicy(
+                    messageAction: message =>
+                    {
+                        // Skip this policy for everything except file operations
+                        if (message?.Request?.Uri?.AbsoluteUri?.Contains("openai/files") == false)
+                        {
+                            return;
+                        }
+
+                        // When processing the message to send the request (no response yet), perform a fixup to ensure a multipart/form-data Content-Type is
+                        // provided for the "file" content part (non-parity limitation)
+                        if (message?.Request?.Method == "POST" && message?.Request is not null && message?.Response is null)
+                        {
+                            using MemoryStream requestStream = new();
+                            message.Request.Content.WriteTo(requestStream);
+                            requestStream.Position = 0;
+                            using StreamReader reader = new(requestStream);
+
+                            MemoryStream newRequestStream = new();
+                            StreamWriter newRequestWriter = new(newRequestStream);
+                            string previousLine = null;
+
+                            for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine())
+                            {
+                                if (line == string.Empty
+                                    && Regex.Match(
+                                        previousLine,
+                                        "Content-Disposition: form-data; name=file; filename=([^;]*);.*") is Match fileContentDispositionMatch
+                                    && fileContentDispositionMatch.Success)
+                                {
+                                    newRequestWriter.WriteLine("Content-Type: application/octet-stream");
+                                }
+                                newRequestWriter.WriteLine(line);
+                                previousLine = line;
+                            }
+
+                            newRequestWriter.Flush();
+                            newRequestStream.Position = 0;
+                            message.Request.Content = BinaryContent.Create(newRequestStream);
+                            message.ResponseClassifier = PipelineMessageClassifier;
+                        }
+
+                        // When processing the message for the response, force non-OpenAI "status" values to "processed" and relocate the extended value
+                        // to an additional property
+                        if (message?.Response is not null)
+                        {
+                            message?.Response.BufferContent();
+                            if (JsonNode.Parse(message?.Response?.ContentStream) is JsonObject responseObject
+                                && responseObject.TryGetPropertyValue("status", out JsonNode statusNode)
+                                && statusNode is JsonValue statusValue
+                                && !Enum.TryParse(statusValue.ToString(), out FileStatus _))
+                            {
+                                responseObject["status"] = "processed";
+                                responseObject["_sdk_status"] = statusValue.ToString();
+                                message.Response.ContentStream = new MemoryStream(BinaryData.FromString(responseObject.ToJsonString()).ToArray());
+                            }
+                        }
+                    }),
+                PipelinePosition.PerCall);
+        }
+
+        private static PipelineMessageClassifier s_pipelineMessageClassifier;
+        private static PipelineMessageClassifier PipelineMessageClassifier
+            => s_pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
     }
 }
