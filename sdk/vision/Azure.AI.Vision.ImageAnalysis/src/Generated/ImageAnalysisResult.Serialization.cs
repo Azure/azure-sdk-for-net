@@ -263,10 +263,9 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ImageAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ImageAnalysisResult"/> from. </param>
-        public static explicit operator ImageAnalysisResult(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ImageAnalysisResult"/> from. </param>
+        public static explicit operator ImageAnalysisResult(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeImageAnalysisResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

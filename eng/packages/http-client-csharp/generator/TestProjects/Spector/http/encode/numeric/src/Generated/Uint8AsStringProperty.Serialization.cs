@@ -38,6 +38,6 @@ namespace Encode.Numeric._Property
         /// <param name="uint8AsStringProperty"> The <see cref="Uint8AsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Uint8AsStringProperty uint8AsStringProperty) => throw null;
 
-        public static explicit operator Uint8AsStringProperty(Response result) => throw null;
+        public static explicit operator Uint8AsStringProperty(Response response) => throw null;
     }
 }

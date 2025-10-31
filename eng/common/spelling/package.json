@@ -1,10 +1,7 @@
 {
   "name": "cspell-version-pin",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "dependencies": {
-    "@cspell/cspell-bundled-dicts": "^6.12.0",
-    "@cspell/cspell-types": "^6.12.0",
-    "cspell": "^6.12.0",
-    "cspell-lib": "^6.12.0"
+    "cspell": "^9.2.1"
   }
 }

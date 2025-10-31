@@ -38,6 +38,6 @@ namespace Client.Naming.EnumConflict.SecondNamespace
         /// <param name="secondModel"> The <see cref="SecondModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SecondModel secondModel) => throw null;
 
-        public static explicit operator SecondModel(Response result) => throw null;
+        public static explicit operator SecondModel(Response response) => throw null;
     }
 }

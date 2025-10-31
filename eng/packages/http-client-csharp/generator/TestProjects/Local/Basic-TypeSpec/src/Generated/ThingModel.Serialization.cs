@@ -337,10 +337,9 @@ namespace BasicTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
-        public static explicit operator ThingModel(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
+        public static explicit operator ThingModel(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
