@@ -111,10 +111,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The FooActionResult. </summary>
         /// <param name="msg"></param>
+        /// <param name="error"></param>
         /// <returns> A new <see cref="Models.FooActionResult"/> instance for mocking. </returns>
-        public static FooActionResult FooActionResult(string msg = default)
+        public static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
         {
-            return new FooActionResult(msg, additionalBinaryDataProperties: null);
+            return new FooActionResult(msg, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
