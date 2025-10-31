@@ -191,9 +191,6 @@ ProvisioningOutput primaryBlobEndpoint = new(nameof(primaryBlobEndpoint), typeof
 
 The `ToBicepExpression()` extension method allows you to create references to resource properties and values for use in Bicep expressions. This is essential when you need to reference one resource's properties in another resource or build dynamic configuration strings.
 
-#### Common use cases:
-
-**Assert a property as expression:**
 ```C# Snippet:CommonUseCases
 // Create a storage account
 StorageAccount storage = new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
@@ -215,56 +212,95 @@ BicepValue<string> nonExpressionConnectionString =
 // this would produce: 'AccountName=mystorageaccount;EndpointSuffix=core.windows.net'
 ```
 
-**Referencing resource outputs:**
-```csharp
-// Reference a storage account's blob endpoint in an app service
-AppService app = new("myApp")
-{
-    SiteConfig = new SiteConfig
-    {
-        AppSettings = new BicepList<NameValuePair>
-        {
-            new() { Name = "StorageBlobEndpoint", Value = storage.PrimaryEndpoints.BlobUri.ToBicepExpression() }
-        }
-    }
-};
-```
-
-**Using with Bicep functions:**
-```csharp
-// Pass resource references to Bicep functions
-BicepExpression uniqueStorageName = BicepFunction.Interpolate(
-    $"st{BicepFunction.UniqueString(storage.Id.ToBicepExpression())}"
-);
-```
-
 Use `ToBicepExpression()` whenever you need to reference a resource property or value in Bicep expressions, function calls, or when building dynamic configuration values.
 
 #### Important Notes
 
-**Named Root Requirement**: `ToBicepExpression()` requires that the value being referenced belongs to a named root element. Named root elements are classes that inherit from `NamedProvisionableConstruct`, which includes:
-- `ProvisionableResource` (all Azure resources like `StorageAccount`, `CognitiveServicesAccount`, etc.)
-- `ProvisioningParameter`
-- `ProvisioningOutput`
-- `ProvisioningVariable`
-- `ModuleImport`
+**NamedProvisionableConstruct Requirement**:
 
-Calling this method on properties of regular `ProvisionableConstruct` instances (like model classes) will result in an exception.
+`ToBicepExpression()` requires that the value can be traced back through a chain of properties to a root `NamedProvisionableConstruct`. The method recursively traverses up the property ownership chain until it finds a `NamedProvisionableConstruct` at the root.
 
-```csharp
-// ✅ Works - StorageAccount inherits from ProvisionableResource (a named root)
+**Types that qualify as root `NamedProvisionableConstruct`:**
+- **Azure resources** (like `StorageAccount`, `CognitiveServicesAccount`, etc.) - these inherit from `ProvisionableResource`
+- **Infrastructure components** like:
+  - `ProvisioningParameter` - input parameters to your template
+  - `ProvisioningOutput` - output values from your template  
+  - `ProvisioningVariable` - variables within your template
+  - `ModuleImport` - imported modules
+
+**How the traversal works:**
+- ✅ `storage.Name` - direct property of `StorageAccount` (a `NamedProvisionableConstruct`)
+- ✅ `storage.Sku.Name` - `Sku` is a property of `StorageAccount`, `Name` is a property of `Sku`
+- ✅ `storage.Properties.Encryption.Services.Blob.Enabled` - any depth is supported as long as it traces back to `StorageAccount`
+- ✅ `storage.Tags[0]` - collection element where the collection (`Tags`) is a property of `StorageAccount`
+- ✅ `storage.NetworkRuleSet.VirtualNetworkRules[0].Action` - element of a list property, then accessing a property of that element
+- ❌ `new StorageSku().Name` - standalone `StorageSku` has no traceable path to a `NamedProvisionableConstruct`
+
+This restriction exists because the generated Bicep expression needs an identifier to make it syntax correct (e.g., `storage.sku.name` or `param.someProperty.value`).
+
+```C# Snippet:NamedProvisionableConstructRequirement
+// ✅ Works - calling from a property of StorageAccount which inherits from ProvisionableResource
 StorageAccount storage = new("myStorage");
 var nameRef = storage.Name.ToBicepExpression(); // Works
 
-// ✅ Works - ProvisioningParameter is a named root
+// ✅ Works - calling from a ProvisioningParameter
 ProvisioningParameter param = new("myParam", typeof(string));
 var paramRef = param.ToBicepExpression(); // Works
 
-// ❌ Throws exception - StorageSku is just a ProvisionableConstruct (not a named root)
+// ❌ Throws exception - StorageSku is just a ProvisionableConstruct (not a NamedProvisionableConstruct)
 StorageSku sku = new() { Name = StorageSkuName.StandardLrs };
 // var badRef = sku.Name.ToBicepExpression(); // Throws exception
+// ✅ Works - if you assign it to another NamedProvisionableConstruct first
+storage.Sku = sku;
+var goodRef = storage.Sku.Name.ToBicepExpression(); // Works
 ```
-This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use `azd` to deploy your infrastructure to Azure directly without needing to write or maintain `bicep` or arm templates.
+
+**Why Instance Sharing Fails**:
+
+As mentioned in the [Declarative Design Pattern](#important-usage-guidelines) section, sharing the same construct instance across multiple properties leads to problems with `ToBicepExpression()`. Here's the correct approach and what happens when you don't follow it:
+
+**The correct approach:**
+
+```C# Snippet:InstanceSharingCorrect
+// ✅ GOOD: Create separate instances with the same values
+StorageAccount storage1 = new("storage1")
+{
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+StorageAccount storage2 = new("storage2")
+{
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+
+// Each has its own StorageSku instance
+// Bicep expressions work correctly and unambiguously:
+var sku1Ref = storage1.Sku.Name.ToBicepExpression(); // "${storage1.sku.name}"
+var sku2Ref = storage2.Sku.Name.ToBicepExpression(); // "${storage2.sku.name}"
+```
+
+**What NOT to do and why it fails:**
+
+```C# Snippet:InstanceSharingProblem
+// ❌ BAD: Sharing the same StorageSku instance
+StorageSku sharedSku = new() { Name = StorageSkuName.StandardLrs };
+
+StorageAccount storage1 = new("storage1") { Sku = sharedSku };
+StorageAccount storage2 = new("storage2") { Sku = sharedSku };
+
+// Now both storage accounts reference the SAME StorageSku object
+// This creates ambiguity when building Bicep expressions:
+
+// ❌ PROBLEM: Which storage account should this reference?
+// storage1.sku.name or storage2.sku.name?
+var skuNameRef = sharedSku.Name.ToBicepExpression(); // Confusing and unpredictable!
+
+// The system can't determine whether this should generate:
+// - "${storage1.sku.name}"
+// - "${storage2.sku.name}"
+// This leads to incorrect or unpredictable Bicep output.
+```
+
+**Key takeaway:** Each construct instance must have a single, unambiguous path back to its owning `NamedProvisionableConstruct`. Sharing instances breaks this requirement and makes Bicep reference generation impossible.
 
 ## Examples
 
