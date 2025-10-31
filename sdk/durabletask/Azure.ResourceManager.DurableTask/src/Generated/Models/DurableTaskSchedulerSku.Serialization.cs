@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 return null;
             }
-            SchedulerSkuName name = default;
+            DurableTaskSchedulerSkuName name = default;
             int? capacity = default;
             DurableTaskResourceRedundancyState? redundancyState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 if (property.NameEquals("name"u8))
                 {
-                    name = new SchedulerSkuName(property.Value.GetString());
+                    name = new DurableTaskSchedulerSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))

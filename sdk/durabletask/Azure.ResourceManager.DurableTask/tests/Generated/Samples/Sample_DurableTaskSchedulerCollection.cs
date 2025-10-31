@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
             string schedulerName = "testscheduler";
             DurableTaskSchedulerData data = new DurableTaskSchedulerData(new AzureLocation("northcentralus"))
             {
-                Properties = new DurableTaskSchedulerProperties(new string[] { "10.0.0.0/8" }, new DurableTaskSchedulerSku(SchedulerSkuName.Dedicated)),
+                Properties = new DurableTaskSchedulerProperties(new string[] { "10.0.0.0/8" }, new DurableTaskSchedulerSku(DurableTaskSchedulerSkuName.Dedicated)),
                 Tags =
 {
 ["department"] = "research",
