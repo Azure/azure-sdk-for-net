@@ -176,6 +176,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup",
       "apiVersions": [],
@@ -302,6 +303,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3",
           "apiVersions": [],
@@ -394,6 +396,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4",
           "apiVersions": [],
@@ -488,6 +491,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup",
       "apiVersions": [],
@@ -577,6 +581,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5",
           "apiVersions": [],
