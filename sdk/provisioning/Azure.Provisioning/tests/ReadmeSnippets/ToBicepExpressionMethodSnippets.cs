@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Storage;
 using NUnit.Framework;
@@ -47,18 +42,18 @@ internal class ToBicepExpressionMethodSnippets
         #region Snippet:NamedProvisionableConstructRequirement
         // ✅ Works - calling from a property of StorageAccount which inherits from ProvisionableResource
         StorageAccount storage = new("myStorage");
-        var nameRef = storage.Name.ToBicepExpression(); // Works
+        BicepExpression nameRef = storage.Name.ToBicepExpression(); // Works
 
         // ✅ Works - calling from a ProvisioningParameter
         ProvisioningParameter param = new("myParam", typeof(string));
-        var paramRef = param.ToBicepExpression(); // Works
+        BicepExpression paramRef = param.ToBicepExpression(); // Works
 
         // ❌ Throws exception - StorageSku is just a ProvisionableConstruct (not a NamedProvisionableConstruct)
         StorageSku sku = new() { Name = StorageSkuName.StandardLrs };
-        // var badRef = sku.Name.ToBicepExpression(); // Throws exception
+        // BicepExpression badRef = sku.Name.ToBicepExpression(); // Throws exception
         // ✅ Works - if you assign it to another NamedProvisionableConstruct first
         storage.Sku = sku;
-        var goodRef = storage.Sku.Name.ToBicepExpression(); // Works
+        BicepExpression goodRef = storage.Sku.Name.ToBicepExpression(); // Works
         #endregion
     }
 
@@ -79,8 +74,8 @@ internal class ToBicepExpressionMethodSnippets
 
         // Each has its own StorageSku instance
         // Bicep expressions work correctly and unambiguously:
-        var sku1Ref = storage1.Sku.Name.ToBicepExpression(); // "${storage1.sku.name}"
-        var sku2Ref = storage2.Sku.Name.ToBicepExpression(); // "${storage2.sku.name}"
+        BicepExpression sku1Ref = storage1.Sku.Name.ToBicepExpression(); // "${storage1.sku.name}"
+        BicepExpression sku2Ref = storage2.Sku.Name.ToBicepExpression(); // "${storage2.sku.name}"
         #endregion
     }
 
@@ -100,7 +95,7 @@ internal class ToBicepExpressionMethodSnippets
 
         // ❌ PROBLEM: Which storage account should this reference?
         // storage1.sku.name or storage2.sku.name?
-        var skuNameRef = sharedSku.Name.ToBicepExpression(); // Confusing and unpredictable!
+        BicepExpression skuNameRef = sharedSku.Name.ToBicepExpression(); // Confusing and unpredictable!
 
         // The system can't determine whether this should generate:
         // - "${storage1.sku.name}"

@@ -61,7 +61,7 @@ internal class ImportantUsageGuideLinesSnippets
         // Generates: output connectionString string = 'Endpoint=${aiServices.properties.endpoints['Azure AI Model Inference API']}'
 
         // ⚠️ Note: Accessing .Value will still throw at runtime if the data doesn't exist
-        // var actualValue = apiEndpoint.Value; // Would throw KeyNotFoundException at runtime
+        // BicepValue<string> actualValue = apiEndpoint.Value; // Would throw KeyNotFoundException at runtime
         #endregion
     }
 }

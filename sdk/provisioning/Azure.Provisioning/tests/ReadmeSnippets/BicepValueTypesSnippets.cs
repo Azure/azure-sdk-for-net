@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Provisioning.AppService;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Storage;
 using NUnit.Framework;
