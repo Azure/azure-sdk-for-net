@@ -109,7 +109,7 @@ As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token
 
 ## Identity binding mode (WorkloadIdentityCredential)
 
-`WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `AzureKubernetesTokenProxy` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
+`WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `IsAzureKubernetesTokenProxyEnabled ` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
 
 **Note:** This feature is only available when using `WorkloadIdentityCredential` directly. It is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
 
@@ -118,7 +118,7 @@ As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token
 ```csharp
 var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
 {
-    AzureKubernetesTokenProxy = true  // Enable identity binding mode
+    IsAzureKubernetesTokenProxyEnabled = true  // Enable identity binding mode
 });
 ```
 
@@ -126,7 +126,7 @@ When enabled, the credential reads these environment variables (typically config
 
 * `AZURE_KUBERNETES_TOKEN_PROXY` - Base HTTPS URL for the proxy endpoint
 * `AZURE_KUBERNETES_CA_FILE` - Path to PEM bundle with proxy CA certificates
-* `AZURE_KUBERNETES_CA_DATA` - PEM-encoded CA bundle (mutually exclusive with `CA_FILE`)
+* `AZURE_KUBERNETES_CA_DATA` - PEM-encoded CA bundle (mutually exclusive with `AZURE_KUBERNETES_CA_FILE `)
 * `AZURE_KUBERNETES_SNI_NAME` - TLS Server Name Indication (optional)
 
 The credential validates the configuration at construction time and throws `InvalidOperationException` if the configuration is invalid or incomplete.
@@ -142,7 +142,7 @@ If you're currently using `ManagedIdentityCredential` for workload identity in A
 // After (with identity binding support):
 var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
 {
-    AzureKubernetesTokenProxy = true
+    IsAzureKubernetesTokenProxyEnabled = true
 });
 ```
 
