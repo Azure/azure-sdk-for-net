@@ -181,5 +181,163 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Successfully validated {validatedCount} intervals");
         }
+
+        /// <summary>
+        /// Tests getting a legend as a PNG image.
+        /// Maps to Python test: test_03_get_legend_as_png
+        /// </summary>
+        [Test]
+        [Category("Legend")]
+        public async Task Test07_03_GetLegendAsPng()
+        {
+            // Arrange
+            var client = GetTestClient();
+            var tilerClient = client.GetTilerClient();
+            string colorMapName = "rdylgn";
+
+            TestContext.WriteLine($"Input - color_map_name: {colorMapName}");
+
+            // Act
+            Response<BinaryData> response = await tilerClient.GetLegendAsync(colorMapName);
+
+            // Assert
+            ValidateResponse(response, "GetLegend");
+
+            BinaryData legendData = response.Value;
+            byte[] legendBytes = legendData.ToArray();
+
+            TestContext.WriteLine($"Legend size: {legendBytes.Length} bytes");
+            TestContext.WriteLine($"First 16 bytes (hex): {BitConverter.ToString(legendBytes.Take(16).ToArray())}");
+
+            // Verify PNG magic bytes (89 50 4E 47 0D 0A 1A 0A)
+            byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+
+            Assert.That(legendBytes.Length, Is.GreaterThan(0), "Legend bytes should not be empty");
+            Assert.That(legendBytes.Length, Is.GreaterThan(100), "Legend should be substantial image");
+
+            bool hasPngMagic = true;
+            for (int i = 0; i < 8; i++)
+            {
+                if (legendBytes[i] != pngMagic[i])
+                {
+                    hasPngMagic = false;
+                    break;
+                }
+            }
+            Assert.That(hasPngMagic, Is.True, "Response should be a valid PNG image (magic bytes mismatch)");
+
+            TestContext.WriteLine("PNG magic bytes validated successfully");
+            TestContext.WriteLine("Legend PNG retrieved successfully");
+        }
+
+        /// <summary>
+        /// Tests getting a legend with a different color map (viridis).
+        /// Maps to Python test: test_04_get_legend_with_different_colormap
+        /// </summary>
+        [Test]
+        [Category("Legend")]
+        public async Task Test07_04_GetLegendWithDifferentColormap()
+        {
+            // Arrange
+            var client = GetTestClient();
+            var tilerClient = client.GetTilerClient();
+            string colorMapName = "viridis";
+
+            TestContext.WriteLine($"Input - color_map_name: {colorMapName}");
+
+            // Act
+            Response<BinaryData> response = await tilerClient.GetLegendAsync(colorMapName);
+
+            // Assert
+            ValidateResponse(response, "GetLegend");
+
+            BinaryData legendData = response.Value;
+            byte[] legendBytes = legendData.ToArray();
+
+            TestContext.WriteLine($"Legend size: {legendBytes.Length} bytes");
+
+            // Verify PNG magic bytes
+            byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+
+            Assert.That(legendBytes.Length, Is.GreaterThan(0), "Legend bytes should not be empty");
+            Assert.That(legendBytes.Length, Is.GreaterThan(100), "Legend should be substantial image");
+
+            bool hasPngMagic = true;
+            for (int i = 0; i < 8; i++)
+            {
+                if (legendBytes[i] != pngMagic[i])
+                {
+                    hasPngMagic = false;
+                    break;
+                }
+            }
+            Assert.That(hasPngMagic, Is.True, "Response should be a valid PNG image");
+
+            TestContext.WriteLine("Legend PNG with viridis colormap retrieved successfully");
+        }
+
+        /// <summary>
+        /// Tests class map legend structure and validates color consistency.
+        /// Maps to Python test: test_05_class_map_legend_structure
+        /// </summary>
+        [Test]
+        [Category("ClassMapLegend")]
+        public async Task Test07_05_ClassMapLegendStructure()
+        {
+            // Arrange
+            var client = GetTestClient();
+            var tilerClient = client.GetTilerClient();
+            string classmapName = "mtbs-severity";
+
+            TestContext.WriteLine($"Input - classmap_name: {classmapName}");
+
+            // Act
+            Response response = await tilerClient.GetClassMapLegendAsync(classmapName, null, null, null);
+
+            // Assert
+            ValidateResponse(response);
+
+            using JsonDocument doc = JsonDocument.Parse(response.Content);
+            JsonElement root = doc.RootElement;
+
+            // Assert response is a dictionary
+            Assert.That(root.ValueKind, Is.EqualTo(JsonValueKind.Object), "Response should be a dict");
+
+            // Validate all keys are string class values
+            foreach (JsonProperty property in root.EnumerateObject())
+            {
+                Assert.That(property.Name, Is.TypeOf<string>(), $"Key '{property.Name}' should be a string");
+            }
+
+            // Validate color consistency - all colors should be [R, G, B, A] format
+            var allColors = new List<int[]>();
+            foreach (JsonProperty property in root.EnumerateObject())
+            {
+                JsonElement colorElement = property.Value;
+                Assert.That(colorElement.GetArrayLength(), Is.EqualTo(4), "All colors should have RGBA format");
+
+                int[] color = new int[4];
+                for (int i = 0; i < 4; i++)
+                {
+                    int component = colorElement[i].GetInt32();
+                    Assert.That(component, Is.InRange(0, 255), "All color components should be integers 0-255");
+                    color[i] = component;
+                }
+                allColors.Add(color);
+            }
+
+            // Validate that different classes have different colors (except transparent)
+            var nonTransparentColors = new HashSet<(int, int, int, int)>(
+                allColors
+                    .Where(c => c[3] != 0) // Exclude transparent (alpha = 0)
+                    .Select(c => (c[0], c[1], c[2], c[3]))
+            );
+
+            Assert.That(nonTransparentColors.Count, Is.GreaterThan(1),
+                "Non-transparent classes should have different colors");
+
+            TestContext.WriteLine($"Found {allColors.Count} classes with {nonTransparentColors.Count} unique non-transparent colors");
+            TestContext.WriteLine("Color consistency validated successfully");
+        }
     }
 }
