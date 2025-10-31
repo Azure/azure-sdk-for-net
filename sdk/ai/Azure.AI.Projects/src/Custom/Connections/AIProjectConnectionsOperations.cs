@@ -29,10 +29,10 @@ namespace Azure.AI.Projects
             // Use the instance method instead of incorrectly calling it as static
             if (includeCredentials)
             {
-                return GetConnectionWithCredentials(connectionName, clientRequestId, cancellationToken);
+                return GetConnectionWithCredentials(connectionName, cancellationToken);
             }
 
-            return GetConnection(connectionName, clientRequestId, cancellationToken);
+            return GetConnection(connectionName, cancellationToken);
         }
 
         /// <summary>
@@ -54,10 +54,10 @@ namespace Azure.AI.Projects
             // Use the instance method instead of incorrectly calling it as static
             if (includeCredentials)
             {
-                return await GetConnectionWithCredentialsAsync(connectionName, clientRequestId, cancellationToken).ConfigureAwait(false);
+                return await GetConnectionWithCredentialsAsync(connectionName, cancellationToken).ConfigureAwait(false);
             }
 
-            return await GetConnectionAsync(connectionName, clientRequestId, cancellationToken).ConfigureAwait(false);
+            return await GetConnectionAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

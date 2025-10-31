@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        internal PipelineMessage CreateGetConnectionRequest(string name, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetConnectionRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -23,16 +23,12 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetConnectionWithCredentialsRequest(string name, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetConnectionWithCredentialsRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -42,16 +38,12 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetConnectionsRequest(string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetConnectionsRequest(string connectionType, bool? defaultConnection, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -67,16 +59,12 @@ namespace Azure.AI.Projects
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateNextGetConnectionsRequest(Uri nextPage, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateNextGetConnectionsRequest(Uri nextPage, string connectionType, bool? defaultConnection, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
