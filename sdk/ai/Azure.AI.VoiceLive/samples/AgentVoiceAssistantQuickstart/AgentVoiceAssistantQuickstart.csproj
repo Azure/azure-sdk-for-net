@@ -5,14 +5,14 @@
     <TargetFrameworks>net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>BasicVoiceAssistantQuickstart</AssemblyName>
+    <AssemblyName>AgentVoiceAssistantQuickstart</AssemblyName>
     <RootNamespace>Azure.AI.VoiceLive.Samples</RootNamespace>
     <IsSamplesProject>true</IsSamplesProject>
     <SupportsNetStandard20>false</SupportsNetStandard20>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.12.1"/>
+    <PackageReference Include="Azure.Identity"/>
     <PackageReference Include="NAudio" VersionOverride="2.2.1"/>
     <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" VersionOverride="8.0.0"/>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Azure.AI.VoiceLive.csproj" />
+    <ProjectReference Include="..\..\src\Azure.AI.VoiceLive.csproj" />
   </ItemGroup>
 
   <ItemGroup>

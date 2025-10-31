@@ -1,0 +1,4 @@
+# Ignore settings files to avoide committing secrets
+appsettings.json
+appsettings.development.json
+appsettings.production.json
