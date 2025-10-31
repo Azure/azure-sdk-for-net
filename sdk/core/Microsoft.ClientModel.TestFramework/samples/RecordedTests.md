@@ -191,6 +191,23 @@ public class DebuggingTests : RecordedTestBase<MapsTestEnvironment>
 }
 ```
 
+Note: A user can set the environment variable PROXY_DEBUG_MODE to a truthy value prior to invoking, just like if they set UseLocalDebugProxy in their code.
+
+In order to debug the test proxy, you will need to clone the azure-sdk-tools repo. The best practice is to first create a fork of the repo, and then clone your fork locally.
+
+Once you have cloned the repo, open the Test Proxy solution in your IDE.
+
+If you are attempting to debug Playback mode, set a breakpoint in the HandlePlaybackRequest method of RecordingHandler. If you are attempting to debug Record mode, set a breakpoint in the HandleRecordRequestAsync method of RecordingHandler. It may also be helpful to put breakpoints in Admin.cs to verify that your sanitizers are being added as expected.
+
+With your breakpoints set, run the Test Proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit.
+
+The key integration points between the Test Framework and the Test Proxy are:
+
+InstrumentClientOptions method of RecordedTestBase - calling this on your client options will set the ClientOptions.Transport property to be ProxyTransport to your client options when in Playback or Record mode. The ProxyTransport will send all requests to the Test Proxy.
+TestProxy.cs - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in Record or Playback mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
+Including Test Proxy Debug Logs
+In order to enable Test Proxy debug logs, you can either set the AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS environment variable or the EnableTestProxyDebugLogs runsetting parameter to true.
+
 ### Custom recording session names
 
 Control how recording sessions are named:
