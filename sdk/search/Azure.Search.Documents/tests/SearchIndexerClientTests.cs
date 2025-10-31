@@ -723,6 +723,7 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(ChatCompletionSkill) => CreateSkill(t, new[] { "userMessage", "systemMessage" }, new[] { "response" }),
                     Type _ when t == typeof(VisionVectorizeSkill) =>
                     TestEnvironment.AzureEnvironment != "AzureUSGovernment" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
+                    Type _ when t == typeof(ContentUnderstandingSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "output" }),
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .Where(skill => skill != null)

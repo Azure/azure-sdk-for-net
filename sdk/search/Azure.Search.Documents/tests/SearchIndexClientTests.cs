@@ -11,7 +11,6 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
 using NUnit.Framework;
 
@@ -693,6 +692,27 @@ namespace Azure.Search.Documents.Tests
             }
 
             Assert.IsTrue(found, "Knowledge agent not found");
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+        public async Task CreateRemoteSharePointKnowledgeSource()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            var remoteSharePointKnowledgeSource = new RemoteSharePointKnowledgeSource("sharepoint", new RemoteSharePointKnowledgeSourceParameters
+            {
+                FilterExpression = null,
+                ContainerTypeId = "site",
+                ResourceMetadata = { "Title", "CreatedBy", "CreatedDate" }
+            });
+
+            KnowledgeSource createdKs = await client.CreateKnowledgeSourceAsync(remoteSharePointKnowledgeSource);
+            Assert.IsNotNull(createdKs);
+
+            await client.DeleteKnowledgeSourceAsync(remoteSharePointKnowledgeSource.Name);
         }
     }
 }

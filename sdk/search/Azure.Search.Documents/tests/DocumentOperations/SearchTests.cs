@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -16,6 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public class SearchTests : SearchTestBase
     {
         public SearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -54,7 +55,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, null, null, null, null, null, new Dictionary<string, IList<FacetResult>>(), new Dictionary<string, object>()
+            new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), additionalProperties: new Dictionary<string, object>()
             {
                 ["from"] = from,
                 ["to"] = to
@@ -647,7 +648,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [Ignore("Metrics facets are only supported in preview. Enable this test when they are GA'd.")]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
         public async Task MetricFacets()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -1064,7 +1065,7 @@ namespace Azure.Search.Documents.Tests
                 SemanticConfigurationName = "my-config",
                 QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.9, MaxCharLength = 300 },
                 QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = true, MaxCharLength = 300 },
-                QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 3},
+                QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 3 },
                 ErrorMode = SemanticErrorMode.Partial,
                 MaxWait = TimeSpan.FromMilliseconds(1000),
             };
