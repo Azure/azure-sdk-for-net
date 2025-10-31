@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>AgentVoiceAssistantQuickstart</AssemblyName>
-    <RootNamespace>Azure.AI.VoiceLive.Samples</RootNamespace>
     <IsSamplesProject>true</IsSamplesProject>
     <SupportsNetStandard20>false</SupportsNetStandard20>
   </PropertyGroup>
