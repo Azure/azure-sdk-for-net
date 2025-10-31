@@ -4392,7 +4392,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
                 boundingBox,
                 intersects,
-                query,
+                query != null ? new Dictionary<string, BinaryData>(query) : null,
                 filter,
                 datetime,
                 sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
