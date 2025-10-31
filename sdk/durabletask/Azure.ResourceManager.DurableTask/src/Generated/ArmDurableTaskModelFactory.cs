@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
         /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
         /// <returns> A new <see cref="Models.SchedulerSku"/> instance for mocking. </returns>
-        public static SchedulerSku SchedulerSku(SchedulerSkuName name = default, int? capacity = null, ResourceRedundancyState? redundancyState = null)
+        public static SchedulerSku SchedulerSku(SchedulerSkuName name = default, int? capacity = null, DurableTaskResourceRedundancyState? redundancyState = null)
         {
             return new SchedulerSku(name, capacity, redundancyState, serializedAdditionalRawData: null);
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
         /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
         /// <returns> A new <see cref="Models.SchedulerSkuUpdate"/> instance for mocking. </returns>
-        public static SchedulerSkuUpdate SchedulerSkuUpdate(SchedulerSkuName? name = null, int? capacity = null, ResourceRedundancyState? redundancyState = null)
+        public static SchedulerSkuUpdate SchedulerSkuUpdate(SchedulerSkuName? name = null, int? capacity = null, DurableTaskResourceRedundancyState? redundancyState = null)
         {
             return new SchedulerSkuUpdate(name, capacity, redundancyState, serializedAdditionalRawData: null);
         }

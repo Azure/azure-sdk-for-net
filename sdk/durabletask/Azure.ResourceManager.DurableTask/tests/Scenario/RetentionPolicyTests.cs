@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
                 new RetentionPolicyDetails()
                 {
                     RetentionPeriodInDays = 3,
-                    OrchestrationState = PurgeableOrchestrationState.Completed
+                    OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed
                 });
             retentionPolicyProperties.RetentionPolicies.Add(
                 new RetentionPolicyDetails()
                 {
                     RetentionPeriodInDays = 30,
-                    OrchestrationState = PurgeableOrchestrationState.Failed
+                    OrchestrationState = DurableTaskPurgeableOrchestrationState.Failed
                 });
             retentionPolicyProperties.RetentionPolicies.Add(
                 new RetentionPolicyDetails()
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
             // Assert the specific policy for Completed orchestrations has the expected retention period
             RetentionPolicyDetails completedPolicy = singletonRetentionPolicy.Data.Properties.RetentionPolicies
-                .SingleOrDefault(p => p.OrchestrationState == PurgeableOrchestrationState.Completed);
+                .SingleOrDefault(p => p.OrchestrationState == DurableTaskPurgeableOrchestrationState.Completed);
 
             Assert.NotNull(completedPolicy, "Expected a retention policy with OrchestrationState=Completed.");
             Assert.AreEqual(3, completedPolicy.RetentionPeriodInDays, "Unexpected retention days for Completed state.");

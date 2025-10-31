@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="retentionPeriodInDays"> The retention period in days after which the orchestration will be purged automatically. </param>
         /// <param name="orchestrationState"> The orchestration state to which this policy applies. If omitted, the policy applies to all purgeable orchestration states. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionPolicyDetails(int retentionPeriodInDays, PurgeableOrchestrationState? orchestrationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RetentionPolicyDetails(int retentionPeriodInDays, DurableTaskPurgeableOrchestrationState? orchestrationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RetentionPeriodInDays = retentionPeriodInDays;
             OrchestrationState = orchestrationState;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> The retention period in days after which the orchestration will be purged automatically. </summary>
         public int RetentionPeriodInDays { get; set; }
         /// <summary> The orchestration state to which this policy applies. If omitted, the policy applies to all purgeable orchestration states. </summary>
-        public PurgeableOrchestrationState? OrchestrationState { get; set; }
+        public DurableTaskPurgeableOrchestrationState? OrchestrationState { get; set; }
     }
 }
