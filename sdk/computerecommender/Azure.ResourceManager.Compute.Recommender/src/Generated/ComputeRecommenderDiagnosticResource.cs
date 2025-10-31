@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                HttpMessage message = _spotPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeRecommenderDiagnosticData> response = Response.FromValue(ComputeRecommenderDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                HttpMessage message = _spotPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeRecommenderDiagnosticData> response = Response.FromValue(ComputeRecommenderDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
+                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
+                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
