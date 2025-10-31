@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
@@ -117,9 +116,24 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 new XmlDocStatement("description", [$"{operation.Path}"])));
 
             // Operation Id item
+            // Use CrossLanguageDefinitionId for accurate operation IDs
+            // For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")
+            // For non-resource operations, the format is: Namespace.Client.OperationName
+            string operationId = operation.Name;
+            if (!string.IsNullOrEmpty(serviceMethod.CrossLanguageDefinitionId))
+            {
+                var parts = serviceMethod.CrossLanguageDefinitionId.Split('.');
+                if (parts.Length >= 2)
+                {
+                    // Take the last two parts: ResourceClient and OperationName
+                    var resourceOrClientName = parts[^2];  // Second to last
+                    var methodName = parts[^1];            // Last
+                    operationId = $"{resourceOrClientName}_{methodName.FirstCharToUpperCase()}";
+                }
+            }
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Operation Id"]),
-                new XmlDocStatement("description", [$"{operation.Name}"])));
+                new XmlDocStatement("description", [$"{operationId}"])));
 
             // API Version item (if available)
             var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
@@ -428,7 +442,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     .MakeGenericType([_returnBodyType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
-            ValueExpression[] armOperationArguments = [
+            ValueExpression[] commonArmOperationArguments = [
                 _clientDiagnosticsField,
                 This.As<ArmResource>().Pipeline(),
                 messageVariable.Property("Request"),
@@ -436,17 +450,28 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _returnBodyResourceClient != null
-                ? [
-                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
-                    .. armOperationArguments
-                  ]
-                : armOperationArguments;
+            ValueExpression? operationSourceInstance = null;
+            if (_returnBodyResourceClient != null)
+            {
+                // Resource type - pass client to operation source constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.ResourceData.Type].Type;
+                operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
+            }
+            else if (_originalBodyType != null)
+            {
+                // Non-resource type - use parameterless constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_originalBodyType].Type;
+                operationSourceInstance = New.Instance(operationSourceType);
+            }
+
+            var armOperationArguments = operationSourceInstance != null
+                ? [operationSourceInstance, .. commonArmOperationArguments]
+                : commonArmOperationArguments;
 
             var operationDeclaration = Declare(
                 "operation",
                 armOperationType,
-                New.Instance(armOperationType, operationInstanceArguments),
+                New.Instance(armOperationType, armOperationArguments),
                 out var operationVariable);
             statements.Add(operationDeclaration);
 

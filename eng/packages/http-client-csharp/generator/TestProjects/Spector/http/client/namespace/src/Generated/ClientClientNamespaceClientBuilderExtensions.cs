@@ -15,20 +15,20 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class ClientClientNamespaceClientBuilderExtensions
     {
-        public static IAzureClientBuilder<ClientNamespaceFirstClient, ClientNamespaceFirstClientOptions> AddClientNamespaceFirstClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<ClientNamespaceFirstClient, ClientNamespaceClientOptions> AddClientNamespaceFirstClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ClientNamespaceFirstClient, ClientNamespaceFirstClientOptions> AddClientNamespaceFirstClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ClientNamespaceFirstClient, ClientNamespaceClientOptions> AddClientNamespaceFirstClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<ClientNamespaceSecondClient, ClientNamespaceSecondClientOptions> AddClientNamespaceSecondClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<ClientNamespaceSecondClient, ClientNamespaceClientOptions> AddClientNamespaceSecondClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ClientNamespaceSecondClient, ClientNamespaceSecondClientOptions> AddClientNamespaceSecondClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ClientNamespaceSecondClient, ClientNamespaceClientOptions> AddClientNamespaceSecondClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

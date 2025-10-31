@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation
 
         string IPersistableModel<NoDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator NoDecoratorModelInInternal(Response result) => throw null;
+        public static explicit operator NoDecoratorModelInInternal(Response response) => throw null;
     }
 }

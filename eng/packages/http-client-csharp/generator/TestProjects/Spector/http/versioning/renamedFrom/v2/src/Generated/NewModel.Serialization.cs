@@ -38,6 +38,6 @@ namespace Versioning.RenamedFrom
         /// <param name="newModel"> The <see cref="NewModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(NewModel newModel) => throw null;
 
-        public static explicit operator NewModel(Response result) => throw null;
+        public static explicit operator NewModel(Response response) => throw null;
     }
 }

@@ -181,10 +181,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RenewLocksResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RenewLocksResult"/> from. </param>
-        public static explicit operator RenewLocksResult(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RenewLocksResult"/> from. </param>
+        public static explicit operator RenewLocksResult(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRenewLocksResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

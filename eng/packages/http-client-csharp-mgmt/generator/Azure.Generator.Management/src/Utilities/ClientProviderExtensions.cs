@@ -5,7 +5,7 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 
-namespace Azure.Generator.Management.Extensions
+namespace Azure.Generator.Management.Utilities
 {
     internal static class ClientProviderExtensions
     {

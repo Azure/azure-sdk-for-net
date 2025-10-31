@@ -167,7 +167,7 @@ namespace Azure.Core.Foundations
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedConnection"/> from. </param>
         public static explicit operator PagedConnection(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializePagedConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

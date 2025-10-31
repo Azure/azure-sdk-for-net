@@ -127,10 +127,9 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReturnsAnonymousModelResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ReturnsAnonymousModelResponse"/> from. </param>
-        public static explicit operator ReturnsAnonymousModelResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReturnsAnonymousModelResponse"/> from. </param>
+        public static explicit operator ReturnsAnonymousModelResponse(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeReturnsAnonymousModelResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

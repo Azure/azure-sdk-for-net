@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Versioning.PreviewVersion
 
         string IPersistableModel<Widget>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator Widget(Response result) => throw null;
+        public static explicit operator Widget(Response response) => throw null;
     }
 }
