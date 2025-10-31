@@ -8,7 +8,7 @@ This is a **standalone, self-contained** version of the BasicVoiceAssistant samp
   - `Program` class (main entry point and command-line handling)
   - `BasicVoiceAssistant` class (voice assistant logic)
   - `AudioProcessor` class (audio capture and playback)
-- **ConsolidatedVoiceAssistant.csproj**: Project file with all necessary dependencies
+- **AgentVoiceAssistantQuickstart.csproj**: Project file with all necessary dependencies
 - **appsettings.json**: Configuration file (template - update with your values)
 
 ## Standalone Features
