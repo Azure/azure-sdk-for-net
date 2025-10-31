@@ -80,7 +80,7 @@ public abstract class PipelineRequest : IDisposable
     /// If not set, a value is automatically generated on first access using
     /// <see cref="Activity.Current"/>?.Id if available, otherwise a new <see cref="Guid"/>.
     /// </summary>
-    public string ClientRequestId
+    public virtual string ClientRequestId
     {
         get => _clientRequestId ??= Activity.Current?.Id ?? Guid.NewGuid().ToString();
         set
