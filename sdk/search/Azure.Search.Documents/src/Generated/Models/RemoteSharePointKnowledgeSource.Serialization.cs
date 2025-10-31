@@ -35,8 +35,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("remoteSharePointParameters"u8);
-            writer.WriteObjectValue(RemoteSharePointParameters, options);
+            if (Optional.IsDefined(RemoteSharePointParameters))
+            {
+                writer.WritePropertyName("remoteSharePointParameters"u8);
+                writer.WriteObjectValue(RemoteSharePointParameters, options);
+            }
         }
 
         RemoteSharePointKnowledgeSource IJsonModel<RemoteSharePointKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,6 +74,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("remoteSharePointParameters"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     remoteSharePointParameters = RemoteSharePointKnowledgeSourceParameters.DeserializeRemoteSharePointKnowledgeSourceParameters(property.Value, options);
                     continue;
                 }

@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string LowValue = "low";
         private const string MediumValue = "medium";
 
-        /// <summary> Does not perform any source selections, any query planning, or any iterative search. </summary>
+        /// <summary> Does not perform any source selections, query planning, or iterative search. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Minimal { get; } = new KnowledgeRetrievalReasoningEffortKind(MinimalValue);
         /// <summary> Use low reasoning during retrieval. </summary>
         public static KnowledgeRetrievalReasoningEffortKind Low { get; } = new KnowledgeRetrievalReasoningEffortKind(LowValue);

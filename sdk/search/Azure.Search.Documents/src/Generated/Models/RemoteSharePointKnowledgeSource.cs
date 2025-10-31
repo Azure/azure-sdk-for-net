@@ -15,14 +15,11 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSource"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="remoteSharePointParameters"> The parameters for the knowledge source. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="remoteSharePointParameters"/> is null. </exception>
-        public RemoteSharePointKnowledgeSource(string name, RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters) : base(name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public RemoteSharePointKnowledgeSource(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(remoteSharePointParameters, nameof(remoteSharePointParameters));
 
-            RemoteSharePointParameters = remoteSharePointParameters;
             Kind = KnowledgeSourceKind.RemoteSharePoint;
         }
 

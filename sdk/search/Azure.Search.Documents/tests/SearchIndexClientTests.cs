@@ -702,12 +702,15 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexClient client = resources.GetIndexClient();
 
-            var remoteSharePointKnowledgeSource = new RemoteSharePointKnowledgeSource("sharepoint", new RemoteSharePointKnowledgeSourceParameters
+            var remoteSharePointKnowledgeSource = new RemoteSharePointKnowledgeSource("sharepoint")
             {
-                FilterExpression = null,
-                ContainerTypeId = "site",
-                ResourceMetadata = { "Title", "CreatedBy", "CreatedDate" }
-            });
+                RemoteSharePointParameters = new RemoteSharePointKnowledgeSourceParameters
+                {
+                    FilterExpression = null,
+                    ContainerTypeId = "site",
+                    ResourceMetadata = { "Title", "CreatedBy", "CreatedDate" }
+                }
+            };
 
             KnowledgeSource createdKs = await client.CreateKnowledgeSourceAsync(remoteSharePointKnowledgeSource);
             Assert.IsNotNull(createdKs);

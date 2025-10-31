@@ -15,9 +15,9 @@ use-model-reader-writer: true
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/d1da9e72acfda60af3d5ca9aa5498a9af8d061d3/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/d1da9e72acfda60af3d5ca9aa5498a9af8d061d3/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchservice.json
- - https://github.com/Azure/azure-rest-api-specs/blob/d1da9e72acfda60af3d5ca9aa5498a9af8d061d3/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/knowledgebase.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/66088f96b90cc4aaf1b21e9779506e68efcfb2ca/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/66088f96b90cc4aaf1b21e9779506e68efcfb2ca/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/66088f96b90cc4aaf1b21e9779506e68efcfb2ca/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/knowledgebase.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
