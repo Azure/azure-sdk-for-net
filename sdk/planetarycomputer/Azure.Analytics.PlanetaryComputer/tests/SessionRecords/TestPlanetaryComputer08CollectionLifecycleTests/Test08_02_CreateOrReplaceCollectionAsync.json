@@ -70,8 +70,8 @@
           "temporal": {
             "interval": [
               [
-                "2018-01-01T00:00:00.0000000Z",
-                "2018-12-31T23:59:59.0000000Z"
+                "2018-01-01T00:00:00Z",
+                "2018-12-31T23:59:59Z"
               ]
             ]
           }
@@ -79,8 +79,8 @@
         "license": "CC-BY-4.0",
         "description": "An example collection",
         "stac_version": "1.0.0",
-        "msft:_created": "2025-10-30T22:06:32.474719Z",
-        "msft:_updated": "2025-10-30T22:06:32.474719Z",
+        "msft:_created": "2025-10-30T23:07:34.2191864Z",
+        "msft:_updated": "2025-10-30T23:07:34.2191864Z",
         "msft:short_description": "An example collection"
       }
     },
@@ -154,8 +154,8 @@
           "temporal": {
             "interval": [
               [
-                "2018-01-01T00:00:00.0000000Z",
-                "2018-12-31T23:59:59.0000000Z"
+                "2018-01-01T00:00:00Z",
+                "2018-12-31T23:59:59Z"
               ]
             ]
           }
@@ -163,8 +163,8 @@
         "license": "CC-BY-4.0",
         "description": "An example collection",
         "stac_version": "1.0.0",
-        "msft:_created": "2025-10-30T22:06:32.474719Z",
-        "msft:_updated": "2025-10-30T22:06:32.474719Z",
+        "msft:_created": "2025-10-30T23:07:34.2191864Z",
+        "msft:_updated": "2025-10-30T23:07:34.2191864Z",
         "msft:short_description": "An example collection"
       }
     },
@@ -174,15 +174,15 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1126",
+        "Content-Length": "1112",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "msft:_created": "2025-10-30T22:06:32.474719Z",
-        "msft:_updated": "2025-10-30T22:06:32.474719Z",
+        "msft:_created": "2025-10-30T23:07:34.2191864Z",
+        "msft:_updated": "2025-10-30T23:07:34.2191864Z",
         "msft:short_description": "An example collection",
         "id": "test-collection-lifecycle",
         "description": "Test collection for lifecycle operations - UPDATED",
@@ -226,8 +226,8 @@
           "temporal": {
             "interval": [
               [
-                "2018-01-01T00:00:00.0000000Z",
-                "2018-12-31T23:59:59.0000000Z"
+                "2018-01-01T00:00:00Z",
+                "2018-12-31T23:59:59Z"
               ]
             ]
           }
@@ -253,8 +253,8 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "msft:_created": "2025-10-30T22:06:32.474719Z",
-        "msft:_updated": "2025-10-30T22:06:52.1578139Z",
+        "msft:_created": "2025-10-30T23:07:34.2191864Z",
+        "msft:_updated": "2025-10-30T23:07:55.6071447Z",
         "msft:short_description": "An example collection",
         "id": "test-collection-lifecycle",
         "description": "Test collection for lifecycle operations - UPDATED",
@@ -298,8 +298,8 @@
           "temporal": {
             "interval": [
               [
-                "2018-01-01T00:00:00.0000000Z",
-                "2018-12-31T23:59:59.0000000Z"
+                "2018-01-01T00:00:00Z",
+                "2018-12-31T23:59:59Z"
               ]
             ]
           }
@@ -376,8 +376,8 @@
           "temporal": {
             "interval": [
               [
-                "2018-01-01T00:00:00.0000000Z",
-                "2018-12-31T23:59:59.0000000Z"
+                "2018-01-01T00:00:00Z",
+                "2018-12-31T23:59:59Z"
               ]
             ]
           }
@@ -385,14 +385,14 @@
         "license": "CC-BY-4.0",
         "description": "Test collection for lifecycle operations - UPDATED",
         "stac_version": "1.0.0",
-        "msft:_created": "2025-10-30T22:06:32.474719Z",
-        "msft:_updated": "2025-10-30T22:06:52.1578139Z",
+        "msft:_created": "2025-10-30T23:07:34.2191864Z",
+        "msft:_updated": "2025-10-30T23:07:55.6071447Z",
         "msft:short_description": "An example collection"
       }
     }
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "2011232232"
+    "RandomSeed": "742388477"
   }
 }

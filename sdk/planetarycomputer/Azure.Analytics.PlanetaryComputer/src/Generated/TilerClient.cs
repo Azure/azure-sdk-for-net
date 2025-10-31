@@ -234,23 +234,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -300,23 +300,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -359,23 +359,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -407,23 +407,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1040,23 +1040,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1109,23 +1109,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1171,23 +1171,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1222,23 +1222,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2596,23 +2596,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2662,23 +2662,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -2721,23 +2721,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2769,23 +2769,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
         /// <param name="histogramBins">
         /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
+        ///
         /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
         /// increasing array of bin edges, including the rightmost edge, allowing for
         /// non-uniform bin widths.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="histogramRange">
         /// Comma `,` delimited range of the bins.
-        /// 
+        ///
         /// The lower and upper range of the bins. If not provided, range is simply
         /// (a.min(), a.max()).
-        /// 
+        ///
         /// Values outside the range are ignored. The first element of the range must be
         /// less than or equal to the second.
         /// range affects the automatic bin computation as well.
-        /// 
+        ///
         /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -3695,7 +3695,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate a legend image for a given colormap.
-        /// 
+        ///
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -3735,7 +3735,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate a legend image for a given colormap.
-        /// 
+        ///
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -3775,7 +3775,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate a legend image for a given colormap.
-        /// 
+        ///
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
@@ -3799,7 +3799,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate a legend image for a given colormap.
-        /// 
+        ///
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.

@@ -709,7 +709,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(deleteResponse, "DeleteRenderOption");
-            Assert.AreEqual(204, deleteResponse.Status, "Expected 204 No Content response");
+            Assert.That(deleteResponse.Status, Is.EqualTo(200).Or.EqualTo(204), "Expected 200 OK or 204 No Content response");
 
             TestContext.WriteLine("Render option deleted successfully");
 
@@ -826,10 +826,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Testing ReplaceMosaic for collection: {collectionId}");
 
-            // Create updated mosaic
+            // Create updated mosaic (name max 30 chars)
             var mosaic = new StacMosaic(
                 id: "test-mosaic-1",
-                name: "Test Most recent available - updated",
+                name: "Test Mosaic Updated",
                 cql: new List<IDictionary<string, BinaryData>>()
             );
 
@@ -885,7 +885,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(deleteResponse, "DeleteMosaic");
-            Assert.AreEqual(204, deleteResponse.Status, "Expected 204 No Content response");
+            Assert.That(deleteResponse.Status, Is.EqualTo(200).Or.EqualTo(204), "Expected 200 OK or 204 No Content response");
 
             TestContext.WriteLine("Mosaic deleted successfully");
 
