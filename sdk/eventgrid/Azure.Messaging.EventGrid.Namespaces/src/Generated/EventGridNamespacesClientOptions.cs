@@ -10,14 +10,13 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Client options for clients in this library. </summary>
-    public partial class EventGridReceiverClientOptions : ClientOptions
+    internal partial class EventGridNamespacesClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_06_01;
 
         /// <summary> Initializes a new instance of EventGridSenderClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public EventGridReceiverClientOptions(ServiceVersion version = LatestVersion)
+        public EventGridNamespacesClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -30,8 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> V2023_11_01. </summary>
             V2023_11_01 = 1,
