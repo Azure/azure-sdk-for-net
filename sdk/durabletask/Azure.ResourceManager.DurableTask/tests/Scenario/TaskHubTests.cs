@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             {
                 Properties = new DurableTaskSchedulerProperties(
                     ipAllowlist: ["0.0.0.0/0"], // all IPs allowed to access the endpoint
-                    sku: new DurableTaskSchedulerSku() { Name = SchedulerSkuName.Dedicated, Capacity = 1 }
+                    sku: new DurableTaskSchedulerSku() { Name = DurableTaskSchedulerSkuName.Dedicated, Capacity = 1 }
                 )
             };
             ArmOperation<DurableTaskSchedulerResource> longRunningOperation =
