@@ -41,7 +41,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T01:02:56.6160516Z",
+        "creationTime": "2025-10-31T11:10:29.6123212Z",
         "importType": "StaticCatalog",
         "displayName": "Ingestion for Operation",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -84,7 +84,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T01:02:57.6709001Z",
+        "creationTime": "2025-10-31T11:10:29.727059Z",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
         "skipExistingItems": true,
         "keepOriginalAssets": true,
@@ -94,10 +94,10 @@
           "statusHistory": [
             {
               "status": "Pending",
-              "timestamp": "2025-10-31T01:02:57.6614378Z"
+              "timestamp": "2025-10-31T11:10:29.7187093Z"
             }
           ],
-          "creationTime": "2025-10-31T01:02:57.661436Z",
+          "creationTime": "2025-10-31T11:10:29.7187085Z",
           "totalItems": 0,
           "totalPendingItems": 0,
           "totalSuccessfulItems": 0,
@@ -141,11 +141,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-31T01:02:57.6614378Z"
+            "timestamp": "2025-10-31T11:10:29.7187093Z"
           }
         ],
         "type": "IngestionStaticCatalog",
-        "creationTime": "2025-10-31T01:02:57.661436Z",
+        "creationTime": "2025-10-31T11:10:29.7187085Z",
         "collectionId": "naip-atl"
       }
     }
@@ -154,6 +154,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_INGESTION_CATALOG_URL": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
-    "RandomSeed": "1186523776"
+    "RandomSeed": "153650382"
   }
 }

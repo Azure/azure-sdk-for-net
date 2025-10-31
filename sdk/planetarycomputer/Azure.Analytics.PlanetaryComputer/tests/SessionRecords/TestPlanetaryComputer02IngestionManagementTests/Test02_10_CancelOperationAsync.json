@@ -28,7 +28,7 @@
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
         "api-supported-versions": "2024-01-31-preview, 2025-04-30-preview",
-        "Connection": "close",
+        "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
         "Location": "Sanitized",
@@ -41,7 +41,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T01:03:39.1307321Z",
+        "creationTime": "2025-10-31T11:11:06.4751365Z",
         "importType": "StaticCatalog",
         "displayName": "Ingestion for Cancel Test",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -84,7 +84,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T01:03:39.2743764Z",
+        "creationTime": "2025-10-31T11:11:06.5469723Z",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
         "skipExistingItems": true,
         "keepOriginalAssets": true,
@@ -94,10 +94,10 @@
           "statusHistory": [
             {
               "status": "Pending",
-              "timestamp": "2025-10-31T01:03:39.2654661Z"
+              "timestamp": "2025-10-31T11:11:06.5224881Z"
             }
           ],
-          "creationTime": "2025-10-31T01:03:39.2654646Z",
+          "creationTime": "2025-10-31T11:11:06.522486Z",
           "totalItems": 0,
           "totalPendingItems": 0,
           "totalSuccessfulItems": 0,
@@ -139,6 +139,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_INGESTION_CATALOG_URL": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
-    "RandomSeed": "1614934876"
+    "RandomSeed": "1790592923"
   }
 }

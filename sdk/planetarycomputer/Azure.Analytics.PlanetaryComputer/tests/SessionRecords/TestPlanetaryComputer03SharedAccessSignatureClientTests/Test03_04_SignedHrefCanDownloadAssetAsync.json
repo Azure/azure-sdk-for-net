@@ -64,14 +64,6 @@
               "thumbnail"
             ],
             "title": "NAIP thumbnail"
-          },
-          "test-asset": {
-            "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset/test-asset.txt",
-            "type": "text/plain",
-            "roles": [
-              "metadata"
-            ],
-            "title": "Test Asset - Updated"
           }
         },
         "extent": {
@@ -194,7 +186,7 @@
         },
         "stac_version": "1.0.0",
         "msft:_created": "2025-10-22T11:14:31.811918Z",
-        "msft:_updated": "2025-10-29T11:34:20.571986Z",
+        "msft:_updated": "2025-10-31T02:30:09.036472Z",
         "stac_extensions": [
           "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
           "https://stac-extensions.github.io/table/v1.2.0/schema.json"
@@ -231,14 +223,14 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "msft:expiry": "2025-11-01T01:19:02Z",
-        "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/thumbnail/thumbnail.png?st=2025-10-30T01%3A19%3A02Z&se=2025-11-01T01%3A19%3A02Z&sp=rl&sv=Sanitized&sr=c&skoid=f3267c15-016e-4c75-af2c-24daf0bc92e4&sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d&skt=2025-10-31T01%3A18%3A23Z&ske=2025-11-07T01%3A17%3A23Z&sks=b&skv=2025-01-05&sig=Sanitized"
+        "msft:expiry": "2025-11-01T11:14:38Z",
+        "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/thumbnail/thumbnail.png?st=2025-10-30T11%3A14%3A38Z&se=2025-11-01T11%3A14%3A38Z&sp=rl&sv=Sanitized&sr=c&skoid=f3267c15-016e-4c75-af2c-24daf0bc92e4&sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d&skt=2025-10-31T11%3A14%3A02Z&ske=2025-11-07T11%3A13%3A02Z&sks=b&skv=2025-01-05&sig=Sanitized"
       }
     }
   ],
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "20655953"
+    "RandomSeed": "792491983"
   }
 }

@@ -41,7 +41,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T01:01:52.3418179Z",
+        "creationTime": "2025-10-31T11:09:32.777577Z",
         "importType": "StaticCatalog",
         "displayName": "Ingestion for Run",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -84,7 +84,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T01:01:52.4898893Z",
+        "creationTime": "2025-10-31T11:09:32.8895971Z",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
         "skipExistingItems": true,
         "keepOriginalAssets": true,
@@ -94,10 +94,10 @@
           "statusHistory": [
             {
               "status": "Pending",
-              "timestamp": "2025-10-31T01:01:52.4648222Z"
+              "timestamp": "2025-10-31T11:09:32.8500463Z"
             }
           ],
-          "creationTime": "2025-10-31T01:01:52.4648184Z",
+          "creationTime": "2025-10-31T11:09:32.850045Z",
           "totalItems": 0,
           "totalPendingItems": 0,
           "totalSuccessfulItems": 0,
@@ -110,6 +110,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_INGESTION_CATALOG_URL": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
-    "RandomSeed": "168383023"
+    "RandomSeed": "651005358"
   }
 }

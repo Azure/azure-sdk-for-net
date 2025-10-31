@@ -21,7 +21,7 @@
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
         "Connection": "keep-alive",
-        "Content-Length": "900",
+        "Content-Length": "893",
         "Content-Type": "application/json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -51,7 +51,7 @@
             },
             {
               "id": "test-mosaic-1",
-              "name": "Test Most recent available",
+              "name": "Test Mosaic Updated",
               "description": null,
               "cql": []
             }
@@ -89,6 +89,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "590498343"
+    "RandomSeed": "310440080"
   }
 }

@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -19,7 +19,7 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
-        "Connection": "keep-alive",
+        "Connection": "close",
         "Content-Length": "146",
         "Content-Type": "application/json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
@@ -45,7 +45,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "350",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -106,11 +106,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -119,7 +119,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -149,11 +149,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -162,7 +162,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -192,11 +192,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -205,7 +205,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -235,11 +235,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -248,7 +248,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -278,11 +278,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -291,7 +291,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -321,11 +321,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -334,7 +334,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -364,11 +364,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -377,7 +377,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -407,11 +407,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -420,7 +420,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -450,11 +450,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -463,7 +463,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -493,11 +493,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -506,7 +506,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -536,11 +536,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -549,7 +549,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -579,11 +579,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -592,7 +592,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -622,11 +622,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -635,7 +635,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -665,11 +665,11 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -678,7 +678,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -708,19 +708,19 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           },
           {
             "status": "Running",
-            "timestamp": "2025-10-30T23:07:34.1151163Z"
+            "timestamp": "2025-10-31T11:27:17.9317265Z"
           },
           {
             "status": "Finished",
-            "timestamp": "2025-10-30T23:07:34.3614015Z"
+            "timestamp": "2025-10-31T11:27:18.1501585Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -729,7 +729,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -759,19 +759,19 @@
         "statusHistory": [
           {
             "status": "Pending",
-            "timestamp": "2025-10-30T23:07:20.5025186Z"
+            "timestamp": "2025-10-31T11:27:04.1839717Z"
           },
           {
             "status": "Running",
-            "timestamp": "2025-10-30T23:07:34.1151163Z"
+            "timestamp": "2025-10-31T11:27:17.9317265Z"
           },
           {
             "status": "Finished",
-            "timestamp": "2025-10-30T23:07:34.3614015Z"
+            "timestamp": "2025-10-31T11:27:18.1501585Z"
           }
         ],
         "type": "AddCollection",
-        "creationTime": "2025-10-30T23:07:20.5025163Z",
+        "creationTime": "2025-10-31T11:27:04.1839686Z",
         "collectionId": "test-collection-lifecycle"
       }
     },
@@ -781,7 +781,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251030.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -854,14 +854,14 @@
         "license": "CC-BY-4.0",
         "description": "An example collection",
         "stac_version": "1.0.0",
-        "msft:_created": "2025-10-30T23:07:34.2191864Z",
-        "msft:_updated": "2025-10-30T23:07:34.2191864Z",
+        "msft:_created": "2025-10-31T11:27:18.0303482Z",
+        "msft:_updated": "2025-10-31T11:27:18.0303482Z",
         "msft:short_description": "An example collection"
       }
     }
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "509303160"
+    "RandomSeed": "1978882460"
   }
 }
