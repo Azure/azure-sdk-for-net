@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
                 HighAvailability = RedisEnterpriseHighAvailability.Enabled,
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled,
                 Zones = { "1", "2", "3" }
             };
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
                 HighAvailability = RedisEnterpriseHighAvailability.Disabled,
-                PublicNetworkAccess = PublicNetworkAccess.Enabled
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
                 HighAvailability = RedisEnterpriseHighAvailability.Enabled,
-                PublicNetworkAccess = PublicNetworkAccess.Enabled
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;

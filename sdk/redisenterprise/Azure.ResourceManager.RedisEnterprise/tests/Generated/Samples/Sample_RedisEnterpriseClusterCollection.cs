@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                     },
                     KeyEncryptionKeyUri = new Uri("https://your-kv.vault.azure.net/keys/your-key/your-key-version"),
                 },
-                PublicNetworkAccess = PublicNetworkAccess.Disabled,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Disabled,
                 Tags =
 {
 ["tag1"] = "value1"

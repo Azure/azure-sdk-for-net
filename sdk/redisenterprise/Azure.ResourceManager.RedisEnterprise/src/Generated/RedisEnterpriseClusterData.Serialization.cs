@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             RedisEnterpriseClusterResourceState? resourceState = default;
             string redisVersion = default;
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                                 publicNetworkAccess = null;
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new RedisEnterprisePublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

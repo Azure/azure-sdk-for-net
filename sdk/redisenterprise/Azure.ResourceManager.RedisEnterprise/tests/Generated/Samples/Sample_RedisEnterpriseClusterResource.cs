@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 ["tag1"] = "value1"
 },
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled,
             };
             ArmOperation<RedisEnterpriseClusterResource> lro = await redisEnterpriseCluster.UpdateAsync(WaitUntil.Completed, patch);
             RedisEnterpriseClusterResource result = lro.Value;

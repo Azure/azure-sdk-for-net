@@ -68,6 +68,7 @@ rename-mapping:
   Protocol.Plaintext: PlainText
   Protocol: RedisEnterpriseClientProtocol
   ProvisioningState: RedisEnterpriseProvisioningStatus
+  PublicNetworkAccess: RedisEnterprisePublicNetworkAccess
   RdbFrequency.12h: TwelveHours
   RdbFrequency.1h: OneHour
   RdbFrequency.6h: SixHours
