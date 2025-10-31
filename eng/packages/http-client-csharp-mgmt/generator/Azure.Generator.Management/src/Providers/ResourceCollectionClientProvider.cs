@@ -180,6 +180,13 @@ namespace Azure.Generator.Management.Providers
             }
             foreach (var seg in variableSegments)
             {
+                // Skip parameters that should remain as method parameters rather than becoming constructor parameters/fields.
+                // These are parameters that identify individual resources in the collection, not the collection itself.
+                if (ShouldParameterRemainAsMethodParameter(seg.VariableName))
+                {
+                    continue;
+                }
+
                 var parameter = new ParameterProvider(
                     seg.VariableName,
                     $"The {seg.VariableName} for the resource.",
@@ -188,6 +195,45 @@ namespace Azure.Generator.Management.Providers
                 map.Add(parameter, field);
             }
             return map;
+        }
+
+        /// <summary>
+        /// Determines whether a path parameter should remain as a method parameter instead of becoming a constructor parameter/field.
+        /// Parameters that identify individual resources in a collection (rather than the collection's scope) should be method parameters.
+        /// </summary>
+        /// <param name="parameterName">The name of the parameter to check.</param>
+        /// <returns>True if the parameter should remain as a method parameter; false if it should become a constructor parameter/field.</returns>
+        private bool ShouldParameterRemainAsMethodParameter(string parameterName)
+        {
+            // subscriptionId should be a method parameter when it appears after the parent scope in scenarios where
+            // the parent is not naturally scoped to a subscription (e.g., ManagementGroup, Tenant).
+            // In these cases, subscriptionId identifies individual resources in the collection, not the collection itself.
+            if (string.Equals(parameterName, "subscriptionId", StringComparison.OrdinalIgnoreCase))
+            {
+                // Check if the contextual path (parent) is naturally subscription-scoped
+                // If the parent is Subscription or ResourceGroup scoped, subscriptionId is part of the parent identity
+                // and should not be a method parameter (it would be extracted from the parent's Id).
+                // If the parent is ManagementGroup or Tenant scoped, subscriptionId is a cross-scope parameter
+                // that varies per resource and should be a method parameter.
+                bool isParentSubscriptionScoped = _contextualPath == RequestPathPattern.Subscription ||
+                                                  _contextualPath == RequestPathPattern.ResourceGroup ||
+                                                  _contextualPath.IsAncestorOf(RequestPathPattern.Subscription);
+
+                if (!isParentSubscriptionScoped)
+                {
+                    return true;
+                }
+            }
+
+            // resourceProviderName (as a standalone segment, not as part of providers/{resourceProviderNamespace})
+            // is typically used as a filtering/scoping parameter that varies per resource.
+            // It should remain as a method parameter rather than becoming a constructor parameter.
+            if (string.Equals(parameterName, "resourceProviderName", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         // BuildPathParameters is now handled by BuildPathParametersAndFields
