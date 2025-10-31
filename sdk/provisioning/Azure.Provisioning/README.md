@@ -26,29 +26,38 @@ This library allows you to specify your infrastructure in a declarative style us
 
 **Declarative Design Pattern**: `Azure.Provisioning` is designed for declarative infrastructure definition. Each resource and construct instance should represent a single infrastructure component. Avoid reusing the same instance across multiple properties or locations, as this can lead to unexpected behavior in the generated Bicep templates.
 
-```csharp
-// ❌ Don't reuse instances
-var sharedSku = new StorageSku { Name = StorageSkuName.StandardLrs };
-var storage1 = new StorageAccount("storage1") { Sku = sharedSku };
-var storage2 = new StorageAccount("storage2") { Sku = sharedSku }; // Can cause issues
-
+```C# Snippet:CreateSeparateInstances
 // ✅ Create separate instances
-var storage1 = new StorageAccount("storage1")
+StorageAccount storage1 = new(nameof(storage1))
 {
     Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
 };
-var storage2 = new StorageAccount("storage2")
+StorageAccount storage2 = new(nameof(storage2))
 {
     Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
 };
 ```
 
+<details>
+<summary>❌ What NOT to do - Click to expand bad example</summary>
+
+```C# Snippet:ReuseInstances
+// ❌ DO NOT reuse the same instance
+StorageSku sharedSku = new() { Name = StorageSkuName.StandardLrs };
+StorageAccount storage1 = new(nameof(storage1)) { Sku = sharedSku }; // ❌ Bad
+StorageAccount storage2 = new(nameof(storage2)) { Sku = sharedSku }; // ❌ Bad
+```
+
+This pattern can lead to incorrect Bicep expressions when you build expressions on them. Details could be found in [this section](#tobicepexpression-method).
+
+</details>
+
 **Safe Collection Access**: You can safely access any index in a `BicepList` or any key in a `BicepDictionary` without exceptions. This is **especially important when working with output properties** from Azure resources, where the actual data doesn't exist at design time but you need to create references for the generated Bicep template.
 
-```csharp
+```C# Snippet:SafeCollectionAccess
 // ✅ Accessing output properties safely - very common scenario
-CognitiveServicesAccount aiServices = new("aiServices");
 Infrastructure infra = new();
+CognitiveServicesAccount aiServices = new("aiServices");
 infra.Add(aiServices);
 
 // Safe to access dictionary keys that exist in the deployed resource
@@ -79,8 +88,7 @@ This feature resolves common scenarios where you need to reference nested proper
 - A Bicep expression that evaluates to type `T`
 - An unset value (usually one should get this state from the property of a constructed resource/construct)
 
-```csharp
-// Literal value
+```C# Snippet:ThreeKindsOfBicepValue
 BicepValue<string> literalName = "my-storage-account";
 
 // Expression value
@@ -95,15 +103,19 @@ BicepValue<string> unsetName = storageAccount.Name;
 - A Bicep expression that evaluates to an array
 - An unset list (usually one should get this state from the property of a constructed resource/construct)
 
-```csharp
+```C# Snippet:BicepListUsages
 // Literal list
 BicepList<string> tagNames = new() { "Environment", "Project", "Owner" };
 
-// Expression list (referencing a parameter)
-BicepList<string> dynamicTags = parameterReference;
+// Modifying items
+tagNames.Add("CostCenter"); // add an item
+tagNames.Remove("Owner"); // remove an item
+tagNames[0] = "Env"; // modify an item
+tagNames.Clear(); // clear all items
 
-// Adding items
-tagNames.Add("CostCenter");
+// Expression list (referencing a parameter)
+ProvisioningParameter parameter = new(nameof(parameter), typeof(string[]));
+BicepList<string> dynamicTags = parameter;
 ```
 
 **`BicepDictionary<T>`** - Represents a key-value collection where values are `BicepValue<T>`:
@@ -111,7 +123,7 @@ tagNames.Add("CostCenter");
 - A Bicep expression that evaluates to an object
 - An unset dictionary (usually one should get this state from the property of a constructed resource/construct)
 
-```csharp
+```C# Snippet:BicepDictionaryUsages
 // Literal dictionary
 BicepDictionary<string> tags = new()
 {
@@ -120,11 +132,12 @@ BicepDictionary<string> tags = new()
     ["Owner"] = "DevTeam"
 };
 
-// Expression dictionary
-BicepDictionary<string> dynamicTags = parameterReference;
-
 // Accessing values
 tags["CostCenter"] = "12345";
+
+// Expression dictionary
+ProvisioningParameter parameter = new(nameof(parameter), typeof(object));
+BicepDictionary<string> dynamicTags = parameter;
 ```
 
 #### Working with Azure Resources
@@ -135,16 +148,19 @@ tags["CostCenter"] = "12345";
 
 Here's how you use the provided Azure resource classes:
 
-```csharp
+```C# Snippet:WorkingWithAzureResources
+// Define parameters for dynamic configuration
+ProvisioningParameter location = new(nameof(location), typeof(string));
+ProvisioningParameter environment = new(nameof(environment), typeof(string));
 // Create a storage account with BicepValue properties
-StorageAccount storage = new("myStorage", StorageAccount.ResourceVersions.V2023_01_01)
+StorageAccount myStorage = new(nameof(myStorage), StorageAccount.ResourceVersions.V2023_01_01)
 {
     // Set literal values
     Name = "mystorageaccount",
     Kind = StorageKind.StorageV2,
 
     // Use BicepValue for dynamic configuration
-    Location = locationParameter, // Reference a parameter
+    Location = location, // Reference a parameter
 
     // Configure nested properties
     Sku = new StorageSku
@@ -156,22 +172,18 @@ StorageAccount storage = new("myStorage", StorageAccount.ResourceVersions.V2023_
     Tags = new BicepDictionary<string>
     {
         ["Environment"] = "Production",
-        ["Project"] = environmentParameter // Mix literal and dynamic values
+        ["Project"] = environment // Mix literal and dynamic values
     }
 };
 
-// Access output properties (these are BicepValue<T> that reference the deployed resource)
-BicepValue<string> storageAccountId = storage.Id;
-BicepValue<Uri> primaryBlobEndpoint = storage.PrimaryEndpoints.BlobUri;
-
-// Reference properties in other resources
-var appService = new AppService("myApp")
+// Access output properties and use them in output (these are BicepValue<T> that reference the deployed resource)
+ProvisioningOutput storageAccountId = new(nameof(storageAccountId), typeof(string))
 {
-    // Reference the storage account's connection string
-    ConnectionStrings = new BicepDictionary<string>
-    {
-        ["Storage"] = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};AccountKey={storage.GetKeys().Value[0].Value}")
-    }
+    Value = myStorage.Id
+};
+ProvisioningOutput primaryBlobEndpoint = new(nameof(primaryBlobEndpoint), typeof(string))
+{
+    Value = myStorage.PrimaryEndpoints.BlobUri
 };
 ```
 
@@ -181,19 +193,26 @@ The `ToBicepExpression()` extension method allows you to create references to re
 
 #### Common use cases:
 
-**Building connection strings and URLs:**
-```csharp
+**Assert a property as expression:**
+```C# Snippet:CommonUseCases
 // Create a storage account
-StorageAccount storage = new("myStorage", StorageAccount.ResourceVersions.V2023_01_01)
+StorageAccount storage = new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
 {
     Name = "mystorageaccount",
     Kind = StorageKind.StorageV2
 };
 
 // Reference the storage account name in a connection string
-BicepExpression connectionString = BicepFunction.Interpolate(
-    $"DefaultEndpointsProtocol=https;AccountName={storage.Name.ToBicepExpression()};EndpointSuffix=core.windows.net"
+BicepValue<string> connectionString = BicepFunction.Interpolate(
+    $"AccountName={storage.Name.ToBicepExpression()};EndpointSuffix=core.windows.net"
 );
+// this would produce: 'AccountName=${storage.name};EndpointSuffix=core.windows.net'
+// If we do not call ToBicepExpression()
+BicepValue<string> nonExpressionConnectionString =
+    BicepFunction.Interpolate(
+        $"AccountName={storage.Name};EndpointSuffix=core.windows.net"
+    );
+// this would produce: 'AccountName=mystorageaccount;EndpointSuffix=core.windows.net'
 ```
 
 **Referencing resource outputs:**
