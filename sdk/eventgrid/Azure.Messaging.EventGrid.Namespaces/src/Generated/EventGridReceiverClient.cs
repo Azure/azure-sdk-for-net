@@ -34,44 +34,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridReceiverClient(Uri endpoint, AzureKeyCredential credential, EventGridNamespacesClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new EventGridNamespacesClientOptions();
-
-            _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of EventGridReceiverClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridReceiverClient(Uri endpoint, TokenCredential credential, EventGridNamespacesClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new EventGridNamespacesClientOptions();
-
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
 
