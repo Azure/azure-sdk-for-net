@@ -17,7 +17,7 @@
         "kind": "SasToken",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
-          "sasToken": "sp=rl&st=2025-10-31T11:11:40Z&se=2025-11-07T11:11:40Z&sv=2023-01-03&sr=c&sig=InitialRandomSignature123456"
+          "sasToken": "sp=rl&st=2025-10-31T11:46:27Z&se=2025-11-07T11:46:27Z&sv=2023-01-03&sr=c&sig=InitialRandomSignature123456"
         }
       },
       "StatusCode": 201,
@@ -43,10 +43,10 @@
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
         "kind": "SasToken",
-        "created": "2025-10-31T11:11:58.3444468Z",
+        "created": "2025-10-31T11:46:37.7253072Z",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
-          "expiration": "2025-11-07T11:11:40.0000000Z"
+          "expiration": "2025-11-07T11:46:27.0000000Z"
         }
       }
     },
@@ -67,7 +67,7 @@
         "kind": "SasToken",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
-          "sasToken": "sp=rl&st=2025-10-31T11:11:40Z&se=2025-11-07T11:11:40Z&sv=2023-01-03&sr=c&sig=InitialRandomSignature123456"
+          "sasToken": "sp=rl&st=2025-10-31T11:46:27Z&se=2025-11-07T11:46:27Z&sv=2023-01-03&sr=c&sig=InitialRandomSignature123456"
         }
       },
       "StatusCode": 200,
@@ -94,7 +94,7 @@
         "kind": "SasToken",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
-          "expiration": "2025-11-07T11:11:40.0000000Z"
+          "expiration": "2025-11-07T11:46:27.0000000Z"
         }
       }
     },
@@ -115,7 +115,7 @@
         "kind": "SasToken",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
-          "sasToken": "sp=rl&st=2025-10-31T11:11:40Z&se=2025-11-07T11:11:40Z&sv=2023-01-03&sr=c&sig=UpdatedRandomSignature123456"
+          "sasToken": "sp=rl&st=2025-10-31T11:46:27Z&se=2025-11-07T11:46:27Z&sv=2023-01-03&sr=c&sig=UpdatedRandomSignature123456"
         }
       },
       "StatusCode": 200,
@@ -142,7 +142,7 @@
         "kind": "SasToken",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
-          "expiration": "2025-11-07T11:11:40.0000000Z"
+          "expiration": "2025-11-07T11:46:27.0000000Z"
         }
       }
     },
@@ -178,6 +178,6 @@
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1284396819"
+    "RandomSeed": "1192033176"
   }
 }

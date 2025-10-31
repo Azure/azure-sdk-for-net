@@ -41,7 +41,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T11:12:50.5013517Z",
+        "creationTime": "2025-10-31T11:47:13.2158557Z",
         "importType": "StaticCatalog",
         "displayName": "Ingestion for List Runs Test",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -84,7 +84,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T11:12:50.587992Z",
+        "creationTime": "2025-10-31T11:47:13.3334982Z",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
         "skipExistingItems": true,
         "keepOriginalAssets": true,
@@ -94,10 +94,10 @@
           "statusHistory": [
             {
               "status": "Pending",
-              "timestamp": "2025-10-31T11:12:50.5593042Z"
+              "timestamp": "2025-10-31T11:47:13.3117177Z"
             }
           ],
-          "creationTime": "2025-10-31T11:12:50.5593028Z",
+          "creationTime": "2025-10-31T11:47:13.3117152Z",
           "totalItems": 0,
           "totalPendingItems": 0,
           "totalSuccessfulItems": 0,
@@ -139,7 +139,7 @@
         "value": [
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:12:50.587992Z",
+            "creationTime": "2025-10-31T11:47:13.3334982Z",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
             "skipExistingItems": true,
             "keepOriginalAssets": true,
@@ -149,10 +149,10 @@
               "statusHistory": [
                 {
                   "status": "Pending",
-                  "timestamp": "2025-10-31T11:12:50.5593042Z"
+                  "timestamp": "2025-10-31T11:47:13.3117177Z"
                 }
               ],
-              "creationTime": "2025-10-31T11:12:50.5593028Z",
+              "creationTime": "2025-10-31T11:47:13.3117152Z",
               "totalItems": 0,
               "totalPendingItems": 0,
               "totalSuccessfulItems": 0,
@@ -167,6 +167,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_INGESTION_CATALOG_URL": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
-    "RandomSeed": "1930691889"
+    "RandomSeed": "942700297"
   }
 }

@@ -20,7 +20,7 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
-        "Connection": "close",
+        "Connection": "keep-alive",
         "Content-Length": "58",
         "Content-Type": "application/json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
@@ -30,7 +30,7 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "msft:expiry": "2025-10-31T12:13:26Z",
+        "msft:expiry": "2025-10-31T12:47:35Z",
         "token": "Sanitized"
       }
     },
@@ -69,6 +69,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1756736931"
+    "RandomSeed": "300700923"
   }
 }

@@ -223,14 +223,14 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "msft:expiry": "2025-11-01T11:14:38Z",
-        "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/thumbnail/thumbnail.png?st=2025-10-30T11%3A14%3A38Z&se=2025-11-01T11%3A14%3A38Z&sp=rl&sv=Sanitized&sr=c&skoid=f3267c15-016e-4c75-af2c-24daf0bc92e4&sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d&skt=2025-10-31T11%3A14%3A02Z&ske=2025-11-07T11%3A13%3A02Z&sks=b&skv=2025-01-05&sig=Sanitized"
+        "msft:expiry": "2025-11-01T11:48:17Z",
+        "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/thumbnail/thumbnail.png?st=2025-10-30T11%3A48%3A17Z&se=2025-11-01T11%3A48%3A17Z&sp=rl&sv=Sanitized&sr=c&skoid=f3267c15-016e-4c75-af2c-24daf0bc92e4&sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d&skt=2025-10-31T11%3A47%3A55Z&ske=2025-11-07T11%3A46%3A55Z&sks=b&skv=2025-01-05&sig=Sanitized"
       }
     }
   ],
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "792491983"
+    "RandomSeed": "1714443461"
   }
 }

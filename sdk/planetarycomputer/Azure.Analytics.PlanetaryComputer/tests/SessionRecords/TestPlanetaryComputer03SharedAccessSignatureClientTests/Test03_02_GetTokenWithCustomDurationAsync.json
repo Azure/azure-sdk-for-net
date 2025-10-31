@@ -30,7 +30,7 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "msft:expiry": "2025-10-31T12:14:03Z",
+        "msft:expiry": "2025-10-31T12:47:56Z",
         "token": "Sanitized"
       }
     }
@@ -38,6 +38,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1863640133"
+    "RandomSeed": "157424232"
   }
 }
