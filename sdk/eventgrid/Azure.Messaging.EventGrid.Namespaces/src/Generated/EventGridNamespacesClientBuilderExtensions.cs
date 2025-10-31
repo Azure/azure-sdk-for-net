@@ -5,12 +5,66 @@
 
 #nullable disable
 
+using System;
+using Azure;
 using Azure.Core.Extensions;
+using Azure.Messaging.EventGrid.Namespaces;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class EventGridNamespacesClientBuilderExtensions
     {
+        /// <summary> Registers a <see cref="EventGridSenderClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public static IAzureClientBuilder<EventGridSenderClient, EventGridNamespacesClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<EventGridSenderClient, EventGridNamespacesClientOptions>(options => new EventGridSenderClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="EventGridSenderClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<EventGridSenderClient, EventGridNamespacesClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<EventGridSenderClient, EventGridNamespacesClientOptions>((options, credential) => new EventGridSenderClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="EventGridReceiverClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public static IAzureClientBuilder<EventGridReceiverClient, EventGridNamespacesClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<EventGridReceiverClient, EventGridNamespacesClientOptions>(options => new EventGridReceiverClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="EventGridReceiverClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<EventGridReceiverClient, EventGridNamespacesClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<EventGridReceiverClient, EventGridNamespacesClientOptions>((options, credential) => new EventGridReceiverClient(endpoint, credential, options));
+        }
     }
 }
