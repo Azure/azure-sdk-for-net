@@ -82,7 +82,7 @@ public abstract class PipelineRequest : IDisposable
     public virtual string ClientRequestId
     {
         get => _clientRequestId ??= Activity.Current?.Id ?? Guid.NewGuid().ToString();
-        set
+        init
         {
             Argument.AssertNotNull(value, nameof(value));
             _clientRequestId = value;
