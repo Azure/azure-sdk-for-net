@@ -178,11 +178,16 @@ namespace Azure.Generator.Management.Providers
             {
                 variableSegments.RemoveAt(variableSegments.Count - 1);
             }
+
+            // Check if we encounter a scope transition in the path (e.g., subscriptionId after ManagementGroup)
+            // If so, all parameters after that point should be method parameters, not constructor parameters
+            bool hasScopeTransition = HasScopeTransition(diff);
+
             foreach (var seg in variableSegments)
             {
                 // Skip parameters that should remain as method parameters rather than becoming constructor parameters/fields.
                 // These are parameters that identify individual resources in the collection, not the collection itself.
-                if (ShouldParameterRemainAsMethodParameter(seg.VariableName))
+                if (hasScopeTransition || ShouldParameterRemainAsMethodParameter(seg.VariableName))
                 {
                     continue;
                 }
@@ -195,6 +200,36 @@ namespace Azure.Generator.Management.Providers
                 map.Add(parameter, field);
             }
             return map;
+        }
+
+        /// <summary>
+        /// Determines if the path contains a scope transition where subscriptionId appears after a non-subscription parent.
+        /// When this occurs, all parameters in the path should be method parameters rather than constructor parameters.
+        /// </summary>
+        /// <param name="diffPath">The path difference between parent and resource.</param>
+        /// <returns>True if there's a scope transition; false otherwise.</returns>
+        private bool HasScopeTransition(RequestPathPattern diffPath)
+        {
+            // Check if the parent is subscription-scoped
+            bool isParentSubscriptionScoped = _contextualPath == RequestPathPattern.Subscription ||
+                                              _contextualPath == RequestPathPattern.ResourceGroup ||
+                                              _contextualPath.IsAncestorOf(RequestPathPattern.Subscription);
+
+            if (isParentSubscriptionScoped)
+            {
+                return false;
+            }
+
+            // Check if subscriptionId appears in the diff path (indicating cross-subscription access)
+            foreach (var segment in diffPath)
+            {
+                if (!segment.IsConstant && string.Equals(segment.VariableName, "subscriptionId", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
