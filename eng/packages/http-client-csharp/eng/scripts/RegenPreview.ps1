@@ -511,7 +511,7 @@ try {
     Add-LocalNuGetSource -NuGetConfigPath $nugetConfigPath -SourcePath $debugFolder
     
     # Step 3: Build required generators and update artifacts
-    Write-Host "`n[4/5] Building additional required generators and updating artifacts..." -ForegroundColor Cyan
+    Write-Host "`n[4/6] Building additional required generators and updating artifacts..." -ForegroundColor Cyan
     
     # Determine which generators are needed based on libraries to be regenerated
     if ($Select) {
@@ -822,7 +822,6 @@ catch {
     Write-Host "`nAttempting to restore NuGet.Config..." -ForegroundColor Yellow
     Push-Location $sdkRepoPath -ErrorAction SilentlyContinue
     try {
-        #& git restore NuGet.Config 2>&1 | Out-Null
         Invoke "git restore NuGet.Config" $sdkRepoPath
         Write-Host "  NuGet.Config restored" -ForegroundColor Green
     }

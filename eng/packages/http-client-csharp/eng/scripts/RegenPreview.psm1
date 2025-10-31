@@ -80,7 +80,7 @@ function Update-GeneratorPackage {
             $packageJson | ConvertTo-Json -Depth 100 | Set-Content $packageJsonPath -Encoding UTF8
             Write-Host "  Updated dependencies to local packages" -ForegroundColor Green
 
-             # Step 2: Install dependencies, clean, and build
+            # Install dependencies, clean, and build
             Push-Location $GeneratorPath
             try {
                 Write-Host "Installing dependencies..." -ForegroundColor Gray
