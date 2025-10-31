@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
@@ -36,6 +37,7 @@ pr:
   paths:
     include:
     - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
