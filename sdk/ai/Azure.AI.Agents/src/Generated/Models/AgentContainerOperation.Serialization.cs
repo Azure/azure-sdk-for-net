@@ -201,7 +201,7 @@ namespace Azure.AI.Agents
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentContainerOperation"/> from. </param>
         public static explicit operator AgentContainerOperation(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeAgentContainerOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

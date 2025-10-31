@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -90,7 +89,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            ClientResult result = GetAgent(agentName, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetAgent(agentName, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
         }
 
@@ -104,267 +103,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            ClientResult result = await GetAgentAsync(agentName, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates the agent. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentRecord> CreateAgent(string name, AgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            AgentCreationOptions spreadModel = new AgentCreationOptions(name, metadata, description, definition, default);
-            ClientResult result = CreateAgent(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates the agent. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentRecord>> CreateAgentAsync(string name, AgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            AgentCreationOptions spreadModel = new AgentCreationOptions(name, metadata, description, definition, default);
-            ClientResult result = await CreateAgentAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Updates the agent by adding a new version if there are any changes to the agent definition.
-        /// If no changes, returns the existing agent version.
-        /// </summary>
-        /// <param name="agentName"> The name of the agent to retrieve. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentRecord> UpdateAgent(string agentName, AgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            AgentUpdateOptions spreadModel = new AgentUpdateOptions(metadata, description, definition, default);
-            ClientResult result = UpdateAgent(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Updates the agent by adding a new version if there are any changes to the agent definition.
-        /// If no changes, returns the existing agent version.
-        /// </summary>
-        /// <param name="agentName"> The name of the agent to retrieve. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentRecord>> UpdateAgentAsync(string agentName, AgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            AgentUpdateOptions spreadModel = new AgentUpdateOptions(metadata, description, definition, default);
-            ClientResult result = await UpdateAgentAsync(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates an agent from a manifest. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="manifestId"/> or <paramref name="parameterValues"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentRecord> CreateAgentFromManifest(string name, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-            Argument.AssertNotNull(parameterValues, nameof(parameterValues));
-
-            CreateAgentFromManifestRequest1 spreadModel = new CreateAgentFromManifestRequest1(
-                name,
-                metadata,
-                description,
-                default,
-                default,
-                default);
-            ClientResult result = CreateAgentFromManifest(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates an agent from a manifest. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="manifestId"/> or <paramref name="parameterValues"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentRecord>> CreateAgentFromManifestAsync(string name, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-            Argument.AssertNotNull(parameterValues, nameof(parameterValues));
-
-            CreateAgentFromManifestRequest1 spreadModel = new CreateAgentFromManifestRequest1(
-                name,
-                metadata,
-                description,
-                default,
-                default,
-                default);
-            ClientResult result = await CreateAgentFromManifestAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Updates the agent from a manifest by adding a new version if there are any changes to the agent definition.
-        /// If no changes, returns the existing agent version.
-        /// </summary>
-        /// <param name="agentName"> The name of the agent to update. </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="manifestId"/> or <paramref name="parameterValues"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentRecord> UpdateAgentFromManifest(string agentName, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-            Argument.AssertNotNull(parameterValues, nameof(parameterValues));
-
-            UpdateAgentFromManifestRequest1 spreadModel = new UpdateAgentFromManifestRequest1(metadata, description, default, default, default);
-            ClientResult result = UpdateAgentFromManifest(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Updates the agent from a manifest by adding a new version if there are any changes to the agent definition.
-        /// If no changes, returns the existing agent version.
-        /// </summary>
-        /// <param name="agentName"> The name of the agent to update. </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="manifestId"/> or <paramref name="parameterValues"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentRecord>> UpdateAgentFromManifestAsync(string agentName, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-            Argument.AssertNotNull(parameterValues, nameof(parameterValues));
-
-            UpdateAgentFromManifestRequest1 spreadModel = new UpdateAgentFromManifestRequest1(metadata, description, default, default, default);
-            ClientResult result = await UpdateAgentFromManifestAsync(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
         }
 
@@ -422,7 +161,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            ClientResult result = DeleteAgent(agentName, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteAgent(agentName, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentDeletionResult)result, result.GetRawResponse());
         }
 
@@ -436,136 +175,8 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            ClientResult result = await DeleteAgentAsync(agentName, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentDeletionResult)result, result.GetRawResponse());
-        }
-
-        /// <summary> Create a new agent version. </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentVersion> CreateAgentVersion(string agentName, AgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            AgentVersionCreationOptions spreadModel = new AgentVersionCreationOptions(metadata, description, definition, default);
-            ClientResult result = CreateAgentVersion(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AgentVersion)result, result.GetRawResponse());
-        }
-
-        /// <summary> Create a new agent version. </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionAsync(string agentName, AgentDefinition definition, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            AgentVersionCreationOptions spreadModel = new AgentVersionCreationOptions(metadata, description, definition, default);
-            ClientResult result = await CreateAgentVersionAsync(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentVersion)result, result.GetRawResponse());
-        }
-
-        /// <summary> Create a new agent version from a manifest. </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="manifestId"/> or <paramref name="parameterValues"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-            Argument.AssertNotNull(parameterValues, nameof(parameterValues));
-
-            AgentManifestOptions spreadModel = new AgentManifestOptions(metadata, description, default, default, default);
-            ClientResult result = CreateAgentVersionFromManifest(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AgentVersion)result, result.GetRawResponse());
-        }
-
-        /// <summary> Create a new agent version from a manifest. </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters,
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="manifestId"/> or <paramref name="parameterValues"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionFromManifestAsync(string agentName, string manifestId, IDictionary<string, BinaryData> parameterValues, IDictionary<string, string> metadata = default, string description = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-            Argument.AssertNotNull(parameterValues, nameof(parameterValues));
-
-            AgentManifestOptions spreadModel = new AgentManifestOptions(metadata, description, default, default, default);
-            ClientResult result = await CreateAgentVersionFromManifestAsync(agentName, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentVersion)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -628,7 +239,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = GetAgentVersion(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetAgentVersion(agentName, agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentVersion)result, result.GetRawResponse());
         }
 
@@ -644,7 +255,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = await GetAgentVersionAsync(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAgentVersionAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentVersion)result, result.GetRawResponse());
         }
 
@@ -708,7 +319,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = DeleteAgentVersion(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteAgentVersion(agentName, agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DeleteAgentVersionResponse)result, result.GetRawResponse());
         }
 
@@ -724,7 +335,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = await DeleteAgentVersionAsync(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteAgentVersionAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DeleteAgentVersionResponse)result, result.GetRawResponse());
         }
 
@@ -803,7 +414,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
             StartAgentContainerRequest spreadModel = new StartAgentContainerRequest(default, default, default);
-            ClientResult result = StartAgentContainer(agentName, agentVersion, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = StartAgentContainer(agentName, agentVersion, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -826,7 +437,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
             StartAgentContainerRequest spreadModel = new StartAgentContainerRequest(default, default, default);
-            ClientResult result = await StartAgentContainerAsync(agentName, agentVersion, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await StartAgentContainerAsync(agentName, agentVersion, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -905,7 +516,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
             UpdateAgentContainerRequest spreadModel = new UpdateAgentContainerRequest(default, default, default);
-            ClientResult result = UpdateAgentContainer(agentName, agentVersion, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = UpdateAgentContainer(agentName, agentVersion, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -928,7 +539,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
             UpdateAgentContainerRequest spreadModel = new UpdateAgentContainerRequest(default, default, default);
-            ClientResult result = await UpdateAgentContainerAsync(agentName, agentVersion, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await UpdateAgentContainerAsync(agentName, agentVersion, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -1000,7 +611,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = StopAgentContainer(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = StopAgentContainer(agentName, agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -1020,7 +631,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = await StopAgentContainerAsync(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await StopAgentContainerAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -1092,7 +703,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = DeleteAgentContainer(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteAgentContainer(agentName, agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -1112,7 +723,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = await DeleteAgentContainerAsync(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteAgentContainerAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -1176,7 +787,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = GetAgentContainer(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetAgentContainer(agentName, agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentContainer)result, result.GetRawResponse());
         }
 
@@ -1192,7 +803,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-            ClientResult result = await GetAgentContainerAsync(agentName, agentVersion, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAgentContainerAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentContainer)result, result.GetRawResponse());
         }
 
@@ -1256,7 +867,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            ClientResult result = GetAgentContainerOperation(agentName, operationId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetAgentContainerOperation(agentName, operationId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
 
@@ -1272,7 +883,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            ClientResult result = await GetAgentContainerOperationAsync(agentName, operationId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAgentContainerOperationAsync(agentName, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentContainerOperation)result, result.GetRawResponse());
         }
     }

@@ -22,9 +22,9 @@ public static partial class ResponseCreationOptionsExtensions
     /// <param name="agentReference"></param>
     public static void SetAgentReference(this ResponseCreationOptions responseCreationOptions, AgentReference agentReference)
     {
-        responseCreationOptions.SetAdditionalProperty("agent", agentReference);
+        AdditionalPropertyHelpers.SetAdditionalProperty(responseCreationOptions, "agent", agentReference);
         // Agent specification is mutually exclusive with model specification; see internal issue 4770700
-        responseCreationOptions.SetAdditionalProperty("model", BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray()));
+        AdditionalPropertyHelpers.SetAdditionalProperty(responseCreationOptions, "model", BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray()));
     }
 
     /// <summary>
@@ -72,20 +72,4 @@ public static partial class ResponseCreationOptionsExtensions
     /// <param name="conversation"></param>
     public static void SetConversationReference(this ResponseCreationOptions responseCreationOptions, AgentConversation conversation)
         => SetConversationReference(responseCreationOptions, conversation.Id);
-
-    private static void SetAdditionalProperty<T>(this ResponseCreationOptions responseCreationOptions, string key, T value)
-    {
-        PropertyInfo additionalDataProperty = typeof(ResponseCreationOptions).GetProperty("SerializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
-        object existingSerializedAdditionalRawData = additionalDataProperty.GetValue(responseCreationOptions);
-
-        IDictionary<string, BinaryData> additionalData = (IDictionary<string, BinaryData>)existingSerializedAdditionalRawData ?? new Dictionary<string, BinaryData>();
-        BinaryData writtenBinaryData = value switch
-        {
-            BinaryData binaryDataObject => binaryDataObject,
-            string stringObject => BinaryData.FromString(stringObject),
-            _ => ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIAgentsContext.Default),
-        };
-        additionalData[key] = writtenBinaryData;
-        additionalDataProperty.SetValue(responseCreationOptions, additionalData);
-    }
 }

@@ -166,7 +166,7 @@ namespace Azure.AI.Agents
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryStoreSearchResponse"/> from. </param>
         public static explicit operator MemoryStoreSearchResponse(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeMemoryStoreSearchResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
