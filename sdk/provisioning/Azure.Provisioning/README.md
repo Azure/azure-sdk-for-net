@@ -72,7 +72,7 @@ infra.Add(new ProvisioningOutput("connectionString", typeof(string))
 // Generates: output connectionString string = 'Endpoint=${aiServices.properties.endpoints['Azure AI Model Inference API']}'
 
 // ⚠️ Note: Accessing .Value will still throw at runtime if the data doesn't exist
-// var actualValue = apiEndpoint.Value; // Would throw KeyNotFoundException at runtime
+// BicepValue<string> actualValue = apiEndpoint.Value; // Would throw KeyNotFoundException at runtime
 ```
 
 This feature resolves common scenarios where you need to reference nested properties or collection items as outputs.
