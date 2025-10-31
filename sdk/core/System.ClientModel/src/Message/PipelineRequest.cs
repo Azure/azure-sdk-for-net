@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Diagnostics;
 
 namespace System.ClientModel.Primitives;
@@ -70,10 +71,24 @@ public abstract class PipelineRequest : IDisposable
     /// </summary>
     protected abstract BinaryContent? ContentCore { get; set; }
 
+    private string? _clientRequestId;
+
     /// <summary>
-    /// The client request id to include in log entries.
+    /// Gets or sets the client request id that was sent to the server.
+    /// The value is used to correlate the request with server logs and can be sent
+    /// to the service via custom policies.
+    /// If not set, a value is automatically generated on first access using
+    /// <see cref="Activity.Current"/>?.Id if available, otherwise a new <see cref="Guid"/>.
     /// </summary>
-    internal string? ClientRequestId { get; set; }
+    public string ClientRequestId
+    {
+        get => _clientRequestId ??= Activity.Current?.Id ?? Guid.NewGuid().ToString();
+        set
+        {
+            Argument.AssertNotNull(value, nameof(value));
+            _clientRequestId = value;
+        }
+    }
 
     /// <inheritdoc/>
     public abstract void Dispose();
