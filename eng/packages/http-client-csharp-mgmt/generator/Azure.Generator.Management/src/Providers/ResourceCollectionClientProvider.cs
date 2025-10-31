@@ -203,6 +203,17 @@ namespace Azure.Generator.Management.Providers
         }
 
         /// <summary>
+        /// Checks if the contextual path (parent) is naturally subscription-scoped.
+        /// </summary>
+        /// <returns>True if the parent is subscription-scoped; false otherwise.</returns>
+        private bool IsParentSubscriptionScoped()
+        {
+            return _contextualPath == RequestPathPattern.Subscription ||
+                   _contextualPath == RequestPathPattern.ResourceGroup ||
+                   _contextualPath.IsAncestorOf(RequestPathPattern.Subscription);
+        }
+
+        /// <summary>
         /// Determines if the path contains a scope transition where subscriptionId appears after a non-subscription parent.
         /// When this occurs, all parameters in the path should be method parameters rather than constructor parameters.
         /// </summary>
@@ -210,12 +221,7 @@ namespace Azure.Generator.Management.Providers
         /// <returns>True if there's a scope transition; false otherwise.</returns>
         private bool HasScopeTransition(RequestPathPattern diffPath)
         {
-            // Check if the parent is subscription-scoped
-            bool isParentSubscriptionScoped = _contextualPath == RequestPathPattern.Subscription ||
-                                              _contextualPath == RequestPathPattern.ResourceGroup ||
-                                              _contextualPath.IsAncestorOf(RequestPathPattern.Subscription);
-
-            if (isParentSubscriptionScoped)
+            if (IsParentSubscriptionScoped())
             {
                 return false;
             }
@@ -250,11 +256,7 @@ namespace Azure.Generator.Management.Providers
                 // and should not be a method parameter (it would be extracted from the parent's Id).
                 // If the parent is ManagementGroup or Tenant scoped, subscriptionId is a cross-scope parameter
                 // that varies per resource and should be a method parameter.
-                bool isParentSubscriptionScoped = _contextualPath == RequestPathPattern.Subscription ||
-                                                  _contextualPath == RequestPathPattern.ResourceGroup ||
-                                                  _contextualPath.IsAncestorOf(RequestPathPattern.Subscription);
-
-                if (!isParentSubscriptionScoped)
+                if (!IsParentSubscriptionScoped())
                 {
                     return true;
                 }
