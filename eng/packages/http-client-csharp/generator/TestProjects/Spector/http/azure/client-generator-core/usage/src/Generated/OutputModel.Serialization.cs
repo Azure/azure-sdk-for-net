@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 
         string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator OutputModel(Response result) => throw null;
+        public static explicit operator OutputModel(Response response) => throw null;
     }
 }

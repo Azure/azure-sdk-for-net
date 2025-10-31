@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
@@ -40,10 +41,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
+        /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="extendedLocation"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, ETag? etag = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -55,7 +58,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null || nestedPropertyProperties is null ? default : new FooProperties(
+                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null || etag is null || nestedPropertyProperties is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
@@ -64,6 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     prop1,
                     prop2,
                     new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
+                    etag,
                     new Dictionary<string, BinaryData>()),
                 extendedLocation);
         }
@@ -76,8 +80,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <param name="etag"> ETag property for testing etag parameter name generation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, ETag? etag = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -91,7 +97,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop1.ToList(),
                 prop2.ToList(),
                 nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
+                etag,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooActionRequest. </summary>
+        /// <param name="id"></param>
+        /// <returns> A new <see cref="Models.FooActionRequest"/> instance for mocking. </returns>
+        public static FooActionRequest FooActionRequest(string id = default)
+        {
+            return new FooActionRequest(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FooActionResult. </summary>
+        /// <param name="msg"></param>
+        /// <param name="error"></param>
+        /// <returns> A new <see cref="Models.FooActionResult"/> instance for mocking. </returns>
+        public static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
+        {
+            return new FooActionResult(msg, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>

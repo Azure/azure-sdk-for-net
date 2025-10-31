@@ -366,7 +366,7 @@ namespace Azure.Generator.Management.Visitors
                     var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
                     var flattenPropertyBody = new MethodPropertyBody(
                         PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                        !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
+                        !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
                     );
 
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.

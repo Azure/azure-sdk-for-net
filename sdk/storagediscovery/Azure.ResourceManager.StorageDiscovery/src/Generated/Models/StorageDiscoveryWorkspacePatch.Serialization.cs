@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageDiscoveryWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="StorageDiscoveryWorkspacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StorageDiscoveryWorkspacePatch patch)
+        /// <param name="storageDiscoveryWorkspacePatch"> The <see cref="StorageDiscoveryWorkspacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageDiscoveryWorkspacePatch storageDiscoveryWorkspacePatch)
         {
-            if (patch == null)
+            if (storageDiscoveryWorkspacePatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(storageDiscoveryWorkspacePatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
