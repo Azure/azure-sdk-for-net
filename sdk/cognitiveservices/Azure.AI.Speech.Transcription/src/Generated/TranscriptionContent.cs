@@ -12,7 +12,7 @@ using System.IO;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> Request model for transcription operation. </summary>
-    internal partial class TranscribeRequestContent
+    internal partial class TranscriptionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.AI.Speech.Transcription
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TranscribeRequestContent"/>. </summary>
-        public TranscribeRequestContent()
+        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        public TranscriptionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscribeRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscribeRequestContent(TranscriptionOptions options, Stream audio, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranscriptionContent(TranscriptionOptions options, Stream audio, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Options = options;
             Audio = audio;

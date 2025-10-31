@@ -92,7 +92,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        internal virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscribeRequestContent body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscriptionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -106,7 +106,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="body"> The body of the multipart request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        internal virtual Response<TranscriptionResult> Transcribe(TranscribeRequestContent body, CancellationToken cancellationToken = default)
+        internal virtual Response<TranscriptionResult> Transcribe(TranscriptionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -126,7 +126,7 @@ namespace Azure.AI.Speech.Transcription
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TranscribeAsync(TranscribeRequestContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TranscribeAsync(TranscriptionContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -165,7 +165,7 @@ namespace Azure.AI.Speech.Transcription
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Transcribe(TranscribeRequestContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Transcribe(TranscriptionContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

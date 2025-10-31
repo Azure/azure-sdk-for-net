@@ -35,7 +35,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-                TranscribeRequestContent request = new TranscribeRequestContent
+                TranscriptionContent request = new TranscriptionContent
                 {
                     Audio = audioStream
                 };
@@ -96,7 +96,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-                TranscribeRequestContent request = new TranscribeRequestContent
+                TranscriptionContent request = new TranscriptionContent
                 {
                     Audio = audioStream
                 };
@@ -147,7 +147,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 {
                     using FileStream audioStream = File.OpenRead(audioFilePath);
 
-                    TranscribeRequestContent request = new TranscribeRequestContent
+                    TranscriptionContent request = new TranscriptionContent
                     {
                         Audio = audioStream
                     };
@@ -205,7 +205,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-                TranscribeRequestContent request = new TranscribeRequestContent
+                TranscriptionContent request = new TranscriptionContent
                 {
                     Audio = audioStream
                 };
@@ -279,7 +279,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 using FileStream audioStream = File.OpenRead(audioFilePath);
 
-                TranscribeRequestContent request = new TranscribeRequestContent
+                TranscriptionContent request = new TranscriptionContent
                 {
                     Audio = audioStream
                 };
@@ -323,7 +323,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                     }
                 };
 
-                TranscribeRequestContent request = new TranscribeRequestContent
+                TranscriptionContent request = new TranscriptionContent
                 {
                     Audio = audioStream,
                     Options = options

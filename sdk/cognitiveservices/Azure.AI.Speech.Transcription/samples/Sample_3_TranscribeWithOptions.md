@@ -27,7 +27,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     var options = new TranscriptionOptions();
     options.Locales.Add("en-US");
 
-    var request = new TranscribeRequestContent
+    var request = new TranscriptionContent
     {
         Audio = fileStream,
         Options = options
@@ -57,7 +57,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     var options = new TranscriptionOptions();
     options.Models.Add("en-US", new Uri("https://myaccount.api.cognitive.microsoft.com/speechtotext/models/your-model-uuid"));
 
-    var request = new TranscribeRequestContent
+    var request = new TranscriptionContent
     {
         Audio = fileStream,
         Options = options
@@ -85,7 +85,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     var options = new TranscriptionOptions();
     options.ProfanityFilterMode = ProfanityFilterMode.Masked;
 
-    var request = new TranscribeRequestContent
+    var request = new TranscriptionContent
     {
         Audio = fileStream,
         Options = options
@@ -115,7 +115,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     var options = new TranscriptionOptions();
     options.ActiveChannels.Add(0);
 
-    var request = new TranscribeRequestContent
+    var request = new TranscriptionContent
     {
         Audio = fileStream,
         Options = options
@@ -151,7 +151,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
         }
     };
 
-    var request = new TranscribeRequestContent
+    var request = new TranscriptionContent
     {
         Audio = fileStream,
         Options = options
@@ -166,3 +166,4 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     }
 }
 ```
+

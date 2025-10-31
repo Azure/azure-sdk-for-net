@@ -54,7 +54,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             // Create a test request
             using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
@@ -121,7 +121,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             // Make a request - it will use the mock response
             using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
@@ -162,7 +162,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             try
             {
                 using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
-                TranscribeRequestContent request = new TranscribeRequestContent
+                TranscriptionContent request = new TranscriptionContent
                 {
                     Audio = audioStream
                 };

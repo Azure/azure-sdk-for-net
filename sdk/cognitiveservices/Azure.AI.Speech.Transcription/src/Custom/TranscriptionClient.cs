@@ -21,7 +21,7 @@ namespace Azure.AI.Speech.Transcription
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<TranscriptionResult>> TranscribeAsync(TranscriptionOptions options, CancellationToken cancellationToken = default)
         {
-            TranscribeRequestContent body = new TranscribeRequestContent(options, options.AudioStream, null);
+            TranscriptionContent body = new TranscriptionContent(options, options.AudioStream, null);
             return await TranscribeAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
@@ -29,9 +29,9 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The transcription options containing audio and configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        internal virtual Response<TranscriptionResult> Transcribe(TranscriptionOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<TranscriptionResult> Transcribe(TranscriptionOptions options, CancellationToken cancellationToken = default)
         {
-            TranscribeRequestContent body = new TranscribeRequestContent(options, options.AudioStream, null);
+            TranscriptionContent body = new TranscriptionContent(options, options.AudioStream, null);
             return Transcribe(body, cancellationToken);
         }
     }

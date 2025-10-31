@@ -22,7 +22,7 @@ string filePath = "path/to/audio.wav";
 TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
-    var request = new TranscribeRequestContent { Audio = fileStream };
+    var request = new TranscriptionContent { Audio = fileStream };
     var response = client.Transcribe(request);
 
     Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -42,7 +42,7 @@ string filePath = "path/to/audio.wav";
 TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
-    var request = new TranscribeRequestContent { Audio = fileStream };
+    var request = new TranscriptionContent { Audio = fileStream };
     var response = await client.TranscribeAsync(request);
 
     Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -52,3 +52,4 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
     }
 }
 ```
+

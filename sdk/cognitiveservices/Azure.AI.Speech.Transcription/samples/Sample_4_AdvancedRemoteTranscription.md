@@ -40,7 +40,7 @@ httpResponse.EnsureSuccessStatusCode();
 using Stream audioStream = await httpResponse.Content.ReadAsStreamAsync();
 
 // Create transcription request with the downloaded stream
-TranscribeRequestContent request = new TranscribeRequestContent
+TranscriptionContent request = new TranscriptionContent
 {
     Audio = audioStream
 };
@@ -150,3 +150,4 @@ for (int i = 0; i < responses.Length; i++)
     Console.WriteLine($"Text: {channelPhrases.Text}");
 }
 ```
+

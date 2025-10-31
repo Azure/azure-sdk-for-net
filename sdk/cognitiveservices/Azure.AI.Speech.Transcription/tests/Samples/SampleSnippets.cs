@@ -47,7 +47,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
-                var request = new TranscribeRequestContent { Audio = fileStream };
+                var request = new TranscriptionContent { Audio = fileStream };
                 var response = client.Transcribe(request);
 
                 Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -72,7 +72,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
-                var request = new TranscribeRequestContent { Audio = fileStream };
+                var request = new TranscriptionContent { Audio = fileStream };
                 var response = await client.TranscribeAsync(request);
 
                 Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -97,7 +97,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             using HttpResponseMessage httpResponse = httpClient.GetAsync("https://your-domain.com/your-file.mp3").Result;
             using Stream stream = httpResponse.Content.ReadAsStreamAsync().Result;
 
-            var request = new TranscribeRequestContent { Audio = stream };
+            var request = new TranscriptionContent { Audio = stream };
             var response = client.Transcribe(request);
 
             Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -121,7 +121,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             using HttpResponseMessage httpResponse = await httpClient.GetAsync("https://your-domain.com/your-file.mp3");
             using Stream stream = await httpResponse.Content.ReadAsStreamAsync();
 
-            var request = new TranscribeRequestContent { Audio = stream };
+            var request = new TranscriptionContent { Audio = stream };
             var response = await client.TranscribeAsync(request);
 
             Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -148,7 +148,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 var options = new TranscriptionOptions();
                 options.Locales.Add("en-US");
 
-                var request = new TranscribeRequestContent
+                var request = new TranscriptionContent
                 {
                     Audio = fileStream,
                     Options = options
@@ -181,7 +181,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 var options = new TranscriptionOptions();
                 options.Models.Add("en-US", new Uri("https://myaccount.api.cognitive.microsoft.com/speechtotext/models/your-model-uuid"));
 
-                var request = new TranscribeRequestContent
+                var request = new TranscriptionContent
                 {
                     Audio = fileStream,
                     Options = options
@@ -214,7 +214,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 var options = new TranscriptionOptions();
                 options.ProfanityFilterMode = ProfanityFilterMode.Masked;
 
-                var request = new TranscribeRequestContent
+                var request = new TranscriptionContent
                 {
                     Audio = fileStream,
                     Options = options
@@ -247,7 +247,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 var options = new TranscriptionOptions();
                 options.ActiveChannels.Add(0);
 
-                var request = new TranscribeRequestContent
+                var request = new TranscriptionContent
                 {
                     Audio = fileStream,
                     Options = options
@@ -286,7 +286,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                     }
                 };
 
-                var request = new TranscribeRequestContent
+                var request = new TranscriptionContent
                 {
                     Audio = fileStream,
                     Options = options

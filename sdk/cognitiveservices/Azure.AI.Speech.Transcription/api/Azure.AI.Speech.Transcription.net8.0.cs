@@ -103,6 +103,7 @@ namespace Azure.AI.Speech.Transcription
         public TranscriptionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public TranscriptionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.AI.Speech.Transcription.TranscriptionResult> Transcribe(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Speech.Transcription.TranscriptionResult>> TranscribeAsync(Azure.AI.Speech.Transcription.TranscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TranscriptionClientOptions : Azure.Core.ClientOptions

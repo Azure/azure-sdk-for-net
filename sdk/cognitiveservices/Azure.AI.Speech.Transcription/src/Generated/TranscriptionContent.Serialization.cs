@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.AI.Speech.Transcription
 {
-    internal partial class TranscribeRequestContent : IUtf8JsonSerializable, IJsonModel<TranscribeRequestContent>
+    internal partial class TranscriptionContent : IUtf8JsonSerializable, IJsonModel<TranscriptionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranscribeRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranscriptionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TranscribeRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TranscriptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranscribeRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranscribeRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Options))
@@ -69,19 +69,19 @@ namespace Azure.AI.Speech.Transcription
             }
         }
 
-        TranscribeRequestContent IJsonModel<TranscribeRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TranscriptionContent IJsonModel<TranscriptionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranscribeRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranscribeRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TranscriptionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTranscribeRequestContent(document.RootElement, options);
+            return DeserializeTranscriptionContent(document.RootElement, options);
         }
 
-        internal static TranscribeRequestContent DeserializeTranscribeRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TranscriptionContent DeserializeTranscriptionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,7 +119,7 @@ namespace Azure.AI.Speech.Transcription
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TranscribeRequestContent(definition, audio, serializedAdditionalRawData);
+            return new TranscriptionContent(definition, audio, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeMultipart(ModelReaderWriterOptions options)
@@ -151,9 +151,9 @@ namespace Azure.AI.Speech.Transcription
             return content;
         }
 
-        BinaryData IPersistableModel<TranscribeRequestContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TranscriptionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranscribeRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -162,34 +162,34 @@ namespace Azure.AI.Speech.Transcription
                 case "MFD":
                     return SerializeMultipart(options);
                 default:
-                    throw new FormatException($"The model {nameof(TranscribeRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranscriptionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TranscribeRequestContent IPersistableModel<TranscribeRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TranscriptionContent IPersistableModel<TranscriptionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranscribeRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTranscribeRequestContent(document.RootElement, options);
+                        return DeserializeTranscriptionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranscribeRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranscriptionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TranscribeRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
+        string IPersistableModel<TranscriptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranscribeRequestContent FromResponse(Response response)
+        internal static TranscriptionContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTranscribeRequestContent(document.RootElement);
+            return DeserializeTranscriptionContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

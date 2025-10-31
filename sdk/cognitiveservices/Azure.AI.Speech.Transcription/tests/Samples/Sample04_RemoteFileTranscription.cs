@@ -69,7 +69,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             using Stream audioStream = await httpResponse.Content.ReadAsStreamAsync();
 
             // Create transcription request with the downloaded stream
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
@@ -197,7 +197,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 
                 using Stream audioStream = await httpResponse.Content.ReadAsStreamAsync();
 
-                TranscribeRequestContent streamRequest = new TranscribeRequestContent
+                TranscriptionContent streamRequest = new TranscriptionContent
                 {
                     Audio = audioStream
                 };
@@ -291,7 +291,7 @@ namespace Azure.AI.Speech.Transcription.Samples
 
             Console.WriteLine("Starting transcription...");
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };

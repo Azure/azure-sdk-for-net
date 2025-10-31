@@ -34,7 +34,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             options.Locales.Add("en-US");
             options.Locales.Add("es-ES"); // Add Spanish as a secondary locale
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options
@@ -72,7 +72,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 ProfanityFilterMode = ProfanityFilterMode.Masked // Masks profanity with asterisks
             };
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options
@@ -111,7 +111,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 }
             };
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options
@@ -159,7 +159,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             options.PhraseList.Phrases.Add("speech-to-text");
             options.PhraseList.Phrases.Add("API endpoint");
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options
@@ -194,7 +194,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             options.ActiveChannels.Add(0); // Left channel
             options.ActiveChannels.Add(1); // Right channel
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options
@@ -237,7 +237,7 @@ namespace Azure.AI.Speech.Transcription.Samples
                 "https://myaccount.api.cognitive.microsoft.com/speechtotext/models/your-custom-model-id");
             options.Models.Add("en-US", customModelEndpoint);
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options
@@ -288,7 +288,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             options.PhraseList.Phrases.Add("action items");
             options.PhraseList.Phrases.Add("stakeholders");
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream,
                 Options = options

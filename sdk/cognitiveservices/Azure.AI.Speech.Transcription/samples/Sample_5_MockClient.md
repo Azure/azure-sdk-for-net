@@ -5,6 +5,7 @@ This sample demonstrates how to mock the `TranscriptionClient` for unit testing 
 ## Why Mock the Client?
 
 Mocking the `TranscriptionClient` is useful for:
+
 - Unit testing application logic without network calls
 - Testing error handling scenarios
 - Running tests in CI/CD pipelines without Azure credentials
@@ -39,7 +40,7 @@ mockClient.SetMockResult(expectedText);
 
 // Create a test request
 using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
-TranscribeRequestContent request = new TranscribeRequestContent
+TranscriptionContent request = new TranscriptionContent
 {
     Audio = audioStream
 };
@@ -102,7 +103,7 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential, optio
 
 // Make a request - it will use the mock response
 using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
-TranscribeRequestContent request = new TranscribeRequestContent
+TranscriptionContent request = new TranscriptionContent
 {
     Audio = audioStream
 };
@@ -139,7 +140,7 @@ TranscriptionClient client = new TranscriptionClient(endpoint, credential, optio
 try
 {
     using var audioStream = new MemoryStream(new byte[] { 0x00, 0x01, 0x02 });
-    TranscribeRequestContent request = new TranscribeRequestContent
+    TranscriptionContent request = new TranscriptionContent
     {
         Audio = audioStream
     };
@@ -172,7 +173,7 @@ public class TranscriptionService
 
     public async Task<string> GetTranscriptionAsync(Stream audioStream)
     {
-        var request = new TranscribeRequestContent { Audio = audioStream };
+        var request = new TranscriptionContent { Audio = audioStream };
         var response = await _client.TranscribeAsync(request);
         return response.Value.PhrasesByChannel.First().Text;
     }
@@ -204,3 +205,4 @@ public async Task TestTranscriptionService()
 - Verify your application handles all possible response states
 - Use dependency injection to make your code testable
 - Keep mock data realistic to catch serialization issues
+

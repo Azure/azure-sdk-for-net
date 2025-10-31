@@ -23,7 +23,7 @@ using HttpClient httpClient = new HttpClient();
 using HttpResponseMessage httpResponse = httpClient.GetAsync("https://your-domain.com/your-file.mp3").Result;
 using Stream stream = httpResponse.Content.ReadAsStreamAsync().Result;
 
-var request = new TranscribeRequestContent { Audio = stream };
+var request = new TranscriptionContent { Audio = stream };
 var response = client.Transcribe(request);
 
 Console.WriteLine($"File Duration: {response.Value.Duration}");
@@ -43,7 +43,7 @@ using HttpClient httpClient = new HttpClient();
 using HttpResponseMessage httpResponse = await httpClient.GetAsync("https://your-domain.com/your-file.mp3");
 using Stream stream = await httpResponse.Content.ReadAsStreamAsync();
 
-var request = new TranscribeRequestContent { Audio = stream };
+var request = new TranscriptionContent { Audio = stream };
 var response = await client.TranscribeAsync(request);
 
 Console.WriteLine($"File Duration: {response.Value.Duration}");

@@ -70,7 +70,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
             // Create the transcription request
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
@@ -111,7 +111,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
             // Create the transcription request
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
@@ -148,7 +148,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             #region Snippet:AccessTranscribedWords
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
@@ -186,7 +186,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             #region Snippet:AccessCombinedText
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
-            TranscribeRequestContent request = new TranscribeRequestContent
+            TranscriptionContent request = new TranscriptionContent
             {
                 Audio = audioStream
             };
