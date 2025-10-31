@@ -273,7 +273,6 @@ namespace Azure.Provisioning.FrontDoor
             public static readonly string V2020_05_01;
             public static readonly string V2020_07_01;
             public static readonly string V2021_06_01;
-            public static readonly string V2025_10_01;
         }
     }
     public enum FrontDoorResourceState
@@ -311,7 +310,6 @@ namespace Azure.Provisioning.FrontDoor
             public static readonly string V2020_05_01;
             public static readonly string V2020_07_01;
             public static readonly string V2021_06_01;
-            public static readonly string V2025_10_01;
         }
     }
     public enum FrontDoorSkuName
@@ -359,7 +357,6 @@ namespace Azure.Provisioning.FrontDoor
             public static readonly string V2022_05_01;
             public static readonly string V2024_02_01;
             public static readonly string V2025_03_01;
-            public static readonly string V2025_10_01;
         }
     }
     public partial class FrontDoorWebApplicationFirewallPolicyGroupByVariable : Azure.Provisioning.Primitives.ProvisionableConstruct
