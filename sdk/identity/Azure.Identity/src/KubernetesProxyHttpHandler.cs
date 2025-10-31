@@ -100,6 +100,7 @@ namespace Azure.Identity
             }
 
             request.RequestUri = newUri.Uri;
+            request.Headers.Host = _config.SniName;
         }
 
         private bool ShouldReloadHandler()
