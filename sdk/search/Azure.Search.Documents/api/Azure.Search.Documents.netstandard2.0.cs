@@ -3462,7 +3462,7 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class RemoteSharePointKnowledgeSource : Azure.Search.Documents.Indexes.Models.KnowledgeSource, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSource>
     {
-        public RemoteSharePointKnowledgeSource(string name, Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters) : base (default(string)) { }
+        public RemoteSharePointKnowledgeSource(string name) : base (default(string)) { }
         public Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSourceParameters RemoteSharePointParameters { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSource System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.RemoteSharePointKnowledgeSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
