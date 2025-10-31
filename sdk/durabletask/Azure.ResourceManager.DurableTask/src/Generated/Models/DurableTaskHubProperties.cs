@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    /// <summary> The response of a RetentionPolicy list operation. </summary>
-    internal partial class RetentionPolicyListResult
+    /// <summary> The properties of Task Hub. </summary>
+    public partial class DurableTaskHubProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,25 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/>. </summary>
-        /// <param name="value"> The RetentionPolicy items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RetentionPolicyListResult(IEnumerable<DurableTaskRetentionPolicyData> value)
+        /// <summary> Initializes a new instance of <see cref="DurableTaskHubProperties"/>. </summary>
+        public DurableTaskHubProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/>. </summary>
-        /// <param name="value"> The RetentionPolicy items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskHubProperties"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="dashboardUri"> URL of the durable task scheduler dashboard. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionPolicyListResult(IReadOnlyList<DurableTaskRetentionPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState, Uri dashboardUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ProvisioningState = provisioningState;
+            DashboardUri = dashboardUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/> for deserialization. </summary>
-        internal RetentionPolicyListResult()
-        {
-        }
-
-        /// <summary> The RetentionPolicy items on this page. </summary>
-        public IReadOnlyList<DurableTaskRetentionPolicyData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The status of the last operation. </summary>
+        public DurableTaskProvisioningState? ProvisioningState { get; }
+        /// <summary> URL of the durable task scheduler dashboard. </summary>
+        public Uri DashboardUri { get; }
     }
 }

@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             string resourceName = Recording.GenerateAssetName("resource");
 
             // Create Scheduler
-            SchedulerData createSchedulerData = new(AzureLocation.NorthCentralUS)
+            DurableTaskSchedulerData createSchedulerData = new(AzureLocation.NorthCentralUS)
             {
-                Properties = new SchedulerProperties(
+                Properties = new DurableTaskSchedulerProperties(
                     ipAllowlist: ["0.0.0.0/0"], // all IPs allowed to access the endpoint
-                    sku: new SchedulerSku() { Name = SchedulerSkuName.Dedicated, Capacity = 1 }
+                    sku: new DurableTaskSchedulerSku() { Name = SchedulerSkuName.Dedicated, Capacity = 1 }
                 )
             };
-            ArmOperation<SchedulerResource> longRunningOperation =
-                await rg.GetSchedulers().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, createSchedulerData);
-            SchedulerResource scheduler = longRunningOperation.Value;
-            SchedulerTaskHubCollection collection = scheduler.GetSchedulerTaskHubs();
+            ArmOperation<DurableTaskSchedulerResource> longRunningOperation =
+                await rg.GetDurableTaskSchedulers().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, createSchedulerData);
+            DurableTaskSchedulerResource scheduler = longRunningOperation.Value;
+            DurableTaskHubCollection collection = scheduler.GetDurableTaskHubs();
 
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, "MyHub", new SchedulerTaskHubData());
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, "MyHub", new DurableTaskHubData());
 
-            SchedulerTaskHubResource hub = await scheduler.GetSchedulerTaskHubAsync("MyHub");
+            DurableTaskHubResource hub = await scheduler.GetDurableTaskHubAsync("MyHub");
             Assert.True(hub.HasData);
             Assert.True(hub.Data.Properties.DashboardUri.Host.ToLower().Contains("durabletask.io"));
             Assert.AreEqual("MyHub", hub.Data.Name);
 
             // The list endpoint should also return the newly created hub
-            SchedulerTaskHubResource listHub = await collection.GetAllAsync().FirstOrDefaultAsync(t => t.Data.Name == "MyHub");
+            DurableTaskHubResource listHub = await collection.GetAllAsync().FirstOrDefaultAsync(t => t.Data.Name == "MyHub");
             Assert.NotNull(listHub);
             Assert.AreEqual(hub.Data.Name, listHub.Data.Name);
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
             try
             {
-                await scheduler.GetSchedulerTaskHubAsync("MyHub");
+                await scheduler.GetDurableTaskHubAsync("MyHub");
             }
             catch (RequestFailedException ex) when (ex.Status == StatusCodes.Status404NotFound)
             {
