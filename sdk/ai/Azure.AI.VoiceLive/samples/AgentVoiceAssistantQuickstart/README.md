@@ -25,6 +25,7 @@ This is a **standalone, self-contained** version of the BasicVoiceAssistant samp
 - Azure VoiceLive resource with API key or Azure authentication
 - Azure AI Foundry project with a deployed agent
 - Azure CLI authentication or appropriate Azure credentials configured
+- NAudio package installed. You can add the following to the *.csproj* file `<PackageReference Include="NAudio" VersionOverride="2.2.1"/>`.
 
 ## Configuration
 

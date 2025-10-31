@@ -23,6 +23,7 @@ This is a **standalone, self-contained** version of the BasicVoiceAssistant samp
 - .NET 8.0 SDK
 - Audio input/output devices (microphone and speakers)  
 - Azure VoiceLive resource with API key or Azure authentication
+- NAudio package installed. You can add the following to the *.csproj* file `<PackageReference Include="NAudio" VersionOverride="2.2.1"/>`.
 
 ## Configuration
 
