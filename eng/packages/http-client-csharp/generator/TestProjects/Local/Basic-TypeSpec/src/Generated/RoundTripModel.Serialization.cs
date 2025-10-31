@@ -660,10 +660,9 @@ namespace BasicTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
-        public static explicit operator RoundTripModel(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
+        public static explicit operator RoundTripModel(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

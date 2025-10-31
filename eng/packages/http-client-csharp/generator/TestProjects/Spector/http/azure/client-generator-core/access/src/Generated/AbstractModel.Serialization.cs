@@ -35,6 +35,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         string IPersistableModel<AbstractModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator AbstractModel(Response result) => throw null;
+        public static explicit operator AbstractModel(Response response) => throw null;
     }
 }

@@ -32,6 +32,6 @@ namespace _Specs_.Azure.Core.Traits
 
         string IPersistableModel<User>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator User(Response result) => throw null;
+        public static explicit operator User(Response response) => throw null;
     }
 }

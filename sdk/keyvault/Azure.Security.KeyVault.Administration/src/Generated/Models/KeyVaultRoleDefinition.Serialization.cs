@@ -180,10 +180,9 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultRoleDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultRoleDefinition"/> from. </param>
-        public static explicit operator KeyVaultRoleDefinition(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultRoleDefinition"/> from. </param>
+        public static explicit operator KeyVaultRoleDefinition(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeKeyVaultRoleDefinition(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

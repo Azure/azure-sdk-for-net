@@ -338,7 +338,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
-                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
+                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
                 result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
@@ -348,7 +348,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(ResourceMethod getAll, bool isAsync)
         {
             var restClientInfo = _clientInfos[getAll.InputClient];
-            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),

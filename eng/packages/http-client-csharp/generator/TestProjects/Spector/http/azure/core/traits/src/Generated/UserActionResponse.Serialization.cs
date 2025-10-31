@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Core.Traits
 
         string IPersistableModel<UserActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator UserActionResponse(Response result) => throw null;
+        public static explicit operator UserActionResponse(Response response) => throw null;
     }
 }

@@ -1,0 +1,9 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/api/Azure.ResourceManager.ContainerServiceFleet.net8.0.cs'
+    words:
+      - kubeconfigs
+  - filename: '**/sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/api/Azure.ResourceManager.ContainerServiceFleet.netstandard2.0.cs'
+    words:
+      - kubeconfigs

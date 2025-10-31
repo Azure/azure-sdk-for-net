@@ -38,6 +38,6 @@ namespace Encode.Duration._Property
         /// <param name="floatSecondsDurationProperty"> The <see cref="FloatSecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatSecondsDurationProperty floatSecondsDurationProperty) => throw null;
 
-        public static explicit operator FloatSecondsDurationProperty(Response result) => throw null;
+        public static explicit operator FloatSecondsDurationProperty(Response response) => throw null;
     }
 }

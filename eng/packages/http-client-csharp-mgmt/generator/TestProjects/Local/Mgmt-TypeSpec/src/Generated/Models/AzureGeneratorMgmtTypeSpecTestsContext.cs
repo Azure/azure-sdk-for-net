@@ -42,6 +42,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(EndpointResource))]
     [ModelReaderWriterBuildable(typeof(EndpointResourceData))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(FooActionRequest))]
+    [ModelReaderWriterBuildable(typeof(FooActionResult))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooPreviewAction))]
