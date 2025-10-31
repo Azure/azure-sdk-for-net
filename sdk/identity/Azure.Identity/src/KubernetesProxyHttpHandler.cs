@@ -81,7 +81,7 @@ namespace Azure.Identity
         {
             if (request.RequestUri == null)
             {
-                return;
+                throw new InvalidOperationException("Request URI is null.");
             }
 
             string pathAndQuery = request.RequestUri.PathAndQuery;
