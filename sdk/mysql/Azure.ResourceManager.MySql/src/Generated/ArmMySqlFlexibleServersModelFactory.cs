@@ -577,37 +577,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServersPrivateLinkResourceDataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServersPrivateLinkResourceDataData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServersPrivateLinkResourceDataData MySqlFlexibleServersPrivateLinkResourceDataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServersPrivateLinkResourceProperties properties = null)
-        {
-            return new MySqlFlexibleServersPrivateLinkResourceDataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServersPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.MySqlFlexibleServersPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static MySqlFlexibleServersPrivateLinkResourceProperties MySqlFlexibleServersPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new MySqlFlexibleServersPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="zone"> zone name. </param>
         /// <param name="supportedHAMode"> Supported high availability mode. </param>

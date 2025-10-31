@@ -248,25 +248,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMySqlFlexibleServersArmClient.GetMySqlFlexibleServersPrivateLinkResourceDataResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> object. </returns>
-        public static MySqlFlexibleServersPrivateLinkResourceDataResource GetMySqlFlexibleServersPrivateLinkResourceDataResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMySqlFlexibleServersArmClient(client).GetMySqlFlexibleServersPrivateLinkResourceDataResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of MySqlFlexibleServerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>

@@ -165,17 +165,5 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             MySqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
         }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateLinkResourceDataResource"/> object. </returns>
-        public virtual MySqlFlexibleServersPrivateLinkResourceDataResource GetMySqlFlexibleServersPrivateLinkResourceDataResource(ResourceIdentifier id)
-        {
-            MySqlFlexibleServersPrivateLinkResourceDataResource.ValidateResourceId(id);
-            return new MySqlFlexibleServersPrivateLinkResourceDataResource(Client, id);
-        }
     }
 }
