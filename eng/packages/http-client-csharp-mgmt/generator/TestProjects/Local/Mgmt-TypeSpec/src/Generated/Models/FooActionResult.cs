@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
@@ -26,15 +27,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Initializes a new instance of <see cref="FooActionResult"/>. </summary>
         /// <param name="msg"></param>
+        /// <param name="error"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooActionResult(string msg, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooActionResult(string msg, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Msg = msg;
+            Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Msg. </summary>
         [WirePath("msg")]
         public string Msg { get; }
+
+        /// <summary> Gets the Error. </summary>
+        [WirePath("error")]
+        public ResponseError Error { get; }
     }
 }

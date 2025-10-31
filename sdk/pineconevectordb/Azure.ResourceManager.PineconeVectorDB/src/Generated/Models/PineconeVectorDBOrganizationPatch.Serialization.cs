@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PineconeVectorDBOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="PineconeVectorDBOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PineconeVectorDBOrganizationPatch patch)
+        /// <param name="pineconeVectorDBOrganizationPatch"> The <see cref="PineconeVectorDBOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PineconeVectorDBOrganizationPatch pineconeVectorDBOrganizationPatch)
         {
-            if (patch == null)
+            if (pineconeVectorDBOrganizationPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(pineconeVectorDBOrganizationPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

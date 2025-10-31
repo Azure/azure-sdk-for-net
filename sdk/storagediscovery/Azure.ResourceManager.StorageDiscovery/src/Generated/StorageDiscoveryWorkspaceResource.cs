@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -189,7 +189,27 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary> Update a StorageDiscoveryWorkspace. </summary>
+        /// <summary>
+        /// Update a StorageDiscoveryWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -221,7 +241,27 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary> Update a StorageDiscoveryWorkspace. </summary>
+        /// <summary>
+        /// Update a StorageDiscoveryWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -262,7 +302,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> StorageDiscoveryWorkspaces_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -313,7 +353,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> StorageDiscoveryWorkspaces_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
