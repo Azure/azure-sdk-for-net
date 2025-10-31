@@ -1,0 +1,6 @@
+directory: specification/ai/Azure.AI.Agents.V2.csharp
+commit: b7220aba707e67f502b30c146a1aa4494f581521
+repo: Azure/azure-rest-api-specs-pr
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+additionalDirectories:
+  - specification/ai/Azure.AI.Projects
