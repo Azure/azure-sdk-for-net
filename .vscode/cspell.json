@@ -219,7 +219,8 @@
         "azureai",
         "bleu",
         "gleu",
-        "ubinary"
+        "ubinary",
+        "agentic"
       ]
     },
     {
