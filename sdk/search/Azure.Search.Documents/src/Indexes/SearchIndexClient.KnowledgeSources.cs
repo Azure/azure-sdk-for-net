@@ -318,6 +318,44 @@ namespace Azure.Search.Documents.Indexes
                 }
             });
         }
+
+        /// <summary> Returns the current status and synchronization history of a knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source for which to retrieve status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        public virtual Response<KnowledgeSourceStatus> GetKnowledgeSourceStatus(string sourceName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSource)}");
+            scope.Start();
+            try
+            {
+                return KnowledgeSourcesClient.GetStatus(sourceName, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Returns the current status and synchronization history of a knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source for which to retrieve status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        public virtual async Task<Response<KnowledgeSourceStatus>> GetKnowledgeSourceStatusAsync(string sourceName, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSource)}");
+            scope.Start();
+            try
+            {
+                return await KnowledgeSourcesClient.GetStatusAsync(sourceName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
         #endregion
     }
 }

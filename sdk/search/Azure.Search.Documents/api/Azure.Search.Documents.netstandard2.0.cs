@@ -317,6 +317,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSource>> GetKnowledgeSourceAsync(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceStatus> GetKnowledgeSourceStatus(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceStatus>> GetKnowledgeSourceStatusAsync(string sourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Search.Documents.SearchClient GetSearchClient(string indexName) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchServiceStatistics> GetServiceStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchServiceStatistics>> GetServiceStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -423,6 +425,7 @@ namespace Azure.Search.Documents.Indexes
         public bool IsSortable { get { throw null; } set { } }
         public string NormalizerName { get { throw null; } set { } }
         public string PermissionFilter { get { throw null; } set { } }
+        public bool? SensitivityLabel { get { throw null; } set { } }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
     public partial class VectorSearchFieldAttribute : System.Attribute
@@ -4267,6 +4270,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool IsSortable { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? NormalizerName { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.PermissionFilter? PermissionFilter { get { throw null; } set { } }
+        public bool? SensitivityLabel { get { throw null; } set { } }
     }
     public partial class SnowballTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.SnowballTokenFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.SnowballTokenFilter>
     {

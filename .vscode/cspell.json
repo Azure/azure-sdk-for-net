@@ -1365,12 +1365,6 @@
       ]
     },
     {
-      "filename": "**/sdk/search/**/*.cs",
-      "words": [
-        "agentic"
-      ]
-    },
-    {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
         "dscp",
@@ -1485,6 +1479,7 @@
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "adls",
+        "agentic",
         "bangla",
         "beider",
         "bokmaal",
