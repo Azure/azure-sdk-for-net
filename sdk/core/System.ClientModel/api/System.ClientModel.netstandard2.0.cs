@@ -489,6 +489,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
+        public string ClientRequestId { get { throw null; } set { } }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
