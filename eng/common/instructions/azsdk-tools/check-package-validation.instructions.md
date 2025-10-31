@@ -1,13 +1,13 @@
 ---
-description: 'Check if the package validation checks have passed for the SDK package.'
+description: 'Run the package validation checks for the SDK package.'
 ---
 ## Goal
-Check the validation checks for the SDK package by collecting the required information from the user and executing the `azsdk_package_run_check` tool.
+Run the validation checks for the SDK package by collecting the required information from the user and executing the `azsdk_package_run_check` tool.
 
 ## Instructions
 1. **Collect Required Information**:
     - Prompt the user for the absolute package path to the package directory for the SDK package they want to check.
-    - Prompt the user specify values for each of the parameters required by the azsdk_package_run_check tool. Present the user with options to pick from for the allowed values specified by the parameter schema.
+    - Prompt the user to specify values for each of the parameters required by the azsdk_package_run_check tool. Present the user with options to pick from for the allowed values specified by the parameter schema.
 
 2. **Execute Check**:
     - Use the `azsdk_package_run_check` tool with the package path and check type.
