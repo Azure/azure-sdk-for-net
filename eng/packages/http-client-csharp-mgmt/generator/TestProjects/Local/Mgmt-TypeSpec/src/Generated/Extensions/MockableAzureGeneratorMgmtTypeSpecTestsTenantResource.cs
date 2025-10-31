@@ -56,7 +56,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -86,7 +86,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

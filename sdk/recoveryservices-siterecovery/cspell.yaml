@@ -1,0 +1,16 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/recoveryservices-siterecovery/**/*.cs'
+    words:
+      - ahub
+      - bcdr
+      - dras
+      - esxi
+      - mware
+      - nics
+      - orignal
+      - payg
+      - reassociate
+      - reprotect
+      - seleted

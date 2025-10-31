@@ -16,9 +16,9 @@ namespace client.clientnamespace.second
 {
     public partial class ClientNamespaceSecondClient
     {
-        public ClientNamespaceSecondClient() : this(new Uri("http://localhost:3000"), new ClientNamespaceClientOptions()) => throw null;
+        public ClientNamespaceSecondClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
 
-        public ClientNamespaceSecondClient(Uri endpoint, ClientNamespaceClientOptions options) => throw null;
+        public ClientNamespaceSecondClient(Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

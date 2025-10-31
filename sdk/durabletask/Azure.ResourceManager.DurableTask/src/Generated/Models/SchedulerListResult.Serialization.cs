@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 return null;
             }
-            IReadOnlyList<SchedulerData> value = default;
+            IReadOnlyList<DurableTaskSchedulerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SchedulerData> array = new List<SchedulerData>();
+                    List<DurableTaskSchedulerData> array = new List<DurableTaskSchedulerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SchedulerData.DeserializeSchedulerData(item, options));
+                        array.Add(DurableTaskSchedulerData.DeserializeDurableTaskSchedulerData(item, options));
                     }
                     value = array;
                     continue;
