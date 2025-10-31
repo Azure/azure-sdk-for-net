@@ -8,7 +8,7 @@
     This script supports two modes:
     
     Azure SDK Mode (default):
-    1. Builds a local npm package of @azure-ypespec/http-client-csharp with a versioned name (1.0.0-alpha.YYYYMMDD.hash)
+    1. Builds a local npm package of @azure-typespec/http-client-csharp with a versioned name (1.0.0-alpha.YYYYMMDD.hash)
     2. Builds and packages the NuGet generator framework packages with the same versioning
     3. Updates Packages.Data.props in azure-sdk-for-net with the local NuGet version
     4. Updates the management plane generator (@azure-typespec/http-client-csharp-mgmt) to use local generators
