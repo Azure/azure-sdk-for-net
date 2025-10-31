@@ -142,9 +142,9 @@ BicepDictionary<string> dynamicTags = parameter;
 
 #### Working with Azure Resources
 
-**`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualMachine`, `AppService`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
+**`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualNetwork`, `WebSite`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
 
-**`ProvisionableConstruct`** - Base class for infrastructure components that group related properties and resources. Most users will work with concrete implementations like `StorageAccountSku`, `VirtualNetworkIPConfiguration`, etc. An instance of type `ProvisionableConstruct` usually corresponds to an object definition statement in `bicep` language.
+**`ProvisionableConstruct`** - Base class for infrastructure components that group related properties and resources. Most users will work with concrete implementations like `StorageAccountSku`, `VirtualNetworkEncryption`, etc. An instance of type `ProvisionableConstruct` usually corresponds to an object definition statement in `bicep` language.
 
 Here's how you use the provided Azure resource classes:
 
