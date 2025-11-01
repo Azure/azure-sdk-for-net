@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "754",
+        "Content-Length": "536",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251101.1 (.NET Framework 4.8.9310.0; Microsoft Windows 10.0.26100 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -47,24 +47,24 @@
           "coordinates": [
             [
               [
-                -84.45378,
-                33.65673
+                -84.4537811,
+                33.6567307
               ],
               [
                 -84.398056,
-                33.65673
+                33.6567307
               ],
               [
                 -84.398056,
-                33.619457
+                33.6194572
               ],
               [
-                -84.45378,
-                33.619457
+                -84.4537811,
+                33.6194572
               ],
               [
-                -84.45378,
-                33.65673
+                -84.4537811,
+                33.6567307
               ]
             ]
           ]
@@ -95,16 +95,16 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "url": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/image/static/geocatalog-naip-atl-8afad574413b42e4a6269efd12278954.png?api-version=2025-04-30-preview"
+        "url": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/image/static/geocatalog-naip-atl-ccbdd0b4d9704c6bac728671a38cf710.png?api-version=2025-04-30-preview"
       }
     },
     {
-      "RequestUri": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/image/static/geocatalog-naip-atl-00000000413b42e4a6269efd12278954.png?api-version=2025-04-30-preview",
+      "RequestUri": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/image/static/geocatalog-naip-atl-00000000d9704c6bac728671a38cf710.png?api-version=2025-04-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "image/png",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251101.1 (.NET Framework 4.8.9310.0; Microsoft Windows 10.0.26100 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -135,6 +135,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1211648983"
+    "RandomSeed": "976179581"
   }
 }

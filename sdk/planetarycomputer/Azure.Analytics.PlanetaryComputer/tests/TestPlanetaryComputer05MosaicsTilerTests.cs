@@ -421,15 +421,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             string collectionId = TestEnvironment.CollectionId;
 
             // Define geometry for the static image - coordinates as [[[lon, lat], ...]]
+            // Using values that match .NET Framework serialization precision
             var coordinates = new List<IList<IList<float>>>
             {
                 new List<IList<float>>
                 {
-                    new List<float> { -84.45378097481053f, 33.6567321707079f },
-                    new List<float> { -84.39805886744838f, 33.6567321707079f },
-                    new List<float> { -84.39805886744838f, 33.61945681366625f },
-                    new List<float> { -84.45378097481053f, 33.61945681366625f },
-                    new List<float> { -84.45378097481053f, 33.6567321707079f }
+                    new List<float> { -84.4537811f, 33.6567307f },
+                    new List<float> { -84.398056f, 33.6567307f },
+                    new List<float> { -84.398056f, 33.6194572f },
+                    new List<float> { -84.4537811f, 33.6194572f },
+                    new List<float> { -84.4537811f, 33.6567307f }
                 }
             };
             var geometry = new PolygonGeometry(coordinates);
@@ -498,15 +499,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             string collectionId = TestEnvironment.CollectionId;
 
             // First create a static image to get an ID
+            // Using simpler float values that serialize consistently across .NET Framework and .NET Core
             var coordinates = new List<IList<IList<float>>>
             {
                 new List<IList<float>>
                 {
-                    new List<float> { -84.45378097481053f, 33.6567321707079f },
-                    new List<float> { -84.39805886744838f, 33.6567321707079f },
-                    new List<float> { -84.39805886744838f, 33.61945681366625f },
-                    new List<float> { -84.45378097481053f, 33.61945681366625f },
-                    new List<float> { -84.45378097481053f, 33.6567321707079f }
+                    new List<float> { -84.4537811f, 33.6567307f },
+                    new List<float> { -84.398056f, 33.6567307f },
+                    new List<float> { -84.398056f, 33.6194572f },
+                    new List<float> { -84.4537811f, 33.6194572f },
+                    new List<float> { -84.4537811f, 33.6567307f }
                 }
             };
             var geometry = new PolygonGeometry(coordinates);
