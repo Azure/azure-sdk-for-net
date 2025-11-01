@@ -19,13 +19,10 @@ namespace Azure.AI.Agents
         /// <param name="kind"></param>
         /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="workflow"> The CSDL YAML definition of the workflow. </param>
-        internal WorkflowAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workflow) : base(kind, raiConfig, additionalBinaryDataProperties)
+        /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
+        internal WorkflowAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workflowYaml) : base(kind, raiConfig, additionalBinaryDataProperties)
         {
-            Workflow = workflow;
+            WorkflowYaml = workflowYaml;
         }
-
-        /// <summary> The CSDL YAML definition of the workflow. </summary>
-        public string Workflow { get; set; }
     }
 }

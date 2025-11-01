@@ -6,10 +6,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using OpenAI;
@@ -358,7 +358,6 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("4771165")]
     public async Task ErrorsGiveGoodExceptionMessages()
     {
         AgentsClient client = GetTestClient();
@@ -377,40 +376,76 @@ public class AgentsTests : AgentsTestBase
     }
 
     [Test]
-    [Ignore("Bug 4755051")]
+    public async Task StructuredInputsWork()
+    {
+        AgentsClient agentsClient = GetTestClient();
+        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
+
+        AgentVersion agent = await agentsClient.CreateAgentVersionAsync(
+            "TestPromptAgentFromDotnetTests2343",
+            new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+            {
+                Instructions = "You are a friendly agent. The name of the user talking to you is {{user_name}}.",
+                StructuredInputs =
+                {
+                    ["user_name"] = new StructuredInputDefinition()
+                    {
+                        DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
+                    }
+                }
+            },
+            new AgentVersionCreationOptions()
+            {
+                Metadata =
+                {
+                    ["test_delete_me"] = "true",
+                }
+            });
+
+        ResponseCreationOptions responseOptions = new();
+        responseOptions.SetAgentReference(agent);
+
+        ResponseItem item = ResponseItem.CreateUserMessageItem("What's my name?");
+
+        OpenAIResponse response = await responseClient.CreateResponseAsync([item], responseOptions);
+        Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
+
+        responseOptions.AddStructuredInput("user_name", "Mr. Jingles");
+        response = await responseClient.CreateResponseAsync([item], responseOptions);
+        Assert.That(response.GetOutputText(), Does.Contain("Mr. Jingles"));
+
+        responseOptions.SetStructuredInputs(BinaryData.FromString("""
+            {
+              "user_name": "Le Flufferkins"
+            }
+            """));
+        response = await responseClient.CreateResponseAsync([item], responseOptions);
+        Assert.That(response.GetOutputText(), Does.Contain("Le Flufferkins"));
+    }
+
+    [Test]
     public async Task SimpleWorkflowAgent()
     {
         AgentsClient agentsClient = GetTestClient();
         OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        AgentDefinition workflowAgentDefinition = new WorkflowAgentDefinition()
-        {
-            TriggerBytes = MATH_TUTOR_TRIGGER_BYTES,
-        };
+        AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 
         string agentName = null;
         string agentVersion = null;
 
-        AgentRecord existingAgent = await agentsClient.GetAgentAsync("TestWorkflowAgentFromDotnet");
-        if (existingAgent is not null)
-        {
-            agentName = existingAgent.Name;
-            agentVersion = existingAgent.Versions.Latest.Version;
-        }
-        else
-        {
-            AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
-                "TestWorkflowAgentFromDotnet",
-                workflowAgentDefinition,
-                new AgentVersionCreationOptions()
-                {
-                    Description = "A test agent created from the .NET SDK automation suite",
-                    Metadata = { ["freely_deleteable"] = "true" },
-                });
-            agentName = newAgentVersion.Name;
-            agentVersion = newAgentVersion.Version;
-        }
+        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+            "TestWorkflowAgentFromDotnet234",
+            workflowAgentDefinition,
+            new AgentVersionCreationOptions()
+            {
+                Description = "A test agent created from the .NET SDK automation suite",
+                Metadata = { ["freely_deleteable"] = "true" },
+            });
+        agentName = newAgentVersion.Name;
+        agentVersion = newAgentVersion.Version;
 
         AgentConversation newConversation = await agentsClient.GetConversationClient().CreateConversationAsync();
 
@@ -432,42 +467,27 @@ public class AgentsTests : AgentsTestBase
     }
 
     [Test]
-    [Ignore("Bug 4755051")]
     public async Task SimpleWorkflowAgentStreaming()
     {
-        if (!IsAsync && Mode != RecordedTestMode.Live)
-            Assert.Inconclusive(STREAMING_CONSTRAINT);
         AgentsClient agentsClient = GetTestClient();
         OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        AgentDefinition workflowAgentDefinition = new WorkflowAgentDefinition()
-        {
-            TriggerBytes = MATH_TUTOR_TRIGGER_BYTES,
-        };
+        AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 
         string agentName = null;
         string agentVersion = null;
 
-        AgentRecord existingAgent = await agentsClient.GetAgentAsync("TestWorkflowAgentFromDotnet");
-        if (existingAgent is not null)
-        {
-            agentName = existingAgent.Name;
-            agentVersion = existingAgent.Versions.Latest.Version;
-        }
-        else
-        {
-            AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
-                "TestWorkflowAgentFromDotnet",
-                workflowAgentDefinition,
-                new AgentVersionCreationOptions()
-                {
-                    Description = "A test agent created from the .NET SDK automation suite",
-                    Metadata = { ["freely_deleteable"] = "true" },
-                });
-            agentName = newAgentVersion.Name;
-            agentVersion = newAgentVersion.Version;
-        }
+        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+            "TestWorkflowAgentFromDotnet234",
+            workflowAgentDefinition,
+            new AgentVersionCreationOptions()
+            {
+                Description = "A test agent created from the .NET SDK automation suite",
+                Metadata = { ["freely_deleteable"] = "true" },
+            });
+        agentName = newAgentVersion.Name;
+        agentVersion = newAgentVersion.Version;
 
         AgentConversation newConversation = await agentsClient.GetConversationClient().CreateConversationAsync();
 
@@ -800,98 +820,16 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetOutputText().ToLower(), Does.Contain(replyToFunctionCall.ToLower()));
     }
 
-    private static BinaryData MATH_TUTOR_TRIGGER_BYTES = BinaryData.FromString("""
-                {
-                  "kind": "OnConversationStart",
-                  "id": "my_workflow",
-                  "actions": [
-                    {
-                      "kind": "SetVariable",
-                      "id": "set_variable_input_task",
-                      "variable": "Local.LatestMessage",
-                      "value": "=UserMessage(System.LastMessageText)"
-                    },
-                    {
-                      "kind": "CreateConversation",
-                      "id": "create_student_conversation",
-                      "conversationId": "Local.StudentConversationId"
-                    },
-                    {
-                      "kind": "CreateConversation",
-                      "id": "create_teacher_conversation",
-                      "conversationId": "Local.TeacherConversationId"
-                    },
-                    {
-                      "kind": "InvokeAzureAgent",
-                      "id": "student_agent",
-                      "description": "The student node",
-                      "conversationId": "=Local.StudentConversationId",
-                      "agent": {
-                        "name": "StudentAgent_123"
-                      },
-                      "input": {
-                        "messages": "=Local.LatestMessage"
-                      },
-                      "output": {
-                        "messages": "Local.LatestMessage"
-                      }
-                    },
-                    {
-                      "kind": "InvokeAzureAgent",
-                      "id": "teacher_agent",
-                      "description": "The teacher node",
-                      "conversationId": "=Local.TeacherConversationId",
-                      "agent": {
-                        "name": "TeacherAgent_123"
-                      },
-                      "input": {
-                        "messages": "=Local.LatestMessage"
-                      },
-                      "output": {
-                        "messages": "Local.LatestMessage"
-                      }
-                    },
-                    {
-                      "kind": "SetVariable",
-                      "id": "set_variable_turncount",
-                      "variable": "Local.TurnCount",
-                      "value": "=Local.TurnCount + 1"
-                    },
-                    {
-                      "kind": "ConditionGroup",
-                      "id": "completion_check",
-                      "conditions": [
-                        {
-                          "condition": "=!IsBlank(Find(\"[COMPLETE]\", Upper(Last(Local.LatestMessage).Text)))",
-                          "id": "check_done",
-                          "actions": [
-                            {
-                              "kind": "EndConversation",
-                              "id": "end_workflow"
-                            }
-                          ]
-                        },
-                        {
-                          "condition": "=Local.TurnCount >= 4",
-                          "id": "check_turn_count_exceeded",
-                          "actions": [
-                            {
-                              "kind": "SendActivity",
-                              "id": "send_activity_tired",
-                              "activity": "Let's try again later...I am tired."
-                            }
-                          ]
-                        }
-                      ],
-                      "elseActions": [
-                        {
-                          "kind": "GotoAction",
-                          "id": "goto_student_agent",
-                          "actionId": "student_agent"
-                        }
-                      ]
-                    }
-                  ]
-                }
-                """);
+    private static readonly string s_HelloWorkflowYaml = """
+        kind: workflow
+        trigger:
+          kind: OnConversationStart
+          id: my_workflow
+          actions:
+            - kind: SendActivity
+              id: sendActivity_welcome
+              activity: hello world
+            - kind: EndConversation
+              id: end_conversation
+        """;
 }

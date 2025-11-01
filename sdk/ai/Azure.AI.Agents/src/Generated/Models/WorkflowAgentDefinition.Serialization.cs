@@ -31,10 +31,10 @@ namespace Azure.AI.Agents
                 throw new FormatException($"The model {nameof(WorkflowAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Workflow))
+            if (Optional.IsDefined(WorkflowYaml))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteStringValue(Workflow);
+                writer.WriteStringValue(WorkflowYaml);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.AI.Agents
             AgentKind kind = default;
             RaiConfig raiConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string workflow = default;
+            string workflowYaml = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -85,7 +85,7 @@ namespace Azure.AI.Agents
                 }
                 if (prop.NameEquals("workflow"u8))
                 {
-                    workflow = prop.Value.GetString();
+                    workflowYaml = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowAgentDefinition(kind, raiConfig, additionalBinaryDataProperties, workflow);
+            return new WorkflowAgentDefinition(kind, raiConfig, additionalBinaryDataProperties, workflowYaml);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -13,7 +13,7 @@ public static partial class OpenAIFileExtensions
 {
     public static string GetAzureFileStatus(this OpenAIFile file)
     {
-        if (AdditionalPropertyHelpers.GetAdditionalProperty<OpenAIFile, string>(file, "_sdk_status") is string extraStatusValue
+        if (file.TryGetAdditionalProperty("_sdk_status", out string extraStatusValue)
             && extraStatusValue.Length > 2)
         {
             return extraStatusValue.Substring(1, extraStatusValue.Length - 2);
