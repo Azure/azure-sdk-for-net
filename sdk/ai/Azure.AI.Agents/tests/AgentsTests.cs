@@ -9,9 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -588,15 +586,16 @@ public class AgentsTests : AgentsTestBase
 
     [RecordedTest]
     [TestCase(ToolType.CodeInterpreter)]
+    [TestCase(ToolType.FileSearch)]
     public async Task TestTool(ToolType toolType)
     {
         AgentsClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: GetAgentToolDefinition(toolType),
+            definition: await GetAgentToolDefinition(toolType, openAIClient),
             options: null
         );
-        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
             TestEnvironment.MODELDEPLOYMENTNAME);
         AgentReference agentReference = new(name: agentVersion.Name)
@@ -614,7 +613,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
         if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
         {
-            StringAssert.Contains(expectedResponse, response.GetOutputText(), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
+            Assert.That(response.GetOutputText(), Does.Contain(expectedResponse), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
         }
     }
 

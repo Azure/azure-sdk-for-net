@@ -209,4 +209,10 @@ public class AgentsSmokeTests : AgentsTestBase
 
         AgentResponseItem asAgentItem = ModelReaderWriter.Read<AgentResponseItem>(itemBytes);
     }
+
+    [TearDown]
+    public override void Cleanup()
+    {
+        // Nothing here
+    }
 }
