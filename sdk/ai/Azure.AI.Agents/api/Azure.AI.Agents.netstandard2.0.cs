@@ -774,7 +774,7 @@ namespace Azure.AI.Agents
         public static Azure.AI.Agents.ToolArgumentBinding ToolArgumentBinding(string toolName = null, string argumentName = null) { throw null; }
         public static Azure.AI.Agents.ToolProjectConnection ToolProjectConnection(string projectConnectionId = null) { throw null; }
         public static Azure.AI.Agents.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
-        public static Azure.AI.Agents.WorkflowAgentDefinition WorkflowAgentDefinition(Azure.AI.Agents.RaiConfig raiConfig = null, string workflow = null) { throw null; }
+        public static Azure.AI.Agents.WorkflowAgentDefinition WorkflowAgentDefinition(Azure.AI.Agents.RaiConfig raiConfig = null, string workflowYaml = null) { throw null; }
     }
     public partial class AzureAISearchAgentTool : Azure.AI.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.AzureAISearchAgentTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AzureAISearchAgentTool>
     {
@@ -1797,12 +1797,14 @@ namespace Azure.AI.Agents
     }
     public static partial class ResponseCreationOptionsExtensions
     {
+        public static void AddStructuredInput(this OpenAI.Responses.ResponseCreationOptions options, string key, string value) { }
         public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentRecord agentObject, string version = null) { }
         public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentReference agentReference) { }
         public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentVersion agentVersion) { }
         public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, string agentName, string version = null) { }
         public static void SetConversationReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentConversation conversation) { }
         public static void SetConversationReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, string conversationId) { }
+        public static void SetStructuredInputs(this OpenAI.Responses.ResponseCreationOptions options, System.BinaryData structuredInputsBytes) { }
     }
     public static partial class ResponseItemExtensions
     {
@@ -1920,8 +1922,7 @@ namespace Azure.AI.Agents
     public partial class WorkflowAgentDefinition : Azure.AI.Agents.AgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.WorkflowAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.WorkflowAgentDefinition>
     {
         public WorkflowAgentDefinition() { }
-        public System.BinaryData TriggerBytes { get { throw null; } set { } }
-        public string Workflow { get { throw null; } set { } }
+        public static Azure.AI.Agents.WorkflowAgentDefinition FromYaml(string workflowYamlDocument) { throw null; }
         protected override Azure.AI.Agents.AgentDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Agents.AgentDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
