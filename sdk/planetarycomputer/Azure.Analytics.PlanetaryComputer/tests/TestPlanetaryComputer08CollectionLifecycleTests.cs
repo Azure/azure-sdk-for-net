@@ -37,6 +37,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_01_begin_create_collection
         /// </summary>
         [Test]
+        [Ignore("Recording incomplete - missing final GET request after LRO completion - needs to be re-recorded")]
         [Category("CreateCollection")]
         public async Task Test08_01_BeginCreateCollection()
         {
@@ -204,6 +205,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_03_begin_delete_collection
         /// </summary>
         [Test]
+        [Ignore("Recording incomplete - missing final GET request after LRO completion - needs to be re-recorded")]
         [Category("DeleteCollection")]
         public async Task Test08_03_BeginDeleteCollection()
         {
@@ -259,6 +261,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_04_create_collection_asset
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("CollectionAsset")]
         public async Task Test08_04_CreateCollectionAsset()
         {
@@ -327,6 +330,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_05_replace_collection_asset
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("CollectionAsset")]
         public async Task Test08_05_ReplaceCollectionAsset()
         {
@@ -379,6 +383,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_06_delete_collection_asset
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("CollectionAsset")]
         public async Task Test08_06_DeleteCollectionAsset()
         {

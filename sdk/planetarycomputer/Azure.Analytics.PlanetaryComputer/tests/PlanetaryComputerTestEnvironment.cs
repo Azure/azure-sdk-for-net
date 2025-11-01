@@ -54,7 +54,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Gets the SAS token for container access in SAS-based ingestion tests.
         /// Marked as secret to prevent token disclosure in recordings.
         /// </summary>
-        public string IngestionSasToken => GetRecordedVariable("PLANETARYCOMPUTER_INGESTION_SAS_TOKEN", options => options.IsSecret("sv=sanitized"));
+        public string IngestionSasToken => GetRecordedVariable("PLANETARYCOMPUTER_INGESTION_SAS_TOKEN", options => options.IsSecret("sv=2021-01-01&st=2020-01-01T00:00:00Z&se=2099-12-31T23:59:59Z&sr=c&sp=rl&sig=Sanitized"));
 
         /// <summary>
         /// Gets the OAuth scope for Geocatalog authentication.

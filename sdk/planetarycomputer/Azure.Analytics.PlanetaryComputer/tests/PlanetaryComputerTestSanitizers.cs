@@ -217,6 +217,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 Value = $@"""access_token"": ""{SANITIZED_ACCESS_TOKEN}"""
             });
 
+            // Sanitize SAS tokens in request/response bodies
+            // SAS tokens contain sensitive signature data that must not be recorded
+            // Pattern matches full SAS token query string format: sv=2021-01-01&st=...&sig=...
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"""sasToken""\s*:\s*""[^""]+""")
+            {
+                Value = @"""sasToken"": ""sv=2021-01-01&st=2020-01-01T00:00:00Z&se=2099-12-31T23:59:59Z&sr=c&sp=rl&sig=Sanitized"""
+            });
+
             // Collection ID sanitizers
             // Python pattern: r"(?P<collection_id>[a-z0-9]+-[a-z]+-[a-z0-9]+)-[0-9a-f]{8}"
             // This matches collection IDs like "naip-atl-20231201-a1b2c3d4" where the hash suffix needs sanitization

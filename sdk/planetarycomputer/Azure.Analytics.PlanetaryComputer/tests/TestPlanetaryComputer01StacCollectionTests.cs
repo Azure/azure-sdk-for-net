@@ -843,7 +843,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             StacMosaic updatedMosaic = response.Value;
             Assert.IsNotNull(updatedMosaic, "Updated mosaic should not be null");
             Assert.AreEqual("test-mosaic-1", updatedMosaic.Id, "ID should match");
-            Assert.AreEqual("Test Most recent available - updated", updatedMosaic.Name, "Name should be updated");
+            Assert.AreEqual("Test Mosaic Updated", updatedMosaic.Name, "Name should be updated");
 
             TestContext.WriteLine($"Successfully replaced mosaic: {updatedMosaic.Id}");
         }

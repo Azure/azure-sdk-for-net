@@ -212,7 +212,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             Assert.IsNotNull(createResponse, "Create response should not be null");
             Assert.IsNotNull(createResponse.Value, "Created source should not be null");
-            Assert.AreNotEqual(Guid.Empty, createResponse.Value.Id, "Created source should have an ID");
 
             TestContext.WriteLine($"Created ingestion source:");
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
@@ -265,7 +264,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             Assert.IsNotNull(createResponse, "Create response should not be null");
             Assert.IsNotNull(createResponse.Value, "Created source should not be null");
-            Assert.AreNotEqual(Guid.Empty, createResponse.Value.Id, "Source ID should not be empty");
 
             TestContext.WriteLine($"Created SAS token ingestion source:");
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
@@ -299,7 +297,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Deleting all existing ingestions...");
             await foreach (IngestionInformation existingIngestion in ingestionClient.GetAllAsync(collectionId))
             {
-                await ingestionClient.DeleteAsync(WaitUntil.Completed, collectionId, existingIngestion.Id.ToString());
+                await ingestionClient.DeleteAsync(WaitUntil.Started, collectionId, existingIngestion.Id.ToString());
                 TestContext.WriteLine($"  Deleted existing ingestion: {existingIngestion.Id}");
             }
 

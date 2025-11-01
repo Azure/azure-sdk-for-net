@@ -207,6 +207,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// C# method: Search(StacSearchParameters)
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("STAC")]
         [Category("Search")]
         public async Task Test04_05_SearchItemsWithSpatialFilter()
@@ -344,6 +345,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// C# method: GetCollectionQueryables(collectionId)
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("STAC")]
         [Category("Queryables")]
         public async Task Test04_07_GetCollectionQueryables()

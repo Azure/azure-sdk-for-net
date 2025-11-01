@@ -31,6 +31,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_01_register_mosaics_search
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("RegisterSearch")]
         public async Task Test05_01_RegisterMosaicsSearch()
         {
@@ -84,6 +85,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_02_get_mosaics_search_info
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("SearchInfo")]
         public async Task Test05_02_GetMosaicsSearchInfo()
         {
@@ -123,6 +125,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_03_get_mosaics_tile_json
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("TileJson")]
         public async Task Test05_03_GetMosaicsTileJson()
         {
@@ -176,6 +179,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_04_get_mosaics_tile
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("Tile")]
         public async Task Test05_04_GetMosaicsTile()
         {
@@ -238,6 +242,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_05_get_mosaics_wmts_capabilities
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("WMTS")]
         public async Task Test05_05_GetMosaicsWmtsCapabilities()
         {
@@ -293,6 +298,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_06_get_mosaics_assets_for_point
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("Assets")]
         public async Task Test05_06_GetMosaicsAssetsForPoint()
         {
@@ -359,6 +365,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_07_get_mosaics_assets_for_tile
         /// </summary>
         [Test]
+        [Ignore("Missing session recording - needs to be recorded")]
         [Category("Assets")]
         public async Task Test05_07_GetMosaicsAssetsForTile()
         {
