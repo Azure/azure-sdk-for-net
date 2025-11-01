@@ -5,11 +5,10 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Reflection;
 using OpenAI.Responses;
 
 #pragma warning disable OPENAI001
+#pragma warning disable SCME0001
 
 namespace Azure.AI.Agents;
 
@@ -22,9 +21,9 @@ public static partial class ResponseCreationOptionsExtensions
     /// <param name="agentReference"></param>
     public static void SetAgentReference(this ResponseCreationOptions responseCreationOptions, AgentReference agentReference)
     {
-        AdditionalPropertyHelpers.SetAdditionalProperty(responseCreationOptions, "agent", agentReference);
-        // Agent specification is mutually exclusive with model specification; see internal issue 4770700
-        AdditionalPropertyHelpers.SetAdditionalProperty(responseCreationOptions, "model", BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray()));
+        BinaryData agentReferenceBin = ModelReaderWriter.Write(agentReference, ModelSerializationExtensions.WireOptions, AzureAIAgentsContext.Default);
+        responseCreationOptions.Patch.Set("$.agent"u8, agentReferenceBin);
+        responseCreationOptions.Patch.Remove("$.model"u8);
     }
 
     /// <summary>
@@ -60,9 +59,7 @@ public static partial class ResponseCreationOptionsExtensions
     /// <param name="conversationId"></param>
     public static void SetConversationReference(this ResponseCreationOptions responseCreationOptions, string conversationId)
     {
-        responseCreationOptions.SetAdditionalProperty(
-            "conversation",
-            BinaryData.FromString($"\"{conversationId}\""));
+        responseCreationOptions.Patch.Set("$.conversation"u8, $"{conversationId}");
     }
 
     /// <summary>

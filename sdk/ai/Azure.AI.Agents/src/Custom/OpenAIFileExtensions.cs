@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 using OpenAI.Files;
 
 #pragma warning disable CS0618
@@ -13,10 +17,18 @@ public static partial class OpenAIFileExtensions
 {
     public static string GetAzureFileStatus(this OpenAIFile file)
     {
-        if (AdditionalPropertyHelpers.GetAdditionalProperty<OpenAIFile, string>(file, "_sdk_status") is string extraStatusValue
-            && extraStatusValue.Length > 2)
+        using BinaryContent contentBytes = BinaryContent.Create(file, ModelSerializationExtensions.WireOptions);
+        using var stream = new MemoryStream();
+        contentBytes.WriteTo(stream);
+        string json = Encoding.UTF8.GetString(stream.ToArray());
+        JsonDocument doc = JsonDocument.Parse(json);
+        if (doc.RootElement.TryGetProperty("_sdk_status", out JsonElement extraStatusElement))
         {
-            return extraStatusValue.Substring(1, extraStatusValue.Length - 2);
+            string extraStatusValue = extraStatusElement.GetString();
+            if (!string.IsNullOrEmpty(extraStatusValue))
+            {
+                return extraStatusValue;
+            }
         }
         return null;
     }

@@ -199,9 +199,12 @@ internal static partial class PipelinePolicyHelpers
                                         "Content-Disposition: form-data; name=file; filename=([^;]*);.*") is Match fileContentDispositionMatch
                                     && fileContentDispositionMatch.Success)
                                 {
-                                    newRequestWriter.WriteLine("Content-Type: application/octet-stream");
+                                    // We are explicitly set the line ending as
+                                    // WriteLine will add only \n symbol on Unix systems,
+                                    // Which will result in error 400 on te service side.
+                                    newRequestWriter.Write("Content-Type: application/octet-stream\r\n");
                                 }
-                                newRequestWriter.WriteLine(line);
+                                newRequestWriter.Write($"{line}\r\n");
                                 previousLine = line;
                             }
 
