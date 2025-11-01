@@ -59,7 +59,7 @@ public partial class AgentsApiError
         if (Details?.Count > 0 == true)
         {
             messageBuilder.AppendLine().AppendLine();
-            messageBuilder.Append(GetExceptionMesageRecursive());
+            messageBuilder.Append(GetExceptionMessageRecursive());
             foreach (AgentsApiError error in Details)
             {
                 messageBuilder.AppendLine($"{error.Target ?? "<empty>"}:");
@@ -69,13 +69,13 @@ public partial class AgentsApiError
         return messageBuilder.ToString();
     }
 
-    private string GetExceptionMesageRecursive()
+    private string GetExceptionMessageRecursive()
     {
         StringBuilder messageBuilder = new();
         foreach (AgentsApiError error in Details)
         {
             messageBuilder.AppendLine($"{error.Target ?? "<empty>"}: {error.Message}");
-            messageBuilder.AppendLine().Append($"  - {error.GetExceptionMesageRecursive()}");
+            messageBuilder.AppendLine().Append($"  - {error.GetExceptionMessageRecursive()}");
         }
         return messageBuilder.ToString();
     }
@@ -94,7 +94,7 @@ public partial class AgentsApiError
             messageBuilder.Append(" (");
             foreach (AgentsApiError error in Details)
             {
-                messageBuilder.Append(error.GetExceptionMesageRecursive());
+                messageBuilder.Append(error.GetExceptionMessageRecursive());
                 messageBuilder.Append("; ");
             }
             messageBuilder.Remove(messageBuilder.Length - 2, 2);

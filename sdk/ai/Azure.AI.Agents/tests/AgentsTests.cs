@@ -9,9 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using OpenAI;
 using OpenAI.Responses;
 

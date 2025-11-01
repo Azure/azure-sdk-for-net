@@ -93,7 +93,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNull(definition, nameof(definition));
 
             CreateMemoryStoreRequest spreadModel = new CreateMemoryStoreRequest(name, description, metadata, definition, default);
-            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
         }
 
@@ -112,7 +112,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNull(definition, nameof(definition));
 
             CreateMemoryStoreRequest spreadModel = new CreateMemoryStoreRequest(name, description, metadata, definition, default);
-            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
         }
 
@@ -177,7 +177,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata, default);
-            ClientResult result = UpdateMemoryStore(name, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = UpdateMemoryStore(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
         }
 
@@ -194,7 +194,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata, default);
-            ClientResult result = await UpdateMemoryStoreAsync(name, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await UpdateMemoryStoreAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
         }
 
@@ -252,7 +252,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetMemoryStore(name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetMemoryStore(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
         }
 
@@ -266,7 +266,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetMemoryStoreAsync(name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
         }
 
@@ -324,7 +324,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = DeleteMemoryStore(name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteMemoryStore(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DeleteMemoryStoreResponse)result, result.GetRawResponse());
         }
 
@@ -338,7 +338,7 @@ namespace Azure.AI.Agents
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await DeleteMemoryStoreAsync(name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DeleteMemoryStoreResponse)result, result.GetRawResponse());
         }
 
@@ -498,7 +498,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            ClientResult result = GetUpdateResult(name, updateId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetUpdateResult(name, updateId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
         }
 
@@ -514,7 +514,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            ClientResult result = await GetUpdateResultAsync(name, updateId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetUpdateResultAsync(name, updateId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
         }
 
@@ -579,7 +579,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             DeleteScopeRequest spreadModel = new DeleteScopeRequest(scope, default);
-            ClientResult result = DeleteScope(name, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = DeleteScope(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStoreDeleteScopeResponse)result, result.GetRawResponse());
         }
 
@@ -596,7 +596,7 @@ namespace Azure.AI.Agents
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             DeleteScopeRequest spreadModel = new DeleteScopeRequest(scope, default);
-            ClientResult result = await DeleteScopeAsync(name, spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await DeleteScopeAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStoreDeleteScopeResponse)result, result.GetRawResponse());
         }
     }

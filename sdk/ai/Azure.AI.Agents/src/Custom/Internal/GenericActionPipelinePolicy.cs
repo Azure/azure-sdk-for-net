@@ -12,8 +12,9 @@ internal partial class GenericActionPipelinePolicy : PipelinePolicy
 {
     private readonly Action<PipelineRequest> _requestAction;
     private readonly Action<PipelineResponse> _responseAction;
+    private readonly Action<PipelineMessage> _messageAction;
 
-    public GenericActionPipelinePolicy(Action<PipelineRequest> requestAction = null, Action<PipelineResponse> responseAction = null)
+    public GenericActionPipelinePolicy(Action<PipelineRequest> requestAction = null, Action<PipelineResponse> responseAction = null, Action<PipelineMessage> messageAction = null)
     {
         _requestAction = (request) =>
         {
@@ -29,19 +30,30 @@ internal partial class GenericActionPipelinePolicy : PipelinePolicy
                 responseAction?.Invoke(response);
             }
         };
+        _messageAction = (message) =>
+        {
+            if (message is not null)
+            {
+                messageAction?.Invoke(message);
+            }
+        };
     }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
+        _messageAction?.Invoke(message);
         _requestAction?.Invoke(message.Request);
         ProcessNext(message, pipeline, currentIndex);
         _responseAction?.Invoke(message.Response);
+        _messageAction?.Invoke(message);
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
+        _messageAction?.Invoke(message);
         _requestAction?.Invoke(message.Request);
         await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
         _responseAction?.Invoke(message.Response);
+        _messageAction?.Invoke(message);
     }
 }
