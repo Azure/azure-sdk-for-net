@@ -383,18 +383,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateRun(string collectionId, string ingestionId, RequestContext context)
+        public virtual Response CreateRun(string collectionId, Guid ingestionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.CreateRun");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateCreateRunRequest(collectionId, ingestionId, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -417,18 +416,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateRunAsync(string collectionId, string ingestionId, RequestContext context)
+        public virtual async Task<Response> CreateRunAsync(string collectionId, Guid ingestionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.CreateRun");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateCreateRunRequest(collectionId, ingestionId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -444,13 +442,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionRun> CreateRun(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionRun> CreateRun(string collectionId, Guid ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = CreateRun(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((IngestionRun)result, result);
@@ -460,13 +457,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionRun>> CreateRunAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionRun>> CreateRunAsync(string collectionId, Guid ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = await CreateRunAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((IngestionRun)result, result);
@@ -484,18 +480,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetRun(string collectionId, string ingestionId, Guid runId, RequestContext context)
+        public virtual Response GetRun(string collectionId, Guid ingestionId, Guid runId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetRun");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateGetRunRequest(collectionId, ingestionId, runId, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -519,18 +514,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRunAsync(string collectionId, string ingestionId, Guid runId, RequestContext context)
+        public virtual async Task<Response> GetRunAsync(string collectionId, Guid ingestionId, Guid runId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetRun");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateGetRunRequest(collectionId, ingestionId, runId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -547,13 +541,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionRun> GetRun(string collectionId, string ingestionId, Guid runId, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionRun> GetRun(string collectionId, Guid ingestionId, Guid runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = GetRun(collectionId, ingestionId, runId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((IngestionRun)result, result);
@@ -564,13 +557,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionRun>> GetRunAsync(string collectionId, string ingestionId, Guid runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionRun>> GetRunAsync(string collectionId, Guid ingestionId, Guid runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = await GetRunAsync(collectionId, ingestionId, runId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((IngestionRun)result, result);
@@ -589,18 +581,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRuns(string collectionId, string ingestionId, int? top, int? skip, RequestContext context)
+        public virtual Pageable<BinaryData> GetRuns(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetRuns");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 return new IngestionClientGetRunsCollectionResult(
                     this,
@@ -630,18 +621,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, string ingestionId, int? top, int? skip, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetRuns");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 return new IngestionClientGetRunsAsyncCollectionResult(
                     this,
@@ -664,13 +654,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IngestionRun> GetRuns(string collectionId, string ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IngestionRun> GetRuns(string collectionId, Guid ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             return new IngestionClientGetRunsCollectionResultOfT(
                 this,
@@ -687,13 +676,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IngestionRun> GetRunsAsync(string collectionId, string ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IngestionRun> GetRunsAsync(string collectionId, Guid ingestionId, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             return new IngestionClientGetRunsAsyncCollectionResultOfT(
                 this,
@@ -809,17 +797,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation Delete(WaitUntil waitUntil, string collectionId, string ingestionId, RequestContext context)
+        public virtual Operation Delete(WaitUntil waitUntil, string collectionId, Guid ingestionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.Delete");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateDeleteRequest(collectionId, ingestionId, context);
                 return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "IngestionClient.Delete", OperationFinalStateVia.Location, context, waitUntil);
@@ -836,17 +823,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string collectionId, string ingestionId, RequestContext context)
+        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string collectionId, Guid ingestionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.Delete");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateDeleteRequest(collectionId, ingestionId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "IngestionClient.DeleteAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
@@ -863,12 +849,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Delete(WaitUntil waitUntil, string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Delete(WaitUntil waitUntil, string collectionId, Guid ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             return Delete(waitUntil, collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -878,12 +863,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string collectionId, Guid ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             return await DeleteAsync(waitUntil, collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -899,18 +883,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Get(string collectionId, string ingestionId, RequestContext context)
+        public virtual Response Get(string collectionId, Guid ingestionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.Get");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateGetRequest(collectionId, ingestionId, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -933,18 +916,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAsync(string collectionId, string ingestionId, RequestContext context)
+        public virtual async Task<Response> GetAsync(string collectionId, Guid ingestionId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.Get");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
                 using HttpMessage message = CreateGetRequest(collectionId, ingestionId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -960,13 +942,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionInformation> Get(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionInformation> Get(string collectionId, Guid ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = Get(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((IngestionInformation)result, result);
@@ -976,13 +957,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionInformation>> GetAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionInformation>> GetAsync(string collectionId, Guid ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             Response result = await GetAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((IngestionInformation)result, result);
@@ -1096,18 +1076,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="ingestionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Update(string collectionId, string ingestionId, RequestContent content, RequestContext context = null)
+        public virtual Response Update(string collectionId, Guid ingestionId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.Update");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateRequest(collectionId, ingestionId, content, context);
@@ -1132,18 +1111,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="ingestionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAsync(string collectionId, string ingestionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UpdateAsync(string collectionId, Guid ingestionId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.Update");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateRequest(collectionId, ingestionId, content, context);
@@ -1255,17 +1233,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReplaceSource(string id, RequestContent content, RequestContext context = null)
+        public virtual Response ReplaceSource(Guid id, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.ReplaceSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateReplaceSourceRequest(id, content, context);
@@ -1289,17 +1265,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReplaceSourceAsync(string id, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> ReplaceSourceAsync(Guid id, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.ReplaceSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateReplaceSourceRequest(id, content, context);
@@ -1316,12 +1290,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="body"> Definition of the ingestion source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionSource> ReplaceSource(string id, IngestionSource body, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionSource> ReplaceSource(Guid id, IngestionSource body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = ReplaceSource(id, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
@@ -1332,12 +1304,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="body"> Definition of the ingestion source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionSource>> ReplaceSourceAsync(string id, IngestionSource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionSource>> ReplaceSourceAsync(Guid id, IngestionSource body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await ReplaceSourceAsync(id, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
@@ -1354,18 +1324,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteSource(string id, RequestContext context)
+        public virtual Response DeleteSource(Guid id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.DeleteSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteSourceRequest(id, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1386,18 +1352,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteSourceAsync(string id, RequestContext context)
+        public virtual async Task<Response> DeleteSourceAsync(Guid id, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.DeleteSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
                 using HttpMessage message = CreateDeleteSourceRequest(id, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1411,26 +1373,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteSource(string id, CancellationToken cancellationToken = default)
+        public virtual Response DeleteSource(Guid id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return DeleteSource(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSourceAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteSourceAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
             return await DeleteSourceAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 

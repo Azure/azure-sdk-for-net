@@ -17,7 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
     {
         private readonly IngestionClient _client;
         private readonly string _collectionId;
-        private readonly string _ingestionId;
+        private readonly Guid _ingestionId;
         private readonly int? _top;
         private readonly int? _skip;
         private readonly RequestContext _context;
@@ -29,12 +29,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public IngestionClientGetRunsCollectionResult(IngestionClient client, string collectionId, string ingestionId, int? top, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public IngestionClientGetRunsCollectionResult(IngestionClient client, string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
             _client = client;
             _collectionId = collectionId;

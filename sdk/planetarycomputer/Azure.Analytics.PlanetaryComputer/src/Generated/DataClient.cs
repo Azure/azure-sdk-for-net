@@ -17,23 +17,23 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary> The TilerClient sub-client. </summary>
-    public partial class TilerClient
+    /// <summary> The DataClient sub-client. </summary>
+    public partial class DataClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TilerClient for mocking. </summary>
-        protected TilerClient()
+        /// <summary> Initializes a new instance of DataClient for mocking. </summary>
+        protected DataClient()
         {
         }
 
-        /// <summary> Initializes a new instance of TilerClient. </summary>
+        /// <summary> Initializes a new instance of DataClient. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TilerClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DataClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -63,7 +63,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTileMatrixDefinitions(string tileMatrixSetId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrixDefinitions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileMatrixDefinitions");
             scope.Start();
             try
             {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrixDefinitions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileMatrixDefinitions");
             scope.Start();
             try
             {
@@ -152,7 +152,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTileMatrices(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrices");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileMatrices");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetTileMatricesAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrices");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileMatrices");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetStatistics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAssetStatistics");
             scope.Start();
             try
             {
@@ -326,7 +326,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetStatistics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAssetStatistics");
             scope.Start();
             try
             {
@@ -456,7 +456,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAvailableAssets(string collectionId, string itemId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAvailableAssets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAvailableAssets");
             scope.Start();
             try
             {
@@ -490,7 +490,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetAvailableAssetsAsync(string collectionId, string itemId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAvailableAssets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAvailableAssets");
             scope.Start();
             try
             {
@@ -556,7 +556,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetBounds(string collectionId, string itemId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetBounds");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetBounds");
             scope.Start();
             try
             {
@@ -590,7 +590,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetBoundsAsync(string collectionId, string itemId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetBounds");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetBounds");
             scope.Start();
             try
             {
@@ -676,7 +676,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response CropGeoJson(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJson");
             scope.Start();
             try
             {
@@ -732,7 +732,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CropGeoJsonAsync(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJson");
             scope.Start();
             try
             {
@@ -864,7 +864,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJsonWithDimensions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJsonWithDimensions");
             scope.Start();
             try
             {
@@ -920,7 +920,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CropGeoJsonWithDimensions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJsonWithDimensions");
             scope.Start();
             try
             {
@@ -1066,7 +1066,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetGeoJsonStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetGeoJsonStatistics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetGeoJsonStatistics");
             scope.Start();
             try
             {
@@ -1135,7 +1135,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetGeoJsonStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetGeoJsonStatistics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetGeoJsonStatistics");
             scope.Start();
             try
             {
@@ -1273,7 +1273,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetInfoGeoJson(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetInfoGeoJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetInfoGeoJson");
             scope.Start();
             try
             {
@@ -1308,7 +1308,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetInfoGeoJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetInfoGeoJson");
             scope.Start();
             try
             {
@@ -1377,7 +1377,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetItemAssetDetails");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetDetails");
             scope.Start();
             try
             {
@@ -1412,7 +1412,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetItemAssetDetails");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetDetails");
             scope.Start();
             try
             {
@@ -1518,7 +1518,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPart");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPart");
             scope.Start();
             try
             {
@@ -1577,7 +1577,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPart");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPart");
             scope.Start();
             try
             {
@@ -1718,7 +1718,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPartWithDimensions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPartWithDimensions");
             scope.Start();
             try
             {
@@ -1777,7 +1777,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPartWithDimensions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPartWithDimensions");
             scope.Start();
             try
             {
@@ -1904,7 +1904,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPoint");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPoint");
             scope.Start();
             try
             {
@@ -1948,7 +1948,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPoint");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPoint");
             scope.Start();
             try
             {
@@ -2053,7 +2053,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreview");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreview");
             scope.Start();
             try
             {
@@ -2106,7 +2106,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreview");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreview");
             scope.Start();
             try
             {
@@ -2229,7 +2229,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreviewWithFormat");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreviewWithFormat");
             scope.Start();
             try
             {
@@ -2283,7 +2283,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreviewWithFormat");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreviewWithFormat");
             scope.Start();
             try
             {
@@ -2390,7 +2390,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateStaticImage(string collectionId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CreateStaticImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CreateStaticImage");
             scope.Start();
             try
             {
@@ -2424,7 +2424,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateStaticImageAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.CreateStaticImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CreateStaticImage");
             scope.Start();
             try
             {
@@ -2490,7 +2490,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetStaticImage(string collectionId, string id, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStaticImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStaticImage");
             scope.Start();
             try
             {
@@ -2524,7 +2524,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetStaticImageAsync(string collectionId, string id, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStaticImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStaticImage");
             scope.Start();
             try
             {
@@ -2622,7 +2622,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStatistics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStatistics");
             scope.Start();
             try
             {
@@ -2688,7 +2688,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStatistics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStatistics");
             scope.Start();
             try
             {
@@ -2845,7 +2845,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileJson");
             scope.Start();
             try
             {
@@ -2907,7 +2907,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileJson");
             scope.Start();
             try
             {
@@ -3066,7 +3066,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
             scope.Start();
             try
             {
@@ -3138,7 +3138,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
             scope.Start();
             try
             {
@@ -3306,7 +3306,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetWmtsCapabilities");
             scope.Start();
             try
             {
@@ -3365,7 +3365,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetWmtsCapabilities");
             scope.Start();
             try
             {
@@ -3483,7 +3483,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassMapLegend(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetClassMapLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetClassMapLegend");
             scope.Start();
             try
             {
@@ -3517,7 +3517,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetClassMapLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetClassMapLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetClassMapLegend");
             scope.Start();
             try
             {
@@ -3611,7 +3611,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetIntervalLegend(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetIntervalLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetIntervalLegend");
             scope.Start();
             try
             {
@@ -3645,7 +3645,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetIntervalLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetIntervalLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetIntervalLegend");
             scope.Start();
             try
             {
@@ -3717,7 +3717,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetLegend(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetLegend");
             scope.Start();
             try
             {
@@ -3757,7 +3757,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetLegendAsync(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetLegend");
             scope.Start();
             try
             {
@@ -3848,7 +3848,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsAssetsForPoint");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForPoint");
             scope.Start();
             try
             {
@@ -3891,7 +3891,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsAssetsForPoint");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForPoint");
             scope.Start();
             try
             {
@@ -4009,7 +4009,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsAssetsForTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForTile");
             scope.Start();
             try
             {
@@ -4065,7 +4065,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsAssetsForTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForTile");
             scope.Start();
             try
             {
@@ -4203,7 +4203,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsSearchInfo(string searchId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsSearchInfo");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsSearchInfo");
             scope.Start();
             try
             {
@@ -4235,7 +4235,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMosaicsSearchInfoAsync(string searchId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsSearchInfo");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsSearchInfo");
             scope.Start();
             try
             {
@@ -4294,7 +4294,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response RegisterMosaicsSearch(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.RegisterMosaicsSearch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.RegisterMosaicsSearch");
             scope.Start();
             try
             {
@@ -4325,7 +4325,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> RegisterMosaicsSearchAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.RegisterMosaicsSearch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.RegisterMosaicsSearch");
             scope.Start();
             try
             {
@@ -4456,7 +4456,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTileJson");
             scope.Start();
             try
             {
@@ -4526,7 +4526,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTileJson");
             scope.Start();
             try
             {
@@ -4707,7 +4707,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTile");
             scope.Start();
             try
             {
@@ -4785,7 +4785,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTile");
             scope.Start();
             try
             {
@@ -4963,7 +4963,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsWmtsCapabilities");
             scope.Start();
             try
             {
@@ -5020,7 +5020,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsWmtsCapabilities");
             scope.Start();
             try
             {

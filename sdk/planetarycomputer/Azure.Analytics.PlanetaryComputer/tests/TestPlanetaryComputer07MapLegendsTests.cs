@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Analytics.PlanetaryComputer.Tests
 {
     /// <summary>
-    /// Tests for Map Legend operations using TilerClient.
+    /// Tests for Map Legend operations using DataClient.
     /// Tests are mapped from Python tests in test_planetary_computer_07_map_legends.py.
     /// </summary>
     [Category("Tiler")]
@@ -35,13 +35,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string classmapName = "mtbs-severity"; // ColorMapNames.MTBS_SEVERITY from Python
 
             TestContext.WriteLine($"Input - classmap_name: {classmapName}");
 
             // Act
-            Response response = await tilerClient.GetClassMapLegendAsync(classmapName, null, null, null);
+            Response response = await dataClient.GetClassMapLegendAsync(classmapName, null, null, null);
 
             // Assert
             ValidateResponse(response);
@@ -141,14 +141,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string colormapName = "modis-64A1"; // ColorMapNames.MODIS64_A1 from Python (note: hyphen, and capital A)
 
             TestContext.WriteLine($"Input - colormap_name: {colormapName}");
 
             // Act
             // Note: Using protocol method because response contains raw numeric arrays, not BinaryData
-            Response response = await tilerClient.GetIntervalLegendAsync(colormapName, null, null, null);
+            Response response = await dataClient.GetIntervalLegendAsync(colormapName, null, null, null);
 
             // Assert
             ValidateResponse(response);
@@ -192,13 +192,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string colorMapName = "rdylgn";
 
             TestContext.WriteLine($"Input - color_map_name: {colorMapName}");
 
             // Act
-            Response<BinaryData> response = await tilerClient.GetLegendAsync(colorMapName);
+            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
 
             // Assert
             ValidateResponse(response, "GetLegend");
@@ -240,13 +240,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string colorMapName = "viridis";
 
             TestContext.WriteLine($"Input - color_map_name: {colorMapName}");
 
             // Act
-            Response<BinaryData> response = await tilerClient.GetLegendAsync(colorMapName);
+            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
 
             // Assert
             ValidateResponse(response, "GetLegend");
@@ -286,13 +286,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string classmapName = "mtbs-severity";
 
             TestContext.WriteLine($"Input - classmap_name: {classmapName}");
 
             // Act
-            Response response = await tilerClient.GetClassMapLegendAsync(classmapName, null, null, null);
+            Response response = await dataClient.GetClassMapLegendAsync(classmapName, null, null, null);
 
             // Assert
             ValidateResponse(response);

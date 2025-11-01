@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.Analytics.PlanetaryComputer.Tests
 {
     /// <summary>
-    /// Tests for Mosaics Tiler operations using TilerClient.
+    /// Tests for Mosaics Tiler operations using DataClient.
     /// Tests are mapped from Python tests in test_planetary_computer_05_mosaics_tiler.py.
     /// </summary>
     [Category("Tiler")]
@@ -37,7 +37,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             TestContext.WriteLine($"Input - collection_id: {collectionId}");
@@ -54,7 +54,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Filter Language: cql2-text");
 
             // Act - Use convenience method instead of JSON serialization
-            Response<TilerMosaicSearchRegistrationResult> response = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> response = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text,
                 sortBy: sortBy
@@ -91,13 +91,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             // First, register a search to get a search ID with CQL2-Text
             string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text
             );
@@ -108,7 +108,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Registered Search ID: {searchId}");
 
             // Act - Get search info for the registered search
-            Response<TilerStacSearchRegistration> response = await tilerClient.GetMosaicsSearchInfoAsync(searchId);
+            Response<TilerStacSearchRegistration> response = await dataClient.GetMosaicsSearchInfoAsync(searchId);
 
             // Assert
             ValidateResponse(response, "GetMosaicsSearchInfo");
@@ -131,13 +131,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             // Register search first
             string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text
             );
@@ -146,7 +146,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile JSON metadata
-            Response<TileJsonMetadata> response = await tilerClient.GetMosaicsTileJsonAsync(
+            Response<TileJsonMetadata> response = await dataClient.GetMosaicsTileJsonAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 assets: new[] { "image" },
@@ -185,7 +185,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             TestContext.WriteLine("Input - tile coordinates: z=13, x=2174, y=3282");
@@ -193,7 +193,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Register search first
             string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text
             );
@@ -202,7 +202,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile image
-            Response<BinaryData> response = await tilerClient.GetMosaicsTileAsync(
+            Response<BinaryData> response = await dataClient.GetMosaicsTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -248,13 +248,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             // Register search first
             string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text
             );
@@ -263,7 +263,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get WMTS capabilities
-            Response<BinaryData> response = await tilerClient.GetMosaicsWmtsCapabilitiesAsync(
+            Response<BinaryData> response = await dataClient.GetMosaicsWmtsCapabilitiesAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 tileFormat: TilerImageFormat.Png,
@@ -304,7 +304,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             float longitude = -84.43202751899601f;
@@ -315,7 +315,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Register search first
             string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text
             );
@@ -324,7 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for point
-            Response<IReadOnlyList<StacItemPointAsset>> response = await tilerClient.GetMosaicsAssetsForPointAsync(
+            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetMosaicsAssetsForPointAsync(
                 searchId: searchId,
                 longitude: longitude,
                 latitude: latitude,
@@ -371,7 +371,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             TestContext.WriteLine("Input - tile coordinates: z=13, x=2174, y=3282");
@@ -379,7 +379,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Register search first
             string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await tilerClient.RegisterMosaicsSearchAsync(
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
                 filterLanguage: FilterLanguage.Cql2Text
             );
@@ -388,7 +388,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for tile
-            Response<IReadOnlyList<BinaryData>> response = await tilerClient.GetMosaicsAssetsForTileAsync(
+            Response<IReadOnlyList<BinaryData>> response = await dataClient.GetMosaicsAssetsForTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -417,7 +417,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             // Define geometry for the static image - coordinates as [[[lon, lat], ...]]
@@ -468,7 +468,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Image request: columns={imageRequest.Columns}, rows={imageRequest.Rows}, zoom={imageRequest.Zoom}");
 
             // Act - Create static image
-            Response<ImageResponse> response = await tilerClient.CreateStaticImageAsync(
+            Response<ImageResponse> response = await dataClient.CreateStaticImageAsync(
                 collectionId: collectionId,
                 body: imageRequest
             );
@@ -494,7 +494,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         {
             // Arrange
             var client = GetTestClient();
-            var tilerClient = client.GetTilerClient();
+            var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
             // First create a static image to get an ID
@@ -537,7 +537,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             imageRequest.ImageSize = "1080x1080";
             imageRequest.ShowBranding = false;
 
-            Response<ImageResponse> createResponse = await tilerClient.CreateStaticImageAsync(
+            Response<ImageResponse> createResponse = await dataClient.CreateStaticImageAsync(
                 collectionId: collectionId,
                 body: imageRequest
             );
@@ -554,7 +554,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Assert.IsNotEmpty(imageId, "Image ID should not be empty");
 
             // Act - Get the static image
-            Response<BinaryData> response = await tilerClient.GetStaticImageAsync(
+            Response<BinaryData> response = await dataClient.GetStaticImageAsync(
                 collectionId: collectionId,
                 id: imageId
             );

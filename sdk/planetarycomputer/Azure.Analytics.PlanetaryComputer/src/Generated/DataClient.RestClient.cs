@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary></summary>
-    public partial class TilerClient
+    public partial class DataClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

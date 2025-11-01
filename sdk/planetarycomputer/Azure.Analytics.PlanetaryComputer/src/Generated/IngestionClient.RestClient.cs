@@ -111,14 +111,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateRunRequest(string collectionId, string ingestionId, RequestContext context)
+        internal HttpMessage CreateCreateRunRequest(string collectionId, Guid ingestionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
-            uri.AppendPath(ingestionId, true);
+            uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
@@ -129,14 +129,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetRunRequest(string collectionId, string ingestionId, Guid runId, RequestContext context)
+        internal HttpMessage CreateGetRunRequest(string collectionId, Guid ingestionId, Guid runId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
-            uri.AppendPath(ingestionId, true);
+            uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -148,14 +148,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetRunsRequest(string collectionId, string ingestionId, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateGetRunsRequest(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
-            uri.AppendPath(ingestionId, true);
+            uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendPath("/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
@@ -174,7 +174,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateNextGetRunsRequest(Uri nextPage, string collectionId, string ingestionId, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateNextGetRunsRequest(Uri nextPage, string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -204,14 +204,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string collectionId, string ingestionId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string collectionId, Guid ingestionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
-            uri.AppendPath(ingestionId, true);
+            uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -221,14 +221,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string collectionId, string ingestionId, RequestContext context)
+        internal HttpMessage CreateGetRequest(string collectionId, Guid ingestionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
-            uri.AppendPath(ingestionId, true);
+            uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -274,14 +274,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string collectionId, string ingestionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string collectionId, Guid ingestionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/ingestions/", false);
-            uri.AppendPath(ingestionId, true);
+            uri.AppendPath(ingestionId.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -309,12 +309,12 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateReplaceSourceRequest(string id, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReplaceSourceRequest(Guid id, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(id.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -326,12 +326,12 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateDeleteSourceRequest(string id, RequestContext context)
+        internal HttpMessage CreateDeleteSourceRequest(Guid id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(id.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;

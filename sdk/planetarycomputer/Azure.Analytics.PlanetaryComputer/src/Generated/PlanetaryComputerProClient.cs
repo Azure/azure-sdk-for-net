@@ -22,7 +22,7 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly string _apiVersion;
         private IngestionClient _cachedIngestionClient;
         private StacClient _cachedStacClient;
-        private TilerClient _cachedTilerClient;
+        private DataClient _cachedDataClient;
         private ManagedStorageSharedAccessSignatureClient _cachedManagedStorageSharedAccessSignatureClient;
 
         /// <summary> Initializes a new instance of PlanetaryComputerProClient for mocking. </summary>
@@ -75,10 +75,10 @@ namespace Azure.Analytics.PlanetaryComputer
             return Volatile.Read(ref _cachedStacClient) ?? Interlocked.CompareExchange(ref _cachedStacClient, new StacClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedStacClient;
         }
 
-        /// <summary> Initializes a new instance of TilerClient. </summary>
-        public virtual TilerClient GetTilerClient()
+        /// <summary> Initializes a new instance of DataClient. </summary>
+        public virtual DataClient GetDataClient()
         {
-            return Volatile.Read(ref _cachedTilerClient) ?? Interlocked.CompareExchange(ref _cachedTilerClient, new TilerClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTilerClient;
+            return Volatile.Read(ref _cachedDataClient) ?? Interlocked.CompareExchange(ref _cachedDataClient, new DataClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataClient;
         }
 
         /// <summary> Initializes a new instance of ManagedStorageSharedAccessSignatureClient. </summary>

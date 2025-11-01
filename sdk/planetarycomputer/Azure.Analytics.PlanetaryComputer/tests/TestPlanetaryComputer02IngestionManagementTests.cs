@@ -195,7 +195,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Cleaning up {existingSources.Count} existing sources");
             foreach (IngestionSourceSummary source in existingSources)
             {
-                await ingestionClient.DeleteSourceAsync(source.Id.ToString());
+                await ingestionClient.DeleteSourceAsync(source.Id);
                 TestContext.WriteLine($"  Deleted source: {source.Id}");
             }
 
@@ -269,7 +269,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
 
             // Clean up
-            await ingestionClient.DeleteSourceAsync(createResponse.Value.Id.ToString());
+            await ingestionClient.DeleteSourceAsync(createResponse.Value.Id);
             TestContext.WriteLine($"Cleaned up SAS source: {createResponse.Value.Id}");
         }
 
@@ -297,7 +297,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Deleting all existing ingestions...");
             await foreach (IngestionInformation existingIngestion in ingestionClient.GetAllAsync(collectionId))
             {
-                await ingestionClient.DeleteAsync(WaitUntil.Started, collectionId, existingIngestion.Id.ToString());
+                await ingestionClient.DeleteAsync(WaitUntil.Started, collectionId, existingIngestion.Id);
                 TestContext.WriteLine($"  Deleted existing ingestion: {existingIngestion.Id}");
             }
 
@@ -356,7 +356,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
             TestContext.WriteLine($"Created ingestion with ID: {ingestionId}");
 
             // Update the ingestion with new display name
@@ -381,7 +381,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Display Name: {updatedIngestion.DisplayName}");
             TestContext.WriteLine($"  - Import Type: {updatedIngestion.ImportType}");
 
-            Assert.AreEqual(ingestionId, updatedIngestion.Id.ToString(), "Ingestion ID should remain the same");
+            Assert.AreEqual(ingestionId, updatedIngestion.Id, "Ingestion ID should remain the same");
             Assert.AreEqual("Updated Ingestion Name", updatedIngestion.DisplayName, "Display name should be updated");
         }
 
@@ -413,7 +413,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
             TestContext.WriteLine($"Created ingestion with ID: {ingestionId}");
 
             // Act
@@ -458,7 +458,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
 
             // Create ingestion run
             Response<IngestionRun> runResponse = await ingestionClient.CreateRunAsync(collectionId, ingestionId);
@@ -514,7 +514,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
 
             // Create run to generate an operation
             Response<IngestionRun> runResponse = await ingestionClient.CreateRunAsync(collectionId, ingestionId);
@@ -580,7 +580,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionSource = new ManagedIdentityIngestionSource(sourceIdGuid, connectionInfo);
 
             Response<IngestionSource> createResponse = await ingestionClient.CreateSourceAsync(ingestionSource);
-            string sourceId = createResponse.Value.Id.ToString();
+            Guid sourceId = createResponse.Value.Id;
             TestContext.WriteLine($"Created source with ID: {sourceId}");
 
             // Act
@@ -597,7 +597,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 sources.Add(source);
             }
 
-            List<string> sourceIds = sources.Select(s => s.Id.ToString()).ToList();
+            List<Guid> sourceIds = sources.Select(s => s.Id).ToList();
             TestContext.WriteLine($"Remaining sources: {sources.Count}");
 
             // Only check in live mode because in playback mode all UUIDs are sanitized to the same value
@@ -635,7 +635,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
 
             // Create run to generate an operation
             Response<IngestionRun> runResponse = await ingestionClient.CreateRunAsync(collectionId, ingestionId);
@@ -750,7 +750,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - ID: {getResponse.Value.Id}");
 
             // Clean up
-            await ingestionClient.DeleteSourceAsync(createResponse.Value.Id.ToString());
+            await ingestionClient.DeleteSourceAsync(createResponse.Value.Id);
         }
 
         /// <summary>
@@ -789,7 +789,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var sasIngestionSource = new SharedAccessSignatureTokenIngestionSource(sourceIdGuid, sasConnectionInfo);
 
             Response<IngestionSource> createdSource = await ingestionClient.CreateSourceAsync(sasIngestionSource);
-            string sourceId = createdSource.Value.Id.ToString();
+            Guid sourceId = createdSource.Value.Id;
             TestContext.WriteLine($"Created SAS token ingestion source: {sourceId}");
 
             // Step 2: First call to ReplaceSource - replaces the existing source with original token
@@ -897,7 +897,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
             TestContext.WriteLine($"Created ingestion with ID: {ingestionId}");
 
             // Act
@@ -914,7 +914,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Import Type: {retrievedIngestion.ImportType}");
             TestContext.WriteLine($"  - Source Catalog URL: {retrievedIngestion.SourceCatalogUrl}");
 
-            Assert.AreEqual(ingestionId, retrievedIngestion.Id.ToString(), "Ingestion ID should match");
+            Assert.AreEqual(ingestionId, retrievedIngestion.Id, "Ingestion ID should match");
         }
 
         /// <summary>
@@ -945,7 +945,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
 
             Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
-            string ingestionId = createResponse.Value.Id.ToString();
+            Guid ingestionId = createResponse.Value.Id;
             TestContext.WriteLine($"Created ingestion with ID: {ingestionId}");
 
             // Create a run
