@@ -119,7 +119,7 @@ namespace Azure.AI.Translation.Text
                 return null;
             }
             string requestId = default;
-            string etag = default;
+            ETag etag = default;
             IDictionary<string, TranslationLanguage> translation = default;
             IDictionary<string, TransliterationLanguage> transliteration = default;
             IReadOnlyList<string> models = default;

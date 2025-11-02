@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.AI.Translation.Text
 {
@@ -23,7 +24,7 @@ namespace Azure.AI.Translation.Text
         /// To make subsequent requests more efficient, the client may send the `ETag` value in an 
         /// `If-None-Match` header field.
         /// </param>
-        internal GetSupportedLanguagesResult(string requestId, string etag)
+        internal GetSupportedLanguagesResult(string requestId, ETag etag)
         {
             RequestId = requestId;
             Etag = etag;
@@ -43,7 +44,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="models"> LLM models supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSupportedLanguagesResult(string requestId, string etag, IDictionary<string, TranslationLanguage> translation, IDictionary<string, TransliterationLanguage> transliteration, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSupportedLanguagesResult(string requestId, ETag etag, IDictionary<string, TranslationLanguage> translation, IDictionary<string, TransliterationLanguage> transliteration, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             Etag = etag;
@@ -61,7 +62,7 @@ namespace Azure.AI.Translation.Text
         /// To make subsequent requests more efficient, the client may send the `ETag` value in an 
         /// `If-None-Match` header field.
         /// </summary>
-        public string Etag { get; }
+        public ETag Etag { get; }
 
         /// <summary> Languages that support translate API. </summary>
         public IDictionary<string, TranslationLanguage> Translation { get; }
