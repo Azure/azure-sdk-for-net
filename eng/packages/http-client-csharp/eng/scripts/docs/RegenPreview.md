@@ -10,7 +10,7 @@ This script is designed to streamline the workflow for testing changes to the Ty
 
 When making changes to the TypeSpec HTTP Client C# generator, it may be helpful to validate what the effects will be to generated libraries. This script automates the entire validation workflow by:
 
-### Azure SDK Mode
+### High level process
 
 1. Building local versions of the generator packages
 2. Updating the Azure SDK for .NET repository to use these local packages
@@ -26,7 +26,7 @@ When making changes to the TypeSpec HTTP Client C# generator, it may be helpful 
 
 ## Usage
 
-### Azure SDK Mode - Basic Usage (Regenerate All)
+### Basic Usage (Regenerate All)
 
 **Windows:**
 

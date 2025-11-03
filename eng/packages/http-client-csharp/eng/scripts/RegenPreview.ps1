@@ -5,9 +5,8 @@
     Builds local generator packages and regenerates Azure SDK for .NET libraries for validation.
 
 .DESCRIPTION
-    This script supports two modes:
+    This script supports generating Azure SDK libraries following this high level process:
     
-    Azure SDK Mode (default):
     1. Builds a local npm package of @azure-typespec/http-client-csharp with a versioned name (1.0.0-alpha.YYYYMMDD.hash)
     2. Builds and packages the NuGet generator framework packages with the same versioning
     3. Updates Packages.Data.props in azure-sdk-for-net with the local NuGet version
@@ -17,7 +16,7 @@
     7. Restores all modified artifacts to original state on success
 
 
-    Generator Filtering (Azure SDK Mode only):
+    Generator Filtering:
     - Use -Azure to regenerate only Azure-branded libraries (@azure-typespec/http-client-csharp)
     - Use -Unbranded to regenerate only unbranded libraries (@typespec/http-client-csharp)
     - Use -Mgmt to regenerate only management plane libraries (@azure-typespec/http-client-csharp-mgmt)
@@ -29,24 +28,24 @@
     If omitted, regenerates all libraries without prompting.
 
 .PARAMETER Azure
-    Optional. Azure SDK Mode only. When specified, only regenerates libraries using the Azure generator (@azure-typespec/http-client-csharp).
+    Optional. When specified, only regenerates libraries using the Azure generator (@azure-typespec/http-client-csharp).
     Mutually exclusive with Unbranded and Mgmt parameters.
 
 .PARAMETER Unbranded
-    Optional. Azure SDK Mode only. When specified, only regenerates libraries using the unbranded generator (@typespec/http-client-csharp).
+    Optional. When specified, only regenerates libraries using the unbranded generator (@typespec/http-client-csharp).
     Mutually exclusive with Azure and Mgmt parameters.
 
 .PARAMETER Mgmt
-    Optional. Azure SDK Mode only. When specified, only regenerates libraries using the management plane generator (@azure-typespec/http-client-csharp-mgmt).
+    Optional. When specified, only regenerates libraries using the management plane generator (@azure-typespec/http-client-csharp-mgmt).
     Mutually exclusive with Azure and Unbranded parameters.
     If no generator filter is specified, all libraries are regenerated.
 
 .EXAMPLE
-    # Azure SDK Mode - Regenerate all libraries
+    # Regenerate all libraries
     .\RegenPreview.ps1
 
 .EXAMPLE
-    # Azure SDK Mode - Interactively select libraries to regenerate (from all available)
+    # Interactively select libraries to regenerate (from all available)
     .\RegenPreview.ps1 -Select
 
 .EXAMPLE
@@ -83,7 +82,7 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 3.0
 
-# In Azure SDK mode, validate filter parameters
+# Validate filter parameters
 $generatorFilters = @($Azure, $Unbranded, $Mgmt)
 $activeFilters = @($generatorFilters | Where-Object { $_ }).Count
 
@@ -408,7 +407,7 @@ function Write-RegenerationReport {
 $scriptStartTime = Get-Date
 
 try {
-    # Step 1: Load and select libraries (Azure SDK Mode only, if using -Select flag)
+    # Step 1: Load and select libraries
     if ($Select) {
         Write-Host "`n[1/6] Loading libraries from Library_Inventory.md..." -ForegroundColor Cyan
         
