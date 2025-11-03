@@ -8,33 +8,27 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
-    public partial class AzureAISearchToolResource
+    public partial class AzureAISearchToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
-        public AzureAISearchToolResource()
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/>. </summary>
+        public AzureAISearchToolOptions()
         {
-            Indexes = new ChangeTrackingList<AISearchIndexResource>();
+            Indexes = new ChangeTrackingList<AzureAISearchIndex>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/>. </summary>
         /// <param name="indexes">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchToolResource(IList<AISearchIndexResource> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureAISearchToolOptions(IList<AzureAISearchIndex> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Indexes = indexes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// The indices attached to this agent. There can be a maximum of 1 index
-        /// resource attached to the agent.
-        /// </summary>
-        public IList<AISearchIndexResource> Indexes { get; }
     }
 }

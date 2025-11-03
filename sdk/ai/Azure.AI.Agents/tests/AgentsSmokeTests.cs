@@ -11,6 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Agents.Tests;
 
 [Category("Smoke")]
+[SyncOnly]
 public class AgentsSmokeTests : AgentsTestBase
 {
     public AgentsSmokeTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
@@ -59,14 +60,21 @@ public class AgentsSmokeTests : AgentsTestBase
             {
                 ResponseTool.CreateWebSearchTool(),
                 AgentTool.CreateA2ATool(new Uri("https://test-uri.microsoft.com")),
+                new A2ATool(new Uri("https://test-uri.microsoft.com")),
+                AgentTool.CreateAzureAISearchTool(),
+                new AzureAISearchAgentTool(),
+                AgentTool.CreateAzureAISearchTool(new AzureAISearchToolOptions()
+                {
+                    Indexes = { new AzureAISearchIndex(projectConnectionId: "project-foo") { TopK = 42 } }
+                }),
             }
         };
 
-        Assert.That(responseOptions.Tools, Has.Count.EqualTo(2));
+        Assert.That(responseOptions.Tools, Has.Count.EqualTo(6));
 
-        Assert.That(
-            ModelReaderWriter.Write(responseOptions).ToString(),
-            Does.Contain("base_url"));
+        string serializedOptions = ModelReaderWriter.Write(responseOptions).ToString();
+        Assert.That(serializedOptions, Does.Contain("base_url"));
+        Assert.That(serializedOptions, Does.Contain("topK"));
 
         OpenAIResponse mockResponse = ModelReaderWriter.Read<OpenAIResponse>(BinaryData.FromString("""
             {
