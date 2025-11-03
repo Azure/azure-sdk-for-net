@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Utilities
                 bicepValue.Self = self;
                 if (bicepValue is ProvisionableConstruct)
                 {
-                    break; // we cannot go into LiteralValue now because it would be the same instance
+                    break; // Stop traversal at ProvisionableConstruct to avoid repeatedly processing the same instance (which would cause an infinite loop or redundant work), since its LiteralValue refers back to itself.
                 }
                 bicepValue = bicepValue.LiteralValue as IBicepValue;
             }
