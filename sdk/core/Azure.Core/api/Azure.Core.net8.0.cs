@@ -710,13 +710,14 @@ namespace Azure.Core
         public static bool TryParse(string? input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
+    public readonly partial struct ResourceType : System.IComparable<Azure.Core.ResourceType>, System.IEquatable<Azure.Core.ResourceType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ResourceType(string resourceType) { throw null; }
         public string Namespace { get { throw null; } }
         public string Type { get { throw null; } }
+        public int CompareTo(Azure.Core.ResourceType other) { throw null; }
         public bool Equals(Azure.Core.ResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? other) { throw null; }

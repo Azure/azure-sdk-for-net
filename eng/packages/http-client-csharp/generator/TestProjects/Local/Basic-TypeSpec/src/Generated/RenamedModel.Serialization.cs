@@ -153,10 +153,9 @@ namespace BasicTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RenamedModel"/> from. </param>
-        public static explicit operator RenamedModel(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RenamedModel"/> from. </param>
+        public static explicit operator RenamedModel(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRenamedModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

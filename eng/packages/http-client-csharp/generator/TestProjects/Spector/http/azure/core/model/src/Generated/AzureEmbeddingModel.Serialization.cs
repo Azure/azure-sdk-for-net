@@ -38,6 +38,6 @@ namespace _Specs_.Azure.Core.Model
         /// <param name="azureEmbeddingModel"> The <see cref="AzureEmbeddingModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(AzureEmbeddingModel azureEmbeddingModel) => throw null;
 
-        public static explicit operator AzureEmbeddingModel(Response result) => throw null;
+        public static explicit operator AzureEmbeddingModel(Response response) => throw null;
     }
 }

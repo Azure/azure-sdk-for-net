@@ -234,7 +234,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Stopwatch sw = Stopwatch.StartNew();
             try
             {
-                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(cancellationToken: cancellationToken);
+                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(
+                    traits: BlobTraits.None,
+                    states: BlobStates.None,
+                    prefix: null,
+                    cancellationToken: cancellationToken);
                 IAsyncEnumerable<Page<BlobItem>> pages = blobsAsyncPageable.AsPages(continuationToken: continuationToken, pageSizeHint: blobPollLimitPerContainer);
                 IAsyncEnumerator<Page<BlobItem>> pagesEnumerator = pages.GetAsyncEnumerator(cancellationToken);
                 if (await pagesEnumerator.MoveNextAsync().ConfigureAwait(false))

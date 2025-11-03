@@ -16,9 +16,9 @@ namespace client.clientnamespace
 {
     public partial class ClientNamespaceFirstClient
     {
-        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientNamespaceFirstClientOptions()) => throw null;
+        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
 
-        public ClientNamespaceFirstClient(Uri endpoint, ClientNamespaceFirstClientOptions options) => throw null;
+        public ClientNamespaceFirstClient(Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -166,10 +166,9 @@ namespace Azure.Data.SchemaRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SchemaVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SchemaVersions"/> from. </param>
-        public static explicit operator SchemaVersions(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SchemaVersions"/> from. </param>
+        public static explicit operator SchemaVersions(Response response)
         {
-            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeSchemaVersions(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

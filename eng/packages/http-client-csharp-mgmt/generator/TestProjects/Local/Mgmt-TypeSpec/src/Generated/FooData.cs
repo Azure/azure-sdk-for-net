@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
@@ -71,7 +72,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> something. </summary>
         [WirePath("properties.something")]
-        public string Something
+        public ManagedServiceIdentity Something
         {
             get
             {
@@ -158,6 +159,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             get
             {
                 return Properties is null ? default : Properties.Prop2;
+            }
+        }
+
+        /// <summary> ETag property for testing etag parameter name generation. </summary>
+        [WirePath("properties.etag")]
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ETag = value.Value;
             }
         }
 
