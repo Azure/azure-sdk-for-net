@@ -11,6 +11,8 @@ The following inputs will be provided to you:
 
 If any of the above pre-requisites are missing, please notify the user and halt further processing.
 
+The `json` file or files will be provided by a github link. Please first fetch them and save them to a local directory in your working directory preserving their directory structure. For example, if the `json` file is located at `https://github.com/Azure/azure-rest-api-specs/tree/main/specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/PutStorageTask.json`, please save it to `<working_directory>/specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/PutStorageTask.json`.
+
 The working directory should have a structure of the directory like this:
 ```
 - api
@@ -89,23 +91,29 @@ About the structure of the source code in `src`:
 
 You need to follow the following steps to generate the sample:
 1. **Analyze the JSON File**: Read the provided `json` file to understand the `operationId` and its parameters.
-2. **Map Operation ID to Method**: Identify the corresponding method in the source code (`src` directory) that matches the `operationId`. Prioritize the methods on `*Resource.cs` class over those on `*Collection.cs` class, and those on `*Collection.cs` class over those on `<ServiceName>Extensions.cs` class. If no method is found, please continue on next `json` file and notify the user about the missing method in the summary when everything is finished.
-3. **Identify the Resource Structure**: Determine the resource structure of how we could get to the resource where the method is defined. This involves identifying the parent resources and how to instantiate them using the factory methods.
-4. **Generate Sample Code**:
+2. **Determine the Relative Path of the JSON File**: Find the relative path of this file to the `examples` directory in its full path, this value is referred as `jsonFileRelativePath` below.
+3. **Map Operation ID to Method**: Identify the corresponding method in the source code (`src` directory) that matches the `operationId`. Prioritize the methods on `*Resource.cs` class over those on `*Collection.cs` class, and those on `*Collection.cs` class over those on `<ServiceName>Extensions.cs` class. If no method is found, please continue on next `json` file and notify the user about the missing method in the summary.
+4. **Identify the Resource Structure**: Determine the resource structure of how we could get to the resource where the method is defined. This involves identifying the parent resources and how to instantiate them using the factory methods.
+5. **Generate Sample Code**:
     1. Determine the class name for this sample. The sample class should be named as `Sample_<TypeName>.cs` where `<TypeName>` is the name of the class where the method is defined.
     2. Determine the method name of this sample. The sample method name should be `<MethodName>_<TitleOfJsonFile>`, where `<MethodName>` is the name of the method being called, and `<TitleOfJsonFile>` is the `title` field from the `json` file.
-    3. Write the sample code that demonstrates how to call the identified method with the parameters from the `json` file. The sample code contains three parts which will elaborate with more details below:
+    3. Write the sample code in the sample method in step 2 above that demonstrates how to call the identified method with the parameters from the `json` file. The sample code contains four parts which will elaborate with more details below:
+        - **Information**: Write the comment header indicating the source of this sample.
         - **Initialization**: Get an instance of the type which holds the method.
         - **Parameter Preparation**: Prepare the parameters needed for the method call.
         - **Method Invocation**: Call the method with the prepared parameters and handle the response.
 
 The following details are steps about each part of the sample code:
+- **Information**:
+    - Write the comment header indicating the source of this sample.
+    ```
+    // Generated from example definition: <jsonFileRelativePath>
+    // this example is just showing the usage of "<operationId>" operation, for the dependent resources, they will have to be created separately
+    ```
+    Here you need to replace `<jsonFileRelativePath>` with the actual relative path determined in step 2 above, and `<operationId>` with the actual operation ID from the `json` file.
 - **Initialization**:
     - Before everything starts, we need to write
     ```
-    // Generated from example definition: <relative path of the json file to the `examples` directory>
-    // this example is just showing the usage of "<operationId>" operation, for the dependent resources, they will have to be created separately
-
     // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
     TokenCredential cred = new DefaultAzureCredential();
     // authenticate your client
@@ -135,5 +143,5 @@ Some additional notes:
 8. If a property of a complex type is a collection, make sure to initialize it properly using collection initializers. Collection properties in the source code usually do not have setters, please make sure we never construct a new instance.
 9. If a parameter is optional and not provided in the `json` file, you can omit setting that property in the sample code.
 10. If a parameter is required and not provided in the `json` file, please notify the user about the missing required parameter and use `(T)default` as a placeholder for such occurrences.
-11. Once the code is generated, call `dotnet build` on the working directory to verify the code could build successfully. If there are any build errors, fix them before finalizing the code.
+11. Once the code is generated, call `dotnet build` in the working directory to verify the code could build successfully. If there are any build errors, fix them before finalizing the code.
 12. Summarize the results for each `json` file processed, including whether the sample code is generated successfully, any missing methods or parameters, and any build errors encountered.
