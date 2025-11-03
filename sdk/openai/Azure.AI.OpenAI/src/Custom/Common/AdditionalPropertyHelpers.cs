@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Chat;
+using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.OpenAI.Chat;
 
 namespace Azure.AI.OpenAI.Internal;
 
 #pragma warning disable AOAI001
+#pragma warning disable SCME0001
+
 internal static class AdditionalPropertyHelpers
 {
     private static string SARD_EMPTY_SENTINEL = "__EMPTY__";
@@ -99,6 +102,20 @@ internal static class AdditionalPropertyHelpers
         writer.Flush();
 
         additionalProperties[key] = BinaryData.FromBytes(stream.ToArray());
+    }
+
+    internal static void SetEmptySentinelValue(ref JsonPatch patch, ReadOnlySpan<byte> path)
+    {
+        patch.Set(path, SARD_EMPTY_SENTINEL);
+    }
+
+    internal static bool GetIsEmptySentinelValue(JsonPatch patch, ReadOnlySpan<byte> path)
+    {
+        if (patch.Contains(path) && patch.TryGetValue(path, out string val))
+        {
+            return string.Equals(val, SARD_EMPTY_SENTINEL);
+        }
+        return false;
     }
 
     internal static bool GetIsEmptySentinelValue(IDictionary<string, BinaryData> additionalProperties, string key)
