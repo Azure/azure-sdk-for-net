@@ -8,9 +8,6 @@
   - New `SmsClient.GetDeliveryReport` and `SmsClient.GetDeliveryReportAsync` methods for retrieving message delivery status
   - Provides detailed information including delivery status, delivery attempts, and timestamps
   - Supports tracking partner-generated message IDs via `MessagingConnectPartnerMessageId` property
-- Enhanced OptOuts API with improved subclient pattern:
-  - `SmsClient.OptOuts` property provides access to opt-out management functionality
-  - Supports `Add`, `Remove`, and `Check` methods (with async variants) for managing recipient opt-out preferences
 - Improved MessagingConnect partner integration with standard Azure SDK patterns:
   - Use `Dictionary<string, object>` for partner-specific parameters
   - Constructor: `new MessagingConnectOptions(string partner, IDictionary<string, object> partnerParams)`
