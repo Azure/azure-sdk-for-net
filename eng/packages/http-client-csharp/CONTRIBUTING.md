@@ -141,7 +141,7 @@ The package uses the Spector test framework for end-to-end testing of generated 
 ./eng/scripts/Test-Spector.ps1
 
 # Run Spector tests with filter (filters by directory path)
-./eng/scripts/Test-Spector.ps1 -filter "http/type/array"
+./eng/scripts/Test-Spector.ps1 "http/type/array"
 
 # Get Spector test coverage (outputs to ./generator/artifacts/coverage, not checked in)
 ./eng/scripts/Get-Spector-Coverage.ps1
