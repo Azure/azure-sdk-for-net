@@ -47,8 +47,6 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        [RequiresDynamicCode("This method uses reflection.")]
-        [RequiresUnreferencedCode("This method uses reflection.")]
         public static Operation Rehydrate(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
         {
             Argument.AssertNotNull(pipeline, nameof(pipeline));
@@ -87,8 +85,6 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        [RequiresDynamicCode("This method uses reflection.")]
-        [RequiresUnreferencedCode("This method uses reflection.")]
         public static async Task<Operation> RehydrateAsync(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
         {
             Argument.AssertNotNull(pipeline, nameof(pipeline));
