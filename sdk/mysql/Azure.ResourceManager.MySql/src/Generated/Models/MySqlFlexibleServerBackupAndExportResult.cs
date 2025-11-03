@@ -57,28 +57,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
+        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
+        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="status"> The operation status. </param>
         /// <param name="startOn"> Start time. </param>
         /// <param name="endOn"> End time. </param>
         /// <param name="percentComplete"> Operation progress (0-100). </param>
-        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
-        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
-        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResponseError error, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupMetadata, ResponseError error, MySqlFlexibleServerBackupAndExportOperationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            DatasourceSizeInBytes = datasourceSizeInBytes;
+            DataTransferredInBytes = dataTransferredInBytes;
+            BackupMetadata = backupMetadata;
             Error = error;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
-            DatasourceSizeInBytes = datasourceSizeInBytes;
-            DataTransferredInBytes = dataTransferredInBytes;
-            BackupMetadata = backupMetadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Size of datasource in bytes. </summary>
+        public long? DatasourceSizeInBytes { get; set; }
+        /// <summary> Data transferred in bytes. </summary>
+        public long? DataTransferredInBytes { get; set; }
+        /// <summary> Metadata related to backup to be stored for restoring resource in key-value pairs. </summary>
+        public string BackupMetadata { get; set; }
         /// <summary> The error object. </summary>
         public ResponseError Error { get; set; }
         /// <summary> The operation status. </summary>
@@ -89,11 +95,5 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Operation progress (0-100). </summary>
         public double? PercentComplete { get; set; }
-        /// <summary> Size of datasource in bytes. </summary>
-        public long? DatasourceSizeInBytes { get; set; }
-        /// <summary> Data transferred in bytes. </summary>
-        public long? DataTransferredInBytes { get; set; }
-        /// <summary> Metadata related to backup to be stored for restoring resource in key-value pairs. </summary>
-        public string BackupMetadata { get; set; }
     }
 }
