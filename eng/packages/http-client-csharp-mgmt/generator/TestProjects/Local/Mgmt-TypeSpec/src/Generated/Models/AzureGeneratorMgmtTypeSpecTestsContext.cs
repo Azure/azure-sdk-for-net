@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -35,10 +36,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(BazListResult))]
     [ModelReaderWriterBuildable(typeof(BazProperties))]
     [ModelReaderWriterBuildable(typeof(BazResource))]
+    [ModelReaderWriterBuildable(typeof(Employee))]
+    [ModelReaderWriterBuildable(typeof(EmployeeListResult))]
+    [ModelReaderWriterBuildable(typeof(EmployeeProperties))]
     [ModelReaderWriterBuildable(typeof(EndpointProperties))]
     [ModelReaderWriterBuildable(typeof(EndpointResource))]
     [ModelReaderWriterBuildable(typeof(EndpointResourceData))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(FooActionRequest))]
+    [ModelReaderWriterBuildable(typeof(FooActionResult))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooPreviewAction))]
@@ -63,12 +69,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(JobResourcePatch))]
     [ModelReaderWriterBuildable(typeof(LimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(NestedFooModel))]
+    [ModelReaderWriterBuildable(typeof(OfferDetails))]
     [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
@@ -76,6 +85,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserDetails))]
     [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
     [ModelReaderWriterBuildable(typeof(ZooData))]
     [ModelReaderWriterBuildable(typeof(ZooListResult))]

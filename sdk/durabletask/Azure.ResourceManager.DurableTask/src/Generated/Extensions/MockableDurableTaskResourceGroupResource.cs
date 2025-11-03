@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SchedulerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SchedulerResources and their operations over a SchedulerResource. </returns>
-        public virtual SchedulerCollection GetSchedulers()
+        /// <summary> Gets a collection of DurableTaskSchedulerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DurableTaskSchedulerResources and their operations over a DurableTaskSchedulerResource. </returns>
+        public virtual DurableTaskSchedulerCollection GetDurableTaskSchedulers()
         {
-            return GetCachedClient(client => new SchedulerCollection(client, Id));
+            return GetCachedClient(client => new DurableTaskSchedulerCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchedulerResource"/></description>
+        /// <description><see cref="DurableTaskSchedulerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="schedulerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SchedulerResource>> GetSchedulerAsync(string schedulerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskSchedulerResource>> GetDurableTaskSchedulerAsync(string schedulerName, CancellationToken cancellationToken = default)
         {
-            return await GetSchedulers().GetAsync(schedulerName, cancellationToken).ConfigureAwait(false);
+            return await GetDurableTaskSchedulers().GetAsync(schedulerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchedulerResource"/></description>
+        /// <description><see cref="DurableTaskSchedulerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="schedulerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SchedulerResource> GetScheduler(string schedulerName, CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskSchedulerResource> GetDurableTaskScheduler(string schedulerName, CancellationToken cancellationToken = default)
         {
-            return GetSchedulers().Get(schedulerName, cancellationToken);
+            return GetDurableTaskSchedulers().Get(schedulerName, cancellationToken);
         }
     }
 }

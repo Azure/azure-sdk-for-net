@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DurableTask.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDurableTaskSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _schedulerClientDiagnostics;
-        private SchedulersRestOperations _schedulerRestClient;
+        private ClientDiagnostics _durableTaskSchedulerSchedulersClientDiagnostics;
+        private SchedulersRestOperations _durableTaskSchedulerSchedulersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskSubscriptionResource"/> class for mocking. </summary>
         protected MockableDurableTaskSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         {
         }
 
-        private ClientDiagnostics SchedulerClientDiagnostics => _schedulerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask", SchedulerResource.ResourceType.Namespace, Diagnostics);
-        private SchedulersRestOperations SchedulerRestClient => _schedulerRestClient ??= new SchedulersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SchedulerResource.ResourceType));
+        private ClientDiagnostics DurableTaskSchedulerSchedulersClientDiagnostics => _durableTaskSchedulerSchedulersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskSchedulerResource.ResourceType.Namespace, Diagnostics);
+        private SchedulersRestOperations DurableTaskSchedulerSchedulersRestClient => _durableTaskSchedulerSchedulersRestClient ??= new SchedulersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DurableTaskSchedulerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchedulerResource"/></description>
+        /// <description><see cref="DurableTaskSchedulerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SchedulerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SchedulerResource> GetSchedulersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DurableTaskSchedulerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DurableTaskSchedulerResource> GetDurableTaskSchedulersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SchedulerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SchedulerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SchedulerResource(Client, SchedulerData.DeserializeSchedulerData(e)), SchedulerClientDiagnostics, Pipeline, "MockableDurableTaskSubscriptionResource.GetSchedulers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DurableTaskSchedulerSchedulersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DurableTaskSchedulerSchedulersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DurableTaskSchedulerResource(Client, DurableTaskSchedulerData.DeserializeDurableTaskSchedulerData(e)), DurableTaskSchedulerSchedulersClientDiagnostics, Pipeline, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchedulerResource"/></description>
+        /// <description><see cref="DurableTaskSchedulerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SchedulerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SchedulerResource> GetSchedulers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DurableTaskSchedulerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DurableTaskSchedulerResource> GetDurableTaskSchedulers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SchedulerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SchedulerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SchedulerResource(Client, SchedulerData.DeserializeSchedulerData(e)), SchedulerClientDiagnostics, Pipeline, "MockableDurableTaskSubscriptionResource.GetSchedulers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DurableTaskSchedulerSchedulersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DurableTaskSchedulerSchedulersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DurableTaskSchedulerResource(Client, DurableTaskSchedulerData.DeserializeDurableTaskSchedulerData(e)), DurableTaskSchedulerSchedulersClientDiagnostics, Pipeline, "MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -46,8 +46,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetCachedClient(client => new GroupQuotaSubscriptionRequestStatusCollection(client, Id));
         }
 
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
+        /// <summary>
+        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
@@ -61,8 +77,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetGroupQuotaSubscriptionRequestStatuses().GetAsync(managementGroupId, requestId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
+        /// <summary>
+        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
@@ -76,7 +108,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetGroupQuotaSubscriptionRequestStatuses().Get(managementGroupId, requestId, cancellationToken);
         }
 
-        /// <summary> Starts a failed runtime resource. </summary>
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinks_StartFailedServerlessRuntime. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartFailedServerlessRuntimeAsync(CancellationToken cancellationToken = default)
         {
@@ -99,7 +143,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             }
         }
 
-        /// <summary> Starts a failed runtime resource. </summary>
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinks_StartFailedServerlessRuntime. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartFailedServerlessRuntime(CancellationToken cancellationToken = default)
         {

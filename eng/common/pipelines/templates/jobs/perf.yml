@@ -105,9 +105,16 @@ jobs:
       - Name: ${{ parameters.LanguageRepoName }}
         Commitish: ${{ parameters.LanguageRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)
+
+  - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+    parameters:
+      Paths:
+      - 'tools/perf-automation/Azure.Sdk.Tools.PerfAutomation'
+      Repositories:
       - Name: Azure/azure-sdk-tools
         Commitish: ${{ parameters.ToolsRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
+      SkipCheckoutNone: true
 
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
     parameters:

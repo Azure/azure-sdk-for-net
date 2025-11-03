@@ -19,38 +19,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckMySqlFlexibleServerNameAvailabilityWithoutLocation_CheckNameAvailability()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/CheckNameAvailabilityWithoutLocation.json
-            // this example is just showing the usage of "CheckNameAvailabilityWithoutLocation_Execute" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            MySqlFlexibleServerNameAvailabilityContent content = new MySqlFlexibleServerNameAvailabilityContent("name1")
-            {
-                ResourceType = new ResourceType("Microsoft.DBforMySQL/flexibleServers"),
-            };
-            MySqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetMySqlFlexibleServers_ListServersInASubscription()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServersList.json
-            // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ServersList.json
+            // this example is just showing the usage of "Server_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLocationBasedCapabilities_CapabilitiesList()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/CapabilitiesByLocationList.json
+            // Generated from example definition: 2024-12-30/CapabilitiesByLocationList.json
             // this example is just showing the usage of "LocationBasedCapabilities_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,10 +78,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task ExecuteCheckVirtualNetworkSubnetUsage_CheckVirtualNetworkSubnetUsage()
+        {
+            // Generated from example definition: 2024-12-30/CheckVirtualNetworkSubnetUsage.json
+            // this example is just showing the usage of "CheckVirtualNetworkSubnetUsage_Execute" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation locationName = new AzureLocation("WestUS");
+            MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter = new MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
+            {
+                VirtualNetworkResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.Network/virtualNetworks/testvnet"),
+            };
+            MySqlFlexibleServerVirtualNetworkSubnetUsageResult result = await subscriptionResource.ExecuteCheckVirtualNetworkSubnetUsageAsync(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckMySqlFlexibleServerNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/CheckNameAvailability.json
-            // this example is just showing the usage of "CheckNameAvailability_Execute" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/CheckNameAvailability.json
+            // this example is just showing the usage of "CheckNameAvailability_CheckMySqlFlexibleServerNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,10 +136,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ExecuteCheckVirtualNetworkSubnetUsage_CheckVirtualNetworkSubnetUsage()
+        public async Task CheckMySqlFlexibleServerNameAvailabilityWithoutLocation_CheckNameAvailability()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/CheckVirtualNetworkSubnetUsage.json
-            // this example is just showing the usage of "CheckVirtualNetworkSubnetUsage_Execute" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/CheckNameAvailabilityWithoutLocation.json
+            // this example is just showing the usage of "CheckNameAvailabilityWithoutLocation_CheckMySqlFlexibleServerNameAvailabilityWithoutLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -152,12 +153,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AzureLocation locationName = new AzureLocation("WestUS");
-            MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter = new MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
+            MySqlFlexibleServerNameAvailabilityContent content = new MySqlFlexibleServerNameAvailabilityContent("name1")
             {
-                VirtualNetworkResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.Network/virtualNetworks/testvnet"),
+                ResourceType = new ResourceType("Microsoft.DBforMySQL/flexibleServers"),
             };
-            MySqlFlexibleServerVirtualNetworkSubnetUsageResult result = await subscriptionResource.ExecuteCheckVirtualNetworkSubnetUsageAsync(locationName, mySqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            MySqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

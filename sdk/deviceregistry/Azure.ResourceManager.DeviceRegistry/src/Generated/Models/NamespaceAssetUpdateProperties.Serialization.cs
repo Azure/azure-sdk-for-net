@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class NamespaceAssetUpdateProperties : IUtf8JsonSerializable, IJsonModel<NamespaceAssetUpdateProperties>
+    /// <summary> The updatable properties of the NamespaceAsset. </summary>
+    public partial class NamespaceAssetUpdateProperties : IJsonModel<NamespaceAssetUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceAssetUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceAssetUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceAssetUpdateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -53,8 +53,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("assetTypeRefs"u8);
                 writer.WriteStartArray();
-                foreach (var item in AssetTypeRefs)
+                foreach (string item in AssetTypeRefs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -112,9 +117,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("defaultDatasetsDestinations"u8);
                 writer.WriteStartArray();
-                foreach (var item in DefaultDatasetsDestinations)
+                foreach (DatasetDestination item in DefaultDatasetsDestinations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,7 +161,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("defaultEventsDestinations"u8);
                 writer.WriteStartArray();
-                foreach (var item in DefaultEventsDestinations)
+                foreach (EventDestination item in DefaultEventsDestinations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,7 +171,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("defaultStreamsDestinations"u8);
                 writer.WriteStartArray();
-                foreach (var item in DefaultStreamsDestinations)
+                foreach (StreamDestination item in DefaultStreamsDestinations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -176,7 +181,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Datasets)
+                foreach (NamespaceDataset item in Datasets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -186,7 +191,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("eventGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in EventGroups)
+                foreach (NamespaceEventGroup item in EventGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -196,7 +201,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
-                foreach (var item in Streams)
+                foreach (NamespaceStream item in Streams)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -206,21 +211,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in ManagementGroups)
+                foreach (ManagementGroup item in ManagementGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -229,22 +234,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        NamespaceAssetUpdateProperties IJsonModel<NamespaceAssetUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceAssetUpdateProperties IJsonModel<NamespaceAssetUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceAssetUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceAssetUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNamespaceAssetUpdateProperties(document.RootElement, options);
         }
 
-        internal static NamespaceAssetUpdateProperties DeserializeNamespaceAssetUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NamespaceAssetUpdateProperties DeserializeNamespaceAssetUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -273,216 +283,222 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             IList<NamespaceEventGroup> eventGroups = default;
             IList<NamespaceStream> streams = default;
             IList<ManagementGroup> managementGroups = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = property.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetTypeRefs"u8))
+                if (prop.NameEquals("assetTypeRefs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     assetTypeRefs = array;
                     continue;
                 }
-                if (property.NameEquals("manufacturer"u8))
+                if (prop.NameEquals("manufacturer"u8))
                 {
-                    manufacturer = property.Value.GetString();
+                    manufacturer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manufacturerUri"u8))
+                if (prop.NameEquals("manufacturerUri"u8))
                 {
-                    manufacturerUri = property.Value.GetString();
+                    manufacturerUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    model = property.Value.GetString();
+                    model = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productCode"u8))
+                if (prop.NameEquals("productCode"u8))
                 {
-                    productCode = property.Value.GetString();
+                    productCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hardwareRevision"u8))
+                if (prop.NameEquals("hardwareRevision"u8))
                 {
-                    hardwareRevision = property.Value.GetString();
+                    hardwareRevision = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softwareRevision"u8))
+                if (prop.NameEquals("softwareRevision"u8))
                 {
-                    softwareRevision = property.Value.GetString();
+                    softwareRevision = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documentationUri"u8))
+                if (prop.NameEquals("documentationUri"u8))
                 {
-                    documentationUri = property.Value.GetString();
+                    documentationUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serialNumber"u8))
+                if (prop.NameEquals("serialNumber"u8))
                 {
-                    serialNumber = property.Value.GetString();
+                    serialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"u8))
+                if (prop.NameEquals("attributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     attributes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("defaultDatasetsConfiguration"u8))
+                if (prop.NameEquals("defaultDatasetsConfiguration"u8))
                 {
-                    defaultDatasetsConfiguration = property.Value.GetString();
+                    defaultDatasetsConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultEventsConfiguration"u8))
+                if (prop.NameEquals("defaultEventsConfiguration"u8))
                 {
-                    defaultEventsConfiguration = property.Value.GetString();
+                    defaultEventsConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultStreamsConfiguration"u8))
+                if (prop.NameEquals("defaultStreamsConfiguration"u8))
                 {
-                    defaultStreamsConfiguration = property.Value.GetString();
+                    defaultStreamsConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultManagementGroupsConfiguration"u8))
+                if (prop.NameEquals("defaultManagementGroupsConfiguration"u8))
                 {
-                    defaultManagementGroupsConfiguration = property.Value.GetString();
+                    defaultManagementGroupsConfiguration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultDatasetsDestinations"u8))
+                if (prop.NameEquals("defaultDatasetsDestinations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DatasetDestination> array = new List<DatasetDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DatasetDestination.DeserializeDatasetDestination(item, options));
                     }
                     defaultDatasetsDestinations = array;
                     continue;
                 }
-                if (property.NameEquals("defaultEventsDestinations"u8))
+                if (prop.NameEquals("defaultEventsDestinations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EventDestination> array = new List<EventDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EventDestination.DeserializeEventDestination(item, options));
                     }
                     defaultEventsDestinations = array;
                     continue;
                 }
-                if (property.NameEquals("defaultStreamsDestinations"u8))
+                if (prop.NameEquals("defaultStreamsDestinations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StreamDestination> array = new List<StreamDestination>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StreamDestination.DeserializeStreamDestination(item, options));
                     }
                     defaultStreamsDestinations = array;
                     continue;
                 }
-                if (property.NameEquals("datasets"u8))
+                if (prop.NameEquals("datasets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NamespaceDataset> array = new List<NamespaceDataset>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NamespaceDataset.DeserializeNamespaceDataset(item, options));
                     }
                     datasets = array;
                     continue;
                 }
-                if (property.NameEquals("eventGroups"u8))
+                if (prop.NameEquals("eventGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NamespaceEventGroup> array = new List<NamespaceEventGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NamespaceEventGroup.DeserializeNamespaceEventGroup(item, options));
                     }
                     eventGroups = array;
                     continue;
                 }
-                if (property.NameEquals("streams"u8))
+                if (prop.NameEquals("streams"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NamespaceStream> array = new List<NamespaceStream>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NamespaceStream.DeserializeNamespaceStream(item, options));
                     }
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("managementGroups"u8))
+                if (prop.NameEquals("managementGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ManagementGroup> array = new List<ManagementGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ManagementGroup.DeserializeManagementGroup(item, options));
                     }
@@ -491,10 +507,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NamespaceAssetUpdateProperties(
                 enabled,
                 displayName,
@@ -520,13 +535,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 eventGroups ?? new ChangeTrackingList<NamespaceEventGroup>(),
                 streams ?? new ChangeTrackingList<NamespaceStream>(),
                 managementGroups ?? new ChangeTrackingList<ManagementGroup>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NamespaceAssetUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NamespaceAssetUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -536,15 +554,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        NamespaceAssetUpdateProperties IPersistableModel<NamespaceAssetUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceAssetUpdateProperties IPersistableModel<NamespaceAssetUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceAssetUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAssetUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNamespaceAssetUpdateProperties(document.RootElement, options);
                     }
                 default:
@@ -552,6 +575,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NamespaceAssetUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

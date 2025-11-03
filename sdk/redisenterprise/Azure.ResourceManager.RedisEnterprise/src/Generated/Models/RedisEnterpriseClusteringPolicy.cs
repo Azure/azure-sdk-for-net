@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </summary>
+    /// <summary> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </summary>
     public readonly partial struct RedisEnterpriseClusteringPolicy : IEquatable<RedisEnterpriseClusteringPolicy>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         private const string EnterpriseClusterValue = "EnterpriseCluster";
         private const string OssClusterValue = "OSSCluster";
+        private const string NoClusterValue = "NoCluster";
 
         /// <summary> Enterprise clustering policy uses only the classic redis protocol, which does not support redis cluster commands. </summary>
         public static RedisEnterpriseClusteringPolicy EnterpriseCluster { get; } = new RedisEnterpriseClusteringPolicy(EnterpriseClusterValue);
         /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
         public static RedisEnterpriseClusteringPolicy OssCluster { get; } = new RedisEnterpriseClusteringPolicy(OssClusterValue);
+        /// <summary> The NoCluster policy is used for non-clustered Redis instances that do not require clustering features. </summary>
+        public static RedisEnterpriseClusteringPolicy NoCluster { get; } = new RedisEnterpriseClusteringPolicy(NoClusterValue);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are not the same. </summary>

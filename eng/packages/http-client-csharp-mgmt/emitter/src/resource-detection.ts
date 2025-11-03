@@ -75,6 +75,7 @@ export async function updateClients(
         resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
         methods: [],
         parentResourceId: undefined, // this will be populated later
+        parentResourceModelId: undefined,
         resourceName: m.name
       } as ResourceMetadata
     ])
@@ -132,6 +133,7 @@ export async function updateClients(
       metadata.parentResourceId = resourceModelToMetadataMap.get(
         parentResourceModelId
       )?.resourceIdPattern;
+      metadata.parentResourceModelId = parentResourceModelId;
     }
 
     // figure out the resourceScope of all resource methods
@@ -146,6 +148,17 @@ export async function updateClients(
     const model = resourceModelMap.get(modelId);
     if (model) {
       metadata.resourceScope = getResourceScope(model, metadata.methods);
+    }
+  }
+
+  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
+  for (const [modelId, metadata] of resourceModelToMetadataMap) {
+    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
+    if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
+      resourceModelToMetadataMap.get(metadata.parentResourceModelId)?.methods.push(
+        ...metadata.methods
+      );
+      resourceModelToMetadataMap.delete(modelId);
     }
   }
 
