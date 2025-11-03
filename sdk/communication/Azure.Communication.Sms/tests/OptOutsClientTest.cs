@@ -16,36 +16,36 @@ namespace Azure.Communication.Sms.Tests
     public class OptOutsClientTest
     {
         [Test]
-        public void OptOutsClient_ThrowsWithNullClientDiagnostics()
+        public void OptOuts_ThrowsWithNullClientDiagnostics()
         {
             var httpPipeline = HttpPipelineBuilder.Build(new SmsClientOptions());
             var uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsClient(null, httpPipeline, uri));
+            Assert.Throws<ArgumentNullException>(() => new OptOuts(null, httpPipeline, uri));
         }
 
         [Test]
-        public void OptOutsClient_ThrowsWithNullPipeline()
+        public void OptOuts_ThrowsWithNullPipeline()
         {
             var clientDiagnostics = new ClientDiagnostics(new SmsClientOptions());
             var uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsClient(clientDiagnostics, null, uri));
+            Assert.Throws<ArgumentNullException>(() => new OptOuts(clientDiagnostics, null, uri));
         }
 
         [Test]
-        public void OptOutsClient_ThrowsWithNullEndpoint()
+        public void OptOuts_ThrowsWithNullEndpoint()
         {
             var clientDiagnostics = new ClientDiagnostics(new SmsClientOptions());
             var httpPipeline = HttpPipelineBuilder.Build(new SmsClientOptions());
 
-            Assert.Throws<ArgumentNullException>(() => new OptOutsClient(clientDiagnostics, httpPipeline, null));
+            Assert.Throws<ArgumentNullException>(() => new OptOuts(clientDiagnostics, httpPipeline, null));
         }
 
         [TestCaseSource(nameof(TestData))]
         public async Task CheckAsyncOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
-            Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
+            Mock<OptOuts> mockClient = new Mock<OptOuts>() { CallBase = true };
             Response<IReadOnlyList<OptOutResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.CheckAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
@@ -69,7 +69,7 @@ namespace Azure.Communication.Sms.Tests
         [TestCaseSource(nameof(TestData))]
         public void CheckOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
-            Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
+            Mock<OptOuts> mockClient = new Mock<OptOuts>() { CallBase = true };
             Response<IReadOnlyList<OptOutResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.Check(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
@@ -93,7 +93,7 @@ namespace Azure.Communication.Sms.Tests
         [TestCaseSource(nameof(TestData))]
         public async Task AddAsyncOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
-            Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
+            Mock<OptOuts> mockClient = new Mock<OptOuts>() { CallBase = true };
             Response<IReadOnlyList<OptOutAddResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.AddAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
@@ -117,7 +117,7 @@ namespace Azure.Communication.Sms.Tests
         [TestCaseSource(nameof(TestData))]
         public void AddOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
-            Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
+            Mock<OptOuts> mockClient = new Mock<OptOuts>() { CallBase = true };
             Response<IReadOnlyList<OptOutAddResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.Add(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
@@ -141,7 +141,7 @@ namespace Azure.Communication.Sms.Tests
         [TestCaseSource(nameof(TestData))]
         public async Task RemoveAsyncOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
-            Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
+            Mock<OptOuts> mockClient = new Mock<OptOuts>() { CallBase = true };
             Response<IReadOnlyList<OptOutRemoveResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.RemoveAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
@@ -165,7 +165,7 @@ namespace Azure.Communication.Sms.Tests
         [TestCaseSource(nameof(TestData))]
         public void RemoveOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
-            Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
+            Mock<OptOuts> mockClient = new Mock<OptOuts>() { CallBase = true };
             Response<IReadOnlyList<OptOutRemoveResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.Remove(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
@@ -191,7 +191,7 @@ namespace Azure.Communication.Sms.Tests
             yield return new TestCaseData("+14255550123", new List<string> { "+14255550234" });
         }
 
-        private static Expression<Func<OptOutsClient, TResult>> BuildExpression<TResult>(Expression<Func<OptOutsClient, TResult>> expression)
+        private static Expression<Func<OptOuts, TResult>> BuildExpression<TResult>(Expression<Func<OptOuts, TResult>> expression)
             => expression;
     }
 }

@@ -6,9 +6,9 @@ namespace Azure.Communication.Sms
         public string Partner { get { throw null; } }
         public object PartnerParams { get { throw null; } }
     }
-    public partial class OptOutsClient
+    public partial class OptOuts
     {
-        protected OptOutsClient() { }
+        protected OptOuts() { }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutAddResponseItem>> Add(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutAddResponseItem>>> AddAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutResponseItem>> Check(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -23,7 +23,9 @@ namespace Azure.Communication.Sms
         public SmsClient(string connectionString, Azure.Communication.Sms.SmsClientOptions options) { }
         public SmsClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Sms.SmsClientOptions options = null) { }
         public SmsClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Sms.SmsClientOptions options = null) { }
-        public virtual Azure.Communication.Sms.OptOutsClient OptOuts { get { throw null; } }
+        public virtual Azure.Communication.Sms.OptOuts OptOuts { get { throw null; } }
+        public virtual Azure.Response<Azure.Communication.Sms.Models.DeliveryReport> GetDeliveryReport(string outgoingMessageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Sms.Models.DeliveryReport>> GetDeliveryReportAsync(string outgoingMessageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.SmsSendResult>> Send(string from, System.Collections.Generic.IEnumerable<string> to, string message, Azure.Communication.Sms.SmsSendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Sms.SmsSendResult> Send(string from, string to, string message, Azure.Communication.Sms.SmsSendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.SmsSendResult>>> SendAsync(string from, System.Collections.Generic.IEnumerable<string> to, string message, Azure.Communication.Sms.SmsSendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

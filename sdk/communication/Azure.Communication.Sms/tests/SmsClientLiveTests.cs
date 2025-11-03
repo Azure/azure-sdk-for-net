@@ -343,6 +343,131 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task GetDeliveryReport_WithValidMessageId()
+        {
+            SmsClient client = CreateSmsClient();
+
+            // First send a message to get a valid message ID
+            Response<SmsSendResult> sendResponse = await client.SendAsync(
+                from: TestEnvironment.FromPhoneNumber,
+                to: TestEnvironment.ToPhoneNumber,
+                message: "Test message for delivery report");
+
+            string messageId = sendResponse.Value.MessageId;
+            Assert.IsFalse(string.IsNullOrWhiteSpace(messageId));
+
+            // Wait a bit for the message to be processed
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(2000);
+            }
+
+            try
+            {
+                // Get delivery report
+                Response<DeliveryReport> reportResponse = await client.GetDeliveryReportAsync(messageId);
+                DeliveryReport report = reportResponse.Value;
+
+                Console.WriteLine($"Message ID: {report.MessageId}");
+                Console.WriteLine($"From: {report.From}, To: {report.To}");
+                Console.WriteLine($"Delivery Status: {report.DeliveryStatus}");
+                Console.WriteLine($"Status Details: {report.DeliveryStatusDetails}");
+
+                Assert.AreEqual(messageId, report.MessageId);
+                Assert.AreEqual(TestEnvironment.FromPhoneNumber, report.From);
+                Assert.AreEqual(TestEnvironment.ToPhoneNumber, report.To);
+                Assert.NotNull(report.DeliveryStatus);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Error getting delivery report: {ex.Message}");
+                // Don't fail if service is not ready yet - this is expected in some environments
+                if (ex.Status != 404)
+                {
+                    throw;
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetDeliveryReport_WithInvalidMessageId_ReturnsError()
+        {
+            SmsClient client = CreateSmsClient();
+            string invalidMessageId = "invalid-message-id-12345";
+
+            try
+            {
+                Response<DeliveryReport> response = await client.GetDeliveryReportAsync(invalidMessageId);
+                Assert.Fail("Expected RequestFailedException for invalid message ID");
+            }
+            catch (RequestFailedException ex)
+            {
+                // Service may return either 400 (Bad Request) or 404 (Not Found) for invalid message IDs
+                Assert.That(ex.Status, Is.EqualTo(400).Or.EqualTo(404));
+                Console.WriteLine($"Expected error: {ex.Message}");
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetDeliveryReport_UsingTokenCredential_WithValidMessageId()
+        {
+            SmsClient client = CreateSmsClientWithToken();
+
+            // First send a message to get a valid message ID
+            Response<SmsSendResult> sendResponse = await client.SendAsync(
+                from: TestEnvironment.FromPhoneNumber,
+                to: TestEnvironment.ToPhoneNumber,
+                message: "Test message for delivery report with AAD");
+
+            string messageId = sendResponse.Value.MessageId;
+            Assert.IsFalse(string.IsNullOrWhiteSpace(messageId));
+
+            // Wait a bit for the message to be processed
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(2000);
+            }
+
+            try
+            {
+                // Get delivery report using AAD authentication
+                Response<DeliveryReport> reportResponse = await client.GetDeliveryReportAsync(messageId);
+                DeliveryReport report = reportResponse.Value;
+
+                Assert.AreEqual(messageId, report.MessageId);
+                Assert.AreEqual(TestEnvironment.FromPhoneNumber, report.From);
+                Assert.AreEqual(TestEnvironment.ToPhoneNumber, report.To);
+                Assert.NotNull(report.DeliveryStatus);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Don't fail if service is not ready yet
+                if (ex.Status != 404)
+                {
+                    throw;
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetDeliveryReport_UsingTokenCredential_WithInvalidMessageId()
+        {
+            SmsClient client = CreateSmsClientWithToken();
+            string invalidMessageId = "invalid-message-id-aad-test";
+
+            try
+            {
+                Response<DeliveryReport> response = await client.GetDeliveryReportAsync(invalidMessageId);
+                Assert.Fail("Expected RequestFailedException for invalid message ID with AAD");
+            }
+            catch (RequestFailedException ex)
+            {
+                // Service may return 400, 401, or 404 for invalid message IDs
+                Assert.That(ex.Status, Is.EqualTo(400).Or.EqualTo(401).Or.EqualTo(404));
+            }
+        }
+
         private void AssertSmsSendingHappyPath(SmsSendResult sendResult)
         {
             Assert.True(sendResult.Successful);

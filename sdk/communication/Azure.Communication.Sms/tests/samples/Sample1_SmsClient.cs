@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -11,7 +10,6 @@ namespace Azure.Communication.Sms.Tests.samples
 {
     /// <summary>
     /// Samples that are used in the README.md file.
-    /// NOTE: SmsClient samples are deprecated. For new development, see Sample3_TelcoMessagingClient.cs for TelcoMessagingClient examples.
     /// </summary>
     public partial class Sample1_SmsClient : SmsClientLiveTestBase
     {

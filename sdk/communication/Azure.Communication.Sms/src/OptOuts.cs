@@ -12,15 +12,15 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Sms
 {
     /// <summary>
-    /// The Azure Communication Services SMS Opt Out Management client.
+    /// The Azure Communication Services SMS Opt Out Management sub-client.
     /// </summary>
-    public class OptOutsClient
+    public class OptOuts
     {
         private readonly ClientDiagnostics _clientDiagnostics;
 
         internal OptOutsRestClient OptOutsRestClient;
 
-        internal OptOutsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-12-10-preview")
+        internal OptOuts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-12-10-preview")
         {
             Argument.CheckNotNull(clientDiagnostics, nameof(clientDiagnostics));
             Argument.CheckNotNull(pipeline, nameof(pipeline));
@@ -31,8 +31,8 @@ namespace Azure.Communication.Sms
             _clientDiagnostics = clientDiagnostics;
         }
 
-        /// <summary>Initializes a new instance of <see cref="SmsClient"/> for mocking.</summary>
-        protected OptOutsClient()
+        /// <summary>Initializes a new instance of <see cref="OptOuts"/> for mocking.</summary>
+        protected OptOuts()
         {
             _clientDiagnostics = null;
             OptOutsRestClient = null;
@@ -49,7 +49,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         public virtual async Task<Response<IReadOnlyList<OptOutResponseItem>>> CheckAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Check)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOuts)}.{nameof(Check)}");
             scope.Start();
             try
             {
@@ -85,7 +85,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         public virtual Response<IReadOnlyList<OptOutResponseItem>> Check(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Check)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOuts)}.{nameof(Check)}");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         public virtual async Task<Response<IReadOnlyList<OptOutAddResponseItem>>> AddAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Add)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOuts)}.{nameof(Add)}");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         public virtual Response<IReadOnlyList<OptOutAddResponseItem>> Add(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Add)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOuts)}.{nameof(Add)}");
             scope.Start();
             try
             {
@@ -198,7 +198,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         public virtual async Task<Response<IReadOnlyList<OptOutRemoveResponseItem>>> RemoveAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Remove)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOuts)}.{nameof(Remove)}");
             scope.Start();
             try
             {
@@ -236,7 +236,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         public virtual Response<IReadOnlyList<OptOutRemoveResponseItem>> Remove(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Remove)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOuts)}.{nameof(Remove)}");
             scope.Start();
             try
             {

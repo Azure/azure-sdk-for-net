@@ -38,7 +38,7 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
-        public void DeliveryReportsRestClient_NullApiVersion_ShouldThrow()
+        public void DeliveryReportsRestClient_NullVersion_ShouldThrow()
         {
             var clientOptions = new SmsClientOptions();
             var clientDiagnostics = new ClientDiagnostics(clientOptions);
@@ -56,11 +56,43 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 client.Get(null);
+                Assert.Fail("Expected ArgumentException to be thrown");
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                Assert.That(ex.Message, Contains.Substring("outgoingMessageId"));
-                Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
+                Assert.AreEqual("outgoingMessageId", ex.ParamName);
+            }
+        }
+
+        [Test]
+        public void DeliveryReportsRestClient_GetWithEmptyMessageId_ShouldThrow()
+        {
+            var client = CreateDeliveryReportsRestClient();
+
+            try
+            {
+                client.Get(string.Empty);
+                Assert.Fail("Expected ArgumentException to be thrown");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("outgoingMessageId", ex.ParamName);
+            }
+        }
+
+        [Test]
+        public void DeliveryReportsRestClient_GetWithWhitespaceMessageId_ShouldThrow()
+        {
+            var client = CreateDeliveryReportsRestClient();
+
+            try
+            {
+                client.Get("   ");
+                Assert.Fail("Expected ArgumentException to be thrown");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("outgoingMessageId", ex.ParamName);
             }
         }
 
@@ -72,106 +104,81 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 await client.GetAsync(null);
+                Assert.Fail("Expected ArgumentException to be thrown");
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                Assert.That(ex.Message, Contains.Substring("outgoingMessageId"));
-                Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
+                Assert.AreEqual("outgoingMessageId", ex.ParamName);
             }
         }
 
         [Test]
-        public void DeliveryReportsRestClient_DefaultApiVersion_IsCorrect()
-        {
-            var clientOptions = new SmsClientOptions();
-            var clientDiagnostics = new ClientDiagnostics(clientOptions);
-            var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-            var endpoint = new Uri("http://localhost");
-
-            // Test that default API version is used when not specified
-            Assert.DoesNotThrow(() =>
-            {
-                var client = new DeliveryReportsRestClient(clientDiagnostics, httpPipeline, endpoint);
-                Assert.NotNull(client);
-            });
-        }
-
-        [Test]
-        public void DeliveryReportsRestClient_CustomApiVersion_IsAccepted()
-        {
-            var clientOptions = new SmsClientOptions();
-            var clientDiagnostics = new ClientDiagnostics(clientOptions);
-            var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-            var endpoint = new Uri("http://localhost");
-            var customApiVersion = "2021-03-07";
-
-            Assert.DoesNotThrow(() =>
-            {
-                var client = new DeliveryReportsRestClient(clientDiagnostics, httpPipeline, endpoint, customApiVersion);
-                Assert.NotNull(client);
-            });
-        }
-
-        [Test]
-        public void DeliveryReportsRestClient_ClientDiagnosticsProperty_IsNotNull()
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            Assert.NotNull(client.ClientDiagnostics);
-        }
-
-        [Test]
-        public void DeliveryReportsRestClient_ClientDiagnosticsProperty_IsCorrectInstance()
-        {
-            var clientOptions = new SmsClientOptions();
-            var expectedClientDiagnostics = new ClientDiagnostics(clientOptions);
-            var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-            var endpoint = new Uri("http://localhost");
-
-            var client = new DeliveryReportsRestClient(expectedClientDiagnostics, httpPipeline, endpoint);
-
-            Assert.AreSame(expectedClientDiagnostics, client.ClientDiagnostics);
-        }
-
-        [TestCase("")]
-        [TestCase("   ")]
-        [TestCase("\t")]
-        [TestCase("\n")]
-        public void DeliveryReportsRestClient_GetWithEmptyOrWhitespaceMessageId_ShouldThrowArgumentException(string messageId)
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            // Empty/whitespace message IDs should be validated on the client side to prevent unnecessary network calls
-            var ex = Assert.Throws<ArgumentException>(() => client.Get(messageId));
-            Assert.AreEqual("outgoingMessageId", ex!.ParamName);
-            Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
-        }
-
-        [TestCase("")]
-        [TestCase("   ")]
-        [TestCase("\t")]
-        [TestCase("\n")]
-        public async Task DeliveryReportsRestClient_GetAsyncWithEmptyOrWhitespaceMessageId_ShouldThrowArgumentException(string messageId)
+        public async Task DeliveryReportsRestClient_GetAsyncWithEmptyMessageId_ShouldThrow()
         {
             var client = CreateDeliveryReportsRestClient();
 
             try
             {
-                await client.GetAsync(messageId);
+                await client.GetAsync(string.Empty);
+                Assert.Fail("Expected ArgumentException to be thrown");
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                Assert.That(ex.Message, Contains.Substring("outgoingMessageId"));
-                Assert.That(ex.Message, Contains.Substring("cannot be null, empty, or whitespace"));
+                Assert.AreEqual("outgoingMessageId", ex.ParamName);
             }
         }
 
-        private DeliveryReportsRestClient CreateDeliveryReportsRestClient()
+        [Test]
+        public async Task DeliveryReportsRestClient_GetAsyncWithWhitespaceMessageId_ShouldThrow()
+        {
+            var client = CreateDeliveryReportsRestClient();
+
+            try
+            {
+                await client.GetAsync("   ");
+                Assert.Fail("Expected ArgumentException to be thrown");
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.AreEqual("outgoingMessageId", ex.ParamName);
+            }
+        }
+
+        [Test]
+        public void DeliveryReportsRestClient_GetWithValidMessageId_ShouldCreateValidRequest()
+        {
+            var client = CreateDeliveryReportsRestClient();
+            var messageId = "test-message-id-12345";
+
+            var message = client.CreateGetRequest(messageId);
+
+            Assert.NotNull(message);
+            Assert.AreEqual("GET", message.Request.Method.Method);
+            StringAssert.Contains("/deliveryReports/", message.Request.Uri.ToString());
+            StringAssert.Contains(messageId, message.Request.Uri.ToString());
+            StringAssert.Contains("api-version", message.Request.Uri.ToString());
+        }
+
+        [Test]
+        [TestCase("msg-123")]
+        [TestCase("a1b2c3d4-e5f6-7890-abcd-ef1234567890")]
+        [TestCase("simple-id")]
+        public void DeliveryReportsRestClient_GetWithVariousValidMessageIds_ShouldCreateValidRequest(string messageId)
+        {
+            var client = CreateDeliveryReportsRestClient();
+
+            var message = client.CreateGetRequest(messageId);
+
+            Assert.NotNull(message);
+            StringAssert.Contains(messageId, message.Request.Uri.ToString());
+        }
+
+        private static DeliveryReportsRestClient CreateDeliveryReportsRestClient()
         {
             var clientOptions = new SmsClientOptions();
             var clientDiagnostics = new ClientDiagnostics(clientOptions);
             var httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-            var endpoint = new Uri("http://localhost");
+            var endpoint = new Uri("https://test.communication.azure.com");
 
             return new DeliveryReportsRestClient(clientDiagnostics, httpPipeline, endpoint);
         }

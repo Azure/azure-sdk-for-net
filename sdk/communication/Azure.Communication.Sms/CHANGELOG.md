@@ -1,34 +1,41 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 2.0.0 (Unreleased)
 
 ### Features Added
 
-- Added new `TelcoMessagingClient` with improved architecture using sub-clients:
-  - `TelcoMessagingClient.Sms` - for sending SMS messages
-  - `TelcoMessagingClient.OptOuts` - for managing opt-out preferences
-  - `TelcoMessagingClient.DeliveryReports` - for retrieving message delivery status
-- Added `DeliveryReportsClient` for getting delivery reports of sent messages
-- Added comprehensive samples demonstrating the new `TelcoMessagingClient` functionality
-- Enhanced `DeliveryReport` model with `MessagingConnectPartnerMessageId` property for tracking partner-generated message IDs
-- Added documentation remarks to `SmsClient` methods guiding users to consider `TelcoMessagingClient` for new development
+- Added delivery report functionality to `SmsClient`:
+  - New `SmsClient.GetDeliveryReport` and `SmsClient.GetDeliveryReportAsync` methods for retrieving message delivery status
+  - Provides detailed information including delivery status, delivery attempts, and timestamps
+  - Supports tracking partner-generated message IDs via `MessagingConnectPartnerMessageId` property
+- Enhanced OptOuts API with improved subclient pattern:
+  - `SmsClient.OptOuts` property provides access to opt-out management functionality
+  - Supports `Add`, `Remove`, and `Check` methods (with async variants) for managing recipient opt-out preferences
+- Improved MessagingConnect partner integration with standard Azure SDK patterns:
+  - Use `Dictionary<string, object>` for partner-specific parameters
+  - Constructor: `new MessagingConnectOptions(string partner, IDictionary<string, object> partnerParams)`
+  - Follows Azure SDK design guidelines for flexible parameter collections
 
 ### Breaking Changes
 
-- **MessagingConnect API Changes**: Updated `MessagingConnectOptions` constructor and properties for better flexibility:
+- **MessagingConnect API Changes**: Updated `MessagingConnectOptions` to follow Azure SDK standards
   - Constructor changed from `MessagingConnectOptions(string apiKey, string partner)` to `MessagingConnectOptions(string partner, object partnerParams)`
   - Property `ApiKey` replaced with `PartnerParams` to support various partner-specific parameters
-  - Added new `MessagingConnectPartnerParameters` class providing multiple convenient factory methods for creating partner parameters:
-    - `MessagingConnectPartnerParameters.Create(("key", "value"), ...)` - Clean tuple syntax (recommended)
-    - `MessagingConnectPartnerParameters.FromObject(new { Key = "value" })` - Familiar anonymous object syntax
-    - `MessagingConnectPartnerParameters.FromDictionary(dictionary)` - Dictionary-based creation
-  - **Migration**: Replace `new MessagingConnectOptions("your-api-key", "PartnerName")` with `new MessagingConnectOptions("PartnerName", MessagingConnectPartnerParameters.FromObject(new { ApiKey = "your-api-key" }))` or use the recommended tuple syntax: `MessagingConnectPartnerParameters.Create(("ApiKey", "your-api-key"))`
+  - **Removed `MessagingConnectPartnerParameters` helper class** - use standard `Dictionary<string, object>` instead
+  - **Migration Guide**:
+    ```csharp
+    // Before (beta)
+    var options = new MessagingConnectOptions("your-api-key", "PartnerName");
 
-### Other Changes
-
-- Migrate to `TelcoMessagingClient` for new development
-- Updated documentation and README.md with migration guidance from `SmsClient` to `TelcoMessagingClient`
-- Added comprehensive unit tests for the new client architecture
+    // After (2.0.0) - Standard Azure SDK pattern
+    var partnerParams = new Dictionary<string, object>
+    {
+        { "ApiKey", "your-api-key" },
+        { "CustomParam", "custom-value" }
+    };
+    var options = new MessagingConnectOptions("PartnerName", partnerParams);
+    ```
+  - This change aligns with Azure SDK design guidelines and patterns used across all Azure SDKs
 
 ## 1.1.0-beta.3 (2025-06-12)
 

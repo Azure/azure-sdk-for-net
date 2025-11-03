@@ -17,13 +17,10 @@ namespace Azure.Communication.Sms
     /// <summary>
     /// The Azure Communication Services SMS client.
     /// </summary>
-    /// <remarks>
-    /// For new development, consider using <see cref="TelcoMessagingClient"/> instead,
-    /// which provides enhanced capabilities with dedicated sub-clients for SMS messaging, opt-out management, and delivery reports.
-    /// </remarks>
     public class SmsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly DeliveryReportsRestClient _deliveryReportsRestClient;
         internal SmsRestClient RestClient { get; }
 
         #region public constructors - all arguments need null check
@@ -87,7 +84,8 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new SmsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
-            OptOuts = new OptOutsClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
+            _deliveryReportsRestClient = new DeliveryReportsRestClient(_clientDiagnostics, httpPipeline, new Uri(endpoint), "2026-01-23");
+            OptOuts = new OptOuts(_clientDiagnostics, httpPipeline, new Uri(endpoint), options.ApiVersion);
         }
 
         #endregion
@@ -97,16 +95,14 @@ namespace Azure.Communication.Sms
         {
             _clientDiagnostics = null;
             RestClient = null;
+            _deliveryReportsRestClient = null;
             OptOuts = null;
         }
 
         /// <summary>
-        /// Opt Out management client.
+        /// Opt Out management sub-client.
         /// </summary>
-        /// <remarks>
-        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
-        /// </remarks>
-        public virtual OptOutsClient OptOuts { get; private set; }
+        public virtual OptOuts OptOuts { get; private set; }
 
         /// <summary>
         /// Sends a SMS <paramref name="from"/> a phone number that is acquired by the authenticated account, <paramref name="to"/> another phone number.
@@ -120,9 +116,6 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        /// <remarks>
-        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
-        /// </remarks>
         public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
@@ -143,9 +136,6 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        /// <remarks>
-        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
-        /// </remarks>
         public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
@@ -164,9 +154,6 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        /// <remarks>
-        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
-        /// </remarks>
         public virtual async Task<Response<IReadOnlyList<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
@@ -209,9 +196,6 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        /// <remarks>
-        /// For new development, consider using <see cref="TelcoMessagingClient"/> which provides enhanced features.
-        /// </remarks>
         public virtual Response<IReadOnlyList<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
@@ -237,6 +221,80 @@ namespace Azure.Communication.Sms
 
                 var smsSendResponse = (SmsSendResponse)response.Value;
                 return Response.FromValue(smsSendResponse.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets delivery report for a specific outgoing message.
+        /// </summary>
+        /// <param name="outgoingMessageId">The identifier of the outgoing message.</param>
+        /// <param name="cancellationToken">The cancellation token for the task.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="outgoingMessageId"/> is null.</exception>
+        public virtual async Task<Response<DeliveryReport>> GetDeliveryReportAsync(string outgoingMessageId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(GetDeliveryReport)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrWhiteSpace(outgoingMessageId, nameof(outgoingMessageId));
+
+                Response<object> response = await _deliveryReportsRestClient.GetAsync(outgoingMessageId, cancellationToken).ConfigureAwait(false);
+
+                if (response.Value is DeliveryReport deliveryReport)
+                {
+                    return Response.FromValue(deliveryReport, response.GetRawResponse());
+                }
+                else if (response.Value is ErrorResponse error)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unexpected response type");
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets delivery report for a specific outgoing message.
+        /// </summary>
+        /// <param name="outgoingMessageId">The identifier of the outgoing message.</param>
+        /// <param name="cancellationToken">The cancellation token for the underlying request.</param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="outgoingMessageId"/> is null.</exception>
+        public virtual Response<DeliveryReport> GetDeliveryReport(string outgoingMessageId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(GetDeliveryReport)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrWhiteSpace(outgoingMessageId, nameof(outgoingMessageId));
+
+                Response<object> response = _deliveryReportsRestClient.Get(outgoingMessageId, cancellationToken);
+
+                if (response.Value is DeliveryReport deliveryReport)
+                {
+                    return Response.FromValue(deliveryReport, response.GetRawResponse());
+                }
+                else if (response.Value is ErrorResponse error)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unexpected response type");
+                }
             }
             catch (Exception ex)
             {

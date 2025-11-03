@@ -73,7 +73,8 @@ namespace Azure.Communication.Sms.Tests
                 #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
                 //@@ string endpoint = "<endpoint_url>";
                 //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/tokenCredential = TestEnvironment.Credential;
+                /*@@*/
+                tokenCredential = TestEnvironment.Credential;
                 //@@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             }
@@ -86,46 +87,6 @@ namespace Azure.Communication.Sms.Tests
             SmsClientOptions smsClientOptions = new SmsClientOptions();
             smsClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(smsClientOptions);
-        }
-
-        public TelcoMessagingClient CreateTelcoMessagingClient()
-        {
-            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-            TelcoMessagingClient client = new TelcoMessagingClient(connectionString, CreateTelcoMessagingClientOptionsWithCorrelationVectorLogs());
-
-            #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateTelcoMessagingClient
-            //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@TelcoMessagingClient client = new TelcoMessagingClient(connectionString);
-            #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateTelcoMessagingClient
-            return InstrumentClient(client);
-        }
-
-        public TelcoMessagingClient CreateTelcoMessagingClientWithToken()
-        {
-            Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
-            TokenCredential tokenCredential;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                tokenCredential = new MockCredential();
-            }
-            else
-            {
-                #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateTelcoMessagingClientWithToken
-                //@@ string endpoint = "<endpoint_url>";
-                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/tokenCredential = TestEnvironment.Credential;
-                //@@ TelcoMessagingClient client = new TelcoMessagingClient(new Uri(endpoint), tokenCredential);
-                #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateTelcoMessagingClientWithToken
-            }
-            TelcoMessagingClient client = new TelcoMessagingClient(endpoint, tokenCredential, CreateTelcoMessagingClientOptionsWithCorrelationVectorLogs());
-            return InstrumentClient(client);
-        }
-
-        private TelcoMessagingClientOptions CreateTelcoMessagingClientOptionsWithCorrelationVectorLogs()
-        {
-            TelcoMessagingClientOptions telcoMessagingClientOptions = new TelcoMessagingClientOptions();
-            telcoMessagingClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
-            return InstrumentClientOptions(telcoMessagingClientOptions);
         }
     }
 }
