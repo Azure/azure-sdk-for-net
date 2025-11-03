@@ -69,14 +69,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GroupQuotaSubscriptionRequestStatusResource>> GetAsync(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<GroupQuotaSubscriptionRequestStatusResource>> GetAsync(string requestId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
             using DiagnosticScope scope = _groupQuotaSubscriptionRequestStatusesClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Get");
@@ -120,14 +118,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GroupQuotaSubscriptionRequestStatusResource> Get(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<GroupQuotaSubscriptionRequestStatusResource> Get(string requestId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
             using DiagnosticScope scope = _groupQuotaSubscriptionRequestStatusesClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Get");
@@ -171,14 +167,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string requestId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
             using DiagnosticScope scope = _groupQuotaSubscriptionRequestStatusesClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Exists");
@@ -230,14 +224,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string requestId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
             using DiagnosticScope scope = _groupQuotaSubscriptionRequestStatusesClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Exists");
@@ -289,14 +281,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<GroupQuotaSubscriptionRequestStatusResource>> GetIfExistsAsync(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<GroupQuotaSubscriptionRequestStatusResource>> GetIfExistsAsync(string requestId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
             using DiagnosticScope scope = _groupQuotaSubscriptionRequestStatusesClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.GetIfExists");
@@ -352,14 +342,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<GroupQuotaSubscriptionRequestStatusResource> GetIfExists(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<GroupQuotaSubscriptionRequestStatusResource> GetIfExists(string requestId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
             using DiagnosticScope scope = _groupQuotaSubscriptionRequestStatusesClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.GetIfExists");
