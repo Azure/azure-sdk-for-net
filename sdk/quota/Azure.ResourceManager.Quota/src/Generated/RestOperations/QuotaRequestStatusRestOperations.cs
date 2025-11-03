@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Quota
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top, null), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skiptoken != null)
             {

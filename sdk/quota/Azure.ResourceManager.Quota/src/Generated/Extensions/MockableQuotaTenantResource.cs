@@ -58,108 +58,66 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Gets a collection of GroupQuotaEntities in the <see cref="TenantResource"/>. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <returns> An object representing collection of GroupQuotaEntities and their operations over a GroupQuotaEntityResource. </returns>
-        public virtual GroupQuotaEntityCollection GetGroupQuotaEntities(string managementGroupId)
-        {
-            return GetCachedClient(client => new GroupQuotaEntityCollection(client, Id, managementGroupId));
-        }
-
-        /// <summary> Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-
-            return await GetGroupQuotaEntities(managementGroupId).GetAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GroupQuotaEntityResource> GetGroupQuotaEntity(string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-
-            return GetGroupQuotaEntities(managementGroupId).Get(groupQuotaName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="TenantResource"/>. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
         /// <returns> An object representing collection of SubscriptionQuotaAllocationsLists and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
-        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName)
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists()
         {
-            return GetCachedClient(client => new SubscriptionQuotaAllocationsListCollection(
-                client,
-                Id,
-                managementGroupId,
-                subscriptionId,
-                groupQuotaName,
-                resourceProviderName));
+            return GetCachedClient(client => new SubscriptionQuotaAllocationsListCollection(client, Id));
         }
 
         /// <summary> Gets a collection of QuotaAllocationRequestStatuses in the <see cref="TenantResource"/>. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
         /// <returns> An object representing collection of QuotaAllocationRequestStatuses and their operations over a QuotaAllocationRequestStatusResource. </returns>
-        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName)
+        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses()
         {
-            return GetCachedClient(client => new QuotaAllocationRequestStatusCollection(
-                client,
-                Id,
-                managementGroupId,
-                subscriptionId,
-                groupQuotaName,
-                resourceProviderName));
+            return GetCachedClient(client => new QuotaAllocationRequestStatusCollection(client, Id));
         }
 
-        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
-        /// <param name="allocationId"> Request Id. </param>
+        /// <summary>
+        /// Get the quota allocation request status for the subscriptionId by allocationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaAllocationRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
-
-            return await GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName).GetAsync(allocationId, cancellationToken).ConfigureAwait(false);
+            return await GetQuotaAllocationRequestStatuses().GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
-        /// <param name="allocationId"> Request Id. </param>
+        /// <summary>
+        /// Get the quota allocation request status for the subscriptionId by allocationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaAllocationRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
-
-            return GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName).Get(allocationId, cancellationToken);
+            return GetQuotaAllocationRequestStatuses().Get(cancellationToken);
         }
 
         /// <summary> Get a list of current usage for all resources for the scope specified. </summary>

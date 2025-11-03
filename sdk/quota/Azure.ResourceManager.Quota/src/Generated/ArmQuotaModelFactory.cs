@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota;
@@ -149,17 +150,6 @@ namespace Azure.ResourceManager.Quota.Models
         public static GroupQuotaRequestStatusProperties GroupQuotaRequestStatusProperties(GroupQuotaRequestBase requestedResource = default, DateTimeOffset? requestSubmittedOn = default, QuotaRequestStatus? provisioningState = default, string faultCode = default)
         {
             return new GroupQuotaRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
-        /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
-        /// <param name="comments"> GroupQuota Request comments and details for request. This is optional paramter to provide more details related to the requested resource. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaRequestBase"/> instance for mocking. </returns>
-        public static GroupQuotaRequestBase GroupQuotaRequestBase(long? limit = default, string region = default, string comments = default, string value = default, string localizedValue = default)
-        {
-            return new GroupQuotaRequestBase(limit is null || region is null || comments is null || value is null || localizedValue is null ? default : new GroupQuotaRequestBaseProperties(limit, new GroupQuotaRequestBasePropertiesName(value, localizedValue, new Dictionary<string, BinaryData>()), region, comments, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Resource details with usages and GroupQuota. </summary>
@@ -399,16 +389,6 @@ namespace Azure.ResourceManager.Quota.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 requestedResource is null || requestSubmittedOn is null || provisioningState is null || faultCode is null ? default : new QuotaAllocationRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, new Dictionary<string, BinaryData>()));
-        }
-
-        /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
-        /// <param name="region"> The location for which the subscription is allocated. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <returns> A new <see cref="Models.QuotaAllocationRequestBase"/> instance for mocking. </returns>
-        public static QuotaAllocationRequestBase QuotaAllocationRequestBase(long? limit = default, string region = default, string value = default, string localizedValue = default)
-        {
-            return new QuotaAllocationRequestBase(limit is null || region is null || value is null || localizedValue is null ? default : new QuotaAllocationRequestBaseProperties(limit, new QuotaAllocationRequestBasePropertiesName(value, localizedValue, new Dictionary<string, BinaryData>()), region, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>

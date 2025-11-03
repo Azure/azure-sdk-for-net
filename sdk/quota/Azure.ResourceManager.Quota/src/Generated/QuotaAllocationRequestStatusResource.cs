@@ -93,7 +93,27 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <summary>
+        /// Get the quota allocation request status for the subscriptionId by allocationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaAllocationRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="QuotaAllocationRequestStatusResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -121,7 +141,27 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <summary>
+        /// Get the quota allocation request status for the subscriptionId by allocationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests/{allocationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaAllocationRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="QuotaAllocationRequestStatusResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<QuotaAllocationRequestStatusResource> Get(CancellationToken cancellationToken = default)
         {

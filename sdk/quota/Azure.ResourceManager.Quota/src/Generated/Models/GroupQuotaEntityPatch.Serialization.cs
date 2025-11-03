@@ -173,15 +173,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GroupQuotaEntityPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="GroupQuotaEntityPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GroupQuotaEntityPatch patch)
+        /// <param name="groupQuotaEntityPatch"> The <see cref="GroupQuotaEntityPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GroupQuotaEntityPatch groupQuotaEntityPatch)
         {
-            if (patch == null)
+            if (groupQuotaEntityPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(groupQuotaEntityPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

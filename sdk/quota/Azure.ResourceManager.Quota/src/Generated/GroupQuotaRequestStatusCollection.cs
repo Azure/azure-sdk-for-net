@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -47,21 +46,32 @@ namespace Azure.ResourceManager.Quota
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TenantResource.ResourceType)
+            if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), id);
             }
         }
 
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
-        /// <param name="requestId"> Request Id. </param>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetAsync(string requestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
             using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Get");
             scope.Start();
             try
@@ -70,7 +80,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -86,15 +96,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
-        /// <param name="requestId"> Request Id. </param>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GroupQuotaRequestStatusResource> Get(string requestId, CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaRequestStatusResource> Get(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
             using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Get");
             scope.Start();
             try
@@ -103,7 +124,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -119,15 +140,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="requestId"> Request Id. </param>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string requestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
             using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Exists");
             scope.Start();
             try
@@ -136,7 +168,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaRequestStatusData> response = default;
@@ -160,15 +192,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="requestId"> Request Id. </param>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string requestId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
             using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Exists");
             scope.Start();
             try
@@ -177,7 +220,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaRequestStatusData> response = default;
@@ -201,15 +244,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="requestId"> Request Id. </param>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<GroupQuotaRequestStatusResource>> GetIfExistsAsync(string requestId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<GroupQuotaRequestStatusResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
             using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.GetIfExists");
             scope.Start();
             try
@@ -218,7 +272,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaRequestStatusData> response = default;
@@ -246,15 +300,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="requestId"> Request Id. </param>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<GroupQuotaRequestStatusResource> GetIfExists(string requestId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<GroupQuotaRequestStatusResource> GetIfExists(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
             using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.GetIfExists");
             scope.Start();
             try
@@ -263,7 +328,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaRequestStatusData> response = default;

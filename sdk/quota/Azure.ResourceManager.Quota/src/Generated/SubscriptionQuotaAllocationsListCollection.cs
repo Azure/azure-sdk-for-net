@@ -26,14 +26,6 @@ namespace Azure.ResourceManager.Quota
     {
         private readonly ClientDiagnostics _subscriptionQuotaAllocationsListsClientDiagnostics;
         private readonly SubscriptionQuotaAllocationsLists _subscriptionQuotaAllocationsListsRestClient;
-        /// <summary> The managementGroupId. </summary>
-        private readonly string _managementGroupId;
-        /// <summary> The subscriptionId. </summary>
-        private readonly string _subscriptionId;
-        /// <summary> The groupQuotaName. </summary>
-        private readonly string _groupQuotaName;
-        /// <summary> The resourceProviderName. </summary>
-        private readonly string _resourceProviderName;
 
         /// <summary> Initializes a new instance of SubscriptionQuotaAllocationsListCollection for mocking. </summary>
         protected SubscriptionQuotaAllocationsListCollection()
@@ -43,17 +35,9 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationsListCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
-        internal SubscriptionQuotaAllocationsListCollection(ArmClient client, ResourceIdentifier id, string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName) : base(client, id)
+        internal SubscriptionQuotaAllocationsListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
-            _managementGroupId = managementGroupId;
-            _subscriptionId = subscriptionId;
-            _groupQuotaName = groupQuotaName;
-            _resourceProviderName = resourceProviderName;
             _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
             _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
@@ -69,10 +53,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetAll");
             scope.Start();
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -98,10 +97,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionQuotaAllocationsListResource> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionQuotaAllocationsListResource> GetAll(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetAll");
             scope.Start();
@@ -111,7 +125,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -127,10 +141,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
             scope.Start();
@@ -140,7 +169,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -164,10 +193,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Exists");
             scope.Start();
@@ -177,7 +221,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -201,10 +245,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
             scope.Start();
@@ -214,7 +273,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -242,10 +301,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary>
+        /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionQuotaAllocationsLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<SubscriptionQuotaAllocationsListResource> GetIfExists(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SubscriptionQuotaAllocationsListResource> GetIfExists(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetIfExists");
             scope.Start();
@@ -255,7 +329,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;

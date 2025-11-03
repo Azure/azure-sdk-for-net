@@ -2100,7 +2100,7 @@
                 "methodId": "Microsoft.Quota.GroupQuotasEntities.list",
                 "kind": "List",
                 "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas",
-                "operationScope": "Tenant"
+                "operationScope": "ManagementGroup"
               },
               {
                 "$id": "206",
@@ -2119,7 +2119,7 @@
                 "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}"
               }
             ],
-            "resourceScope": "Tenant",
+            "resourceScope": "ManagementGroup",
             "resourceName": "GroupQuotaEntity"
           }
         }

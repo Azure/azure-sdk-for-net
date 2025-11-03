@@ -56,21 +56,27 @@ namespace Azure.ResourceManager.Quota
         /// Create or update the quota limit for the specified resource with the requested value. To update the quota, follow these steps:
         /// 1. Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
         /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
         /// <param name="data"> Quota request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CurrentQuotaLimitBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<CurrentQuotaLimitBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
                     new CurrentQuotaLimitBaseOperationSource(Client),
@@ -107,21 +113,27 @@ namespace Azure.ResourceManager.Quota
         /// Create or update the quota limit for the specified resource with the requested value. To update the quota, follow these steps:
         /// 1. Use the GET operation for quotas and usages to determine how much quota remains for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
         /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
         /// <param name="data"> Quota request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CurrentQuotaLimitBaseResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<CurrentQuotaLimitBaseResource> CreateOrUpdate(WaitUntil waitUntil, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
@@ -132,7 +144,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
                     new CurrentQuotaLimitBaseOperationSource(Client),
@@ -154,20 +166,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request. </summary>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
             try
@@ -176,7 +194,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -192,20 +210,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request. </summary>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CurrentQuotaLimitBaseResource> Get(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<CurrentQuotaLimitBaseResource> Get(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
             try
@@ -214,7 +238,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,20 +254,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
             try
@@ -252,7 +282,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -276,20 +306,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
             try
@@ -298,7 +334,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -322,20 +358,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CurrentQuotaLimitBaseResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CurrentQuotaLimitBaseResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
             try
@@ -344,7 +386,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -372,20 +414,26 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceName">
-        /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
-        ///  For Microsoft.Network PublicIPAddresses.
-        /// </param>
+        /// <summary>
+        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CurrentQuotaLimitBaseResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CurrentQuotaLimitBaseResource> GetIfExists(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
             try
@@ -394,7 +442,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;

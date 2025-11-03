@@ -90,7 +90,27 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GroupQuotaRequestStatusResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -118,7 +138,27 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GroupQuotaRequestStatusResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GroupQuotaRequestStatusResource> Get(CancellationToken cancellationToken = default)
         {
