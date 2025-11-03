@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             TryGetApiVersion(ResourceType, out string dependencyMapDiscoverySourceApiVersion);
             _discoverySourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", ResourceType.Namespace, Diagnostics);
-            _discoverySourcesRestClient = new DiscoverySources(_discoverySourcesClientDiagnostics, Pipeline, Endpoint, dependencyMapDiscoverySourceApiVersion ?? "2025-05-01-preview");
+            _discoverySourcesRestClient = new DiscoverySources(_discoverySourcesClientDiagnostics, Pipeline, Endpoint, dependencyMapDiscoverySourceApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -135,6 +135,27 @@ namespace Azure.ResourceManager.DependencyMap.Models
             return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfoAvailableDaysCount is null ? default : new ExportDependenciesAdditionalInfo(additionalInfoAvailableDaysCount, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> The status URL of the asynchronous operation. </param>
+        /// <param name="name"> The resource name of the operation status. It must match the last segment of 'id' field. </param>
+        /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
+        /// <param name="error"> Contains error details if status is Failed/Canceled. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="getDependencyViewForAllMachinesResultLayoutFileSasUri"> The SAS URI of the blob containing the layout file for the multi-server view. </param>
+        /// <returns> A new <see cref="Models.GetDependencyViewForAllMachinesOperationResult"/> instance for mocking. </returns>
+        public static GetDependencyViewForAllMachinesOperationResult GetDependencyViewForAllMachinesOperationResult(string id = default, string name = default, string status = default, ResponseError error = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string getDependencyViewForAllMachinesResultLayoutFileSasUri = default)
+        {
+            return new GetDependencyViewForAllMachinesOperationResult(
+                id,
+                name,
+                status,
+                error,
+                startOn,
+                endOn,
+                getDependencyViewForAllMachinesResultLayoutFileSasUri is null ? default : new GetDependencyViewForAllMachinesResultProperties(getDependencyViewForAllMachinesResultLayoutFileSasUri, new Dictionary<string, BinaryData>()),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A Discovery Source resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

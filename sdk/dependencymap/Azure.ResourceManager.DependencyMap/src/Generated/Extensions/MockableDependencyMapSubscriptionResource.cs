@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
 
         private ClientDiagnostics MapsClientDiagnostics => _mapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DependencyMap.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Maps MapsRestClient => _mapsRestClient ??= new Maps(MapsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Maps MapsRestClient => _mapsRestClient ??= new Maps(MapsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
 
         /// <summary> List MapsResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
