@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text.Tests
             string targetLanguages = "cs";
             string inputText = "Hola mundo";
             TextTranslationClient client = GetClient();
-            var response = await client.TranslateAsync(targetLanguages, inputText, sourceLanguage: fromLanguage).ConfigureAwait(false);
+            var response = await client.TranslateAsync(inputText, targetLanguages, sourceLanguage: fromLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -45,7 +45,7 @@ namespace Azure.AI.Translation.Text.Tests
             string targetLanguage = "cs";
             string inputText = "This is a test.";
             TextTranslationClient client = GetClient();
-            var response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+            var response = await client.TranslateAsync(inputText,targetLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -111,7 +111,7 @@ namespace Azure.AI.Translation.Text.Tests
             string targetLanguage = "cs";
             string inputText = "It is a beautiful morning";
             TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
-            var response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+            var response = await client.TranslateAsync(inputText, targetLanguage).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -149,7 +149,7 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task TranslateWithAADAuth()
         {
             TextTranslationClient client = GetClient(useAADAuth: true);
-            var translate = await client.TranslateAsync("cs", "This is a test.").ConfigureAwait(false);
+            var translate = await client.TranslateAsync("This is a test.", "cs").ConfigureAwait(false);
 
             Assert.AreEqual(200, translate.GetRawResponse().Status);
             Assert.NotNull(translate.Value);
