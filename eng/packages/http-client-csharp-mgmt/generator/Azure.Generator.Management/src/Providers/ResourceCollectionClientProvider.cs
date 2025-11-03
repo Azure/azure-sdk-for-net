@@ -29,7 +29,6 @@ namespace Azure.Generator.Management.Providers
     {
         private readonly ResourceMetadata _resourceMetadata;
         private readonly Dictionary<ParameterProvider, FieldProvider> _pathParameterMap;
-        //private readonly Dictionary<ParameterProvider, FieldProvider> _extraConstructorParameterMap;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -38,6 +37,7 @@ namespace Azure.Generator.Management.Providers
         // Cached Get method providers
         private MethodProvider? _getAsyncMethodProvider;
         private MethodProvider? _getSyncMethodProvider;
+        private MethodProvider? _getAllSyncMethodProvider;
 
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
@@ -62,7 +62,6 @@ namespace Azure.Generator.Management.Providers
 
             // this depends on _getAll being initialized
             _pathParameterMap = BuildExtraConstuctorParameterMap();
-            //_extraConstructorParameterMap = BuildExtraConstuctorParameterMap();
         }
 
         /// <summary>
@@ -150,7 +149,7 @@ namespace Azure.Generator.Management.Providers
 
         private bool ShouldSkipIEnumerableImplementation()
         {
-            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
+            return _getAllSyncMethodProvider is null || _getAllSyncMethodProvider.Signature.Parameters.Any(p => p.DefaultValue is null);
         }
 
         protected override PropertyProvider[] BuildProperties()
@@ -170,27 +169,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             return [.. properties];
-        }
-
-        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
-        {
-            var map = new Dictionary<ParameterProvider, FieldProvider>();
-            var diff = ContextualPath.TrimAncestorFrom(Resource.ContextualPath);
-            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
-            if (variableSegments.Count > 0)
-            {
-                variableSegments.RemoveAt(variableSegments.Count - 1);
-            }
-            foreach (var seg in variableSegments)
-            {
-                var parameter = new ParameterProvider(
-                    seg.VariableName,
-                    $"The {seg.VariableName} for the resource.",
-                    Resource.GetPathParameterType(seg.VariableName));
-                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
-                map.Add(parameter, field);
-            }
-            return map;
         }
 
         private Dictionary<ParameterProvider, FieldProvider> BuildExtraConstuctorParameterMap()
@@ -325,10 +303,10 @@ namespace Azure.Generator.Management.Providers
             }
 
             // implement paging method GetAll
-            var getAll = BuildGetAllMethod(_getAll, false);
+            _getAllSyncMethodProvider = BuildGetAllMethod(_getAll, false);
             var getAllAsync = BuildGetAllMethod(_getAll, true);
 
-            return [getAllAsync, getAll];
+            return [getAllAsync, _getAllSyncMethodProvider];
         }
 
         private MethodProvider[] BuildEnumeratorMethods()

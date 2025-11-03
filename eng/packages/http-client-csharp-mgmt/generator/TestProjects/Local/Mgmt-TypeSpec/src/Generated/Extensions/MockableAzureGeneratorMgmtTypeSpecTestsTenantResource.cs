@@ -63,7 +63,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>
@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="requestId"/> is null. </exception>

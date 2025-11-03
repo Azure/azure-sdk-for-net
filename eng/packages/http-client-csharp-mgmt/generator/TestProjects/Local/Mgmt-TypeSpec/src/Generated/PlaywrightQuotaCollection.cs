@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +23,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Each <see cref="PlaywrightQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
     /// To get a <see cref="PlaywrightQuotaCollection"/> instance call the GetPlaywrightQuotas method from an instance of the parent resource.
     /// </summary>
-    public partial class PlaywrightQuotaCollection : ArmCollection, IEnumerable<PlaywrightQuotaResource>, IAsyncEnumerable<PlaywrightQuotaResource>
+    public partial class PlaywrightQuotaCollection : ArmCollection
     {
         private readonly ClientDiagnostics _playwrightQuotasClientDiagnostics;
         private readonly PlaywrightQuotas _playwrightQuotasRestClient;
@@ -73,6 +71,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlaywrightQuotaResource>> GetAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -118,6 +117,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PlaywrightQuotaResource> Get(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -189,6 +189,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -242,6 +243,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -295,6 +297,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<PlaywrightQuotaResource>> GetIfExistsAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -352,6 +355,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<PlaywrightQuotaResource> GetIfExists(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
@@ -390,22 +394,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<PlaywrightQuotaResource> IEnumerable<PlaywrightQuotaResource>.GetEnumerator()
-        {
-            return this.GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PlaywrightQuotaResource> IAsyncEnumerable<PlaywrightQuotaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
