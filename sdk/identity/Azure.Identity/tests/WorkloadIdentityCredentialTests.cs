@@ -23,6 +23,7 @@ namespace Azure.Identity.Tests
         { }
 
         [Test]
+        [NonParallelizable]
         public void VerifyInvalidConfigurationThrowsCredentialUnavailable([Values] bool specifyTenantId, [Values] bool specifyClientId, [Values] bool specifyTokenFilePath)
         {
             if (specifyTenantId && specifyClientId && specifyTokenFilePath)
@@ -98,6 +99,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public void KubernetesProxy_DisabledByDefault()
         {
             var tokenFilePath = _tempFiles.GetTempFilePath();
@@ -113,8 +115,11 @@ namespace Azure.Identity.Tests
             };
 
             // Should not throw even with invalid proxy config
-            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "http://invalid&proxy#url"))
-            using (new TestEnvVar("AZURE_KUBERNETES_CA_DATA", "invalid-cert-data"))
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_KUBERNETES_TOKEN_PROXY", "http://invalid&proxy#url" },
+                { "AZURE_KUBERNETES_CA_DATA", "invalid-cert-data" },
+            }))
             {
                 var credential = new WorkloadIdentityCredential(options);
                 Assert.IsNotNull(credential);
@@ -122,6 +127,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public void KubernetesProxy_OptInWithoutEnvVars_NoError()
         {
             var tokenFilePath = _tempFiles.GetTempFilePath();
@@ -143,6 +149,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public void KubernetesProxy_InvalidProxyUrl_ThrowsInvalidOperation()
         {
             var tokenFilePath = _tempFiles.GetTempFilePath();
@@ -181,6 +188,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public void KubernetesProxy_BothCaFileAndCaData_ThrowsInvalidOperation()
         {
             var tokenFilePath = _tempFiles.GetTempFilePath();
@@ -199,9 +207,12 @@ namespace Azure.Identity.Tests
                 Pipeline = CredentialPipeline.GetInstance(null)
             };
 
-            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local"))
-            using (new TestEnvVar("AZURE_KUBERNETES_CA_FILE", caFilePath))
-            using (new TestEnvVar("AZURE_KUBERNETES_CA_DATA", "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t"))
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local" },
+                { "AZURE_KUBERNETES_CA_FILE", caFilePath},
+                { "AZURE_KUBERNETES_CA_DATA", "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t" },
+            }))
             {
                 var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
                 Assert.That(ex.Message, Does.Contain("ambiguous"));
@@ -209,6 +220,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
         public void KubernetesProxy_CaFileDoesNotExist_ThrowsInvalidOperation()
         {
             var tokenFilePath = _tempFiles.GetTempFilePath();
@@ -224,8 +236,11 @@ namespace Azure.Identity.Tests
                 Pipeline = CredentialPipeline.GetInstance(null)
             };
 
-            using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local"))
-            using (new TestEnvVar("AZURE_KUBERNETES_CA_FILE", "/path/does/not/exist.pem"))
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local" },
+                { "AZURE_KUBERNETES_CA_FILE",  "/path/does/not/exist.pem"},
+            }))
             {
                 var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
                 Assert.That(ex.Message, Does.Contain("does not exist"));
