@@ -72,11 +72,19 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="data"> Quota request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CurrentQuotaLimitBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<CurrentQuotaLimitBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
@@ -87,7 +95,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
                     new CurrentQuotaLimitBaseOperationSource(Client),
@@ -129,11 +137,19 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="data"> Quota request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CurrentQuotaLimitBaseResource> CreateOrUpdate(WaitUntil waitUntil, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<CurrentQuotaLimitBaseResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
@@ -144,7 +160,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateCreateOrUpdateRequest(Id, resourceName, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
                     new CurrentQuotaLimitBaseOperationSource(Client),
@@ -183,9 +199,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
             try
@@ -194,7 +220,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,9 +253,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CurrentQuotaLimitBaseResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CurrentQuotaLimitBaseResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
             try
@@ -238,7 +274,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -271,9 +307,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
             try
@@ -282,7 +328,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -323,9 +369,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
             try
@@ -334,7 +390,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -375,9 +431,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<CurrentQuotaLimitBaseResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<CurrentQuotaLimitBaseResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
             try
@@ -386,7 +452,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;
@@ -431,9 +497,19 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<CurrentQuotaLimitBaseResource> GetIfExists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<CurrentQuotaLimitBaseResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
             try
@@ -442,7 +518,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentQuotaLimitBaseData> response = default;

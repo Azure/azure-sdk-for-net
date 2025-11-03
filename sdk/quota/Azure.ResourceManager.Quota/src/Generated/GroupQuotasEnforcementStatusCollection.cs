@@ -74,10 +74,16 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(WaitUntil waitUntil, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -86,7 +92,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
                     new GroupQuotasEnforcementStatusOperationSource(Client),
@@ -130,10 +136,16 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> CreateOrUpdate(WaitUntil waitUntil, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> CreateOrUpdate(WaitUntil waitUntil, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -142,7 +154,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
                     new GroupQuotasEnforcementStatusOperationSource(Client),
@@ -181,9 +193,15 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GroupQuotasEnforcementStatusResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<GroupQuotasEnforcementStatusResource>> GetAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.Get");
             scope.Start();
             try
@@ -192,7 +210,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotasEnforcementStatusData> response = Response.FromValue(GroupQuotasEnforcementStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,9 +243,15 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GroupQuotasEnforcementStatusResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<GroupQuotasEnforcementStatusResource> Get(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.Get");
             scope.Start();
             try
@@ -236,7 +260,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotasEnforcementStatusData> response = Response.FromValue(GroupQuotasEnforcementStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,9 +293,15 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.Exists");
             scope.Start();
             try
@@ -280,7 +310,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;
@@ -321,9 +351,15 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.Exists");
             scope.Start();
             try
@@ -332,7 +368,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;
@@ -373,9 +409,15 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<GroupQuotasEnforcementStatusResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<GroupQuotasEnforcementStatusResource>> GetIfExistsAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.GetIfExists");
             scope.Start();
             try
@@ -384,7 +426,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;
@@ -429,9 +471,15 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<GroupQuotasEnforcementStatusResource> GetIfExists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<GroupQuotasEnforcementStatusResource> GetIfExists(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.GetIfExists");
             scope.Start();
             try
@@ -440,7 +488,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;

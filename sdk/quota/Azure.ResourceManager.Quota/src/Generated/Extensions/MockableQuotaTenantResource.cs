@@ -66,10 +66,20 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary> Gets a collection of QuotaAllocationRequestStatuses in the <see cref="TenantResource"/>. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
         /// <returns> An object representing collection of QuotaAllocationRequestStatuses and their operations over a QuotaAllocationRequestStatusResource. </returns>
-        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses()
+        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName)
         {
-            return GetCachedClient(client => new QuotaAllocationRequestStatusCollection(client, Id));
+            return GetCachedClient(client => new QuotaAllocationRequestStatusCollection(
+                client,
+                Id,
+                managementGroupId,
+                subscriptionId,
+                groupQuotaName,
+                resourceProviderName));
         }
 
         /// <summary>
@@ -89,11 +99,20 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaAllocationRequestStatuses().GetAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return await GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName).GetAsync(allocationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -113,11 +132,20 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(CancellationToken cancellationToken = default)
+        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
         {
-            return GetQuotaAllocationRequestStatuses().Get(cancellationToken);
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName).Get(allocationId, cancellationToken);
         }
 
         /// <summary> Get a list of current usage for all resources for the scope specified. </summary>

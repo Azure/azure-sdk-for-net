@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,11 +55,16 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(string groupQuotaName, CancellationToken cancellationToken = default)
         {
-            return await GetGroupQuotaEntities().GetAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+
+            return await GetGroupQuotaEntities().GetAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,11 +84,16 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GroupQuotaEntityResource> GetGroupQuotaEntity(CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaEntityResource> GetGroupQuotaEntity(string groupQuotaName, CancellationToken cancellationToken = default)
         {
-            return GetGroupQuotaEntities().Get(cancellationToken);
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+
+            return GetGroupQuotaEntities().Get(groupQuotaName, cancellationToken);
         }
     }
 }

@@ -69,9 +69,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QuotaRequestDetailsResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuotaRequestDetailsResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
             scope.Start();
             try
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaRequestDetailsData> response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -113,9 +118,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QuotaRequestDetailsResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuotaRequestDetailsResource> Get(string id, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
             scope.Start();
             try
@@ -124,7 +134,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaRequestDetailsData> response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -157,9 +167,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Exists");
             scope.Start();
             try
@@ -168,7 +183,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaRequestDetailsData> response = default;
@@ -209,9 +224,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Exists");
             scope.Start();
             try
@@ -220,7 +240,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaRequestDetailsData> response = default;
@@ -261,9 +281,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<QuotaRequestDetailsResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<QuotaRequestDetailsResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.GetIfExists");
             scope.Start();
             try
@@ -272,7 +297,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaRequestDetailsData> response = default;
@@ -317,9 +342,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<QuotaRequestDetailsResource> GetIfExists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<QuotaRequestDetailsResource> GetIfExists(string id, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.GetIfExists");
             scope.Start();
             try
@@ -328,7 +358,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaRequestDetailsData> response = default;

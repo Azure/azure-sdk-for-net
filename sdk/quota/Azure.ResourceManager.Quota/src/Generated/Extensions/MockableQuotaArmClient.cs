@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,20 +121,40 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         /// <summary> Get the current usage of a resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CurrentUsagesBaseResource> GetCurrentUsagesBase(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Response<CurrentUsagesBaseResource> GetCurrentUsagesBase(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetCurrentUsagesBases(scope).Get(cancellationToken);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetCurrentUsagesBases(scope).Get(resourceName, cancellationToken);
         }
 
         /// <summary> Get the current usage of a resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetCurrentUsagesBases(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetCurrentUsagesBases(scope).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="CurrentQuotaLimitBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -155,20 +176,40 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         /// <summary> Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Response<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetCurrentQuotaLimitBases(scope).Get(cancellationToken);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetCurrentQuotaLimitBases(scope).Get(resourceName, cancellationToken);
         }
 
         /// <summary> Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="resourceName">
+        /// Resource name for a given resource provider. For example:
+        /// - SKU name for Microsoft.Compute
+        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        ///  For Microsoft.Network PublicIPAddresses.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetCurrentQuotaLimitBases(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetCurrentQuotaLimitBases(scope).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="QuotaRequestDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -190,20 +231,30 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
-            return GetQuotaRequestDetails(scope).Get(cancellationToken);
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return GetQuotaRequestDetails(scope).Get(id, cancellationToken);
         }
 
         /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="id"> Quota request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaRequestDetails(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return await GetQuotaRequestDetails(scope).GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
     }
 }
