@@ -1,4 +1,4 @@
 directory: specification\azuredependencymap\DependencyMap.Management
-commit: 9a4ed27ca7baaf32cda3e8394e0613056a911c21
+commit: e6bae8cf6c8cfac2fad93992856011dbc7f3d1d5
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
