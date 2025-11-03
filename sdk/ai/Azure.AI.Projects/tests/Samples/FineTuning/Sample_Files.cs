@@ -103,6 +103,10 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine($"✅ File content retrieved successfully!");
         Console.WriteLine($"   Content size: {fileContent.ToMemory().Length} bytes");
 
+        // Assert downloaded content matches expected size
+        Assert.IsNotNull(fileContent, "Downloaded file content should not be null");
+        Assert.IsTrue(fileContent.ToMemory().Length > 0, "Downloaded content should not be empty");
+
         // Display first few lines of content
         string contentStr = fileContent.ToString();
         string[] lines = contentStr.Split('\n');
@@ -142,10 +146,17 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
             }
         }
         Console.WriteLine($"✅ Listed {fileCount} file(s)");
+
+        // Assert that we listed at least one file
+        Assert.IsTrue(fileCount > 0, "Should have listed at least one file");
+
         if (foundUploadedFile)
         {
             Console.WriteLine($"✅ Confirmed our uploaded file is in the list");
         }
+
+        // Assert that our uploaded file is in the list
+        Assert.IsTrue(foundUploadedFile, "Uploaded file should appear in the list of files");
 
         // Step 5: Delete the file
         Console.WriteLine("\n=== Step 5: Deleting File ===");
@@ -183,6 +194,9 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
         {
             Console.WriteLine($"✅ Confirmed: File no longer appears in the list");
         }
+
+        // Assert file no longer exists in the list
+        Assert.IsFalse(fileStillExists, "Deleted file should not appear in the list of files");
 
         Console.WriteLine("\n=== File Operations Completed Successfully! ===");
     }
