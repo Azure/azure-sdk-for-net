@@ -40,9 +40,18 @@ public class BicepList<T> :
     internal BicepList(BicepValueReference? self, IList<BicepValue<T>>? values = null)
         : base(self)
     {
-        _kind = values != null ? BicepValueKind.Literal : BicepValueKind.Unset;
-        // Shallow clone their list
-        _values = values != null ? [.. values] : [];
+        if (values == null)
+        {
+            // we consider this as an "uninitialized list"
+            _kind = BicepValueKind.Unset;
+            _values = [];
+        }
+        else
+        {
+            // in this case, the list is initialized as a literal list
+            _kind = BicepValueKind.Literal;
+            _values = [.. values]; // Shallow clone their list
+        }
     }
 
     // Move literal elements when assigning values to a list

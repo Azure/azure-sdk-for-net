@@ -309,7 +309,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         bool isRequired = false)
     {
         BicepList<T> values =
-            new(new BicepValueReference(this, propertyName, bicepPath), null)
+            new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" list
             {
                 _isOutput = isOutput,
                 _isRequired = isRequired
@@ -325,7 +325,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         bool isRequired = false)
     {
         BicepDictionary<T> values =
-            new(new BicepValueReference(this, propertyName, bicepPath))
+            new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" dictionary
             {
                 _isOutput = isOutput,
                 _isRequired = isRequired

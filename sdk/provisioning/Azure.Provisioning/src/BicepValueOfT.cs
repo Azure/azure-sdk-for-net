@@ -32,7 +32,7 @@ public class BicepValue<T> : BicepValue
         {
             if (_valueFactory is not null)
             {
-                throw new InvalidOperationException($"Cannot assign value for {_self?.GetReference(false)} because its value may not be valid");
+                throw new InvalidOperationException($"Cannot assign value for {_self?.GetReference(false)} because its value is invalid");
             }
             _value = value;
         }

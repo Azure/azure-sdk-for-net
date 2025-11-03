@@ -43,9 +43,18 @@ public class BicepDictionary<T> :
     internal BicepDictionary(BicepValueReference? self, IDictionary<string, BicepValue<T>>? values = null)
         : base(self)
     {
-        _kind = values != null ? BicepValueKind.Literal : BicepValueKind.Unset;
-        // Shallow clone their values
-        _values = values != null ? new Dictionary<string, BicepValue<T>>(values) : [];
+        if (values == null)
+        {
+            // we consider this as an "uninitialized list"
+            _kind = BicepValueKind.Unset;
+            _values = new Dictionary<string, BicepValue<T>>();
+        }
+        else
+        {
+            // in this case, the list is initialized as a literal list
+            _kind = BicepValueKind.Literal;
+            _values = new Dictionary<string, BicepValue<T>>(values); // Shallow clone their values
+        }
     }
 
     // Move literal elements when assigning values to a dictionary
