@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DependencyMap.Models
 {
     /// <summary> GetDependencyViewForAllMachines request model. </summary>
-    public partial class GetDependencyViewForAllMachinesRequest
+    public partial class GetDependencyViewForAllMachinesContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetDependencyViewForAllMachinesRequest"/>. </summary>
-        public GetDependencyViewForAllMachinesRequest()
+        /// <summary> Initializes a new instance of <see cref="GetDependencyViewForAllMachinesContent"/>. </summary>
+        public GetDependencyViewForAllMachinesContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetDependencyViewForAllMachinesRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDependencyViewForAllMachinesContent"/>. </summary>
         /// <param name="filters"> Filters for GetDependencyViewForAllMachines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetDependencyViewForAllMachinesRequest(DependencyProcessFilter filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetDependencyViewForAllMachinesContent(DependencyProcessFilter filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filters = filters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
