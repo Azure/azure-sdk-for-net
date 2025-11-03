@@ -455,18 +455,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
-        public static PlaywrightQuotaCollection GetAllPlaywrightQuota(this SubscriptionResource subscriptionResource)
+        public static PlaywrightQuotaCollection GetAllPlaywrightQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -480,7 +481,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

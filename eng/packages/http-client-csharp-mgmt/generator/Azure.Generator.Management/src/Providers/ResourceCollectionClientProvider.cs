@@ -179,12 +179,8 @@ namespace Azure.Generator.Management.Providers
                 return map;
             }
 
-            var diff = new RequestPathPattern(_getAll.OperationPath).TrimAncestorFrom(Resource.ContextualPath);
+            var diff = ContextualPath.TrimAncestorFrom(new RequestPathPattern(_getAll.OperationPath));
             var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
-            if (variableSegments.Count > 0)
-            {
-                variableSegments.RemoveAt(variableSegments.Count - 1);
-            }
 
             foreach (var seg in variableSegments)
             {
