@@ -219,7 +219,13 @@ internal static partial class PipelinePolicyHelpers
                         if (message?.Response is not null)
                         {
                             message?.Response.BufferContent();
-                            if (JsonNode.Parse(message?.Response?.ContentStream) is JsonObject responseObject
+
+                            // Only parse as JSON if the response Content-Type indicates JSON
+                            string contentType = message?.Response?.Headers?.TryGetValue("Content-Type", out string ct) == true ? ct : string.Empty;
+                            bool isJsonResponse = contentType.IndexOf("application/json", StringComparison.OrdinalIgnoreCase) >= 0;
+
+                            if (isJsonResponse
+                                && JsonNode.Parse(message?.Response?.ContentStream) is JsonObject responseObject
                                 && responseObject.TryGetPropertyValue("status", out JsonNode statusNode)
                                 && statusNode is JsonValue statusValue
                                 && !Enum.TryParse(statusValue.ToString(), out FileStatus _))
