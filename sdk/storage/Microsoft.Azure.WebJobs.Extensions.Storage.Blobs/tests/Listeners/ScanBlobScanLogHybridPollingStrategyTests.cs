@@ -108,7 +108,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             product.Register(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 container,
                 executor);
             product.Start();
@@ -169,7 +168,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             product.Register(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 container,
                 executor);
             product.Start();
@@ -201,11 +199,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             product.Register(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 firstContainer,
                 executor);
             product.Register(
-                _blobClientMock.Object,
                 _blobClientMock.Object,
                 secondContainer,
                 executor);
@@ -250,7 +246,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             product.Register(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 container,
                 executor);
             product.Start();
@@ -293,7 +288,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             product.Register(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 container,
                 executor);
             product.Start();
@@ -333,7 +327,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
             await product.RegisterAsync(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 container,
                 executor,
                 CancellationToken.None);
@@ -365,12 +358,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             await product.RegisterAsync(
                 _blobClientMock.Object,
-                _blobClientMock.Object,
                 firstContainer,
                 executor,
                 CancellationToken.None);
             await product.RegisterAsync(
-                _blobClientMock.Object,
                 _blobClientMock.Object,
                 secondContainer,
                 executor,
@@ -423,7 +414,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                   .SetValue(product, testScanBlobLimitPerPoll);
 
             await product.RegisterAsync(
-                _blobClientMock.Object,
                 _blobClientMock.Object,
                 container,
                 executor,

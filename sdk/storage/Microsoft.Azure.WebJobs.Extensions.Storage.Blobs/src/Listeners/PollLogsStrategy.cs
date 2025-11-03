@@ -50,8 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         }
 
         public async Task RegisterAsync(
-            BlobServiceClient primaryBlobServiceClient,
-            BlobServiceClient targetBlobServiceClient,
+            BlobServiceClient blobServiceClient,
             BlobContainerClient container,
             ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
@@ -80,27 +79,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             containerRegistrations.Add(triggerExecutor);
 
-            if (targetBlobServiceClient == default)
-            {
-                // If no target client is specified, use the primary.
-                BlobLogListener logListener = await BlobLogListener.CreateAsync(primaryBlobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
-                _logListeners.Add(primaryBlobServiceClient, logListener);
-            }
-            else if (!_logListeners.ContainsKey(targetBlobServiceClient))
+            if (!_logListeners.ContainsKey(blobServiceClient))
             {
                 try
                 {
-                    BlobLogListener logListener = await BlobLogListener.CreateAsync(targetBlobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
-                    _logListeners.Add(targetBlobServiceClient, logListener);
+                    BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
+                    _logListeners.Add(blobServiceClient, logListener);
                 }
                 // TODO: verify if this is the only permissions error code, or other possible permissions errors
-                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.AuthorizationPermissionMismatch)
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.AuthorizationPermissionMismatch ||
+                                                        ex.ErrorCode == BlobErrorCode.InsufficientAccountPermissions)
                 {
-                    Logger.LoggingNotEnabledOnTargetAccount(_logger, targetBlobServiceClient.Uri.AbsoluteUri);
-
-                    // Fallback to primary client if target client does not have the permissions to be used.
-                    BlobLogListener logListener = await BlobLogListener.CreateAsync(primaryBlobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
-                    _logListeners.Add(primaryBlobServiceClient, logListener);
+                    // TODO: Remove SAS on Uri if present before logging to prevent secrets from being logged.
+                    Logger.LoggingNotEnabledOnTargetAccount(_logger, blobServiceClient.Uri.AbsoluteUri);
                 }
             }
         }

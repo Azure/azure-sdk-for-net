@@ -62,8 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         }
 
         public async Task RegisterAsync(
-            BlobServiceClient primaryBlobServiceClient,
-            BlobServiceClient targetBlobServiceClient,
+            BlobServiceClient blobServiceClient,
             BlobContainerClient container,
             ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
@@ -74,8 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             // Register all in logPolling, there is no problem if we get 2 notifications of the new blob
             await _pollLogStrategy.RegisterAsync(
-                primaryBlobServiceClient,
-                targetBlobServiceClient,
+                blobServiceClient,
                 container,
                 triggerExecutor,
                 cancellationToken).ConfigureAwait(false);
@@ -83,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 // First, try to load serialized scanInfo for this container.
-                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(primaryBlobServiceClient.AccountName, container.Name).ConfigureAwait(false);
+                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
 
                 containerScanInfo = new ContainerScanInfo()
                 {

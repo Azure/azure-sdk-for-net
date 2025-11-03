@@ -41,8 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         }
 
         public Task RegisterAsync(
-            BlobServiceClient primaryBlobServiceClient,
-            BlobServiceClient targetBlobServiceClient,
+            BlobServiceClient blobServiceClient,
             BlobContainerClient container,
             ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)

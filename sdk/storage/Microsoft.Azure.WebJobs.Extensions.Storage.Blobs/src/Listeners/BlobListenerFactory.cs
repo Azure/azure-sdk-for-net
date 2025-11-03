@@ -110,7 +110,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 await RegisterWithSharedBlobListenerAsync(
                     hostId,
                     sharedBlobListener,
-                    primaryBlobClient,
                     targetBlobClient,
                     blobTriggerQueueWriter,
                     cancellationToken).ConfigureAwait(false);
@@ -170,17 +169,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private async Task RegisterWithSharedBlobListenerAsync(
             string hostId,
             SharedBlobListener sharedBlobListener,
-            BlobServiceClient primaryBlobClient,
-            BlobServiceClient targetBlobClient,
+            BlobServiceClient blobClient,
             BlobTriggerQueueWriter blobTriggerQueueWriter,
             CancellationToken cancellationToken)
         {
-            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(primaryBlobClient),
+            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
                 blobTriggerQueueWriter, _loggerFactory.CreateLogger<BlobListener>());
 
             await sharedBlobListener.RegisterAsync(
-                primaryBlobClient,
-                targetBlobClient,
+                blobClient,
                 _container,
                 triggerExecutor,
                 cancellationToken).ConfigureAwait(false);

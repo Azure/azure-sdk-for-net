@@ -23,8 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public static void Register(
             this IBlobListenerStrategy strategy,
-            BlobServiceClient primaryBlobServiceClient,
-            BlobServiceClient targetBlobServiceClient,
+            BlobServiceClient blobServiceClient,
             BlobContainerClient container,
             ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor)
         {
@@ -34,8 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             strategy.RegisterAsync(
-                primaryBlobServiceClient,
-                targetBlobServiceClient,
+                blobServiceClient,
                 container,
                 triggerExecutor,
                 CancellationToken.None).GetAwaiter().GetResult();

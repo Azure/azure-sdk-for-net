@@ -33,7 +33,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
             product.Register(
                 blobServiceClient,
-                blobServiceClient,
                 container,
                 executor);
             product.Start();
