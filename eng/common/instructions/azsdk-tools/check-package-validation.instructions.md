@@ -18,5 +18,6 @@ Run the validation checks for the SDK package by collecting the required informa
 
 ## Expected User Interaction Flow
 1. Ask: "What is the exact path of the package you want to check for validation?"
+2. Ask: "Please specify the check type you want to run (e.g., 'all', 'lint', 'format', etc.)"
 3. Execute the check using the provided information
 4. Display results and next steps
