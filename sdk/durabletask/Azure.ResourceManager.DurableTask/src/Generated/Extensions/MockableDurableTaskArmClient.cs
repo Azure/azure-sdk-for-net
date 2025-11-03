@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDurableTaskArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDurableTaskArmClient for mocking. </summary>
         protected MockableDurableTaskArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDurableTaskArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDurableTaskArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDurableTaskArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DurableTaskSchedulerResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskSchedulerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskSchedulerResource"/> object. </returns>
         public virtual DurableTaskSchedulerResource GetDurableTaskSchedulerResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             return new DurableTaskSchedulerResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DurableTaskHubResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskHubResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskHubResource"/> object. </returns>
         public virtual DurableTaskHubResource GetDurableTaskHubResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             return new DurableTaskHubResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DurableTaskRetentionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DurableTaskRetentionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
         public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(ResourceIdentifier id)
