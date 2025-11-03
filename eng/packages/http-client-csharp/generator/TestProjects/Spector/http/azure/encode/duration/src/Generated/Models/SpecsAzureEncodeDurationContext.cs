@@ -7,10 +7,10 @@
 
 using System.ClientModel.Primitives;
 
-namespace _Specs_.Azure.Encode.Duration
+namespace Specs.Azure.Encode.Duration
 {
     [ModelReaderWriterBuildable(typeof(DurationModel))]
-    public partial class _Specs_AzureEncodeDurationContext : ModelReaderWriterContext
+    public partial class SpecsAzureEncodeDurationContext : ModelReaderWriterContext
     {
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace client.clientnamespace.first
+namespace Client.Clientnamespace.First
 {
     public partial class FirstClientResult
     {

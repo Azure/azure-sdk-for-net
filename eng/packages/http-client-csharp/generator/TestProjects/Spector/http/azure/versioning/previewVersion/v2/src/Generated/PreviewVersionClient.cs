@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Versioning.PreviewVersion
+namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class PreviewVersionClient
     {

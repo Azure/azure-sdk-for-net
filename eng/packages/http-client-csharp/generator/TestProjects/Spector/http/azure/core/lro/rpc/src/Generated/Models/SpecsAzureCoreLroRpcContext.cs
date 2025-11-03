@@ -9,12 +9,12 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Lro.Standard
+namespace Specs.Azure.Core.Lro.Rpc
 {
-    [ModelReaderWriterBuildable(typeof(ExportedUser))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(User))]
-    public partial class _Specs_AzureCoreLroStandardContext : ModelReaderWriterContext
+    [ModelReaderWriterBuildable(typeof(GenerationOptions))]
+    [ModelReaderWriterBuildable(typeof(GenerationResult))]
+    public partial class SpecsAzureCoreLroRpcContext : ModelReaderWriterContext
     {
     }
 }

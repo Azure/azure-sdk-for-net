@@ -8,10 +8,10 @@
 using System.ClientModel.Primitives;
 using Azure.Core;
 
-namespace _Specs_.Azure.Payload.Pageable
+namespace Specs.Azure.Payload.Pageable
 {
     [ModelReaderWriterBuildable(typeof(User))]
-    public partial class _Specs_AzurePayloadPageableContext : ModelReaderWriterContext
+    public partial class SpecsAzurePayloadPageableContext : ModelReaderWriterContext
     {
     }
 }

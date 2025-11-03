@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace _Specs_.Azure.Payload.Pageable
+namespace Specs.Azure.Payload.Pageable
 {
     public partial class User : IJsonModel<User>
     {

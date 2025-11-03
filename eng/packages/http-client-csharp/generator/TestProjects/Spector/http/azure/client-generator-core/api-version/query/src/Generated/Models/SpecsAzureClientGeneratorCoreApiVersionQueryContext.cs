@@ -7,9 +7,9 @@
 
 using System.ClientModel.Primitives;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ApiVersion.Path
+namespace Specs.Azure.ClientGenerator.Core.ApiVersion.Query
 {
-    public partial class _Specs_AzureClientGeneratorCoreApiVersionPathContext : ModelReaderWriterContext
+    public partial class SpecsAzureClientGeneratorCoreApiVersionQueryContext : ModelReaderWriterContext
     {
     }
 }

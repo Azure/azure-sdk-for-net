@@ -189,7 +189,7 @@ namespace Azure.Generator.Visitors
         {
             var flags = RequestConditionHeaders.None;
 
-            var allParameters = method.IsProtocolMethod || IsCreateRequestMethod(method)
+            var allParameters = method.Kind == ScmMethodKind.Protocol || IsCreateRequestMethod(method)
                 ? method.ServiceMethod!.Operation.Parameters
                 : method.ServiceMethod!.Parameters;
 
@@ -286,7 +286,7 @@ namespace Azure.Generator.Visitors
             var updatedStatements = new List<MethodBodyStatement>();
             var requestConditionsParameter = GetConditionsParameter(matchConditionParams[0], headerFlags);
 
-            if (method.IsProtocolMethod && HasModificationTimeHeaders(headerFlags))
+            if (method.Kind == ScmMethodKind.Protocol && HasModificationTimeHeaders(headerFlags))
             {
                 // Add validation statements for unsupported headers
                 var unsupportedHeaders = new[]
@@ -319,7 +319,7 @@ namespace Azure.Generator.Visitors
             foreach (var statement in method.BodyStatements)
             {
                 var updatedStatement = UpdateMethodInvocationStatement(
-                    method.IsProtocolMethod,
+                    method.Kind == ScmMethodKind.Protocol,
                     statement,
                     requestConditionsParameter);
                 updatedStatements.Add(updatedStatement);
@@ -497,7 +497,7 @@ namespace Azure.Generator.Visitors
         {
             return method.EnclosingType is RestClientProvider &&
                 method.ServiceMethod != null &&
-                !method.IsProtocolMethod &&
+                method.Kind != ScmMethodKind.Protocol &&
                 method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                 method.Signature.ReturnType?.Equals(typeof(HttpMessage)) == true;
         }
