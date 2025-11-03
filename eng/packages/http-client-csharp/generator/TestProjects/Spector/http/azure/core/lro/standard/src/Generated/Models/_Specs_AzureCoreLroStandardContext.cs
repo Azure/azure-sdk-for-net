@@ -12,8 +12,8 @@ using Azure.Core;
 namespace _Specs_.Azure.Core.Lro.Standard
 {
     [ModelReaderWriterBuildable(typeof(ExportedUser))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(User))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class _Specs_AzureCoreLroStandardContext : ModelReaderWriterContext
     {
     }

@@ -13,10 +13,10 @@ namespace _Specs_.Azure.Core.Page
 {
     [ModelReaderWriterBuildable(typeof(FirstItem))]
     [ModelReaderWriterBuildable(typeof(ListItemInputBody))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondItem))]
     [ModelReaderWriterBuildable(typeof(User))]
     [ModelReaderWriterBuildable(typeof(UserOrder))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class _Specs_AzureCorePageContext : ModelReaderWriterContext
     {
     }

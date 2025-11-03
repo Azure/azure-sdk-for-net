@@ -10,10 +10,10 @@ using Azure;
 
 namespace _Specs_.Azure.Core.Traits
 {
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(User))]
     [ModelReaderWriterBuildable(typeof(UserActionParam))]
     [ModelReaderWriterBuildable(typeof(UserActionResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class _Specs_AzureCoreTraitsContext : ModelReaderWriterContext
     {
     }

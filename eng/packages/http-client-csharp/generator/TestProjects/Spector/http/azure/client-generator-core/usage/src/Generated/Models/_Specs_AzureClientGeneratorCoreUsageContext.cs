@@ -11,10 +11,10 @@ using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {
     [ModelReaderWriterBuildable(typeof(InputModel))]
-    [ModelReaderWriterBuildable(typeof(OrphanModel))]
     [ModelReaderWriterBuildable(typeof(OutputModel))]
     [ModelReaderWriterBuildable(typeof(ResultModel))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
+    [ModelReaderWriterBuildable(typeof(OrphanModel))]
     public partial class _Specs_AzureClientGeneratorCoreUsageContext : ModelReaderWriterContext
     {
     }
