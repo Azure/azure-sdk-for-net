@@ -16,8 +16,6 @@ namespace Azure.Core
         ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
             => new ValueTask<T>(CreateResult(response));
 
-        [RequiresDynamicCode("This method uses reflection. https://github.com/Azure/azure-sdk-for-net/issues/49894.")]
-        [RequiresUnreferencedCode("This method uses reflection.  https://github.com/Azure/azure-sdk-for-net/issues/49894.")]
         private T CreateResult(Response response)
             // This call will never be invoked with a collection of models, so we can safely disable the warning
 #pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext

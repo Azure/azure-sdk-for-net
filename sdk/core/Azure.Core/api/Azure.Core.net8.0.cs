@@ -142,9 +142,13 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
         public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static Azure.Operation Rehydrate(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static System.Threading.Tasks.Task<Azure.Operation> RehydrateAsync(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static System.Threading.Tasks.Task<Azure.Operation<T>> RehydrateAsync<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
