@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-Fix for https://github.com/Azure/azure-sdk-for-net/issues/53564
+Fixed issue [53564](https://github.com/Azure/azure-sdk-for-net/issues/53564): Resolved incorrect request data of `GetSpotPlacementScore` operation.
 
 ## 1.0.0-beta.1 (2025-09-30)
 
