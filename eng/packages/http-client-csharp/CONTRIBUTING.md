@@ -44,7 +44,6 @@ npm ci
 ### 3. Build the C# Package
 
 ```bash
-cd eng/packages/http-client-csharp
 npm run build
 ```
 
@@ -207,7 +206,6 @@ Before creating a pull request:
 ## Getting Help
 
 - **Issues**: Report bugs or request features in the [Azure SDK for .NET repository issues](https://github.com/Azure/azure-sdk-for-net/issues)
-- **Discussions**: Join conversations in [Azure SDK discussions](https://github.com/Azure/azure-sdk-for-net/discussions)
 - **Documentation**: Check the [TypeSpec documentation](https://typespec.io/) for more information
 - **C# Customization**: See the [Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md)
 
