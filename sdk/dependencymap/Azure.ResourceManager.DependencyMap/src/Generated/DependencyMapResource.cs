@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DependencyMap.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DependencyMap
 {
     /// <summary>
-    /// A Class representing a DependencyMap along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DependencyMapResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDependencyMapResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDependencyMap method.
+    /// A class representing a DependencyMap along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DependencyMapResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDependencyMaps method.
     /// </summary>
     public partial class DependencyMapResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DependencyMapResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="mapName"> The mapName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mapName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dependencyMapMapsClientDiagnostics;
-        private readonly MapsRestOperations _dependencyMapMapsRestClient;
+        private readonly ClientDiagnostics _mapsClientDiagnostics;
+        private readonly Maps _mapsRestClient;
         private readonly DependencyMapData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DependencyMap/maps";
 
-        /// <summary> Initializes a new instance of the <see cref="DependencyMapResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DependencyMapResource for mocking. </summary>
         protected DependencyMapResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DependencyMapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyMapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DependencyMapResource(ArmClient client, DependencyMapData data) : this(client, data.Id)
@@ -56,140 +46,92 @@ namespace Azure.ResourceManager.DependencyMap
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DependencyMapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyMapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DependencyMapResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dependencyMapMapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dependencyMapMapsApiVersion);
-            _dependencyMapMapsRestClient = new MapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapMapsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string dependencyMapApiVersion);
+            _mapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", ResourceType.Namespace, Diagnostics);
+            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Endpoint, dependencyMapApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DependencyMapData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mapName"> The mapName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mapName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of DependencyMapDiscoverySourceResources in the DependencyMap. </summary>
-        /// <returns> An object representing collection of DependencyMapDiscoverySourceResources and their operations over a DependencyMapDiscoverySourceResource. </returns>
-        public virtual DependencyMapDiscoverySourceCollection GetDependencyMapDiscoverySources()
-        {
-            return GetCachedClient(client => new DependencyMapDiscoverySourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a DiscoverySourceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/discoverySources/{sourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoverySourceResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapDiscoverySourceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceName"> discovery source resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DependencyMapDiscoverySourceResource>> GetDependencyMapDiscoverySourceAsync(string sourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetDependencyMapDiscoverySources().GetAsync(sourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a DiscoverySourceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/discoverySources/{sourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoverySourceResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapDiscoverySourceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceName"> discovery source resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DependencyMapDiscoverySourceResource> GetDependencyMapDiscoverySource(string sourceName, CancellationToken cancellationToken = default)
-        {
-            return GetDependencyMapDiscoverySources().Get(sourceName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a MapsResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DependencyMapResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.Get");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.Get");
             scope.Start();
             try
             {
-                var response = await _dependencyMapMapsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,118 +145,42 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get a MapsResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DependencyMapResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.Get");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.Get");
             scope.Start();
             try
             {
-                var response = _dependencyMapMapsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a MapsResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _dependencyMapMapsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a MapsResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _dependencyMapMapsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -327,20 +193,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Update a MapsResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,14 +218,27 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.Update");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.Update");
             scope.Start();
             try
             {
-                var response = await _dependencyMapMapsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation<DependencyMapResource>(new DependencyMapOperationSource(Client), _dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DependencyMapPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
+                    new DependencyMapOperationSource(Client),
+                    _mapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -373,20 +252,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Update a MapsResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,14 +277,125 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.Update");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.Update");
             scope.Start();
             try
             {
-                var response = _dependencyMapMapsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DependencyMapArmOperation<DependencyMapResource>(new DependencyMapOperationSource(Client), _dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DependencyMapPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
+                    new DependencyMapOperationSource(Client),
+                    _mapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a MapsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a MapsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -419,20 +409,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get dependency map of single machine
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getDependencyViewForFocusedMachine</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getDependencyViewForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_GetDependencyViewForFocusedMachine</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetDependencyViewForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,14 +434,21 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.GetDependencyViewForFocusedMachine");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.GetDependencyViewForFocusedMachine");
             scope.Start();
             try
             {
-                var response = await _dependencyMapMapsRestClient.GetDependencyViewForFocusedMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateGetDependencyViewForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetDependencyViewForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetDependencyViewForFocusedMachineContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -465,20 +462,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get dependency map of single machine
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getDependencyViewForFocusedMachine</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getDependencyViewForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_GetDependencyViewForFocusedMachine</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetDependencyViewForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,14 +487,21 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.GetDependencyViewForFocusedMachine");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.GetDependencyViewForFocusedMachine");
             scope.Start();
             try
             {
-                var response = _dependencyMapMapsRestClient.GetDependencyViewForFocusedMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateGetDependencyViewForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetDependencyViewForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetDependencyViewForFocusedMachineContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -511,20 +515,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get network connections between machines
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsWithConnectedMachineForFocusedMachine</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsWithConnectedMachineForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_GetConnectionsWithConnectedMachineForFocusedMachine</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetConnectionsWithConnectedMachineForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,14 +540,21 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsWithConnectedMachineForFocusedMachine");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsWithConnectedMachineForFocusedMachine");
             scope.Start();
             try
             {
-                var response = await _dependencyMapMapsRestClient.GetConnectionsWithConnectedMachineForFocusedMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateGetConnectionsWithConnectedMachineForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetConnectionsWithConnectedMachineForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetConnectionsWithConnectedMachineForFocusedMachineContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -557,20 +568,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get network connections between machines
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsWithConnectedMachineForFocusedMachine</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsWithConnectedMachineForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_GetConnectionsWithConnectedMachineForFocusedMachine</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetConnectionsWithConnectedMachineForFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,14 +593,21 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsWithConnectedMachineForFocusedMachine");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsWithConnectedMachineForFocusedMachine");
             scope.Start();
             try
             {
-                var response = _dependencyMapMapsRestClient.GetConnectionsWithConnectedMachineForFocusedMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateGetConnectionsWithConnectedMachineForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetConnectionsWithConnectedMachineForFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetConnectionsWithConnectedMachineForFocusedMachineContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -603,20 +621,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get network connections of a process
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsForProcessOnFocusedMachine</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsForProcessOnFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_GetConnectionsForProcessOnFocusedMachine</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetConnectionsForProcessOnFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,14 +646,21 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsForProcessOnFocusedMachine");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsForProcessOnFocusedMachine");
             scope.Start();
             try
             {
-                var response = await _dependencyMapMapsRestClient.GetConnectionsForProcessOnFocusedMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateGetConnectionsForProcessOnFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetConnectionsForProcessOnFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetConnectionsForProcessOnFocusedMachineContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -649,20 +674,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Get network connections of a process
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsForProcessOnFocusedMachine</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/getConnectionsForProcessOnFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_GetConnectionsForProcessOnFocusedMachine</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetConnectionsForProcessOnFocusedMachine. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -674,14 +699,21 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsForProcessOnFocusedMachine");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.GetConnectionsForProcessOnFocusedMachine");
             scope.Start();
             try
             {
-                var response = _dependencyMapMapsRestClient.GetConnectionsForProcessOnFocusedMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DependencyMapArmOperation(_dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateGetConnectionsForProcessOnFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateGetConnectionsForProcessOnFocusedMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetConnectionsForProcessOnFocusedMachineContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DependencyMapArmOperation operation = new DependencyMapArmOperation(_mapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -695,20 +727,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Export dependencies
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/exportDependencies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/exportDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_ExportDependencies</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExportDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -720,14 +752,27 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.ExportDependencies");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.ExportDependencies");
             scope.Start();
             try
             {
-                var response = await _dependencyMapMapsRestClient.ExportDependenciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DependencyMapArmOperation<ExportDependenciesOperationResult>(new ExportDependenciesOperationResultOperationSource(), _dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExportDependenciesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DependencyMapArmOperation<ExportDependenciesOperationResult> operation = new DependencyMapArmOperation<ExportDependenciesOperationResult>(
+                    new ExportDependenciesOperationResultOperationSource(),
+                    _mapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -741,20 +786,20 @@ namespace Azure.ResourceManager.DependencyMap
         /// Export dependencies
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/exportDependencies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}/exportDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Maps_ExportDependencies</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExportDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DependencyMapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -766,14 +811,27 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.ExportDependencies");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.ExportDependencies");
             scope.Start();
             try
             {
-                var response = _dependencyMapMapsRestClient.ExportDependencies(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DependencyMapArmOperation<ExportDependenciesOperationResult>(new ExportDependenciesOperationResultOperationSource(), _dependencyMapMapsClientDiagnostics, Pipeline, _dependencyMapMapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mapsRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExportDependenciesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DependencyMapArmOperation<ExportDependenciesOperationResult> operation = new DependencyMapArmOperation<ExportDependenciesOperationResult>(
+                    new ExportDependenciesOperationResultOperationSource(),
+                    _mapsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -783,27 +841,7 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -813,28 +851,34 @@ namespace Azure.ResourceManager.DependencyMap
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.AddTag");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dependencyMapMapsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DependencyMapResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
+                    return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DependencyMapPatch();
-                    foreach (var tag in current.Tags)
+                    DependencyMapData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DependencyMapPatch patch = new DependencyMapPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -845,27 +889,7 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -875,28 +899,34 @@ namespace Azure.ResourceManager.DependencyMap
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.AddTag");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dependencyMapMapsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DependencyMapResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
+                    return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DependencyMapPatch();
-                    foreach (var tag in current.Tags)
+                    DependencyMapData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DependencyMapPatch patch = new DependencyMapPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -907,53 +937,39 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DependencyMapResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.SetTags");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dependencyMapMapsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DependencyMapResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
+                    return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DependencyMapPatch();
+                    DependencyMapData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DependencyMapPatch patch = new DependencyMapPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -964,53 +980,39 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DependencyMapResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.SetTags");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dependencyMapMapsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DependencyMapResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
+                    return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DependencyMapPatch();
+                    DependencyMapData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DependencyMapPatch patch = new DependencyMapPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1021,27 +1023,7 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1049,28 +1031,34 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.RemoveTag");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dependencyMapMapsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DependencyMapResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
+                    return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DependencyMapPatch();
-                    foreach (var tag in current.Tags)
+                    DependencyMapData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DependencyMapPatch patch = new DependencyMapPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1081,27 +1069,7 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps/{mapName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1109,28 +1077,34 @@ namespace Azure.ResourceManager.DependencyMap
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dependencyMapMapsClientDiagnostics.CreateScope("DependencyMapResource.RemoveTag");
+            using DiagnosticScope scope = _mapsClientDiagnostics.CreateScope("DependencyMapResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dependencyMapMapsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DependencyMapResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
+                    return Response.FromValue(new DependencyMapResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DependencyMapPatch();
-                    foreach (var tag in current.Tags)
+                    DependencyMapData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DependencyMapPatch patch = new DependencyMapPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1139,6 +1113,39 @@ namespace Azure.ResourceManager.DependencyMap
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of DependencyMapDiscoverySources in the <see cref="DependencyMapResource"/>. </summary>
+        /// <returns> An object representing collection of DependencyMapDiscoverySources and their operations over a DependencyMapDiscoverySourceResource. </returns>
+        public virtual DependencyMapDiscoverySourceCollection GetDependencyMapDiscoverySources()
+        {
+            return GetCachedClient(client => new DependencyMapDiscoverySourceCollection(client, Id));
+        }
+
+        /// <summary> Get a DiscoverySourceResource. </summary>
+        /// <param name="sourceName"> discovery source resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DependencyMapDiscoverySourceResource>> GetDependencyMapDiscoverySourceAsync(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return await GetDependencyMapDiscoverySources().GetAsync(sourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a DiscoverySourceResource. </summary>
+        /// <param name="sourceName"> discovery source resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DependencyMapDiscoverySourceResource> GetDependencyMapDiscoverySource(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return GetDependencyMapDiscoverySources().Get(sourceName, cancellationToken);
         }
     }
 }
