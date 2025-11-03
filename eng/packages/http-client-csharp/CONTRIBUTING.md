@@ -140,10 +140,10 @@ The package uses the Spector test framework for end-to-end testing of generated 
 # Run Spector tests (requires PowerShell)
 ./eng/scripts/Test-Spector.ps1
 
-# Run Spector tests with filter
-./eng/scripts/Test-Spector.ps1 -filter "specific-test-name"
+# Run Spector tests with filter (filters by directory path)
+./eng/scripts/Test-Spector.ps1 -filter "Http/Authentication"
 
-# Get Spector test coverage
+# Get Spector test coverage (outputs to ./generator/artifacts/coverage, not checked in)
 ./eng/scripts/Get-Spector-Coverage.ps1
 ```
 
