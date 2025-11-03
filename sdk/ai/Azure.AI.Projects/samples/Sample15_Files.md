@@ -9,10 +9,6 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
-## Important Note
-
-File upload via OpenAIClient from AgentsClient.GetOpenAIClient() is not currently supported because it doesn't set the required Content-Type header for individual multipart form parts. The sample demonstrates other file operations using pre-existing file IDs.
-
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_FileOperationsAsync
@@ -22,7 +18,15 @@ AgentsClient agentClient = projectClient.GetAgentsClient();
 OpenAIClient oaiClient = agentClient.GetOpenAIClient();
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 
-string fileId = "file-abc123"; // Replace with an actual file ID from your project
+// Upload a file
+using FileStream fileStream = File.OpenRead("path/to/your/file.jsonl");
+OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
+    fileStream,
+    "training_data.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"File uploaded: {uploadedFile.Id}");
+
+string fileId = uploadedFile.Id;
 
 // Retrieve file metadata
 OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);

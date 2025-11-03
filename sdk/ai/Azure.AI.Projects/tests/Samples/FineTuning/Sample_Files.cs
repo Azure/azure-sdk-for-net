@@ -39,93 +39,52 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
 
     [Test]
     [AsyncOnly]
-    public async Task FileOperationsCRUDAsync()
-    {
-        #region Snippet:AI_Projects_FileOperationsAsync
-#if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-#else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-#endif
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        AgentsClient agentClient = projectClient.GetAgentsClient();
-        OpenAIClient oaiClient = agentClient.GetOpenAIClient();
-        OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
-
-        string fileId = "file-abc123"; // Replace with an actual file ID from your project
-
-        // Retrieve file metadata
-        OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
-        Console.WriteLine($"File ID: {retrievedFile.Id}, Filename: {retrievedFile.Filename}");
-
-        // Download file content
-        BinaryData fileContent = await fileClient.DownloadFileAsync(fileId);
-        Console.WriteLine($"Content size: {fileContent.ToMemory().Length} bytes");
-
-        // List all files
-        ClientResult<OpenAIFileCollection> filesResult = await fileClient.GetFilesAsync();
-        foreach (OpenAIFile file in filesResult.Value)
-        {
-            Console.WriteLine($"File: {file.Filename} (ID: {file.Id})");
-        }
-
-        // Delete file
-        ClientResult<FileDeletionResult> deleteResult = await fileClient.DeleteFileAsync(fileId);
-        Console.WriteLine($"File deleted: {deleteResult.Value.Deleted}");
-        #endregion
-    }
-
-    [Test]
-    [AsyncOnly]
     public async Task FileOperationsAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
-        // var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
+        var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
 
         OpenAIFileClient fileClient = await GetFileClientAsync(endpoint);
 
         // Step 1: Upload a file
-        // Note: File upload via OpenAIClient from AgentsClient.GetOpenAIClient() is not currently supported
-        // because it doesn't set the required Content-Type header for individual multipart form parts.
-        // Using a pre-uploaded file ID for testing other file operations.
-        // Console.WriteLine("\n=== Step 1: Uploading File ===");
-        // Console.WriteLine($"Uploading file from: {testFilePath}");
-        //
-        // // Verify file exists and is not empty
-        // if (!File.Exists(testFilePath))
-        // {
-        //     throw new FileNotFoundException($"Test file not found: {testFilePath}");
-        // }
-        //
-        // FileInfo fileInfo = new FileInfo(testFilePath);
-        // Console.WriteLine($"File size on disk: {fileInfo.Length} bytes");
-        //
-        // if (fileInfo.Length == 0)
-        // {
-        //     throw new InvalidOperationException($"Test file is empty: {testFilePath}");
-        // }
-        //
-        // OpenAIFile uploadedFile;
-        // using (FileStream fileStream = File.OpenRead(testFilePath))
-        // {
-        //     Console.WriteLine($"FileStream length: {fileStream.Length} bytes");
-        //     Console.WriteLine($"FileStream can read: {fileStream.CanRead}");
-        //
-        //     uploadedFile = await fileClient.UploadFileAsync(
-        //         fileStream,
-        //         "training_set.jsonl",
-        //         FileUploadPurpose.FineTune);
-        // }
-        // Console.WriteLine($"✅ File uploaded successfully!");
-        // Console.WriteLine($"   File ID: {uploadedFile.Id}");
-        // Console.WriteLine($"   Filename: {uploadedFile.Filename}");
-        // Console.WriteLine($"   Purpose: {uploadedFile.Purpose}");
-        // Console.WriteLine($"   Size: {uploadedFile.SizeInBytes} bytes");
-        // Console.WriteLine($"   Created At: {uploadedFile.CreatedAt}");
+        Console.WriteLine("\n=== Step 1: Uploading File ===");
+        Console.WriteLine($"Uploading file from: {testFilePath}");
 
-        // Use a pre-existing file ID from the fine-tuning sample
-        string fileId = "file-6d833125cca94ed4a8798289534d8e38"; // Hardcoded for now, to be replaced by uploadedFile.Id
+        // Verify file exists and is not empty
+        if (!File.Exists(testFilePath))
+        {
+            throw new FileNotFoundException($"Test file not found: {testFilePath}");
+        }
+
+        FileInfo fileInfo = new FileInfo(testFilePath);
+        Console.WriteLine($"File size on disk: {fileInfo.Length} bytes");
+
+        if (fileInfo.Length == 0)
+        {
+            throw new InvalidOperationException($"Test file is empty: {testFilePath}");
+        }
+
+        OpenAIFile uploadedFile;
+        using (FileStream fileStream = File.OpenRead(testFilePath))
+        {
+            Console.WriteLine($"FileStream length: {fileStream.Length} bytes");
+            Console.WriteLine($"FileStream can read: {fileStream.CanRead}");
+
+            uploadedFile = await fileClient.UploadFileAsync(
+                fileStream,
+                "training_set.jsonl",
+                FileUploadPurpose.FineTune);
+        }
+        Console.WriteLine($"✅ File uploaded successfully!");
+        Console.WriteLine($"   File ID: {uploadedFile.Id}");
+        Console.WriteLine($"   Filename: {uploadedFile.Filename}");
+        Console.WriteLine($"   Purpose: {uploadedFile.Purpose}");
+        Console.WriteLine($"   Size: {uploadedFile.SizeInBytes} bytes");
+        Console.WriteLine($"   Created At: {uploadedFile.CreatedAt}");
+
+        // Use the uploaded file ID
+        string fileId = uploadedFile.Id;
 
         // Step 2: Retrieve file metadata by ID
         Console.WriteLine("\n=== Step 2: Retrieving File Metadata ===");
