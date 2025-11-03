@@ -125,9 +125,11 @@ Some additional notes:
 1. The service methods always come with both synchronous and asynchronous versions. Please always use the asynchronous version (the one with `Async` suffix).
 2. Always include necessary `using` directives at the top of the sample file.
 3. Never use `var` keyword in the sample code, always use explicit types.
-4. Make sure the generated sample code is properly formatted and follows C# coding conventions.
-5. When constructing complex types, use the object initializer syntax for better readability.
-6. If a property of a complex type is another complex type, make sure to initialize it properly using nested object initializers.
-7. If a property of a complex type is a collection, make sure to initialize it properly using collection initializers. Collection properties in the source code usually do not have setters, please make sure we never construct a new instance.
-8. If a parameter is optional and not provided in the `json` file, you can omit setting that property in the sample code.
-9. If a parameter is required and not provided in the `json` file, please notify the user about the missing required parameter and use `(T)default` as a placeholder for such occurrences.
+4. Always use public members in the sample code, never use internal or private members.
+5. Make sure the generated sample code is properly formatted and follows C# coding conventions.
+6. When constructing complex types, use the object initializer syntax for better readability.
+7. If a property of a complex type is another complex type, make sure to initialize it properly using nested object initializers.
+8. If a property of a complex type is a collection, make sure to initialize it properly using collection initializers. Collection properties in the source code usually do not have setters, please make sure we never construct a new instance.
+9. If a parameter is optional and not provided in the `json` file, you can omit setting that property in the sample code.
+10. If a parameter is required and not provided in the `json` file, please notify the user about the missing required parameter and use `(T)default` as a placeholder for such occurrences.
+11. Once the code is generated, call `dotnet build` on the working directory to verify the code could build successfully. If there are any build errors, fix them before finalizing the code.
