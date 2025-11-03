@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -17,27 +18,25 @@ namespace Azure.Identity
     internal class KubernetesProxyHttpHandler : DelegatingHandler
     {
         private readonly KubernetesProxyConfig _config;
-        private HttpClientHandler _innerHandler;
         private byte[] _lastCaData;
         private readonly object _lock = new object();
-        private SemaphoreSlim _requestSemaphore;
-        private int _requestCount;
+        private HttpPipeline _pipeline;
 
         public KubernetesProxyHttpHandler(KubernetesProxyConfig config)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
 
-            _innerHandler = CreateHandler();
-            InnerHandler = _innerHandler;
-            _requestSemaphore = new SemaphoreSlim(1, 1);
-            _requestCount = 0;
+            InnerHandler = CreateHandler();
+            if (_config.Transport != null)
+            {
+                // Use mock transport for testing
+                _pipeline = new HttpPipeline(_config.Transport);
+            }
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Interlocked.Increment(ref _requestCount);
-
-            try
+            using (((DisposingHttpClientHandler)InnerHandler).StartSend())
             {
                 // Reload handler if CA certificate file has changed
                 if (ShouldReloadHandler())
@@ -46,19 +45,14 @@ namespace Azure.Identity
                     {
                         if (ShouldReloadHandler())
                         {
-                            var oldHandler = _innerHandler;
-                            var oldSemaphore = _requestSemaphore;
-
-                            _innerHandler = CreateHandler();
-                            InnerHandler = _innerHandler;
-                            _requestSemaphore = new SemaphoreSlim(1, 1);
+                            var oldHandler = InnerHandler as DisposingHttpClientHandler;
+                            InnerHandler = CreateHandler();
 
                             // Dispose old handler after in-flight requests complete
                             Task.Run(async () =>
                             {
-                                await oldSemaphore.WaitAsync().ConfigureAwait(false);
-                                oldHandler?.Dispose();
-                                oldSemaphore?.Dispose();
+                                await oldHandler.WaitForOutstandingRequests().ConfigureAwait(false);
+                                oldHandler.Dispose();
                             });
                         }
                     }
@@ -66,15 +60,70 @@ namespace Azure.Identity
 
                 RewriteRequestUrl(request);
 
+                if (_pipeline != null)
+                {
+                    return await SendMockRequest(request, cancellationToken).ConfigureAwait(false);
+                }
+
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
-            finally
+        }
+
+        private async Task<HttpResponseMessage> SendMockRequest(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            Request pipelineRequest = _pipeline.CreateRequest();
+
+            pipelineRequest.Method = new RequestMethod(request.Method.Method);
+            pipelineRequest.Uri.Reset(request.RequestUri);
+
+            // Copy headers from HttpRequestMessage to Request
+            foreach (var header in request.Headers)
             {
-                if (Interlocked.Decrement(ref _requestCount) == 0)
+                foreach (var value in header.Value)
                 {
-                    _requestSemaphore?.Release();
+                    pipelineRequest.Headers.Add(header.Key, value);
                 }
             }
+
+            // Copy content if present
+            if (request.Content != null)
+            {
+                foreach (var contentHeader in request.Content.Headers)
+                {
+                    foreach (var value in contentHeader.Value)
+                    {
+                        pipelineRequest.Headers.Add(contentHeader.Key, value);
+                    }
+                }
+                var contentStream = await request.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                pipelineRequest.Content = RequestContent.Create(contentStream);
+            }
+
+            Response pipelineResponse = await _pipeline.SendRequestAsync(pipelineRequest, cancellationToken).ConfigureAwait(false);
+
+            // Convert Response back to HttpResponseMessage
+            var response = new HttpResponseMessage((System.Net.HttpStatusCode)pipelineResponse.Status);
+            response.ReasonPhrase = pipelineResponse.ReasonPhrase;
+
+            // Copy response content
+            if (pipelineResponse.ContentStream != null)
+            {
+                response.Content = new StreamContent(pipelineResponse.ContentStream);
+            }
+
+            // Copy response headers
+            foreach (var header in pipelineResponse.Headers)
+            {
+                if (pipelineResponse.Headers.TryGetValues(header.Name, out var values))
+                {
+                    if (!response.Headers.TryAddWithoutValidation(header.Name, values))
+                    {
+                        response.Content?.Headers.TryAddWithoutValidation(header.Name, values);
+                    }
+                }
+            }
+
+            return response;
         }
 
         private void RewriteRequestUrl(HttpRequestMessage request)
@@ -90,26 +139,24 @@ namespace Azure.Identity
             string proxyPath = newUri.Path.TrimEnd('/');
             string requestPath = pathAndQuery.TrimStart('/');
 
+            string combinedPath;
             if (string.IsNullOrEmpty(proxyPath) || proxyPath == "/")
             {
-                newUri.Path = "/" + requestPath;
+                combinedPath = "/" + requestPath;
             }
             else
             {
-                newUri.Path = proxyPath + "/" + requestPath;
+                combinedPath = proxyPath + "/" + requestPath;
             }
 
-            request.RequestUri = newUri.Uri;
+            // Build URI string directly to avoid UriBuilder.Path escaping
+            string uriString = $"{newUri.Scheme}://{newUri.Host}:{newUri.Port}{combinedPath}";
+            request.RequestUri = new Uri(uriString);
             request.Headers.Host = _config.SniName;
         }
 
         private bool ShouldReloadHandler()
         {
-            if (string.IsNullOrEmpty(_config.CaFilePath))
-            {
-                return false;
-            }
-
             byte[] currentCaData = GetCaCertificateData();
 
             // Keep using current handler during rotation gaps (empty or missing file)
@@ -146,21 +193,25 @@ namespace Azure.Identity
 
         private static bool AreByteArraysEqual(byte[] a, byte[] b)
         {
-            if (a == null && b == null) return true;
-            if (a == null || b == null) return false;
-            if (a.Length != b.Length) return false;
+            if (a == null && b == null)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.Length != b.Length)
+                return false;
 
             for (int i = 0; i < a.Length; i++)
             {
-                if (a[i] != b[i]) return false;
+                if (a[i] != b[i])
+                    return false;
             }
 
             return true;
         }
 
-        private HttpClientHandler CreateHandler()
+        private DisposingHttpClientHandler CreateHandler()
         {
-            var handler = new HttpClientHandler();
+            var handler = new DisposingHttpClientHandler();
 
             byte[] caData = GetCaCertificateData();
             _lastCaData = caData;
@@ -215,16 +266,6 @@ namespace Azure.Identity
                 throw new InvalidOperationException(
                     "Failed to configure custom CA certificate for Kubernetes token proxy.", ex);
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _innerHandler?.Dispose();
-                _requestSemaphore?.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

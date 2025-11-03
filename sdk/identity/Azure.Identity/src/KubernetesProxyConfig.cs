@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -12,6 +13,7 @@ namespace Azure.Identity
         public string CaFilePath { get; private set; }
         public string CaData { get; private set; }
         public string SniName { get; private set; }
+        public HttpPipelineTransport Transport { get; set; }
 
         private KubernetesProxyConfig() { }
 

@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -74,7 +70,6 @@ namespace Azure.Identity.Tests
             // This test requires the following environment variables to be set:
             // - AZURE_KUBERNETES_TOKEN_PROXY: URL of the Kubernetes token proxy
             // - AZURE_KUBERNETES_CA_FILE: Path to CA certificate file
-            // These are automatically set by AKS when the workload identity webhook is enabled
 
             var proxyUrl = Environment.GetEnvironmentVariable("AZURE_KUBERNETES_TOKEN_PROXY");
             var caFile = Environment.GetEnvironmentVariable("AZURE_KUBERNETES_CA_FILE");

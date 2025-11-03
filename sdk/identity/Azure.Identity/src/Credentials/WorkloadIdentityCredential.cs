@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -55,7 +52,7 @@ namespace Azure.Identity
                     {
                         var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
                         var httpClient = new System.Net.Http.HttpClient(proxyHandler);
-                        clientAssertionCredentialOptions.Transport = new Azure.Core.Pipeline.HttpClientTransport(httpClient);
+                        clientAssertionCredentialOptions.Transport = new HttpClientTransport(httpClient);
                     }
                 }
 
