@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DurableTask.Models
     public readonly partial struct DurableTaskResourceRedundancyState : IEquatable<DurableTaskResourceRedundancyState>
     {
         private readonly string _value;
+        /// <summary> The resource is not redundant. </summary>
+        private const string NoneValue = "None";
+        /// <summary> The resource is zone redundant. </summary>
+        private const string ZoneValue = "Zone";
 
         /// <summary> Initializes a new instance of <see cref="DurableTaskResourceRedundancyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DurableTaskResourceRedundancyState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ZoneValue = "Zone";
+            _value = value;
+        }
 
         /// <summary> The resource is not redundant. </summary>
         public static DurableTaskResourceRedundancyState None { get; } = new DurableTaskResourceRedundancyState(NoneValue);
+
         /// <summary> The resource is zone redundant. </summary>
         public static DurableTaskResourceRedundancyState Zone { get; } = new DurableTaskResourceRedundancyState(ZoneValue);
+
         /// <summary> Determines if two <see cref="DurableTaskResourceRedundancyState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DurableTaskResourceRedundancyState left, DurableTaskResourceRedundancyState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DurableTaskResourceRedundancyState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DurableTaskResourceRedundancyState left, DurableTaskResourceRedundancyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DurableTaskResourceRedundancyState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DurableTaskResourceRedundancyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DurableTaskResourceRedundancyState(string value) => new DurableTaskResourceRedundancyState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DurableTaskResourceRedundancyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DurableTaskResourceRedundancyState?(string value) => value == null ? null : new DurableTaskResourceRedundancyState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DurableTaskResourceRedundancyState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DurableTaskResourceRedundancyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
