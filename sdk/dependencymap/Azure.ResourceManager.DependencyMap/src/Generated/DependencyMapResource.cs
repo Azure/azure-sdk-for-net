@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Maps_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Maps_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> Maps_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> Maps_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Maps_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Maps_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetDependencyViewForFocusedMachine. </description>
+        /// <description> Maps_GetDependencyViewForFocusedMachine. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetDependencyViewForFocusedMachine. </description>
+        /// <description> Maps_GetDependencyViewForFocusedMachine. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetConnectionsWithConnectedMachineForFocusedMachine. </description>
+        /// <description> Maps_GetConnectionsWithConnectedMachineForFocusedMachine. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetConnectionsWithConnectedMachineForFocusedMachine. </description>
+        /// <description> Maps_GetConnectionsWithConnectedMachineForFocusedMachine. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetConnectionsForProcessOnFocusedMachine. </description>
+        /// <description> Maps_GetConnectionsForProcessOnFocusedMachine. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetConnectionsForProcessOnFocusedMachine. </description>
+        /// <description> Maps_GetConnectionsForProcessOnFocusedMachine. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExportDependencies. </description>
+        /// <description> Maps_ExportDependencies. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExportDependencies. </description>
+        /// <description> Maps_ExportDependencies. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

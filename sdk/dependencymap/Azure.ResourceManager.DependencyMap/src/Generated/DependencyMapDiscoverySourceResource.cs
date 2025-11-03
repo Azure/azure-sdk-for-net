@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DiscoverySources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DiscoverySources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> DiscoverySources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> DiscoverySources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> DiscoverySources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> DiscoverySources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
