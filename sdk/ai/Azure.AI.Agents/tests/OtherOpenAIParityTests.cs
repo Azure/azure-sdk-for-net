@@ -32,7 +32,7 @@ public class OtherOpenAIParityTests : AgentsTestBase
         AgentsClient agentsClient = GetTestClient();
         OpenAIClient openAIClient = clientMode switch
         {
-            OpenAIClientMode.UseExternalOpenAI => new OpenAIClient(new ApiKeyCredential(Environment.GetEnvironmentVariable("OPENAI_API_KEY")), TestOpenAIClientOptions),
+            OpenAIClientMode.UseExternalOpenAI => new OpenAIClient(new ApiKeyCredential(TestEnvironment.ParseEnvironmentFile()["OPEN-API-KEY"]), TestOpenAIClientOptions),
             OpenAIClientMode.UseFDPOpenAI => agentsClient.GetOpenAIClient(TestOpenAIClientOptions),
             _ => throw new NotImplementedException()
         };
