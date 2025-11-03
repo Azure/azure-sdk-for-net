@@ -6,8 +6,8 @@ applyTo: '**/*.cs'
 This instruction set guides you through generating sample code snippets for C# files.
 
 The following inputs will be provided to you:
-- A working directory
-- A `json` file containing details about the sample to be generated
+- A working directory.
+- A `json` file containing details about the sample to be generated. If multiple `json` files are provided, please process them one by one.
 
 If any of the above pre-requisites are missing, please notify the user and halt further processing.
 
@@ -89,7 +89,7 @@ About the structure of the source code in `src`:
 
 You need to follow the following steps to generate the sample:
 1. **Analyze the JSON File**: Read the provided `json` file to understand the `operationId` and its parameters.
-2. **Map Operation ID to Method**: Identify the corresponding method in the source code (`src` directory) that matches the `operationId`. Prioritize the methods on `*Resource.cs` class over those on `*Collection.cs` class, and those on `*Collection.cs` class over those on `<ServiceName>Extensions.cs` class.
+2. **Map Operation ID to Method**: Identify the corresponding method in the source code (`src` directory) that matches the `operationId`. Prioritize the methods on `*Resource.cs` class over those on `*Collection.cs` class, and those on `*Collection.cs` class over those on `<ServiceName>Extensions.cs` class. If no method is found, please continue on next `json` file and notify the user about the missing method in the summary when everything is finished.
 3. **Identify the Resource Structure**: Determine the resource structure of how we could get to the resource where the method is defined. This involves identifying the parent resources and how to instantiate them using the factory methods.
 4. **Generate Sample Code**:
     1. Determine the class name for this sample. The sample class should be named as `Sample_<TypeName>.cs` where `<TypeName>` is the name of the class where the method is defined.
@@ -103,6 +103,9 @@ The following details are steps about each part of the sample code:
 - **Initialization**:
     - Before everything starts, we need to write
     ```
+    // Generated from example definition: <relative path of the json file to the `examples` directory>
+    // this example is just showing the usage of "<operationId>" operation, for the dependent resources, they will have to be created separately
+
     // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
     TokenCredential cred = new DefaultAzureCredential();
     // authenticate your client
@@ -133,3 +136,4 @@ Some additional notes:
 9. If a parameter is optional and not provided in the `json` file, you can omit setting that property in the sample code.
 10. If a parameter is required and not provided in the `json` file, please notify the user about the missing required parameter and use `(T)default` as a placeholder for such occurrences.
 11. Once the code is generated, call `dotnet build` on the working directory to verify the code could build successfully. If there are any build errors, fix them before finalizing the code.
+12. Summarize the results for each `json` file processed, including whether the sample code is generated successfully, any missing methods or parameters, and any build errors encountered.
