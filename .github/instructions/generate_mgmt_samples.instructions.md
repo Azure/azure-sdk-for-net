@@ -95,9 +95,16 @@ You need to follow the following steps to generate the sample:
 3. **Map Operation ID to Method**: Identify the corresponding method in the source code (`src` directory) that matches the `operationId`. Prioritize the methods on `*Resource.cs` class over those on `*Collection.cs` class, and those on `*Collection.cs` class over those on `<ServiceName>Extensions.cs` class. If no method is found, please continue on next `json` file and notify the user about the missing method in the summary.
 4. **Identify the Resource Structure**: Determine the resource structure of how we could get to the resource where the method is defined. This involves identifying the parent resources and how to instantiate them using the factory methods.
 5. **Generate Sample Code**:
-    1. Determine the class name for this sample. The sample class should be named as `Sample_<TypeName>.cs` where `<TypeName>` is the name of the class where the method is defined.
+    1. Determine the class name for this sample.
+        - If the class where the method is defined is `*Resource.cs` or `*Collection.cs`, the sample class should be named as `Sample_<TypeName>.cs` where `<TypeName>` is the name of the class where the method is defined.
+        - If the class where the method is defined is `<ServiceName>Extensions.cs`, the sample class should be named as `Sample_<TypeName>Extensions.cs` where `<TypeName>` is the type name of the method's first parameter.
     2. Determine the method name of this sample. The sample method name should be `<MethodName>_<TitleOfJsonFile>`, where `<MethodName>` is the name of the method being called, and `<TitleOfJsonFile>` is the `title` field from the `json` file.
-    3. Write the sample code in the sample method in step 2 above that demonstrates how to call the identified method with the parameters from the `json` file. The sample code contains four parts which will elaborate with more details below:
+    3. A sample method should have the following two attributes on it:
+        ```csharp
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        ```
+    4. Write the sample code inside the sample method in step 2 above that demonstrates how to call the identified method with the parameters from the `json` file. The sample code contains four parts which will elaborate with more details below:
         - **Information**: Write the comment header indicating the source of this sample.
         - **Initialization**: Get an instance of the type which holds the method.
         - **Parameter Preparation**: Prepare the parameters needed for the method call.

@@ -10,25 +10,30 @@ using Azure.ResourceManager.DependencyMap;
 using Azure.ResourceManager.DependencyMap.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.DependencyMap.Tests.Samples
+namespace Azure.ResourceManager.DependencyMap.Samples
 {
     public partial class Sample_DependencyMapDiscoverySourceCollection
     {
+        // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_CreateOrUpdate.json
+        // this example is just showing the usage of "DiscoverySources_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately
         [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_DiscoverySourcesCreateOrUpdateGeneratedByMaximumSetRule()
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdateAsync_DiscoverySourcesCreateOrUpdate()
         {
-            // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_CreateOrUpdate.json
-            // this example is just showing the usage of "DiscoverySources_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // get the collection of this resource
-            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier("D6E58BDB-45F1-41EC-A884-1FC945058848", "rgdependencyMap", "mapsTest1");
+            // this example assumes you already have this DependencyMapResource created on azure
+            // for more information of creating DependencyMapResource, please refer to the document of DependencyMapResource
+            string subscriptionId = "D6E58BDB-45F1-41EC-A884-1FC945058848";
+            string resourceGroupName = "rgdependencyMap";
+            string mapName = "mapsTest1";
+            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mapName);
             DependencyMapResource dependencyMapResource = client.GetDependencyMapResource(dependencyMapResourceId);
+
+            // get the collection of this DependencyMapDiscoverySourceResource
             DependencyMapDiscoverySourceCollection collection = dependencyMapResource.GetDependencyMapDiscoverySources();
 
             // invoke the operation
@@ -36,7 +41,9 @@ namespace Azure.ResourceManager.DependencyMap.Tests.Samples
             DependencyMapDiscoverySourceData data = new DependencyMapDiscoverySourceData(new AzureLocation("y"))
             {
                 Properties = new OffAzureDiscoverySourceProperties(new ResourceIdentifier("wzlrkzumplzjmixbqv")),
-                Tags = { },
+                Tags =
+                {
+                },
             };
             ArmOperation<DependencyMapDiscoverySourceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sourceName, data);
             DependencyMapDiscoverySourceResource result = lro.Value;
@@ -48,21 +55,26 @@ namespace Azure.ResourceManager.DependencyMap.Tests.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_Get.json
+        // this example is just showing the usage of "DiscoverySources_Get" operation, for the dependent resources, they will have to be created separately
         [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task Get_DiscoverySourcesGetGeneratedByMaximumSetRule()
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAsync_DiscoverySourcesGet()
         {
-            // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_Get.json
-            // this example is just showing the usage of "DiscoverySources_Get" operation, for the dependent resources, they will have to be created separately
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // get the collection of this resource
-            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier("D6E58BDB-45F1-41EC-A884-1FC945058848", "rgdependencyMap", "mapsTest1");
+            // this example assumes you already have this DependencyMapResource created on azure
+            // for more information of creating DependencyMapResource, please refer to the document of DependencyMapResource
+            string subscriptionId = "D6E58BDB-45F1-41EC-A884-1FC945058848";
+            string resourceGroupName = "rgdependencyMap";
+            string mapName = "mapsTest1";
+            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mapName);
             DependencyMapResource dependencyMapResource = client.GetDependencyMapResource(dependencyMapResourceId);
+
+            // get the collection of this DependencyMapDiscoverySourceResource
             DependencyMapDiscoverySourceCollection collection = dependencyMapResource.GetDependencyMapDiscoverySources();
 
             // invoke the operation
@@ -76,81 +88,26 @@ namespace Azure.ResourceManager.DependencyMap.Tests.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_ListByMapsResource.json
+        // this example is just showing the usage of "DiscoverySources_ListByMapsResource" operation, for the dependent resources, they will have to be created separately
         [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task Exists_DiscoverySourcesGetGeneratedByMaximumSetRule()
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAllAsync_DiscoverySourcesListByMapsResource()
         {
-            // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_Get.json
-            // this example is just showing the usage of "DiscoverySources_Get" operation, for the dependent resources, they will have to be created separately
-
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // get the collection of this resource
-            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier("D6E58BDB-45F1-41EC-A884-1FC945058848", "rgdependencyMap", "mapsTest1");
+            // this example assumes you already have this DependencyMapResource created on azure
+            // for more information of creating DependencyMapResource, please refer to the document of DependencyMapResource
+            string subscriptionId = "D6E58BDB-45F1-41EC-A884-1FC945058848";
+            string resourceGroupName = "rgdependencyMap";
+            string mapName = "mapsTest1";
+            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mapName);
             DependencyMapResource dependencyMapResource = client.GetDependencyMapResource(dependencyMapResourceId);
-            DependencyMapDiscoverySourceCollection collection = dependencyMapResource.GetDependencyMapDiscoverySources();
 
-            // invoke the operation
-            string sourceName = "sourceTest1";
-            bool result = await collection.ExistsAsync(sourceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_DiscoverySourcesGetGeneratedByMaximumSetRule()
-        {
-            // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_Get.json
-            // this example is just showing the usage of "DiscoverySources_Get" operation, for the dependent resources, they will have to be created separately
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // get the collection of this resource
-            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier("D6E58BDB-45F1-41EC-A884-1FC945058848", "rgdependencyMap", "mapsTest1");
-            DependencyMapResource dependencyMapResource = client.GetDependencyMapResource(dependencyMapResourceId);
-            DependencyMapDiscoverySourceCollection collection = dependencyMapResource.GetDependencyMapDiscoverySources();
-
-            // invoke the operation
-            string sourceName = "sourceTest1";
-            NullableResponse<DependencyMapDiscoverySourceResource> response = await collection.GetIfExistsAsync(sourceName);
-            DependencyMapDiscoverySourceResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DependencyMapDiscoverySourceData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_DiscoverySourcesListByMapsResourceGeneratedByMaximumSetRule()
-        {
-            // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/DiscoverySources_ListByMapsResource.json
-            // this example is just showing the usage of "DiscoverySources_ListByMapsResource" operation, for the dependent resources, they will have to be created separately
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // get the collection of this resource
-            ResourceIdentifier dependencyMapResourceId = DependencyMapResource.CreateResourceIdentifier("D6E58BDB-45F1-41EC-A884-1FC945058848", "rgdependencyMap", "mapsTest1");
-            DependencyMapResource dependencyMapResource = client.GetDependencyMapResource(dependencyMapResourceId);
+            // get the collection of this DependencyMapDiscoverySourceResource
             DependencyMapDiscoverySourceCollection collection = dependencyMapResource.GetDependencyMapDiscoverySources();
 
             // invoke the operation and iterate over the result
