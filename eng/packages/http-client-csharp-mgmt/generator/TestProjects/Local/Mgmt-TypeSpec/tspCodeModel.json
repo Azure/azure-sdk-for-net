@@ -8629,11 +8629,11 @@
                 "methodId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatuses.get",
                 "kind": "Get",
                 "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}",
-                "operationScope": "Tenant",
+                "operationScope": "ManagementGroup",
                 "resourceScope": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/MgmtTypeSpec/quotas/{requestId}"
               }
             ],
-            "resourceScope": "Tenant",
+            "resourceScope": "ManagementGroup",
             "resourceName": "GroupQuotaSubscriptionRequestStatus"
           }
         }

@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -47,9 +46,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TenantResource.ResourceType)
+            if (id.ResourceType != GroupQuotaSubscriptionRequestStatusResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaSubscriptionRequestStatusResource.ResourceType), id);
             }
         }
 
@@ -88,7 +87,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaSubscriptionRequestStatusData> response = Response.FromValue(GroupQuotaSubscriptionRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -139,7 +138,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaSubscriptionRequestStatusData> response = Response.FromValue(GroupQuotaSubscriptionRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +189,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -249,7 +248,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -308,7 +307,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -371,7 +370,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;

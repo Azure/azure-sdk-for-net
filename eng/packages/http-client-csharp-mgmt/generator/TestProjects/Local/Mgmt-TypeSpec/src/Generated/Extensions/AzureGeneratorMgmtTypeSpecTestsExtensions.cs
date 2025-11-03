@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Mocking;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
@@ -42,6 +43,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private static MockableAzureGeneratorMgmtTypeSpecTestsTenantResource GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(TenantResource tenantResource)
         {
             return tenantResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsTenantResource(client, tenantResource.Id));
+        }
+
+        /// <param name="managementGroupResource"></param>
+        private static MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(ManagementGroupResource managementGroupResource)
+        {
+            return managementGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(client, managementGroupResource.Id));
         }
 
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -591,45 +598,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="TenantResource"/>. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of GroupQuotaSubscriptionRequestStatuses and their operations over a GroupQuotaSubscriptionRequestStatusResource. </returns>
-        public static GroupQuotaSubscriptionRequestStatusCollection GetGroupQuotaSubscriptionRequestStatuses(this TenantResource tenantResource)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatuses();
-        }
-
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GroupQuotaSubscriptionRequestStatusResource>> GetGroupQuotaSubscriptionRequestStatusAsync(this TenantResource tenantResource, string managementGroupId, string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatusAsync(managementGroupId, requestId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GroupQuotaSubscriptionRequestStatusResource> GetGroupQuotaSubscriptionRequestStatus(this TenantResource tenantResource, string managementGroupId, string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatus(managementGroupId, requestId, cancellationToken);
-        }
-
         /// <summary> Starts a failed runtime resource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -650,6 +618,43 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of GroupQuotaSubscriptionRequestStatuses and their operations over a GroupQuotaSubscriptionRequestStatusResource. </returns>
+        public static GroupQuotaSubscriptionRequestStatusCollection GetGroupQuotaSubscriptionRequestStatuses(this ManagementGroupResource managementGroupResource)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatuses();
+        }
+
+        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GroupQuotaSubscriptionRequestStatusResource>> GetGroupQuotaSubscriptionRequestStatusAsync(this ManagementGroupResource managementGroupResource, string requestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatusAsync(requestId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GroupQuotaSubscriptionRequestStatusResource> GetGroupQuotaSubscriptionRequestStatus(this ManagementGroupResource managementGroupResource, string requestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatus(requestId, cancellationToken);
         }
     }
 }
