@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access
+namespace Specs.Azure.ClientGenerator.Core.Access
 {
     public partial class AccessClientOptions : ClientOptions
     {

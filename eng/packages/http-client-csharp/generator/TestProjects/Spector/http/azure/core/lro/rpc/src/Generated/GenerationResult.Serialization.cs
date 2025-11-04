@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Core.Lro.Rpc
+namespace Specs.Azure.Core.Lro.Rpc
 {
     public partial class GenerationResult : IJsonModel<GenerationResult>
     {

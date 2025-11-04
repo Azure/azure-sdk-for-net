@@ -327,6 +327,7 @@
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict",
       "apiVersions": [],
@@ -528,6 +529,7 @@
               "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations",
           "apiVersions": [],
@@ -732,6 +734,7 @@
               "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations",
           "apiVersions": [],

@@ -3,7 +3,7 @@
     <Description>This is the _Specs_.Azure.Core.Model client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation _Specs_.Azure.Core.Model</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>_Specs_.Azure.Core.Model</PackageTags>
+    <PackageTags>Specs.Azure.Core.Model</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

@@ -9,15 +9,15 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Page
+namespace Specs.Azure.Core.Page
 {
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(FirstItem))]
     [ModelReaderWriterBuildable(typeof(ListItemInputBody))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondItem))]
     [ModelReaderWriterBuildable(typeof(User))]
     [ModelReaderWriterBuildable(typeof(UserOrder))]
-    public partial class _Specs_AzureCorePageContext : ModelReaderWriterContext
+    public partial class SpecsAzureCorePageContext : ModelReaderWriterContext
     {
     }
 }
