@@ -687,57 +687,69 @@ try {
         
         Write-Host "Using $throttleLimit concurrent jobs (detected $cpuCores logical processors)" -ForegroundColor Gray
         Write-Host ""
-        
+
         # Pre-install tsp-client to avoid concurrent npm operations
-    Write-Host "Pre-installing tsp-client..." -ForegroundColor Gray
-    $tspClientDir = Join-Path $sdkRepoPath "eng" "common" "tsp-client"
-    Invoke "npm ci --prefix $tspClientDir" $tspClientDir
-    if ($LASTEXITCODE -ne 0) {
-        throw "Failed to install tsp-client"
-    }
-    Write-Host "  tsp-client ready" -ForegroundColor Green
-    Write-Host ""
-    
-    # Thread-safe collections for progress tracking
-    $completed = [System.Collections.Concurrent.ConcurrentBag[int]]::new()
-    $totalCount = $libraries.Count
-    
-    # Run regeneration in parallel
-    $results = $libraries | ForEach-Object -ThrottleLimit $throttleLimit -Parallel {
-        $library = $_
-        $azureSdkPath = $using:sdkRepoPath
-        $completedBag = $using:completed
-        $total = $using:totalCount
-        
-        # Determine build path (check for src subdirectory)
-        $libraryPath = Join-Path $azureSdkPath $library.Path
-        $srcPath = Join-Path $libraryPath "src"
-        $buildPath = if ((Test-Path $srcPath) -and (Get-ChildItem -Path $srcPath -Filter "*.csproj" -ErrorAction SilentlyContinue)) {
-            $srcPath
-        } else {
-            $libraryPath
+        $sdkForNetEngFolder = Join-Path $sdkRepoPath "eng"
+        Write-Host "Pre-installing tsp-client..." -ForegroundColor Gray
+        $tspClientDir = Join-Path $sdkForNetEngFolder "common" "tsp-client"
+        Invoke "npm ci --prefix $tspClientDir" $tspClientDir
+        if ($LASTEXITCODE -ne 0) {
+            throw "Failed to install tsp-client"
+        }
+        Write-Host "  tsp-client ready" -ForegroundColor Green
+        Write-Host ""
+
+        # Pre-build the client plugin to avoid concurrent builds
+        $codeGenerationTargetPath = Join-Path $sdkForNetEngFolder  "CodeGeneration.targets"
+        if (-not (Test-Path $codeGenerationTargetPath)) {
+            throw "CodeGeneration.targets not found at: $codeGenerationTargetPath"
+        }
+        Write-Host "Pre-building client plugin..." -ForegroundColor Gray
+        Invoke "dotnet build $codeGenerationTargetPath /t:BuildPlugin /p:TypeSpecInput=temp" $sdkForNetEngFolder
+        if ($LASTEXITCODE -ne 0) {
+            throw "Failed to build client plugin"
         }
         
-        # Regenerate library
-        $result = try {
-            if (-not (Test-Path $libraryPath)) {
-                @{ Success = $false; Error = "Library path not found"; Output = "" }
+        # Thread-safe collections for progress tracking
+        $completed = [System.Collections.Concurrent.ConcurrentBag[int]]::new()
+        $totalCount = $libraries.Count
+        
+        # Run regeneration in parallel
+        $results = $libraries | ForEach-Object -ThrottleLimit $throttleLimit -Parallel {
+            $library = $_
+            $azureSdkPath = $using:sdkRepoPath
+            $completedBag = $using:completed
+            $total = $using:totalCount
+            
+            # Determine build path (check for src subdirectory)
+            $libraryPath = Join-Path $azureSdkPath $library.Path
+            $srcPath = Join-Path $libraryPath "src"
+            $buildPath = if ((Test-Path $srcPath) -and (Get-ChildItem -Path $srcPath -Filter "*.csproj" -ErrorAction SilentlyContinue)) {
+                $srcPath
             } else {
-                Push-Location $buildPath
-                try {
-                    $output = & dotnet build /t:GenerateCode /p:SkipTspClientInstall=true 2>&1
-                    $exitCode = $LASTEXITCODE
-                    
-                    if ($exitCode -ne 0) {
-                        @{ Success = $false; Error = "Generation failed with exit code $exitCode"; Output = ($output -join "`n") }
-                    } else {
-                        @{ Success = $true; Output = ($output -join "`n") }
+                $libraryPath
+            }
+            
+            # Regenerate library
+            $result = try {
+                if (-not (Test-Path $libraryPath)) {
+                    @{ Success = $false; Error = "Library path not found"; Output = "" }
+                } else {
+                    Push-Location $buildPath
+                    try {
+                        $output = & dotnet build /t:GenerateCode /p:SkipTspClientInstall=true /p:SkipBuildPlugin=true 2>&1
+                        $exitCode = $LASTEXITCODE
+                        
+                        if ($exitCode -ne 0) {
+                            @{ Success = $false; Error = "Generation failed with exit code $exitCode"; Output = ($output -join "`n") }
+                        } else {
+                            @{ Success = $true; Output = ($output -join "`n") }
+                        }
+                    }
+                    finally {
+                        Pop-Location
                     }
                 }
-                finally {
-                    Pop-Location
-                }
-            }
         }
         catch {
             @{ Success = $false; Error = $_.Exception.Message; Output = $_.Exception.ToString() }
