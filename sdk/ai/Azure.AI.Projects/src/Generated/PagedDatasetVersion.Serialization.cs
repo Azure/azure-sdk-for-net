@@ -151,7 +151,7 @@ namespace Azure.Core
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedDatasetVersion(document.RootElement, options);
                     }
@@ -167,7 +167,7 @@ namespace Azure.Core
         public static explicit operator PagedDatasetVersion(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedDatasetVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

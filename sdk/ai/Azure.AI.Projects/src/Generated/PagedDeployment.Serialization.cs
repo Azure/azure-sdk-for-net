@@ -152,7 +152,7 @@ namespace Azure.Core.Foundations
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedDeployment(document.RootElement, options);
                     }
@@ -168,7 +168,7 @@ namespace Azure.Core.Foundations
         public static explicit operator PagedDeployment(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedDeployment(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

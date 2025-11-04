@@ -127,7 +127,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAIProjectDeployment(document.RootElement, options);
                     }
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects
         public static explicit operator AIProjectDeployment(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAIProjectDeployment(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
