@@ -59,9 +59,11 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
-        responseOptions.SetConversationReference(conversation.Id);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+            Conversation = conversation,
+        };
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")],
@@ -123,9 +125,11 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(agentVersion.Name));
-        responseOptions.SetConversationReference(conversation.Id);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+            Conversation = conversation,
+        };
 
         OpenAIResponse response = responsesClient.CreateResponse(
             [ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")],

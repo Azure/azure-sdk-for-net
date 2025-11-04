@@ -41,9 +41,11 @@ public static partial class OpenAIResponseExtension
 
     private static BinaryContent RemoveItems(AgentConversation conversation, AgentReference agentRef)
     {
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentRef);
-        responseOptions.SetConversationReference(conversation);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentRef,
+            Conversation = conversation,
+        };
         using BinaryContent contentBytes = BinaryContent.Create(responseOptions, ModelSerializationExtensions.WireOptions);
         using var stream = new MemoryStream();
         contentBytes.WriteTo(stream);

@@ -7,6 +7,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Reflection;
+using OpenAI.Responses;
 
 #pragma warning disable OPENAI001
 

@@ -49,8 +49,10 @@ public class Sample_CodeInterpreter : AgentsTestBase
         #endregion
         #region Snippet:Sample_CreateResponse_CodeInterpreter_Async
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -109,8 +111,10 @@ public class Sample_CodeInterpreter : AgentsTestBase
         #endregion
         #region Snippet:Sample_CreateResponse_CodeInterpreter_Sync
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
         OpenAIResponse response = responseClient.CreateResponse(

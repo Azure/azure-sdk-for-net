@@ -111,12 +111,14 @@ To run an existing Prompt Agent, reference the Agent by ID when calling the Open
     OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
     OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
 
-    ResponseCreationOptions responseCreationOptions = new();
-    responseCreationOptions.SetAgentReference(AGENT_NAME);
-
     // Optionally, use a conversation to automatically maintain state between calls.
     AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync();
-    responseCreationOptions.SetConversationReference(conversation);
+
+    ResponseCreationOptions responseCreationOptions = new()
+    {
+        Agent = AGENT_NAME,
+        Conversation = conversation,
+    };
 
     List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
     OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseCreationOptions);
@@ -175,9 +177,11 @@ _ = await agentsClient.GetConversationClient().CreateConversationItemsAsync(
 // Use the agent and conversation in a response
 //
 
-ResponseCreationOptions responseCreationOptions = new();
-responseCreationOptions.SetAgentReference(AGENT_NAME);
-responseCreationOptions.SetConversationReference(EXISTING_CONVERSATION_ID);
+ResponseCreationOptions responseCreationOptions = new()
+{
+    Agent = AGENT_NAME,
+    Conversation = EXISTING_CONVERSATION_ID,
+};
 
 List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
 OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseCreationOptions);

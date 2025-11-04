@@ -9,11 +9,17 @@ namespace Azure.AI.Agents;
 
 public static partial class ClientConnectionProviderExtensions
 {
-    public static AgentsClient GetAgentsClient(this ClientConnectionProvider clientConnectionProvider, AgentsClientOptions agentsClientOptions = default)
+    private static AgentsClient s_cachedAgentsClient = null;
+
+    extension(ClientConnectionProvider target)
     {
-        ClientConnection chatConnection = clientConnectionProvider.GetConnection("OpenAI.Chat.ChatClient");
-        Uri endpoint = new(chatConnection.Locator);
-        AuthenticationTokenProvider tokenProvider = chatConnection.Credential as AuthenticationTokenProvider;
-        return new AgentsClient(endpoint, tokenProvider, agentsClientOptions);
+        public AgentsClient GetAgentsClient(AgentsClientOptions options = default)
+        {
+            ClientConnection chatConnection = target.GetConnection("OpenAI.Chat.ChatClient");
+            Uri endpoint = new(chatConnection.Locator);
+            AuthenticationTokenProvider tokenProvider = chatConnection.Credential as AuthenticationTokenProvider;
+            return new AgentsClient(endpoint, tokenProvider, options);
+        }
+        public AgentsClient Agents => s_cachedAgentsClient ??= GetAgentsClient(target, options: null);
     }
 }

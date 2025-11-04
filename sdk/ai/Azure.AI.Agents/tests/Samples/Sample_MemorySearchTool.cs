@@ -50,8 +50,10 @@ public class Sample_MemorySearchTool : AgentsTestBase
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -118,8 +120,10 @@ public class Sample_MemorySearchTool : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Async
-        responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
+        responseOptions = new()
+        {
+            Agent = agentVersion2,
+        };
 
         response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
@@ -169,8 +173,10 @@ public class Sample_MemorySearchTool : AgentsTestBase
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
         OpenAIResponse response = responseClient.CreateResponse(
@@ -238,8 +244,10 @@ public class Sample_MemorySearchTool : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Sync
-        responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
+        responseOptions = new()
+        {
+            Agent = agentVersion2,
+        };
 
         response = responseClient.CreateResponse(
             [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],

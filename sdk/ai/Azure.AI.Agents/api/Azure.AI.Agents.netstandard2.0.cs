@@ -161,6 +161,22 @@ namespace Azure.AI.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationDeletionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationDeletionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AgentConversationReference : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.AgentConversationReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationReference>
+    {
+        public AgentConversationReference(string id) { }
+        public string Id { get { throw null; } set { } }
+        protected virtual Azure.AI.Agents.AgentConversationReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.AI.Agents.AgentConversationReference (Azure.AI.Agents.AgentConversation conversation) { throw null; }
+        public static implicit operator Azure.AI.Agents.AgentConversationReference (string conversationId) { throw null; }
+        protected virtual Azure.AI.Agents.AgentConversationReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Agents.AgentConversationReference System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.AgentConversationReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.AgentConversationReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.AgentConversationReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AgentConversationUpdateOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.AgentConversationUpdateOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.AgentConversationUpdateOptions>
     {
         public AgentConversationUpdateOptions() { }
@@ -317,6 +333,9 @@ namespace Azure.AI.Agents
         public string Version { get { throw null; } set { } }
         protected virtual Azure.AI.Agents.AgentReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.AI.Agents.AgentReference (Azure.AI.Agents.AgentRecord agent) { throw null; }
+        public static implicit operator Azure.AI.Agents.AgentReference (Azure.AI.Agents.AgentVersion agent) { throw null; }
+        public static implicit operator Azure.AI.Agents.AgentReference (string agentName) { throw null; }
         protected virtual Azure.AI.Agents.AgentReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Agents.AgentReference System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.AgentReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1066,7 +1085,14 @@ namespace Azure.AI.Agents
     }
     public static partial class ClientConnectionProviderExtensions
     {
-        public static Azure.AI.Agents.AgentsClient GetAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider clientConnectionProvider, Azure.AI.Agents.AgentsClientOptions agentsClientOptions = null) { throw null; }
+        public static Azure.AI.Agents.AgentsClient GetAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider target, Azure.AI.Agents.AgentsClientOptions options = null) { throw null; }
+        public static Azure.AI.Agents.AgentsClient get_Agents(System.ClientModel.Primitives.ClientConnectionProvider target) { throw null; }
+        public sealed partial class <>E__0
+        {
+            internal <>E__0() { }
+            public Azure.AI.Agents.AgentsClient Agents { get { throw null; } }
+            public Azure.AI.Agents.AgentsClient GetAgentsClient(Azure.AI.Agents.AgentsClientOptions options = null) { throw null; }
+        }
     }
     public partial class ContainerAppAgentDefinition : Azure.AI.Agents.AgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.ContainerAppAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.ContainerAppAgentDefinition>
     {
@@ -1797,12 +1823,16 @@ namespace Azure.AI.Agents
     }
     public static partial class ResponseCreationOptionsExtensions
     {
-        public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentRecord agentObject, string version = null) { }
-        public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentReference agentReference) { }
-        public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentVersion agentVersion) { }
-        public static void SetAgentReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, string agentName, string version = null) { }
-        public static void SetConversationReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, Azure.AI.Agents.AgentConversation conversation) { }
-        public static void SetConversationReference(this OpenAI.Responses.ResponseCreationOptions responseCreationOptions, string conversationId) { }
+        public static Azure.AI.Agents.AgentReference get_Agent(OpenAI.Responses.ResponseCreationOptions target) { throw null; }
+        public static Azure.AI.Agents.AgentConversationReference get_Conversation(OpenAI.Responses.ResponseCreationOptions target) { throw null; }
+        public static void set_Agent(OpenAI.Responses.ResponseCreationOptions target, Azure.AI.Agents.AgentReference value) { }
+        public static void set_Conversation(OpenAI.Responses.ResponseCreationOptions target, Azure.AI.Agents.AgentConversationReference value) { }
+        public sealed partial class <>E__0
+        {
+            internal <>E__0() { }
+            public Azure.AI.Agents.AgentReference Agent { get { throw null; } set { } }
+            public Azure.AI.Agents.AgentConversationReference Conversation { get { throw null; } set { } }
+        }
     }
     public static partial class ResponseItemExtensions
     {

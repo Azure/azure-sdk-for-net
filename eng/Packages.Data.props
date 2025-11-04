@@ -204,11 +204,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Agents'))">
-    <PackageReference Update="OpenAI" Version="[2.5.0,3.0)" />
+    <PackageReference Update="OpenAI" Version="[2.6.0,3.0)" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Projects'))">
-    <PackageReference Update="OpenAI" Version="[2.5.0,3.0)" />
+    <PackageReference Update="OpenAI" Version="[2.6.0,3.0)" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">

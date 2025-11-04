@@ -51,6 +51,59 @@ public class AgentsSmokeTests : AgentsTestBase
     }
 
     [Test]
+    public void TestResponseInputExtensionProps()
+    {
+        ResponseCreationOptions options = new();
+        void AssertHasExtensions(bool hasAgent, bool hasConversation)
+        {
+            BinaryData serializedOptionBytes = ModelReaderWriter.Write(options);
+            string serializedOptions = serializedOptionBytes?.ToString();
+            if (hasAgent)
+            {
+                Assert.That(options.Agent, Is.Not.Null);
+                Assert.That(serializedOptions, Does.Contain("agent"));
+            }
+            else
+            {
+                Assert.That(options.Agent, Is.Null);
+                Assert.That(serializedOptions, Does.Not.Contain("agent"));
+            }
+            if (hasConversation)
+            {
+                Assert.That(options.Conversation, Is.Not.Null);
+                Assert.That(serializedOptions, Does.Contain("conversation"));
+            }
+            else
+            {
+                Assert.That(options.Conversation, Is.Null);
+                Assert.That(serializedOptions, Does.Not.Contain("conversation"));
+            }
+        }
+        AssertHasExtensions(false, false);
+
+        options.Agent = new AgentReference("foobar-agent");
+        AssertHasExtensions(true, false);
+
+        options.Agent = null;
+        AssertHasExtensions(false, false);
+
+        options = new()
+        {
+            Agent = new AgentReference("foobar-agent"),
+        };
+        AssertHasExtensions(true, false);
+
+        options.Agent = null;
+        AssertHasExtensions(false, false);
+
+        options.Conversation = "foobar-conversation";
+        AssertHasExtensions(false, true);
+
+        options.Conversation = null;
+        AssertHasExtensions(false, false);
+    }
+
+    [Test]
     public void TestUseAnAgentTool()
     {
         ResponseCreationOptions responseOptions = new()
@@ -186,11 +239,10 @@ public class AgentsSmokeTests : AgentsTestBase
     {
         ResponseCreationOptions responseOptions = new()
         {
-            Instructions = "You talk like a pirate."
+            Instructions = "You talk like a pirate.",
+            Agent = "my-test-agent",
+            Conversation = "conv_abcd1234",
         };
-
-        responseOptions.SetAgentReference(new AgentReference("my-test-agent"));
-        responseOptions.SetConversationReference("conv_abcd1234");
 
         Assert.That(ModelReaderWriter.Write(responseOptions).ToString(), Does.Contain("my-test-agent"));
         Assert.That(ModelReaderWriter.Write(responseOptions).ToString(), Does.Contain("conv_abcd1234"));

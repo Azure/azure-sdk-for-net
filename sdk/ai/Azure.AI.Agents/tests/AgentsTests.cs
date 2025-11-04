@@ -19,7 +19,6 @@ public class AgentsTests : AgentsTestBase
 {
     public AgentsTests(bool isAsync) : base(isAsync)
     {
-        // TestDiagnostics = false;
     }
 
     [RecordedTest]
@@ -317,9 +316,11 @@ public class AgentsTests : AgentsTestBase
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentVersion);
-        responseOptions.SetConversationReference(conversation);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+            Conversation = conversation,
+        };
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.")],
@@ -346,8 +347,10 @@ public class AgentsTests : AgentsTestBase
             options: null
         );
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentVersion);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.")],
@@ -412,9 +415,11 @@ public class AgentsTests : AgentsTestBase
 
         AgentConversation newConversation = await agentsClient.GetConversationClient().CreateConversationAsync();
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentName, agentVersion);
-        responseOptions.SetConversationReference(newConversation.Id);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = new AgentReference(agentName) { Version = agentVersion },
+            Conversation = newConversation,
+        };
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             inputItems: [ResponseItem.CreateUserMessageItem("Hello, agent!")], responseOptions);
@@ -469,9 +474,11 @@ public class AgentsTests : AgentsTestBase
 
         AgentConversation newConversation = await agentsClient.GetConversationClient().CreateConversationAsync();
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentName, agentVersion);
-        responseOptions.SetConversationReference(newConversation.Id);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = new(agentName) { Version = agentVersion },
+            Conversation = newConversation,
+        };
 
         AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
 
@@ -603,7 +610,7 @@ public class AgentsTests : AgentsTestBase
             Version = agentVersion.Version,
         };
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentReference);
+        responseOptions.Agent = agentReference;
         ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [request],
@@ -687,7 +694,7 @@ public class AgentsTests : AgentsTestBase
                 options: null
             );
 
-            responseOptions.SetAgentReference(agentVersion);
+            responseOptions.Agent = agentVersion;
         }
 
         List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem("Hello, model!")];
@@ -749,7 +756,7 @@ public class AgentsTests : AgentsTestBase
             cts.Token);
 
         ResponseCreationOptions responseCreationOptions = new();
-        responseCreationOptions.SetAgentReference(newAgentVersion);
+        responseCreationOptions.Agent = newAgentVersion;
 
         string userInput = "Hello, agent! Greet me by name.";
         List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem(userInput)];
@@ -758,7 +765,7 @@ public class AgentsTests : AgentsTestBase
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
             AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync(options: null, cts.Token);
-            responseCreationOptions.SetConversationReference(conversation);
+            responseCreationOptions.Conversation = conversation;
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
         {

@@ -47,9 +47,6 @@ namespace OpenAI;
 [CodeGenType("ComputerUsePreviewTool")] internal partial class InternalComputerUsePreviewTool { }
 [CodeGenType("ComputerUsePreviewToolEnvironment")] internal readonly partial struct ComputerUsePreviewToolEnvironment { }
 [CodeGenType("Coordinate")] internal partial class InternalCoordinate { }
-[CodeGenType("CreateResponseRequest")] internal partial class InternalAgentCreateResponseRequest { }
-[CodeGenType("CreateResponseRequestConversation1")] internal partial class InternalCreateResponseRequestConversation1 { }
-[CodeGenType("DeleteResponseResult")] internal partial class InternalAgentDeleteResponseResult { }
 [CodeGenType("EasyInputMessage")] internal partial class InternalEasyInputMessage { }
 [CodeGenType("FileSearchTool")] internal partial class InternalFileSearchTool { }
 [CodeGenType("FileSearchToolCallItemParam")] internal partial class InternalFileSearchToolCallItemParam { }
@@ -73,7 +70,6 @@ namespace OpenAI;
 [CodeGenType("ImageGenToolOutputFormat")] internal readonly partial struct ImageGenToolOutputFormat { }
 [CodeGenType("ImageGenToolQuality")] internal readonly partial struct ImageGenToolQuality { }
 [CodeGenType("ImageGenToolSize")] internal readonly partial struct ImageGenToolSize { }
-[CodeGenType("ImplicitUserMessage")] internal partial class InternalImplicitUserMessage { }
 [CodeGenType("ItemContent")] internal partial class InternalItemContent { }
 [CodeGenType("ItemContentInputAudio")] internal partial class InternalItemContentInputAudio { }
 [CodeGenType("ItemContentInputAudioFormat")] internal readonly partial struct ItemContentInputAudioFormat { }

@@ -23,7 +23,6 @@ public class ResponsesParityTests : AgentsTestBase
 {
     public ResponsesParityTests(bool isAsync) : base(isAsync)
     {
-        // TestDiagnostics = false;
     }
 
     [RecordedTest]
@@ -304,8 +303,8 @@ public class ResponsesParityTests : AgentsTestBase
         ResponseCreationOptions responseCreationOptions = new()
         {
             Tools = { functionTool },
+            Conversation = conversation,
         };
-        responseCreationOptions.SetConversationReference(conversation);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("What's my favorite food?")],
