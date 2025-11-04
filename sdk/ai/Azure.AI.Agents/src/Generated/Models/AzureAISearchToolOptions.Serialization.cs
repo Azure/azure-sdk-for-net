@@ -10,11 +10,11 @@ using System.Text.Json;
 namespace Azure.AI.Agents
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
-    public partial class AzureAISearchToolResource : IJsonModel<AzureAISearchToolResource>
+    public partial class AzureAISearchToolOptions : IJsonModel<AzureAISearchToolOptions>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureAISearchToolResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureAISearchToolOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -25,16 +25,16 @@ namespace Azure.AI.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureAISearchToolOptions)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Indexes))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
-                foreach (AISearchIndexResource item in Indexes)
+                foreach (AzureAISearchIndex item in Indexes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -59,30 +59,30 @@ namespace Azure.AI.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAISearchToolResource IJsonModel<AzureAISearchToolResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureAISearchToolOptions IJsonModel<AzureAISearchToolOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureAISearchToolResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AzureAISearchToolOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureAISearchToolOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureAISearchToolResource(document.RootElement, options);
+            return DeserializeAzureAISearchToolOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureAISearchToolResource DeserializeAzureAISearchToolResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureAISearchToolOptions DeserializeAzureAISearchToolOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<AISearchIndexResource> indexes = default;
+            IList<AzureAISearchIndex> indexes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,10 +92,10 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    List<AISearchIndexResource> array = new List<AISearchIndexResource>();
+                    List<AzureAISearchIndex> array = new List<AzureAISearchIndex>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AISearchIndexResource.DeserializeAISearchIndexResource(item, options));
+                        array.Add(AzureAISearchIndex.DeserializeAzureAISearchIndex(item, options));
                     }
                     indexes = array;
                     continue;
@@ -105,47 +105,47 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchToolResource(indexes ?? new ChangeTrackingList<AISearchIndexResource>(), additionalBinaryDataProperties);
+            return new AzureAISearchToolOptions(indexes ?? new ChangeTrackingList<AzureAISearchIndex>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAISearchToolResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureAISearchToolOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureAISearchToolOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAISearchToolResource IPersistableModel<AzureAISearchToolResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureAISearchToolOptions IPersistableModel<AzureAISearchToolOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureAISearchToolResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AzureAISearchToolOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAzureAISearchToolResource(document.RootElement, options);
+                        return DeserializeAzureAISearchToolOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureAISearchToolOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAISearchToolResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureAISearchToolOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

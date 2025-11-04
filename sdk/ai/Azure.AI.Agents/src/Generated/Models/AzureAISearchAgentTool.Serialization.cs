@@ -13,11 +13,6 @@ namespace Azure.AI.Agents
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class AzureAISearchAgentTool : AgentTool, IJsonModel<AzureAISearchAgentTool>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchAgentTool"/> for deserialization. </summary>
-        internal AzureAISearchAgentTool()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureAISearchAgentTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,7 +33,7 @@ namespace Azure.AI.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azure_ai_search"u8);
-            writer.WriteObjectValue(AzureAiSearch, options);
+            writer.WriteObjectValue(Options, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -68,7 +63,7 @@ namespace Azure.AI.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureAISearchToolResource azureAiSearch = default;
+            AzureAISearchToolOptions options0 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -78,7 +73,7 @@ namespace Azure.AI.Agents
                 }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
+                    options0 = AzureAISearchToolOptions.DeserializeAzureAISearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -86,7 +81,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchAgentTool(@type, additionalBinaryDataProperties, azureAiSearch);
+            return new AzureAISearchAgentTool(@type, additionalBinaryDataProperties, options0);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
