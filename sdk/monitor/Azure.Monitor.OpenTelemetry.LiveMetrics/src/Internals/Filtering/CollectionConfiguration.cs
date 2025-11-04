@@ -37,6 +37,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private readonly List<DerivedMetric<Trace>> traceTelemetryMetrics = new List<DerivedMetric<Trace>>();
 
+        private readonly List<DerivedMetric<Event>> eventTelemetryMetrics = new List<DerivedMetric<Event>>();
+
         private readonly List<DocumentStream> documentStreams = new List<DocumentStream>();
         #endregion
 
@@ -106,6 +108,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => exceptionTelemetryMetrics;
 
         public IEnumerable<DerivedMetric<Trace>> TraceMetrics => traceTelemetryMetrics;
+
+        public IEnumerable<DerivedMetric<Event>> EventMetrics => eventTelemetryMetrics;
 
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.

@@ -109,6 +109,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         documentStream => documentStream.CheckFilters(trace, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
+                else if (item is Models.Event eventModel)
+                {
+                    matchesDocumentStreamFilter = UpdateTelemetryDocumentIfInterested(eventModel,
+                        documentStreams,
+                        documentStream => documentStream.EventQuotaTracker,
+                        documentStream => documentStream.CheckFilters(eventModel, out groupErrors));
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.EventMetrics, eventModel, out filteringErrors, ref projectionError);
+                }
                 else
                 {
                     Debug.WriteLine($"Unknown DocumentType: {item.DocumentType}");
