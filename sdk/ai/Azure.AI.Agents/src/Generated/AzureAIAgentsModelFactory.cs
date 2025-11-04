@@ -84,11 +84,11 @@ namespace Azure.AI.Agents
 
         /// <summary> The workflow specification in CSDL format. </summary>
         /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <param name="workflow"> The CSDL YAML definition of the workflow. </param>
+        /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
-        public static WorkflowAgentDefinition WorkflowAgentDefinition(RaiConfig raiConfig = default, string workflow = default)
+        public static WorkflowAgentDefinition WorkflowAgentDefinition(RaiConfig raiConfig = default, string workflowYaml = default)
         {
-            return new WorkflowAgentDefinition(AgentKind.Workflow, raiConfig, additionalBinaryDataProperties: null, workflow);
+            return new WorkflowAgentDefinition(AgentKind.Workflow, raiConfig, additionalBinaryDataProperties: null, workflowYaml);
         }
 
         /// <summary> The hosted agent definition. </summary>

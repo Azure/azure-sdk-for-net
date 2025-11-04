@@ -5,6 +5,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json.Nodes;
 using OpenAI.Responses;
 
 #pragma warning disable OPENAI001
@@ -69,4 +71,19 @@ public static partial class ResponseCreationOptionsExtensions
     /// <param name="conversation"></param>
     public static void SetConversationReference(this ResponseCreationOptions responseCreationOptions, AgentConversation conversation)
         => SetConversationReference(responseCreationOptions, conversation.Id);
+
+    public static void AddStructuredInput(this ResponseCreationOptions options, string key, string value)
+    {
+        IDictionary<string, BinaryData> structuredInputs
+            = options.TryGetAdditionalProperty("structured_inputs", out IDictionary<string, BinaryData> existingDictionary)
+                ? existingDictionary
+                : new ChangeTrackingDictionary<string, BinaryData>();
+        structuredInputs[key] = BinaryData.FromString(JsonValue.Create(value).ToJsonString());
+        options.SetAdditionalProperty("structured_inputs", structuredInputs);
+    }
+
+    public static void SetStructuredInputs(this ResponseCreationOptions options, BinaryData structuredInputsBytes)
+    {
+        options.SetAdditionalProperty("structured_inputs", structuredInputsBytes);
+    }
 }
