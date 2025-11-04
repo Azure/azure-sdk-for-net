@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Foundations;
@@ -12,7 +11,7 @@ using Azure.Core.Foundations;
 namespace Azure.AI.Projects
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AzureAIProjectsModelFactory
+    public static partial class ProjectsModelFactory
     {
         /// <summary> Response from the list and get connections operations. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
@@ -411,39 +410,6 @@ namespace Azure.AI.Projects
                 size,
                 tier,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a request for a pending upload. </summary>
-        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
-        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
-        /// <returns> A new <see cref="Projects.PendingUploadConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId, string connectionName, PendingUploadType pendingUploadType)
-        {
-            return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the response for a pending upload request. </summary>
-        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
-        /// <param name="pendingUploadId"> ID for this upload request. </param>
-        /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
-        /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType)
-        {
-            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> SAS Credential definition. </summary>
-        /// <param name="sasUri"></param>
-        /// <param name="type"> Type of credential. </param>
-        /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri, string @type)
-        {
-            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
         }
     }
 }
