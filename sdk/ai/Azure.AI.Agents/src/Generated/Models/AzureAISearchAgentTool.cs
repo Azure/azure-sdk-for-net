@@ -12,25 +12,12 @@ namespace Azure.AI.Agents
     public partial class AzureAISearchAgentTool : AgentTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchAgentTool"/>. </summary>
-        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureAiSearch"/> is null. </exception>
-        public AzureAISearchAgentTool(AzureAISearchToolResource azureAiSearch) : base(ToolType.AzureAiSearch)
-        {
-            Argument.AssertNotNull(azureAiSearch, nameof(azureAiSearch));
-
-            AzureAiSearch = azureAiSearch;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchAgentTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        internal AzureAISearchAgentTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
+        /// <param name="options"> The azure ai search index resource. </param>
+        internal AzureAISearchAgentTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolOptions options) : base(@type, additionalBinaryDataProperties)
         {
-            AzureAiSearch = azureAiSearch;
+            Options = options;
         }
-
-        /// <summary> The azure ai search index resource. </summary>
-        public AzureAISearchToolResource AzureAiSearch { get; set; }
     }
 }

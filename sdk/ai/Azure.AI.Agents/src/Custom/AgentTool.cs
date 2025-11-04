@@ -5,7 +5,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -19,7 +18,7 @@ public abstract partial class AgentTool
     public static BingGroundingAgentTool CreateBingGroundingTool(BingGroundingSearchToolParameters parameters) => new BingGroundingAgentTool(parameters);
     public static MicrosoftFabricAgentTool CreateMicrosoftFabricTool(FabricDataAgentToolParameters parameters) => new MicrosoftFabricAgentTool(parameters);
     public static SharepointAgentTool CreateSharepointTool(SharepointGroundingToolParameters parameters) => new SharepointAgentTool(parameters);
-    public static AzureAISearchAgentTool CreateAzureAISearchTool() => new AzureAISearchAgentTool();
+    public static AzureAISearchAgentTool CreateAzureAISearchTool(AzureAISearchToolOptions options = null) => new AzureAISearchAgentTool(options ?? new());
     public static OpenApiAgentTool CreateOpenApiTool(OpenApiFunctionDefinition definition) => new OpenApiAgentTool(definition);
     public static BingCustomSearchAgentTool CreateBingCustomSearchTool(BingCustomSearchToolParameters parameters) => new BingCustomSearchAgentTool(parameters);
     public static BrowserAutomationAgentTool CreateBrowserAutomationTool(BrowserAutomationToolParameters parameters) => new BrowserAutomationAgentTool(parameters);
