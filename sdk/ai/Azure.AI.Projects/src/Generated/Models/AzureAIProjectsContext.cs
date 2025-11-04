@@ -34,16 +34,16 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(ModelDeployment))]
     [ModelReaderWriterBuildable(typeof(ModelDeploymentSku))]
     [ModelReaderWriterBuildable(typeof(NoAuthenticationCredentials))]
-    [ModelReaderWriterBuildable(typeof(PagedConnection))]
-    [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]
-    [ModelReaderWriterBuildable(typeof(PagedDeployment))]
-    [ModelReaderWriterBuildable(typeof(PagedIndex))]
     [ModelReaderWriterBuildable(typeof(PendingUploadConfiguration))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResult))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectConnectionBaseCredential))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDataset))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectIndex))]
+    [ModelReaderWriterBuildable(typeof(PagedConnection))]
+    [ModelReaderWriterBuildable(typeof(PagedDeployment))]
+    [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]
+    [ModelReaderWriterBuildable(typeof(PagedIndex))]
     public partial class AzureAIProjectsContext : ModelReaderWriterContext
     {
     }
