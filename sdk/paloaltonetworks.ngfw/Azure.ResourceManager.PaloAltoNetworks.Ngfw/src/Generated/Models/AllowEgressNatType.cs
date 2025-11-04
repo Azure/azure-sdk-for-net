@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct AllowEgressNatType : IEquatable<AllowEgressNatType>
     {
         private readonly string _value;
-        private const string DISABLEDValue = "DISABLED";
-        private const string ENABLEDValue = "ENABLED";
+        private const string DisabledValue = "DISABLED";
+        private const string EnabledValue = "ENABLED";
 
         /// <summary> Initializes a new instance of <see cref="AllowEgressNatType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the DISABLED. </summary>
-        public static AllowEgressNatType DISABLED { get; } = new AllowEgressNatType(DISABLEDValue);
+        /// <summary> Gets the Disabled. </summary>
+        public static AllowEgressNatType Disabled { get; } = new AllowEgressNatType(DisabledValue);
 
-        /// <summary> Gets the ENABLED. </summary>
-        public static AllowEgressNatType ENABLED { get; } = new AllowEgressNatType(ENABLEDValue);
+        /// <summary> Gets the Enabled. </summary>
+        public static AllowEgressNatType Enabled { get; } = new AllowEgressNatType(EnabledValue);
 
         /// <summary> Determines if two <see cref="AllowEgressNatType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

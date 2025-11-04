@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             AllowDnsProxyType? enableDnsProxy = default;
-            EnabledDNSType? enabledDnsType = default;
+            EnabledDnsType? enabledDnsType = default;
             IList<IPAddressInfo> dnsServers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    enabledDnsType = new EnabledDNSType(prop.Value.GetString());
+                    enabledDnsType = new EnabledDnsType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsServers"u8))

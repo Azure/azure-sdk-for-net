@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -43,10 +44,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStringValue(ApplicationInsightsResourceId);
             writer.WritePropertyName("applicationInsightsConnectionString"u8);
             writer.WriteStringValue(ApplicationInsightsConnectionString);
-            if (Optional.IsDefined(PanEtag))
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
-                writer.WriteStringValue(PanEtag);
+                writer.WriteStringValue(PanETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             string applicationInsightsResourceId = default;
             string applicationInsightsConnectionString = default;
-            string panEtag = default;
+            ETag? panETag = default;
             FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -114,7 +115,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (prop.NameEquals("panEtag"u8))
                 {
-                    panEtag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    panETag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricsObject(applicationInsightsResourceId, applicationInsightsConnectionString, panEtag, provisioningState, additionalBinaryDataProperties);
+            return new MetricsObject(applicationInsightsResourceId, applicationInsightsConnectionString, panETag, provisioningState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

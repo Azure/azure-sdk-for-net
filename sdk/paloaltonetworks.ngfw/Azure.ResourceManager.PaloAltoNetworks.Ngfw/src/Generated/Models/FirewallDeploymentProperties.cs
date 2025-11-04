@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallDeploymentProperties"/>. </summary>
-        /// <param name="panEtag"> panEtag info. </param>
+        /// <param name="panETag"> panEtag info. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
@@ -51,9 +52,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallDeploymentProperties(string panEtag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, StrataCloudManagerConfig strataCloudManagerConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallDeploymentProperties(ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, StrataCloudManagerConfig strataCloudManagerConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PanEtag = panEtag;
+            PanETag = panETag;
             NetworkProfile = networkProfile;
             IsPanoramaManaged = isPanoramaManaged;
             IsStrataCloudManaged = isStrataCloudManaged;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> panEtag info. </summary>
-        public string PanEtag { get; set; }
+        public ETag? PanETag { get; set; }
 
         /// <summary> Network settings. </summary>
         public FirewallNetworkProfile NetworkProfile { get; set; }

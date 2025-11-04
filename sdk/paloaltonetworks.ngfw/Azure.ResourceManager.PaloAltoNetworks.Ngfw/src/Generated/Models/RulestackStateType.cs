@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct RulestackStateType : IEquatable<RulestackStateType>
     {
         private readonly string _value;
-        private const string DISABLEDValue = "DISABLED";
-        private const string ENABLEDValue = "ENABLED";
+        private const string DisabledValue = "DISABLED";
+        private const string EnabledValue = "ENABLED";
 
         /// <summary> Initializes a new instance of <see cref="RulestackStateType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the DISABLED. </summary>
-        public static RulestackStateType DISABLED { get; } = new RulestackStateType(DISABLEDValue);
+        /// <summary> Gets the Disabled. </summary>
+        public static RulestackStateType Disabled { get; } = new RulestackStateType(DisabledValue);
 
-        /// <summary> Gets the ENABLED. </summary>
-        public static RulestackStateType ENABLED { get; } = new RulestackStateType(ENABLEDValue);
+        /// <summary> Gets the Enabled. </summary>
+        public static RulestackStateType Enabled { get; } = new RulestackStateType(EnabledValue);
 
         /// <summary> Determines if two <see cref="RulestackStateType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

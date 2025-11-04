@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("unTrustSubnet"u8);
                 writer.WriteObjectValue(UnTrustSubnet, options);
             }
-            if (Optional.IsDefined(IpOfTrustSubnetForUdr))
+            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue(IpOfTrustSubnetForUdr, options);
+                writer.WriteObjectValue(IPOfTrustSubnetForUdr, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

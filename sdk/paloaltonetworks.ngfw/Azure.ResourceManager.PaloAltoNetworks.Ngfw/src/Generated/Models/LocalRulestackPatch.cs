@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the LocalRulestackResource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalRulestackPatch(AzureResourceManagerManagedIdentityProperties identity, IDictionary<string, string> tags, LocalRulestackUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalRulestackPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, LocalRulestackUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public AzureResourceManagerManagedIdentityProperties Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

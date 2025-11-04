@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallNetworkType : IEquatable<FirewallNetworkType>
     {
         private readonly string _value;
-        private const string VNETValue = "VNET";
-        private const string VWANValue = "VWAN";
+        private const string VnetValue = "VNET";
+        private const string VwanValue = "VWAN";
 
         /// <summary> Initializes a new instance of <see cref="FirewallNetworkType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the VNET. </summary>
-        public static FirewallNetworkType VNET { get; } = new FirewallNetworkType(VNETValue);
+        /// <summary> Gets the Vnet. </summary>
+        public static FirewallNetworkType Vnet { get; } = new FirewallNetworkType(VnetValue);
 
-        /// <summary> Gets the VWAN. </summary>
-        public static FirewallNetworkType VWAN { get; } = new FirewallNetworkType(VWANValue);
+        /// <summary> Gets the Vwan. </summary>
+        public static FirewallNetworkType Vwan { get; } = new FirewallNetworkType(VwanValue);
 
         /// <summary> Determines if two <see cref="FirewallNetworkType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

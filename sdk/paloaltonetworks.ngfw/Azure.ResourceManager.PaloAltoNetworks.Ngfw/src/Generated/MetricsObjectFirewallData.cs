@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal MetricsObjectFirewallData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MetricsObject properties) : base(id, name, resourceType, systemData)
+        internal MetricsObjectFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MetricsObject properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -83,11 +84,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary> read only string representing last create or update. </summary>
-        public string PanEtag
+        public ETag? PanETag
         {
             get
             {
-                return Properties is null ? default : Properties.PanEtag;
+                return Properties is null ? default : Properties.PanETag;
             }
             set
             {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new MetricsObject();
                 }
-                Properties.PanEtag = value;
+                Properties.PanETag = value.Value;
             }
         }
 

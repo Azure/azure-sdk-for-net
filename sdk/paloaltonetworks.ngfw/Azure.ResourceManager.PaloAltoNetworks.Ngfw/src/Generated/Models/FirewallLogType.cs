@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallLogType : IEquatable<FirewallLogType>
     {
         private readonly string _value;
-        private const string TRAFFICValue = "TRAFFIC";
-        private const string THREATValue = "THREAT";
-        private const string DECRYPTIONValue = "DECRYPTION";
-        private const string WILDFIREValue = "WILDFIRE";
+        private const string TrafficValue = "TRAFFIC";
+        private const string ThreatValue = "THREAT";
+        private const string DecryptionValue = "DECRYPTION";
+        private const string WildfireValue = "WILDFIRE";
         private const string DlpValue = "DLP";
-        private const string AUDITValue = "AUDIT";
+        private const string AuditValue = "AUDIT";
 
         /// <summary> Initializes a new instance of <see cref="FirewallLogType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,23 +32,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the TRAFFIC. </summary>
-        public static FirewallLogType TRAFFIC { get; } = new FirewallLogType(TRAFFICValue);
+        /// <summary> Gets the Traffic. </summary>
+        public static FirewallLogType Traffic { get; } = new FirewallLogType(TrafficValue);
 
-        /// <summary> Gets the THREAT. </summary>
-        public static FirewallLogType THREAT { get; } = new FirewallLogType(THREATValue);
+        /// <summary> Gets the Threat. </summary>
+        public static FirewallLogType Threat { get; } = new FirewallLogType(ThreatValue);
 
-        /// <summary> Gets the DECRYPTION. </summary>
-        public static FirewallLogType DECRYPTION { get; } = new FirewallLogType(DECRYPTIONValue);
+        /// <summary> Gets the Decryption. </summary>
+        public static FirewallLogType Decryption { get; } = new FirewallLogType(DecryptionValue);
 
-        /// <summary> Gets the WILDFIRE. </summary>
-        public static FirewallLogType WILDFIRE { get; } = new FirewallLogType(WILDFIREValue);
+        /// <summary> Gets the Wildfire. </summary>
+        public static FirewallLogType Wildfire { get; } = new FirewallLogType(WildfireValue);
 
         /// <summary> Gets the Dlp. </summary>
         public static FirewallLogType Dlp { get; } = new FirewallLogType(DlpValue);
 
-        /// <summary> Gets the AUDIT. </summary>
-        public static FirewallLogType AUDIT { get; } = new FirewallLogType(AUDITValue);
+        /// <summary> Gets the Audit. </summary>
+        public static FirewallLogType Audit { get; } = new FirewallLogType(AuditValue);
 
         /// <summary> Determines if two <see cref="FirewallLogType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

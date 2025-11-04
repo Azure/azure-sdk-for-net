@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallBooleanType : IEquatable<FirewallBooleanType>
     {
         private readonly string _value;
-        private const string TRUEValue = "TRUE";
-        private const string FALSEValue = "FALSE";
+        private const string TrueValue = "TRUE";
+        private const string FalseValue = "FALSE";
 
         /// <summary> Initializes a new instance of <see cref="FirewallBooleanType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the TRUE. </summary>
-        public static FirewallBooleanType TRUE { get; } = new FirewallBooleanType(TRUEValue);
+        /// <summary> Gets the True. </summary>
+        public static FirewallBooleanType True { get; } = new FirewallBooleanType(TrueValue);
 
-        /// <summary> Gets the FALSE. </summary>
-        public static FirewallBooleanType FALSE { get; } = new FirewallBooleanType(FALSEValue);
+        /// <summary> Gets the False. </summary>
+        public static FirewallBooleanType False { get; } = new FirewallBooleanType(FalseValue);
 
         /// <summary> Determines if two <see cref="FirewallBooleanType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

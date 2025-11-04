@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The updatable properties of the GlobalRulestackResource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalRulestackPatch(string location, AzureResourceManagerManagedIdentityProperties identity, GlobalRulestackUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GlobalRulestackPatch(AzureLocation? location, ManagedServiceIdentity identity, GlobalRulestackUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Identity = identity;
@@ -35,10 +37,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Global Location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public AzureResourceManagerManagedIdentityProperties Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The updatable properties of the GlobalRulestackResource. </summary>
         public GlobalRulestackUpdateProperties Properties { get; set; }

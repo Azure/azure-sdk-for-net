@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallBillingPlanUsageType : IEquatable<FirewallBillingPlanUsageType>
     {
         private readonly string _value;
-        private const string PAYGValue = "PAYG";
-        private const string COMMITTEDValue = "COMMITTED";
+        private const string PaygValue = "PAYG";
+        private const string CommittedValue = "COMMITTED";
 
         /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanUsageType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the PAYG. </summary>
-        public static FirewallBillingPlanUsageType PAYG { get; } = new FirewallBillingPlanUsageType(PAYGValue);
+        /// <summary> Gets the Payg. </summary>
+        public static FirewallBillingPlanUsageType Payg { get; } = new FirewallBillingPlanUsageType(PaygValue);
 
-        /// <summary> Gets the COMMITTED. </summary>
-        public static FirewallBillingPlanUsageType COMMITTED { get; } = new FirewallBillingPlanUsageType(COMMITTEDValue);
+        /// <summary> Gets the Committed. </summary>
+        public static FirewallBillingPlanUsageType Committed { get; } = new FirewallBillingPlanUsageType(CommittedValue);
 
         /// <summary> Determines if two <see cref="FirewallBillingPlanUsageType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

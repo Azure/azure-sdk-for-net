@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceTypeList"/>. </summary>
-        /// <param name="type"> security services type. </param>
+        /// <param name="securityServicesTypeListType"> security services type. </param>
         /// <param name="entry"> list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulestackSecurityServiceTypeList(string @type, IReadOnlyList<NameDescriptionObject> entry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RulestackSecurityServiceTypeList(string securityServicesTypeListType, IReadOnlyList<NameDescriptionObject> entry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            SecurityServicesTypeListType = securityServicesTypeListType;
             Entry = entry;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> security services type. </summary>
-        public string Type { get; }
+        public string SecurityServicesTypeListType { get; }
 
         /// <summary> list. </summary>
         public IReadOnlyList<NameDescriptionObject> Entry { get; }

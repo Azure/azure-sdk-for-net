@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallHealthStatus : IEquatable<FirewallHealthStatus>
     {
         private readonly string _value;
-        private const string GREENValue = "GREEN";
-        private const string YELLOWValue = "YELLOW";
+        private const string GreenValue = "GREEN";
+        private const string YellowValue = "YELLOW";
         private const string RedValue = "RED";
-        private const string INITIALIZINGValue = "INITIALIZING";
+        private const string InitializingValue = "INITIALIZING";
 
         /// <summary> Initializes a new instance of <see cref="FirewallHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the GREEN. </summary>
-        public static FirewallHealthStatus GREEN { get; } = new FirewallHealthStatus(GREENValue);
+        /// <summary> Gets the Green. </summary>
+        public static FirewallHealthStatus Green { get; } = new FirewallHealthStatus(GreenValue);
 
-        /// <summary> Gets the YELLOW. </summary>
-        public static FirewallHealthStatus YELLOW { get; } = new FirewallHealthStatus(YELLOWValue);
+        /// <summary> Gets the Yellow. </summary>
+        public static FirewallHealthStatus Yellow { get; } = new FirewallHealthStatus(YellowValue);
 
         /// <summary> Gets the Red. </summary>
         public static FirewallHealthStatus Red { get; } = new FirewallHealthStatus(RedValue);
 
-        /// <summary> Gets the INITIALIZING. </summary>
-        public static FirewallHealthStatus INITIALIZING { get; } = new FirewallHealthStatus(INITIALIZINGValue);
+        /// <summary> Gets the Initializing. </summary>
+        public static FirewallHealthStatus Initializing { get; } = new FirewallHealthStatus(InitializingValue);
 
         /// <summary> Determines if two <see cref="FirewallHealthStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

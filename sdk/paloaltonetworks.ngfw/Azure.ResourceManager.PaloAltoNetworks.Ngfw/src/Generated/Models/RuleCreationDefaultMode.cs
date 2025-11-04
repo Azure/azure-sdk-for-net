@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     {
         private readonly string _value;
         private const string IPSValue = "IPS";
-        private const string FIREWALLValue = "FIREWALL";
-        private const string NONEValue = "NONE";
+        private const string FirewallValue = "FIREWALL";
+        private const string NoneValue = "NONE";
 
         /// <summary> Initializes a new instance of <see cref="RuleCreationDefaultMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Gets the IPS. </summary>
         public static RuleCreationDefaultMode IPS { get; } = new RuleCreationDefaultMode(IPSValue);
 
-        /// <summary> Gets the FIREWALL. </summary>
-        public static RuleCreationDefaultMode FIREWALL { get; } = new RuleCreationDefaultMode(FIREWALLValue);
+        /// <summary> Gets the Firewall. </summary>
+        public static RuleCreationDefaultMode Firewall { get; } = new RuleCreationDefaultMode(FirewallValue);
 
-        /// <summary> Gets the NONE. </summary>
-        public static RuleCreationDefaultMode NONE { get; } = new RuleCreationDefaultMode(NONEValue);
+        /// <summary> Gets the None. </summary>
+        public static RuleCreationDefaultMode None { get; } = new RuleCreationDefaultMode(NoneValue);
 
         /// <summary> Determines if two <see cref="RuleCreationDefaultMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

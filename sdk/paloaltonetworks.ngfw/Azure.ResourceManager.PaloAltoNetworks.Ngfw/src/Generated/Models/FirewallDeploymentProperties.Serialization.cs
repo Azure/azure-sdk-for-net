@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -39,10 +40,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 throw new FormatException($"The model {nameof(FirewallDeploymentProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PanEtag))
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
-                writer.WriteStringValue(PanEtag);
+                writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
             writer.WriteObjectValue(NetworkProfile, options);
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            string panEtag = default;
+            ETag? panETag = default;
             FirewallNetworkProfile networkProfile = default;
             FirewallBooleanType? isPanoramaManaged = default;
             FirewallBooleanType? isStrataCloudManaged = default;
@@ -151,7 +152,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 if (prop.NameEquals("panEtag"u8))
                 {
-                    panEtag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    panETag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -248,7 +253,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             return new FirewallDeploymentProperties(
-                panEtag,
+                panETag,
                 networkProfile,
                 isPanoramaManaged,
                 isStrataCloudManaged,

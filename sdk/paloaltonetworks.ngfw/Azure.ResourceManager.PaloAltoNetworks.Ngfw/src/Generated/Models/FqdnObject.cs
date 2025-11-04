@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FqdnObject(string description, IList<string> fqdnList, string eTag, string auditComment, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FqdnObject(string description, IList<string> fqdnList, ETag? eTag, string auditComment, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             FqdnList = fqdnList;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public IList<string> FqdnList { get; } = new ChangeTrackingList<string>();
 
         /// <summary> etag info. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> comment for this object. </summary>
         public string AuditComment { get; set; }

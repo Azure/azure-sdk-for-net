@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         private readonly string _value;
         private const string AntiSpywareValue = "antiSpyware";
         private const string AntiVirusValue = "antiVirus";
-        private const string IpsVulnerabilityValue = "ipsVulnerability";
+        private const string IPsVulnerabilityValue = "ipsVulnerability";
         private const string UrlFilteringValue = "urlFiltering";
         private const string FileBlockingValue = "fileBlocking";
         private const string DnsSubscriptionValue = "dnsSubscription";
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Gets the AntiVirus. </summary>
         public static RulestackSecurityServiceType AntiVirus { get; } = new RulestackSecurityServiceType(AntiVirusValue);
 
-        /// <summary> Gets the IpsVulnerability. </summary>
-        public static RulestackSecurityServiceType IpsVulnerability { get; } = new RulestackSecurityServiceType(IpsVulnerabilityValue);
+        /// <summary> Gets the IPsVulnerability. </summary>
+        public static RulestackSecurityServiceType IPsVulnerability { get; } = new RulestackSecurityServiceType(IPsVulnerabilityValue);
 
         /// <summary> Gets the UrlFiltering. </summary>
         public static RulestackSecurityServiceType UrlFiltering { get; } = new RulestackSecurityServiceType(UrlFilteringValue);

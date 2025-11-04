@@ -12,52 +12,52 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Enabled DNS type values. </summary>
-    public readonly partial struct EnabledDNSType : IEquatable<EnabledDNSType>
+    public readonly partial struct EnabledDnsType : IEquatable<EnabledDnsType>
     {
         private readonly string _value;
-        private const string CUSTOMValue = "CUSTOM";
-        private const string AZUREValue = "AZURE";
+        private const string CustomValue = "CUSTOM";
+        private const string AzureValue = "AZURE";
 
-        /// <summary> Initializes a new instance of <see cref="EnabledDNSType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledDnsType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EnabledDNSType(string value)
+        public EnabledDnsType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
 
-        /// <summary> Gets the CUSTOM. </summary>
-        public static EnabledDNSType CUSTOM { get; } = new EnabledDNSType(CUSTOMValue);
+        /// <summary> Gets the Custom. </summary>
+        public static EnabledDnsType Custom { get; } = new EnabledDnsType(CustomValue);
 
-        /// <summary> Gets the AZURE. </summary>
-        public static EnabledDNSType AZURE { get; } = new EnabledDNSType(AZUREValue);
+        /// <summary> Gets the Azure. </summary>
+        public static EnabledDnsType Azure { get; } = new EnabledDnsType(AzureValue);
 
-        /// <summary> Determines if two <see cref="EnabledDNSType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EnabledDnsType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EnabledDNSType left, EnabledDNSType right) => left.Equals(right);
+        public static bool operator ==(EnabledDnsType left, EnabledDnsType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EnabledDNSType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EnabledDnsType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EnabledDNSType left, EnabledDNSType right) => !left.Equals(right);
+        public static bool operator !=(EnabledDnsType left, EnabledDnsType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EnabledDNSType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EnabledDnsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnabledDNSType(string value) => new EnabledDNSType(value);
+        public static implicit operator EnabledDnsType(string value) => new EnabledDnsType(value);
 
-        /// <summary> Converts a string to a <see cref="EnabledDNSType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EnabledDnsType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnabledDNSType?(string value) => value == null ? null : new EnabledDNSType(value);
+        public static implicit operator EnabledDnsType?(string value) => value == null ? null : new EnabledDnsType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EnabledDNSType other && Equals(other);
+        public override bool Equals(object obj) => obj is EnabledDnsType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EnabledDNSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EnabledDnsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

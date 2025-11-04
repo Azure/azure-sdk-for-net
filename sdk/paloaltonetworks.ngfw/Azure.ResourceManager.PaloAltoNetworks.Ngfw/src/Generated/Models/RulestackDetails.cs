@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="rulestackId"> Associated rulestack Id. </param>
         /// <param name="location"> Rulestack location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulestackDetails(ResourceIdentifier resourceId, string rulestackId, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RulestackDetails(ResourceIdentifier resourceId, string rulestackId, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             RulestackId = rulestackId;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string RulestackId { get; set; }
 
         /// <summary> Rulestack location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

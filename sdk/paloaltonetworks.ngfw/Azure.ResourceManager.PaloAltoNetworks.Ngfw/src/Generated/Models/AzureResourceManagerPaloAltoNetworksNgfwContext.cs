@@ -19,8 +19,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(AdvancedSecurityObjectListResult))]
     [ModelReaderWriterBuildable(typeof(AppSeenInfo))]
     [ModelReaderWriterBuildable(typeof(AppSeenInfoList))]
-    [ModelReaderWriterBuildable(typeof(AzureResourceManagerManagedIdentityProperties))]
-    [ModelReaderWriterBuildable(typeof(AzureResourceManagerUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(CertificateObject))]
     [ModelReaderWriterBuildable(typeof(CertificateObjectGlobalRulestackResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CertificateObjectLocalRulestackResourceListResult))]
@@ -78,6 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleData))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleResource))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetricsObject))]
     [ModelReaderWriterBuildable(typeof(MetricsObjectFirewallData))]
     [ModelReaderWriterBuildable(typeof(MetricsObjectFirewallResource))]
@@ -120,6 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(StrataCloudManagerInfo))]
     [ModelReaderWriterBuildable(typeof(SupportInfoModel))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPaloAltoNetworksNgfwContext : ModelReaderWriterContext
     {
     }

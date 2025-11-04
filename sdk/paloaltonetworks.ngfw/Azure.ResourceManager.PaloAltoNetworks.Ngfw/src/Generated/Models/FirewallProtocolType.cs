@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallProtocolType : IEquatable<FirewallProtocolType>
     {
         private readonly string _value;
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="FirewallProtocolType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the TCP. </summary>
-        public static FirewallProtocolType TCP { get; } = new FirewallProtocolType(TCPValue);
+        /// <summary> Gets the Tcp. </summary>
+        public static FirewallProtocolType Tcp { get; } = new FirewallProtocolType(TcpValue);
 
-        /// <summary> Gets the UDP. </summary>
-        public static FirewallProtocolType UDP { get; } = new FirewallProtocolType(UDPValue);
+        /// <summary> Gets the Udp. </summary>
+        public static FirewallProtocolType Udp { get; } = new FirewallProtocolType(UdpValue);
 
         /// <summary> Determines if two <see cref="FirewallProtocolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct RulestackScopeType : IEquatable<RulestackScopeType>
     {
         private readonly string _value;
-        private const string LOCALValue = "LOCAL";
-        private const string GLOBALValue = "GLOBAL";
+        private const string LocalValue = "LOCAL";
+        private const string GlobalValue = "GLOBAL";
 
         /// <summary> Initializes a new instance of <see cref="RulestackScopeType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the LOCAL. </summary>
-        public static RulestackScopeType LOCAL { get; } = new RulestackScopeType(LOCALValue);
+        /// <summary> Gets the Local. </summary>
+        public static RulestackScopeType Local { get; } = new RulestackScopeType(LocalValue);
 
-        /// <summary> Gets the GLOBAL. </summary>
-        public static RulestackScopeType GLOBAL { get; } = new RulestackScopeType(GLOBALValue);
+        /// <summary> Gets the Global. </summary>
+        public static RulestackScopeType Global { get; } = new RulestackScopeType(GlobalValue);
 
         /// <summary> Determines if two <see cref="RulestackScopeType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

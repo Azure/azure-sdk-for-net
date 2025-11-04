@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleEntry(string eTag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuleEntry(ETag? eTag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             RuleName = ruleName;
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> etag info. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> rule name. </summary>
         public string RuleName { get; set; }

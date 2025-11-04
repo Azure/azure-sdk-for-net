@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallBillingCycle : IEquatable<FirewallBillingCycle>
     {
         private readonly string _value;
-        private const string WEEKLYValue = "WEEKLY";
-        private const string MONTHLYValue = "MONTHLY";
+        private const string WeeklyValue = "WEEKLY";
+        private const string MonthlyValue = "MONTHLY";
 
         /// <summary> Initializes a new instance of <see cref="FirewallBillingCycle"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the WEEKLY. </summary>
-        public static FirewallBillingCycle WEEKLY { get; } = new FirewallBillingCycle(WEEKLYValue);
+        /// <summary> Gets the Weekly. </summary>
+        public static FirewallBillingCycle Weekly { get; } = new FirewallBillingCycle(WeeklyValue);
 
-        /// <summary> Gets the MONTHLY. </summary>
-        public static FirewallBillingCycle MONTHLY { get; } = new FirewallBillingCycle(MONTHLYValue);
+        /// <summary> Gets the Monthly. </summary>
+        public static FirewallBillingCycle Monthly { get; } = new FirewallBillingCycle(MonthlyValue);
 
         /// <summary> Determines if two <see cref="FirewallBillingCycle"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

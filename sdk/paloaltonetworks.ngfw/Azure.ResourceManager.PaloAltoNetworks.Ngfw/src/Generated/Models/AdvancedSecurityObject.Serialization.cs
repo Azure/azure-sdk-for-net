@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AdvSecurityObjectModelType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(AdvSecurityObjectModelType);
             }
             writer.WritePropertyName("entry"u8);
             writer.WriteStartArray();
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            string @type = default;
+            string advSecurityObjectModelType = default;
             IReadOnlyList<NameDescriptionObject> entry = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    advSecurityObjectModelType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("entry"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AdvancedSecurityObject(@type, entry, additionalBinaryDataProperties);
+            return new AdvancedSecurityObject(advSecurityObjectModelType, entry, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

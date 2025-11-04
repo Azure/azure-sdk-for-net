@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     {
         private readonly string _value;
         private const string UpValue = "UP";
-        private const string DOWNValue = "DOWN";
+        private const string DownValue = "DOWN";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPanoramaServerStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Gets the Up. </summary>
         public static FirewallPanoramaServerStatus Up { get; } = new FirewallPanoramaServerStatus(UpValue);
 
-        /// <summary> Gets the DOWN. </summary>
-        public static FirewallPanoramaServerStatus DOWN { get; } = new FirewallPanoramaServerStatus(DOWNValue);
+        /// <summary> Gets the Down. </summary>
+        public static FirewallPanoramaServerStatus Down { get; } = new FirewallPanoramaServerStatus(DownValue);
 
         /// <summary> Determines if two <see cref="FirewallPanoramaServerStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

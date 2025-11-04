@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="enabledDnsType"> Enabled DNS proxy type, disabled by default. </param>
         /// <param name="dnsServers"> List of IPs associated with the Firewall. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallDnsSettings(AllowDnsProxyType? enableDnsProxy, EnabledDNSType? enabledDnsType, IList<IPAddressInfo> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallDnsSettings(AllowDnsProxyType? enableDnsProxy, EnabledDnsType? enabledDnsType, IList<IPAddressInfo> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableDnsProxy = enableDnsProxy;
             EnabledDnsType = enabledDnsType;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public AllowDnsProxyType? EnableDnsProxy { get; set; }
 
         /// <summary> Enabled DNS proxy type, disabled by default. </summary>
-        public EnabledDNSType? EnabledDnsType { get; set; }
+        public EnabledDnsType? EnabledDnsType { get; set; }
 
         /// <summary> List of IPs associated with the Firewall. </summary>
         public IList<IPAddressInfo> DnsServers { get; }

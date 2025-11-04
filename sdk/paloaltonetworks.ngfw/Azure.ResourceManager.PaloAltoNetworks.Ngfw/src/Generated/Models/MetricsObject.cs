@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -33,14 +34,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of <see cref="MetricsObject"/>. </summary>
         /// <param name="applicationInsightsResourceId"> Resource Id of application insights resource. </param>
         /// <param name="applicationInsightsConnectionString"> Connection string of application insights resource. </param>
-        /// <param name="panEtag"> read only string representing last create or update. </param>
+        /// <param name="panETag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsObject(string applicationInsightsResourceId, string applicationInsightsConnectionString, string panEtag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricsObject(string applicationInsightsResourceId, string applicationInsightsConnectionString, ETag? panETag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationInsightsResourceId = applicationInsightsResourceId;
             ApplicationInsightsConnectionString = applicationInsightsConnectionString;
-            PanEtag = panEtag;
+            PanETag = panETag;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string ApplicationInsightsConnectionString { get; set; }
 
         /// <summary> read only string representing last create or update. </summary>
-        public string PanEtag { get; set; }
+        public ETag? PanETag { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public FirewallProvisioningState? ProvisioningState { get; }

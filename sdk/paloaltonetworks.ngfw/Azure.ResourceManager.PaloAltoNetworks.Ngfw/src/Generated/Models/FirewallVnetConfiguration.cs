@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Vnet = vnet;
             TrustSubnet = trustSubnet;
             UnTrustSubnet = unTrustSubnet;
-            IpOfTrustSubnetForUdr = ipOfTrustSubnetForUdr;
+            IPOfTrustSubnetForUdr = ipOfTrustSubnetForUdr;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public IPAddressSpaceInfo UnTrustSubnet { get; set; }
 
         /// <summary> IP of trust subnet for UDR. </summary>
-        public IPAddressInfo IpOfTrustSubnetForUdr { get; set; }
+        public IPAddressInfo IPOfTrustSubnetForUdr { get; set; }
     }
 }

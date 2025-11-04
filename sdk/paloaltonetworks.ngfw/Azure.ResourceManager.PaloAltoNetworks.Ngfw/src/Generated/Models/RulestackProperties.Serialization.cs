@@ -9,6 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -34,15 +36,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 throw new FormatException($"The model {nameof(RulestackProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PanEtag))
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
-                writer.WriteStringValue(PanEtag);
+                writer.WriteStringValue(PanETag.Value.ToString());
             }
             if (Optional.IsDefined(PanLocation))
             {
                 writer.WritePropertyName("panLocation"u8);
-                writer.WriteStringValue(PanLocation);
+                writer.WriteStringValue(PanLocation.Value);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -131,8 +133,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            string panEtag = default;
-            string panLocation = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
             RulestackScopeType? scope = default;
             IList<string> associatedSubscriptions = default;
             string description = default;
@@ -145,12 +147,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 if (prop.NameEquals("panEtag"u8))
                 {
-                    panEtag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    panETag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("panLocation"u8))
                 {
-                    panLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    panLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))
@@ -226,7 +236,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             return new RulestackProperties(
-                panEtag,
+                panETag,
                 panLocation,
                 scope,
                 associatedSubscriptions ?? new ChangeTrackingList<string>(),

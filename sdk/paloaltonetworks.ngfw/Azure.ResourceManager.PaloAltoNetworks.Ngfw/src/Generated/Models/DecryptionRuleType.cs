@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct DecryptionRuleType : IEquatable<DecryptionRuleType>
     {
         private readonly string _value;
-        private const string SSLOutboundInspectionValue = "SSLOutboundInspection";
-        private const string SSLInboundInspectionValue = "SSLInboundInspection";
+        private const string SslOutboundInspectionValue = "SSLOutboundInspection";
+        private const string SslInboundInspectionValue = "SSLInboundInspection";
         private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="DecryptionRuleType"/>. </summary>
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the SSLOutboundInspection. </summary>
-        public static DecryptionRuleType SSLOutboundInspection { get; } = new DecryptionRuleType(SSLOutboundInspectionValue);
+        /// <summary> Gets the SslOutboundInspection. </summary>
+        public static DecryptionRuleType SslOutboundInspection { get; } = new DecryptionRuleType(SslOutboundInspectionValue);
 
-        /// <summary> Gets the SSLInboundInspection. </summary>
-        public static DecryptionRuleType SSLInboundInspection { get; } = new DecryptionRuleType(SSLInboundInspectionValue);
+        /// <summary> Gets the SslInboundInspection. </summary>
+        public static DecryptionRuleType SslInboundInspection { get; } = new DecryptionRuleType(SslInboundInspectionValue);
 
         /// <summary> Gets the None. </summary>
         public static DecryptionRuleType None { get; } = new DecryptionRuleType(NoneValue);

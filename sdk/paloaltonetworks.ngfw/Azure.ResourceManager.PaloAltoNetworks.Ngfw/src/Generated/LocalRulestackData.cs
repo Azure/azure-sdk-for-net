@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal LocalRulestackData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RulestackProperties properties, AzureResourceManagerManagedIdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
+        internal LocalRulestackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RulestackProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,14 +48,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         internal RulestackProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public AzureResourceManagerManagedIdentityProperties Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> PanEtag info. </summary>
-        public string PanEtag
+        public ETag? PanETag
         {
             get
             {
-                return Properties is null ? default : Properties.PanEtag;
+                return Properties is null ? default : Properties.PanETag;
             }
             set
             {
@@ -62,12 +63,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RulestackProperties();
                 }
-                Properties.PanEtag = value;
+                Properties.PanETag = value.Value;
             }
         }
 
         /// <summary> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </summary>
-        public string PanLocation
+        public AzureLocation? PanLocation
         {
             get
             {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new RulestackProperties();
                 }
-                Properties.PanLocation = value;
+                Properties.PanLocation = value.Value;
             }
         }
 

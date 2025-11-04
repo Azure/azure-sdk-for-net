@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/>. </summary>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
-        /// <param name="publicIps"> List of IPs associated with the Firewall. </param>
+        /// <param name="publicIPs"> List of IPs associated with the Firewall. </param>
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIps"/> is null. </exception>
-        public FirewallNetworkProfile(FirewallNetworkType networkType, IEnumerable<IPAddressInfo> publicIps, AllowEgressNatType enableEgressNat)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPs"/> is null. </exception>
+        public FirewallNetworkProfile(FirewallNetworkType networkType, IEnumerable<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat)
         {
-            Argument.AssertNotNull(publicIps, nameof(publicIps));
+            Argument.AssertNotNull(publicIPs, nameof(publicIPs));
 
             NetworkType = networkType;
-            PublicIps = publicIps.ToList();
+            PublicIPs = publicIPs.ToList();
             EnableEgressNat = enableEgressNat;
-            EgressNatIp = new ChangeTrackingList<IPAddressInfo>();
+            EgressNatIP = new ChangeTrackingList<IPAddressInfo>();
             TrustedRanges = new ChangeTrackingList<string>();
             PrivateSourceNatRulesDestination = new ChangeTrackingList<string>();
         }
@@ -39,20 +39,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="vnetConfiguration"> Vnet configurations. </param>
         /// <param name="vwanConfiguration"> Vwan configurations. </param>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
-        /// <param name="publicIps"> List of IPs associated with the Firewall. </param>
+        /// <param name="publicIPs"> List of IPs associated with the Firewall. </param>
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
-        /// <param name="egressNatIp"> Egress nat IP to use. </param>
+        /// <param name="egressNatIP"> Egress nat IP to use. </param>
         /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
         /// <param name="privateSourceNatRulesDestination"> Array of ipv4 destination address for which source NAT is to be performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIps, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIp, IList<string> trustedRanges, IList<string> privateSourceNatRulesDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges, IList<string> privateSourceNatRulesDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VnetConfiguration = vnetConfiguration;
             VwanConfiguration = vwanConfiguration;
             NetworkType = networkType;
-            PublicIps = publicIps;
+            PublicIPs = publicIPs;
             EnableEgressNat = enableEgressNat;
-            EgressNatIp = egressNatIp;
+            EgressNatIP = egressNatIP;
             TrustedRanges = trustedRanges;
             PrivateSourceNatRulesDestination = privateSourceNatRulesDestination;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public FirewallNetworkType NetworkType { get; set; }
 
         /// <summary> List of IPs associated with the Firewall. </summary>
-        public IList<IPAddressInfo> PublicIps { get; }
+        public IList<IPAddressInfo> PublicIPs { get; }
 
         /// <summary> Enable egress NAT, enabled by default. </summary>
         public AllowEgressNatType EnableEgressNat { get; set; }
 
         /// <summary> Egress nat IP to use. </summary>
-        public IList<IPAddressInfo> EgressNatIp { get; }
+        public IList<IPAddressInfo> EgressNatIP { get; }
 
         /// <summary> Non-RFC 1918 address. </summary>
         public IList<string> TrustedRanges { get; }

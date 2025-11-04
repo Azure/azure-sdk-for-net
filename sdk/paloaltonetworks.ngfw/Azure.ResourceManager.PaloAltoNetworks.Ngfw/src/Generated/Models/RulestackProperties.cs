@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RulestackProperties"/>. </summary>
-        /// <param name="panEtag"> PanEtag info. </param>
+        /// <param name="panETag"> PanEtag info. </param>
         /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
         /// <param name="scope"> Rulestack Type. </param>
         /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="securityServices"> Security Profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulestackProperties(string panEtag, string panLocation, RulestackScopeType? scope, IList<string> associatedSubscriptions, string description, RuleCreationDefaultMode? defaultMode, string minAppIdVersion, FirewallProvisioningState? provisioningState, RulestackSecurityServices securityServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RulestackProperties(ETag? panETag, AzureLocation? panLocation, RulestackScopeType? scope, IList<string> associatedSubscriptions, string description, RuleCreationDefaultMode? defaultMode, string minAppIdVersion, FirewallProvisioningState? provisioningState, RulestackSecurityServices securityServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PanEtag = panEtag;
+            PanETag = panETag;
             PanLocation = panLocation;
             Scope = scope;
             AssociatedSubscriptions = associatedSubscriptions;
@@ -49,10 +51,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> PanEtag info. </summary>
-        public string PanEtag { get; set; }
+        public ETag? PanETag { get; set; }
 
         /// <summary> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </summary>
-        public string PanLocation { get; set; }
+        public AzureLocation? PanLocation { get; set; }
 
         /// <summary> Rulestack Type. </summary>
         public RulestackScopeType? Scope { get; set; }

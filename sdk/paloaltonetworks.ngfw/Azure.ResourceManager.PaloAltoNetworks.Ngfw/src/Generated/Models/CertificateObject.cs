@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="eTag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateObject(string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment, string description, string eTag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateObject(string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment, string description, ETag? eTag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateSignerResourceId = certificateSignerResourceId;
             CertificateSelfSigned = certificateSelfSigned;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string Description { get; set; }
 
         /// <summary> read only string representing last create or update. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public FirewallProvisioningState? ProvisioningState { get; }

@@ -53,18 +53,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStringValue(NetworkType.ToString());
             writer.WritePropertyName("publicIps"u8);
             writer.WriteStartArray();
-            foreach (IPAddressInfo item in PublicIps)
+            foreach (IPAddressInfo item in PublicIPs)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (Optional.IsCollectionDefined(EgressNatIp))
+            if (Optional.IsCollectionDefined(EgressNatIP))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
-                foreach (IPAddressInfo item in EgressNatIp)
+                foreach (IPAddressInfo item in EgressNatIP)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FirewallVnetConfiguration vnetConfiguration = default;
             FirewallVwanConfiguration vwanConfiguration = default;
             FirewallNetworkType networkType = default;
-            IList<IPAddressInfo> publicIps = default;
+            IList<IPAddressInfo> publicIPs = default;
             AllowEgressNatType enableEgressNat = default;
-            IList<IPAddressInfo> egressNatIp = default;
+            IList<IPAddressInfo> egressNatIP = default;
             IList<string> trustedRanges = default;
             IList<string> privateSourceNatRulesDestination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
-                    publicIps = array;
+                    publicIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("enableEgressNat"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
-                    egressNatIp = array;
+                    egressNatIP = array;
                     continue;
                 }
                 if (prop.NameEquals("trustedRanges"u8))
@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 vnetConfiguration,
                 vwanConfiguration,
                 networkType,
-                publicIps,
+                publicIPs,
                 enableEgressNat,
-                egressNatIp ?? new ChangeTrackingList<IPAddressInfo>(),
+                egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
                 trustedRanges ?? new ChangeTrackingList<string>(),
                 privateSourceNatRulesDestination ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObject"/>. </summary>
-        /// <param name="type"> type of object. </param>
+        /// <param name="advSecurityObjectModelType"> type of object. </param>
         /// <param name="entry"> URL entry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedSecurityObject(string @type, IReadOnlyList<NameDescriptionObject> entry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvancedSecurityObject(string advSecurityObjectModelType, IReadOnlyList<NameDescriptionObject> entry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            AdvSecurityObjectModelType = advSecurityObjectModelType;
             Entry = entry;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> type of object. </summary>
-        public string Type { get; }
+        public string AdvSecurityObjectModelType { get; }
 
         /// <summary> URL entry. </summary>
         public IReadOnlyList<NameDescriptionObject> Entry { get; }

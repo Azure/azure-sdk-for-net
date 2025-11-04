@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallLogOption : IEquatable<FirewallLogOption>
     {
         private readonly string _value;
-        private const string SAMEDESTINATIONValue = "SAME_DESTINATION";
-        private const string INDIVIDUALDESTINATIONValue = "INDIVIDUAL_DESTINATION";
+        private const string SameDestinationValue = "SAME_DESTINATION";
+        private const string IndividualDestinationValue = "INDIVIDUAL_DESTINATION";
 
         /// <summary> Initializes a new instance of <see cref="FirewallLogOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the SAMEDESTINATION. </summary>
-        public static FirewallLogOption SAMEDESTINATION { get; } = new FirewallLogOption(SAMEDESTINATIONValue);
+        /// <summary> Gets the SameDestination. </summary>
+        public static FirewallLogOption SameDestination { get; } = new FirewallLogOption(SameDestinationValue);
 
-        /// <summary> Gets the INDIVIDUALDESTINATION. </summary>
-        public static FirewallLogOption INDIVIDUALDESTINATION { get; } = new FirewallLogOption(INDIVIDUALDESTINATIONValue);
+        /// <summary> Gets the IndividualDestination. </summary>
+        public static FirewallLogOption IndividualDestination { get; } = new FirewallLogOption(IndividualDestinationValue);
 
         /// <summary> Determines if two <see cref="FirewallLogOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

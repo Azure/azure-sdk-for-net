@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct AllowDnsProxyType : IEquatable<AllowDnsProxyType>
     {
         private readonly string _value;
-        private const string DISABLEDValue = "DISABLED";
-        private const string ENABLEDValue = "ENABLED";
+        private const string DisabledValue = "DISABLED";
+        private const string EnabledValue = "ENABLED";
 
         /// <summary> Initializes a new instance of <see cref="AllowDnsProxyType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Gets the DISABLED. </summary>
-        public static AllowDnsProxyType DISABLED { get; } = new AllowDnsProxyType(DISABLEDValue);
+        /// <summary> Gets the Disabled. </summary>
+        public static AllowDnsProxyType Disabled { get; } = new AllowDnsProxyType(DisabledValue);
 
-        /// <summary> Gets the ENABLED. </summary>
-        public static AllowDnsProxyType ENABLED { get; } = new AllowDnsProxyType(ENABLEDValue);
+        /// <summary> Gets the Enabled. </summary>
+        public static AllowDnsProxyType Enabled { get; } = new AllowDnsProxyType(EnabledValue);
 
         /// <summary> Determines if two <see cref="AllowDnsProxyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
