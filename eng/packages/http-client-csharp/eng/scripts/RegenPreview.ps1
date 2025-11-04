@@ -700,7 +700,7 @@ try {
         Write-Host ""
 
         # Pre-build the client plugin to avoid concurrent builds
-        $codeGenerationTargetPath = Join-Path $sdkForNetEngFolder  "CodeGeneration.targets"
+        $codeGenerationTargetPath = Join-Path $sdkForNetEngFolder "CodeGeneration.targets"
         if (-not (Test-Path $codeGenerationTargetPath)) {
             throw "CodeGeneration.targets not found at: $codeGenerationTargetPath"
         }
