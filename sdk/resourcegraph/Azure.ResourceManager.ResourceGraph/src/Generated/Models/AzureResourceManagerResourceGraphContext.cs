@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceGraph.Models;
 
 namespace Azure.ResourceManager.ResourceGraph
@@ -21,11 +22,15 @@ namespace Azure.ResourceManager.ResourceGraph
     [ModelReaderWriterBuildable(typeof(FacetRequest))]
     [ModelReaderWriterBuildable(typeof(FacetRequestOptions))]
     [ModelReaderWriterBuildable(typeof(FacetResult))]
+    [ModelReaderWriterBuildable(typeof(GraphQueryListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceGraphQueryData))]
+    [ModelReaderWriterBuildable(typeof(ResourceGraphQueryPatch))]
+    [ModelReaderWriterBuildable(typeof(ResourceGraphQueryResource))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryContent))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryRequestOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceQueryResult))]
-    [ModelReaderWriterBuildable(typeof(ResourcesHistoryContent))]
     [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequestOptions))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownFacet))]
     public partial class AzureResourceManagerResourceGraphContext : ModelReaderWriterContext
     {

@@ -34,6 +34,6 @@ namespace client.clientnamespace.second
 
         string IPersistableModel<SecondClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator SecondClientResult(Response result) => throw null;
+        public static explicit operator SecondClientResult(Response response) => throw null;
     }
 }

@@ -39,43 +39,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="TenantResource"/>. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <returns> An object representing collection of GroupQuotaSubscriptionRequestStatuses and their operations over a GroupQuotaSubscriptionRequestStatusResource. </returns>
-        public virtual GroupQuotaSubscriptionRequestStatusCollection GetGroupQuotaSubscriptionRequestStatuses(string managementGroupId)
-        {
-            return GetCachedClient(client => new GroupQuotaSubscriptionRequestStatusCollection(client, Id, managementGroupId));
-        }
-
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotaSubscriptionRequestStatusResource>> GetGroupQuotaSubscriptionRequestStatusAsync(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
-            return await GetGroupQuotaSubscriptionRequestStatuses(managementGroupId).GetAsync(requestId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GroupQuotaSubscriptionRequestStatusResource> GetGroupQuotaSubscriptionRequestStatus(string managementGroupId, string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
-
-            return GetGroupQuotaSubscriptionRequestStatuses(managementGroupId).Get(requestId, cancellationToken);
-        }
-
-        /// <summary> Starts a failed runtime resource. </summary>
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinks_StartFailedServerlessRuntime. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartFailedServerlessRuntimeAsync(CancellationToken cancellationToken = default)
         {
@@ -98,7 +74,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             }
         }
 
-        /// <summary> Starts a failed runtime resource. </summary>
+        /// <summary>
+        /// Starts a failed runtime resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinks_StartFailedServerlessRuntime. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartFailedServerlessRuntime(CancellationToken cancellationToken = default)
         {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -365,19 +366,21 @@ namespace Azure.Generator.Management.Visitors
                     var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
                     var flattenPropertyBody = new MethodPropertyBody(
                         PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                        !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
+                        !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
                     );
 
                     // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
                     var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
                     var flattenedProperty =
-                        new PropertyProvider(
+                        new FlattenedPropertyProvider(
                             innerProperty.Description,
                             innerProperty.Modifiers,
                             innerProperty.Type,
                             flattenPropertyName,
                             flattenPropertyBody,
                             model,
+                            internalProperty,
+                            innerProperty,
                             innerProperty.ExplicitInterface,
                             innerProperty.WireInfo,
                             innerProperty.IsRef,
@@ -416,15 +419,17 @@ namespace Azure.Generator.Management.Visitors
             // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
             var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
             var flattenedProperty =
-                new PropertyProvider(
+                new FlattenedPropertyProvider(
                     innerProperty.Description,
                     innerProperty.Modifiers,
                     isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type,
                     flattenPropertyName,
                     flattenPropertyBody,
                     model,
+                    internalProperty,
+                    innerProperty,
                     innerProperty.ExplicitInterface,
-                    null,
+                    innerProperty.WireInfo,
                     innerProperty.IsRef,
                     innerProperty.Attributes);
 

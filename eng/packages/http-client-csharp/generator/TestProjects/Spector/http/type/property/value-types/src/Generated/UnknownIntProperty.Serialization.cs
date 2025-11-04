@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="unknownIntProperty"> The <see cref="UnknownIntProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnknownIntProperty unknownIntProperty) => throw null;
 
-        public static explicit operator UnknownIntProperty(Response result) => throw null;
+        public static explicit operator UnknownIntProperty(Response response) => throw null;
     }
 }

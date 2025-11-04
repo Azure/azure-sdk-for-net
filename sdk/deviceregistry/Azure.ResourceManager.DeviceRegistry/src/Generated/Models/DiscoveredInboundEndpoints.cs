@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> An endpoint to connect to the device. </summary>
     public partial class DiscoveredInboundEndpoints
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiscoveredInboundEndpoints"/>. </summary>
         /// <param name="endpointType"> Type of connection endpoint. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="supportedAuthenticationMethods"> List of supported authentication methods supported by device for Inbound connections. </param>
         /// <param name="additionalConfiguration"> Stringified JSON that contains configuration to be used by the connector (e.g., OPC UA, ONVIF). </param>
         /// <param name="lastUpdatedOn"> The timestamp (in UTC) when the endpoint was discovered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredInboundEndpoints(string endpointType, string address, string version, IList<AuthenticationMethod> supportedAuthenticationMethods, string additionalConfiguration, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveredInboundEndpoints(string endpointType, string address, string version, IList<AuthenticationMethod> supportedAuthenticationMethods, string additionalConfiguration, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointType = endpointType;
             Address = address;
@@ -75,24 +47,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             SupportedAuthenticationMethods = supportedAuthenticationMethods;
             AdditionalConfiguration = additionalConfiguration;
             LastUpdatedOn = lastUpdatedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DiscoveredInboundEndpoints"/> for deserialization. </summary>
-        internal DiscoveredInboundEndpoints()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of connection endpoint. </summary>
         public string EndpointType { get; set; }
+
         /// <summary> The endpoint address &amp; port. This can be either an IP address (e.g., 192.168.1.1) or a fully qualified domain name (FQDN, e.g., server.example.com). </summary>
         public string Address { get; set; }
+
         /// <summary> Protocol version associated with the endpoint e.g. 1 or 2 for endpointType Microsoft.HTTP, and 3.5 or 5.0 for endpointType Microsoft.Mqtt etc. </summary>
         public string Version { get; set; }
+
         /// <summary> List of supported authentication methods supported by device for Inbound connections. </summary>
         public IList<AuthenticationMethod> SupportedAuthenticationMethods { get; }
+
         /// <summary> Stringified JSON that contains configuration to be used by the connector (e.g., OPC UA, ONVIF). </summary>
         public string AdditionalConfiguration { get; set; }
+
         /// <summary> The timestamp (in UTC) when the endpoint was discovered. </summary>
         public DateTimeOffset? LastUpdatedOn { get; set; }
     }

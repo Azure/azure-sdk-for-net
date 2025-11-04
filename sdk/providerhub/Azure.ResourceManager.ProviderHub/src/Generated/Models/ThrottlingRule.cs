@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/>. </summary>
-        /// <param name="action"></param>
-        /// <param name="metrics"></param>
+        /// <param name="action"> The action. </param>
+        /// <param name="metrics"> The metrics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="metrics"/> is null. </exception>
         public ThrottlingRule(string action, IEnumerable<ThrottlingMetric> metrics)
         {
@@ -58,18 +58,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Action = action;
             Metrics = metrics.ToList();
             RequiredFeatures = new ChangeTrackingList<string>();
+            ApplicationId = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/>. </summary>
-        /// <param name="action"></param>
-        /// <param name="metrics"></param>
-        /// <param name="requiredFeatures"></param>
+        /// <param name="action"> The action. </param>
+        /// <param name="metrics"> The metrics. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="applicationId"> The application id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThrottlingRule(string action, IList<ThrottlingMetric> metrics, IList<string> requiredFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThrottlingRule(string action, IList<ThrottlingMetric> metrics, IList<string> requiredFeatures, IList<string> applicationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             Metrics = metrics;
             RequiredFeatures = requiredFeatures;
+            ApplicationId = applicationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,11 +81,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the action. </summary>
+        /// <summary> The action. </summary>
         public string Action { get; set; }
-        /// <summary> Gets the metrics. </summary>
+        /// <summary> The metrics. </summary>
         public IList<ThrottlingMetric> Metrics { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
+        /// <summary> The application id. </summary>
+        public IList<string> ApplicationId { get; }
     }
 }

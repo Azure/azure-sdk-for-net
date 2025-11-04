@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
@@ -31,6 +32,9 @@ namespace Azure.Generator.Management
         private ProviderConstantsProvider? _providerConstants;
         internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
 
+        private WirePathAttributeDefinition? _wirePathAttributeProvider;
+        internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
@@ -41,6 +45,9 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict;
         private IReadOnlyList<MockableResourceProvider>? _mockableResources;
         private ExtensionProvider? _extensionProvider;
+
+        private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
+        internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
 
         internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
@@ -298,8 +305,10 @@ namespace Azure.Generator.Management
 
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
+                .. OperationSourceDict.Values,
                 ProviderConstants,
                 .. ResourceProviders,
                 .. ResourceCollectionProviders,
@@ -307,8 +316,48 @@ namespace Azure.Generator.Management
                 ExtensionProvider,
                 PageableWrapper,
                 AsyncPageableWrapper,
-                .. ResourceProviders.Select(r => r.Source),
                 .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+        }
+
+        private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()
+        {
+            var operationSources = new Dictionary<CSharpType, OperationSourceProvider>();
+
+            foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
+            {
+                foreach (var resourceMethod in metadata.Methods)
+                {
+                    if (resourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
+                    {
+                        var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+                        if (returnType is InputModelType inputModelType)
+                        {
+                            var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                            if (returnCSharpType == null)
+                            {
+                                continue;
+                            }
+
+                            if (!operationSources.ContainsKey(returnCSharpType))
+                            {
+                                var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
+                                if (resourceProvider is not null)
+                                {
+                                    // This is a resource model - use the resource-based constructor
+                                    operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
+                                }
+                                else
+                                {
+                                    // This is a non-resource model - use the CSharpType-based constructor
+                                    operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return operationSources;
         }
 
         internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);

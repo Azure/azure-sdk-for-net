@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="extendsModelArrayAdditionalProperties"> The <see cref="ExtendsModelArrayAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ExtendsModelArrayAdditionalProperties extendsModelArrayAdditionalProperties) => throw null;
 
-        public static explicit operator ExtendsModelArrayAdditionalProperties(Response result) => throw null;
+        public static explicit operator ExtendsModelArrayAdditionalProperties(Response response) => throw null;
     }
 }

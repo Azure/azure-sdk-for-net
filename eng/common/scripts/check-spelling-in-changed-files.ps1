@@ -114,7 +114,7 @@ foreach ($file in $changedFiles) {
 $spellingErrors = &"$PSScriptRoot/../spelling/Invoke-Cspell.ps1" `
   -CspellConfigPath $CspellConfigPath `
   -SpellCheckRoot $SpellCheckRoot `
-  -ScanGlobs $changedFilePaths
+  -FileList $changedFilePaths
 
 if ($spellingErrors) {
     $errorLoggingFunction = Get-Item 'Function:LogWarning'

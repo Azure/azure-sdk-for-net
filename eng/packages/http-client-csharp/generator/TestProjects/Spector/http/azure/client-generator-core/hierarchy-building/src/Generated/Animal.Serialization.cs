@@ -39,6 +39,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
         /// <param name="animal"> The <see cref="Animal"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Animal animal) => throw null;
 
-        public static explicit operator Animal(Response result) => throw null;
+        public static explicit operator Animal(Response response) => throw null;
     }
 }
