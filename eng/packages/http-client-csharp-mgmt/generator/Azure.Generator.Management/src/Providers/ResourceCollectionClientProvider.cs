@@ -61,7 +61,7 @@ namespace Azure.Generator.Management.Providers
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
 
             // this depends on _getAll being initialized
-            _pathParameterMap = BuildExtraConstuctorParameterMap();
+            _pathParameterMap = BuildPathParameterMap();
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.Generator.Management.Providers
             return [.. properties];
         }
 
-        private Dictionary<ParameterProvider, FieldProvider> BuildExtraConstuctorParameterMap()
+        private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
         {
             var map = new Dictionary<ParameterProvider, FieldProvider>();
             if (_getAll is null)
