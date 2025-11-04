@@ -63,12 +63,11 @@ namespace Azure.Generator.Visitors
                 return base.VisitMethod(method);
             }
 
-            bool isCreateRequestMethod = IsCreateRequestMethod(method);
             // Update method parameters
             UpdateMethodParameters(method, headerFlags, matchConditionParams);
 
             // Update method body
-            if (isCreateRequestMethod)
+            if (method.Kind == ScmMethodKind.CreateRequest)
             {
                 UpdateCreateRequestMethodBody(method, headerFlags, matchConditionParams);
             }
@@ -177,7 +176,7 @@ namespace Azure.Generator.Visitors
             }
 
             // Update the method signature & xml docs with the new parameters
-            if (!IsCreateRequestMethod(method))
+            if (method.Kind != ScmMethodKind.CreateRequest)
             {
                 method.XmlDocs.Update(parameters: xmlParameterDocs);
             }
@@ -189,7 +188,7 @@ namespace Azure.Generator.Visitors
         {
             var flags = RequestConditionHeaders.None;
 
-            var allParameters = method.Kind == ScmMethodKind.Protocol || IsCreateRequestMethod(method)
+            var allParameters = method.Kind == ScmMethodKind.Protocol || method.Kind == ScmMethodKind.CreateRequest
                 ? method.ServiceMethod!.Operation.Parameters
                 : method.ServiceMethod!.Parameters;
 
@@ -491,15 +490,6 @@ namespace Azure.Generator.Visitors
             }
 
             return false;
-        }
-
-        private static bool IsCreateRequestMethod(ScmMethodProvider method)
-        {
-            return method.EnclosingType is RestClientProvider &&
-                method.ServiceMethod != null &&
-                method.Kind != ScmMethodKind.Protocol &&
-                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                method.Signature.ReturnType?.Equals(typeof(HttpMessage)) == true;
         }
 
         private static List<ParameterProvider> GetMatchConditionParameters(IReadOnlyList<ParameterProvider> parameters)
