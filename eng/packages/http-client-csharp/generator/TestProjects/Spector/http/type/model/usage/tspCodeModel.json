@@ -573,6 +573,7 @@
           "crossLanguageDefinitionId": "Type.Model.Usage.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Usage",
       "apiVersions": []

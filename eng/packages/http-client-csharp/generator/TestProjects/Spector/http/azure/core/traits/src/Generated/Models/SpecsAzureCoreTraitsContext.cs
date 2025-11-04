@@ -8,13 +8,13 @@
 using System.ClientModel.Primitives;
 using Azure;
 
-namespace _Specs_.Azure.Core.Basic
+namespace Specs.Azure.Core.Traits
 {
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(User))]
-    [ModelReaderWriterBuildable(typeof(UserList))]
-    [ModelReaderWriterBuildable(typeof(UserOrder))]
-    public partial class _Specs_AzureCoreBasicContext : ModelReaderWriterContext
+    [ModelReaderWriterBuildable(typeof(UserActionParam))]
+    [ModelReaderWriterBuildable(typeof(UserActionResponse))]
+    public partial class SpecsAzureCoreTraitsContext : ModelReaderWriterContext
     {
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace _Specs_.Azure.Core.Basic
+namespace Specs.Azure.Core.Basic
 {
     public partial class UserOrder : IJsonModel<UserOrder>
     {

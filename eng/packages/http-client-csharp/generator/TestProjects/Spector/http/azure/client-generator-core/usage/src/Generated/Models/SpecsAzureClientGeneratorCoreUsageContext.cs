@@ -6,16 +6,16 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
+using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage
+namespace Specs.Azure.ClientGenerator.Core.Usage
 {
     [ModelReaderWriterBuildable(typeof(InputModel))]
-    [ModelReaderWriterBuildable(typeof(OrphanModel))]
     [ModelReaderWriterBuildable(typeof(OutputModel))]
     [ModelReaderWriterBuildable(typeof(ResultModel))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
-    public partial class _Specs_AzureClientGeneratorCoreUsageContext : ModelReaderWriterContext
+    [ModelReaderWriterBuildable(typeof(OrphanModel))]
+    public partial class SpecsAzureClientGeneratorCoreUsageContext : ModelReaderWriterContext
     {
     }
 }
