@@ -3,15 +3,19 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-
 namespace Azure.AI.Agents;
 
 [CodeGenType("WorkflowDefinition")]
 public partial class WorkflowAgentDefinition
 {
-    [CodeGenMember("Trigger")]
-    public BinaryData TriggerBytes { get; set; }
+    public static WorkflowAgentDefinition FromYaml(string workflowYamlDocument)
+    {
+        return new()
+        {
+            WorkflowYaml = workflowYamlDocument,
+        };
+    }
+
+    [CodeGenMember("Workflow")]
+    private string WorkflowYaml { get; set; }
 }
