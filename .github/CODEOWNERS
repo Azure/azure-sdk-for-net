@@ -70,7 +70,7 @@
 /sdk/identity/                                                     @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
-# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# AzureSdkOwners:                                                  @JonathanCrd
 
 # PRLabel: %Extensions
 /sdk/extensions/                                                   @jsquire
