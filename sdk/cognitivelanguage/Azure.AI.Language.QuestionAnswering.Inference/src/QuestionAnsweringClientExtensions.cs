@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.Language.QuestionAnswering;
+using Azure.Core;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
