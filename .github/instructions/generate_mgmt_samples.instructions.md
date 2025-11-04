@@ -1,27 +1,60 @@
 ---
 applyTo: '**/*.cs'
 ---
-# Generate Samples
+# Generate Management Plane SDK Samples
 
-This instruction set guides you through generating sample code snippets for C# files.
+This instruction set guides you through generating C# sample code snippets for Azure Management Plane SDKs using Azure Resource Manager (ARM) operations.
 
-The following inputs will be provided to you:
-- A working directory.
-- A `json` file containing details about the sample to be generated. If multiple `json` files are provided, please process them one by one.
+## Prerequisites
 
-If any of the above pre-requisites are missing, please notify the user and halt further processing.
+The following inputs must be provided:
+- **Working directory**: An Azure SDK library directory containing the expected structure
+- **JSON file(s)**: One or more REST API example files containing sample request/response data
 
-The `json` file or files will be provided by a github link. Please first fetch them and save them to a local directory in your working directory preserving their directory structure. For example, if the `json` file is located at `https://github.com/Azure/azure-rest-api-specs/tree/main/specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/PutStorageTask.json`, please save it to `<working_directory>/specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/PutStorageTask.json`.
+If any prerequisite is missing, notify the user and halt processing.
 
-The working directory should have a structure of the directory like this:
+## Input Processing
+
+### JSON File Retrieval
+
+JSON files will be provided via GitHub links. You must:
+1. Fetch the files from the provided URLs
+2. Save them locally in your working directory while preserving the original directory structure
+
+**Example**: If the JSON file is located at:
 ```
-- api
-- src
-- tests
+https://github.com/Azure/azure-rest-api-specs/tree/main/specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/PutStorageTask.json
 ```
-The generated samples should be placed in the `tests/Samples` directory. The `src` directory contains the source code of the library, the generated samples should be calling APIs from this library in `src`.
+Save it to:
+```
+<working_directory>/specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/PutStorageTask.json
+```
 
-This `json` file will contain everything about its corresponding rest API, it looks like this:
+### Working Directory Structure
+
+The working directory must have the following structure:
+```
+<working_directory>/
+├── api/          # API specifications and metadata
+├── src/          # Source code of the SDK library
+├── tests/        # Test files and samples
+│   └── Samples/  # Generated samples go here (create if missing)
+└── specification/ # Downloaded JSON example files (preserving original structure)
+    └── <service>/
+        └── <namespace>/
+            └── examples/
+                └── <api-version>/
+                    └── *.json  # REST API example files
+```
+
+**Important**:
+- Generated samples must be placed in the `tests/Samples` directory
+- Downloaded JSON files should preserve their original directory structure under `specification/`
+- The samples should call APIs from the library code located in the `src` directory
+
+## JSON File Format
+
+The JSON files contain REST API example data and follow this structure:
 ```json
 {
   "operationId": "StorageTasks_Create",
@@ -80,75 +113,320 @@ This `json` file will contain everything about its corresponding rest API, it lo
   }
 }
 ```
-The `operationId` indicates which method from the library you should call in the sample. The `parameters` section contains all the parameters you need to call that method. Usually you could just ignore the `responses` section.
+**Key Fields**:
+- `operationId`: Identifies which SDK method to call in the sample
+- `parameters`: Contains all parameters needed for the method call
+- `title`: Used for naming the sample method
+- `responses`: Response examples (usually can be ignored for sample generation)
 
-About the structure of the source code in `src`:
-1. All the service methods in the source code have an xml documentation comment that contains a paragraph indicating the `operationId`, you should use this to map the `operationId` from the `json` file to the corresponding method in the source code.
-2. All the service methods are organized in classes named `*Resource.cs`, `*Collection.cs` or `<ServiceName>Extensions.cs`. Other classes might also contain service methods, but please consider them as helper methods.
-3. The resource structure is hierarchical. A pair classes of `*Resource.cs` and `*Collection.cs` represent an ARM resource. Each resource should have a factory method in its parent resource to get its collection or resource instance. There are two types of factory methods:
-    - If the parent resource exists in this library, the factory method is on the `*Resource.cs` class of the parent resource, and it returns the `*Collection.cs` class (or `*Resource.cs` class only when it does not have a collection class) of the child resource.
-    - If the parent resource does not exist in this library, the factory method is in the `<ServiceName>Extensions.cs` class, and it returns the `*Collection.cs` class (or `*Resource.cs` class only when it does not have a collection class) of the child resource.
+## Source Code Structure (src/ directory)
 
-You need to follow the following steps to generate the sample:
-1. **Analyze the JSON File**: Read the provided `json` file to understand the `operationId` and its parameters.
-2. **Determine the Relative Path of the JSON File**: Find the relative path of this file to the `examples` directory in its full path, this value is referred as `jsonFileRelativePath` below.
-3. **Map Operation ID to Method**: Identify the corresponding method in the source code (`src` directory) that matches the `operationId`. Prioritize the methods on `*Resource.cs` class over those on `*Collection.cs` class, and those on `*Collection.cs` class over those on `<ServiceName>Extensions.cs` class. If no method is found, please continue on next `json` file and notify the user about the missing method in the summary.
-4. **Identify the Resource Structure**: Determine the resource structure of how we could get to the resource where the method is defined. This involves identifying the parent resources and how to instantiate them using the factory methods.
-5. **Generate Sample Code**:
-    1. Determine the class name for this sample.
-        - If the class where the method is defined is `*Resource.cs` or `*Collection.cs`, the sample class should be named as `Sample_<TypeName>.cs` where `<TypeName>` is the name of the class where the method is defined.
-        - If the class where the method is defined is `<ServiceName>Extensions.cs`, the sample class should be named as `Sample_<TypeName>Extensions.cs` where `<TypeName>` is the type name of the method's first parameter.
-    2. Determine the method name of this sample. The sample method name should be `<MethodName>_<TitleOfJsonFile>`, where `<MethodName>` is the name of the method being called, and `<TitleOfJsonFile>` is the `title` field from the `json` file.
-    3. A sample method should have the following two attributes on it:
-        ```csharp
+### Method Organization
+
+1. **Method Identification**: All service methods include XML documentation comments with the `Operation Id` in a specific XML format. Use this to map JSON `operationId` values to SDK methods.
+
+   **Search Strategy**:
+   - Search for the exact XML documentation format within `<summary>` tags:
+     ```xml
+     /// <item>
+     /// <term>Operation Id</term>
+     /// <description>OperationId_Value</description>
+     /// </item>
+     ```
+   - The operation ID value is found in the `<description>` tag immediately following the `<term>Operation Id</term>` line
+   - **Important**: Only search for this specific XML documentation pattern. If no match is found using this exact format, mark the operation ID as "no match" and do not perform additional regex searches or alternative search methods.
+   - This targeted approach prevents time-consuming searches and ensures consistent results.
+
+2. **Class Types**: Service methods are organized in these class types:
+   - `*Resource.cs`: Individual ARM resource operations
+   - `*Collection.cs`: Collection-level operations (create, list, etc.)
+   - `<ServiceName>Extensions.cs`: Extension methods for resources not in this library
+   - Other classes: Helper methods (lower priority)
+
+3. **Resource Hierarchy**: ARM resources follow a hierarchical structure where `*Resource.cs` and `*Collection.cs` pairs represent ARM resources.
+
+### Factory Methods
+
+Resources use factory methods to access child resources:
+- **Parent exists in library**: Factory method is on the parent `*Resource.cs` class, returns child `*Collection.cs` or `*Resource.cs`
+- **Parent not in library**: Factory method is in `<ServiceName>Extensions.cs`, returns child `*Collection.cs` or `*Resource.cs`
+
+## Sample Generation Process
+
+Follow these steps for each JSON file:
+
+### Step 1: Analyze JSON File
+
+- Extract the `operationId` and parameters
+- Note the `title` field for method naming
+- Understand the parameter structure and types
+
+### Step 2: Determine JSON File Path
+
+- Extract the relative path from the first `examples` directory to the JSON file
+- **Format**: Everything after and including the API version directory
+- **Example**: For a file at `specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/Maps_ListBySubscription.json`, the relative path should be `2025-05-01-preview/Maps_ListBySubscription.json`
+- **Complex Example**: For `specification/service/Management/examples/2023-01-01/subfolder/operation.json`, the relative path should be `2023-01-01/subfolder/operation.json`
+- Store as `jsonFileRelativePath` for documentation comments
+
+### Step 3: Map Operation ID to SDK Method
+
+**Search Process**:
+1. Extract the `operationId` from the JSON file
+2. Search for methods with XML documentation containing the pattern:
+   - `<term>Operation Id</term>` followed by
+   - `<description>{operationId}</description>` on the next line
+3. **Search only once**: Do not perform multiple searches or use regex patterns if the first search yields no results
+4. If no match is found with the XML documentation search, immediately mark as "no match" and proceed to the next JSON file
+
+**Priority Order** (highest to lowest):
+1. Methods in `*Resource.cs` classes
+2. Methods in `*Collection.cs` classes
+3. Methods in `<ServiceName>Extensions.cs` classes
+
+**If no matching method is found**:
+- **Do not** perform additional searches with different patterns or regex
+- **Do not** spend time on alternative search strategies
+- Mark the operation ID as "no match" immediately
+- Continue to the next JSON file
+- Report the missing method in the final summary
+
+### Step 4: Identify Resource Structure
+
+- Determine the resource hierarchy needed to reach the target method
+- Identify parent resources and their factory methods
+- Plan the resource instantiation chain
+
+### Step 5: Generate Sample Code
+
+Use the template and guidelines below.
+
+## Naming Conventions
+
+### Sample Class Name
+
+- **For methods in `*Resource.cs` or `*Collection.cs` classes**: Use `Sample_<ClassName>` where `<ClassName>` is the exact class name without the `.cs` extension
+  - Example: Method in `DependencyMapResource.cs` → `Sample_DependencyMapResource`
+  - Example: Method in `DependencyMapCollection.cs` → `Sample_DependencyMapCollection`
+
+- **For methods in the `<ServiceName>Extensions.cs` class**: Use `Sample_<FirstParameterTypeName>Extensions` where `<FirstParameterTypeName>` is the type name of the method's first parameter (not the service name)
+  - Example: Extension method `GetDependencyMaps(this SubscriptionResource subscription, ...)` → `Sample_SubscriptionResourceExtensions` (because first parameter is `SubscriptionResource`)
+  - Example: Extension method `GetVirtualMachines(this ResourceGroupResource resourceGroup, ...)` → `Sample_ResourceGroupResourceExtensions` (because first parameter is `ResourceGroupResource`)
+  - **Important**: Do NOT use the service name (e.g., `DependencyMap`) in the class name for extensions. Always use the first parameter's type name.
+
+### Sample Method Name
+
+**Format**: `<MethodName>_<TitleOfJsonFile>`
+
+**Components**:
+
+1. **`<MethodName>`**: The actual SDK method name being called
+   - Use the exact method name as it appears in the source code
+   - **Important**: Since we generate only async samples, remove the `Async` suffix from the method name
+   - **Example**: If calling `CreateOrUpdateAsync()`, use `CreateOrUpdate` in the sample method name
+
+2. **`<TitleOfJsonFile>`**: The `title` field from the JSON file
+   - Extract the exact value from the JSON file's `title` field
+   - **Character normalization**: Remove or replace invalid C# identifier characters:
+     - Remove spaces, hyphens, dots, and special characters
+     - Convert to PascalCase (first letter uppercase, subsequent words capitalized)
+   - **Example transformations**:
+     - `"Put Storage Task"` → `PutStorageTask`
+     - `"list-by-subscription"` → `ListBySubscription`
+     - `"Get VM.Status"` → `GetVMStatus`
+
+**Complete Examples**:
+- SDK method: `CreateOrUpdateAsync()`, JSON title: `"Put Storage Task"` → Sample method: `CreateOrUpdate_PutStorageTask()`
+- SDK method: `ListAsync()`, JSON title: `"list-by-subscription"` → Sample method: `List_ListBySubscription()`
+- SDK method: `GetAsync()`, JSON title: `"Get VM.Status"` → Sample method: `Get_GetVMStatus()`
+
+## Sample Code Template
+
+Generate samples using this structure with the following components:
+
+### Template Structure
+```C#
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace <PackageNamespace>.Tests.Samples
+{
+    public partial class <SampleClassName>
+    {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        ```
-    4. Write the sample code inside the sample method in step 2 above that demonstrates how to call the identified method with the parameters from the `json` file. The sample code contains four parts which will elaborate with more details below:
-        - **Information**: Write the comment header indicating the source of this sample.
-        - **Initialization**: Get an instance of the type which holds the method.
-        - **Parameter Preparation**: Prepare the parameters needed for the method call.
-        - **Method Invocation**: Call the method with the prepared parameters and handle the response.
+        public async Task <SampleMethodName>()
+        {
+            // Generated from example definition: <jsonFileRelativePath>
+            // this example is just showing the usage of "<operationId>" operation, for the dependent resources, they will have to be created separately
 
-The following details are steps about each part of the sample code:
-- **Information**:
-    - Write the comment header indicating the source of this sample.
-    ```
-    // Generated from example definition: <jsonFileRelativePath>
-    // this example is just showing the usage of "<operationId>" operation, for the dependent resources, they will have to be created separately
-    ```
-    Here you need to replace `<jsonFileRelativePath>` with the actual relative path determined in step 2 above, and `<operationId>` with the actual operation ID from the `json` file.
-- **Initialization**:
-    - Before everything starts, we need to write
-    ```
-    // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-    TokenCredential cred = new DefaultAzureCredential();
-    // authenticate your client
-    ArmClient client = new ArmClient(cred);
-    ```
-    - Determine the type of the class where the method is defined.
-        - If the class is a `*Resource.cs` class, we need to get an instance of this resource first. To do this, we need to find its `CreateResourceIdentifier` method, and call it with its parameters. Then we call `client.Get<ResourceName>(resourceId)` to get the resource instance.
-        - If the class is a `*Collection.cs` class, we need to get its parent resource first, then call the factory method on the parent resource to get the collection instance. To get the instance of the parent resource, follow the same way as above.
-        - If the class is a `<ServiceName>Extensions.cs` class, because every method in this class is a static extension method, we need to get its first parameter's type instance first, and it should be a `*Resource.cs` class, then follow the same way as above to get the instance of this resource.
-- **Parameter Preparation**:
-    - For each parameter needed for the method call, check its type.
-        - If it is a primitive type (string, int, bool, etc.), directly use the value from the `json` file.
-        - If it is a complex type (a class defined in this library), create an instance of this class, and set its properties with the values from the `json` file.
-        - If it is an enum type, use the enum value defined in this library that matches the value from the `json` file.
-        - If it is a collection type (List, Dictionary, etc.), create an instance of this collection type, and populate it with the values from the `json` file.
-- **Method Invocation**:
-    - Call the identified method with the prepared parameters.
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
 
-Some additional notes:
-1. The service methods always come with both synchronous and asynchronous versions. Please always use the asynchronous version (the one with `Async` suffix).
-2. Always include necessary `using` directives at the top of the sample file.
-3. Never use `var` keyword in the sample code, always use explicit types.
-4. Always use public members in the sample code, never use internal or private members.
-5. Make sure the generated sample code is properly formatted and follows C# coding conventions.
-6. When constructing complex types, use the object initializer syntax for better readability.
-7. If a property of a complex type is another complex type, make sure to initialize it properly using nested object initializers.
-8. If a property of a complex type is a collection, make sure to initialize it properly using collection initializers. Collection properties in the source code usually do not have setters, please make sure we never construct a new instance.
-9. If a parameter is optional and not provided in the `json` file, you can omit setting that property in the sample code.
-10. If a parameter is required and not provided in the `json` file, please notify the user about the missing required parameter and use `(T)default` as a placeholder for such occurrences.
-11. Once the code is generated, call `dotnet build` in the working directory to verify the code could build successfully. If there are any build errors, fix them before finalizing the code.
-12. Summarize the results for each `json` file processed, including whether the sample code is generated successfully, any missing methods or parameters, and any build errors encountered.
+            <InstancePreparation>
+
+            // invoke the operation
+            <MethodParametersPreparation>
+            <MethodInvocation>
+            <HandleResponse>
+        }
+    }
+}
+```
+
+## Implementation Details
+
+### Operation ID Matching
+
+When searching for methods that match a given `operationId`:
+
+1. **Use targeted search**: Search specifically for the XML documentation pattern:
+   ```xml
+   /// <term>Operation Id</term>
+   /// <description>{operationId}</description>
+   ```
+2. **Single search attempt**: Perform only one search using this exact XML documentation format
+3. **No fallback searches**: Do not use regex patterns, partial matches, or alternative search methods if the initial search fails
+4. **Efficiency priority**: This approach prioritizes speed and consistency over exhaustive matching
+5. **Clear outcomes**: Either find an exact match or mark as "no match" - no ambiguous results
+
+### Template Components
+
+#### InstancePreparation
+
+Construct an instance of the type containing the target method:
+
+- **`*Resource.cs` class**:
+  1. Find the `CreateResourceIdentifier` method and call it with parameters
+  2. Use `client.Get<ResourceName>(resourceId)` to get the resource instance
+
+- **`*Collection.cs` class**:
+  1. Get the parent resource instance (using `*Resource.cs` approach above)
+  2. Call the factory method on the parent resource to get the collection
+
+- **`<ServiceName>Extensions.cs` class**:
+  1. Get the first parameter's type instance (should be a `*Resource.cs` class)
+  2. Follow the `*Resource.cs` approach above
+
+#### MethodParametersPreparation
+
+Handle each parameter based on its type:
+
+- **Primitive types** (string, int, bool): Use values directly from JSON
+- **Complex types** (SDK classes): Create instances using object initializer syntax
+- **Enum types**: Use matching enum values from the SDK library
+- **Collection types** (List, Dictionary):
+  - Use collection initializer syntax
+  - **Important**: Most collection properties lack setters - never create and assign new instances
+
+#### MethodInvocation
+
+Call the identified method with the prepared parameters.
+
+#### HandleResponse
+
+Handle different return types appropriately:
+
+- **`Response`**: No additional handling needed
+- **`Response<T>`**: Unwrap using `.Value` to get type `T`
+- **`AsyncPageable<T>`**: Use `await foreach` to iterate over results
+- **`ArmOperation`**: No additional handling needed
+- **`ArmOperation<T>`**: Unwrap using `.Value` to get type `T`
+
+## Code Quality Guidelines
+
+### Required Practices
+
+1. **Use async methods**: Always use asynchronous versions (methods with `Async` suffix)
+2. **Include using directives**: Add all necessary `using` statements at the top
+3. **Explicit types**: Never use `var` keyword - always specify explicit types
+4. **Public members only**: Only use public members, never internal or private
+5. **Proper formatting**: Follow C# coding conventions and proper formatting
+
+### Object Construction
+
+6. **Object initializers**: Use object initializer syntax for complex types
+7. **Nested initializers**: Handle nested complex types with nested object initializers
+8. **Collection initializers**: Use collection initializer syntax (never construct and assign new instances)
+
+### Parameter Handling
+
+9. **Optional parameters**: Omit optional parameters not provided in JSON
+10. **Missing required parameters**:
+    - Notify the user about missing required parameters
+    - Use `(T)default` as placeholder and continue generation
+
+### Validation and Reporting
+
+11. **Build verification**: Run `dotnet build` in working directory to verify successful compilation
+12. **Error resolution**: Fix any build errors before finalizing code
+
+## Quality Assurance and Final Verification
+
+### Compilation and Code Quality
+
+- Ensure all generated samples compile successfully
+- Verify proper error handling and resource cleanup
+- Confirm samples demonstrate realistic usage patterns
+- Test that samples work with the actual SDK library
+
+### Comprehensive Processing Report
+
+Before proceeding with cleanup, generate a detailed verification report:
+
+1. **List all downloaded JSON example files** from the `specification/` directory
+2. **For each JSON example file, verify one of the following**:
+   - **Generated Sample**: A corresponding sample method was successfully created in the appropriate `Sample_*.cs` file
+   - **No Matching Method**: The `operationId` from the JSON file does not correspond to any method in the SDK source code (`src/` directory)
+
+Create a summary report in the following format:
+
+```
+## Sample Generation Summary
+
+### Successfully Generated Samples:
+- `<json_file_name>` → `Sample_<ClassName>.<MethodName>_<Title>()` (Operation: `<operationId>`)
+
+### JSON Files Without Matching SDK Methods:
+- `<json_file_name>` → Operation `<operationId>` marked as "no match" (not found in XML documentation using specified format)
+
+### Total Statistics:
+- Total JSON files processed: X
+- Samples generated: Y
+- Files without matching methods: Z
+```
+
+### User Confirmation Required
+
+**CRITICAL**: Do not proceed with cleanup until you receive explicit user confirmation. Present the verification report to the user and ask:
+
+```
+"I have completed sample generation and created the above summary report.
+Please review the results to ensure all expected samples have been generated.
+Do you want me to proceed with cleanup (removing the specification/ directory)? (Y/N)"
+```
+
+Only proceed to the cleanup step after receiving affirmative confirmation from the user.
+
+## Cleanup
+
+### Remove Example File Cache
+
+After successfully generating and verifying all samples, clean up the local cache of downloaded JSON example files:
+
+1. **Remove the specification directory**: Delete the entire `specification/` directory that was created in the working directory to store the downloaded JSON files
+2. **Preserve generated samples**: Ensure the `tests/Samples/` directory and all generated sample files remain intact
+3. **Verify cleanup**: Confirm that only the generated sample files exist and no temporary JSON files remain
+
+**Example cleanup command**:
+```powershell
+Remove-Item -Path "<working_directory>/specification" -Recurse -Force
+```
+
+This cleanup step ensures that:
+- No temporary files are left in the repository
+- The working directory remains clean
+- Only the final generated sample files are preserved
+- The repository size is not unnecessarily increased by cached JSON files

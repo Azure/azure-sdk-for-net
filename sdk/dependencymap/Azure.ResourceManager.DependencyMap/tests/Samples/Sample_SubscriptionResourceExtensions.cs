@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DependencyMap;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.DependencyMap.Samples
+namespace Azure.ResourceManager.DependencyMap.Tests.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Generated from example definition: specification/azuredependencymap/DependencyMap.Management/examples/2025-05-01-preview/Maps_ListBySubscription.json
-        // this example is just showing the usage of "Maps_ListBySubscription" operation, for the dependent resources, they will have to be created separately
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDependencyMapsAsync_MapsListBySubscription()
+        public async Task GetDependencyMaps_MapsListBySubscriptionGeneratedByMaximumSetRule()
         {
+            // Generated from example definition: 2025-05-01-preview/Maps_ListBySubscription.json
+            // this example is just showing the usage of "Maps_ListBySubscription" operation, for the dependent resources, they will have to be created separately
+
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
