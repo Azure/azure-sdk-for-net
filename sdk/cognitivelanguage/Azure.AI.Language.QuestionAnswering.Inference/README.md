@@ -1,10 +1,10 @@
 # Azure.AI.Language.QuestionAnswering client library for .NET
 
-Azure.AI.Language.QuestionAnswering is a managed service that helps developers get secret simply and securely.
+Azure.AI.Language.QuestionAnswering is a managed service that enables developers to build applications that answer questions using natural language processing and knowledge bases.
 
-Use the client library for to:
+Use the client library to:
 
-* [Get secret](https://docs.microsoft.com/azure)
+* [Ask questions and get answers from your data](https://docs.microsoft.com/azure/cognitive-services/language-service/question-answering/overview)
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
