@@ -28,7 +28,7 @@ $csprojContent = @"
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
-    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
     <EventSourceSupport>true</EventSourceSupport>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <IsTestSupportProject>true</IsTestSupportProject>
