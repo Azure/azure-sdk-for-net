@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AILanguageQuestionAnsweringModelFactory
+    public static partial class QuestionAnsweringModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/>. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
@@ -28,11 +28,11 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
-        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <returns> A new <see cref="QuestionAnswering.ShortAnswerOptions"/> instance for mocking. </returns>
-        public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = null, int? top = null)
+        public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = null, int? size = null)
         {
-            return new ShortAnswerOptions(enable, confidenceThreshold, top, serializedAdditionalRawData: null);
+            return new ShortAnswerOptions(enable, confidenceThreshold, size, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersResult"/>. </summary>

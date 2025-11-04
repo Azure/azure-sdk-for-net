@@ -58,13 +58,13 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
-        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ShortAnswerOptions(bool enable, double? confidenceThreshold, int? top, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ShortAnswerOptions(bool enable, double? confidenceThreshold, int? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enable = enable;
             ConfidenceThreshold = confidenceThreshold;
-            Top = top;
+            Size = size;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,7 +80,5 @@ namespace Azure.AI.Language.QuestionAnswering
         /// to 1.
         /// </summary>
         public double? ConfidenceThreshold { get; set; }
-        /// <summary> Number of Top answers to be considered for span prediction from 1 to 10. </summary>
-        public int? Top { get; set; }
     }
 }

@@ -41,10 +41,10 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Optional.IsDefined(Top))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("topAnswersWithSpan"u8);
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
