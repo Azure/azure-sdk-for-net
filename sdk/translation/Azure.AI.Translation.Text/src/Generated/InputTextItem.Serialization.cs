@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Element containing the text for translation. </summary>
-    internal partial class InputTextItem : IJsonModel<InputTextItem>
+    public partial class InputTextItem : IJsonModel<InputTextItem>
     {
         /// <summary> Initializes a new instance of <see cref="InputTextItem"/> for deserialization. </summary>
         internal InputTextItem()

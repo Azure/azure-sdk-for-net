@@ -1,0 +1,15 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+
+namespace Azure.AI.Translation.Text
+{
+    /// <summary> Input text in the default script of the source language. </summary>
+    [Obsolete("This class is obsolete and will be removed in a future release.")]
+    public class SourceText
+    {
+        /// <summary> Input text in the default script of the source language. </summary>
+        public string Text { get; }
+    }
+}

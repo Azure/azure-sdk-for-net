@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Element containing the text for translation. </summary>
-    internal partial class InputTextItem
+    public partial class InputTextItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -253,6 +253,14 @@ namespace Azure.AI.Translation.Text
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Element containing the text for translation. </summary>
+        /// <param name="text"> Text to translate. </param>
+        /// <returns> A new <see cref="Text.InputTextItem"/> instance for mocking. </returns>
+        public static InputTextItem InputTextItem(string text = default)
+        {
+            return new InputTextItem(text, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Transliterated text element. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
