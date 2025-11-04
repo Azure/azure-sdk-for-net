@@ -9,6 +9,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class BackTranslation
     {
+        /// <summary> Initializes a new instance of BackTranslation. </summary>
+        internal BackTranslation() { }
+
         /// <summary>
         /// A string giving the normalized form of the source term that is a back-translation of the target.
         /// This value should be used as input to lookup examples.

@@ -10,6 +10,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class DictionaryTranslation
     {
+        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        internal DictionaryTranslation() { }
+
         /// <summary>
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.

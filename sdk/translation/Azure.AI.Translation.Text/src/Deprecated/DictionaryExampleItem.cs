@@ -10,6 +10,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class DictionaryExampleItem
     {
+        /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
+        internal DictionaryExampleItem() { }
+
         /// <summary>
         /// A string giving the normalized form of the source term. Generally, this should be identical
         /// to the value of the Text field at the matching list index in the body of the request.

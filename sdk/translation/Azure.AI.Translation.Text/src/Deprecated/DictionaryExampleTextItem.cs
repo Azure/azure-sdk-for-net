@@ -19,10 +19,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="translation"/> is null. </exception>
         public DictionaryExampleTextItem(string text, string translation) : base(text)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(translation, nameof(translation));
-
-            Translation = translation;
+            throw new NotSupportedException("This class is obsolete and will be removed in a future release.");
         }
 
         /// <summary>

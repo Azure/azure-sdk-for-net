@@ -10,6 +10,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class DictionaryLookupItem
     {
+        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
+        internal DictionaryLookupItem() { }
+
         /// <summary>
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".

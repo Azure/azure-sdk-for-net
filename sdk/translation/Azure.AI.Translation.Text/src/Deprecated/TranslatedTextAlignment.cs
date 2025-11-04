@@ -9,6 +9,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class TranslatedTextAlignment
     {
+        /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
+        internal TranslatedTextAlignment() { }
+
         /// <summary>
         /// Maps input text to translated text. The alignment information is only provided when the request
         /// parameter includeAlignment is true. Alignment is returned as a string value of the following

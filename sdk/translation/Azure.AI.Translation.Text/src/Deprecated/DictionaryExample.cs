@@ -9,6 +9,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class DictionaryExample
     {
+        /// <summary> Initializes a new instance of DictionaryExample. </summary>
+        internal DictionaryExample() { }
+
         /// <summary>
         /// The string to concatenate before the value of sourceTerm to form a complete example.
         /// Do not add a space character, since it is already there when it should be.

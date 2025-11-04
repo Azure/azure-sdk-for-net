@@ -9,6 +9,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class SourceText
     {
+        /// <summary> Initializes a new instance of SourceText. </summary>
+        internal SourceText() { }
+
         /// <summary> Input text in the default script of the source language. </summary>
         public string Text { get; }
     }

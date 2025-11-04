@@ -9,6 +9,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class TargetDictionaryLanguage
     {
+        /// <summary> Initializes a new instance of TargetDictionaryLanguage. </summary>
+        internal TargetDictionaryLanguage() { }
+
         /// <summary> Display name of the language in the locale requested via Accept-Language header. </summary>
         public string Name { get; }
         /// <summary> Display name of the language in the locale native for this language. </summary>

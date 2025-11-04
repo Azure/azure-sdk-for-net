@@ -10,6 +10,9 @@ namespace Azure.AI.Translation.Text
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     public class BreakSentenceItem
     {
+        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
+        internal BreakSentenceItem() { }
+
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>
         public DetectedLanguage DetectedLanguage { get; }
         /// <summary>
