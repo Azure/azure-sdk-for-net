@@ -52,7 +52,7 @@ namespace Azure.Generator.Tests.Visitors
                 Assert.IsTrue(scmMethod.Signature.ReturnType!.Equals(typeof(Operation)) ||
                               scmMethod.Signature.ReturnType!.Equals(new CSharpType(typeof(Task<>), typeof(Operation))));
 
-                if (scmMethod.IsProtocolMethod)
+                if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     var requestContextParameter = scmMethod.Signature.Parameters[^1];
                     Assert.IsTrue(requestContextParameter.Type.Equals(typeof(RequestContext)));
@@ -102,7 +102,7 @@ namespace Azure.Generator.Tests.Visitors
                 Assert.IsTrue(waitUntilParameter.Type.Equals(typeof(WaitUntil)));
                 Assert.AreEqual("waitUntil", waitUntilParameter.Name);
 
-                if (scmMethod.IsProtocolMethod)
+                if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     var requestContextParameter = scmMethod.Signature.Parameters[^1];
                     Assert.IsTrue(requestContextParameter.Type.Equals(typeof(RequestContext)));

@@ -1101,6 +1101,7 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator",
       "apiVersions": []

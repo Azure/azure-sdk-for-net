@@ -7,12 +7,12 @@
 
 using System.ClientModel.Primitives;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     [ModelReaderWriterBuildable(typeof(ActionRequest))]
     [ModelReaderWriterBuildable(typeof(ActionResponse))]
     [ModelReaderWriterBuildable(typeof(Model))]
-    public partial class _Specs_AzureExampleBasicContext : ModelReaderWriterContext
+    public partial class SpecsAzureExampleBasicContext : ModelReaderWriterContext
     {
     }
 }
