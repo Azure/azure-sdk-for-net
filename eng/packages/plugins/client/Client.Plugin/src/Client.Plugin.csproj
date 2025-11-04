@@ -14,15 +14,15 @@
 
   <!-- Shared visitor source files -->
   <PropertyGroup>
-    <VisitorsSharedSource>$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors</VisitorsSharedSource>
+    <AzureGeneratorSource>$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\</AzureGeneratorSource>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(VisitorsSharedSource)\NamespaceVisitor.cs" LinkBase="Shared/Visitors" />
-    <Compile Include="$(VisitorsSharedSource)\SpecialHeadersVisitor.cs" LinkBase="Shared/Visitors" />
-    <Compile Include="$(VisitorsSharedSource)\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/Visitors" />
-    <Compile Include="$(VisitorsSharedSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/Visitors/Extensions" />
-    <Compile Include="$(VisitorsSharedSource)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/Visitors/Utilities" />
+    <Compile Include="$(AzureGeneratorSource)\Visitors\NamespaceVisitor.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Visitors\SpecialHeadersVisitor.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Visitors\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/" />
   </ItemGroup>
 
   <!-- Copy output to package dist path  -->
