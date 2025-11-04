@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// <summary> Firewall Status. </summary>
     public partial class PaloAltoNetworksFirewallStatusData : ResourceData, IJsonModel<PaloAltoNetworksFirewallStatusData>
     {
-        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/> for deserialization. </summary>
-        internal PaloAltoNetworksFirewallStatusData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PaloAltoNetworksFirewallStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
