@@ -4,9 +4,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json.Nodes;
+using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json.Nodes;
 using OpenAI.Responses;
 
 #pragma warning disable OPENAI001
@@ -74,16 +77,25 @@ public static partial class ResponseCreationOptionsExtensions
 
     public static void AddStructuredInput(this ResponseCreationOptions options, string key, string value)
     {
-        IDictionary<string, BinaryData> structuredInputs
-            = options.TryGetAdditionalProperty("structured_inputs", out IDictionary<string, BinaryData> existingDictionary)
-                ? existingDictionary
-                : new ChangeTrackingDictionary<string, BinaryData>();
-        structuredInputs[key] = BinaryData.FromString(JsonValue.Create(value).ToJsonString());
-        options.SetAdditionalProperty("structured_inputs", structuredInputs);
+        JsonObject doc;
+        if (options.Patch.Contains("$.structured_inputs"u8) && options.Patch.TryGetJson("$.structured_inputs"u8, out ReadOnlyMemory<byte> jsonBytes))
+        {
+            using var stream = new MemoryStream();
+            stream.Write(jsonBytes.ToArray(), 0, jsonBytes.Length);
+            string json = Encoding.UTF8.GetString(stream.ToArray());
+            doc = JsonObject.Parse(json).AsObject();
+        }
+        else
+        {
+            doc = new();
+        }
+        doc.Remove(key);
+        doc.Add(key, JsonValue.Create(value));
+        options.Patch.Set("$.structured_inputs"u8, BinaryData.FromString(doc.ToJsonString()));
     }
 
     public static void SetStructuredInputs(this ResponseCreationOptions options, BinaryData structuredInputsBytes)
     {
-        options.SetAdditionalProperty("structured_inputs", structuredInputsBytes);
+        options.Patch.Set("$.structured_inputs"u8, structuredInputsBytes);
     }
 }
