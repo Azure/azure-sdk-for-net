@@ -469,6 +469,7 @@
           "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Dictionary",
       "apiVersions": [],
@@ -724,6 +725,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.Int32Value",
           "apiVersions": [],
@@ -982,6 +984,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.Int64Value",
           "apiVersions": [],
@@ -1240,6 +1243,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue",
           "apiVersions": [],
@@ -1498,6 +1502,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.StringValue",
           "apiVersions": [],
@@ -1756,6 +1761,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.Float32Value",
           "apiVersions": [],
@@ -2022,6 +2028,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue",
           "apiVersions": [],
@@ -2288,6 +2295,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.DurationValue",
           "apiVersions": [],
@@ -2546,6 +2554,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue",
           "apiVersions": [],
@@ -2788,6 +2797,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.ModelValue",
           "apiVersions": [],
@@ -3030,6 +3040,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue",
           "apiVersions": [],
@@ -3293,6 +3304,7 @@
               "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue",
           "apiVersions": [],

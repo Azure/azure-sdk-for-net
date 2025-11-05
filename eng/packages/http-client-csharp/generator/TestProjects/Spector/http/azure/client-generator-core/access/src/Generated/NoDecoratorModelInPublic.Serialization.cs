@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._PublicOperation
 {
     public partial class NoDecoratorModelInPublic : IJsonModel<NoDecoratorModelInPublic>
     {
