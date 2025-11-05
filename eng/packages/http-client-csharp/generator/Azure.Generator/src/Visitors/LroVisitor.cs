@@ -25,6 +25,8 @@ namespace Azure.Generator.Visitors
 {
     internal class LroVisitor : ScmLibraryVisitor
     {
+        private const string FromLroResponseMethodName = "FromLroResponse";
+
         protected override ScmMethodProviderCollection? Visit(
             InputServiceMethod serviceMethod,
             ClientProvider client,
@@ -59,7 +61,7 @@ namespace Azure.Generator.Visitors
 
             // Check if FromLroResponse method already exists with matching signature
             var existingMethod = serializationProvider.Methods
-                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse" &&
+                .FirstOrDefault(m => m.Signature.Name == FromLroResponseMethodName &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
                                      m.Signature.ReturnType?.Equals(model.Type) == true &&
@@ -71,9 +73,9 @@ namespace Azure.Generator.Visitors
             }
 
             // Create the FromLroResponse method
-            var responseParameter = new ParameterProvider("response", FormattableStringFactory.Create("The response to deserialize."), typeof(Response));
+            var responseParameter = new ParameterProvider("response", $"The response to deserialize.", typeof(Response));
             var methodSignature = new MethodSignature(
-                "FromLroResponse",
+                FromLroResponseMethodName,
                 $"Converts a response to a {model.Type.Name} using the LRO result path.",
                 MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
                 model.Type,
@@ -250,7 +252,7 @@ namespace Azure.Generator.Visitors
                     if (!string.IsNullOrEmpty(resultSegment) && responseModel != null)
                     {
                         // Call the FromLroResponse static method
-                        conversionExpression = Static(responseType).Invoke("FromLroResponse", [response]);
+                        conversionExpression = Static(responseType).Invoke(FromLroResponseMethodName, [response]);
                     }
                     else
                     {
