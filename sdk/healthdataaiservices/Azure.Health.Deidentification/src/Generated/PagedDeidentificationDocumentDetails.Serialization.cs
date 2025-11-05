@@ -154,7 +154,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedDeidentificationDocumentDetails(document.RootElement, options);
                     }
@@ -169,7 +169,7 @@ namespace Azure.Health.Deidentification
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedDeidentificationDocumentDetails"/> from. </param>
         public static explicit operator PagedDeidentificationDocumentDetails(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedDeidentificationDocumentDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

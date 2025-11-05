@@ -96,10 +96,10 @@ namespace Azure.Generator.Visitors
         {
             var responseType = method.ServiceMethod!.Response.Type;
 
-            var returnType = (responseType, method.IsProtocolMethod) switch
+            var returnType = (responseType, method.Kind) switch
             {
                 (null, _) => typeof(Operation),
-                (not null, true) => new CSharpType(typeof(Operation<>), typeof(BinaryData)),
+                (not null, ScmMethodKind.Protocol) => new CSharpType(typeof(Operation<>), typeof(BinaryData)),
                 _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType)!),
             };
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
@@ -130,7 +130,7 @@ namespace Azure.Generator.Visitors
             ExpressionStatement expressionStatement,
             MethodProvider method)
         {
-            if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod() && !scmMethod.IsProtocolMethod)
+            if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod() && scmMethod.Kind != ScmMethodKind.Protocol)
             {
                 return UpdateConvenienceMethod(expressionStatement, scmMethod);
             }
@@ -192,7 +192,7 @@ namespace Azure.Generator.Visitors
         {
             if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod())
             {
-                if (scmMethod.IsProtocolMethod)
+                if (scmMethod.Kind == ScmMethodKind.Protocol)
                 {
                     return UpdateProcessCall(expression, scmMethod);
                 }
