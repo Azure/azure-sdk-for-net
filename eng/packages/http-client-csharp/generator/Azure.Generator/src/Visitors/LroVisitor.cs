@@ -12,6 +12,7 @@ using Azure.Generator.Extensions;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -31,15 +32,16 @@ namespace Azure.Generator.Visitors
         {
             if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
             {
-                UpdateExplicitOperatorMethod(responseModel, lroServiceMethod);
+                AddFromLroResponseMethod(responseModel, lroServiceMethod, client);
             }
 
             return methods;
         }
 
-        private static void UpdateExplicitOperatorMethod(
+        private static void AddFromLroResponseMethod(
             InputModelType responseModel,
-            InputLongRunningServiceMethod lroServiceMethod)
+            InputLongRunningServiceMethod lroServiceMethod,
+            ClientProvider client)
         {
             var model = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
             if (model == null)
@@ -47,39 +49,100 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            // Update the explicit cast from response in LRO models to use the result path
-            var explicitOperator = model.SerializationProviders[0].Methods
-                .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
-                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
-
             var resultSegment = lroServiceMethod.LongRunningServiceMetadata.ResultPath;
-            if (explicitOperator == null || string.IsNullOrEmpty(resultSegment))
+            if (string.IsNullOrEmpty(resultSegment))
             {
                 return;
             }
 
-            foreach (var statement in explicitOperator.BodyStatements!)
+            var serializationProvider = model.SerializationProviders[0];
+
+            // Check if FromLroResponse method already exists
+            var existingMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+            if (existingMethod != null)
             {
-                if (statement is ExpressionStatement
-                    {
-                        Expression: KeywordExpression
-                        {
-                            Keyword: "return", Expression: InvokeMethodExpression invokeMethodExpression
-                        }
-                    })
+                return;
+            }
+
+            // Create the FromLroResponse method
+            var responseParameter = new ParameterProvider("response", FormattableStringFactory.Create("The response to deserialize."), typeof(Response));
+            var methodSignature = new MethodSignature(
+                "FromLroResponse",
+                FormattableStringFactory.Create("Converts a response to a {0} using the LRO result path.", model.Type.Name),
+                MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                model.Type,
+                null,
+                [responseParameter]);
+
+            // Build method body similar to explicit operator but with result path
+            var statements = new MethodBodyStatement[]
+            {
+                UsingDeclare("document", typeof(JsonDocument),
+                    Static<JsonDocument>().Invoke(nameof(JsonDocument.Parse),
+                        [responseParameter.Property("Content"),
+                         Static(new ModelSerializationExtensionsDefinition().Type).Property("JsonDocumentOptions")]),
+                    out var documentVariable),
+                Return(Static(model.Type).Invoke(
+                    $"Deserialize{model.Type.Name}",
+                    [
+                        documentVariable.Property("RootElement").Invoke("GetProperty", Literal(resultSegment)),
+                        Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions")
+                    ]))
+            };
+
+            var fromLroResponseMethod = new MethodProvider(methodSignature, statements, serializationProvider);
+
+            // Add the method to the serialization provider
+            serializationProvider.Update(methods: [..serializationProvider.Methods, fromLroResponseMethod]);
+
+            // Check if we should remove the explicit operator
+            // Only remove it if the model is ONLY used in LRO contexts across all clients
+            bool isOnlyUsedInLro = IsModelOnlyUsedInLro(responseModel);
+            if (isOnlyUsedInLro)
+            {
+                var explicitOperator = serializationProvider.Methods
+                    .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
+                                         m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
+
+                if (explicitOperator != null)
                 {
-                    if (invokeMethodExpression.Arguments.Count > 0 && invokeMethodExpression.Arguments[0] is ScopedApi<JsonElement>)
+                    var updatedMethods = serializationProvider.Methods.Where(m => m != explicitOperator).ToList();
+                    serializationProvider.Update(methods: updatedMethods);
+                }
+            }
+        }
+
+        private static bool IsModelOnlyUsedInLro(InputModelType responseModel)
+        {
+            // Check all clients in the output library to see if any non-LRO method returns this model type
+            var outputLibrary = AzureClientGenerator.Instance.OutputLibrary;
+            var allClients = outputLibrary.TypeProviders.OfType<ClientProvider>();
+
+            foreach (var client in allClients)
+            {
+                // Get all service methods from the input client
+                var inputMethods = client.Methods.OfType<ScmMethodProvider>()
+                    .Where(m => m.ServiceMethod != null)
+                    .Select(m => m.ServiceMethod!);
+
+                foreach (var method in inputMethods)
+                {
+                    // Skip LRO methods
+                    if (method is InputLongRunningServiceMethod)
                     {
-                        invokeMethodExpression.Update(
-                            arguments:
-                            [
-                                invokeMethodExpression.Arguments[0]
-                                    .Invoke("GetProperty", Literal(resultSegment)),
-                                ..invokeMethodExpression.Arguments.Skip(1)
-                            ]);
+                        continue;
+                    }
+
+                    // Check if this non-LRO method returns the response model
+                    if (method.Response?.Type == responseModel)
+                    {
+                        return false; // Model is used in non-LRO context, keep the explicit operator
                     }
                 }
             }
+
+            return true; // Model is only used in LRO contexts
         }
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
@@ -171,13 +234,31 @@ namespace Azure.Generator.Visitors
                     var client = (ClientProvider)scmMethod.EnclosingType;
                     var diagnosticsProperty = client.GetClientDiagnosticProperty();
                     var scopeName = scmMethod.GetScopeName();
+
+                    // Use FromLroResponse static method instead of explicit operator cast
+                    var responseModel = serviceMethod.Response.Type as InputModelType;
+                    var lroServiceMethod = scmMethod.ServiceMethod as InputLongRunningServiceMethod;
+                    var resultSegment = lroServiceMethod?.LongRunningServiceMetadata.ResultPath;
+
+                    ValueExpression conversionExpression;
+                    if (!string.IsNullOrEmpty(resultSegment) && responseModel != null)
+                    {
+                        // Call the FromLroResponse static method
+                        conversionExpression = Static(responseType).Invoke("FromLroResponse", [response]);
+                    }
+                    else
+                    {
+                        // Fall back to explicit operator cast for models without result path
+                        conversionExpression = new CastExpression(response, responseType);
+                    }
+
                     invokeMethodExpression.Update(
                         instanceReference: Static(typeof(ProtocolOperationHelpers)),
                         methodName: "Convert",
                         arguments:
                         [
                             (invokeMethodExpression.Arguments[0] as CastExpression)!.Inner,
-                            new FuncExpression([response.Declaration], new CastExpression(response, responseType)),
+                            new FuncExpression([response.Declaration], conversionExpression),
                             diagnosticsProperty,
                             Literal(scopeName),
                         ]);

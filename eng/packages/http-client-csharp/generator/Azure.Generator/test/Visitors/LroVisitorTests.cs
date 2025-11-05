@@ -154,22 +154,28 @@ namespace Azure.Generator.Tests.Visitors
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
 
             var serializationProvider = responseModelProvider!.SerializationProviders[0];
+
+            // Check that FromLroResponse method was added
+            var fromLroResponseMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+
+            Assert.IsNotNull(fromLroResponseMethod);
+            Assert.IsNotNull(fromLroResponseMethod!.BodyStatements);
+            var result = fromLroResponseMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
+
+            // Check that explicit operator was removed since model is only used in LRO
             var explicitOperator = serializationProvider.Methods
                 .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
                                      m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
+            Assert.IsNull(explicitOperator);
 
-            Assert.IsNotNull(explicitOperator);
-            Assert.IsNotNull(explicitOperator!.BodyStatements);
-            var result = explicitOperator!.BodyStatements!.ToDisplayString();
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
-
-            // does not mutate an already mutated operator
+            // does not add the method again on subsequent calls
             visitor.InvokeVisitServiceMethod(lroServiceMethod, clientProvider!, methodCollection);
             serializationProvider = responseModelProvider!.SerializationProviders[0];
-            explicitOperator = serializationProvider.Methods
-                .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
-                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
-            result = explicitOperator!.BodyStatements!.ToDisplayString();
+            fromLroResponseMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+            result = fromLroResponseMethod!.BodyStatements!.ToDisplayString();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
         }
 
