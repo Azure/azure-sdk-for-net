@@ -271,6 +271,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     case TelemetryType.Trace:
                         AddMetric(metricInfo, traceTelemetryMetrics, out localErrors);
                         break;
+                    case TelemetryType.Event:
+                        AddMetric(metricInfo, eventTelemetryMetrics, out localErrors);
+                        break;
                     default:
                         errorList.Add(
                             CollectionConfigurationError.CreateError(
@@ -299,7 +302,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
                 .Concat(dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
                 .Concat(exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
+                .Concat(traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(eventTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
             {
                 telemetryMetadata.Add(metricIds);
             }
