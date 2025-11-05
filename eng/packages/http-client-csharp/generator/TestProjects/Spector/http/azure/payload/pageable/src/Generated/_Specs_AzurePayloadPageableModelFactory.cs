@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace _Specs_.Azure.Payload.Pageable
+namespace Specs.Azure.Payload.Pageable
 {
     public static partial class _Specs_AzurePayloadPageableModelFactory
     {

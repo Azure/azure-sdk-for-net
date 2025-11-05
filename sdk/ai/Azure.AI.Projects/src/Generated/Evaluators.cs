@@ -93,7 +93,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new EvaluatorsGetVersionsCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluatorsGetVersionsCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all versions of the given evaluator. </summary>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new EvaluatorsGetVersionsAsyncCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluatorsGetVersionsAsyncCollectionResultOfT(this, name, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<EvaluatorVersion> GetLatestVersions(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List the latest version of each evaluator. </summary>
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<EvaluatorVersion> GetLatestVersionsAsync(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluatorsGetLatestVersionsAsyncCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluatorsGetLatestVersionsAsyncCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetVersion(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetVersion(name, version, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
@@ -243,7 +243,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetVersionAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
@@ -307,7 +307,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return DeleteVersion(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return DeleteVersion(name, version, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete the specific version of the EvaluatorVersion. The service returns 204 No Content if the EvaluatorVersion was deleted successfully or if the EvaluatorVersion does not exist. </summary>
@@ -322,7 +322,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await DeleteVersionAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteVersionAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = CreateVersion(name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = CreateVersion(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
@@ -393,7 +393,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await CreateVersionAsync(name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await CreateVersionAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 

@@ -45,17 +45,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Delete(string id, string clientRequestId, RequestOptions options)
+        public virtual ClientResult Delete(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, clientRequestId, options);
+            using PipelineMessage message = CreateDeleteRequest(id, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -68,46 +67,43 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteAsync(string id, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteAsync(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateDeleteRequest(id, clientRequestId, options);
+            using PipelineMessage message = CreateDeleteRequest(id, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete a schedule. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult Delete(string id, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult Delete(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return Delete(id, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return Delete(id, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete a schedule. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteAsync(string id, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            return await DeleteAsync(id, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,17 +115,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string id, string clientRequestId, RequestOptions options)
+        public virtual ClientResult Get(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, clientRequestId, options);
+            using PipelineMessage message = CreateGetRequest(id, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -142,47 +137,44 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string id, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string id, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, clientRequestId, options);
+            using PipelineMessage message = CreateGetRequest(id, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a schedule by id. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<Schedule> Get(string id, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<Schedule> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = Get(id, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Get(id, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
         /// <summary> Get a schedule by id. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<Schedule>> GetAsync(string id, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<Schedule>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetAsync(id, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAsync(id, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
@@ -194,13 +186,12 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetAll(RequestOptions options)
         {
-            return new SchedulesGetAllCollectionResult(this, clientRequestId, options);
+            return new SchedulesGetAllCollectionResult(this, options);
         }
 
         /// <summary>
@@ -211,31 +202,28 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(RequestOptions options)
         {
-            return new SchedulesGetAllAsyncCollectionResult(this, clientRequestId, options);
+            return new SchedulesGetAllAsyncCollectionResult(this, options);
         }
 
         /// <summary> List all schedules. </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<Schedule> GetAll(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Schedule> GetAll(CancellationToken cancellationToken = default)
         {
-            return new SchedulesGetAllCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new SchedulesGetAllCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all schedules. </summary>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<Schedule> GetAllAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Schedule> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return new SchedulesGetAllAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new SchedulesGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -298,7 +286,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            ClientResult result = CreateOrUpdate(id, schedule, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = CreateOrUpdate(id, schedule, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
@@ -314,7 +302,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            ClientResult result = await CreateOrUpdateAsync(id, schedule, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, schedule, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Schedule)result, result.GetRawResponse());
         }
 
@@ -378,7 +366,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            ClientResult result = GetRun(scheduleId, runId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetRun(scheduleId, runId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ScheduleRun)result, result.GetRawResponse());
         }
 
@@ -394,7 +382,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            ClientResult result = await GetRunAsync(scheduleId, runId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetRunAsync(scheduleId, runId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ScheduleRun)result, result.GetRawResponse());
         }
 
@@ -452,7 +440,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
 
-            ClientResult result = GetRuns(scheduleId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetRuns(scheduleId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((PagedScheduleRun)result, result.GetRawResponse());
         }
 
@@ -466,7 +454,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
 
-            ClientResult result = await GetRunsAsync(scheduleId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetRunsAsync(scheduleId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((PagedScheduleRun)result, result.GetRawResponse());
         }
     }

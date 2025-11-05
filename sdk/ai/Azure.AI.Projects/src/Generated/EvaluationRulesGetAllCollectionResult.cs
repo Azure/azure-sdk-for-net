@@ -16,7 +16,6 @@ namespace Azure.AI.Projects
         private readonly string _actionType;
         private readonly string _agentName;
         private readonly bool? _enabled;
-        private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
         /// <summary> Initializes a new instance of EvaluationRulesGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
@@ -24,15 +23,13 @@ namespace Azure.AI.Projects
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvaluationRulesGetAllCollectionResult(EvaluationRules client, string actionType, string agentName, bool? enabled, string clientRequestId, RequestOptions options)
+        public EvaluationRulesGetAllCollectionResult(EvaluationRules client, string actionType, string agentName, bool? enabled, RequestOptions options)
         {
             _client = client;
             _actionType = actionType;
             _agentName = agentName;
             _enabled = enabled;
-            _clientRequestId = clientRequestId;
             _options = options;
         }
 
@@ -40,7 +37,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetAllRequest(_actionType, _agentName, _enabled, _clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_actionType, _agentName, _enabled, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -52,7 +49,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetAllRequest(nextPageUri, _actionType, _agentName, _enabled, _clientRequestId, _options);
+                message = _client.CreateNextGetAllRequest(nextPageUri, _actionType, _agentName, _enabled, _options);
             }
         }
 

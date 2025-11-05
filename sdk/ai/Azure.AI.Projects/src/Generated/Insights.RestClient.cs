@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(string id, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string id, bool? includeCoordinates, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -48,16 +48,13 @@ namespace Azure.AI.Projects
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal PipelineMessage CreateGetAllRequest(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -85,16 +82,13 @@ namespace Azure.AI.Projects
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (clientRequestId != null)
-            {
-                request.Headers.Set("x-ms-client-request-id", clientRequestId);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
 
-        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
@@ -102,6 +96,7 @@ namespace Azure.AI.Projects
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
     }

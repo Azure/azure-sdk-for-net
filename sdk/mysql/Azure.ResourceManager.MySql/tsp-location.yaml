@@ -1,0 +1,3 @@
+directory: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers
+commit: fe80a99a8d7b83987ffc0d66361d1760cfcb1a2b
+repo: Azure/azure-rest-api-specs

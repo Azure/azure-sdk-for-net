@@ -44,17 +44,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult Get(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -67,47 +66,44 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get an evaluation run by name. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluationTaxonomy> Get(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<EvaluationTaxonomy> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = Get(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Get(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 
         /// <summary> Get an evaluation run by name. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluationTaxonomy>> GetAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<EvaluationTaxonomy>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 
@@ -121,13 +117,12 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="inputName"> Filter by the evaluation input name. </param>
         /// <param name="inputType"> Filter by taxonomy input type. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(string inputName, string inputType, string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetAll(string inputName, string inputType, RequestOptions options)
         {
-            return new EvaluationTaxonomiesGetAllCollectionResult(this, inputName, inputType, clientRequestId, options);
+            return new EvaluationTaxonomiesGetAllCollectionResult(this, inputName, inputType, options);
         }
 
         /// <summary>
@@ -140,35 +135,32 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="inputName"> Filter by the evaluation input name. </param>
         /// <param name="inputType"> Filter by taxonomy input type. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(string inputName, string inputType, string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string inputName, string inputType, RequestOptions options)
         {
-            return new EvaluationTaxonomiesGetAllAsyncCollectionResult(this, inputName, inputType, clientRequestId, options);
+            return new EvaluationTaxonomiesGetAllAsyncCollectionResult(this, inputName, inputType, options);
         }
 
         /// <summary> List evaluation taxonomies. </summary>
         /// <param name="inputName"> Filter by the evaluation input name. </param>
         /// <param name="inputType"> Filter by taxonomy input type. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<EvaluationTaxonomy> GetAll(string inputName = default, string inputType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<EvaluationTaxonomy> GetAll(string inputName = default, string inputType = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationTaxonomiesGetAllCollectionResultOfT(this, inputName, inputType, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluationTaxonomiesGetAllCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List evaluation taxonomies. </summary>
         /// <param name="inputName"> Filter by the evaluation input name. </param>
         /// <param name="inputType"> Filter by taxonomy input type. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<EvaluationTaxonomy> GetAllAsync(string inputName = default, string inputType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<EvaluationTaxonomy> GetAllAsync(string inputName = default, string inputType = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationTaxonomiesGetAllAsyncCollectionResultOfT(this, inputName, inputType, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluationTaxonomiesGetAllAsyncCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -180,17 +172,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Delete(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult Delete(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateDeleteRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -203,46 +194,43 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteAsync(string name, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteAsync(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateDeleteRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Delete an evaluation taxonomy by name. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult Delete(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult Delete(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return Delete(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return Delete(name, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete an evaluation taxonomy by name. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> DeleteAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await DeleteAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -305,7 +293,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = Create(name, body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Create(name, body, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 
@@ -321,7 +309,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(body, nameof(body));
 
-            ClientResult result = await CreateAsync(name, body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await CreateAsync(name, body, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationTaxonomy)result, result.GetRawResponse());
         }
 

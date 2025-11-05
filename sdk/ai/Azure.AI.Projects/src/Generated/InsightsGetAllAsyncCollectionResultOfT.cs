@@ -19,7 +19,6 @@ namespace Azure.AI.Projects
         private readonly string _runId;
         private readonly string _agentName;
         private readonly bool? _includeCoordinates;
-        private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
         /// <summary> Initializes a new instance of InsightsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -29,9 +28,8 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Filter by the evaluation run ID. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public InsightsGetAllAsyncCollectionResultOfT(Insights client, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        public InsightsGetAllAsyncCollectionResultOfT(Insights client, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             _client = client;
             _type = @type;
@@ -39,7 +37,6 @@ namespace Azure.AI.Projects
             _runId = runId;
             _agentName = agentName;
             _includeCoordinates = includeCoordinates;
-            _clientRequestId = clientRequestId;
             _options = options;
         }
 
@@ -47,7 +44,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetAllRequest(_type, _evalId, _runId, _agentName, _includeCoordinates, _clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -59,7 +56,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetAllRequest(nextPageUri, _type, _evalId, _runId, _agentName, _includeCoordinates, _clientRequestId, _options);
+                message = _client.CreateNextGetAllRequest(nextPageUri, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             }
         }
 

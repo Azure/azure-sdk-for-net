@@ -13,6 +13,5 @@
     <!-- Disable warning AZC0012: Single word class names -->
     <!-- Disable warning IDE0130: Namespace does not match folder structure-->
     <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

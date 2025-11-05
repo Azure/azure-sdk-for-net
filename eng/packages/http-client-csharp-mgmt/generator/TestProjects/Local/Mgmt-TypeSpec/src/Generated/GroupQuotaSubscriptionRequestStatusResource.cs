@@ -13,14 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a GroupQuotaSubscriptionRequestStatus along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetGroupQuotaSubscriptionRequestStatuses method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetGroupQuotaSubscriptionRequestStatuses method.
     /// </summary>
     public partial class GroupQuotaSubscriptionRequestStatusResource : ArmResource
     {

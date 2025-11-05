@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
 {
     public partial class MoveToNewSubClient
     {
