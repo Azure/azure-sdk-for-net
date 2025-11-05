@@ -568,10 +568,11 @@ public class AgentsTests : AgentsTestBase
         // Create an empty scope and make sure we cannot find anything.
         string scope = "Test scope";
         memoryClient.UpdateMemories(store.Id, scope, items: []);
-        MemorySearchOptions opts = new(
-            maxMemories: 1,
-            items: [ResponseItem.CreateUserMessageItem("Name your favorite animal")],
-            additionalBinaryDataProperties: null);
+        MemorySearchOptions opts = new()
+        {
+            MaxMemories = 1,
+            Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
+        };
         MemoryStoreSearchResponse resp = await memoryClient.SearchMemoriesAsync(
             memoryStoreId: store.Id,
             scope: scope,

@@ -86,9 +86,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -117,9 +115,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -149,9 +145,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -181,9 +175,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -234,9 +226,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -289,9 +279,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -323,9 +311,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
+        ReinitializeOpenTelemetryScopeConfiguration();
 
         var client = GetTestClient();
         var modelDeploymentName = GetModelDeploymentName();
@@ -348,6 +334,17 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var createAgentVersionSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
         Assert.That(createAgentVersionSpan, Is.Not.Null);
         CheckCreateAgentVersionTrace(createAgentVersionSpan, modelDeploymentName, agentName, "\"\"");
+    }
+
+    private static void ReinitializeOpenTelemetryScopeConfiguration()
+    {
+        Assembly assembly = typeof(AgentsClient).Assembly;
+        Assert.That(assembly, Is.Not.Null);
+        Type openTelemetryScopeType = assembly.GetType("Azure.AI.Agents.OpenTelemetryScope");
+        Assert.That(openTelemetryScopeType, Is.Not.Null);
+        MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.That(reinitializeConfigurationMethod, Is.Not.Null);
+        reinitializeConfigurationMethod.Invoke(null, null);
     }
 
     #region Helpers
