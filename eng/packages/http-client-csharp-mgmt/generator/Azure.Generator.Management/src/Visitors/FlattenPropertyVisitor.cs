@@ -264,7 +264,7 @@ namespace Azure.Generator.Management.Visitors
             // If the additionalProperties parameter is missing at the end, we need to pass a new instance for it.
             if (parameters.Count < fullConstructorParameters.Count && additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
             {
-                parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
+                parameters.Add(Null);
             }
             return parameters.ToArray();
 
