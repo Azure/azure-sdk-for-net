@@ -69,7 +69,7 @@ namespace Azure.Generator.Visitors
             var responseParameter = new ParameterProvider("response", FormattableStringFactory.Create("The response to deserialize."), typeof(Response));
             var methodSignature = new MethodSignature(
                 "FromLroResponse",
-                FormattableStringFactory.Create("Converts a response to a {0} using the LRO result path.", model.Type.Name),
+                $"Converts a response to a {model.Type.Name} using the LRO result path.",
                 MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
                 model.Type,
                 null,
