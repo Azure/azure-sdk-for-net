@@ -172,15 +172,18 @@ internal static partial class PipelinePolicyHelpers
                 new GenericActionPipelinePolicy(
                     messageAction: message =>
                     {
-                        // Skip this policy for everything except file operations
-                        if (message?.Request?.Uri?.AbsoluteUri?.Contains("openai/files") == false)
+                        bool isFileOperation = message?.Request?.Uri?.AbsoluteUri?.Contains("openai/files") == true;
+                        bool isFineTuningOperation = message?.Request?.Uri?.AbsoluteUri?.Contains("openai/fine_tuning") == true;
+
+                        // Skip this policy for everything except file and fine-tuning operations
+                        if (!isFileOperation && !isFineTuningOperation)
                         {
                             return;
                         }
 
                         // When processing the message to send the request (no response yet), perform a fixup to ensure a multipart/form-data Content-Type is
-                        // provided for the "file" content part (non-parity limitation)
-                        if (message?.Request?.Method == "POST" && message?.Request is not null && message?.Response is null)
+                        // provided for the "file" content part (non-parity limitation) - only for file operations
+                        if (isFileOperation && message?.Request?.Method == "POST" && message?.Request is not null && message?.Response is null)
                         {
                             using MemoryStream requestStream = new();
                             message.Request.Content.WriteTo(requestStream);
@@ -208,12 +211,14 @@ internal static partial class PipelinePolicyHelpers
                             newRequestWriter.Flush();
                             newRequestStream.Position = 0;
                             message.Request.Content = BinaryContent.Create(newRequestStream);
-                            message.ResponseClassifier = PipelineMessageClassifier;
                         }
 
+                        // Set response classifier to accept both 200 and 201 status codes for both file and fine-tuning operations
+                        message.ResponseClassifier = PipelineMessageClassifier;
+
                         // When processing the message for the response, force non-OpenAI "status" values to "processed" and relocate the extended value
-                        // to an additional property
-                        if (message?.Response is not null)
+                        // to an additional property - only for file operations
+                        if (isFileOperation && message?.Response is not null)
                         {
                             message?.Response.BufferContent();
 
