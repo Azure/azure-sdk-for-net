@@ -11,10 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal interface IBlobNotificationStrategy : ITaskSeriesCommand, IBlobWrittenWatcher
     {
-        Task RegisterAsync(
-            BlobServiceClient blobServiceClient,
-            BlobContainerClient container,
-            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken);
     }
 }

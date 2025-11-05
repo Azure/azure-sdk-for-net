@@ -176,11 +176,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
                 blobTriggerQueueWriter, _loggerFactory.CreateLogger<BlobListener>());
 
-            await sharedBlobListener.RegisterAsync(
-                blobClient,
-                _container,
-                triggerExecutor,
-                cancellationToken).ConfigureAwait(false);
+            await sharedBlobListener.RegisterAsync(blobClient, _container, triggerExecutor, cancellationToken).ConfigureAwait(false);
         }
 
         private void RegisterWithSharedBlobQueueListenerAsync(

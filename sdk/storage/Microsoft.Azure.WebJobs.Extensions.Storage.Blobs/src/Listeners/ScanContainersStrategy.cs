@@ -40,10 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _blobWrittenNotifications.Enqueue(blobWritten);
         }
 
-        public Task RegisterAsync(
-            BlobServiceClient blobServiceClient,
-            BlobContainerClient container,
-            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        public Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
         {
             // Register and Execute are not concurrency-safe.

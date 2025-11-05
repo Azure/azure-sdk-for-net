@@ -61,22 +61,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _cancellationTokenSource.Cancel();
         }
 
-        public async Task RegisterAsync(
-            BlobServiceClient blobServiceClient,
-            BlobContainerClient container,
-            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
-            CancellationToken cancellationToken)
+        public async Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor, CancellationToken cancellationToken)
         {
             // Register and Execute are not concurrency-safe.
             // Avoiding calling Register while Execute is running is the caller's responsibility.
             ThrowIfDisposed();
 
             // Register all in logPolling, there is no problem if we get 2 notifications of the new blob
-            await _pollLogStrategy.RegisterAsync(
-                blobServiceClient,
-                container,
-                triggerExecutor,
-                cancellationToken).ConfigureAwait(false);
+            await _pollLogStrategy.RegisterAsync(blobServiceClient, container, triggerExecutor, cancellationToken).ConfigureAwait(false);
 
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {

@@ -21,10 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             return strategy.ExecuteAsync(CancellationToken.None).GetAwaiter().GetResult();
         }
 
-        public static void Register(
-            this IBlobListenerStrategy strategy,
-            BlobServiceClient blobServiceClient,
-            BlobContainerClient container,
+        public static void Register(this IBlobListenerStrategy strategy, BlobServiceClient blobServiceClient, BlobContainerClient container,
             ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor)
         {
             if (strategy == null)
@@ -32,11 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 throw new ArgumentNullException("strategy");
             }
 
-            strategy.RegisterAsync(
-                blobServiceClient,
-                container,
-                triggerExecutor,
-                CancellationToken.None).GetAwaiter().GetResult();
+            strategy.RegisterAsync(blobServiceClient, container, triggerExecutor, CancellationToken.None).GetAwaiter().GetResult();
         }
     }
 }
