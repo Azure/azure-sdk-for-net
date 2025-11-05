@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationRules"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="timeGrain"/> is null. </exception>
-        public ResourceMetricSignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType) : base(evaluationRules)
+        public ResourceMetricSignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType) : base(EntitySignalKind.AzureResourceMetric, evaluationRules)
         {
             Argument.AssertNotNull(evaluationRules, nameof(evaluationRules));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
@@ -31,7 +32,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             MetricName = metricName;
             TimeGrain = timeGrain;
             AggregationType = aggregationType;
-            SignalKind = EntitySignalKind.AzureResourceMetric;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricSignalDefinitionProperties"/>. </summary>
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metricNamespace"> Metric namespace. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <param name="dimension"> Optional: Dimension to split by. </param>
         /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
-        internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimension, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
+        internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimension, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, additionalBinaryDataProperties)
         {
             MetricNamespace = metricNamespace;
             MetricName = metricName;
@@ -58,24 +58,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
             AggregationType = aggregationType;
             Dimension = dimension;
             DimensionFilter = dimensionFilter;
-            SignalKind = signalKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceMetricSignalDefinitionProperties"/> for deserialization. </summary>
-        internal ResourceMetricSignalDefinitionProperties()
-        {
         }
 
         /// <summary> Metric namespace. </summary>
         public string MetricNamespace { get; set; }
+
         /// <summary> Name of the metric. </summary>
         public string MetricName { get; set; }
+
         /// <summary> Time range of signal. ISO duration format like PT10M. </summary>
         public string TimeGrain { get; set; }
+
         /// <summary> Type of aggregation to apply to the metric. </summary>
         public MetricAggregationType AggregationType { get; set; }
+
         /// <summary> Optional: Dimension to split by. </summary>
         public string Dimension { get; set; }
+
         /// <summary> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </summary>
         public string DimensionFilter { get; set; }
     }

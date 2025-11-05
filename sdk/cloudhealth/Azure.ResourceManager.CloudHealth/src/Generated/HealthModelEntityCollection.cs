@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelEntityResource"/> and their operations.
-    /// Each <see cref="HealthModelEntityResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
-    /// To get a <see cref="HealthModelEntityCollection"/> instance call the GetHealthModelEntities method from an instance of <see cref="HealthModelResource"/>.
+    /// Each <see cref="HealthModelEntityResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="HealthModelEntityCollection"/> instance call the GetHealthModelEntities method from an instance of the parent resource.
     /// </summary>
     public partial class HealthModelEntityCollection : ArmCollection, IEnumerable<HealthModelEntityResource>, IAsyncEnumerable<HealthModelEntityResource>
     {
-        private readonly ClientDiagnostics _healthModelEntityEntitiesClientDiagnostics;
-        private readonly EntitiesRestOperations _healthModelEntityEntitiesRestClient;
+        private readonly ClientDiagnostics _entitiesClientDiagnostics;
+        private readonly Entities _entitiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelEntityCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthModelEntityCollection for mocking. </summary>
         protected HealthModelEntityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelEntityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthModelEntityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthModelEntityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthModelEntityEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelEntityResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HealthModelEntityResource.ResourceType, out string healthModelEntityEntitiesApiVersion);
-            _healthModelEntityEntitiesRestClient = new EntitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelEntityEntitiesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HealthModelEntityResource.ResourceType, out string healthModelEntityApiVersion);
+            _entitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelEntityResource.ResourceType.Namespace, Diagnostics);
+            _entitiesRestClient = new Entities(_entitiesClientDiagnostics, Pipeline, Endpoint, healthModelEntityApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HealthModelEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string entityName, HealthModelEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _healthModelEntityEntitiesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _healthModelEntityEntitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelEntityResource>(Response.FromValue(new HealthModelEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, HealthModelEntityData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelEntityData> response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelEntityResource> operation = new CloudHealthArmOperation<HealthModelEntityResource>(Response.FromValue(new HealthModelEntityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// Create a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HealthModelEntityResource> CreateOrUpdate(WaitUntil waitUntil, string entityName, HealthModelEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _healthModelEntityEntitiesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken);
-                var uri = _healthModelEntityEntitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelEntityResource>(Response.FromValue(new HealthModelEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, HealthModelEntityData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelEntityData> response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelEntityResource> operation = new CloudHealthArmOperation<HealthModelEntityResource>(Response.FromValue(new HealthModelEntityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HealthModelEntityResource>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Get");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = await _healthModelEntityEntitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelEntityData> response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HealthModelEntityResource> Get(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Get");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = _healthModelEntityEntitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelEntityData> response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,102 +262,92 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary>
-        /// List Entity resources by HealthModel
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_ListByHealthModel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthModelEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthModelEntityResource> GetAllAsync(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelEntityEntitiesRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelEntityEntitiesRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthModelEntityResource(Client, HealthModelEntityData.DeserializeHealthModelEntityData(e)), _healthModelEntityEntitiesClientDiagnostics, Pipeline, "HealthModelEntityCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List Entity resources by HealthModel
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_ListByHealthModel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Entity resources by HealthModel. </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthModelEntityResource> GetAll(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HealthModelEntityResource> GetAllAsync(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelEntityEntitiesRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelEntityEntitiesRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthModelEntityResource(Client, HealthModelEntityData.DeserializeHealthModelEntityData(e)), _healthModelEntityEntitiesClientDiagnostics, Pipeline, "HealthModelEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HealthModelEntityData, HealthModelEntityResource>(new EntitiesGetByHealthModelAsyncCollectionResultOfT(
+                _entitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                timestamp,
+                context), data => new HealthModelEntityResource(Client, data));
+        }
+
+        /// <summary> List Entity resources by HealthModel. </summary>
+        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HealthModelEntityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthModelEntityResource> GetAll(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HealthModelEntityData, HealthModelEntityResource>(new EntitiesGetByHealthModelCollectionResultOfT(
+                _entitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                timestamp,
+                context), data => new HealthModelEntityResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Exists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _healthModelEntityEntitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,39 +358,53 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Exists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = _healthModelEntityEntitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,41 +415,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HealthModelEntityResource>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.GetIfExists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _healthModelEntityEntitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelEntityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,41 +476,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a Entity
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities/{entityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the entity. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HealthModelEntityResource> GetIfExists(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _healthModelEntityEntitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.GetIfExists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("HealthModelEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _healthModelEntityEntitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, entityName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelEntityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +546,7 @@ namespace Azure.ResourceManager.CloudHealth
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HealthModelEntityResource> IAsyncEnumerable<HealthModelEntityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

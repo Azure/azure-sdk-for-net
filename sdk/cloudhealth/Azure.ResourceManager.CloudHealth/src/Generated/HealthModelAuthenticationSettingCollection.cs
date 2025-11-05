@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelAuthenticationSettingResource"/> and their operations.
-    /// Each <see cref="HealthModelAuthenticationSettingResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
-    /// To get a <see cref="HealthModelAuthenticationSettingCollection"/> instance call the GetHealthModelAuthenticationSettings method from an instance of <see cref="HealthModelResource"/>.
+    /// Each <see cref="HealthModelAuthenticationSettingResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="HealthModelAuthenticationSettingCollection"/> instance call the GetHealthModelAuthenticationSettings method from an instance of the parent resource.
     /// </summary>
     public partial class HealthModelAuthenticationSettingCollection : ArmCollection, IEnumerable<HealthModelAuthenticationSettingResource>, IAsyncEnumerable<HealthModelAuthenticationSettingResource>
     {
-        private readonly ClientDiagnostics _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics;
-        private readonly AuthenticationSettingsRestOperations _healthModelAuthenticationSettingAuthenticationSettingsRestClient;
+        private readonly ClientDiagnostics _authenticationSettingsClientDiagnostics;
+        private readonly AuthenticationSettings _authenticationSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelAuthenticationSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthModelAuthenticationSettingCollection for mocking. </summary>
         protected HealthModelAuthenticationSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelAuthenticationSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthModelAuthenticationSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthModelAuthenticationSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelAuthenticationSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HealthModelAuthenticationSettingResource.ResourceType, out string healthModelAuthenticationSettingAuthenticationSettingsApiVersion);
-            _healthModelAuthenticationSettingAuthenticationSettingsRestClient = new AuthenticationSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelAuthenticationSettingAuthenticationSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HealthModelAuthenticationSettingResource.ResourceType, out string healthModelAuthenticationSettingApiVersion);
+            _authenticationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelAuthenticationSettingResource.ResourceType.Namespace, Diagnostics);
+            _authenticationSettingsRestClient = new AuthenticationSettings(_authenticationSettingsClientDiagnostics, Pipeline, Endpoint, healthModelAuthenticationSettingApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HealthModelAuthenticationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authenticationSettingName, HealthModelAuthenticationSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, HealthModelAuthenticationSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelAuthenticationSettingData> response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelAuthenticationSettingResource> operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// Create a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HealthModelAuthenticationSettingResource> CreateOrUpdate(WaitUntil waitUntil, string authenticationSettingName, HealthModelAuthenticationSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, data, cancellationToken);
-                var uri = _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, HealthModelAuthenticationSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelAuthenticationSettingData> response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelAuthenticationSettingResource> operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HealthModelAuthenticationSettingResource>> GetAsync(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Get");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _healthModelAuthenticationSettingAuthenticationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelAuthenticationSettingData> response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HealthModelAuthenticationSettingResource> Get(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Get");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _healthModelAuthenticationSettingAuthenticationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelAuthenticationSettingData> response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,100 +262,78 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary>
-        /// List AuthenticationSetting resources by HealthModel
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_ListByHealthModel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AuthenticationSetting resources by HealthModel. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthModelAuthenticationSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthModelAuthenticationSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthModelAuthenticationSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthModelAuthenticationSettingResource(Client, HealthModelAuthenticationSettingData.DeserializeHealthModelAuthenticationSettingData(e)), _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics, Pipeline, "HealthModelAuthenticationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelAsyncCollectionResultOfT(_authenticationSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthModelAuthenticationSettingResource(Client, data));
         }
 
-        /// <summary>
-        /// List AuthenticationSetting resources by HealthModel
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_ListByHealthModel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AuthenticationSetting resources by HealthModel. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelAuthenticationSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthModelAuthenticationSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelAuthenticationSettingAuthenticationSettingsRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthModelAuthenticationSettingResource(Client, HealthModelAuthenticationSettingData.DeserializeHealthModelAuthenticationSettingData(e)), _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics, Pipeline, "HealthModelAuthenticationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelCollectionResultOfT(_authenticationSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthModelAuthenticationSettingResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Exists");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _healthModelAuthenticationSettingAuthenticationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelAuthenticationSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelAuthenticationSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,39 +344,53 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Exists");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _healthModelAuthenticationSettingAuthenticationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelAuthenticationSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelAuthenticationSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,41 +401,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HealthModelAuthenticationSettingResource>> GetIfExistsAsync(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _healthModelAuthenticationSettingAuthenticationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelAuthenticationSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelAuthenticationSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelAuthenticationSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,41 +462,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a AuthenticationSetting
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HealthModelAuthenticationSettingResource> GetIfExists(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationSettingName, nameof(authenticationSettingName));
 
-            using var scope = _healthModelAuthenticationSettingAuthenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _authenticationSettingsClientDiagnostics.CreateScope("HealthModelAuthenticationSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _healthModelAuthenticationSettingAuthenticationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationSettingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authenticationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelAuthenticationSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelAuthenticationSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelAuthenticationSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +532,7 @@ namespace Azure.ResourceManager.CloudHealth
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HealthModelAuthenticationSettingResource> IAsyncEnumerable<HealthModelAuthenticationSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AuthenticationSettingListResult))]
     [ModelReaderWriterBuildable(typeof(AzureMonitorWorkspaceSignalGroup))]
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(PrometheusMetricsSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(RelationshipListResult))]
     [ModelReaderWriterBuildable(typeof(ResourceMetricSignalDefinitionProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SignalDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownHealthModelAuthenticationSettingProperties))]

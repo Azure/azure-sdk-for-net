@@ -9,72 +9,84 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCloudHealthModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> A HealthModel resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelData"/> instance for mocking. </returns>
-        public static HealthModelData HealthModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthModelProperties properties = null, ManagedServiceIdentity identity = null)
+        public static HealthModelData HealthModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthModelProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HealthModelData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelProperties"/>. </summary>
+        /// <summary> HealthModel properties. </summary>
         /// <param name="dataplaneEndpoint"> The data plane endpoint for interacting with health data. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="discovery"> Configure to automatically discover entities from a given scope, such as a Service Group. The discovered entities will be linked to the root entity of the health model. </param>
         /// <returns> A new <see cref="Models.HealthModelProperties"/> instance for mocking. </returns>
-        public static HealthModelProperties HealthModelProperties(string dataplaneEndpoint = null, HealthModelProvisioningState? provisioningState = null, ModelDiscoverySettings discovery = null)
+        public static HealthModelProperties HealthModelProperties(string dataplaneEndpoint = default, HealthModelProvisioningState? provisioningState = default, ModelDiscoverySettings discovery = default)
         {
-            return new HealthModelProperties(dataplaneEndpoint, provisioningState, discovery, serializedAdditionalRawData: null);
+            return new HealthModelProperties(dataplaneEndpoint, provisioningState, discovery, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelSignalDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.HealthModelSignalDefinitionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ResourceMetricSignalDefinitionProperties"/>, <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> and <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>.
-        /// </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="healthModelUpdateDiscovery"> Configure to automatically discover entities from a given scope, such as a Service Group. The discovered entities will be linked to the root entity of the health model. </param>
+        /// <returns> A new <see cref="Models.HealthModelPatch"/> instance for mocking. </returns>
+        public static HealthModelPatch HealthModelPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ModelDiscoverySettings healthModelUpdateDiscovery = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HealthModelPatch(identity, tags, healthModelUpdateDiscovery is null ? default : new HealthModelUpdateProperties(healthModelUpdateDiscovery, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A signal definition in a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelSignalDefinitionData"/> instance for mocking. </returns>
-        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelSignalDefinitionProperties properties = null)
+        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelSignalDefinitionProperties properties = default)
         {
             return new HealthModelSignalDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelSignalDefinitionProperties"/>. </summary>
+        /// <summary>
+        /// SignalDefinition properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceMetricSignalDefinitionProperties"/>, <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>, and <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>.
+        /// </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
@@ -84,23 +96,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <returns> A new <see cref="Models.HealthModelSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string signalKind = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null)
+        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string signalKind = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> labels = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default)
         {
-            labels ??= new Dictionary<string, string>();
+            labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new UnknownHealthModelSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                signalKind == null ? default : new EntitySignalKind(signalKind),
+                new EntitySignalKind(signalKind),
                 refreshInterval,
                 labels,
                 dataUnit,
                 evaluationRules,
                 deletedOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricSignalDefinitionProperties"/>. </summary>
+        /// <summary> Azure Resource Metric Signal Definition properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
@@ -115,9 +127,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dimension"> Optional: Dimension to split by. </param>
         /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
         /// <returns> A new <see cref="Models.ResourceMetricSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string metricNamespace = null, string metricName = null, string timeGrain = null, MetricAggregationType aggregationType = default, string dimension = null, string dimensionFilter = null)
+        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> labels = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default, string metricNamespace = default, string metricName = default, string timeGrain = default, MetricAggregationType aggregationType = default, string dimension = default, string dimensionFilter = default)
         {
-            labels ??= new Dictionary<string, string>();
+            labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new ResourceMetricSignalDefinitionProperties(
                 provisioningState,
@@ -128,7 +140,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 dataUnit,
                 evaluationRules,
                 deletedOn,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 metricNamespace,
                 metricName,
                 timeGrain,
@@ -137,7 +149,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 dimensionFilter);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>. </summary>
+        /// <summary> Log Analytics Query Signal Definition properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
@@ -149,9 +161,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> instance for mocking. </returns>
-        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null, string valueColumnName = null)
+        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> labels = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default, string queryText = default, string timeGrain = default, string valueColumnName = default)
         {
-            labels ??= new Dictionary<string, string>();
+            labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new LogAnalyticsQuerySignalDefinitionProperties(
                 provisioningState,
@@ -162,13 +174,13 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 dataUnit,
                 evaluationRules,
                 deletedOn,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 queryText,
                 timeGrain,
                 valueColumnName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>. </summary>
+        /// <summary> Prometheus Metrics Signal Definition properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
@@ -179,9 +191,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="queryText"> Query text in PromQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <returns> A new <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null)
+        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> labels = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default, string queryText = default, string timeGrain = default)
         {
-            labels ??= new Dictionary<string, string>();
+            labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new PrometheusMetricsSignalDefinitionProperties(
                 provisioningState,
@@ -192,72 +204,71 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 dataUnit,
                 evaluationRules,
                 deletedOn,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 queryText,
                 timeGrain);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelAuthenticationSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.HealthModelAuthenticationSettingProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>.
-        /// </param>
+        /// <summary> An authentication setting in a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelAuthenticationSettingData"/> instance for mocking. </returns>
-        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelAuthenticationSettingProperties properties = null)
+        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelAuthenticationSettingProperties properties = default)
         {
             return new HealthModelAuthenticationSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelAuthenticationSettingProperties"/>. </summary>
+        /// <summary>
+        /// Authentication setting properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>.
+        /// </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
         /// <returns> A new <see cref="Models.HealthModelAuthenticationSettingProperties"/> instance for mocking. </returns>
-        public static HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string authenticationKind = null)
+        public static HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string authenticationKind = default)
         {
-            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, authenticationKind == null ? default : new HealthModelAuthenticationKind(authenticationKind), serializedAdditionalRawData: null);
+            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, new HealthModelAuthenticationKind(authenticationKind), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>. </summary>
+        /// <summary> Authentication setting properties for Azure Managed Identity. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="managedIdentityName"> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </param>
         /// <returns> A new <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/> instance for mocking. </returns>
-        public static ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string managedIdentityName = null)
+        public static ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string managedIdentityName = default)
         {
-            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, HealthModelAuthenticationKind.ManagedIdentity, serializedAdditionalRawData: null, managedIdentityName);
+            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, HealthModelAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, managedIdentityName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An entity (aka node) of a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelEntityData"/> instance for mocking. </returns>
-        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelEntityProperties properties = null)
+        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelEntityProperties properties = default)
         {
             return new HealthModelEntityData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelEntityProperties"/>. </summary>
+        /// <summary> Properties which are common across all kinds of entities. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="kind"> Entity kind. </param>
@@ -272,9 +283,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <returns> A new <see cref="Models.HealthModelEntityProperties"/> instance for mocking. </returns>
-        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string kind = null, EntityCoordinates canvasPosition = null, EntityIcon icon = null, float? healthObjective = null, EntityImpact? impact = null, IDictionary<string, string> labels = null, EntitySignalGroup signals = null, string discoveredBy = null, DateTimeOffset? deletedOn = null, EntityHealthState? healthState = null, EntityAlerts alerts = null)
+        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string kind = default, EntityCoordinates canvasPosition = default, EntityIcon icon = default, float? healthObjective = default, EntityImpact? impact = default, IDictionary<string, string> labels = default, EntitySignalGroup signals = default, string discoveredBy = default, DateTimeOffset? deletedOn = default, EntityHealthState? healthState = default, EntityAlerts alerts = default)
         {
-            labels ??= new Dictionary<string, string>();
+            labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new HealthModelEntityProperties(
                 provisioningState,
@@ -290,28 +301,86 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 deletedOn,
                 healthState,
                 alerts,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelRelationshipData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A grouping of signal assignments for an Azure resource. </summary>
+        /// <param name="signalAssignments"> Signal definitions which are assigned to this signal group. All assignments are combined with an OR operator. </param>
+        /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
+        /// <param name="azureResourceId"> Azure resource ID. </param>
+        /// <returns> A new <see cref="Models.AzureResourceSignalGroup"/> instance for mocking. </returns>
+        public static AzureResourceSignalGroup AzureResourceSignalGroup(IEnumerable<EntitySignalAssignment> signalAssignments = default, string authenticationSetting = default, ResourceIdentifier azureResourceId = default)
+        {
+            signalAssignments ??= new ChangeTrackingList<EntitySignalAssignment>();
+
+            return new AzureResourceSignalGroup(signalAssignments.ToList(), authenticationSetting, azureResourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Group of signal definition assignments. </summary>
+        /// <param name="signalDefinitions"> Signal definitions referenced by their names. All definitions are combined with an AND operator. </param>
+        /// <returns> A new <see cref="Models.EntitySignalAssignment"/> instance for mocking. </returns>
+        public static EntitySignalAssignment EntitySignalAssignment(IEnumerable<string> signalDefinitions = default)
+        {
+            signalDefinitions ??= new ChangeTrackingList<string>();
+
+            return new EntitySignalAssignment(signalDefinitions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A grouping of signal assignments for a Log Analytics Workspace. </summary>
+        /// <param name="signalAssignments"> Signal definitions which are assigned to this signal group. All assignments are combined with an OR operator. </param>
+        /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
+        /// <param name="logAnalyticsWorkspaceResourceId"> Log Analytics Workspace resource ID. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsSignalGroup"/> instance for mocking. </returns>
+        public static LogAnalyticsSignalGroup LogAnalyticsSignalGroup(IEnumerable<EntitySignalAssignment> signalAssignments = default, string authenticationSetting = default, ResourceIdentifier logAnalyticsWorkspaceResourceId = default)
+        {
+            signalAssignments ??= new ChangeTrackingList<EntitySignalAssignment>();
+
+            return new LogAnalyticsSignalGroup(signalAssignments.ToList(), authenticationSetting, logAnalyticsWorkspaceResourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A grouping of signal assignments for a Azure Monitor Workspace. </summary>
+        /// <param name="signalAssignments"> Signal definitions which are assigned to this signal group. All assignments are combined with an OR operator. </param>
+        /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
+        /// <param name="azureMonitorWorkspaceResourceId"> Azure Monitor workspace resource ID. </param>
+        /// <returns> A new <see cref="Models.AzureMonitorWorkspaceSignalGroup"/> instance for mocking. </returns>
+        public static AzureMonitorWorkspaceSignalGroup AzureMonitorWorkspaceSignalGroup(IEnumerable<EntitySignalAssignment> signalAssignments = default, string authenticationSetting = default, ResourceIdentifier azureMonitorWorkspaceResourceId = default)
+        {
+            signalAssignments ??= new ChangeTrackingList<EntitySignalAssignment>();
+
+            return new AzureMonitorWorkspaceSignalGroup(signalAssignments.ToList(), authenticationSetting, azureMonitorWorkspaceResourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Alert configuration details. </summary>
+        /// <param name="severity"> The severity of triggered alert. </param>
+        /// <param name="description"> The alert rule description. </param>
+        /// <param name="actionGroupIds"> Optional list of action group resource IDs to be notified when the alert is triggered. </param>
+        /// <returns> A new <see cref="Models.EntityAlertConfiguration"/> instance for mocking. </returns>
+        public static EntityAlertConfiguration EntityAlertConfiguration(EntityAlertSeverity severity = default, string description = default, IEnumerable<ResourceIdentifier> actionGroupIds = default)
+        {
+            actionGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new EntityAlertConfiguration(severity, description, actionGroupIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A relationship (aka edge) between two entities in a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelRelationshipData"/> instance for mocking. </returns>
-        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelRelationshipProperties properties = null)
+        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelRelationshipProperties properties = default)
         {
             return new HealthModelRelationshipData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelRelationshipProperties"/>. </summary>
+        /// <summary> Relationship properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="parentEntityName"> Resource name of the parent entity. </param>
@@ -320,9 +389,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
         /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
         /// <returns> A new <see cref="Models.HealthModelRelationshipProperties"/> instance for mocking. </returns>
-        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string parentEntityName = null, string childEntityName = null, IDictionary<string, string> labels = null, string discoveredBy = null, DateTimeOffset? deletedOn = null)
+        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string parentEntityName = default, string childEntityName = default, IDictionary<string, string> labels = default, string discoveredBy = default, DateTimeOffset? deletedOn = default)
         {
-            labels ??= new Dictionary<string, string>();
+            labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new HealthModelRelationshipProperties(
                 provisioningState,
@@ -332,28 +401,28 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 labels,
                 discoveredBy,
                 deletedOn,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelDiscoveryRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A discovery rule which automatically finds entities and relationships in a health model based on an Azure Resource Graph query. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelDiscoveryRuleData"/> instance for mocking. </returns>
-        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelDiscoveryRuleProperties properties = null)
+        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelDiscoveryRuleProperties properties = default)
         {
             return new HealthModelDiscoveryRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthModelDiscoveryRuleProperties"/>. </summary>
+        /// <summary> Discovery rule properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="resourceGraphQuery"> Azure Resource Graph query text in KQL syntax. The query must return at least a column named 'id' which contains the resource ID of the discovered resources. </param>
@@ -365,7 +434,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="numberOfDiscoveredEntities"> Number of discovered entities in the last discovery operation. </param>
         /// <param name="entityName"> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </param>
         /// <returns> A new <see cref="Models.HealthModelDiscoveryRuleProperties"/> instance for mocking. </returns>
-        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string resourceGraphQuery = null, string authenticationSetting = null, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DateTimeOffset? deletedOn = null, string errorMessage = null, int? numberOfDiscoveredEntities = null, string entityName = null)
+        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string resourceGraphQuery = default, string authenticationSetting = default, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DateTimeOffset? deletedOn = default, string errorMessage = default, int? numberOfDiscoveredEntities = default, string entityName = default)
         {
             return new HealthModelDiscoveryRuleProperties(
                 provisioningState,
@@ -378,7 +447,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 errorMessage,
                 numberOfDiscoveredEntities,
                 entityName,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
     }
 }
