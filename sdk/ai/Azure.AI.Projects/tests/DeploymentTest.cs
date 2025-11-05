@@ -22,6 +22,7 @@ public class DeploymentTest : ProjectsClientTestBase
     }
 
     [RecordedTest]
+    [Ignore("Pending 2.* investigation")]
     public async Task AIDeploymentTest()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;

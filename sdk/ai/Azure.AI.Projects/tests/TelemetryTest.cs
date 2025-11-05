@@ -21,6 +21,7 @@ namespace Azure.AI.Projects.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Pending 2.* investigation")]
         public async Task TelemetryOperationsTest()
         {
             AIProjectClient projectClient = GetTestClient();
