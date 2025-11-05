@@ -398,6 +398,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Break Sentence. </summary>
         /// <param name="content"> Array of the text for which values the sentence boundaries will be calculated. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="language">
         /// Language tag identifying the language of the input text.
         /// If a code isn&apos;t specified, automatic language detection will be applied.
@@ -410,7 +411,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<string> content, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<string> content, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is no longer supported.");
         }
@@ -437,6 +438,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Break Sentence. </summary>
         /// <param name="content"> Array of the text for which values the sentence boundaries will be calculated. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="language">
         /// Language tag identifying the language of the input text.
         /// If a code isn&apos;t specified, automatic language detection will be applied.
@@ -449,7 +451,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<string> content, string language = null, string script = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<string> content, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is no longer supported.");
         }

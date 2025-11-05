@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
@@ -24,12 +23,11 @@ namespace Azure.AI.Translation.Text
         /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="scripts"> List of scripts to convert from. </param>
-        internal TransliterationLanguage(string name, string nativeName, IEnumerable<TransliterableScript> scripts)
+        internal TransliterationLanguage(string name, string nativeName)
         {
             Name = name;
             NativeName = nativeName;
-            Scripts = scripts.ToList();
+            Scripts = new ChangeTrackingList<TransliterableScript>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/>. </summary>
@@ -37,7 +35,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransliterationLanguage(string name, string nativeName, IList<TransliterableScript> scripts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TransliterationLanguage(string name, string nativeName, IReadOnlyList<TransliterableScript> scripts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             NativeName = nativeName;
@@ -52,6 +50,6 @@ namespace Azure.AI.Translation.Text
         public string NativeName { get; }
 
         /// <summary> List of scripts to convert from. </summary>
-        public IList<TransliterableScript> Scripts { get; }
+        public IReadOnlyList<TransliterableScript> Scripts { get; }
     }
 }

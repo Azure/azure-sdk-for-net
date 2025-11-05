@@ -46,13 +46,16 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(Name);
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
-            writer.WritePropertyName("scripts"u8);
-            writer.WriteStartArray();
-            foreach (TransliterableScript item in Scripts)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("scripts"u8);
+                writer.WriteStartArray();
+                foreach (TransliterableScript item in Scripts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -97,7 +100,7 @@ namespace Azure.AI.Translation.Text
             }
             string name = default;
             string nativeName = default;
-            IList<TransliterableScript> scripts = default;
+            IReadOnlyList<TransliterableScript> scripts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
