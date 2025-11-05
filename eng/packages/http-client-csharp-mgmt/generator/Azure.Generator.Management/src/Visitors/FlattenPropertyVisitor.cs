@@ -215,16 +215,20 @@ namespace Azure.Generator.Management.Visitors
                     fullConstructorParameterIndex++;
                 }
                 var (isOverriddenValueType, flattenedProperty) = flattenedProperties[flattenedPropertyIndex];
-                var propertyParameter = flattenedProperty.AsParameter;
                 var flattenedPropertyType = flattenedProperty.Type;
                 var constructorParameterType = fullConstructorParameters[fullConstructorParameterIndex].Type;
 
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
                 if (constructorParameterType.AreNamesEqual(flattenedPropertyType))
                 {
+                    var propertyParameter = flattenedProperty.AsParameter;
                     var parameter = (parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                         ? updatedParameter
-                        : propertyParameter).ToPublicInputParameter(); // use the input type for constructor parameter
+                        : propertyParameter); // use the input type for constructor parameter
+
+                    // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
+                    // update the parameter type to match the constructor parameter type for now
+                    parameter.Update(type: parameter.Type.InputType);
 
                     parameters.Add(isOverriddenValueType
                         ? parameter.Property("Value")
