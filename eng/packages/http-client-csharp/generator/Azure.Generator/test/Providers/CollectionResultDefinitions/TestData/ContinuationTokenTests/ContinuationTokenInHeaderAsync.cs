@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
@@ -54,7 +55,7 @@ namespace Samples
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
-                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
+                    items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.Models.ModelSerializationExtensions.WireOptions));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
                 if (response.Headers.TryGetValue("nextPage", out string value))
