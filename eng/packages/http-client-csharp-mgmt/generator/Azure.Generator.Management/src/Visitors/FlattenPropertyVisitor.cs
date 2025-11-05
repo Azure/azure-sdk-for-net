@@ -215,21 +215,25 @@ namespace Azure.Generator.Management.Visitors
                     fullConstructorParameterIndex++;
                 }
                 var (isOverriddenValueType, flattenedProperty) = flattenedProperties[flattenedPropertyIndex];
-                var propertyParameter = flattenedProperty.AsParameter;
                 var flattenedPropertyType = flattenedProperty.Type;
                 var constructorParameterType = fullConstructorParameters[fullConstructorParameterIndex].Type;
 
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
                 if (constructorParameterType.AreNamesEqual(flattenedPropertyType))
                 {
-                    if (parameterMap.TryGetValue(propertyParameter, out var updatedParameter))
-                    {
-                        parameters.Add(isOverriddenValueType ? updatedParameter.Property("Value") : updatedParameter);
-                    }
-                    else
-                    {
-                        parameters.Add(isOverriddenValueType ? propertyParameter.Property("Value") : propertyParameter);
-                    }
+                    var propertyParameter = flattenedProperty.AsParameter;
+                    var parameter = (parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
+                        ? updatedParameter
+                        : propertyParameter);
+
+                    // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
+                    // update the parameter type to match the constructor parameter type for now
+                    parameter.Update(type: parameter.Type.InputType);
+
+                    parameters.Add(isOverriddenValueType
+                        ? parameter.Property("Value")
+                        : IsNonReadOnlyMemoryList(parameter) ? parameter.ToList() : parameter);
+
                     // only increase flattenedPropertyIndex when we use a flattened property
                     flattenedPropertyIndex++;
                 }
@@ -268,6 +272,9 @@ namespace Azure.Generator.Management.Visitors
                 }
                 return additionalPropertyIndex;
             }
+
+            bool IsNonReadOnlyMemoryList(ParameterProvider parameter) =>
+                parameter.Type is { IsList: true, IsReadOnlyMemory: false };
         }
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
