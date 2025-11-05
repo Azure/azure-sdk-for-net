@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class BackTranslation
     {
-        public BackTranslation() { }
+        internal BackTranslation() { }
         public string DisplayText { get { throw null; } }
         public int ExamplesCount { get { throw null; } }
         public int FrequencyCount { get { throw null; } }
@@ -42,13 +42,15 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class BreakSentenceItem
     {
-        public BreakSentenceItem() { }
+        internal BreakSentenceItem() { }
         public Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<int> SentencesLengths { get { throw null; } }
     }
     public partial class DetectedLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DetectedLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>
     {
         internal DetectedLanguage() { }
+        [System.ObsoleteAttribute("Confidence is deprecated. Use Score instead.")]
+        public float Confidence { get { throw null; } }
         public string Language { get { throw null; } }
         public float Score { get { throw null; } }
         protected virtual Azure.AI.Translation.Text.DetectedLanguage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -64,7 +66,7 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class DictionaryExample
     {
-        public DictionaryExample() { }
+        internal DictionaryExample() { }
         public string SourcePrefix { get { throw null; } }
         public string SourceSuffix { get { throw null; } }
         public string SourceTerm { get { throw null; } }
@@ -75,7 +77,7 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class DictionaryExampleItem
     {
-        public DictionaryExampleItem() { }
+        internal DictionaryExampleItem() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExample> Examples { get { throw null; } }
         public string NormalizedSource { get { throw null; } }
         public string NormalizedTarget { get { throw null; } }
@@ -89,7 +91,7 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class DictionaryLookupItem
     {
-        public DictionaryLookupItem() { }
+        internal DictionaryLookupItem() { }
         public string DisplaySource { get { throw null; } }
         public string NormalizedSource { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryTranslation> Translations { get { throw null; } }
@@ -97,7 +99,7 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class DictionaryTranslation
     {
-        public DictionaryTranslation() { }
+        internal DictionaryTranslation() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BackTranslation> BackTranslations { get { throw null; } }
         public float Confidence { get { throw null; } }
         public string DisplayTarget { get { throw null; } }
@@ -108,11 +110,13 @@ namespace Azure.AI.Translation.Text
     public partial class GetSupportedLanguagesResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.GetSupportedLanguagesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.GetSupportedLanguagesResult>
     {
         internal GetSupportedLanguagesResult() { }
+        [System.ObsoleteAttribute("Dictionary is deprecated and will be removed in a future release.")]
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.SourceDictionaryLanguage> Dictionary { get { throw null; } }
         public Azure.ETag Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Models { get { throw null; } }
         public string RequestId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> Translation { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> Transliteration { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> Translation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> Transliteration { get { throw null; } }
         protected virtual Azure.AI.Translation.Text.GetSupportedLanguagesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Translation.Text.GetSupportedLanguagesResult (Azure.Response result) { throw null; }
@@ -137,6 +141,13 @@ namespace Azure.AI.Translation.Text
         Azure.AI.Translation.Text.InputTextItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.InputTextItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.InputTextItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.InputTextItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
+    public partial class InputTextWithTranslation
+    {
+        public InputTextWithTranslation(string word, string translation) { }
+        public string Text { get { throw null; } }
+        public string Translation { get { throw null; } }
     }
     public enum LanguageDirectionality
     {
@@ -189,14 +200,14 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class SentenceBoundaries
     {
-        public SentenceBoundaries() { }
+        internal SentenceBoundaries() { }
         public System.Collections.Generic.IReadOnlyList<int> SourceSentencesLengths { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<int> TranslatedSentencesLengths { get { throw null; } }
     }
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class SourceDictionaryLanguage
     {
-        public SourceDictionaryLanguage() { }
+        internal SourceDictionaryLanguage() { }
         public Azure.AI.Translation.Text.LanguageDirectionality Directionality { get { throw null; } }
         public string Name { get { throw null; } }
         public string NativeName { get { throw null; } }
@@ -205,13 +216,13 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class SourceText
     {
-        public SourceText() { }
+        internal SourceText() { }
         public string Text { get { throw null; } }
     }
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class TargetDictionaryLanguage
     {
-        public TargetDictionaryLanguage() { }
+        internal TargetDictionaryLanguage() { }
         public string Code { get { throw null; } }
         public Azure.AI.Translation.Text.LanguageDirectionality Directionality { get { throw null; } }
         public string Name { get { throw null; } }
@@ -267,6 +278,38 @@ namespace Azure.AI.Translation.Text
             V2025_10_01_Preview = 2,
         }
     }
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
+    public partial class TextTranslationTranslateOptions
+    {
+        public TextTranslationTranslateOptions(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content) { }
+        public TextTranslationTranslateOptions(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string sourceLanguage = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), string category = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), bool? includeAlignment = default(bool?), bool? includeSentenceLength = default(bool?), string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = default(bool?)) { }
+        public TextTranslationTranslateOptions(string targetLanguage, string content) { }
+        public bool? AllowFallback { get { throw null; } set { } }
+        public string Category { get { throw null; } set { } }
+        public System.Guid ClientTraceId { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> Content { get { throw null; } }
+        public string FromScript { get { throw null; } set { } }
+        public bool? IncludeAlignment { get { throw null; } set { } }
+        public bool? IncludeSentenceLength { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.ProfanityAction? ProfanityAction { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.ProfanityMarker? ProfanityMarker { get { throw null; } set { } }
+        public string SourceLanguage { get { throw null; } set { } }
+        public string SuggestedFrom { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> TargetLanguages { get { throw null; } }
+        public Azure.AI.Translation.Text.TextType? TextType { get { throw null; } set { } }
+        public string ToScript { get { throw null; } set { } }
+    }
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
+    public partial class TextTranslationTransliterateOptions
+    {
+        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid)) { }
+        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, string content, System.Guid clientTraceId = default(System.Guid)) { }
+        public System.Guid ClientTraceId { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> Content { get { throw null; } }
+        public string FromScript { get { throw null; } }
+        public string Language { get { throw null; } }
+        public string ToScript { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TextType : System.IEquatable<Azure.AI.Translation.Text.TextType>
     {
@@ -289,7 +332,7 @@ namespace Azure.AI.Translation.Text
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
     public partial class TranslatedTextAlignment
     {
-        public TranslatedTextAlignment() { }
+        internal TranslatedTextAlignment() { }
         public string Projections { get { throw null; } }
     }
     public partial class TranslatedTextItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslatedTextItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextItem>
@@ -378,6 +421,8 @@ namespace Azure.AI.Translation.Text
         public int? SourceTokens { get { throw null; } }
         public int? TargetTokens { get { throw null; } }
         public string Text { get { throw null; } }
+        [System.ObsoleteAttribute("Transliteration is deprecated and will be removed in a future release.")]
+        public Azure.AI.Translation.Text.TransliteratedText Transliteration { get { throw null; } }
         protected virtual Azure.AI.Translation.Text.TranslationText JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Translation.Text.TranslationText PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -391,7 +436,7 @@ namespace Azure.AI.Translation.Text
     public static partial class TranslationTextModelFactory
     {
         public static Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage(string language = null, float score = 0f) { throw null; }
-        public static Azure.AI.Translation.Text.GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = null, Azure.ETag etag = default(Azure.ETag), System.Collections.Generic.IDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> translation = null, System.Collections.Generic.IDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> transliteration = null, System.Collections.Generic.IEnumerable<string> models = null) { throw null; }
+        public static Azure.AI.Translation.Text.GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = null, Azure.ETag etag = default(Azure.ETag), System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> translation = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> transliteration = null, System.Collections.Generic.IEnumerable<string> models = null) { throw null; }
         public static Azure.AI.Translation.Text.InputTextItem InputTextItem(string text = null) { throw null; }
         public static Azure.AI.Translation.Text.LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
         public static Azure.AI.Translation.Text.ReferenceTextPair ReferenceTextPair(string source = null, string target = null) { throw null; }

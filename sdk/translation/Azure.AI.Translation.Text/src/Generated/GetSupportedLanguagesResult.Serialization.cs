@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
             {
                 throw new FormatException($"The model {nameof(GetSupportedLanguagesResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Translation))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Translation))
             {
                 writer.WritePropertyName("translation"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Transliteration))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteStartObject();
@@ -120,8 +120,8 @@ namespace Azure.AI.Translation.Text
             }
             string requestId = default;
             ETag etag = default;
-            IDictionary<string, TranslationLanguage> translation = default;
-            IDictionary<string, TransliterationLanguage> transliteration = default;
+            IReadOnlyDictionary<string, TranslationLanguage> translation = default;
+            IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
             IReadOnlyList<string> models = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

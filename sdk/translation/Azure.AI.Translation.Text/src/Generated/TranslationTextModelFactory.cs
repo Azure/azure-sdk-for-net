@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="models"> LLM models supported. </param>
         /// <returns> A new <see cref="Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
-        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = default, ETag etag = default, IDictionary<string, TranslationLanguage> translation = default, IDictionary<string, TransliterationLanguage> transliteration = default, IEnumerable<string> models = default)
+        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(string requestId = default, ETag etag = default, IReadOnlyDictionary<string, TranslationLanguage> translation = default, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default, IEnumerable<string> models = default)
         {
             translation ??= new ChangeTrackingDictionary<string, TranslationLanguage>();
             transliteration ??= new ChangeTrackingDictionary<string, TransliterationLanguage>();

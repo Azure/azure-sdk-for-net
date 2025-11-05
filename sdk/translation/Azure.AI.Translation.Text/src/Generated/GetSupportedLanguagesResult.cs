@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="models"> LLM models supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSupportedLanguagesResult(string requestId, ETag etag, IDictionary<string, TranslationLanguage> translation, IDictionary<string, TransliterationLanguage> transliteration, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSupportedLanguagesResult(string requestId, ETag etag, IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyList<string> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             Etag = etag;
@@ -65,10 +65,10 @@ namespace Azure.AI.Translation.Text
         public ETag Etag { get; }
 
         /// <summary> Languages that support translate API. </summary>
-        public IDictionary<string, TranslationLanguage> Translation { get; }
+        public IReadOnlyDictionary<string, TranslationLanguage> Translation { get; }
 
         /// <summary> Languages that support transliteration API. </summary>
-        public IDictionary<string, TransliterationLanguage> Transliteration { get; }
+        public IReadOnlyDictionary<string, TransliterationLanguage> Transliteration { get; }
 
         /// <summary> LLM models supported. </summary>
         public IReadOnlyList<string> Models { get; }
