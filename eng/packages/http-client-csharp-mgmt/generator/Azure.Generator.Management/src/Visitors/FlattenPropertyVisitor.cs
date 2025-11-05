@@ -216,20 +216,18 @@ namespace Azure.Generator.Management.Visitors
                 }
                 var (isOverriddenValueType, flattenedProperty) = flattenedProperties[flattenedPropertyIndex];
                 var propertyParameter = flattenedProperty.AsParameter;
-                propertyParameter.Update(type: propertyParameter.Type.InputType); // use the input type for comparison
                 var flattenedPropertyType = flattenedProperty.Type;
                 var constructorParameterType = fullConstructorParameters[fullConstructorParameterIndex].Type;
 
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
                 if (constructorParameterType.AreNamesEqual(flattenedPropertyType))
                 {
-                    var parameter = parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
+                    var parameter = (parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                         ? updatedParameter
-                        : propertyParameter;
-                    parameter.Update(type: parameter.Type.InputType); // use the input type for comparison
+                        : propertyParameter).ToPublicInputParameter(); // use the input type for constructor parameter
+
                     parameters.Add(isOverriddenValueType
-                        ?
-                        parameter.Property("Value")
+                        ? parameter.Property("Value")
                         : IsNonReadOnlyMemoryList(parameter) ? parameter.ToList() : parameter);
 
                     // only increase flattenedPropertyIndex when we use a flattened property
