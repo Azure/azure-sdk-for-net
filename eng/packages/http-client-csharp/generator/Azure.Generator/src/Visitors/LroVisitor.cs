@@ -57,9 +57,14 @@ namespace Azure.Generator.Visitors
 
             var serializationProvider = model.SerializationProviders[0];
 
-            // Check if FromLroResponse method already exists
+            // Check if FromLroResponse method already exists with matching signature
             var existingMethod = serializationProvider.Methods
-                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse");
+                .FirstOrDefault(m => m.Signature.Name == "FromLroResponse" &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                                     m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
+                                     m.Signature.ReturnType?.Equals(model.Type) == true &&
+                                     m.Signature.Parameters.Count == 1 &&
+                                     m.Signature.Parameters[0].Type.Equals(typeof(Response)));
             if (existingMethod != null)
             {
                 return;
