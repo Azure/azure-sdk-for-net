@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Base class for JSON models implementing <see cref="IJsonModel{T}"/>.
+/// Helper class for JSON models implementing <see cref="IJsonModel{T}"/>.
 /// </summary>
 /// <typeparam name="T">The type of the model represented by this JSON model.</typeparam>
 public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
@@ -43,8 +43,8 @@ public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
 
     BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options)
     {
-        MemoryStream stream = new MemoryStream();
-        Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+        using MemoryStream stream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
         WriteCore(writer, options);
         writer.Flush();
         byte[] buffer = stream.GetBuffer();
