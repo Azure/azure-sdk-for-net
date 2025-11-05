@@ -426,7 +426,7 @@ namespace Azure.AI.DocumentIntelligence
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAnalyzeResult(document.RootElement, options);
                     }
@@ -441,7 +441,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnalyzeResult"/> from. </param>
         public static explicit operator AnalyzeResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAnalyzeResult(document.RootElement.GetProperty("analyzeResult"), ModelSerializationExtensions.WireOptions);
         }
     }

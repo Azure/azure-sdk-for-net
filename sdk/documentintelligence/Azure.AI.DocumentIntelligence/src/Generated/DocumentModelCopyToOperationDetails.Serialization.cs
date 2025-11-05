@@ -216,7 +216,7 @@ namespace Azure.AI.DocumentIntelligence
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDocumentModelCopyToOperationDetails(document.RootElement, options);
                     }
