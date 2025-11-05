@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 using System.Threading.Tasks;
-using _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding;
+using Specs.Azure.ClientGenerator.Core.HierarchyBuilding;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBuilding
 {
