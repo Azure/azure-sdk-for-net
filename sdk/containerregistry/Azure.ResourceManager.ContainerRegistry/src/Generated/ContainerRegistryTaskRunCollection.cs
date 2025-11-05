@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryTaskRunTaskRunsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskRunName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskRunResource>(new ContainerRegistryTaskRunOperationSource(Client), _containerRegistryTaskRunTaskRunsClientDiagnostics, Pipeline, _containerRegistryTaskRunTaskRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskRunName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskRunResource>(new ContainerRegistryTaskRunOperationSource(Client), _containerRegistryTaskRunTaskRunsClientDiagnostics, Pipeline, _containerRegistryTaskRunTaskRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskRunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryTaskRunTaskRunsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskRunName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskRunResource>(new ContainerRegistryTaskRunOperationSource(Client), _containerRegistryTaskRunTaskRunsClientDiagnostics, Pipeline, _containerRegistryTaskRunTaskRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskRunName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTaskRunResource>(new ContainerRegistryTaskRunOperationSource(Client), _containerRegistryTaskRunTaskRunsClientDiagnostics, Pipeline, _containerRegistryTaskRunTaskRunsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskRunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

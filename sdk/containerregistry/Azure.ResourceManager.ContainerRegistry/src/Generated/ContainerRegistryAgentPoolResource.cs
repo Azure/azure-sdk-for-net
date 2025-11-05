@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryAgentPoolAgentPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryAgentPoolAgentPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryAgentPoolResource>(new ContainerRegistryAgentPoolOperationSource(Client), _containerRegistryAgentPoolAgentPoolsClientDiagnostics, Pipeline, _containerRegistryAgentPoolAgentPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
