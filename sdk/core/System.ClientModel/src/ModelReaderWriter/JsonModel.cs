@@ -14,16 +14,16 @@ public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
     /// <summary>
     /// Writes the model to the provided <see cref="Utf8JsonWriter"/>.
     /// </summary>
-    /// <param name="writer"></param>
-    /// <param name="options"></param>
+    /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write into.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     protected abstract void WriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options);
 
     /// <summary>
     /// Reads one JSON value (including objects or arrays) from the provided reader and converts it to a model.
     /// </summary>
-    /// <param name="reader"></param>
-    /// <param name="options"></param>
-    /// <returns></returns>
+    /// <param name="reader">The <see cref="Utf8JsonReader"/> to read from.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <returns>The model created from the JSON value.</returns>
     protected abstract T CreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
 
     #region MRW
