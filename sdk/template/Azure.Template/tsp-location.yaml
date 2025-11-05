@@ -2,7 +2,8 @@
 # Replace the placeholder values with your actual TypeSpec project information
 
 directory: specification/widget/data-plane/WidgetAnalytics
-commit: <commit-hash-from-azure-rest-api-specs>
+# TODO: Update commit once https://github.com/Azure/azure-rest-api-specs/pull/38490 is merged
+commit: <commit-hash-from-azure-rest-api-specs-pr-38490>
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
 
