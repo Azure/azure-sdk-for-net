@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents;
 
 [CodeGenType("CreateConversationRequest1")]
-[CodeGenSerialization(nameof(Items), PropertySerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue))]
+[CodeGenSerialization(nameof(Items), SerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue))]
 public partial class AgentConversationCreationOptions
 {
     /// <summary>

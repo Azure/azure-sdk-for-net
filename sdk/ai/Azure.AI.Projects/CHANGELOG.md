@@ -2,6 +2,9 @@
 
 ## 2.0.0 (Unreleased)
 
+### Features Added
+* Added many new operations (to be filled)
+
 ## 1.1.0 (2025-11-03)
 
 ### Other Changes

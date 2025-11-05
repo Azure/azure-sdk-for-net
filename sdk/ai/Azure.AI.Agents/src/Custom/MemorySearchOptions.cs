@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents;
 
 [CodeGenType("MemorySearchOptions")]
-[CodeGenSerialization(nameof(Items), PropertySerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue))]
+[CodeGenSerialization(nameof(Items), SerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue))]
 public partial class MemorySearchOptions
 {
     /// <summary> Items for which to search for relevant memories. Only one of conversation_id or items should be provided. </summary>
