@@ -168,7 +168,7 @@ namespace Azure.Generator.Management.Visitors
                     }
                     else
                     {
-                        result = result.Or(updatedParameter.Is(Null));
+                        result = result.And(updatedParameter.Is(Null));
                     }
                 }
                 else
@@ -179,7 +179,7 @@ namespace Azure.Generator.Management.Visitors
                     }
                     else
                     {
-                        result = result.Or(propertyParameter.Is(Null));
+                        result = result.And(propertyParameter.Is(Null));
                     }
                 }
             }
@@ -205,7 +205,7 @@ namespace Azure.Generator.Management.Visitors
                 if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
-                    parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
+                    parameters.Add(Null);
 
                     // If the additionalProperties parameter is the last parameter, we can break the loop.
                     if (fullConstructorParameterIndex == fullConstructorParameters.Count - 1)
@@ -230,9 +230,19 @@ namespace Azure.Generator.Management.Visitors
                     // update the parameter type to match the constructor parameter type for now
                     parameter.Update(type: parameter.Type.InputType);
 
+                    ValueExpression parameterExpression = parameter;
+                    if (parameter.Type.IsList)
+                    {
+                        parameterExpression = parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments)));
+                    }
+                    else if (parameter.Type.IsDictionary)
+                    {
+                        parameterExpression = parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(parameter.Type.Arguments)));
+                    }
+
                     parameters.Add(isOverriddenValueType
-                        ? parameter.Property("Value")
-                        : IsNonReadOnlyMemoryList(parameter) ? parameter.ToList() : parameter);
+                        ? parameterExpression.Property("Value")
+                        : IsNonReadOnlyMemoryList(parameter) ? parameterExpression.ToList() : parameterExpression);
 
                     // only increase flattenedPropertyIndex when we use a flattened property
                     flattenedPropertyIndex++;

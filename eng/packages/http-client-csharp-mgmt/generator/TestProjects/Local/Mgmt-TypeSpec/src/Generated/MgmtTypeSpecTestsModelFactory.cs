@@ -58,17 +58,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null || etag is null || nestedPropertyProperties is null ? default : new FooProperties(
+                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && etag is null && nestedPropertyProperties is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
                     floatValue,
                     doubleValue,
-                    prop1.ToList(),
-                    prop2.ToList(),
+                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
+                    (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
                     etag,
-                    new Dictionary<string, BinaryData>()),
+                    null),
                 extendedLocation);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 user,
                 provisioningState,
                 accessControlEnabled,
-                metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas.ToList(), new Dictionary<string, BinaryData>()),
+                metaDatas is null ? default : new FooSettingsPropertiesMetaData((metaDatas ?? new ChangeTrackingList<string>()).ToList(), new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
@@ -242,15 +242,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 stringArray.ToList(),
                 propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
                 anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
-                innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
+                innerProp1 is null && innerProp2 is null && middleProp1 is null && middleProp2 is null && prop1 is null && prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
-                    new Dictionary<string, BinaryData>(),
+                    null,
                     middleProp1.Value,
-                    middleProp2,
-                    prop1.ToList(),
+                    middleProp2 ?? new ChangeTrackingDictionary<string, string>(),
+                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp.ToList(), new Dictionary<string, BinaryData>()),
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), new Dictionary<string, BinaryData>()),
                 discriminatorProperty);
         }
 
@@ -518,7 +518,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 comment,
                 unit,
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue.ToList(), new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<AllocatedToSubscription>()).ToList(), new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
@@ -537,7 +537,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 comment,
                 unit,
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue.ToList(), new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<AllocatedToSubscription>()).ToList(), new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
