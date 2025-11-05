@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);OPENAI001;CS1573;CS1574;CS1591;AZC0007;AZC0012;AZC0014;AZC0015;AZC0030;AZC0031;AZC0033;AZC0034;SA1649;SA1402;SA1636;</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.AI.OpenAI"/>
+    <PackageReference Include="System.Text.Json"/>
+  </ItemGroup>
+</Project>
