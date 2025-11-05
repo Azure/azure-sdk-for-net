@@ -509,7 +509,9 @@ public class AgentsTests : AgentsTestBase
                     streamedWorkflowActionItem = workflowActionItem;
                 }
             }
-            Console.WriteLine($"{responseUpdate} : {ModelReaderWriter.Write(responseUpdate).ToString()}");
+            // This line is commented because of failure:
+            // System.InvalidOperationException : Cannot write a JSON property within an array or as the first JSON token. Current token type is 'EndObject'.
+            //Console.WriteLine($"{responseUpdate} : {ModelReaderWriter.Write(responseUpdate).ToString()}");
         }
 
         Assert.That(streamedWorkflowActionItem?.ActionId, Is.Not.Null.And.Not.Empty);
