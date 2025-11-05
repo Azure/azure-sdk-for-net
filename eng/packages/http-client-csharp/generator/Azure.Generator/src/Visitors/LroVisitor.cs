@@ -129,24 +129,16 @@ namespace Azure.Generator.Visitors
 
             foreach (var client in allClients)
             {
-                // Get all non-null service methods from the client
-                var inputMethods = client.Methods.OfType<ScmMethodProvider>()
-                    .Where(m => m.ServiceMethod != null)
-                    .Select(m => m.ServiceMethod);
+                // Check if any non-LRO method in this client uses the response model
+                bool usedInNonLro = client.Methods
+                    .OfType<ScmMethodProvider>()
+                    .Any(m => m.ServiceMethod != null &&
+                              m.ServiceMethod is not InputLongRunningServiceMethod &&
+                              m.ServiceMethod.Response?.Type == responseModel);
 
-                foreach (var method in inputMethods)
+                if (usedInNonLro)
                 {
-                    // Skip LRO methods
-                    if (method is InputLongRunningServiceMethod)
-                    {
-                        continue;
-                    }
-
-                    // Check if this non-LRO method returns the response model
-                    if (method!.Response?.Type == responseModel)
-                    {
-                        return false; // Model is used in non-LRO context, keep the explicit operator
-                    }
+                    return false; // Model is used in non-LRO context, keep the explicit operator
                 }
             }
 
