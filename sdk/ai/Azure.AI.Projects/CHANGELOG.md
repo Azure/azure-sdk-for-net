@@ -1,12 +1,8 @@
 # Release History
 
+## 2.0.0 (Unreleased)
+
 ## 1.1.0 (2025-11-03)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 * Added `files` samples for operations create, delete, list, retrieve and download.
