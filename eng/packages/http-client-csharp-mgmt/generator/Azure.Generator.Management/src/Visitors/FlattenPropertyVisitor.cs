@@ -224,7 +224,7 @@ namespace Azure.Generator.Management.Visitors
                     var propertyParameter = flattenedProperty.AsParameter;
                     var parameter = (parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                         ? updatedParameter
-                        : propertyParameter); // use the input type for constructor parameter
+                        : propertyParameter);
 
                     // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
                     // update the parameter type to match the constructor parameter type for now
