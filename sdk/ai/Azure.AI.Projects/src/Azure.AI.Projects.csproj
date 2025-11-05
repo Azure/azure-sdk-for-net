@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
-    <Version>2.0.0</Version>
+    <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Projects</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -35,7 +35,7 @@
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="OpenAI" />
+    <PackageReference Include="Azure.AI.OpenAI" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

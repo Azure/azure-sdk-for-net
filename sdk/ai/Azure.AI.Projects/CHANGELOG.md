@@ -1,11 +1,19 @@
 # Release History
 
-## 2.0.0 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.1.0 (2025-11-03)
 
-### Other Changes
-* Added `files` samples for operations create, delete, list, retrieve and download.
+### Features Added
+
 - Remove `clientRequestId` parameter from `AIProjectConnectionsOperations` and `AIProjectDeploymentsOperations` methods as this value is controlled transparently by `System.ClientModel`.
 - Remove `type` parameter from `AzureAIProjectsModelFactory.BlobReferenceSasCredential` as this is a hardcoded value.
 - Remove `pendingUploadType` parameter from `AzureAIProjectsModelFactory.PendingUploadRequest` and `AzureAIProjectsModelFactory.PendingUploadConfiguration` as this is a hardcoded value.
