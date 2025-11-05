@@ -8,7 +8,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Base class for JSON models implementing <see cref="IJsonModel{T}"/>.
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">The type of the model represented by this JSON model.</typeparam>
 public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
 {
     /// <summary>
