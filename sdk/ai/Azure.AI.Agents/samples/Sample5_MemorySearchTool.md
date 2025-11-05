@@ -142,10 +142,11 @@ memoryClient.UpdateMemories(memoryStore.Id, scope, updateItems);
 
 Synchronous sample:
 ```C# Snippet:Sample_CheckMemorySearch_Sync
-MemorySearchOptions opts = new(
-    maxMemories: 1,
-    items: [ResponseItem.CreateUserMessageItem("What was the joke?")],
-    additionalBinaryDataProperties: null);
+MemorySearchOptions opts = new()
+{
+    MaxMemories = 1,
+    Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
+};
 MemoryStoreSearchResponse resp = memoryClient.SearchMemories(
     memoryStoreId: memoryStore.Id,
     scope: scope,
@@ -161,10 +162,11 @@ Console.WriteLine("==End of memory search tool output.==");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CheckMemorySearch_Async
-MemorySearchOptions opts = new(
-    maxMemories: 1,
-    items: [ResponseItem.CreateUserMessageItem("What was the joke?")],
-    additionalBinaryDataProperties: null);
+MemorySearchOptions opts = new()
+{
+    MaxMemories = 1,
+    Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
+};
 MemoryStoreSearchResponse resp = await memoryClient.SearchMemoriesAsync(
     memoryStoreId: memoryStore.Id,
     scope: scope,
