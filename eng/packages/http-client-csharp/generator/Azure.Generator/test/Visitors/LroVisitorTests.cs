@@ -188,7 +188,7 @@ namespace Azure.Generator.Tests.Visitors
                 InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var responseModel = InputFactory.Model("foo");
-            
+
             // Create an LRO method
             var lro = InputFactory.Operation(
                 "lroOp",
@@ -203,18 +203,18 @@ namespace Azure.Generator.Tests.Visitors
                     finalState: 1,
                     finalResponse: InputFactory.OperationResponse(),
                     resultPath: "someResultPath"));
-            
+
             // Create a non-LRO method that also returns the same model
             var nonLroOp = InputFactory.Operation(
                 "nonLroOp",
                 parameters: parameters,
                 responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
-            var nonLroServiceMethod = InputFactory.ServiceMethod(
+            var nonLroServiceMethod = InputFactory.BasicServiceMethod(
                 "nonLroOp",
                 nonLroOp,
                 parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
-            
+
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod, nonLroServiceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
