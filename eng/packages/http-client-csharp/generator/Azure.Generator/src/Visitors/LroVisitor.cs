@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Generator.Extensions;
+using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -73,7 +74,7 @@ namespace Azure.Generator.Visitors
             }
 
             // Create the FromLroResponse method
-            var responseParameter = new ParameterProvider("response", $"The response to deserialize.", typeof(Response));
+            var responseParameter = KnownAzureParameters.Response;
             var methodSignature = new MethodSignature(
                 FromLroResponseMethodName,
                 $"Converts a response to a {model.Type.Name} using the LRO result path.",
