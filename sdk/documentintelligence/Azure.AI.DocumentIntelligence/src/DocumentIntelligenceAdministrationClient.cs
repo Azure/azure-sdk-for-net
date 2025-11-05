@@ -94,7 +94,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await BuildClassifierAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentClassifierDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
+            return ProtocolOperationHelpers.Convert(result, DocumentClassifierDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }
 
         /// <summary> Builds a custom document classifier. </summary>
@@ -109,7 +109,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = BuildClassifier(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentClassifierDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
+            return ProtocolOperationHelpers.Convert(result, DocumentClassifierDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }
 
         /// <summary> Builds a custom document analysis model. </summary>
@@ -124,7 +124,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentModelDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
+            return ProtocolOperationHelpers.Convert(result, DocumentModelDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
 
         /// <summary> Builds a custom document analysis model. </summary>
@@ -139,7 +139,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = BuildDocumentModel(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentModelDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
+            return ProtocolOperationHelpers.Convert(result, DocumentModelDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
 
         /// <summary> Creates a new document model from document types of existing document models. </summary>
@@ -154,7 +154,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await ComposeModelAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentModelDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
+            return ProtocolOperationHelpers.Convert(result, DocumentModelDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
 
         /// <summary> Creates a new document model from document types of existing document models. </summary>
@@ -169,7 +169,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = ComposeModel(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentModelDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
+            return ProtocolOperationHelpers.Convert(result, DocumentModelDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
 
         // CUSTOM CODE NOTE: we're overwriting methods CopyClassifierTo and CopyModelTo for the
@@ -190,7 +190,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = authorization;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await CopyClassifierToAsync(waitUntil, classifierId, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentClassifierDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
+            return ProtocolOperationHelpers.Convert(result, DocumentClassifierDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
         }
 
         /// <summary> Copies document classifier to the target resource, region, and classifierId. </summary>
@@ -208,7 +208,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = authorization;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = CopyClassifierTo(waitUntil, classifierId, content, context);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentClassifierDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
+            return ProtocolOperationHelpers.Convert(result, DocumentClassifierDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
         }
 
         /// <summary> Copies document model to the target resource, region, and modelId. </summary>
@@ -226,7 +226,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = authorization;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await CopyModelToAsync(waitUntil, modelId, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentModelDetails)response , ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
+            return ProtocolOperationHelpers.Convert(result, DocumentModelDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
 
         /// <summary> Copies document model to the target resource, region, and modelId. </summary>
@@ -244,7 +244,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = authorization;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = CopyModelTo(waitUntil, modelId, content, context);
-            return ProtocolOperationHelpers.Convert(result, response => (DocumentModelDetails)response, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
+            return ProtocolOperationHelpers.Convert(result, DocumentModelDetails.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
 
         // CUSTOM CODE NOTE: we're overwriting the behavior of the BuildDocumentModel, ComposeModel,

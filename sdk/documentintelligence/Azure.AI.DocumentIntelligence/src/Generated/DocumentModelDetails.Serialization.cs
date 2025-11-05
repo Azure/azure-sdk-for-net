@@ -398,6 +398,14 @@ namespace Azure.AI.DocumentIntelligence
         public static explicit operator DocumentModelDetails(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDocumentModelDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <summary> Converts a response to a DocumentModelDetails using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static DocumentModelDetails FromLroResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentModelDetails(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
         }
     }

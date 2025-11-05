@@ -181,8 +181,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AnalyzeBatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnalyzeBatchResult"/> from. </param>
-        public static explicit operator AnalyzeBatchResult(Response response)
+        /// <summary> Converts a response to a AnalyzeBatchResult using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static AnalyzeBatchResult FromLroResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAnalyzeBatchResult(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);

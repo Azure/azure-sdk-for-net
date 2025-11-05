@@ -59,7 +59,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await AnalyzeDocumentAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeResult)response, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
         /// <summary> Analyzes document with document model. </summary>
@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = AnalyzeDocument(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
-            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeResult)response, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
@@ -89,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeBatchResult)response, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
+            return ProtocolOperationHelpers.Convert(result, AnalyzeBatchResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
@@ -104,7 +104,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = AnalyzeBatchDocuments(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
-            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeBatchResult)response, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
+            return ProtocolOperationHelpers.Convert(result, AnalyzeBatchResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
@@ -119,7 +119,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeResult)response, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
@@ -134,7 +134,7 @@ namespace Azure.AI.DocumentIntelligence
             using RequestContent content = options;
             RequestContext context = cancellationToken.ToRequestContext();
             Operation<BinaryData> result = ClassifyDocument(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context);
-            return ProtocolOperationHelpers.Convert(result, response => (AnalyzeResult)response, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
         // CUSTOM CODE NOTE: adding overloads for common scenarios of the AnalyzeDocument method.

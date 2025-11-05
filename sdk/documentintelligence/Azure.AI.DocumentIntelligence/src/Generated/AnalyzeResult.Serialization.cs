@@ -438,8 +438,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AnalyzeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AnalyzeResult"/> from. </param>
-        public static explicit operator AnalyzeResult(Response response)
+        /// <summary> Converts a response to a AnalyzeResult using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static AnalyzeResult FromLroResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAnalyzeResult(document.RootElement.GetProperty("analyzeResult"), ModelSerializationExtensions.WireOptions);
