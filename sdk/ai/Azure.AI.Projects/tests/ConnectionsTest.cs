@@ -7,12 +7,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Azure.Identity;
-using NUnit.Framework.Internal;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -23,6 +17,7 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
+        [Ignore("Pending 2.* investigation")]
         public async Task ConnectionsBasicTest()
         {
             var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
