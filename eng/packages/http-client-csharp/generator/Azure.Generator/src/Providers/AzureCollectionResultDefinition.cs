@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -148,19 +147,13 @@ namespace Azure.Generator.Providers
 
         private MethodBodyStatement[] ConvertItemsToListOfBinaryData(VariableExpression responseVariable, out VariableExpression itemsVariable)
         {
-            var wireOptions = Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>();
-
             return
             [
                 Declare("items", new CSharpType(typeof(List<>), typeof(BinaryData)),
                     New.Instance(new CSharpType(typeof(List<>), typeof(BinaryData))), out itemsVariable),
-                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable)
+                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<object>>(), out var itemVariable)
                 {
-                    UsingDeclare("stream", typeof(MemoryStream), New.Instance<MemoryStream>(), out var streamVariable),
-                    UsingDeclare("writer", typeof(Utf8JsonWriter), New.Instance<Utf8JsonWriter>([streamVariable]), out var writerVariable),
-                    writerVariable.Invoke("WriteObjectValue", [itemVariable.As<object>(), wireOptions]).Terminate(),
-                    writerVariable.Invoke("Flush").Terminate(),
-                    itemsVariable.Invoke("Add", [New.Instance<BinaryData>([streamVariable.Invoke("ToArray")])]).Terminate()
+                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write), new ValueExpression[] { itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions") })).Terminate()
                 }
             ];
         }
