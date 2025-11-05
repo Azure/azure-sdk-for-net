@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -46,7 +48,11 @@ namespace BasicTypeSpec
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(BinaryData.FromObjectAsJson(item));
+                    using MemoryStream stream = new MemoryStream();
+                    using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                    writer.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                    writer.Flush();
+                    items.Add(new BinaryData(stream.ToArray()));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.Next;
