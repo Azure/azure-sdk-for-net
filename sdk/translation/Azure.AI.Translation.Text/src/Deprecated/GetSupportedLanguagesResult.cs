@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Translation.Text
     {
         /// <summary> Languages that support dictionary API. </summary>
         [Obsolete("Dictionary is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, SourceDictionaryLanguage> Dictionary { get; }
     }
 }

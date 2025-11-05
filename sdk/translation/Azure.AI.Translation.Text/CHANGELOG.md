@@ -5,6 +5,7 @@
 ### Features Added
 
 - Introduced text translations using LLM option.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -16,7 +17,7 @@
 
 ### Features Added
 
-- Introduced model factory `Azure.AI.Translation.Text.TextTranslationModelFactory` for mocking.
+- Introduced model factory `Azure.AI.Translation.Text.AITranslationTextModelFactory` for mocking.
 - Added options overloads to Translate and Transliterate. TextTranslationTranslateOptions and TextTranslationTransliterateOptions roll up method parameters into a single object.
 - Add support for using AAD authentication.
 

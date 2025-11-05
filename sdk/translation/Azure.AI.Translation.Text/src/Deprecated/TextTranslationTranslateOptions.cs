@@ -4,11 +4,13 @@
 using Azure.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Client options for TextTranslationClient.Translate </summary>
     [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class TextTranslationTranslateOptions
     {
         /// <summary>

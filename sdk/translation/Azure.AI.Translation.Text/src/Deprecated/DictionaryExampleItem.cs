@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Example element. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class DictionaryExampleItem
     {
         /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>

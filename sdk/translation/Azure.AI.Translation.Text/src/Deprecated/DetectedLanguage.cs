@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> An object describing the detected language. </summary>
+    // Partial class to hold deprecated members.
     public partial class DetectedLanguage
     {
         /// <summary>

@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Properties of the target dictionary language. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class TargetDictionaryLanguage
     {
         /// <summary> Initializes a new instance of TargetDictionaryLanguage. </summary>

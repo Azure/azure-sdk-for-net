@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Model factory for models. </summary>
     [Obsolete("This class is deprecated. Use TranslationTextModelFactory instead.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public static class AITranslationTextModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Text.GetSupportedLanguagesResult"/>. </summary>

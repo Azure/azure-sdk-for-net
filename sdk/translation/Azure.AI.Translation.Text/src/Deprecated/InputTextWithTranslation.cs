@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Input Text Element for Translator Requests. </summary>
     [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class InputTextWithTranslation
     {
         /// <summary>

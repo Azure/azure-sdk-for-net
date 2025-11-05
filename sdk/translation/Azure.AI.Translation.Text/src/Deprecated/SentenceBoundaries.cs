@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> An object returning sentence boundaries in the input and output texts. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SentenceBoundaries
     {
         /// <summary> Initializes a new instance of SentenceBoundaries. </summary>

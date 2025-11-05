@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Element containing the text with translation. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class DictionaryExampleTextItem : InputTextItem
     {
         /// <summary> Initializes a new instance of <see cref="DictionaryExampleTextItem"/>. </summary>
