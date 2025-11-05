@@ -247,7 +247,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     innerProp2,
                     null,
                     middleProp1.Value,
-                    middleProp2 ?? new ChangeTrackingDictionary<string, string>(),
+                    middleProp2,
                     (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     prop2.Value),
                 optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), null),

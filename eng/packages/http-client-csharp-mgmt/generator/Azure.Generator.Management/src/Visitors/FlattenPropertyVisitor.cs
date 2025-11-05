@@ -230,19 +230,9 @@ namespace Azure.Generator.Management.Visitors
                     // update the parameter type to match the constructor parameter type for now
                     parameter.Update(type: parameter.Type.InputType);
 
-                    ValueExpression parameterExpression = parameter;
-                    if (parameter.Type.IsList)
-                    {
-                        parameterExpression = parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments)));
-                    }
-                    else if (parameter.Type.IsDictionary)
-                    {
-                        parameterExpression = parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.DictionaryInitializationType.MakeGenericType(parameter.Type.Arguments)));
-                    }
-
                     parameters.Add(isOverriddenValueType
-                        ? parameterExpression.Property("Value")
-                        : IsNonReadOnlyMemoryList(parameter) ? parameterExpression.ToList() : parameterExpression);
+                        ? parameter.Property("Value")
+                        : IsNonReadOnlyMemoryList(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
                     // only increase flattenedPropertyIndex when we use a flattened property
                     flattenedPropertyIndex++;
