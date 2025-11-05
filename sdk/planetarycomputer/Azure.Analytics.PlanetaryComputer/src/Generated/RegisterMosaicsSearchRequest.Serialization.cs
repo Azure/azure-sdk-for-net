@@ -97,10 +97,28 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Filter))
+            if (Optional.IsCollectionDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteStringValue(Filter);
+                writer.WriteStartObject();
+                foreach (var item in Filter)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Datetime))
             {
@@ -174,7 +192,7 @@ namespace Azure.Analytics.PlanetaryComputer
             float? boundingBox = default;
             GeoJsonGeometry intersects = default;
             IDictionary<string, BinaryData> query = default;
-            string filter = default;
+            IDictionary<string, BinaryData> filter = default;
             string datetime = default;
             IList<StacSortExtension> sortBy = default;
             FilterLanguage? filterLanguage = default;
@@ -265,7 +283,23 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("filter"u8))
                 {
-                    filter = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    filter = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("datetime"u8))
@@ -316,7 +350,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 boundingBox,
                 intersects,
                 query ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                filter,
+                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 datetime,
                 sortBy ?? new ChangeTrackingList<StacSortExtension>(),
                 filterLanguage,

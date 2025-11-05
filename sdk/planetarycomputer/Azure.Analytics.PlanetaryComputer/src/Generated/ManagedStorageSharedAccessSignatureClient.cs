@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// [Protocol Method] Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
         /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
         /// <list type="bullet">
         /// <item>
@@ -78,7 +78,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// [Protocol Method] Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
         /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
         /// <list type="bullet">
         /// <item>
@@ -111,7 +111,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
         /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
         /// </summary>
         /// <param name="href"> HREF (URL) to sign. </param>
@@ -128,7 +128,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
         /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
         /// </summary>
         /// <param name="href"> HREF (URL) to sign. </param>
@@ -145,7 +145,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// [Protocol Method] Generate a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for the given storage account and container. The storage account and container
         /// must be associated with a Planetary Computer dataset indexed by the STAC API.
         /// <list type="bullet">
@@ -180,7 +180,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// [Protocol Method] Generate a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for the given storage account and container. The storage account and container
         /// must be associated with a Planetary Computer dataset indexed by the STAC API.
         /// <list type="bullet">
@@ -215,7 +215,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// Generate a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for the given storage account and container. The storage account and container
         /// must be associated with a Planetary Computer dataset indexed by the STAC API.
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// Generate a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for the given storage account and container. The storage account and container
         /// must be associated with a Planetary Computer dataset indexed by the STAC API.
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// [Protocol Method] Revoke a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for managed storage account of this GeoCatalog.
         /// <list type="bullet">
         /// <item>
@@ -282,7 +282,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// [Protocol Method] Revoke a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for managed storage account of this GeoCatalog.
         /// <list type="bullet">
         /// <item>
@@ -311,7 +311,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// Revoke a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for managed storage account of this GeoCatalog.
         /// </summary>
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
@@ -323,7 +323,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// Revoke a [SAS Token](https://docs.microsoft.com//azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
         /// for managed storage account of this GeoCatalog.
         /// </summary>
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>

@@ -23,6 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Collections = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<string>();
             Query = new ChangeTrackingDictionary<string, BinaryData>();
+            Filter = new ChangeTrackingDictionary<string, BinaryData>();
             SortBy = new ChangeTrackingList<StacSortExtension>();
         }
 
@@ -38,7 +39,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegisterMosaicsSearchRequest(IList<string> collections, IList<string> ids, float? boundingBox, GeoJsonGeometry intersects, IDictionary<string, BinaryData> query, string filter, string datetime, IList<StacSortExtension> sortBy, FilterLanguage? filterLanguage, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegisterMosaicsSearchRequest(IList<string> collections, IList<string> ids, float? boundingBox, GeoJsonGeometry intersects, IDictionary<string, BinaryData> query, IDictionary<string, BinaryData> filter, string datetime, IList<StacSortExtension> sortBy, FilterLanguage? filterLanguage, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -93,8 +94,33 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         public IDictionary<string, BinaryData> Query { get; }
 
-        /// <summary> Filter. </summary>
-        public string Filter { get; }
+        /// <summary>
+        /// Filter
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Filter { get; }
 
         /// <summary> Temporal filter in RFC 3339 format or interval. </summary>
         public string Datetime { get; }

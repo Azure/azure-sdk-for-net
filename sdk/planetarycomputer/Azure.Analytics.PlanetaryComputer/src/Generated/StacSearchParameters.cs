@@ -31,6 +31,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Query = new ChangeTrackingDictionary<string, BinaryData>();
             SortBy = new ChangeTrackingList<StacSortExtension>();
             Fields = new ChangeTrackingList<SearchOptionsFields>();
+            Filter = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StacSearchParameters"/>. </summary>
@@ -71,7 +72,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacSearchParameters(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, StacAssetUrlSigningMode? sign, int? durationInMinutes, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, string filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacSearchParameters(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, StacAssetUrlSigningMode? sign, int? durationInMinutes, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, IDictionary<string, BinaryData> filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -194,8 +195,31 @@ namespace Azure.Analytics.PlanetaryComputer
         /// CQL2 Filter
         /// 
         /// See the [STAC Filter Extension](https://github.com/stac-api-extensions/filter).
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string Filter { get; set; }
+        public IDictionary<string, BinaryData> Filter { get; }
 
         /// <summary> Coordinate reference system for the filter. </summary>
         public string FilterCoordinateReferenceSystem { get; set; }

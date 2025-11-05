@@ -4354,7 +4354,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, float? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, string filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, float? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
         {
             RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
                 collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
@@ -4385,7 +4385,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, float? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, string filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, float? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
         {
             RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
                 collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),

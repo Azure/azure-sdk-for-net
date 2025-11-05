@@ -1038,7 +1038,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacSearchParameters"/> instance for mocking. </returns>
-        public static StacSearchParameters StacSearchParameters(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, string datetime = default, int? limit = default, IDictionary<string, BinaryData> conformanceClass = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, IDictionary<string, BinaryData> query = default, IEnumerable<StacSortExtension> sortBy = default, IEnumerable<SearchOptionsFields> fields = default, string filter = default, string filterCoordinateReferenceSystem = default, FilterLanguage? filterLang = default, string token = default)
+        public static StacSearchParameters StacSearchParameters(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, string datetime = default, int? limit = default, IDictionary<string, BinaryData> conformanceClass = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, IDictionary<string, BinaryData> query = default, IEnumerable<StacSortExtension> sortBy = default, IEnumerable<SearchOptionsFields> fields = default, IDictionary<string, BinaryData> filter = default, string filterCoordinateReferenceSystem = default, FilterLanguage? filterLang = default, string token = default)
         {
             collections ??= new ChangeTrackingList<string>();
             ids ??= new ChangeTrackingList<string>();
@@ -1047,6 +1047,7 @@ namespace Azure.Analytics.PlanetaryComputer
             query ??= new ChangeTrackingDictionary<string, BinaryData>();
             sortBy ??= new ChangeTrackingList<StacSortExtension>();
             fields ??= new ChangeTrackingList<SearchOptionsFields>();
+            filter ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new StacSearchParameters(
                 collections.ToList(),
