@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
+            if (Optional.IsDefined(Sensitivity))
+            {
+                writer.WritePropertyName("sensitivity"u8);
+                writer.WriteStringValue(Sensitivity.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
@@ -98,6 +103,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string ruleId = default;
             ManagedRuleEnabledState? enabledState = default;
             RuleMatchActionType? action = default;
+            SensitivityType? sensitivity = default;
             IList<ManagedRuleExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -126,6 +132,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     action = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sensitivity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivity = new SensitivityType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -146,7 +161,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedRuleOverride(ruleId, enabledState, action, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), serializedAdditionalRawData);
+            return new ManagedRuleOverride(
+                ruleId,
+                enabledState,
+                action,
+                sensitivity,
+                exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -210,6 +231,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     builder.Append("  action: ");
                     builder.AppendLine($"'{Action.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sensitivity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sensitivity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sensitivity))
+                {
+                    builder.Append("  sensitivity: ");
+                    builder.AppendLine($"'{Sensitivity.Value.ToString()}'");
                 }
             }
 

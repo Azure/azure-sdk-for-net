@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckFrontDoorNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/CheckFrontdoorNameAvailability.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/CheckFrontdoorNameAvailability.json
             // this example is just showing the usage of "FrontDoorNameAvailability_Check" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

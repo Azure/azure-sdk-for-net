@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFrontendEndpoint()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorFrontendEndpointGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorFrontendEndpointGet.json
             // this example is just showing the usage of "FrontendEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task EnableHttps_FrontendEndpointsEnableHttps()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorEnableHttps.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorEnableHttps.json
             // this example is just showing the usage of "FrontendEndpoints_EnableHttps" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DisableHttps_FrontendEndpointsDisableHttps()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorDisableHttps.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorDisableHttps.json
             // this example is just showing the usage of "FrontendEndpoints_DisableHttps" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

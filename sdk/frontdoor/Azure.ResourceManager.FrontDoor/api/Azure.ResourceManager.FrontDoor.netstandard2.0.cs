@@ -466,7 +466,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.FrontendEndpointData FrontendEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string hostName = null, Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState? sessionAffinityEnabledState = default(Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState?), int? sessionAffinityTtlInSeconds = default(int?), Azure.Core.ResourceIdentifier webApplicationFirewallPolicyLinkId = null, Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? resourceState = default(Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState?), Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState?), Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate?), Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration customHttpsConfiguration = null) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.LatencyMetric LatencyMetric(string name = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), float? aValue = default(float?), float? bValue = default(float?), float? delta = default(float?), float? deltaPercent = default(float?), float? acLower95CI = default(float?), float? ahUpper95CI = default(float?), float? bcLower95CI = default(float?), float? bUpper95CI = default(float?)) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.LatencyScorecard LatencyScorecard(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string latencyScorecardId = null, string latencyScorecardName = null, string description = null, System.Uri scorecardEndpointA = null, System.Uri scorecardEndpointB = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.Models.LatencyMetric> latencyMetrics = null) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? defaultState = default(Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState?), Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? defaultAction = default(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType?), string description = null) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? defaultState = default(Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState?), Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? defaultAction = default(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType?), Azure.ResourceManager.FrontDoor.Models.SensitivityType? defaultSensitivity = default(Azure.ResourceManager.FrontDoor.Models.SensitivityType?), string description = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition ManagedRuleDefinition(string ruleId, Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? defaultState, Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? defaultAction, string description) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition> rules = null) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition ManagedRuleSetDefinition(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null, string ruleSetId = null, string ruleSetType = null, string ruleSetVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition> ruleGroups = null) { throw null; }
         public static Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint PreconfiguredEndpoint(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, string endpoint = null, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType? endpointType = default(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType?), string backend = null) { throw null; }
@@ -1427,6 +1429,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal ManagedRuleDefinition() { }
         public Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? DefaultAction { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.SensitivityType? DefaultSensitivity { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? DefaultState { get { throw null; } }
         public string Description { get { throw null; } }
         public string RuleId { get { throw null; } }
@@ -1543,6 +1546,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
         public string RuleId { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.SensitivityType? Sensitivity { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1987,6 +1991,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SensitivityType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.SensitivityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SensitivityType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.SensitivityType High { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.SensitivityType Low { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.SensitivityType Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.SensitivityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.SensitivityType left, Azure.ResourceManager.FrontDoor.Models.SensitivityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.SensitivityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.SensitivityType left, Azure.ResourceManager.FrontDoor.Models.SensitivityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SessionAffinityEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState>
     {
         private readonly object _dummy;
@@ -2089,6 +2112,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator LessThan { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator LessThanOrEqual { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator RegEX { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator ServiceTagMatch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

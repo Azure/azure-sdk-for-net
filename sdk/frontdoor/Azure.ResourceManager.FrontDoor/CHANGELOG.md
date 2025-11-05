@@ -1,14 +1,9 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.2 (2025-11-18)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Support for DDos-RuleSet
 
 ## 1.4.1 (2025-10-15)
 

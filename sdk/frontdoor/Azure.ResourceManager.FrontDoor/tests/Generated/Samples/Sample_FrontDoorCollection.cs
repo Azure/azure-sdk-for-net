@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateSpecificFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorCreate.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorCreate.json
             // this example is just showing the usage of "FrontDoors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ Name = "default",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorGet.json
             // this example is just showing the usage of "FrontDoors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,7 +183,7 @@ Name = "default",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListFrontDoorsInAResourceGroup()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorList.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorList.json
             // this example is just showing the usage of "FrontDoors_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -218,7 +218,7 @@ Name = "default",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorGet.json
             // this example is just showing the usage of "FrontDoors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +247,7 @@ Name = "default",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorGet.json
             // this example is just showing the usage of "FrontDoors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
