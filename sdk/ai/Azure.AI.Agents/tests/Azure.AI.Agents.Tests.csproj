@@ -14,7 +14,7 @@
     <!-- OPENAI001 - Ignore experimental warnings-->
     <NoWarn>$(NoWarn);OPENAI001;SCME0001;</NoWarn>
 
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.Agents.csproj" />
@@ -24,18 +24,14 @@
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="9.0.0" />
     <PackageReference Include="NUnit" VersionOverride="4.4.0" />
-    <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0"/>
+    <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" />
     <PackageReference Include="System.Linq.Async" />
-		<PackageReference Include="Microsoft.ClientModel.TestFramework" VersionOverride="1.0.0-alpha.20251023.1"/>
+		<PackageReference Include="Microsoft.ClientModel.TestFramework" VersionOverride="1.0.0-alpha.20251023.1" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
 	</ItemGroup>
-
-  <ItemGroup>
-
-  </ItemGroup>
 
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
@@ -43,4 +39,9 @@
 			<_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
 		</AssemblyAttribute>
 	</ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Samples\SingleFile\src\SingleFileNonCompilingInputs.cs" />
+    <Content Include="Samples\SingleFile\src\SingleFileNonCompilingInputs.cs" />
+  </ItemGroup>
 </Project>
