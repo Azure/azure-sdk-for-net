@@ -340,7 +340,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     {
         Assembly assembly = typeof(AgentsClient).Assembly;
         Assert.That(assembly, Is.Not.Null);
-        Type openTelemetryScopeType = assembly.GetType("Azure.AI.Agents.OpenTelemetryScope");
+        Type openTelemetryScopeType = assembly.GetType("Azure.AI.Agents.Telemetry.OpenTelemetryScope");
         Assert.That(openTelemetryScopeType, Is.Not.Null);
         MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
         Assert.That(reinitializeConfigurationMethod, Is.Not.Null);
