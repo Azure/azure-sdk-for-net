@@ -76,18 +76,19 @@ namespace Azure.Generator.Visitors
                 [responseParameter]);
 
             // Build method body similar to explicit operator but with result path
+            var modelSerializationExtensions = Static(new ModelSerializationExtensionsDefinition().Type);
             var statements = new MethodBodyStatement[]
             {
                 UsingDeclare("document", typeof(JsonDocument),
                     Static<JsonDocument>().Invoke(nameof(JsonDocument.Parse),
                         [responseParameter.Property("Content"),
-                         Static(new ModelSerializationExtensionsDefinition().Type).Property("JsonDocumentOptions")]),
+                         modelSerializationExtensions.Property("JsonDocumentOptions")]),
                     out var documentVariable),
                 Return(Static(model.Type).Invoke(
                     $"Deserialize{model.Type.Name}",
                     [
                         documentVariable.Property("RootElement").Invoke("GetProperty", Literal(resultSegment)),
-                        Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions")
+                        modelSerializationExtensions.Property("WireOptions")
                     ]))
             };
 
@@ -107,7 +108,7 @@ namespace Azure.Generator.Visitors
 
                 if (explicitOperator != null)
                 {
-                    var updatedMethods = serializationProvider.Methods.Where(m => m != explicitOperator).ToList();
+                    var updatedMethods = serializationProvider.Methods.Except([explicitOperator]).ToList();
                     serializationProvider.Update(methods: updatedMethods);
                 }
             }
@@ -121,10 +122,10 @@ namespace Azure.Generator.Visitors
 
             foreach (var client in allClients)
             {
-                // Get all service methods from the input client
+                // Get all non-null service methods from the client
                 var inputMethods = client.Methods.OfType<ScmMethodProvider>()
                     .Where(m => m.ServiceMethod != null)
-                    .Select(m => m.ServiceMethod!);
+                    .Select(m => m.ServiceMethod);
 
                 foreach (var method in inputMethods)
                 {
@@ -135,7 +136,7 @@ namespace Azure.Generator.Visitors
                     }
 
                     // Check if this non-LRO method returns the response model
-                    if (method.Response?.Type == responseModel)
+                    if (method!.Response?.Type == responseModel)
                     {
                         return false; // Model is used in non-LRO context, keep the explicit operator
                     }
