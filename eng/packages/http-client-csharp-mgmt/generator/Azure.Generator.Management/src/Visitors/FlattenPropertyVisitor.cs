@@ -389,7 +389,7 @@ namespace Azure.Generator.Management.Visitors
                             internalProperty,
                             innerProperty,
                             innerProperty.ExplicitInterface,
-                            ConstructFlattrenPropertyWireInfo(internalProperty, innerProperty),
+                            ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                             innerProperty.IsRef,
                             innerProperty.Attributes);
 
@@ -409,7 +409,7 @@ namespace Azure.Generator.Management.Visitors
             return isFlattened;
         }
 
-        private static PropertyWireInformation? ConstructFlattrenPropertyWireInfo(PropertyProvider internalProperty, PropertyProvider innerProperty)
+        private static PropertyWireInformation? ConstructFlattenPropertyWireInfo(PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
             var innerPropertyWireInfo = innerProperty.WireInfo;
             var internalPropertyWireInfo = internalProperty.WireInfo;
@@ -453,7 +453,7 @@ namespace Azure.Generator.Management.Visitors
                     internalProperty,
                     innerProperty,
                     innerProperty.ExplicitInterface,
-                    ConstructFlattrenPropertyWireInfo(internalProperty, innerProperty),
+                    ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
                     innerProperty.IsRef,
                     innerProperty.Attributes);
 
