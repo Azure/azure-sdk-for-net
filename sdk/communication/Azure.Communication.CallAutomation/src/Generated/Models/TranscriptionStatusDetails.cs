@@ -22,57 +22,57 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SubscriptionStartedValue = "subscriptionStarted";
-        private const string StreamConnectionReestablishedValue = "streamConnectionReestablished";
-        private const string StreamConnectionUnsuccessfulValue = "streamConnectionUnsuccessful";
-        private const string StreamUrlMissingValue = "streamUrlMissing";
-        private const string ServiceShutdownValue = "serviceShutdown";
-        private const string StreamConnectionInterruptedValue = "streamConnectionInterrupted";
-        private const string SpeechServicesConnectionErrorValue = "speechServicesConnectionError";
-        private const string SubscriptionStoppedValue = "subscriptionStopped";
-        private const string UnspecifiedErrorValue = "unspecifiedError";
-        private const string AuthenticationFailureValue = "authenticationFailure";
-        private const string BadRequestValue = "badRequest";
-        private const string TooManyRequestsValue = "tooManyRequests";
-        private const string ForbiddenValue = "forbidden";
-        private const string ServiceTimeoutValue = "serviceTimeout";
-        private const string TranscriptionLocaleUpdatedValue = "transcriptionLocaleUpdated";
-        private const string CallSummarySuccessValue = "callSummarySuccess";
-        private const string CallSummaryFailureValue = "callSummaryFailure";
+        private const string SubscriptionStartedValue = "SubscriptionStarted";
+        private const string StreamConnectionReestablishedValue = "StreamConnectionReestablished";
+        private const string StreamConnectionUnsuccessfulValue = "StreamConnectionUnsuccessful";
+        private const string StreamUrlMissingValue = "StreamUrlMissing";
+        private const string ServiceShutdownValue = "ServiceShutdown";
+        private const string StreamConnectionInterruptedValue = "StreamConnectionInterrupted";
+        private const string SpeechServicesConnectionErrorValue = "SpeechServicesConnectionError";
+        private const string SubscriptionStoppedValue = "SubscriptionStopped";
+        private const string UnspecifiedErrorValue = "UnspecifiedError";
+        private const string AuthenticationFailureValue = "AuthenticationFailure";
+        private const string BadRequestValue = "BadRequest";
+        private const string TooManyRequestsValue = "TooManyRequests";
+        private const string ForbiddenValue = "Forbidden";
+        private const string ServiceTimeoutValue = "ServiceTimeout";
+        private const string TranscriptionLocaleUpdatedValue = "TranscriptionLocaleUpdated";
+        private const string CallSummarySuccessValue = "CallSummarySuccess";
+        private const string CallSummaryFailureValue = "CallSummaryFailure";
 
-        /// <summary> subscriptionStarted. </summary>
+        /// <summary> SubscriptionStarted. </summary>
         public static TranscriptionStatusDetails SubscriptionStarted { get; } = new TranscriptionStatusDetails(SubscriptionStartedValue);
-        /// <summary> streamConnectionReestablished. </summary>
+        /// <summary> StreamConnectionReestablished. </summary>
         public static TranscriptionStatusDetails StreamConnectionReestablished { get; } = new TranscriptionStatusDetails(StreamConnectionReestablishedValue);
-        /// <summary> streamConnectionUnsuccessful. </summary>
+        /// <summary> StreamConnectionUnsuccessful. </summary>
         public static TranscriptionStatusDetails StreamConnectionUnsuccessful { get; } = new TranscriptionStatusDetails(StreamConnectionUnsuccessfulValue);
-        /// <summary> streamUrlMissing. </summary>
+        /// <summary> StreamUrlMissing. </summary>
         public static TranscriptionStatusDetails StreamUrlMissing { get; } = new TranscriptionStatusDetails(StreamUrlMissingValue);
-        /// <summary> serviceShutdown. </summary>
+        /// <summary> ServiceShutdown. </summary>
         public static TranscriptionStatusDetails ServiceShutdown { get; } = new TranscriptionStatusDetails(ServiceShutdownValue);
-        /// <summary> streamConnectionInterrupted. </summary>
+        /// <summary> StreamConnectionInterrupted. </summary>
         public static TranscriptionStatusDetails StreamConnectionInterrupted { get; } = new TranscriptionStatusDetails(StreamConnectionInterruptedValue);
-        /// <summary> speechServicesConnectionError. </summary>
+        /// <summary> SpeechServicesConnectionError. </summary>
         public static TranscriptionStatusDetails SpeechServicesConnectionError { get; } = new TranscriptionStatusDetails(SpeechServicesConnectionErrorValue);
-        /// <summary> subscriptionStopped. </summary>
+        /// <summary> SubscriptionStopped. </summary>
         public static TranscriptionStatusDetails SubscriptionStopped { get; } = new TranscriptionStatusDetails(SubscriptionStoppedValue);
-        /// <summary> unspecifiedError. </summary>
+        /// <summary> UnspecifiedError. </summary>
         public static TranscriptionStatusDetails UnspecifiedError { get; } = new TranscriptionStatusDetails(UnspecifiedErrorValue);
-        /// <summary> authenticationFailure. </summary>
+        /// <summary> AuthenticationFailure. </summary>
         public static TranscriptionStatusDetails AuthenticationFailure { get; } = new TranscriptionStatusDetails(AuthenticationFailureValue);
-        /// <summary> badRequest. </summary>
+        /// <summary> BadRequest. </summary>
         public static TranscriptionStatusDetails BadRequest { get; } = new TranscriptionStatusDetails(BadRequestValue);
-        /// <summary> tooManyRequests. </summary>
+        /// <summary> TooManyRequests. </summary>
         public static TranscriptionStatusDetails TooManyRequests { get; } = new TranscriptionStatusDetails(TooManyRequestsValue);
-        /// <summary> forbidden. </summary>
+        /// <summary> Forbidden. </summary>
         public static TranscriptionStatusDetails Forbidden { get; } = new TranscriptionStatusDetails(ForbiddenValue);
-        /// <summary> serviceTimeout. </summary>
+        /// <summary> ServiceTimeout. </summary>
         public static TranscriptionStatusDetails ServiceTimeout { get; } = new TranscriptionStatusDetails(ServiceTimeoutValue);
-        /// <summary> transcriptionLocaleUpdated. </summary>
+        /// <summary> TranscriptionLocaleUpdated. </summary>
         public static TranscriptionStatusDetails TranscriptionLocaleUpdated { get; } = new TranscriptionStatusDetails(TranscriptionLocaleUpdatedValue);
-        /// <summary> callSummarySuccess. </summary>
+        /// <summary> CallSummarySuccess. </summary>
         public static TranscriptionStatusDetails CallSummarySuccess { get; } = new TranscriptionStatusDetails(CallSummarySuccessValue);
-        /// <summary> callSummaryFailure. </summary>
+        /// <summary> CallSummaryFailure. </summary>
         public static TranscriptionStatusDetails CallSummaryFailure { get; } = new TranscriptionStatusDetails(CallSummaryFailureValue);
         /// <summary> Determines if two <see cref="TranscriptionStatusDetails"/> values are the same. </summary>
         public static bool operator ==(TranscriptionStatusDetails left, TranscriptionStatusDetails right) => left.Equals(right);

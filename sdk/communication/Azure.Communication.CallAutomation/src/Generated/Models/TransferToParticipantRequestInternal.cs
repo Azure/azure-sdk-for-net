@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class TransferToParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
-        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -23,14 +23,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
-        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="transferee"> Transferee is the participant who is transferred away. </param>
+        /// <param name="transferee"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        /// <param name="customCallingContext"> The custom calling context which will be sent to the target. </param>
         internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri, CustomCallingContextInternal customCallingContext)
         {
             TargetParticipant = targetParticipant;
@@ -40,18 +40,18 @@ namespace Azure.Communication.CallAutomation
             CustomCallingContext = customCallingContext;
         }
 
-        /// <summary> The identity of the target where call should be transferred to. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Transferee is the participant who is transferred away. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Transferee { get; set; }
         /// <summary>
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
-        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        /// <summary> The custom calling context which will be sent to the target. </summary>
         public CustomCallingContextInternal CustomCallingContext { get; set; }
     }
 }

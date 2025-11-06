@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The content type of call recording. </summary>
+    /// <summary> The RecordingContentType. </summary>
     public readonly partial struct RecordingContent : IEquatable<RecordingContent>
     {
         private readonly string _value;
@@ -22,12 +22,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AudioValue = "audio";
-        private const string AudioVideoValue = "audioVideo";
+        private const string AudioValue = "Audio";
+        private const string AudioVideoValue = "AudioVideo";
 
-        /// <summary> audio. </summary>
+        /// <summary> Audio. </summary>
         public static RecordingContent Audio { get; } = new RecordingContent(AudioValue);
-        /// <summary> audioVideo. </summary>
+        /// <summary> AudioVideo. </summary>
         public static RecordingContent AudioVideo { get; } = new RecordingContent(AudioVideoValue);
         /// <summary> Determines if two <see cref="RecordingContent"/> values are the same. </summary>
         public static bool operator ==(RecordingContent left, RecordingContent right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The state of the call connection. </summary>
+    /// <summary> The states of a call connection. </summary>
     public readonly partial struct CallConnectionState : IEquatable<CallConnectionState>
     {
         private readonly string _value;
@@ -22,27 +22,27 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UnknownValue = "unknown";
-        private const string ConnectingValue = "connecting";
-        private const string ConnectedValue = "connected";
-        private const string TransferringValue = "transferring";
-        private const string TransferAcceptedValue = "transferAccepted";
-        private const string DisconnectingValue = "disconnecting";
-        private const string DisconnectedValue = "disconnected";
+        private const string UnknownValue = "Unknown";
+        private const string ConnectingValue = "Connecting";
+        private const string ConnectedValue = "Connected";
+        private const string TransferringValue = "Transferring";
+        private const string TransferAcceptedValue = "TransferAccepted";
+        private const string DisconnectingValue = "Disconnecting";
+        private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static CallConnectionState Unknown { get; } = new CallConnectionState(UnknownValue);
-        /// <summary> connecting. </summary>
+        /// <summary> Connecting. </summary>
         public static CallConnectionState Connecting { get; } = new CallConnectionState(ConnectingValue);
-        /// <summary> connected. </summary>
+        /// <summary> Connected. </summary>
         public static CallConnectionState Connected { get; } = new CallConnectionState(ConnectedValue);
-        /// <summary> transferring. </summary>
+        /// <summary> Transferring. </summary>
         public static CallConnectionState Transferring { get; } = new CallConnectionState(TransferringValue);
-        /// <summary> transferAccepted. </summary>
+        /// <summary> TransferAccepted. </summary>
         public static CallConnectionState TransferAccepted { get; } = new CallConnectionState(TransferAcceptedValue);
-        /// <summary> disconnecting. </summary>
+        /// <summary> Disconnecting. </summary>
         public static CallConnectionState Disconnecting { get; } = new CallConnectionState(DisconnectingValue);
-        /// <summary> disconnected. </summary>
+        /// <summary> Disconnected. </summary>
         public static CallConnectionState Disconnected { get; } = new CallConnectionState(DisconnectedValue);
         /// <summary> Determines if two <see cref="CallConnectionState"/> values are the same. </summary>
         public static bool operator ==(CallConnectionState left, CallConnectionState right) => left.Equals(right);

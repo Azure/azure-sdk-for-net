@@ -22,51 +22,51 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SubscriptionStartedValue = "subscriptionStarted";
-        private const string StreamConnectionReestablishedValue = "streamConnectionReestablished";
-        private const string StreamConnectionUnsuccessfulValue = "streamConnectionUnsuccessful";
-        private const string StreamUrlMissingValue = "streamUrlMissing";
-        private const string ServiceShutdownValue = "serviceShutdown";
-        private const string StreamConnectionInterruptedValue = "streamConnectionInterrupted";
-        private const string SpeechServicesConnectionErrorValue = "speechServicesConnectionError";
-        private const string SubscriptionStoppedValue = "subscriptionStopped";
-        private const string UnspecifiedErrorValue = "unspecifiedError";
-        private const string AuthenticationFailureValue = "authenticationFailure";
-        private const string BadRequestValue = "badRequest";
-        private const string TooManyRequestsValue = "tooManyRequests";
-        private const string ForbiddenValue = "forbidden";
-        private const string ServiceTimeoutValue = "serviceTimeout";
-        private const string InitialWebSocketConnectionFailedValue = "initialWebSocketConnectionFailed";
+        private const string SubscriptionStartedValue = "SubscriptionStarted";
+        private const string StreamConnectionReestablishedValue = "StreamConnectionReestablished";
+        private const string StreamConnectionUnsuccessfulValue = "StreamConnectionUnsuccessful";
+        private const string StreamUrlMissingValue = "StreamUrlMissing";
+        private const string ServiceShutdownValue = "ServiceShutdown";
+        private const string StreamConnectionInterruptedValue = "StreamConnectionInterrupted";
+        private const string SpeechServicesConnectionErrorValue = "SpeechServicesConnectionError";
+        private const string SubscriptionStoppedValue = "SubscriptionStopped";
+        private const string UnspecifiedErrorValue = "UnspecifiedError";
+        private const string AuthenticationFailureValue = "AuthenticationFailure";
+        private const string BadRequestValue = "BadRequest";
+        private const string TooManyRequestsValue = "TooManyRequests";
+        private const string ForbiddenValue = "Forbidden";
+        private const string ServiceTimeoutValue = "ServiceTimeout";
+        private const string InitialWebSocketConnectionFailedValue = "InitialWebSocketConnectionFailed";
 
-        /// <summary> subscriptionStarted. </summary>
+        /// <summary> SubscriptionStarted. </summary>
         public static MediaStreamingStatusDetails SubscriptionStarted { get; } = new MediaStreamingStatusDetails(SubscriptionStartedValue);
-        /// <summary> streamConnectionReestablished. </summary>
+        /// <summary> StreamConnectionReestablished. </summary>
         public static MediaStreamingStatusDetails StreamConnectionReestablished { get; } = new MediaStreamingStatusDetails(StreamConnectionReestablishedValue);
-        /// <summary> streamConnectionUnsuccessful. </summary>
+        /// <summary> StreamConnectionUnsuccessful. </summary>
         public static MediaStreamingStatusDetails StreamConnectionUnsuccessful { get; } = new MediaStreamingStatusDetails(StreamConnectionUnsuccessfulValue);
-        /// <summary> streamUrlMissing. </summary>
+        /// <summary> StreamUrlMissing. </summary>
         public static MediaStreamingStatusDetails StreamUrlMissing { get; } = new MediaStreamingStatusDetails(StreamUrlMissingValue);
-        /// <summary> serviceShutdown. </summary>
+        /// <summary> ServiceShutdown. </summary>
         public static MediaStreamingStatusDetails ServiceShutdown { get; } = new MediaStreamingStatusDetails(ServiceShutdownValue);
-        /// <summary> streamConnectionInterrupted. </summary>
+        /// <summary> StreamConnectionInterrupted. </summary>
         public static MediaStreamingStatusDetails StreamConnectionInterrupted { get; } = new MediaStreamingStatusDetails(StreamConnectionInterruptedValue);
-        /// <summary> speechServicesConnectionError. </summary>
+        /// <summary> SpeechServicesConnectionError. </summary>
         public static MediaStreamingStatusDetails SpeechServicesConnectionError { get; } = new MediaStreamingStatusDetails(SpeechServicesConnectionErrorValue);
-        /// <summary> subscriptionStopped. </summary>
+        /// <summary> SubscriptionStopped. </summary>
         public static MediaStreamingStatusDetails SubscriptionStopped { get; } = new MediaStreamingStatusDetails(SubscriptionStoppedValue);
-        /// <summary> unspecifiedError. </summary>
+        /// <summary> UnspecifiedError. </summary>
         public static MediaStreamingStatusDetails UnspecifiedError { get; } = new MediaStreamingStatusDetails(UnspecifiedErrorValue);
-        /// <summary> authenticationFailure. </summary>
+        /// <summary> AuthenticationFailure. </summary>
         public static MediaStreamingStatusDetails AuthenticationFailure { get; } = new MediaStreamingStatusDetails(AuthenticationFailureValue);
-        /// <summary> badRequest. </summary>
+        /// <summary> BadRequest. </summary>
         public static MediaStreamingStatusDetails BadRequest { get; } = new MediaStreamingStatusDetails(BadRequestValue);
-        /// <summary> tooManyRequests. </summary>
+        /// <summary> TooManyRequests. </summary>
         public static MediaStreamingStatusDetails TooManyRequests { get; } = new MediaStreamingStatusDetails(TooManyRequestsValue);
-        /// <summary> forbidden. </summary>
+        /// <summary> Forbidden. </summary>
         public static MediaStreamingStatusDetails Forbidden { get; } = new MediaStreamingStatusDetails(ForbiddenValue);
-        /// <summary> serviceTimeout. </summary>
+        /// <summary> ServiceTimeout. </summary>
         public static MediaStreamingStatusDetails ServiceTimeout { get; } = new MediaStreamingStatusDetails(ServiceTimeoutValue);
-        /// <summary> initialWebSocketConnectionFailed. </summary>
+        /// <summary> InitialWebSocketConnectionFailed. </summary>
         public static MediaStreamingStatusDetails InitialWebSocketConnectionFailed { get; } = new MediaStreamingStatusDetails(InitialWebSocketConnectionFailedValue);
         /// <summary> Determines if two <see cref="MediaStreamingStatusDetails"/> values are the same. </summary>
         public static bool operator ==(MediaStreamingStatusDetails left, MediaStreamingStatusDetails right) => left.Equals(right);

@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallMediaRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
+        /// <param name="endpoint"> The endpoint of the Azure Communication Service resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public CallMediaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-22-preview")
@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="playRequestInternal"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequestInternal"/> is null. </exception>
@@ -85,7 +85,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="playRequestInternal"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequestInternal"/> is null. </exception>
@@ -132,7 +132,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Starts transcription in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="startTranscriptionRequestInternal"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequestInternal"/> is null. </exception>
@@ -159,7 +159,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Starts transcription in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="startTranscriptionRequestInternal"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequestInternal"/> is null. </exception>
@@ -206,7 +206,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stops transcription in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="stopTranscriptionRequestInternal"> stop transcription request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequestInternal"/> is null. </exception>
@@ -233,7 +233,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stops transcription in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="stopTranscriptionRequestInternal"> stop transcription request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequestInternal"/> is null. </exception>
@@ -280,7 +280,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> UpdateTranscription Api. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="updateTranscriptionRequestInternal"> The UpdateTranscription request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequestInternal"/> is null. </exception>
@@ -308,7 +308,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> UpdateTranscription Api. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="updateTranscriptionRequestInternal"> The UpdateTranscription request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequestInternal"/> is null. </exception>
@@ -352,7 +352,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Cancel all media operations in a call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public async Task<Response> CancelAllMediaOperationsAsync(string callConnectionId, CancellationToken cancellationToken = default)
@@ -374,7 +374,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Cancel all media operations in a call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public Response CancelAllMediaOperations(string callConnectionId, CancellationToken cancellationToken = default)
@@ -416,7 +416,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Recognize media from call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="recognizeRequestInternal"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequestInternal"/> is null. </exception>
@@ -443,7 +443,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Recognize media from call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="recognizeRequestInternal"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequestInternal"/> is null. </exception>
@@ -490,7 +490,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Start continuous Dtmf recognition by subscribing to tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
@@ -517,7 +517,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Start continuous Dtmf recognition by subscribing to tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
@@ -564,7 +564,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stop continuous Dtmf recognition by unsubscribing to tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
@@ -591,7 +591,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stop continuous Dtmf recognition by unsubscribing to tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
@@ -638,7 +638,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Hold participant from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="holdRequestInternal"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequestInternal"/> is null. </exception>
@@ -665,7 +665,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Hold participant from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="holdRequestInternal"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequestInternal"/> is null. </exception>
@@ -712,7 +712,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Unhold participants from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="unholdRequestInternal"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequestInternal"/> is null. </exception>
@@ -739,7 +739,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Unhold participants from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="unholdRequestInternal"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequestInternal"/> is null. </exception>
@@ -788,7 +788,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Send dtmf tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
@@ -820,7 +820,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Send dtmf tones. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
@@ -872,7 +872,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="interruptRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="interruptRequest"/> is null. </exception>
@@ -899,7 +899,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="interruptRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="interruptRequest"/> is null. </exception>
@@ -946,7 +946,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Starts media streaming in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="startMediaStreamingRequestInternal"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequestInternal"/> is null. </exception>
@@ -974,7 +974,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Starts media streaming in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="startMediaStreamingRequestInternal"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequestInternal"/> is null. </exception>
@@ -1022,7 +1022,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stops media streaming in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="stopMediaStreamingRequestInternal"> stop media streaming request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequestInternal"/> is null. </exception>
@@ -1050,7 +1050,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stops media streaming in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="stopMediaStreamingRequestInternal"> stop media streaming request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequestInternal"/> is null. </exception>

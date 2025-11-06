@@ -16,22 +16,15 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="StartRecordingFailed"/>. </summary>
+        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="correlationId"> Correlation Id for event to call correlation. </param>
         /// <param name="recordingId"> The call recording Id. </param>
-        /// <param name="operationContext"></param>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal StartRecordingFailed(string recordingId, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
+        internal StartRecordingFailed(string callConnectionId, string correlationId, string recordingId)
         {
-            RecordingId = recordingId;
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
             CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            RecordingId = recordingId;
         }
-
         /// <summary> The call recording Id. </summary>
         public string RecordingId { get; }
     }

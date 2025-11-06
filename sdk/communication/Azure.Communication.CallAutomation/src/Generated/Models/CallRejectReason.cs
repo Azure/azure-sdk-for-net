@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The rejection reason. </summary>
+    /// <summary> Reason of rejecting a call. </summary>
     public readonly partial struct CallRejectReason : IEquatable<CallRejectReason>
     {
         private readonly string _value;
@@ -22,15 +22,15 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NoneValue = "none";
-        private const string BusyValue = "busy";
-        private const string ForbiddenValue = "forbidden";
+        private const string NoneValue = "None";
+        private const string BusyValue = "Busy";
+        private const string ForbiddenValue = "Forbidden";
 
-        /// <summary> none. </summary>
+        /// <summary> None. </summary>
         public static CallRejectReason None { get; } = new CallRejectReason(NoneValue);
-        /// <summary> busy. </summary>
+        /// <summary> Busy. </summary>
         public static CallRejectReason Busy { get; } = new CallRejectReason(BusyValue);
-        /// <summary> forbidden. </summary>
+        /// <summary> Forbidden. </summary>
         public static CallRejectReason Forbidden { get; } = new CallRejectReason(ForbiddenValue);
         /// <summary> Determines if two <see cref="CallRejectReason"/> values are the same. </summary>
         public static bool operator ==(CallRejectReason left, CallRejectReason right) => left.Equals(right);

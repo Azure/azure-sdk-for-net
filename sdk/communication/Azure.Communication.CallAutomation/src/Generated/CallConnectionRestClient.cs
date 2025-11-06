@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallConnectionRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
+        /// <param name="endpoint"> The endpoint of the Azure Communication Service resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-22-preview")
@@ -35,6 +35,65 @@ namespace Azure.Communication.CallAutomation
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
+        }
+
+        internal HttpMessage CreateHangupCallRequest(string callConnectionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public async Task<Response> HangupCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+
+            using var message = CreateHangupCallRequest(callConnectionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public Response HangupCall(string callConnectionId, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+
+            using var message = CreateHangupCallRequest(callConnectionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateGetCallRequest(string callConnectionId)
@@ -53,7 +112,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get the detail properties of an ongoing call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public async Task<Response<CallConnectionPropertiesInternal>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
@@ -80,7 +139,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get the detail properties of an ongoing call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public Response<CallConnectionPropertiesInternal> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
@@ -106,65 +165,6 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateHangupCallRequest(string callConnectionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/calling/callConnections/", false);
-            uri.AppendPath(callConnectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> HangupCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-
-            using var message = CreateHangupCallRequest(callConnectionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Hang up call automation service from the call. This will make call automation service leave the call, but does not terminate if there are more than 1 caller in the call. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response HangupCall(string callConnectionId, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-
-            using var message = CreateHangupCallRequest(callConnectionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateTerminateCallRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -184,7 +184,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
-        /// <param name="callConnectionId"> The terminate call request. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public async Task<Response> TerminateCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
@@ -206,7 +206,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
-        /// <param name="callConnectionId"> The terminate call request. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public Response TerminateCall(string callConnectionId, CancellationToken cancellationToken = default)
@@ -250,7 +250,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer the call to a participant. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="transferToParticipantRequestInternal"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequestInternal"/> is null. </exception>
@@ -282,7 +282,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer the call to a participant. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="transferToParticipantRequestInternal"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequestInternal"/> is null. </exception>
@@ -330,7 +330,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public async Task<Response<GetParticipantsResponseInternal>> GetParticipantsAsync(string callConnectionId, CancellationToken cancellationToken = default)
@@ -357,7 +357,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         public Response<GetParticipantsResponseInternal> GetParticipants(string callConnectionId, CancellationToken cancellationToken = default)
@@ -406,7 +406,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Add a participant to the call. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="addParticipantRequestInternal"> The <see cref="AddParticipantRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequestInternal"/> is null. </exception>
@@ -438,7 +438,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Add a participant to the call. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="addParticipantRequestInternal"> The <see cref="AddParticipantRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantRequestInternal"/> is null. </exception>
@@ -492,7 +492,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Remove a participant from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="removeParticipantRequestInternal"> The participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequestInternal"/> is null. </exception>
@@ -524,7 +524,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Remove a participant from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="removeParticipantRequestInternal"> The participant to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantRequestInternal"/> is null. </exception>
@@ -578,7 +578,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Mute participants from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="muteParticipantsRequestInternal"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequestInternal"/> is null. </exception>
@@ -610,7 +610,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Mute participants from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="muteParticipantsRequestInternal"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequestInternal"/> is null. </exception>
@@ -664,7 +664,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Cancel add participant operation. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancelAddParticipantRequestInternal"> Cancellation request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="cancelAddParticipantRequestInternal"/> is null. </exception>
@@ -696,7 +696,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Cancel add participant operation. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancelAddParticipantRequestInternal"> Cancellation request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="cancelAddParticipantRequestInternal"/> is null. </exception>
@@ -750,7 +750,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Add a participant to the call. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="moveParticipantRequest"> The move participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="moveParticipantRequest"/> is null. </exception>
@@ -782,7 +782,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Add a participant to the call. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="moveParticipantRequest"> The move participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="moveParticipantRequest"/> is null. </exception>
@@ -831,8 +831,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participant from a call. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participantRawId"> Raw id of the participant to retrieve. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="participantRawId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantRawId"/> is null. </exception>
         public async Task<Response<CallParticipantInternal>> GetParticipantAsync(string callConnectionId, string participantRawId, CancellationToken cancellationToken = default)
@@ -863,8 +863,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get participant from a call. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participantRawId"> Raw id of the participant to retrieve. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="participantRawId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantRawId"/> is null. </exception>
         public Response<CallParticipantInternal> GetParticipant(string callConnectionId, string participantRawId, CancellationToken cancellationToken = default)
@@ -909,7 +909,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="callConnectionId"/> is null. </exception>
         public async Task<Response<GetParticipantsResponseInternal>> GetParticipantsNextPageAsync(string nextLink, string callConnectionId, CancellationToken cancellationToken = default)
@@ -941,7 +941,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="callConnectionId"> The call connection Id. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="callConnectionId"/> is null. </exception>
         public Response<GetParticipantsResponseInternal> GetParticipantsNextPage(string nextLink, string callConnectionId, CancellationToken cancellationToken = default)

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The format type of call recording. </summary>
+    /// <summary> Defines the format type of call recording. </summary>
     public readonly partial struct RecordingFormat : IEquatable<RecordingFormat>
     {
         private readonly string _value;
@@ -22,15 +22,15 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string WavValue = "wav";
-        private const string Mp3Value = "mp3";
-        private const string Mp4Value = "mp4";
+        private const string WavValue = "Wav";
+        private const string Mp3Value = "Mp3";
+        private const string Mp4Value = "Mp4";
 
-        /// <summary> wav. </summary>
+        /// <summary> Wav. </summary>
         public static RecordingFormat Wav { get; } = new RecordingFormat(WavValue);
-        /// <summary> mp3. </summary>
+        /// <summary> Mp3. </summary>
         public static RecordingFormat Mp3 { get; } = new RecordingFormat(Mp3Value);
-        /// <summary> mp4. </summary>
+        /// <summary> Mp4. </summary>
         public static RecordingFormat Mp4 { get; } = new RecordingFormat(Mp4Value);
         /// <summary> Determines if two <see cref="RecordingFormat"/> values are the same. </summary>
         public static bool operator ==(RecordingFormat left, RecordingFormat right) => left.Equals(right);

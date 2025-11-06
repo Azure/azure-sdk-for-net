@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class HoldRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="HoldRequestInternal"/>. </summary>
-        /// <param name="targetParticipant"> Participant to be held from the call. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public HoldRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -23,8 +23,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="HoldRequestInternal"/>. </summary>
-        /// <param name="targetParticipant"> Participant to be held from the call. </param>
-        /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
+        /// <param name="playSourceInfo"></param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -38,9 +38,9 @@ namespace Azure.Communication.CallAutomation
             OperationCallbackUri = operationCallbackUri;
         }
 
-        /// <summary> Participant to be held from the call. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
-        /// <summary> Prompt to play while in hold. </summary>
+        /// <summary> Gets or sets the play source info. </summary>
         public PlaySourceInternal PlaySourceInfo { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }

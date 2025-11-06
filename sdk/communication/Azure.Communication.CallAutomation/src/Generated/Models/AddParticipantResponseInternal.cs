@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="AddParticipantResponseInternal"/>. </summary>
-        /// <param name="participant"> List of current participants in the call. </param>
+        /// <param name="participant"> A call participant. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <param name="invitationId"> Invitation ID used to add a participant. </param>
         internal AddParticipantResponseInternal(CallParticipantInternal participant, string operationContext, string invitationId)
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
             InvitationId = invitationId;
         }
 
-        /// <summary> List of current participants in the call. </summary>
+        /// <summary> A call participant. </summary>
         public CallParticipantInternal Participant { get; }
         /// <summary> The operation context provided by client. </summary>
         public string OperationContext { get; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Voice kind type. </summary>
+    /// <summary> Audio kind type. </summary>
     public readonly partial struct VoiceKind : IEquatable<VoiceKind>
     {
         private readonly string _value;
@@ -22,12 +22,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MaleValue = "male";
-        private const string FemaleValue = "female";
+        private const string MaleValue = "Male";
+        private const string FemaleValue = "Female";
 
-        /// <summary> male. </summary>
+        /// <summary> Male. </summary>
         public static VoiceKind Male { get; } = new VoiceKind(MaleValue);
-        /// <summary> female. </summary>
+        /// <summary> Female. </summary>
         public static VoiceKind Female { get; } = new VoiceKind(FemaleValue);
         /// <summary> Determines if two <see cref="VoiceKind"/> values are the same. </summary>
         public static bool operator ==(VoiceKind left, VoiceKind right) => left.Equals(right);

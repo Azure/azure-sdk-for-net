@@ -5,24 +5,17 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Configuration of Media streaming. </summary>
     internal partial class MediaStreamingOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
-        /// <param name="transportUrl"> Transport URL for media streaming. </param>
-        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
-        /// <param name="contentType"> Content type to stream, eg. audio. </param>
-        /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
-        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
+        /// <param name="transportType"> Transport type for Media streaming. </param>
+        /// <param name="contentType"> Type of content in Media streaming. </param>
+        /// <param name="audioChannelType"> Channel type of media streaming audio. </param>
+        public MediaStreamingOptionsInternal(MediaStreamingTransportTypeDto transportType, MediaStreamingContentTypeDto contentType, MediaStreamingAudioChannelTypeDto audioChannelType)
         {
-            Argument.AssertNotNull(transportUrl, nameof(transportUrl));
-
-            TransportUrl = transportUrl;
             TransportType = transportType;
             ContentType = contentType;
             AudioChannelType = audioChannelType;
@@ -30,14 +23,14 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
         /// <param name="transportUrl"> Transport URL for media streaming. </param>
-        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
-        /// <param name="contentType"> Content type to stream, eg. audio. </param>
-        /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
+        /// <param name="transportType"> Transport type for Media streaming. </param>
+        /// <param name="contentType"> Type of content in Media streaming. </param>
+        /// <param name="audioChannelType"> Channel type of media streaming audio. </param>
         /// <param name="startMediaStreaming"> Determines if the media streaming should be started immediately after call is answered or not. </param>
         /// <param name="enableBidirectional"> A value indicating whether bidirectional streaming is enabled. </param>
-        /// <param name="audioFormat"> Specifies the audio format used for encoding, including sample rate and channel type. </param>
+        /// <param name="audioFormat"> The format of the audio received from the audio subscription option. </param>
         /// <param name="enableDtmfTones"> A value that indicates whether to stream the DTMF tones. </param>
-        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat, bool? enableDtmfTones)
+        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransportTypeDto transportType, MediaStreamingContentTypeDto contentType, MediaStreamingAudioChannelTypeDto audioChannelType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat, bool? enableDtmfTones)
         {
             TransportUrl = transportUrl;
             TransportType = transportType;
@@ -50,18 +43,18 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transport URL for media streaming. </summary>
-        public string TransportUrl { get; }
-        /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransport TransportType { get; }
-        /// <summary> Content type to stream, eg. audio. </summary>
-        public MediaStreamingContent ContentType { get; }
-        /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannel AudioChannelType { get; }
+        public string TransportUrl { get; set; }
+        /// <summary> Transport type for Media streaming. </summary>
+        public MediaStreamingTransportTypeDto TransportType { get; }
+        /// <summary> Type of content in Media streaming. </summary>
+        public MediaStreamingContentTypeDto ContentType { get; }
+        /// <summary> Channel type of media streaming audio. </summary>
+        public MediaStreamingAudioChannelTypeDto AudioChannelType { get; }
         /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
         public bool? StartMediaStreaming { get; set; }
         /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>
         public bool? EnableBidirectional { get; set; }
-        /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+        /// <summary> The format of the audio received from the audio subscription option. </summary>
         public AudioFormat? AudioFormat { get; set; }
         /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
         public bool? EnableDtmfTones { get; set; }

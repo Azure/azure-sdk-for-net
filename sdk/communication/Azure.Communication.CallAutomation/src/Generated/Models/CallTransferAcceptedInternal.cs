@@ -20,9 +20,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="transferTarget"> Target who the call is transferred to. </param>
-        /// <param name="transferee"> the participant who is being transferred away. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="transferTarget"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
+        /// <param name="transferee"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         internal CallTransferAcceptedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel transferTarget, CommunicationIdentifierModel transferee)
         {
             CallConnectionId = callConnectionId;
@@ -42,11 +42,11 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        /// <summary> Gets the result information. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> Target who the call is transferred to. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TransferTarget { get; }
-        /// <summary> the participant who is being transferred away. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Transferee { get; }
     }
 }

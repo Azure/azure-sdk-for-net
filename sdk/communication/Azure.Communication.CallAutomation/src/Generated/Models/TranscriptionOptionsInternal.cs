@@ -14,11 +14,11 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
         /// <param name="transportUrl"> Transport URL for live transcription. </param>
-        /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
+        /// <param name="transportType"> Transport type for Transcription. </param>
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
         /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> or <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, bool startTranscription)
+        public TranscriptionOptionsInternal(string transportUrl, TranscriptionTransportTypeDto transportType, string locale, bool startTranscription)
         {
             Argument.AssertNotNull(transportUrl, nameof(transportUrl));
             Argument.AssertNotNull(locale, nameof(locale));
@@ -31,8 +31,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Transport URL for live transcription. </summary>
         public string TransportUrl { get; }
-        /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
-        public TranscriptionTransport TransportType { get; }
+        /// <summary> Transport type for Transcription. </summary>
+        public TranscriptionTransportTypeDto TransportType { get; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>
         public string Locale { get; }
         /// <summary> Determines if the transcription should be started immediately after call is answered or not. </summary>

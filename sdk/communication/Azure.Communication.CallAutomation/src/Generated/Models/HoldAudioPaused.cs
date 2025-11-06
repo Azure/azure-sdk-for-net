@@ -7,12 +7,27 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The HoldAudioPaused. </summary>
+    /// <summary> Hold Audio Paused event. </summary>
     public partial class HoldAudioPaused
     {
         /// <summary> Initializes a new instance of <see cref="HoldAudioPaused"/>. </summary>
         internal HoldAudioPaused()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HoldAudioPaused"/>. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        internal HoldAudioPaused(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
         }
     }
 }

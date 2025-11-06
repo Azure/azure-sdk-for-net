@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="resultInformation"></param>
         internal CancelAddParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, string invitationId, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; }
         /// <summary> Invitation ID used to cancel the request. </summary>
         public string InvitationId { get; }
-        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        /// <summary> Gets the result information. </summary>
         public ResultInformation ResultInformation { get; }
     }
 }

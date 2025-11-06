@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class RecognizeOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
-        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -27,12 +27,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
         /// <param name="interruptPrompt"> Determines if we interrupt the prompt and start recognizing. </param>
         /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
-        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="speechLanguage"> Speech language to be recognized, If not set default is en-US. </param>
         /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
-        /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
+        /// <param name="dtmfOptions"> Options for DTMF recognition. </param>
         /// <param name="choices"> Defines Ivr choices for recognize. </param>
-        /// <param name="speechOptions"> Defines continuous speech recognition option. </param>
+        /// <param name="speechOptions"> Options for continuous speech recognition. </param>
         internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognitionChoice> choices, SpeechOptionsInternal speechOptions)
         {
             InterruptPrompt = interruptPrompt;
@@ -49,17 +49,17 @@ namespace Azure.Communication.CallAutomation
         public bool? InterruptPrompt { get; set; }
         /// <summary> Time to wait for first input after prompt (if any). </summary>
         public int? InitialSilenceTimeoutInSeconds { get; set; }
-        /// <summary> Target participant of DTMF tone recognition. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
         /// <summary> Endpoint where the custom model was deployed. </summary>
         public string SpeechRecognitionModelEndpointId { get; set; }
-        /// <summary> Defines configurations for DTMF. </summary>
+        /// <summary> Options for DTMF recognition. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>
         public IList<RecognitionChoice> Choices { get; }
-        /// <summary> Defines continuous speech recognition option. </summary>
+        /// <summary> Options for continuous speech recognition. </summary>
         public SpeechOptionsInternal SpeechOptions { get; set; }
     }
 }

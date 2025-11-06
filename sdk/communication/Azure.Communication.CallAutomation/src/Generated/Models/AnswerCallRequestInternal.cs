@@ -28,14 +28,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
-        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </param>
+        /// <param name="customCallingContext"> The custom calling context which will be sent to the target. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="answeredBy"> A user that got created with an Azure Communication Services resource. </param>
+        /// <param name="transcriptionConfiguration"> Configuration of live transcription. </param>
+        /// <param name="mediaStreamingConfiguration"> Configuration of Media streaming. </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
-        /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
+        /// <param name="dtmfOptions"> Represents the configuration for DTMF functionality in calls. </param>
         internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
         {
             IncomingCallContext = incomingCallContext;
@@ -54,21 +54,21 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>
         public string CallbackUri { get; }
-        /// <summary> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </summary>
+        /// <summary> The custom calling context which will be sent to the target. </summary>
         public CustomCallingContextInternal CustomCallingContext { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> The identifier of the call automation entity which answers the call. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
+        /// <summary> Configuration of live transcription. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
+        /// <summary> Configuration of Media streaming. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? EnableLoopbackAudio { get; set; }
-        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        /// <summary> Represents the configuration for DTMF functionality in calls. </summary>
         public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
     }
 }
