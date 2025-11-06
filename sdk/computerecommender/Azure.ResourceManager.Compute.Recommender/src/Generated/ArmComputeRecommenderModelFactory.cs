@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="computeRecommenderDiagnosticSupportedResourceTypes"> Describes what are the supported resource types for a diagnostic. </param>
         /// <returns> A new <see cref="Recommender.ComputeRecommenderDiagnosticData"/> instance for mocking. </returns>
-        public static ComputeRecommenderDiagnosticData ComputeRecommenderDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IList<string> computeRecommenderDiagnosticSupportedResourceTypes = default)
+        public static ComputeRecommenderDiagnosticData ComputeRecommenderDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderDiagnosticSupportedResourceTypes = default)
         {
             return new ComputeRecommenderDiagnosticData(
                 id,
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                computeRecommenderDiagnosticSupportedResourceTypes is null ? default : new ComputeRecommenderDiagnosticProperties(computeRecommenderDiagnosticSupportedResourceTypes, new Dictionary<string, BinaryData>()));
+                computeRecommenderDiagnosticSupportedResourceTypes is null ? default : new ComputeRecommenderDiagnosticProperties(computeRecommenderDiagnosticSupportedResourceTypes.ToList(), new Dictionary<string, BinaryData>()));
         }
 
         /// <summary> SpotPlacementScores API Input. </summary>
