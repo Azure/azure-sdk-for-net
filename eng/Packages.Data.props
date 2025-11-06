@@ -140,7 +140,7 @@
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.AppContainers" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.1" />
-    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.4.1" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.4" />
     <PackageReference Update="Azure.ResourceManager.Batch" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0" />
