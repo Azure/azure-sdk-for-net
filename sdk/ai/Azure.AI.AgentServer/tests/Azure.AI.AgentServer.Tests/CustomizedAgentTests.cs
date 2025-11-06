@@ -1,30 +1,39 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Net.Http.Json;
 using System.Text.Json;
+using Azure.AI.AgentServer.Tests.Utils;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Xunit;
 
-namespace AgentFramework.Integration.Tests
+namespace Azure.AI.AgentServer.Tests
 {
-    public class MinimalConsoleTests : AgentFrameworkAdapterFixture<MinimalConsoleProgram>
+    public class CustomizedAgentTests
     {
+        private WebApplicationFactory<SimpleCustomized.Samples.Program> factory = null!;
+        private HttpClient client = null!;
 
-        public MinimalConsoleTests(WebApplicationFactory<MinimalConsoleProgram> factory)
-            : base(factory)
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
+            this.factory = new WebApplicationFactory<SimpleCustomized.Samples.Program>();
+            this.client = this.factory.CreateClient(new WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = false,
+            });
         }
 
-        [Fact]
+        [Test]
         public async Task CreateResponse_NonStream()
         {
-            var client = _factory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
             {
                 Content = JsonContent.Create(new Dictionary<string, object>
                 {
-                    { "input", "What's the weather like in Vancouver?" }
-                })
+                    { "input", "Hello!" },
+                }),
             };
-            var response = await client.SendAsync(request).ConfigureAwait(false);
+            var response = await this.client.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             // read response content
@@ -33,14 +42,14 @@ namespace AgentFramework.Integration.Tests
 
             // status should be completed
             ResultValidationHelper.ValidateString(document.RootElement.GetProperty("status"), "completed");
+
             // output should be a non-empty array
             ResultValidationHelper.ValidateNonEmptyArray(document.RootElement.GetProperty("output"));
-
             var outputArr = document.RootElement.GetProperty("output").EnumerateArray();
             foreach (var outputItem in outputArr)
             {
-                Assert.Equal(JsonValueKind.Object, outputItem.ValueKind);
-                Assert.Equal(JsonValueKind.String, outputItem.GetProperty("type").ValueKind);
+                Assert.AreEqual(JsonValueKind.Object, outputItem.ValueKind);
+                Assert.AreEqual(JsonValueKind.String, outputItem.GetProperty("type").ValueKind);
             }
 
             // the last output item should be assistant message with weather info
@@ -53,8 +62,8 @@ namespace AgentFramework.Integration.Tests
             {
                 ResultValidationHelper.ValidateString(contentItem.GetProperty("type"), "output_text");
                 var text = contentItem.GetProperty("text").GetString();
-                Assert.Contains("Vancouver", text);
-                Assert.Contains("weather", text, StringComparison.OrdinalIgnoreCase);
+                Assert.True(text?.Contains("I am a mock agent with no intelligence. You said"));
+                Assert.True(text?.Contains("hello", StringComparison.OrdinalIgnoreCase));
             }
         }
     }

@@ -5,7 +5,7 @@ using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Core.Common.Id;
 using Azure.AI.AgentServer.Responses.Invocation;
 
-namespace SimpleCustomized;
+namespace SimpleCustomized.Samples;
 
 public class CustomizedAgentInvocation : IAgentInvocation
 {

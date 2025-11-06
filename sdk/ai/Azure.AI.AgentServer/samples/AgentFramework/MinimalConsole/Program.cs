@@ -5,32 +5,37 @@ using Azure.Identity;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 
-var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
-               throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT is not set.");
-var deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") ?? "gpt-4o-mini";
+namespace MinimalConsole.Samples;
 
-[Description("Get the weather for a given location.")]
-static string GetWeather([Description("The location to get the weather for.")] string location)
-    => $"The weather in {location} is cloudy with a high of 15°C.";
+public class Program
+{
+    private static async Task Main()
+    {
+        var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
+                       throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT is not set.");
+        var deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") ?? "gpt-4o-mini";
 
-var chatClient = new AzureOpenAIClient(
-        new Uri(endpoint),
-        new DefaultAzureCredential())
-    .GetChatClient(deploymentName)
-    .AsIChatClient()
-    .AsBuilder()
-    .UseOpenTelemetry(sourceName: "Agents")
-    .Build();
+        [Description("Get the weather for a given location.")]
+        static string GetWeather([Description("The location to get the weather for.")] string location)
+            => $"The weather in {location} is cloudy with a high of 15°C.";
 
-var agent = new ChatClientAgent(chatClient,
-        instructions: "You are a helpful assistant, you can help the user with weather information.",
-        tools: [AIFunctionFactory.Create(GetWeather)])
-    .AsBuilder()
-    .UseOpenTelemetry(sourceName: "Agents")
-    .Build();
+        var chatClient = new AzureOpenAIClient(
+                new Uri(endpoint),
+                new DefaultAzureCredential())
+            .GetChatClient(deploymentName)
+            .AsIChatClient()
+            .AsBuilder()
+            .UseOpenTelemetry(sourceName: "Agents")
+            .Build();
 
-// Run container agent adapter
-await agent.RunAIAgentAsync(telemetrySourceName: "Agents").ConfigureAwait(false);
+        var agent = new ChatClientAgent(chatClient,
+                instructions: "You are a helpful assistant, you can help the user with weather information.",
+                tools: [AIFunctionFactory.Create(GetWeather)])
+            .AsBuilder()
+            .UseOpenTelemetry(sourceName: "Agents")
+            .Build();
 
-// for integration test
-public partial class MinimalConsoleProgram { }
+        // Run Agent Server
+        await agent.RunAIAgentAsync(telemetrySourceName: "Agents").ConfigureAwait(false);
+    }
+}

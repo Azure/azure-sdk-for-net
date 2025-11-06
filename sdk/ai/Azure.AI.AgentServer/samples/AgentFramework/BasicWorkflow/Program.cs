@@ -51,7 +51,7 @@ public class Program
         builder.AddEdge(spanishAgent, englishAgent);
         var agent = builder.Build().AsAgent();
 
-        // Run container agent adapter
+        // Run Agent Server
         await agent.RunAIAgentAsync(telemetrySourceName: "Agents").ConfigureAwait(false);
     }
 

@@ -5,8 +5,6 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props"/>
 
   <PropertyGroup>
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
     <Version>1.0.0-alpha.1</Version>
     <Nullable>enable</Nullable>
 
