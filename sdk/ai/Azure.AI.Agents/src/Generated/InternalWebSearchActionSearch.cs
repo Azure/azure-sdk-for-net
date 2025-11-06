@@ -18,18 +18,24 @@ namespace OpenAI
             Argument.AssertNotNull(query, nameof(query));
 
             Query = query;
+            Sources = new ChangeTrackingList<WebSearchActionSearchSources>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionSearch"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="query"> The search query. </param>
-        internal InternalWebSearchActionSearch(WebSearchActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string query) : base(@type, additionalBinaryDataProperties)
+        /// <param name="sources"> The sources used in the search. </param>
+        internal InternalWebSearchActionSearch(WebSearchActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string query, IList<WebSearchActionSearchSources> sources) : base(@type, additionalBinaryDataProperties)
         {
             Query = query;
+            Sources = sources;
         }
 
         /// <summary> The search query. </summary>
         public string Query { get; set; }
+
+        /// <summary> The sources used in the search. </summary>
+        public IList<WebSearchActionSearchSources> Sources { get; }
     }
 }

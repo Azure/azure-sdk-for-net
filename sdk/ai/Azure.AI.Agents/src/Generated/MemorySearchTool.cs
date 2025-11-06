@@ -38,8 +38,8 @@ namespace Azure.AI.Agents
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
-        /// <param name="updateDelay"> The amount of time to wait after inactivity before updating memories with messages from the call (e.g., '0s', '5m'). Defaults to '60s'. </param>
-        internal MemorySearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string memoryStoreName, string scope, MemorySearchOptions searchOptions, TimeSpan? updateDelay) : base(@type, additionalBinaryDataProperties)
+        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        internal MemorySearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string memoryStoreName, string scope, MemorySearchOptions searchOptions, int? updateDelay) : base(@type, additionalBinaryDataProperties)
         {
             MemoryStoreName = memoryStoreName;
             Scope = scope;
@@ -60,7 +60,7 @@ namespace Azure.AI.Agents
         /// <summary> Options for searching the memory store. </summary>
         public MemorySearchOptions SearchOptions { get; set; }
 
-        /// <summary> The amount of time to wait after inactivity before updating memories with messages from the call (e.g., '0s', '5m'). Defaults to '60s'. </summary>
-        public TimeSpan? UpdateDelay { get; set; }
+        /// <summary> Time to wait before updating memories after inactivity (seconds). Default 300. </summary>
+        public int? UpdateDelay { get; set; }
     }
 }

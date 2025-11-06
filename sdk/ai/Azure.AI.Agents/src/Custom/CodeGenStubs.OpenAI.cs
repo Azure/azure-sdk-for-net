@@ -47,9 +47,6 @@ namespace OpenAI;
 [CodeGenType("ComputerUsePreviewTool")] internal partial class InternalComputerUsePreviewTool { }
 [CodeGenType("ComputerUsePreviewToolEnvironment")] internal readonly partial struct ComputerUsePreviewToolEnvironment { }
 [CodeGenType("Coordinate")] internal partial class InternalCoordinate { }
-[CodeGenType("CreateResponseRequest")] internal partial class InternalAgentCreateResponseRequest { }
-[CodeGenType("CreateResponseRequestConversation1")] internal partial class InternalCreateResponseRequestConversation1 { }
-[CodeGenType("DeleteResponseResult")] internal partial class InternalAgentDeleteResponseResult { }
 [CodeGenType("EasyInputMessage")] internal partial class InternalEasyInputMessage { }
 [CodeGenType("FileSearchTool")] internal partial class InternalFileSearchTool { }
 [CodeGenType("FileSearchToolCallItemParam")] internal partial class InternalFileSearchToolCallItemParam { }

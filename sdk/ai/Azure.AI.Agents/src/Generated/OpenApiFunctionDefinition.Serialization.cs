@@ -68,7 +68,7 @@ namespace Azure.AI.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.AI.Agents
             BinaryData spec = default;
             OpenApiAuthDetails auth = default;
             IList<string> defaultParams = default;
-            IList<OpenApiFunctionDefinitionFunction> functions = default;
+            IReadOnlyList<OpenApiFunctionDefinitionFunction> functions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

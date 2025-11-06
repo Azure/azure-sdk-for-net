@@ -35,8 +35,8 @@ namespace Azure.AI.Agents
             {
                 throw new FormatException($"The model {nameof(BrowserAutomationToolParameters)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("project_connection"u8);
-            writer.WriteObjectValue(ProjectConnection, options);
+            writer.WritePropertyName("connection"u8);
+            writer.WriteObjectValue(Connection, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -79,13 +79,13 @@ namespace Azure.AI.Agents
             {
                 return null;
             }
-            BrowserAutomationToolConnectionParameters projectConnection = default;
+            BrowserAutomationToolConnectionParameters connection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("project_connection"u8))
+                if (prop.NameEquals("connection"u8))
                 {
-                    projectConnection = BrowserAutomationToolConnectionParameters.DeserializeBrowserAutomationToolConnectionParameters(prop.Value, options);
+                    connection = BrowserAutomationToolConnectionParameters.DeserializeBrowserAutomationToolConnectionParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationToolParameters(projectConnection, additionalBinaryDataProperties);
+            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

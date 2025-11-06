@@ -286,18 +286,6 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("Operation not working yet")]
-    public async Task TestAgentContainerCRUD()
-    {
-        AgentsClient client = GetTestClient();
-
-        await foreach (AgentContainerOperation agentContainerOperation in client.GetAgentContainerOperationsAsync("fake-agent-name"))
-        {
-            Assert.Fail("Shouldn't have found any container operations for a fake agent!");
-        }
-    }
-
-    [RecordedTest]
     public async Task SimplePromptAgentWithConversation()
     {
         AgentsClient agentsClient = GetTestClient();

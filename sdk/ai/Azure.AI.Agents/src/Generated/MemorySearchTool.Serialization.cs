@@ -49,7 +49,7 @@ namespace Azure.AI.Agents
             if (Optional.IsDefined(UpdateDelay))
             {
                 writer.WritePropertyName("update_delay"u8);
-                writer.WriteStringValue(UpdateDelay.Value, "P");
+                writer.WriteNumberValue(UpdateDelay.Value);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.AI.Agents
             string memoryStoreName = default;
             string scope = default;
             MemorySearchOptions searchOptions = default;
-            TimeSpan? updateDelay = default;
+            int? updateDelay = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -116,7 +116,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    updateDelay = prop.Value.GetTimeSpan("P");
+                    updateDelay = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")

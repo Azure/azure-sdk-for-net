@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The workflow specification in CSDL format. </summary>
+    /// <summary> The workflow agent definition. </summary>
     public partial class WorkflowAgentDefinition : AgentDefinition, IJsonModel<WorkflowAgentDefinition>
     {
         /// <param name="writer"> The JSON writer. </param>

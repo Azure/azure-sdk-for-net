@@ -16,7 +16,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="MemoryStoreOperationUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens">
         /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](/docs/guides/prompt-caching).
+        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
         /// </param>
         internal MemoryStoreOperationUsageInputTokensDetails(int cachedTokens)
         {
@@ -26,7 +26,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="MemoryStoreOperationUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens">
         /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](/docs/guides/prompt-caching).
+        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MemoryStoreOperationUsageInputTokensDetails(int cachedTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -37,7 +37,7 @@ namespace OpenAI
 
         /// <summary>
         /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](/docs/guides/prompt-caching).
+        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
         /// </summary>
         public int CachedTokens { get; }
     }
