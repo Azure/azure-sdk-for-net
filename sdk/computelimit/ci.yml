@@ -1,0 +1,35 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/computelimit
+    - sdk/computelimit/ci.yml
+    - sdk/computelimit/Azure.ResourceManager.ComputeLimit
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/computelimit
+    - sdk/computelimit/ci.yml
+    - sdk/computelimit/Azure.ResourceManager.ComputeLimit
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: computelimit
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.ResourceManager.ComputeLimit
+      safeName: AzureResourceManagerComputeLimit
