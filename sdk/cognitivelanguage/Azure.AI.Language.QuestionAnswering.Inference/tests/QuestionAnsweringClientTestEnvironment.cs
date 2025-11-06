@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 {
-    public class InferenceClientTestEnvironment : TestEnvironment
+    public class QuestionAnsweringClientTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// Gets the master API key.

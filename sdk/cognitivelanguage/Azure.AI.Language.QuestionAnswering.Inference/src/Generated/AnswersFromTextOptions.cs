@@ -102,6 +102,6 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Elements (Graphemes) according to Unicode v8.0.0. For additional information
         /// see https://aka.ms/text-analytics-offsets.
         /// </summary>
-        public StringIndexType? StringIndexType { get; set; }
+        public StringIndexType? StringIndexType { get; set; } = QuestionAnsweringClientOptions.DefaultStringIndexType;
     }
 }

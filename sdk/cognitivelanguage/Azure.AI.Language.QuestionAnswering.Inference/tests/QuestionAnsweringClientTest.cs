@@ -12,9 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 {
-    public class InferenceClientTest: RecordedTestBase<InferenceClientTestEnvironment>
+    public class QuestionAnsweringClientTest: RecordedTestBase<QuestionAnsweringClientTestEnvironment>
     {
-        public InferenceClientTest(bool isAsync) : base(isAsync)
+        public QuestionAnsweringClientTest(bool isAsync) : base(isAsync)
         {
         }
 

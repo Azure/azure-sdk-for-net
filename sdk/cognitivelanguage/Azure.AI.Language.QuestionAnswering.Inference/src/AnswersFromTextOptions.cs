@@ -25,13 +25,23 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns>A new instance of the <see cref="AnswersFromTextOptions"/> from the given parameters.</returns>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="textDocuments"/> is null.</exception>
-        internal static AnswersFromTextOptions From(string question, IEnumerable<string> textDocuments, string language)
+        internal static AnswersFromTextOptions From(
+            string question,
+            IEnumerable<string> textDocuments,
+            string language
+        )
         {
             Argument.AssertNotNullOrEmpty(question, nameof(question));
             Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             int id = 1;
-            return new AnswersFromTextOptions(question, textDocuments.Select(record => new TextDocument(id++.ToString(CultureInfo.InvariantCulture), record)))
+            return new AnswersFromTextOptions(
+                question,
+                textDocuments.Select(record => new TextDocument(
+                    id++.ToString(CultureInfo.InvariantCulture),
+                    record
+                ))
+            )
             {
                 Language = language,
             };
@@ -51,14 +61,15 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns>A new instance of the <see cref="AnswersFromTextOptions"/> from the given parameters.</returns>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="textDocuments"/> is null.</exception>
-        internal static AnswersFromTextOptions From(string question, IEnumerable<TextDocument> textDocuments, string language)
+        internal static AnswersFromTextOptions From(
+            string question,
+            IEnumerable<TextDocument> textDocuments,
+            string language
+        )
         {
             Argument.AssertNotNullOrEmpty(question, nameof(question));
 
-            return new(question, textDocuments)
-            {
-                Language = language,
-            };
+            return new(question, textDocuments) { Language = language };
         }
 
         /// <summary>
@@ -67,9 +78,6 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="language">The language to use if <see cref="Language"/> is not already set.</param>
         /// <returns>A shallow clone of the <see cref="AnswersFromTextOptions"/>.</returns>
         internal AnswersFromTextOptions Clone(string language) =>
-            new(Question, TextDocuments)
-            {
-                Language = Language ?? language,
-            };
+            new(Question, TextDocuments) { Language = Language ?? language };
     }
 }

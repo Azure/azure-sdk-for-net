@@ -13,7 +13,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>
         /// Gets the method used to interpret string offsets, which is always <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
         /// </summary>
-        internal static StringIndexType DefaultStringIndexType { get; } = StringIndexType.Utf16CodeUnit;
+        internal static StringIndexType DefaultStringIndexType { get; } =
+            StringIndexType.Utf16CodeUnit;
 
         /// <summary>
         /// Gets or sets the default language to use in some client methods.

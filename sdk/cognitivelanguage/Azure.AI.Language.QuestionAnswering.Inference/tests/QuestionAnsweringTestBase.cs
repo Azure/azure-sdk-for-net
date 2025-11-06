@@ -14,9 +14,9 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
         QuestionAnsweringClientOptions.ServiceVersion.V2025_05_15_Preview
     )]
     [IgnoreServiceError(429, "429")]
-    public abstract class InferenceTestBase<TClient> : RecordedTestBase<InferenceClientTestEnvironment> where TClient : class
+    public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringClientTestEnvironment> where TClient : class
     {
-        protected InferenceTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+        protected QuestionAnsweringTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.

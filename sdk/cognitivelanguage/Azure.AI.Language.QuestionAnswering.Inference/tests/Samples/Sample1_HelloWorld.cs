@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference.Tests.Samples
 {
-    public partial class InferenceSamples: SamplesBase<InferenceClientTestEnvironment>
+    public partial class InferenceSamples: SamplesBase<QuestionAnsweringClientTestEnvironment>
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorld.cs to write samples. */
         [Test]
