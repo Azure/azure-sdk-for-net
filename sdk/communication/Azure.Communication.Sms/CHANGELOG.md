@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -8,31 +8,11 @@
   - New `SmsClient.GetDeliveryReport` and `SmsClient.GetDeliveryReportAsync` methods for retrieving message delivery status
   - Provides detailed information including delivery status, delivery attempts, and timestamps
   - Supports tracking partner-generated message IDs via `MessagingConnectPartnerMessageId` property
-- Improved MessagingConnect partner integration with standard Azure SDK patterns:
-  - Use `Dictionary<string, object>` for partner-specific parameters
-  - Constructor: `new MessagingConnectOptions(string partner, IDictionary<string, object> partnerParams)`
+- Improved MessagingConnect partner integration with standard Azure SDK patterns (changed from 1.1.0-beta.3):
+  - Use `Dictionary<string, object>` for partner-specific parameters instead of the previous `MessagingConnectPartnerParameters` helper class
+  - Updated constructor: `new MessagingConnectOptions(string partner, IDictionary<string, object> partnerParams)`
   - Follows Azure SDK design guidelines for flexible parameter collections
-
-### Breaking Changes
-
-- **MessagingConnect API Changes**: Updated `MessagingConnectOptions` to follow Azure SDK standards
-  - Constructor changed from `MessagingConnectOptions(string apiKey, string partner)` to `MessagingConnectOptions(string partner, object partnerParams)`
-  - Property `ApiKey` replaced with `PartnerParams` to support various partner-specific parameters
-  - **Removed `MessagingConnectPartnerParameters` helper class** - use standard `Dictionary<string, object>` instead
-  - **Migration Guide**:
-    ```csharp
-    // Before (beta)
-    var options = new MessagingConnectOptions("your-api-key", "PartnerName");
-
-    // After (2.0.0) - Standard Azure SDK pattern
-    var partnerParams = new Dictionary<string, object>
-    {
-        { "ApiKey", "your-api-key" },
-        { "CustomParam", "custom-value" }
-    };
-    var options = new MessagingConnectOptions("PartnerName", partnerParams);
-    ```
-  - This change aligns with Azure SDK design guidelines and patterns used across all Azure SDKs
+  - Migration from beta: Change `new MessagingConnectOptions("your-api-key", "PartnerName")` to `new MessagingConnectOptions("PartnerName", new Dictionary<string, object> { { "ApiKey", "your-api-key" } })`
 
 ## 1.1.0-beta.3 (2025-06-12)
 
