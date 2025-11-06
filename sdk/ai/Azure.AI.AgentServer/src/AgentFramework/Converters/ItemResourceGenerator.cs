@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Text;
 
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
@@ -14,7 +17,7 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters;
 public class ItemResourceGenerator
     : NestedChunkedUpdatingGeneratorBase<IEnumerable<ItemResource>, AgentRunResponseUpdate>
 {
-    public required AgentInvocationContext Context { get; init; }
+    required public AgentInvocationContext Context { get; init; }
 
     public Action<ResponseUsage>? NotifyOnUsageUpdate { get; init; }
 

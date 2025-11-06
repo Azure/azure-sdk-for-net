@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Responses.Invocation;
 

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Diagnostics;
 using Azure.AI.AgentServer.AgentFramework.Converters;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
