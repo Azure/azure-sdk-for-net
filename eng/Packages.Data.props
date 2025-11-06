@@ -148,6 +148,7 @@
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerService" Version="1.2.3" />
     <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.12" />
+    <PackageReference Update="Azure.ResourceManager.Dns" Version="1.2.0-beta.2" />
     <PackageReference Update="Azure.ResourceManager.EventGrid" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.FrontDoor" Version="1.4.1" />
