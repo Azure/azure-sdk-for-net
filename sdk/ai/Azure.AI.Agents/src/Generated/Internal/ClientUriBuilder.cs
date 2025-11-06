@@ -12,8 +12,8 @@ namespace Azure.AI.Agents
     internal partial class ClientUriBuilder
     {
         private UriBuilder _uriBuilder;
-        private StringBuilder _pathBuilder;
-        private StringBuilder _queryBuilder;
+        private StringBuilder _pathAndQuery;
+        private int _pathLength;
 
         public ClientUriBuilder()
         {
@@ -21,15 +21,14 @@ namespace Azure.AI.Agents
 
         private UriBuilder UriBuilder => _uriBuilder  ??=  new UriBuilder();
 
-        private StringBuilder PathBuilder => _pathBuilder  ??=  new StringBuilder(UriBuilder.Path);
-
-        private StringBuilder QueryBuilder => _queryBuilder  ??=  new StringBuilder(UriBuilder.Query);
+        private StringBuilder PathAndQuery => _pathAndQuery  ??=  new StringBuilder();
 
         public void Reset(Uri uri)
         {
             _uriBuilder = new UriBuilder(uri);
-            _pathBuilder = new StringBuilder(UriBuilder.Path);
-            _queryBuilder = new StringBuilder(UriBuilder.Query);
+            PathAndQuery.Clear();
+            PathAndQuery.Append(UriBuilder.Path);
+            _pathLength = PathAndQuery.Length;
         }
 
         public void AppendPath(string value, bool escape)
@@ -38,12 +37,13 @@ namespace Azure.AI.Agents
             {
                 value = Uri.EscapeDataString(value);
             }
-            if (PathBuilder.Length > 0 && PathBuilder[PathBuilder.Length - 1] == '/' && value[0] == '/')
+            if (_pathLength > 0 && PathAndQuery[_pathLength  -  1] == '/' && value[0] == '/')
             {
-                PathBuilder.Remove(PathBuilder.Length - 1, 1);
+                PathAndQuery.Remove(_pathLength  -  1, 1);
+                _pathLength = _pathLength  -  1;
             }
-            PathBuilder.Append(value);
-            UriBuilder.Path = PathBuilder.ToString();
+            PathAndQuery.Insert(_pathLength, value);
+            _pathLength = _pathLength  +  value.Length;
         }
 
         public void AppendPath(bool value, bool escape = false) => AppendPath(TypeFormatters.ConvertToString(value), escape);
@@ -73,17 +73,21 @@ namespace Azure.AI.Agents
 
         public void AppendQuery(string name, string value, bool escape)
         {
-            if (QueryBuilder.Length > 0)
+            if (PathAndQuery.Length == _pathLength)
             {
-                QueryBuilder.Append('&');
+                PathAndQuery.Append('?');
+            }
+            if (PathAndQuery.Length > _pathLength && PathAndQuery[PathAndQuery.Length  -  1] != '?')
+            {
+                PathAndQuery.Append('&');
             }
             if (escape)
             {
                 value = Uri.EscapeDataString(value);
             }
-            QueryBuilder.Append(name);
-            QueryBuilder.Append('=');
-            QueryBuilder.Append(value);
+            PathAndQuery.Append(name);
+            PathAndQuery.Append('=');
+            PathAndQuery.Append(value);
         }
 
         public void AppendQuery(string name, bool value, bool escape = false) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
@@ -117,13 +121,14 @@ namespace Azure.AI.Agents
 
         public Uri ToUri()
         {
-            if (_pathBuilder != null)
+            UriBuilder.Path = PathAndQuery.ToString(0, _pathLength);
+            if (PathAndQuery.Length > _pathLength)
             {
-                UriBuilder.Path = _pathBuilder.ToString();
+                UriBuilder.Query = PathAndQuery.ToString(_pathLength  +  1, PathAndQuery.Length  -  _pathLength  -  1);
             }
-            if (_queryBuilder != null)
+            if (PathAndQuery.Length == _pathLength)
             {
-                UriBuilder.Query = _queryBuilder.ToString();
+                UriBuilder.Query = "";
             }
             return UriBuilder.Uri;
         }
