@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="extendedLocation"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, ETag? etag = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -64,8 +64,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     boolValue,
                     floatValue,
                     doubleValue,
-                    prop1,
-                    prop2,
+                    prop1.ToList(),
+                    prop2.ToList(),
                     new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
                     etag,
                     new Dictionary<string, BinaryData>()),
@@ -111,10 +111,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The FooActionResult. </summary>
         /// <param name="msg"></param>
+        /// <param name="error"></param>
         /// <returns> A new <see cref="Models.FooActionResult"/> instance for mocking. </returns>
-        public static FooActionResult FooActionResult(string msg = default)
+        public static FooActionResult FooActionResult(string msg = default, ResponseError error = default)
         {
-            return new FooActionResult(msg, additionalBinaryDataProperties: null);
+            return new FooActionResult(msg, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -141,14 +142,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="accessControlEnabled"></param>
         /// <param name="metaDatas"> Gets the MetaDatas. </param>
         /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
-        public static FooSettingsProperties FooSettingsProperties(MarketplaceDetails marketplace = default, UserDetails user = default, ResourceProvisioningState? provisioningState = default, bool? accessControlEnabled = default, IList<string> metaDatas = default)
+        public static FooSettingsProperties FooSettingsProperties(MarketplaceDetails marketplace = default, UserDetails user = default, ResourceProvisioningState? provisioningState = default, bool? accessControlEnabled = default, IEnumerable<string> metaDatas = default)
         {
             return new FooSettingsProperties(
                 marketplace,
                 user,
                 provisioningState,
                 accessControlEnabled,
-                metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas, new Dictionary<string, BinaryData>()),
+                metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas.ToList(), new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
@@ -227,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
         /// <param name="discriminatorProperty"></param>
         /// <returns> A new <see cref="Tests.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -247,9 +248,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     new Dictionary<string, BinaryData>(),
                     middleProp1.Value,
                     middleProp2,
-                    prop1,
+                    prop1.ToList(),
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()),
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp.ToList(), new Dictionary<string, BinaryData>()),
                 discriminatorProperty);
         }
 
@@ -509,7 +510,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IList<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
+        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaLimitProperties(
                 resourceName,
@@ -517,7 +518,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 comment,
                 unit,
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue.ToList(), new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
@@ -528,7 +529,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IList<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
+        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaDetails(
                 resourceName,
@@ -536,7 +537,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 comment,
                 unit,
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue.ToList(), new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 

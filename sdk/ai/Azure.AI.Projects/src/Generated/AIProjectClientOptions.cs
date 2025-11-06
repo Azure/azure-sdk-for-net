@@ -18,8 +18,8 @@ namespace Azure.AI.Projects
         {
             Version = version switch
             {
-                ServiceVersion.V1 => "1",
                 ServiceVersion.V2025_05_01 => "2025-05-01",
+                ServiceVersion.V1 => "v1",
                 ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
                 _ => throw new NotSupportedException()
@@ -32,10 +32,10 @@ namespace Azure.AI.Projects
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Azure AI API version v1. </summary>
-            V1 = 2,
             /// <summary> Azure AI API version 2025-05-01. </summary>
             V2025_05_01 = 1,
+            /// <summary> Azure AI API version v1. </summary>
+            V1 = 2,
             /// <summary> Azure AI API version 2025-05-15-preview. </summary>
             V2025_05_15_Preview = 3,
             /// <summary> Azure AI API version 2025-11-15-preview. </summary>

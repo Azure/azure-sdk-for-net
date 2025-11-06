@@ -1,7 +1,29 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/provisioning/**/*.cs'
+  - filename: '**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs'
+    words:
+      - apacheavro
+      - openai
+      - scsv
+      - sohsv
+      - tbps
+      - tsve
+  - filename: '**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs'
     words:
       - awsec
       - postgre
+  - filename: '**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs'
+    words:
+      - freemium
+  - filename: '**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs'
+    words:
+      - mibps
+  - filename: '**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs'
+    words:
+      - dscp
+      - fqdns
+      - ipam
+      - snat
+      - vnets
+      - vxlan

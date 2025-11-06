@@ -77,6 +77,7 @@ model FooActionRequest {
 
 model FooActionResult {
   msg: string;
+  error?: Azure.ResourceManager.Foundations.ErrorDetail;
 }
 
 @singleton

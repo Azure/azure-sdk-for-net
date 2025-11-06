@@ -383,6 +383,7 @@
           "crossLanguageDefinitionId": "Versioning.Added.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Added",
       "apiVersions": [

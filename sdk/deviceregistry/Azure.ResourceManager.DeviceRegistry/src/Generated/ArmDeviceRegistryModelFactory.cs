@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="billingContainerProvisioningState"> Provisioning state of the resource. </param>
-        /// <param name="eTag"> Resource ETag. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/> instance for mocking. </returns>
-        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? eTag = default)
+        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? etag = default)
         {
             return new DeviceRegistryBillingContainerData(
                 id,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, new Dictionary<string, BinaryData>()),
-                eTag);
+                etag);
         }
 
         /// <summary> Namespace definition. </summary>
@@ -371,13 +371,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DeviceRegistryNamespacePatch(identity, tags, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
-        /// <returns> A new <see cref="Models.NamespaceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceUpdateProperties NamespaceUpdateProperties(IDictionary<string, MessagingEndpoint> messagingEndpoints = default)
-        {
-            return new NamespaceUpdateProperties(messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
@@ -809,7 +802,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Device definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -817,10 +809,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> Resource Tag. </param>
+        /// <param name="etag"> Resource Tag. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string eTag = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string etag = default, DeviceRegistryExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -833,7 +825,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 tags,
                 location,
                 properties,
-                eTag,
+                etag,
                 extendedLocation);
         }
 

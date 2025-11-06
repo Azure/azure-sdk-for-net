@@ -84,11 +84,11 @@ namespace Azure.AI.Agents
 
         /// <summary> The workflow specification in CSDL format. </summary>
         /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <param name="workflow"> The CSDL YAML definition of the workflow. </param>
+        /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
-        public static WorkflowAgentDefinition WorkflowAgentDefinition(RaiConfig raiConfig = default, string workflow = default)
+        public static WorkflowAgentDefinition WorkflowAgentDefinition(RaiConfig raiConfig = default, string workflowYaml = default)
         {
-            return new WorkflowAgentDefinition(AgentKind.Workflow, raiConfig, additionalBinaryDataProperties: null, workflow);
+            return new WorkflowAgentDefinition(AgentKind.Workflow, raiConfig, additionalBinaryDataProperties: null, workflowYaml);
         }
 
         /// <summary> The hosted agent definition. </summary>
@@ -220,11 +220,11 @@ namespace Azure.AI.Agents
         }
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
+        /// <param name="options"> The azure ai search index resource. </param>
         /// <returns> A new <see cref="Agents.AzureAISearchAgentTool"/> instance for mocking. </returns>
-        public static AzureAISearchAgentTool AzureAISearchAgentTool(AzureAISearchToolResource azureAiSearch = default)
+        public static AzureAISearchAgentTool AzureAISearchAgentTool(AzureAISearchToolOptions options = default)
         {
-            return new AzureAISearchAgentTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, azureAiSearch);
+            return new AzureAISearchAgentTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, options);
         }
 
         /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
@@ -232,12 +232,12 @@ namespace Azure.AI.Agents
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
-        /// <returns> A new <see cref="Agents.AzureAISearchToolResource"/> instance for mocking. </returns>
-        public static AzureAISearchToolResource AzureAISearchToolResource(IEnumerable<AISearchIndexResource> indexes = default)
+        /// <returns> A new <see cref="Agents.AzureAISearchToolOptions"/> instance for mocking. </returns>
+        public static AzureAISearchToolOptions AzureAISearchToolOptions(IEnumerable<AzureAISearchIndex> indexes = default)
         {
-            indexes ??= new ChangeTrackingList<AISearchIndexResource>();
+            indexes ??= new ChangeTrackingList<AzureAISearchIndex>();
 
-            return new AzureAISearchToolResource(indexes.ToList(), additionalBinaryDataProperties: null);
+            return new AzureAISearchToolOptions(indexes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A AI Search Index resource. </summary>
@@ -247,10 +247,10 @@ namespace Azure.AI.Agents
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
-        /// <returns> A new <see cref="Agents.AISearchIndexResource"/> instance for mocking. </returns>
-        public static AISearchIndexResource AISearchIndexResource(string projectConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        /// <returns> A new <see cref="Agents.AzureAISearchIndex"/> instance for mocking. </returns>
+        public static AzureAISearchIndex AzureAISearchIndex(string projectConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
         {
-            return new AISearchIndexResource(
+            return new AzureAISearchIndex(
                 projectConnectionId,
                 indexName,
                 queryType,

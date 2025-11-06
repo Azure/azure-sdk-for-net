@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Versioning.PreviewVersion
+namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class Widget : IJsonModel<Widget>
     {

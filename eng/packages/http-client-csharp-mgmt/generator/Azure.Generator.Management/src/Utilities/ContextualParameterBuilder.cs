@@ -105,9 +105,10 @@ namespace Azure.Generator.Management.Utilities
                     }
                     else // in this branch value is a constant
                     {
-                        if (key.IsProvidersSegment)
+                        if (!key.IsProvidersSegment)
                         {
-                            // if the key is not providers, we need to skip this level and increment the parent hierarchy
+                            // When the value is a constant (e.g., a singleton resource name) and the key is not providers,
+                            // we need to skip this level and increment the parent hierarchy so that parameters from parent segments get the correct .Parent reference
                             appendParent = true;
                         }
                     }

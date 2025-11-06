@@ -86,7 +86,7 @@
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
-    <PackageReference Update="System.ClientModel" Version="1.7.0" />
+    <PackageReference Update="System.ClientModel" Version="1.8.0" />
     <PackageReference Update="System.IO.Hashing" Version="8.0.0" />
     <PackageReference Update="System.Memory" Version="4.6.3" />
     <PackageReference Update="System.Memory.Data" Version="8.0.1" />
@@ -102,7 +102,7 @@
     <PackageReference Update="System.Text.Json" Version="8.0.6" />
     <PackageReference Update="System.Text.Encodings.Web" Version="8.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="9.0.9" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3"/>
 
@@ -212,7 +212,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.5.0" />
+    <PackageReference Update="OpenAI" Version="2.6.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
@@ -409,6 +409,7 @@
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
@@ -430,6 +431,7 @@
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Update="NAudio" Version="2.2.1" />
     <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
@@ -444,7 +446,8 @@
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.ClientModel" Version="1.7.0" />
+    <PackageReference Update="System.ClientModel" Version="1.8.0" />
+    <PackageReference Update="System.CommandLine" VersionOverride="2.0.0-beta4.22272.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
@@ -458,6 +461,7 @@
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
+    <PackageReference Update="System.Threading.Channels" Version="8.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
@@ -477,7 +481,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251029.3</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251103.8</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20251022.3</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

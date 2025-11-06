@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
-            ClientResult result = Generate(insight, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Generate(insight, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
@@ -99,7 +99,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
-            ClientResult result = await GenerateAsync(insight, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GenerateAsync(insight, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
@@ -113,17 +113,16 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string id, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        public virtual ClientResult Get(string id, bool? includeCoordinates, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, includeCoordinates, clientRequestId, options);
+            using PipelineMessage message = CreateGetRequest(id, includeCoordinates, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -137,49 +136,46 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string id, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string id, bool? includeCoordinates, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, includeCoordinates, clientRequestId, options);
+            using PipelineMessage message = CreateGetRequest(id, includeCoordinates, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a specific insight by Id. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<Insight> Get(string id, bool? includeCoordinates = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<Insight> Get(string id, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = Get(id, includeCoordinates, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = Get(id, includeCoordinates, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
         /// <summary> Get a specific insight by Id. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<Insight>> GetAsync(string id, bool? includeCoordinates = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<Insight>> GetAsync(string id, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetAsync(id, includeCoordinates, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetAsync(id, includeCoordinates, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
@@ -196,11 +192,10 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Filter by the evaluation run ID. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetAll(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             return new InsightsGetAllCollectionResult(
                 this,
@@ -209,7 +204,6 @@ namespace Azure.AI.Projects
                 runId,
                 agentName,
                 includeCoordinates,
-                clientRequestId,
                 options);
         }
 
@@ -226,11 +220,10 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Filter by the evaluation run ID. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             return new InsightsGetAllAsyncCollectionResult(
                 this,
@@ -239,7 +232,6 @@ namespace Azure.AI.Projects
                 runId,
                 agentName,
                 includeCoordinates,
-                clientRequestId,
                 options);
         }
 
@@ -249,10 +241,9 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Filter by the evaluation run ID. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<Insight> GetAll(InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Insight> GetAll(InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             return new InsightsGetAllCollectionResultOfT(
                 this,
@@ -261,8 +252,7 @@ namespace Azure.AI.Projects
                 runId,
                 agentName,
                 includeCoordinates,
-                clientRequestId,
-                cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+                cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all insights in reverse chronological order (newest first). </summary>
@@ -271,10 +261,9 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Filter by the evaluation run ID. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<Insight> GetAllAsync(InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Insight> GetAllAsync(InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             return new InsightsGetAllAsyncCollectionResultOfT(
                 this,
@@ -283,8 +272,7 @@ namespace Azure.AI.Projects
                 runId,
                 agentName,
                 includeCoordinates,
-                clientRequestId,
-                cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+                cancellationToken.ToRequestOptions());
         }
     }
 }

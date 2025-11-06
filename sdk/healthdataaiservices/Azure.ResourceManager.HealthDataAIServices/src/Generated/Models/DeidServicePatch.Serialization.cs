@@ -193,15 +193,15 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeidServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="DeidServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeidServicePatch patch)
+        /// <param name="deidServicePatch"> The <see cref="DeidServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeidServicePatch deidServicePatch)
         {
-            if (patch == null)
+            if (deidServicePatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(deidServicePatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

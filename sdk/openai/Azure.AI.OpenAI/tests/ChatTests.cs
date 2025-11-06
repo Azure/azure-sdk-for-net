@@ -20,7 +20,8 @@ using OpenAI.TestFramework.Mocks;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;
-
+#pragma warning disable AOAI001
+#pragma warning disable SCME0001
 public partial class ChatTests : AoaiTestBase<ChatClient>
 {
     public ChatTests(bool isAsync) : base(isAsync)
@@ -168,10 +169,18 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             BinaryData serialized = ModelReaderWriter.Write(options);
             return serialized.ToString().Contains(value);
         }
-        async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
+        async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens, bool isSentilel=false)
         {
             _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
-            Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
+            if (isSentilel)
+            {
+                Assert.True(GetSerializedOptionsContains("max_tokens"));
+                Assert.True(GetSerializedOptionsContains("__EMPTY__"));
+            }
+            else
+            {
+                Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
+            }
             Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
         }
 
@@ -187,12 +196,12 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         await AssertExpectedSerializationAsync(true, false);
 
         options.SetNewMaxCompletionTokensPropertyEnabled();
-        await AssertExpectedSerializationAsync(false, true);
-        await AssertExpectedSerializationAsync(false, true);
+        await AssertExpectedSerializationAsync(false, true, true);
+        await AssertExpectedSerializationAsync(false, true, true);
         options.MaxOutputTokenCount = null;
-        await AssertExpectedSerializationAsync(false, false);
+        await AssertExpectedSerializationAsync(false, false, true);
         options.MaxOutputTokenCount = 42;
-        await AssertExpectedSerializationAsync(false, true);
+        await AssertExpectedSerializationAsync(false, true, true);
 
         options.SetNewMaxCompletionTokensPropertyEnabled(false);
         await AssertExpectedSerializationAsync(true, false);
@@ -560,7 +569,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         {
             options.SetNewMaxCompletionTokensPropertyEnabled();
         }
-
         ChatCompletion completion = await client.CompleteChatAsync(
             ["Hello, world! Please write a funny haiku to greet me."],
             options);
@@ -568,15 +576,16 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         string serializedOptionsAfterUse = ModelReaderWriter.Write(options).ToString();
 
+        Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
         if (useNewProperty)
         {
             Assert.That(serializedOptionsAfterUse, Does.Contain("max_completion_tokens"));
-            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Contain("__EMPTY__"));
         }
         else
         {
             Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
-            Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("__EMPTY__"));
         }
     }
     #endregion

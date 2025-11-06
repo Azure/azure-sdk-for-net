@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
@@ -42,6 +43,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             writer.WritePropertyName("msg"u8);
             writer.WriteStringValue(Msg);
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -85,6 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string msg = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -93,12 +100,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     msg = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("error"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooActionResult(msg, additionalBinaryDataProperties);
+            return new FooActionResult(msg, error, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
