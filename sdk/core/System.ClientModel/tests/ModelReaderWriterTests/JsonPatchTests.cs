@@ -461,5 +461,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("Value cannot be null. (Parameter 'format')", ex!.Message);
 #endif
         }
+
+        [Test]
+        public void AddStringPropertyToComplexObject()
+        {
+            JsonPatch jp = new("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true}}}"u8.ToArray());
+            jp.Set("$.a.new"u8, "newValue");
+            Assert.AreEqual("{\"a\":{\"b\":{\"bProp\":1},\"c\":{\"cProp\":true},\"new\":\"newValue\"}}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void AddStringArrayElement()
+        {
+            JsonPatch jp = new("{\"a\":[\"one\",\"two\",\"three\"]}"u8.ToArray());
+            jp.Set("$.a[1]"u8, "newTwo");
+            Assert.AreEqual("{\"a\":[\"one\",\"newTwo\",\"three\"]}", jp.ToString("J"));
+        }
     }
 }

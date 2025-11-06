@@ -1,5 +1,9 @@
 # Release History
 
+## 12.26.0-beta.1 (Unreleased)
+
+### Features Added
+
 ## 12.25.0-beta.1 (Unreleased)
 
 ### Features Added
@@ -10,6 +14,11 @@
 - Added support for the ShareServiceProperties.Protocol.SMB.EncryptionInTransit parameter on ShareServiceClient.SetProperties() and .SetPropertiesAsync().
 - Added support for uploading data with the new Content parameter on ShareFileClient.Create() and .CreateAsync().
 - Added support for the PropertySemantics parameter on ShareFileClient.Create(), .CreateAsync(), ShareDirectoryClient.Create(), and .CreateAsync().
+
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
 
 ## 12.23.0 (2025-07-14)
 

@@ -217,5 +217,14 @@ namespace MgmtTypeSpec.Mocking
         {
             return new HciVmInstanceResource(Client, scope.AppendProviderResource("MgmtTypeSpec", "virtualMachineInstances", "default"));
         }
+
+        /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> object. </returns>
+        public virtual GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(ResourceIdentifier id)
+        {
+            GroupQuotaSubscriptionRequestStatusResource.ValidateResourceId(id);
+            return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
+        }
     }
 }

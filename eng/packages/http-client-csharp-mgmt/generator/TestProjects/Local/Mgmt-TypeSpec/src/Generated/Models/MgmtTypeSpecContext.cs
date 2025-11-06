@@ -16,6 +16,8 @@ namespace MgmtTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
+    [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
     [ModelReaderWriterBuildable(typeof(BarData))]
     [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
@@ -48,6 +50,10 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaDetails))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaLimitProperties))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionRequestStatusData))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionRequestStatusResource))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceData))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceResource))]
@@ -55,6 +61,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(JobResource))]
     [ModelReaderWriterBuildable(typeof(JobResourceData))]
     [ModelReaderWriterBuildable(typeof(JobResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(LimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NestedFooModel))]
     [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
@@ -67,6 +74,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
     [ModelReaderWriterBuildable(typeof(ZooData))]

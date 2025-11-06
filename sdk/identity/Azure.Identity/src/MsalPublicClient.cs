@@ -286,10 +286,12 @@ namespace Azure.Identity
             }
             if (browserOptions != null)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (browserOptions.UseEmbeddedWebView.HasValue)
                 {
                     builder.WithUseEmbeddedWebView(browserOptions.UseEmbeddedWebView.Value);
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
                 if (browserOptions.SystemBrowserOptions != null)
                 {
                     builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);

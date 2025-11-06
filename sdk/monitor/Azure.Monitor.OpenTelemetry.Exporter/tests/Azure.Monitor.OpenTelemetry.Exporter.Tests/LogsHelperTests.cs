@@ -338,12 +338,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 roleInstance: "testRoleInstance",
                 serviceVersion: null,
                 monitorBaseData: null);
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
+            (var telemetryItems, var telemetryCounter) = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
 
-            Assert.Equal(type, telemetryItem[0].Data.BaseType);
-            Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
-            Assert.Equal(logResource.RoleName, telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal(logResource.RoleInstance, telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(type, telemetryItems[0].Data.BaseType);
+            Assert.Equal("Ikey", telemetryItems[0].InstrumentationKey);
+            Assert.Equal(logResource.RoleName, telemetryItems[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(logResource.RoleInstance, telemetryItems[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+
+            // Validate TelemetryCounter
+            if (type == "MessageData")
+            {
+                Assert.Equal(1, telemetryCounter._traceCount);
+                Assert.Equal(0, telemetryCounter._exceptionCount);
+            }
+            else
+            {
+                Assert.Equal(1, telemetryCounter._exceptionCount);
+                Assert.Equal(0, telemetryCounter._traceCount);
+            }
+            Assert.Equal(0, telemetryCounter._requestCount);
+            Assert.Equal(0, telemetryCounter._dependencyCount);
+            Assert.Equal(0, telemetryCounter._eventCount);
+            Assert.Equal(0, telemetryCounter._metricCount);
         }
 
         [Theory]
