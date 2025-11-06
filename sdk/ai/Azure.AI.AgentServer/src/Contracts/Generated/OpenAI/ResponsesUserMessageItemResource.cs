@@ -23,6 +23,7 @@ namespace Azure.AI.AgentServer.Contracts.Generated.OpenAI
         /// Please note <see cref="ItemContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ItemContentInputAudio"/>, <see cref="ItemContentInputFile"/>, <see cref="ItemContentInputImage"/>, <see cref="ItemContentInputText"/>, <see cref="ItemContentOutputAudio"/>, <see cref="ItemContentOutputText"/> and <see cref="ItemContentRefusal"/>.
         /// </param>
+        /// <param name="createdBy">The information about the creator of the item</param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         public ResponsesUserMessageItemResource(string id, ResponsesMessageItemResourceStatus status, IEnumerable<ItemContent> content, CreatedBy createdBy = null) : base(ItemType.Message, id, createdBy, null, status, ResponsesMessageRole.User)
         {

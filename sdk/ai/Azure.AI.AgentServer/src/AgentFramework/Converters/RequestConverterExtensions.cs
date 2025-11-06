@@ -12,10 +12,18 @@ using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework.Converters;
 
+/// <summary>
+/// Provides extension methods for converting request objects to AI framework types.
+/// </summary>
 public static class RequestConverterExtensions
 {
     private static readonly JsonSerializerOptions Json = JsonExtensions.DefaultJsonSerializerOptions;
 
+    /// <summary>
+    /// Converts a create response request to a collection of chat messages.
+    /// </summary>
+    /// <param name="request">The create response request to convert.</param>
+    /// <returns>A read-only collection of chat messages extracted from the request input.</returns>
     public static IReadOnlyCollection<ChatMessage> GetInputMessages(this CreateResponseRequest request)
     {
         var items = request.Input.ToObject<IList<ItemParam>>();

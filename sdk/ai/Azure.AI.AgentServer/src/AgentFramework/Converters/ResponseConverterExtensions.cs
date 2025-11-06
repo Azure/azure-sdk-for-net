@@ -14,10 +14,20 @@ using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework.Converters;
 
+/// <summary>
+/// Provides extension methods for converting AI framework response types to contract types.
+/// </summary>
 public static class ResponseConverterExtensions
 {
     private static readonly JsonSerializerOptions Json = JsonExtensions.DefaultJsonSerializerOptions;
 
+    /// <summary>
+    /// Converts an agent run response to a response contract object.
+    /// </summary>
+    /// <param name="agentRunResponse">The agent run response to convert.</param>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <returns>A response contract object.</returns>
     public static Contracts.Generated.Responses.Response ToResponse(this AgentRunResponse agentRunResponse,
         CreateResponseRequest request,
         AgentInvocationContext context)
@@ -33,6 +43,12 @@ public static class ResponseConverterExtensions
         );
     }
 
+    /// <summary>
+    /// Converts a chat message to a collection of item resources.
+    /// </summary>
+    /// <param name="message">The chat message to convert.</param>
+    /// <param name="idGenerator">The ID generator for creating resource IDs.</param>
+    /// <returns>An enumerable collection of item resources.</returns>
     public static IEnumerable<ItemResource> ToItemResource(this ChatMessage message, IIdGenerator idGenerator)
     {
         List<ItemContent> contents = [];
@@ -71,6 +87,12 @@ public static class ResponseConverterExtensions
         }
     }
 
+    /// <summary>
+    /// Converts a function call content to a function tool call item resource.
+    /// </summary>
+    /// <param name="functionCallContent">The function call content to convert.</param>
+    /// <param name="id">The ID for the resource.</param>
+    /// <returns>A function tool call item resource.</returns>
     public static FunctionToolCallItemResource ToFunctionToolCallItemResource(
         this FunctionCallContent functionCallContent,
         string id)
@@ -84,6 +106,12 @@ public static class ResponseConverterExtensions
         );
     }
 
+    /// <summary>
+    /// Converts a function result content to a function tool call output item resource.
+    /// </summary>
+    /// <param name="functionResultContent">The function result content to convert.</param>
+    /// <param name="id">The ID for the resource.</param>
+    /// <returns>A function tool call output item resource.</returns>
     public static FunctionToolCallOutputItemResource ToFunctionToolCallOutputItemResource(
         this FunctionResultContent functionResultContent,
         string id)
@@ -99,6 +127,11 @@ public static class ResponseConverterExtensions
         );
     }
 
+    /// <summary>
+    /// Converts usage details to a response usage object.
+    /// </summary>
+    /// <param name="usage">The usage details to convert.</param>
+    /// <returns>A response usage object, or null if the usage details are null.</returns>
     public static ResponseUsage? ToResponseUsage(this UsageDetails? usage)
     {
         if (usage == null)
@@ -125,6 +158,11 @@ public static class ResponseConverterExtensions
         );
     }
 
+    /// <summary>
+    /// Converts AI content to an item content object.
+    /// </summary>
+    /// <param name="content">The AI content to convert.</param>
+    /// <returns>An item content object, or null if the content cannot be converted.</returns>
     public static ItemContent? ToItemContent(this AIContent content)
     {
         switch (content)

@@ -7,6 +7,7 @@
 
 using Azure.AI.AgentServer.Contracts.Generated.Agents;
 using Azure.AI.AgentServer.Contracts.Generated.Common;
+using Azure.AI.AgentServer.Contracts.Generated.Conversations;
 using Azure.AI.AgentServer.Contracts.Generated.MemoryStore;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 
@@ -435,7 +436,7 @@ namespace Azure.AI.AgentServer.Contracts.Generated.Responses
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="CreateResponseRequestConversation"/></description>
+        /// <description><see cref="ResponseConversation1"/></description>
         /// </item>
         /// </list>
         /// </remarks>

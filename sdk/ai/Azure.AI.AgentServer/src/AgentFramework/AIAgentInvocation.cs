@@ -12,8 +12,19 @@ using Microsoft.Agents.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework;
 
+/// <summary>
+/// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
+/// </summary>
+/// <param name="agent">The AI agent to invoke.</param>
 public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
 {
+    /// <summary>
+    /// Executes the agent invocation asynchronously.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The response from the agent.</returns>
     protected override async Task<Contracts.Generated.Responses.Response> DoInvokeAsync(CreateResponseRequest request,
         AgentInvocationContext context,
         CancellationToken cancellationToken)
@@ -25,6 +36,13 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
         return response.ToResponse(request, context);
     }
 
+    /// <summary>
+    /// Executes the agent invocation with streaming support.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A stream event generator for the response.</returns>
     protected override INestedStreamEventGenerator<Contracts.Generated.Responses.Response> DoInvokeStreamAsync(
         CreateResponseRequest request,
         AgentInvocationContext context,

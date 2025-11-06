@@ -14,18 +14,38 @@ using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework.Converters;
 
+/// <summary>
+/// Generates item resources from agent run response updates with streaming support.
+/// </summary>
 public class ItemResourceGenerator
     : NestedChunkedUpdatingGeneratorBase<IEnumerable<ItemResource>, AgentRunResponseUpdate>
 {
+    /// <summary>
+    /// Gets or initializes the agent invocation context.
+    /// </summary>
     required public AgentInvocationContext Context { get; init; }
 
+    /// <summary>
+    /// Gets or initializes the action to notify when usage is updated.
+    /// </summary>
     public Action<ResponseUsage>? NotifyOnUsageUpdate { get; init; }
 
+    /// <summary>
+    /// Determines whether two consecutive updates represent a change based on message ID.
+    /// </summary>
+    /// <param name="previous">The previous update.</param>
+    /// <param name="current">The current update.</param>
+    /// <returns>True if the message ID has changed; otherwise, false.</returns>
     protected override bool Changed(AgentRunResponseUpdate previous, AgentRunResponseUpdate current)
     {
         return previous.MessageId != current.MessageId;
     }
 
+    /// <summary>
+    /// Creates a nested events group from a chunk of updates.
+    /// </summary>
+    /// <param name="updateGroup">The group of updates to process.</param>
+    /// <returns>A nested events group containing item resources.</returns>
     protected override NestedEventsGroup<IEnumerable<ItemResource>> CreateGroup(
         IAsyncEnumerable<AgentRunResponseUpdate> updateGroup)
     {
