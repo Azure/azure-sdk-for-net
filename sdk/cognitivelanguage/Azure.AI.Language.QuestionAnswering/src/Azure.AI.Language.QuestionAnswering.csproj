@@ -18,5 +18,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.Language.QuestionAnswering.Inference\src\Azure.AI.Language.QuestionAnswering.Inference.csproj" />
+  </ItemGroup>
 
 </Project>

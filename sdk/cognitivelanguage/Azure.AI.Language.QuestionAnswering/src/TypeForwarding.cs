@@ -14,7 +14,6 @@ using Microsoft.Extensions.Azure; // For QuestionAnsweringClientExtensions
 // Forward core client and options types
 [assembly: TypeForwardedTo(typeof(QuestionAnsweringClient))]
 [assembly: TypeForwardedTo(typeof(QuestionAnsweringClientOptions))]
-[assembly: TypeForwardedTo(typeof(QuestionAnsweringClientOptions.ServiceVersion))]
 
 // Forward audience & project helpers
 [assembly: TypeForwardedTo(typeof(QuestionAnsweringAudience))]
@@ -51,7 +50,3 @@ using Microsoft.Extensions.Azure; // For QuestionAnsweringClientExtensions
 [assembly: TypeForwardedTo(typeof(PrebuiltQueryMatchingPolicy))]
 [assembly: TypeForwardedTo(typeof(QueryFilters))]
 [assembly: TypeForwardedTo(typeof(QueryPreferences))]
-
-// Forward extension methods container in Microsoft.Extensions.Azure
-[assembly: TypeForwardedTo(typeof(QuestionAnsweringClientExtensions))]
-
