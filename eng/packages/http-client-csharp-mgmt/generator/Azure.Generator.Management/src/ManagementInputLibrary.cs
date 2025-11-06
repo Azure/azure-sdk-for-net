@@ -102,6 +102,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
         {
             Dictionary<InputModelType, string> map = new();
+            HashSet<InputModelType> duplicateUpdateModels = new();
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -112,11 +113,21 @@ namespace Azure.Generator.Management
                     {
                         if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
                         {
+                            if (map.ContainsKey(updateModel))
+                            {
+                                duplicateUpdateModels.Add(updateModel);
+                            }
                             map[updateModel] = metadata.ResourceModel.Name;
                             break;
                         }
                     }
                 }
+            }
+
+            // Remove update models that are used in more than one resource
+            foreach (var duplicateModel in duplicateUpdateModels)
+            {
+                map.Remove(duplicateModel);
             }
 
             return map;
