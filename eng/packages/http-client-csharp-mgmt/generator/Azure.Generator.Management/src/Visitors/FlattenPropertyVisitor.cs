@@ -389,7 +389,7 @@ namespace Azure.Generator.Management.Visitors
                             internalProperty,
                             innerProperty,
                             innerProperty.ExplicitInterface,
-                            innerProperty.WireInfo,
+                            ConstructFlattrenPropertyWireInfo(internalProperty, innerProperty),
                             innerProperty.IsRef,
                             innerProperty.Attributes);
 
@@ -407,6 +407,23 @@ namespace Azure.Generator.Management.Visitors
             }
 
             return isFlattened;
+        }
+
+        private static PropertyWireInformation? ConstructFlattrenPropertyWireInfo(PropertyProvider internalProperty, PropertyProvider innerProperty)
+        {
+            var innerPropertyWireInfo = innerProperty.WireInfo;
+            var internalPropertyWireInfo = internalProperty.WireInfo;
+            if (innerPropertyWireInfo is null || internalPropertyWireInfo is null)
+            {
+                return null;
+            }
+            return new PropertyWireInformation(innerPropertyWireInfo.SerializationFormat,
+                innerPropertyWireInfo.IsRequired && internalPropertyWireInfo.IsRequired,
+                innerPropertyWireInfo.IsReadOnly || internalPropertyWireInfo.IsReadOnly,
+                innerPropertyWireInfo.IsNullable || internalPropertyWireInfo.IsNullable,
+                innerPropertyWireInfo.IsDiscriminator,
+                innerPropertyWireInfo.SerializedName,
+                innerPropertyWireInfo.IsHttpMetadata);
         }
 
         private bool SafeFlatten(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
@@ -436,7 +453,7 @@ namespace Azure.Generator.Management.Visitors
                     internalProperty,
                     innerProperty,
                     innerProperty.ExplicitInterface,
-                    innerProperty.WireInfo,
+                    ConstructFlattrenPropertyWireInfo(internalProperty, innerProperty),
                     innerProperty.IsRef,
                     innerProperty.Attributes);
 
@@ -519,7 +536,10 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private static bool ShouldIncludeFlattenedPropertyInPublicConstructor(PropertyProvider flattenedProperty)
-            => (flattenedProperty.WireInfo?.IsRequired == true) && !flattenedProperty.Type.IsCollection;
+        {
+            // We only include the flattened property in the public constructor if it is required and not a collection type.
+            return flattenedProperty.WireInfo?.IsRequired == true && !flattenedProperty.Type.IsCollection;
+        }
 
         private static void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map, ConstructorProvider publicConstructor)
         {
