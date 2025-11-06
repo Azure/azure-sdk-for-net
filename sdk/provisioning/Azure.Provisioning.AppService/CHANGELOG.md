@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (2025-10-31)
+## 1.3.0-beta.1 (2025-11-07)
 
 ### Features Added
 
@@ -8,9 +8,8 @@
 
 ### Breaking Changes
 
-- Removed `AseV3NetworkingConfigurationData` class. Please use `AseV3NetworkingConfiguration` class instead.
-- Removed `CustomDnsSuffixConfigurationData` class. Please use `CustomDnsSuffixConfiguration` class instead.
-- Removed `StaticSiteUserProvidedFunctionAppData` class. Please use `StaticSiteUserProvidedFunctionApp` class instead.
+- Deprecated models `AseV3NetworkingConfigurationData`, `CustomDnsSuffixConfigurationData` and `StaticSiteUserProvidedFunctionAppData`. Please use `AseV3NetworkingConfiguration`, `CustomDnsSuffixConfiguration` and `StaticSiteUserProvidedFunctionApp` instead.
+- Deprecated properties `AppServiceEnvironment.CustomDnsSuffixConfiguration`, `AppServiceEnvironment.NetworkingConfiguration` and `StaticSite.UserProvidedFunctionApps`. Please use `AppServiceEnvironment.CustomDnsSuffixConfig`, `AppServiceEnvironment.NetworkingConfig` and `StaticSite.UserFunctionApps` instead.
 
 ### Bugs Fixed
 
