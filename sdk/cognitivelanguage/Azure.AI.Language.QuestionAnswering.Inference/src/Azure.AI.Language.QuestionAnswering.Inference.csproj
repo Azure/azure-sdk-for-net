@@ -9,6 +9,10 @@
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
+  </PropertyGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />

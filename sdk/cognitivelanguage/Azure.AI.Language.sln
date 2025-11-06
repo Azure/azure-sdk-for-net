@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Conversat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Conversations.Tests", "Azure.AI.Language.Conversations\tests\Azure.AI.Language.Conversations.Tests.csproj", "{E30B7233-76F8-4966-9CDC-86D9C5B37462}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.QuestionAnswering.Inference", "Azure.AI.Language.QuestionAnswering.Inference\src\Azure.AI.Language.QuestionAnswering.Inference.csproj", "{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,18 @@ Global
 		{E30B7233-76F8-4966-9CDC-86D9C5B37462}.Release|x64.Build.0 = Release|Any CPU
 		{E30B7233-76F8-4966-9CDC-86D9C5B37462}.Release|x86.ActiveCfg = Release|Any CPU
 		{E30B7233-76F8-4966-9CDC-86D9C5B37462}.Release|x86.Build.0 = Release|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Debug|x64.Build.0 = Debug|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Debug|x86.Build.0 = Debug|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Release|x64.ActiveCfg = Release|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Release|x64.Build.0 = Release|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Release|x86.ActiveCfg = Release|Any CPU
+		{634EFCA1-ACFF-9BB4-2976-415DE9B2A133}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
