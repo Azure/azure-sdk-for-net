@@ -462,6 +462,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 .Throws(new ServiceBusException("", reason: ServiceBusFailureReason.MessagingEntityNotFound));
 
             ServiceBusListener listener = CreateListener();
+            var notFoundException = Assert.ThrowsAsync<ServiceBusException>(async () =>
+                await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync());
+            Assert.AreEqual(ServiceBusFailureReason.MessagingEntityNotFound, notFoundException.Reason);
+
+            _loggerProvider.ClearAllLogMessages();
+
+            // UnauthorizedAccessException
+            _mockProvider
+                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
+                .Throws(new UnauthorizedAccessException(""));
+            listener = CreateListener();
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -471,23 +482,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
-            _loggerProvider.ClearAllLogMessages();
-
-            // UnauthorizedAccessException
-            _mockProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_client, _entityPath, It.IsAny<ServiceBusReceiverOptions>()))
-                .Throws(new UnauthorizedAccessException(""));
-            listener = CreateListener();
-
-            metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
-
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             Assert.AreEqual($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
                         $"Falling back to using first message enqueued time.",
                         warning.FormattedMessage);
@@ -499,9 +493,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 .Throws(new Exception("Uh oh"));
             listener = CreateListener();
 
-            var ex = Assert.ThrowsAsync<Exception>(async () =>
+            var genericException = Assert.ThrowsAsync<Exception>(async () =>
                 await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync());
-            Assert.AreEqual("Uh oh", ex.Message);
+            Assert.AreEqual("Uh oh", genericException.Message);
         }
 
         private ServiceBusListener CreateListener(bool useDeadletterQueue = false)

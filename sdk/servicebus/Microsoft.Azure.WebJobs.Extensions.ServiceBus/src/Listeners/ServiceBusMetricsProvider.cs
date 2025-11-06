@@ -87,17 +87,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     deadLetterCount = subscriptionProperties.DeadLetterMessageCount;
                 }
             }
-            catch (ServiceBusException ex)
-            when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
-            {
-                _logger.LogWarning($"ServiceBus {entityName} '{_entityPath}' was not found.");
-            }
             catch (UnauthorizedAccessException ex)
             {
-                if (TimeToLogWarning())
-                {
-                    _logger.LogWarning(ex, $"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.");
-                }
+                _logger.LogWarning(ex, $"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.");
+
+                // When manage claim is not used on Service Bus connection string we are rethrowing the exception to fallback to incremental scale
                 throw;
             }
 
@@ -156,11 +150,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     return await GetTopicMetricsAsync(activeMessage).ConfigureAwait(false);
                 }
             }
-            catch (ServiceBusException ex)
-            when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
-            {
-                _logger.LogWarning($"ServiceBus {entityName} '{_entityPath}' was not found.");
-            }
             catch (UnauthorizedAccessException) // When manage claim is not used on Service Bus connection string
             {
                 if (TimeToLogWarning())
@@ -168,10 +157,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     _logger.LogWarning($"Connection string does not have Manage claim for {entityName} '{_entityPath}'. Failed to get {entityName} description to " +
                         $"derive {entityName} length metrics. Falling back to using first message enqueued time.");
                 }
-            }
 
-            // Path for connection strings with no manage claim
-            return CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
+                // When manage claim is not used on Service Bus connection string we will get the vote based on the active message only
+                return CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            }
         }
 
         private async Task<ServiceBusTriggerMetrics> GetQueueMetricsAsync(ServiceBusReceivedMessage message)
