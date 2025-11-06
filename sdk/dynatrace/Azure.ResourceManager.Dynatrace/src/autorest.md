@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Dynatrace
 namespace: Azure.ResourceManager.Dynatrace
-require: https://github.com/Azure/azure-rest-api-specs/blob/df6a22e29f0eca5b4a89372eb66db94cb1659c0c/specification/dynatrace/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7eb817d513e6b2364a823d1f56db45d25fdca7b7/specification/dynatrace/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
