@@ -35,29 +35,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// <returns>The queue length from the associated queue entity.</returns>
         public async Task<int> GetQueueLengthAsync()
         {
-            try
-            {
-                QueueTriggerMetrics queueMetrics = await GetMetricsAsync().ConfigureAwait(false);
-                return queueMetrics.QueueLength;
-            }
-            catch (RequestFailedException ex)
-            {
-                if (ex.IsNotFoundQueueNotFound() ||
-                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
-                    ex.IsServerSideError())
-                {
-                    // ignore transient errors, and return default metrics
-                    // E.g. if the queue doesn't exist, we'll return a zero queue length
-                    // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
-            }
-
-            return 0;
+            QueueTriggerMetrics queueMetrics = await GetMetricsAsync().ConfigureAwait(false);
+            return queueMetrics.QueueLength;
         }
 
         /// <summary>
@@ -69,44 +48,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             int queueLength = 0;
             TimeSpan queueTime = TimeSpan.Zero;
 
-            try
-            {
-                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
-                queueLength = queueProperties.ApproximateMessagesCount;
+            QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
+            queueLength = queueProperties.ApproximateMessagesCount;
 
-                if (queueLength > 0)
+            if (queueLength > 0)
+            {
+                PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
+                if (message != null)
                 {
-                    PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null)
+                    if (message.InsertedOn.HasValue)
                     {
-                        if (message.InsertedOn.HasValue)
-                        {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
-                        }
-                    }
-                    else
-                    {
-                        // ApproximateMessageCount often returns a stale value,
-                        // especially when the queue is empty.
-                        queueLength = 0;
+                        queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
                     }
                 }
-            }
-            catch (RequestFailedException ex)
-            {
-                if (ex.IsNotFoundQueueNotFound() ||
-                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
-                    ex.IsServerSideError())
+                else
                 {
-                    // ignore transient errors, and return default metrics
-                    // E.g. if the queue doesn't exist, we'll return a zero queue length
-                    // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
+                    // ApproximateMessageCount often returns a stale value,
+                    // especially when the queue is empty.
+                    queueLength = 0;
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
             }
 
             return new QueueTriggerMetrics

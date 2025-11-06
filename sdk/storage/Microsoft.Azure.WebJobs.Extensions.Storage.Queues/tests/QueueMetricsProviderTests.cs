@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -81,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         }
 
         [Test]
-        public async Task GetMetrics_HandlesStorageExceptions()
+        public void GetMetrics_HandlesStorageExceptions()
         {
             var exception = new RequestFailedException(
                 500,
@@ -91,14 +92,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>())).Throws(exception);
 
-            var metrics = await _metricsProvider.GetMetricsAsync();
-
-            Assert.AreEqual(0, metrics.QueueLength);
-            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
-            Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await _metricsProvider.GetMetricsAsync());
+            Assert.AreEqual("Things are very wrong.", ex.Message);
         }
 
         public class TestFixture : IDisposable
