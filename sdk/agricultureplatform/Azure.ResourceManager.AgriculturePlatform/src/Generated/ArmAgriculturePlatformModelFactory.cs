@@ -55,7 +55,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <returns> A new <see cref="Models.AgricultureServiceProperties"/> instance for mocking. </returns>
         public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
-        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
         {
             dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
             installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();

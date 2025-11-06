@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="computeRecommenderDiagnosticSupportedResourceTypes"> Describes what are the supported resource types for a diagnostic. </param>
         /// <returns> A new <see cref="Recommender.ComputeRecommenderDiagnosticData"/> instance for mocking. </returns>
         public static ComputeRecommenderDiagnosticData ComputeRecommenderDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderDiagnosticSupportedResourceTypes = default)
-        public static ComputeRecommenderDiagnosticData ComputeRecommenderDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderDiagnosticSupportedResourceTypes = default)
         {
             return new ComputeRecommenderDiagnosticData(
                 id,
