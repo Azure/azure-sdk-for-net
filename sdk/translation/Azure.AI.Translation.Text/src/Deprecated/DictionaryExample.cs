@@ -2,14 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Example. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class DictionaryExample
+    public class DictionaryExample : IJsonModel<DictionaryExample>
     {
         /// <summary> Initializes a new instance of DictionaryExample. </summary>
         internal DictionaryExample() { }
@@ -38,5 +40,30 @@ namespace Azure.AI.Translation.Text
         public string TargetTerm { get; }
         /// <summary> A string similar to sourceSuffix but for the target. </summary>
         public string TargetSuffix { get; }
+
+        DictionaryExample IJsonModel<DictionaryExample>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryExample is deprecated and not supported.");
+        }
+
+        DictionaryExample IPersistableModel<DictionaryExample>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryExample is deprecated and not supported.");
+        }
+
+        string IPersistableModel<DictionaryExample>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryExample is deprecated and not supported.");
+        }
+
+        void IJsonModel<DictionaryExample>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryExample is deprecated and not supported.");
+        }
+
+        BinaryData IPersistableModel<DictionaryExample>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryExample is deprecated and not supported.");
+        }
     }
 }

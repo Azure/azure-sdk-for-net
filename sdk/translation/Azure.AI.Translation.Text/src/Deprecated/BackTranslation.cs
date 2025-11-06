@@ -2,14 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Back Translation. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class BackTranslation
+    public class BackTranslation : IJsonModel<BackTranslation>
     {
         /// <summary> Initializes a new instance of BackTranslation. </summary>
         internal BackTranslation() { }
@@ -39,5 +42,30 @@ namespace Azure.AI.Translation.Text
         /// field is to provide a user interface with a means to sort back-translations so the most frequent terms are first.
         /// </summary>
         public int FrequencyCount { get; }
+
+        void IJsonModel<BackTranslation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("BackTranslation is deprecated and not supported.");
+        }
+
+        BackTranslation IJsonModel<BackTranslation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("BackTranslation is deprecated and not supported.");
+        }
+
+        BinaryData IPersistableModel<BackTranslation>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("BackTranslation is deprecated and not supported.");
+        }
+
+        BackTranslation IPersistableModel<BackTranslation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("BackTranslation is deprecated and not supported.");
+        }
+
+        string IPersistableModel<BackTranslation>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("BackTranslation is deprecated and not supported.");
+        }
     }
 }

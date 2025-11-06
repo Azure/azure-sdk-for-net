@@ -2,15 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translation source term. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class DictionaryTranslation
+    public class DictionaryTranslation : IJsonModel<DictionaryTranslation>
     {
         /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
         internal DictionaryTranslation() { }
@@ -50,5 +52,30 @@ namespace Azure.AI.Translation.Text
         /// However, it is not guaranteed to be in the first position, and often will not be.
         /// </summary>
         public IReadOnlyList<BackTranslation> BackTranslations { get; }
+
+        DictionaryTranslation IJsonModel<DictionaryTranslation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryTranslation is deprecated and not supported.");
+        }
+
+        DictionaryTranslation IPersistableModel<DictionaryTranslation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryTranslation is deprecated and not supported.");
+        }
+
+        string IPersistableModel<DictionaryTranslation>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryTranslation is deprecated and not supported.");
+        }
+
+        void IJsonModel<DictionaryTranslation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryTranslation is deprecated and not supported.");
+        }
+
+        BinaryData IPersistableModel<DictionaryTranslation>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("DictionaryTranslation is deprecated and not supported.");
+        }
     }
 }

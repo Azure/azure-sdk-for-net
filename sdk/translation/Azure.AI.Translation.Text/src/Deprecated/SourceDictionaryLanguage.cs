@@ -2,15 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Properties ot the source dictionary language. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class SourceDictionaryLanguage
+    public class SourceDictionaryLanguage : IJsonModel<SourceDictionaryLanguage>
     {
         /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
         internal SourceDictionaryLanguage() { }
@@ -23,5 +25,30 @@ namespace Azure.AI.Translation.Text
         public LanguageDirectionality Directionality { get; }
         /// <summary> List of languages with alterative translations and examples for the query expressed in the source language. </summary>
         public IReadOnlyList<TargetDictionaryLanguage> Translations { get; }
+
+        SourceDictionaryLanguage IJsonModel<SourceDictionaryLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("SourceDictionaryLanguage is deprecated and not supported.");
+        }
+
+        SourceDictionaryLanguage IPersistableModel<SourceDictionaryLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("SourceDictionaryLanguage is deprecated and not supported.");
+        }
+
+        string IPersistableModel<SourceDictionaryLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("SourceDictionaryLanguage is deprecated and not supported.");
+        }
+
+        void IJsonModel<SourceDictionaryLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("SourceDictionaryLanguage is deprecated and not supported.");
+        }
+
+        BinaryData IPersistableModel<SourceDictionaryLanguage>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("SourceDictionaryLanguage is deprecated and not supported.");
+        }
     }
 }

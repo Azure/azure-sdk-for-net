@@ -2,14 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Properties of the target dictionary language. </summary>
     [Obsolete("This class is obsolete and will be removed in a future release.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class TargetDictionaryLanguage
+    public class TargetDictionaryLanguage : IJsonModel<TargetDictionaryLanguage>
     {
         /// <summary> Initializes a new instance of TargetDictionaryLanguage. </summary>
         internal TargetDictionaryLanguage() { }
@@ -22,5 +24,30 @@ namespace Azure.AI.Translation.Text
         public LanguageDirectionality Directionality { get; }
         /// <summary> Language code identifying the target language. </summary>
         public string Code { get; }
+
+        TargetDictionaryLanguage IJsonModel<TargetDictionaryLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("TargetDictionaryLanguage is deprecated and not supported.");
+        }
+
+        TargetDictionaryLanguage IPersistableModel<TargetDictionaryLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("TargetDictionaryLanguage is deprecated and not supported.");
+        }
+
+        string IPersistableModel<TargetDictionaryLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("TargetDictionaryLanguage is deprecated and not supported.");
+        }
+
+        void IJsonModel<TargetDictionaryLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("TargetDictionaryLanguage is deprecated and not supported.");
+        }
+
+        BinaryData IPersistableModel<TargetDictionaryLanguage>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("TargetDictionaryLanguage is deprecated and not supported.");
+        }
     }
 }
