@@ -492,7 +492,6 @@ namespace Azure.Storage.Sas
             EnsureState();
 
             stringToSign = ToStringToSign(userDelegationKey, accountName);
-            Console.WriteLine($"StringToSign = \n{stringToSign}\nEND");
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
