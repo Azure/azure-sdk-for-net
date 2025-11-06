@@ -264,6 +264,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/> instance for mocking. </returns>
         public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IEnumerable<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IEnumerable<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
             return new DeviceRegistryAssetEndpointProfileProperties(
                 uuid,
