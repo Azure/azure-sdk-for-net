@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Core.Common.Http.ServerSentEvent;
 
+/// <summary>
+/// Represents a Server-Sent Events (SSE) result for streaming data to HTTP clients.
+/// </summary>
+/// <param name="source">The async enumerable source of SSE frames.</param>
+/// <param name="keepAliveInterval">Optional interval for sending keep-alive frames. Defaults to 15 seconds.</param>
 public sealed class SseResult(
     IAsyncEnumerable<SseFrame> source,
     TimeSpan? keepAliveInterval = null)
@@ -23,9 +28,21 @@ public sealed class SseResult(
 
     private readonly TimeSpan _keepAliveInterval = keepAliveInterval ?? TimeSpan.FromSeconds(15);
 
+    /// <summary>
+    /// Gets the HTTP status code for the result.
+    /// </summary>
     public int? StatusCode => StatusCodes.Status200OK;
+
+    /// <summary>
+    /// Gets the content type for the result.
+    /// </summary>
     public string? ContentType => "text/event-stream; charset=utf-8";
 
+    /// <summary>
+    /// Executes the SSE result by streaming frames to the HTTP response.
+    /// </summary>
+    /// <param name="ctx">The HTTP context.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public async Task ExecuteAsync(HttpContext ctx)
     {
         var res = ctx.Response;

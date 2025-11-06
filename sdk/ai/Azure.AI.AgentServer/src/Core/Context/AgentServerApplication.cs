@@ -12,8 +12,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Core.Context;
 
+/// <summary>
+/// Provides functionality for creating and running an agent server application.
+/// </summary>
 public static class AgentServerApplication
 {
+    /// <summary>
+    /// Runs the agent server application asynchronously.
+    /// </summary>
+    /// <param name="applicationOptions">The configuration options for the application.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public static async Task RunAsync(ApplicationOptions applicationOptions)
     {
         var app = BuildApp(applicationOptions);

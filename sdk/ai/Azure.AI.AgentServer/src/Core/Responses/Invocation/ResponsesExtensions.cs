@@ -6,8 +6,21 @@ using Azure.AI.AgentServer.Core.Common.Http.Json;
 
 namespace Azure.AI.AgentServer.Responses.Invocation;
 
+/// <summary>
+/// Provides extension methods for working with agent responses.
+/// </summary>
 public static class ResponsesExtensions
 {
+    /// <summary>
+    /// Converts a create response request to a response object.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">Optional agent invocation context.</param>
+    /// <param name="output">Optional collection of output items.</param>
+    /// <param name="status">The response status.</param>
+    /// <param name="createdAt">Optional creation timestamp.</param>
+    /// <param name="usage">Optional usage information.</param>
+    /// <returns>A response object.</returns>
     public static Contracts.Generated.Responses.Response ToResponse(
         this CreateResponseRequest request,
         AgentInvocationContext? context = null,
@@ -52,6 +65,11 @@ public static class ResponsesExtensions
         );
     }
 
+    /// <summary>
+    /// Converts an agent reference to an agent ID.
+    /// </summary>
+    /// <param name="agent">The agent reference.</param>
+    /// <returns>An agent ID, or null if the agent reference is null.</returns>
     public static AgentId? ToAgentId(this AgentReference? agent)
     {
         return agent == null
@@ -62,6 +80,11 @@ public static class ResponsesExtensions
                 serializedAdditionalRawData: null);
     }
 
+    /// <summary>
+    /// Gets the conversation ID from a create response request.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <returns>The conversation ID, or null if not present.</returns>
     public static string? GetConversationId(this CreateResponseRequest request)
     {
         return request.Conversation?.ToObject<ResponseConversation1>()?.Id ?? request.Conversation?.ToString();

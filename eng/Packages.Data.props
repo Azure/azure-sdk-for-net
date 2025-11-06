@@ -362,7 +362,6 @@
     <PackageReference Update="Castle.Core" Version="5.1.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
-    <PackageReference Update="dotenv.net" Version="4.0.0"/>
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
     <PackageReference Update="Microsoft.Agents.AI.OpenAI" Version="1.0.0-preview.251104.1" />

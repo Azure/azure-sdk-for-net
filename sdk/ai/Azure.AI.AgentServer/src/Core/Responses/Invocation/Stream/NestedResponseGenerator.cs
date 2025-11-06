@@ -3,14 +3,29 @@ using Azure.AI.AgentServer.Contracts.Generated.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Invocation.Stream;
 
+/// <summary>
+/// Generates nested stream events for agent responses.
+/// </summary>
 public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.Generated.Responses.Response>
 {
-    public required AgentInvocationContext Context { get; init; }
+    /// <summary>
+    /// Gets or initializes the agent invocation context.
+    /// </summary>
+    required public AgentInvocationContext Context { get; init; }
 
-    public required CreateResponseRequest Request { get; init; }
+    /// <summary>
+    /// Gets or initializes the create response request.
+    /// </summary>
+    required public CreateResponseRequest Request { get; init; }
 
-    public required INestedStreamEventGenerator<IEnumerable<ItemResource>> OutputGenerator { get; init; }
+    /// <summary>
+    /// Gets or initializes the output generator for item resources.
+    /// </summary>
+    required public INestedStreamEventGenerator<IEnumerable<ItemResource>> OutputGenerator { get; init; }
 
+    /// <summary>
+    /// Initializes the subscription for usage updates.
+    /// </summary>
     public Action<Action<ResponseUsage>> SubscribeUsageUpdate
     {
         init => value(SetUsage);
@@ -23,6 +38,10 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
     private Contracts.Generated.Responses.Response? CompletedResponse { get; set; }
 
 #pragma warning disable CS1998
+    /// <summary>
+    /// Generates groups of nested events for the response.
+    /// </summary>
+    /// <returns>An async enumerable of nested event groups.</returns>
     public override async IAsyncEnumerable<NestedEventsGroup<Contracts.Generated.Responses.Response>> Generate()
     {
         yield return new NestedEventsGroup<Contracts.Generated.Responses.Response>()
@@ -42,7 +61,7 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
         await foreach (var group in OutputGenerator.Generate().WithCancellation(CancellationToken).ConfigureAwait(false))
         {
             outputFactories.Add(group.CreateAggregate);
-            await foreach(var e in group.Events.WithCancellation(CancellationToken).ConfigureAwait(false))
+            await foreach (var e in group.Events.WithCancellation(CancellationToken).ConfigureAwait(false))
             {
                 yield return e;
             }

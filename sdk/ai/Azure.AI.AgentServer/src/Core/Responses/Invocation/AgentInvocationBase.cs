@@ -8,17 +8,41 @@ using Azure.AI.AgentServer.Responses.Invocation.Stream;
 
 namespace Azure.AI.AgentServer.Responses.Invocation;
 
+/// <summary>
+/// Base class for agent invocations that provides common functionality for executing agents.
+/// </summary>
 public abstract class AgentInvocationBase : IAgentInvocation
 {
+    /// <summary>
+    /// Executes the agent invocation asynchronously.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The response from the agent.</returns>
     protected abstract Task<Contracts.Generated.Responses.Response> DoInvokeAsync(CreateResponseRequest request,
         AgentInvocationContext context,
         CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Executes the agent invocation with streaming support.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A stream event generator for the response.</returns>
     protected abstract INestedStreamEventGenerator<Contracts.Generated.Responses.Response> DoInvokeStreamAsync(
         CreateResponseRequest request,
         AgentInvocationContext context,
         CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Invokes the agent asynchronously and returns a complete response.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The response from the agent.</returns>
     public async Task<Contracts.Generated.Responses.Response> InvokeAsync(CreateResponseRequest request,
         AgentInvocationContext context,
         CancellationToken cancellationToken = default)
@@ -43,6 +67,13 @@ public abstract class AgentInvocationBase : IAgentInvocation
         }
     }
 
+    /// <summary>
+    /// Invokes the agent asynchronously with streaming support.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <param name="context">The agent invocation context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>An async enumerable of response stream events.</returns>
     public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(CreateResponseRequest request,
         AgentInvocationContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)

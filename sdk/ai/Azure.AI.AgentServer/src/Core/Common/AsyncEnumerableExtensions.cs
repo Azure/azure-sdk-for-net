@@ -3,8 +3,19 @@ using System.Runtime.CompilerServices;
 
 namespace Azure.AI.AgentServer.Core.Common;
 
+/// <summary>
+/// Provides extension methods for <see cref="IAsyncEnumerable{T}"/> to enable advanced streaming operations.
+/// </summary>
 public static class AsyncEnumerableExtensions
 {
+    /// <summary>
+    /// Chunks the async enumerable sequence into groups based on when consecutive elements change.
+    /// </summary>
+    /// <typeparam name="TSource">The type of elements in the source sequence.</typeparam>
+    /// <param name="source">The source async enumerable sequence.</param>
+    /// <param name="isChanged">A function to determine if an element has changed from the previous one. If null, uses default equality comparison.</param>
+    /// <param name="cancellationToken">A cancellation token to observe while enumerating the sequence.</param>
+    /// <returns>An async enumerable of async enumerable chunks, where each chunk contains consecutive elements that are considered equal.</returns>
     public static IAsyncEnumerable<IAsyncEnumerable<TSource>> ChunkOnChange<TSource>(
         this IAsyncEnumerable<TSource> source,
         Func<TSource?, TSource?, bool>? isChanged = null,
@@ -17,6 +28,16 @@ public static class AsyncEnumerableExtensions
         return source.ChunkByKey(x => x, c, cancellationToken);
     }
 
+    /// <summary>
+    /// Chunks the async enumerable sequence into groups based on a key selector function.
+    /// </summary>
+    /// <typeparam name="TSource">The type of elements in the source sequence.</typeparam>
+    /// <typeparam name="TKey">The type of the key used for grouping.</typeparam>
+    /// <param name="source">The source async enumerable sequence.</param>
+    /// <param name="keySelector">A function to extract the key from each element.</param>
+    /// <param name="comparer">An equality comparer to compare keys. If null, uses the default equality comparer.</param>
+    /// <param name="cancellationToken">A cancellation token to observe while enumerating the sequence.</param>
+    /// <returns>An async enumerable of async enumerable chunks, where each chunk contains consecutive elements with the same key.</returns>
     public static async IAsyncEnumerable<IAsyncEnumerable<TSource>> ChunkByKey<TSource, TKey>(
         this IAsyncEnumerable<TSource> source,
         Func<TSource, TKey> keySelector,
@@ -73,6 +94,13 @@ public static class AsyncEnumerableExtensions
         }
     }
 
+    /// <summary>
+    /// Peeks at the first element of an async enumerable sequence without consuming the sequence.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the sequence.</typeparam>
+    /// <param name="source">The source async enumerable sequence.</param>
+    /// <param name="cancellationToken">A cancellation token to observe while peeking at the sequence.</param>
+    /// <returns>A tuple containing a flag indicating if the sequence has a value, the first element, and the complete sequence including the peeked element.</returns>
     public static async ValueTask<(bool HasValue, T First, IAsyncEnumerable<T> Source)> Peek<T>(
         this IAsyncEnumerable<T> source,
         CancellationToken cancellationToken = default)

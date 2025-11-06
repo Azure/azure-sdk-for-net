@@ -10,7 +10,6 @@
 developer/
 launch.json
 launchSettings.json
-*/**/.env
 
 # Default Assets restore directory
 .assets

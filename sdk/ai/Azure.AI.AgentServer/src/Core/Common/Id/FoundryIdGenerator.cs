@@ -6,6 +6,9 @@ using Azure.AI.AgentServer.Responses.Invocation;
 
 namespace Azure.AI.AgentServer.Core.Common.Id;
 
+/// <summary>
+/// Generates unique identifiers for Azure AI Foundry resources with partition key support.
+/// </summary>
 public partial class FoundryIdGenerator : IIdGenerator
 {
     private readonly string _partitionId;
@@ -13,6 +16,11 @@ public partial class FoundryIdGenerator : IIdGenerator
     [GeneratedRegex("^[A-Za-z0-9]*$")]
     private static partial Regex WatermarkRegex();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FoundryIdGenerator"/> class.
+    /// </summary>
+    /// <param name="responseId">The response ID. If null, a new ID will be generated.</param>
+    /// <param name="conversationId">The conversation ID. If null, a new ID will be generated.</param>
     public FoundryIdGenerator(string? responseId, string? conversationId)
     {
         ResponseId = responseId ?? NewId("resp");
@@ -20,16 +28,32 @@ public partial class FoundryIdGenerator : IIdGenerator
         _partitionId = ExtractPartitionId(ConversationId);
     }
 
+    /// <summary>
+    /// Creates a new <see cref="FoundryIdGenerator"/> from a create response request.
+    /// </summary>
+    /// <param name="request">The create response request.</param>
+    /// <returns>A new <see cref="FoundryIdGenerator"/> instance.</returns>
     public static FoundryIdGenerator From(CreateResponseRequest request)
     {
         request.Metadata.TryGetValue("response_id", out var responseId);
         return new FoundryIdGenerator(responseId, request.GetConversationId());
     }
 
+    /// <summary>
+    /// Gets the response ID.
+    /// </summary>
     public string ResponseId { get; }
 
+    /// <summary>
+    /// Gets the conversation ID.
+    /// </summary>
     public string ConversationId { get; }
 
+    /// <summary>
+    /// Generates a new ID with an optional category prefix.
+    /// </summary>
+    /// <param name="category">The category prefix for the ID. If null or empty, defaults to "id".</param>
+    /// <returns>A newly generated ID string.</returns>
     public string Generate(string? category = null)
     {
         var prefix = string.IsNullOrEmpty(category) ? "id" : category;

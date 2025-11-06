@@ -15,12 +15,20 @@ using OpenTelemetry;
 
 namespace Azure.AI.AgentServer.Responses.Endpoint;
 
+/// <summary>
+/// Provides extension methods for mapping agent run endpoints.
+/// </summary>
 public static class AgentRunEndpoints
 {
     private sealed class AgentRunEndpointsLogger
     {
     }
 
+    /// <summary>
+    /// Maps agent run endpoints to the endpoint route builder.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <returns>The endpoint route builder for chaining.</returns>
     public static IEndpointRouteBuilder MapAgentRunEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var agentRunGroup = endpoints.MapGroup("/{p:regex(^runs|responses$)}")

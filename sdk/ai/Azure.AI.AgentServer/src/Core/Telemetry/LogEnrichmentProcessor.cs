@@ -3,8 +3,15 @@ using OpenTelemetry.Logs;
 
 namespace Azure.AI.AgentServer.Core.Telemetry
 {
+    /// <summary>
+    /// Processor that enriches log records with baggage information.
+    /// </summary>
     public class LogEnrichmentProcessor : BaseProcessor<LogRecord>
     {
+        /// <summary>
+        /// Called when a log record ends, enriches it with current baggage data.
+        /// </summary>
+        /// <param name="data">The log record to enrich.</param>
         public override void OnEnd(LogRecord data)
         {
             var currentBaggage = Baggage.Current.GetBaggage().ToDictionary();

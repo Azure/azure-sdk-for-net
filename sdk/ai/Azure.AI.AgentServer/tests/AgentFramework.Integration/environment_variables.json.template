@@ -1,0 +1,5 @@
+{
+    "AZURE_OPENAI_ENDPOINT": "https://<foundry-name>.cognitiveservices.azure.com/",
+    "AZURE_OPENAI_API_KEY": "<openai-api-key>",
+    "AZURE_OPENAI_DEPLOYMENT_NAME": "<model-deployment-name>"
+}
