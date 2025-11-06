@@ -28,21 +28,37 @@ public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
 
     #region MRW
     T IJsonModel<T>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        => CreateCore(ref reader, options);
-
-    T IPersistableModel<T>.Create(BinaryData data, ModelReaderWriterOptions options)
     {
-        Utf8JsonReader reader = new Utf8JsonReader(data.ToMemory().Span);
+        ValidateFormat(options);
+        return CreateCore(ref reader, options);
+    }
+
+    /// <summary>
+    /// Converts the provided <see cref="BinaryData"/> into a model.
+    /// </summary>
+    /// <param name="data">The <see cref="BinaryData"/> to parse.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <returns>The model created from the data.</returns>
+    public T Create(BinaryData data, ModelReaderWriterOptions? options = null)
+    {
+        options ??= ModelReaderWriterOptions.Json;
+        ValidateFormat(options);
+
+        var reader = new Utf8JsonReader(data.ToMemory().Span);
         return CreateCore(ref reader, options);
     }
 
     string IPersistableModel<T>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
     void IJsonModel<T>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        => WriteCore(writer, options);
+    {
+        ValidateFormat(options);
+        WriteCore(writer, options);
+    }
 
     BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options)
     {
+        ValidateFormat(options);
         using MemoryStream stream = new MemoryStream();
         using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
         WriteCore(writer, options);
@@ -51,5 +67,14 @@ public abstract class JsonModel<T> : IJsonModel<T>, IPersistableModel<T>
         ReadOnlyMemory<byte> memory = buffer.AsMemory(0, (int)stream.Position);
         return new BinaryData(memory);
     }
+
+    private static void ValidateFormat(ModelReaderWriterOptions options)
+    {
+        if (options.Format != "J" && options.Format != "W")
+        {
+            throw new FormatException($"The model does not support '{options.Format}' format. Supported formats are 'J' and 'W'.");
+        }
+    }
+
     #endregion
 }
