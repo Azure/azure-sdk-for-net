@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation
 {
     public static partial class _Specs_AzureClientGeneratorCoreClientLocationModelFactory
     {

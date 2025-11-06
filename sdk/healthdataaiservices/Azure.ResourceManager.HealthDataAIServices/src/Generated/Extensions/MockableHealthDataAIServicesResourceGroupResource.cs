@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             return GetCachedClient(client => new DeidServiceCollection(client, Id));
         }
 
-        /// <summary> Get a DeidService. </summary>
+        /// <summary>
+        /// Get a DeidService
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deidServiceName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             return await GetDeidServices().GetAsync(deidServiceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a DeidService. </summary>
+        /// <summary>
+        /// Get a DeidService
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deidServiceName"/> is null. </exception>

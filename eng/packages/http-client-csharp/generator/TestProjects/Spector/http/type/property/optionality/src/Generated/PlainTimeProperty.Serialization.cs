@@ -36,6 +36,6 @@ namespace _Type.Property.Optional
         /// <param name="plainTimeProperty"> The <see cref="PlainTimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(PlainTimeProperty plainTimeProperty) => throw null;
 
-        public static explicit operator PlainTimeProperty(Response result) => throw null;
+        public static explicit operator PlainTimeProperty(Response response) => throw null;
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
 
@@ -89,6 +90,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             writer.WritePropertyName("nestedProperty"u8);
             writer.WriteObjectValue(NestedProperty, options);
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,6 +145,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             IList<string> prop1 = default;
             IList<int> prop2 = default;
             NestedFooModel nestedProperty = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,6 +226,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -233,6 +249,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
+                eTag,
                 additionalBinaryDataProperties);
         }
 

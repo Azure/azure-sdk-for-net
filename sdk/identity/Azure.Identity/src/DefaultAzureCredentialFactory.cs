@@ -42,7 +42,7 @@ namespace Azure.Identity
         public TokenCredential[] CreateCredentialChain()
         {
             TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
-            string credentialSelection = Options.CredentialSource ?? EnvironmentVariables.CredentialSelection?.Trim().ToLower();
+            string credentialSelection = Options.CredentialSource ?? EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
 
             if (_customEnvironmentVariableName != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.Identity
             {
                 throw new InvalidOperationException($"Environment variable '{environmentVariableName}' is not set or is empty.{_troubleshootingMessage}");
             }
-            return credentialSelection.Trim().ToLower();
+            return credentialSelection.Trim().ToLowerInvariant();
         }
 
         /// <summary>

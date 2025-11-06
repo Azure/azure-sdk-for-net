@@ -8,7 +8,6 @@
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

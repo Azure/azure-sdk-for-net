@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Azure.Generator.Visitors.Extensions;
+using Azure.Generator.Extensions;
 
 namespace Azure.Generator.Tests
 {

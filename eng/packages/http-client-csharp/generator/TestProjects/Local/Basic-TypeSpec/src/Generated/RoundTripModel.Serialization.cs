@@ -636,7 +636,7 @@ namespace BasicTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeRoundTripModel(document.RootElement, options);
                     }
@@ -660,11 +660,10 @@ namespace BasicTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
-        public static explicit operator RoundTripModel(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
+        public static explicit operator RoundTripModel(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 

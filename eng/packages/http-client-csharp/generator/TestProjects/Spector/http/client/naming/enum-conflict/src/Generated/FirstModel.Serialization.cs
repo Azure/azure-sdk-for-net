@@ -38,6 +38,6 @@ namespace Client.Naming.EnumConflict.FirstNamespace
         /// <param name="firstModel"> The <see cref="FirstModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FirstModel firstModel) => throw null;
 
-        public static explicit operator FirstModel(Response result) => throw null;
+        public static explicit operator FirstModel(Response response) => throw null;
     }
 }

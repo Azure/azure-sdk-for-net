@@ -46,7 +46,7 @@ namespace Azure.Generator.Visitors
                 var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
 
                 // Find the request variable
-                VariableExpression? requestVariable = null;
+                HttpRequestApi? requestVariable = null;
                 foreach (var statement in newStatements)
                 {
                     if (statement is ExpressionStatement
@@ -57,7 +57,7 @@ namespace Azure.Generator.Visitors
                         var variable = declaration.Variable;
                         if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
                         {
-                            requestVariable = variable;
+                            requestVariable = variable.ToApi<HttpRequestApi>();
                         }
                     }
                 }
@@ -67,7 +67,7 @@ namespace Azure.Generator.Visitors
                     // Set the client-request-id header
                     newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
                         clientRequestIdParameter.SerializedName,
-                        requestVariable.Property(nameof(Request.ClientRequestId))));
+                        requestVariable.ClientRequestId()));
                 }
 
                 // Add the return statement back

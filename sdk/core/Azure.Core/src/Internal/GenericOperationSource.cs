@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Azure.Core
 {
-    [RequiresDynamicCode("Uses Non Aot overloads in ModelReaderWriter.")]
-    [RequiresUnreferencedCode("Uses Non Aot overloads in ModelReaderWriter.")]
+    [RequiresDynamicCode("This method uses reflection.")]
+    [RequiresUnreferencedCode("This method uses reflection.")]
     internal class GenericOperationSource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> : IOperationSource<T> where T : IPersistableModel<T>
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)

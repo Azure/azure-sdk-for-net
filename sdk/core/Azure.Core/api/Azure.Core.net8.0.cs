@@ -144,9 +144,9 @@ namespace Azure
         public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
         public static Azure.Operation Rehydrate(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Operation> RehydrateAsync(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Rehydration requires dynamic code because it uses reflection to create instances of the operation's result type.")]
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static System.Threading.Tasks.Task<Azure.Operation<T>> RehydrateAsync<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Rehydration requires dynamic code because it uses reflection to create instances of the operation's result type.")]
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
@@ -712,13 +712,14 @@ namespace Azure.Core
         public static bool TryParse(string? input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
+    public readonly partial struct ResourceType : System.IComparable<Azure.Core.ResourceType>, System.IEquatable<Azure.Core.ResourceType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ResourceType(string resourceType) { throw null; }
         public string Namespace { get { throw null; } }
         public string Type { get { throw null; } }
+        public int CompareTo(Azure.Core.ResourceType other) { throw null; }
         public bool Equals(Azure.Core.ResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? other) { throw null; }
