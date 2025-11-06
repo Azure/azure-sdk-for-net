@@ -58,17 +58,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null || etag is null || nestedPropertyProperties is null ? default : new FooProperties(
+                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && etag is null && nestedPropertyProperties is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
                     floatValue,
                     doubleValue,
-                    prop1.ToList(),
-                    prop2.ToList(),
-                    new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
+                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
+                    (prop2 ?? new ChangeTrackingList<int>()).ToList(),
+                    new NestedFooModel(nestedPropertyProperties, null),
                     etag,
-                    new Dictionary<string, BinaryData>()),
+                    null),
                 extendedLocation);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 doubleValue,
                 prop1.ToList(),
                 prop2.ToList(),
-                nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
+                nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, null),
                 etag,
                 additionalBinaryDataProperties: null);
         }
@@ -149,7 +149,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 user,
                 provisioningState,
                 accessControlEnabled,
-                metaDatas is null ? default : new FooSettingsPropertiesMetaData(metaDatas.ToList(), new Dictionary<string, BinaryData>()),
+                metaDatas is null ? default : new FooSettingsPropertiesMetaData((metaDatas ?? new ChangeTrackingList<string>()).ToList(), null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -238,19 +238,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
+                isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
                 stringArray.ToList(),
-                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()),
-                innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, null),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, null),
+                innerProp1 is null && innerProp2 is null && middleProp1 is null && middleProp2 is null && prop1 is null && prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
-                    new Dictionary<string, BinaryData>(),
+                    null,
                     middleProp1.Value,
                     middleProp2,
-                    prop1.ToList(),
+                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp.ToList(), new Dictionary<string, BinaryData>()),
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), null),
                 discriminatorProperty);
         }
 
@@ -268,7 +268,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, new Dictionary<string, BinaryData>()));
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, null));
         }
 
         /// <summary> An Employee resource. </summary>
@@ -349,7 +349,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                zooSomething is null ? default : new ZooProperties(zooSomething, new Dictionary<string, BinaryData>()),
+                zooSomething is null ? default : new ZooProperties(zooSomething, null),
                 extendedLocation);
         }
 
@@ -360,7 +360,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Paged collection of ZooAddress items. </summary>
@@ -388,7 +388,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                endpointProp is null ? default : new EndpointProperties(endpointProp, new Dictionary<string, BinaryData>()));
+                endpointProp is null ? default : new EndpointProperties(endpointProp, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -405,7 +405,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, new Dictionary<string, BinaryData>()));
+                selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, null));
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource. </summary>
@@ -455,7 +455,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()));
+                jobName is null ? default : new JobProperties(jobName, null));
         }
 
         /// <param name="jobName"> Gets or sets the JobName. </param>
@@ -465,7 +465,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()), tags, additionalBinaryDataProperties: null);
+            return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, null), tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -482,7 +482,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, new Dictionary<string, BinaryData>()));
+                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, null));
         }
 
         /// <summary> The new quota limit request status. </summary>
@@ -518,7 +518,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 comment,
                 unit,
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue.ToList(), new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<AllocatedToSubscription>()).ToList(), null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -537,7 +537,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 comment,
                 unit,
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue.ToList(), new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<AllocatedToSubscription>()).ToList(), null),
                 additionalBinaryDataProperties: null);
         }
 

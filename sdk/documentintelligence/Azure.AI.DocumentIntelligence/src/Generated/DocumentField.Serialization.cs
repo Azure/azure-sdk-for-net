@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentField : IUtf8JsonSerializable, IJsonModel<DocumentField>
+    /// <summary> An object representing the content and location of a field value. </summary>
+    public partial class DocumentField : IJsonModel<DocumentField>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DocumentField"/> for deserialization. </summary>
+        internal DocumentField()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FieldType.ToString());
             if (Optional.IsDefined(ValueString))
@@ -85,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueList)
+                foreach (DocumentField item in ValueList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in ValueObject)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentField>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -121,8 +125,13 @@ namespace Azure.AI.DocumentIntelligence
             {
                 writer.WritePropertyName("valueSelectionGroup"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueSelectionGroup)
+                foreach (string item in ValueSelectionGroup)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -136,7 +145,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
-                foreach (var item in BoundingRegions)
+                foreach (BoundingRegion item in BoundingRegions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -146,7 +155,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
-                foreach (var item in Spans)
+                foreach (DocumentSpan item in Spans)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,15 +166,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -174,37 +183,42 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        DocumentField IJsonModel<DocumentField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentField IJsonModel<DocumentField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DocumentField JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentField)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDocumentField(document.RootElement, options);
         }
 
-        internal static DocumentField DeserializeDocumentField(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DocumentField DeserializeDocumentField(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DocumentFieldType type = default;
+            DocumentFieldType fieldType = default;
             string valueString = default;
             DateTimeOffset? valueDate = default;
             TimeSpan? valueTime = default;
             string valuePhoneNumber = default;
-            double? valueNumber = default;
-            long? valueInteger = default;
+            double? valueDouble = default;
+            long? valueInt64 = default;
             DocumentSelectionMarkState? valueSelectionMark = default;
             DocumentSignatureType? valueSignature = default;
             string valueCountryRegion = default;
-            IReadOnlyList<DocumentField> valueArray = default;
+            IReadOnlyList<DocumentField> valueList = default;
             IReadOnlyDictionary<string, DocumentField> valueObject = default;
             CurrencyValue valueCurrency = default;
             AddressValue valueAddress = default;
@@ -214,213 +228,218 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float? confidence = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new DocumentFieldType(property.Value.GetString());
+                    fieldType = new DocumentFieldType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("valueString"u8))
+                if (prop.NameEquals("valueString"u8))
                 {
-                    valueString = property.Value.GetString();
+                    valueString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueDate"u8))
+                if (prop.NameEquals("valueDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueDate = property.Value.GetDateTimeOffset("D");
+                    valueDate = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
-                if (property.NameEquals("valueTime"u8))
+                if (prop.NameEquals("valueTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueTime = property.Value.GetTimeSpan("T");
+                    valueTime = prop.Value.GetTimeSpan("T");
                     continue;
                 }
-                if (property.NameEquals("valuePhoneNumber"u8))
+                if (prop.NameEquals("valuePhoneNumber"u8))
                 {
-                    valuePhoneNumber = property.Value.GetString();
+                    valuePhoneNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueNumber"u8))
+                if (prop.NameEquals("valueNumber"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueNumber = property.Value.GetDouble();
+                    valueDouble = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("valueInteger"u8))
+                if (prop.NameEquals("valueInteger"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueInteger = property.Value.GetInt64();
+                    valueInt64 = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("valueSelectionMark"u8))
+                if (prop.NameEquals("valueSelectionMark"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueSelectionMark = new DocumentSelectionMarkState(property.Value.GetString());
+                    valueSelectionMark = new DocumentSelectionMarkState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("valueSignature"u8))
+                if (prop.NameEquals("valueSignature"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueSignature = new DocumentSignatureType(property.Value.GetString());
+                    valueSignature = new DocumentSignatureType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("valueCountryRegion"u8))
+                if (prop.NameEquals("valueCountryRegion"u8))
                 {
-                    valueCountryRegion = property.Value.GetString();
+                    valueCountryRegion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueArray"u8))
+                if (prop.NameEquals("valueArray"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DocumentField> array = new List<DocumentField>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeserializeDocumentField(item, options));
                     }
-                    valueArray = array;
+                    valueList = array;
                     continue;
                 }
-                if (property.NameEquals("valueObject"u8))
+                if (prop.NameEquals("valueObject"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value, options));
+                        dictionary.Add(prop0.Name, DeserializeDocumentField(prop0.Value, options));
                     }
                     valueObject = dictionary;
                     continue;
                 }
-                if (property.NameEquals("valueCurrency"u8))
+                if (prop.NameEquals("valueCurrency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value, options);
+                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("valueAddress"u8))
+                if (prop.NameEquals("valueAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueAddress = AddressValue.DeserializeAddressValue(property.Value, options);
+                    valueAddress = AddressValue.DeserializeAddressValue(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("valueBoolean"u8))
+                if (prop.NameEquals("valueBoolean"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueBoolean = property.Value.GetBoolean();
+                    valueBoolean = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("valueSelectionGroup"u8))
+                if (prop.NameEquals("valueSelectionGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     valueSelectionGroup = array;
                     continue;
                 }
-                if (property.NameEquals("content"u8))
+                if (prop.NameEquals("content"u8))
                 {
-                    content = property.Value.GetString();
+                    content = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingRegions"u8))
+                if (prop.NameEquals("boundingRegions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BoundingRegion> array = new List<BoundingRegion>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
                 }
-                if (property.NameEquals("spans"u8))
+                if (prop.NameEquals("spans"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DocumentSpan> array = new List<DocumentSpan>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
                 }
-                if (property.NameEquals("confidence"u8))
+                if (prop.NameEquals("confidence"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    confidence = property.Value.GetSingle();
+                    confidence = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentField(
-                type,
+                fieldType,
                 valueString,
                 valueDate,
                 valueTime,
                 valuePhoneNumber,
-                valueNumber,
-                valueInteger,
+                valueDouble,
+                valueInt64,
                 valueSelectionMark,
                 valueSignature,
                 valueCountryRegion,
-                valueArray ?? new ChangeTrackingList<DocumentField>(),
+                valueList ?? new ChangeTrackingList<DocumentField>(),
                 valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(),
                 valueCurrency,
                 valueAddress,
@@ -430,13 +449,16 @@ namespace Azure.AI.DocumentIntelligence
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans ?? new ChangeTrackingList<DocumentSpan>(),
                 confidence,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -446,15 +468,20 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        DocumentField IPersistableModel<DocumentField>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentField IPersistableModel<DocumentField>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DocumentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentField(document.RootElement, options);
                     }
                 default:
@@ -462,22 +489,7 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DocumentField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentField FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDocumentField(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }
