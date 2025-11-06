@@ -343,7 +343,7 @@ op myOperationCustom(options: MyOperationOptions): void;
 - `Usage.input`: Used in request
 - `Usage.output`: Used in response
 - `Usage.json`: Used with JSON content type
-- `Usage.xml` Used with XML content type
+- `Usage.xml`: Used with XML content type
 
 ### @clientDoc
 
