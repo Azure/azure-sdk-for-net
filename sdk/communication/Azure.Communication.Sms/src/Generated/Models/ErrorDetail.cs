@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> Error detail information. </summary>
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> The error code. </param>

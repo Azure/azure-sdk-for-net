@@ -14,6 +14,28 @@ payload-flattening-threshold: 10
 generation1-convenience-client: true
 ```
 
+### Make error response models internal - using Azure.Core error handling
+
+``` yaml
+directive:
+  - from: swagger-document
+    where: $.definitions.BadRequestErrorResponse
+    transform: >
+      $["x-accessibility"] = "internal";
+  - from: swagger-document
+    where: $.definitions.ErrorDetail
+    transform: >
+      $["x-accessibility"] = "internal";
+  - from: swagger-document
+    where: $.definitions.ErrorResponse
+    transform: >
+      $["x-accessibility"] = "internal";
+  - from: swagger-document
+    where: $.definitions.StandardErrorResponse
+    transform: >
+      $["x-accessibility"] = "internal";
+```
+
 ``` yaml
 directive:
   from: swagger-document
@@ -62,4 +84,12 @@ directive:
   transform: >
     $["x-accessibility"] = "internal";
     $["x-namespace"] = "Azure.Communication.Sms";
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.OptOutRecipient"
+  transform: >
+    $["x-accessibility"] = "internal";
 ```

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> Error response for failed requests. </summary>
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
         /// <param name="type"> A URI reference that identifies the problem type. </param>

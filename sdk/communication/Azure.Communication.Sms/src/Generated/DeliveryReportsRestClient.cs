@@ -56,12 +56,12 @@ namespace Azure.Communication.Sms
         /// <summary> Gets delivery report for a specific outgoing message. </summary>
         /// <param name="outgoingMessageId"> The identifier of the outgoing message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outgoingMessageId"/> is null, empty, or whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outgoingMessageId"/> is null. </exception>
         public async Task<Response<object>> GetAsync(string outgoingMessageId, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(outgoingMessageId))
+            if (outgoingMessageId == null)
             {
-                throw new ArgumentException("Message ID cannot be null, empty, or whitespace.", nameof(outgoingMessageId));
+                throw new ArgumentNullException(nameof(outgoingMessageId));
             }
 
             using var message = CreateGetRequest(outgoingMessageId);
@@ -90,12 +90,12 @@ namespace Azure.Communication.Sms
         /// <summary> Gets delivery report for a specific outgoing message. </summary>
         /// <param name="outgoingMessageId"> The identifier of the outgoing message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outgoingMessageId"/> is null, empty, or whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outgoingMessageId"/> is null. </exception>
         public Response<object> Get(string outgoingMessageId, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(outgoingMessageId))
+            if (outgoingMessageId == null)
             {
-                throw new ArgumentException("Message ID cannot be null, empty, or whitespace.", nameof(outgoingMessageId));
+                throw new ArgumentNullException(nameof(outgoingMessageId));
             }
 
             using var message = CreateGetRequest(outgoingMessageId);

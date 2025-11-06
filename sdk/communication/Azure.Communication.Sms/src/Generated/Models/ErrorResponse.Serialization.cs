@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.Sms.Models
 {
-    public partial class ErrorResponse
+    internal partial class ErrorResponse
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {

@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.Sms.Models
 {
-    public partial class BadRequestErrorResponse
+    internal partial class BadRequestErrorResponse
     {
         internal static BadRequestErrorResponse DeserializeBadRequestErrorResponse(JsonElement element)
         {

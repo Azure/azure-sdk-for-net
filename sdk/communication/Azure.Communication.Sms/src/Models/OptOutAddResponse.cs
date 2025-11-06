@@ -8,7 +8,7 @@ using System.Linq;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> Response for add opt out request. Validate the returned items in the response to see which recipients were successfully added to the opt outs list. </summary>
-    public partial class OptOutAddResponse
+    internal partial class OptOutAddResponse
     {
         /// <summary> Initializes a new instance of <see cref="OptOutAddResponse"/>. </summary>
         /// <param name="value"></param>

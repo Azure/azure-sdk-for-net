@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> Standard error response format. </summary>
-    public partial class StandardErrorResponse
+    internal partial class StandardErrorResponse
     {
         /// <summary> Initializes a new instance of <see cref="StandardErrorResponse"/>. </summary>
         /// <param name="error"> Error detail information. </param>

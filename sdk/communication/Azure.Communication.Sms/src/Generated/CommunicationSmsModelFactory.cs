@@ -14,51 +14,6 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationSmsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.BadRequestErrorResponse"/>. </summary>
-        /// <param name="type"> A URI reference that identifies the problem type (for validation errors). </param>
-        /// <param name="title"> A short, human-readable summary of the problem type (for validation errors). </param>
-        /// <param name="status"> The HTTP status code (for validation errors). </param>
-        /// <param name="errors"> Dictionary of field-specific validation errors (for validation errors). </param>
-        /// <param name="traceId"> The trace identifier for the request (for validation errors). </param>
-        /// <param name="error"> Error detail information (for standard API errors). </param>
-        /// <returns> A new <see cref="Models.BadRequestErrorResponse"/> instance for mocking. </returns>
-        public static BadRequestErrorResponse BadRequestErrorResponse(string type = null, string title = null, int? status = null, IReadOnlyDictionary<string, IList<string>> errors = null, string traceId = null, ErrorDetail error = null)
-        {
-            errors ??= new Dictionary<string, IList<string>>();
-
-            return new BadRequestErrorResponse(
-                type,
-                title,
-                status,
-                errors,
-                traceId,
-                error);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorDetail"/>. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="innerError"> Additional error details. </param>
-        /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
-        public static ErrorDetail ErrorDetail(string code = null, string message = null, object innerError = null)
-        {
-            return new ErrorDetail(code, message, innerError);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StandardErrorResponse"/>. </summary>
-        /// <param name="error"> Error detail information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        /// <returns> A new <see cref="Models.StandardErrorResponse"/> instance for mocking. </returns>
-        public static StandardErrorResponse StandardErrorResponse(ErrorDetail error = null)
-        {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
-
-            return new StandardErrorResponse(error);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.OptOutResponse"/>. </summary>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.OptOutResponse"/> instance for mocking. </returns>
@@ -115,17 +70,6 @@ namespace Azure.Communication.Sms.Models
         public static DeliveryAttempt DeliveryAttempt(DateTimeOffset timestamp = default, int segmentsSucceeded = default, int segmentsFailed = default)
         {
             return new DeliveryAttempt(timestamp, segmentsSucceeded, segmentsFailed);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorResponse"/>. </summary>
-        /// <param name="type"> A URI reference that identifies the problem type. </param>
-        /// <param name="title"> A short, human-readable summary of the problem type. </param>
-        /// <param name="status"> The HTTP status code. </param>
-        /// <param name="traceId"> The trace identifier for the request. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(string type = null, string title = null, int status = default, string traceId = null)
-        {
-            return new ErrorResponse(type, title, status, traceId);
         }
     }
 }

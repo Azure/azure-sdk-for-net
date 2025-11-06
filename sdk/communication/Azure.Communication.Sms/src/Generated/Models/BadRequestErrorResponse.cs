@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> Bad Request error response that can represent both validation errors and standard API errors. </summary>
-    public partial class BadRequestErrorResponse
+    internal partial class BadRequestErrorResponse
     {
         /// <summary> Initializes a new instance of <see cref="BadRequestErrorResponse"/>. </summary>
         internal BadRequestErrorResponse()
