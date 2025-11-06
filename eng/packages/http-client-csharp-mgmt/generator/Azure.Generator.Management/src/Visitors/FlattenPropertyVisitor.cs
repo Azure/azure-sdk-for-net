@@ -168,7 +168,7 @@ namespace Azure.Generator.Management.Visitors
                     }
                     else
                     {
-                        result = result.Or(updatedParameter.Is(Null));
+                        result = result.And(updatedParameter.Is(Null));
                     }
                 }
                 else
@@ -179,7 +179,7 @@ namespace Azure.Generator.Management.Visitors
                     }
                     else
                     {
-                        result = result.Or(propertyParameter.Is(Null));
+                        result = result.And(propertyParameter.Is(Null));
                     }
                 }
             }
@@ -205,7 +205,7 @@ namespace Azure.Generator.Management.Visitors
                 if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
-                    parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
+                    parameters.Add(Null);
 
                     // If the additionalProperties parameter is the last parameter, we can break the loop.
                     if (fullConstructorParameterIndex == fullConstructorParameters.Count - 1)
@@ -232,7 +232,7 @@ namespace Azure.Generator.Management.Visitors
 
                     parameters.Add(isOverriddenValueType
                         ? parameter.Property("Value")
-                        : IsNonReadOnlyMemoryList(parameter) ? parameter.ToList() : parameter);
+                        : IsNonReadOnlyMemoryList(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
                     // only increase flattenedPropertyIndex when we use a flattened property
                     flattenedPropertyIndex++;
@@ -254,7 +254,7 @@ namespace Azure.Generator.Management.Visitors
             // If the additionalProperties parameter is missing at the end, we need to pass a new instance for it.
             if (parameters.Count < fullConstructorParameters.Count && additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
             {
-                parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
+                parameters.Add(Null);
             }
             return parameters.ToArray();
 

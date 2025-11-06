@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="statusErrors"> Array object to transfer and persist errors that originate from the Edge. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IReadOnlyList<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IEnumerable<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
             return new DeviceRegistryAssetEndpointProfileProperties(
                 uuid,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 authentication,
                 additionalConfiguration,
                 discoveredAssetEndpointProfileRef,
-                statusErrors is null ? default : new AssetEndpointProfileStatus(statusErrors, new Dictionary<string, BinaryData>()),
+                statusErrors is null ? default : new AssetEndpointProfileStatus(statusErrors.ToList(), new Dictionary<string, BinaryData>()),
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
