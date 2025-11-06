@@ -10,7 +10,7 @@ AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new
 OpenAIClient openAIClient = client.GetOpenAIClient();
 ```
 
-2 Define three toy functions: `GetUserFavoriteCity`that always returns "Seattle, WA" and `GetCityNickname`, which will handle only "Seattle, WA" and will throw exception in response to other city names. The last function `GetWeatherAtLocation` returns weather at Seattle, WA.
+2 Define three toy functions: `GetUserFavoriteCity` that always returns "Seattle, WA" and `GetCityNickname`, which will handle only "Seattle, WA" and will throw exception in response to other city names. The last function `GetWeatherAtLocation` returns weather in Seattle, WA.
 ```C# Snippet:Sample_Functions_Function
 /// Example of a function that defines no parameters
 /// returns user favorite city.
@@ -42,7 +42,7 @@ public static string GetWeatherAtLocation(string location, string temperatureUni
 };
 ```
 
-3. For each function we need to create `FunctionTool`-s, which defines function name, description and parameters.
+3. For each function we need to create `FunctionTool`, which defines function name, description and parameters.
 ```C# Snippet:Sample_FunctionTools_Function
 public static readonly FunctionTool getUserFavoriteCityTool = ResponseTool.CreateFunctionTool(
     functionName: "getUserFavoriteCity",
@@ -129,7 +129,7 @@ private static FunctionCallOutputResponseItem GetResolvedToolOutput(FunctionCall
 }
 ```
 
-4. Create agent with the `FunctionTool`-s we have created in step 3.
+4. Create agent with the `FunctionTool` we have created in step 3.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_Function_Sync
