@@ -13,7 +13,7 @@ namespace OpenAI
     /// 
     /// Configuring `{ "type": "json_schema" }` enables Structured Outputs,
     /// which ensures the model will match your supplied JSON schema. Learn more in the
-    /// [Structured Outputs guide](/docs/guides/structured-outputs).
+    /// [Structured Outputs guide](https://platform.openai.com/docs/guides/structured-outputs).
     /// 
     /// The default format is `{ "type": "text" }` with no additional options.
     /// 

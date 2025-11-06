@@ -12,11 +12,6 @@ namespace Azure.AI.Agents
     /// <summary> A AI Search Index resource. </summary>
     public partial class AzureAISearchIndex : IJsonModel<AzureAISearchIndex>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/> for deserialization. </summary>
-        internal AzureAISearchIndex()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureAISearchIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -35,21 +30,24 @@ namespace Azure.AI.Agents
             {
                 throw new FormatException($"The model {nameof(AzureAISearchIndex)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("project_connection_id"u8);
-            writer.WriteStringValue(ProjectConnectionId);
+            if (Optional.IsDefined(ProjectConnectionId))
+            {
+                writer.WritePropertyName("project_connection_id"u8);
+                writer.WriteStringValue(ProjectConnectionId);
+            }
             if (Optional.IsDefined(IndexName))
             {
-                writer.WritePropertyName("indexName"u8);
+                writer.WritePropertyName("index_name"u8);
                 writer.WriteStringValue(IndexName);
             }
             if (Optional.IsDefined(QueryType))
             {
-                writer.WritePropertyName("queryType"u8);
+                writer.WritePropertyName("query_type"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
             if (Optional.IsDefined(TopK))
             {
-                writer.WritePropertyName("topK"u8);
+                writer.WritePropertyName("top_k"u8);
                 writer.WriteNumberValue(TopK.Value);
             }
             if (Optional.IsDefined(Filter))
@@ -59,7 +57,7 @@ namespace Azure.AI.Agents
             }
             if (Optional.IsDefined(IndexAssetId))
             {
-                writer.WritePropertyName("indexAssetId"u8);
+                writer.WritePropertyName("index_asset_id"u8);
                 writer.WriteStringValue(IndexAssetId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -118,12 +116,12 @@ namespace Azure.AI.Agents
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("indexName"u8))
+                if (prop.NameEquals("index_name"u8))
                 {
                     indexName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("queryType"u8))
+                if (prop.NameEquals("query_type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +130,7 @@ namespace Azure.AI.Agents
                     queryType = new AzureAISearchQueryType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("topK"u8))
+                if (prop.NameEquals("top_k"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +144,7 @@ namespace Azure.AI.Agents
                     filter = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("indexAssetId"u8))
+                if (prop.NameEquals("index_asset_id"u8))
                 {
                     indexAssetId = prop.Value.GetString();
                     continue;

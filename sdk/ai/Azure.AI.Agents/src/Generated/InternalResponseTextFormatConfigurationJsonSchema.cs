@@ -43,7 +43,7 @@ namespace OpenAI
         /// If set to true, the model will always follow the exact schema defined
         /// in the `schema` field. Only a subset of JSON Schema is supported when
         /// `strict` is `true`. To learn more, read the [Structured Outputs
-        /// guide](/docs/guides/structured-outputs).
+        /// guide](https://platform.openai.com/docs/guides/structured-outputs).
         /// </param>
         internal InternalResponseTextFormatConfigurationJsonSchema(ResponseTextFormatConfigurationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string name, InternalResponseFormatJsonSchemaSchema schema, bool? strict) : base(@type, additionalBinaryDataProperties)
         {
@@ -73,7 +73,7 @@ namespace OpenAI
         /// If set to true, the model will always follow the exact schema defined
         /// in the `schema` field. Only a subset of JSON Schema is supported when
         /// `strict` is `true`. To learn more, read the [Structured Outputs
-        /// guide](/docs/guides/structured-outputs).
+        /// guide](https://platform.openai.com/docs/guides/structured-outputs).
         /// </summary>
         public bool? Strict { get; set; }
     }
