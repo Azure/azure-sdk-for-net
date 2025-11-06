@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -49,6 +50,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     public Dictionary<ToolType, string> ToolPrompts = new()
     {
         {ToolType.None, "Hello, tell me a joke."},
+        {ToolType.FunctionCall, "What is the nickname for Seattle, WA?" },
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.OpenAPI, "What's the weather in Seattle?"},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
@@ -74,6 +76,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.None, "You are a prompt agent."},
         {ToolType.BingGrounding, "You are helpful agent."},
+        {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
         {ToolType.OpenAPI, "You are helpful agent."},
         {ToolType.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
         {ToolType.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
@@ -91,6 +94,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.CodeInterpreter, "673457"},
         {ToolType.FileSearch, "673457"},
+        {ToolType.FunctionCall, "emerald"},
     };
     #endregion
     protected OpenAIClientOptions TestOpenAIClientOptions
@@ -267,6 +271,13 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             vctOptions
         );
     }
+
+    protected static string GetCityNicknameForTest(string location) => location switch
+    {
+        "Seattle, WA" => "The Emerald City",
+        _ => throw new NotImplementedException(),
+    };
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -294,6 +305,27 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                     )
                 ),
             ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(oaiClient)).Id]),
+            ToolType.FunctionCall => ResponseTool.CreateFunctionTool(
+                functionName: "GetCityNicknameForTest",
+                functionDescription: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
+                functionParameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        Type = "object",
+                        Properties = new
+                        {
+                            Location = new
+                            {
+                                Type = "string",
+                                Description = "The city and state, e.g. San Francisco, CA",
+                            },
+                        },
+                        Required = new[] { "location" },
+                    },
+                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                ),
+                strictModeEnabled: false
+            ),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
