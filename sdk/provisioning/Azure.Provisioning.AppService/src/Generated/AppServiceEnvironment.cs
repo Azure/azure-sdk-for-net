@@ -53,12 +53,12 @@ public partial class AppServiceEnvironment : ProvisionableResource
     /// <summary>
     /// Full view of the custom domain suffix configuration for ASEv3.
     /// </summary>
-    public CustomDnsSuffixConfiguration CustomDnsSuffixConfiguration 
+    public CustomDnsSuffixConfiguration CustomDnsSuffixConfig 
     {
-        get { Initialize(); return _customDnsSuffixConfiguration!; }
-        set { Initialize(); AssignOrReplace(ref _customDnsSuffixConfiguration, value); }
+        get { Initialize(); return _customDnsSuffixConfig!; }
+        set { Initialize(); AssignOrReplace(ref _customDnsSuffixConfig, value); }
     }
-    private CustomDnsSuffixConfiguration? _customDnsSuffixConfiguration;
+    private CustomDnsSuffixConfiguration? _customDnsSuffixConfig;
 
     /// <summary>
     /// Dedicated Host Count.
@@ -146,12 +146,12 @@ public partial class AppServiceEnvironment : ProvisionableResource
     /// <summary>
     /// Full view of networking configuration for an ASE.
     /// </summary>
-    public AseV3NetworkingConfiguration NetworkingConfiguration 
+    public AseV3NetworkingConfiguration NetworkingConfig 
     {
-        get { Initialize(); return _networkingConfiguration!; }
-        set { Initialize(); AssignOrReplace(ref _networkingConfiguration, value); }
+        get { Initialize(); return _networkingConfig!; }
+        set { Initialize(); AssignOrReplace(ref _networkingConfig, value); }
     }
-    private AseV3NetworkingConfiguration? _networkingConfiguration;
+    private AseV3NetworkingConfiguration? _networkingConfig;
 
     /// <summary>
     /// Gets or sets the Tags.
@@ -302,7 +302,7 @@ public partial class AppServiceEnvironment : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _clusterSettings = DefineListProperty<AppServiceNameValuePair>("ClusterSettings", ["properties", "clusterSettings"]);
-        _customDnsSuffixConfiguration = DefineModelProperty<CustomDnsSuffixConfiguration>("CustomDnsSuffixConfiguration", ["properties", "customDnsSuffixConfiguration"], new CustomDnsSuffixConfiguration("customDnsSuffixConfiguration"));
+        _customDnsSuffixConfig = DefineModelProperty<CustomDnsSuffixConfiguration>("CustomDnsSuffixConfig", ["properties", "customDnsSuffixConfiguration"], new CustomDnsSuffixConfiguration("customDnsSuffixConfiguration"));
         _dedicatedHostCount = DefineProperty<int>("DedicatedHostCount", ["properties", "dedicatedHostCount"]);
         _dnsSuffix = DefineProperty<string>("DnsSuffix", ["properties", "dnsSuffix"]);
         _frontEndScaleFactor = DefineProperty<int>("FrontEndScaleFactor", ["properties", "frontEndScaleFactor"]);
@@ -311,7 +311,7 @@ public partial class AppServiceEnvironment : ProvisionableResource
         _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _multiSize = DefineProperty<string>("MultiSize", ["properties", "multiSize"]);
-        _networkingConfiguration = DefineModelProperty<AseV3NetworkingConfiguration>("NetworkingConfiguration", ["properties", "networkingConfiguration"], new AseV3NetworkingConfiguration("aseV3NetworkingConfiguration"));
+        _networkingConfig = DefineModelProperty<AseV3NetworkingConfiguration>("NetworkingConfig", ["properties", "networkingConfiguration"], new AseV3NetworkingConfiguration("aseV3NetworkingConfiguration"));
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _upgradePreference = DefineProperty<AppServiceEnvironmentUpgradePreference>("UpgradePreference", ["properties", "upgradePreference"]);
         _userWhitelistedIPRanges = DefineListProperty<string>("UserWhitelistedIPRanges", ["properties", "userWhitelistedIpRanges"]);
@@ -325,7 +325,10 @@ public partial class AppServiceEnvironment : ProvisionableResource
         _status = DefineProperty<HostingEnvironmentStatus>("Status", ["properties", "status"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _upgradeAvailability = DefineProperty<AppServiceEnvironmentUpgradeAvailability>("UpgradeAvailability", ["properties", "upgradeAvailability"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported AppServiceEnvironment resource versions.

@@ -273,11 +273,11 @@ public partial class StaticSite : ProvisionableResource
     /// <summary>
     /// User provided function apps registered with the static site.
     /// </summary>
-    public BicepList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps 
+    public BicepList<StaticSiteUserProvidedFunctionApp> UserFunctionApps 
     {
-        get { Initialize(); return _userProvidedFunctionApps!; }
+        get { Initialize(); return _userFunctionApps!; }
     }
-    private BicepList<StaticSiteUserProvidedFunctionApp>? _userProvidedFunctionApps;
+    private BicepList<StaticSiteUserProvidedFunctionApp>? _userFunctionApps;
 
     /// <summary>
     /// Creates a new StaticSite.
@@ -325,8 +325,11 @@ public partial class StaticSite : ProvisionableResource
         _linkedBackends = DefineListProperty<StaticSiteLinkedBackendInfo>("LinkedBackends", ["properties", "linkedBackends"], isOutput: true);
         _privateEndpointConnections = DefineListProperty<ResponseMessageEnvelopeRemotePrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _userProvidedFunctionApps = DefineListProperty<StaticSiteUserProvidedFunctionApp>("UserProvidedFunctionApps", ["properties", "userProvidedFunctionApps"], isOutput: true);
+        _userFunctionApps = DefineListProperty<StaticSiteUserProvidedFunctionApp>("UserFunctionApps", ["properties", "userProvidedFunctionApps"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported StaticSite resource versions.

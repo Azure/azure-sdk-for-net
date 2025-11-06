@@ -57,6 +57,17 @@ public class AppServiceSpecification() :
         CustomizeProperty<FunctionAppScaleAndConcurrency>("InstanceMemoryMB", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("HttpPerInstanceConcurrency", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<WebSiteSlotResource>("Name", p => { p.IsReadOnly = false; }); // make writable for slot name
+        CustomizeProperty<AppServiceEnvironmentResource>("CustomDnsSuffixConfiguration", p => { p.Name = "CustomDnsSuffixConfig"; });
+        CustomizeProperty<AppServiceEnvironmentResource>("NetworkingConfiguration", p => { p.Name = "NetworkingConfig"; });
+        CustomizeResource<AppServiceEnvironmentResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
+        CustomizeProperty<StaticSiteResource>("UserProvidedFunctionApps", p => { p.Name = "UserFunctionApps"; });
+        CustomizeResource<StaticSiteResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
 
         // Naming requirements
         AddNameRequirements<AppCertificateResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: false);

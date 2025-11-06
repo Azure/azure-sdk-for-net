@@ -1,9 +1,0 @@
-# Baselining these as we are intentionally introduced some minor benign breaking changes to refine our APIs
-MembersMustExist : Member 'public Azure.Provisioning.AppService.CustomDnsSuffixConfigurationData Azure.Provisioning.AppService.AppServiceEnvironment.CustomDnsSuffixConfiguration.get()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public void Azure.Provisioning.AppService.AppServiceEnvironment.CustomDnsSuffixConfiguration.set(Azure.Provisioning.AppService.CustomDnsSuffixConfigurationData)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.Provisioning.AppService.AseV3NetworkingConfigurationData Azure.Provisioning.AppService.AppServiceEnvironment.NetworkingConfiguration.get()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public void Azure.Provisioning.AppService.AppServiceEnvironment.NetworkingConfiguration.set(Azure.Provisioning.AppService.AseV3NetworkingConfigurationData)' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'Azure.Provisioning.AppService.AseV3NetworkingConfigurationData' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'Azure.Provisioning.AppService.CustomDnsSuffixConfigurationData' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionAppData> Azure.Provisioning.AppService.StaticSite.UserProvidedFunctionApps.get()' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionAppData' does not exist in the implementation but it does exist in the contract.

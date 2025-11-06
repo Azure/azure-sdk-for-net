@@ -424,7 +424,9 @@ namespace Azure.Provisioning.AppService
     {
         public AppServiceEnvironment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceNameValuePair> ClusterSettings { get { throw null; } set { } }
-        public Azure.Provisioning.AppService.CustomDnsSuffixConfiguration CustomDnsSuffixConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.CustomDnsSuffixConfiguration CustomDnsSuffixConfig { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.AppService.CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> DedicatedHostCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DnsSuffix { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FrontEndScaleFactor { get { throw null; } set { } }
@@ -440,7 +442,9 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<int> MultiRoleCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MultiSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AppService.AseV3NetworkingConfiguration NetworkingConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.AseV3NetworkingConfiguration NetworkingConfig { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.AppService.AseV3NetworkingConfigurationData NetworkingConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.ProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.HostingEnvironmentStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1012,6 +1016,24 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class AseV3NetworkingConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AseV3NetworkingConfigurationData() { }
+        public Azure.Provisioning.BicepValue<bool> AllowNewPrivateEndpointConnections { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> ExternalInboundIPAddresses { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> InboundIPAddressOverride { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> InternalInboundIPAddresses { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsFtpEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsRemoteDebugEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> LinuxOutboundIPAddresses { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> WindowsOutboundIPAddresses { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class AuthPlatform : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AuthPlatform() { }
@@ -1225,6 +1247,21 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class CustomDnsSuffixConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CustomDnsSuffixConfigurationData() { }
+        public Azure.Provisioning.BicepValue<System.Uri> CertificateUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DnsSuffix { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> KeyVaultReferenceIdentity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningDetails { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.CustomDnsSuffixProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum CustomDnsSuffixProvisioningState
     {
@@ -3722,7 +3759,9 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.AppService.StaticSiteTemplate TemplateProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionApp> UserFunctionApps { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.StaticSite FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -4097,6 +4136,19 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class StaticSiteUserProvidedFunctionAppData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public StaticSiteUserProvidedFunctionAppData() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> FunctionAppRegion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> FunctionAppResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class StatusCodesBasedTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
