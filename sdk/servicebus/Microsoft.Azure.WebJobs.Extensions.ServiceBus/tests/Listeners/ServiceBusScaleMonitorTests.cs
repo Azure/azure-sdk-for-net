@@ -499,15 +499,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 .Throws(new Exception("Uh oh"));
             listener = CreateListener();
 
-            metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
-
-            Assert.AreEqual(0, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.MessageCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(0), metrics.QueueTime);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
-
-            warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Error querying for Service Bus {_entityTypeName} scale status: Uh oh", warning.FormattedMessage);
+            var ex = Assert.ThrowsAsync<Exception>(async () =>
+                await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync());
+            Assert.AreEqual("Uh oh", ex.Message);
         }
 
         private ServiceBusListener CreateListener(bool useDeadletterQueue = false)

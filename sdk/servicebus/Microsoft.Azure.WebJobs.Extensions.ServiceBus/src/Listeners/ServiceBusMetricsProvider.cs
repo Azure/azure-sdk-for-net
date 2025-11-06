@@ -100,10 +100,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                 }
                 throw;
             }
-            catch (Exception e)
-            {
-                _logger.LogWarning(e, $"Error querying for Service Bus {entityName} scale");
-            }
 
             long totalNewMessageCount = 0;
             if ((!_isListeningOnDeadLetterQueue && activeMessageCount > 0) || (_isListeningOnDeadLetterQueue && deadLetterCount > 0))
@@ -172,10 +168,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     _logger.LogWarning($"Connection string does not have Manage claim for {entityName} '{_entityPath}'. Failed to get {entityName} description to " +
                         $"derive {entityName} length metrics. Falling back to using first message enqueued time.");
                 }
-            }
-            catch (Exception e)
-            {
-                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status: {e.Message}");
             }
 
             // Path for connection strings with no manage claim
