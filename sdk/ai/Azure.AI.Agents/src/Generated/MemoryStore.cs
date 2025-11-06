@@ -8,18 +8,18 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents
 {
     /// <summary> A memory store that can store and retrieve user memories. </summary>
-    public partial class MemoryStoreObject
+    public partial class MemoryStore
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemoryStore"/>. </summary>
         /// <param name="id"> The unique identifier of the memory store. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the memory store was created. </param>
         /// <param name="updatedAt"> The Unix timestamp (seconds) when the memory store was last updated. </param>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The definition of the memory store. </param>
-        internal MemoryStoreObject(string id, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, MemoryStoreDefinition definition)
+        internal MemoryStore(string id, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, MemoryStoreDefinition definition)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -29,7 +29,7 @@ namespace Azure.AI.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemoryStore"/>. </summary>
         /// <param name="object"> The object type, which is always 'memory_store'. </param>
         /// <param name="id"> The unique identifier of the memory store. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the memory store was created. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.Agents
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="definition"> The definition of the memory store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreObject(string @object, string id, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, string description, IDictionary<string, string> metadata, MemoryStoreDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStore(string @object, string id, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, string description, IDictionary<string, string> metadata, MemoryStoreDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
@@ -51,9 +51,6 @@ namespace Azure.AI.Agents
             Definition = definition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The object type, which is always 'memory_store'. </summary>
-        public string Object { get; } = "memory_store";
 
         /// <summary> The unique identifier of the memory store. </summary>
         public string Id { get; }

@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.Agents
 {
     /// <summary></summary>
-    public partial class AgentsClient
+    public partial class AgentClient
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier202;

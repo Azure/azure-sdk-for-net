@@ -10,16 +10,16 @@ using System.Text.Json;
 namespace Azure.AI.Agents
 {
     /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
-    public partial class RaiConfig : IJsonModel<RaiConfig>
+    public partial class ContentFilterConfiguration : IJsonModel<ContentFilterConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="RaiConfig"/> for deserialization. </summary>
-        internal RaiConfig()
+        /// <summary> Initializes a new instance of <see cref="ContentFilterConfiguration"/> for deserialization. </summary>
+        internal ContentFilterConfiguration()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContentFilterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,13 +30,13 @@ namespace Azure.AI.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("rai_policy_name"u8);
-            writer.WriteStringValue(RaiPolicyName);
+            writer.WriteStringValue(PolicyName);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -56,36 +56,36 @@ namespace Azure.AI.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiConfig IJsonModel<RaiConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContentFilterConfiguration IJsonModel<ContentFilterConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RaiConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContentFilterConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRaiConfig(document.RootElement, options);
+            return DeserializeContentFilterConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RaiConfig DeserializeRaiConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContentFilterConfiguration DeserializeContentFilterConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string raiPolicyName = default;
+            string policyName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("rai_policy_name"u8))
                 {
-                    raiPolicyName = prop.Value.GetString();
+                    policyName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,47 +93,47 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RaiConfig(raiPolicyName, additionalBinaryDataProperties);
+            return new ContentFilterConfiguration(policyName, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContentFilterConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RaiConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiConfig IPersistableModel<RaiConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContentFilterConfiguration IPersistableModel<ContentFilterConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RaiConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContentFilterConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentFilterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRaiConfig(document.RootElement, options);
+                        return DeserializeContentFilterConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RaiConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContentFilterConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

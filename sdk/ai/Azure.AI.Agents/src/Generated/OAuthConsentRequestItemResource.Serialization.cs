@@ -70,7 +70,7 @@ namespace Azure.AI.Agents
                 return null;
             }
             AgentResponseItemKind @type = default;
-            CreatedBy createdBy = default;
+            AgentResponseItemSource createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string consentLink = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    createdBy = CreatedBy.DeserializeCreatedBy(prop.Value, options);
+                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

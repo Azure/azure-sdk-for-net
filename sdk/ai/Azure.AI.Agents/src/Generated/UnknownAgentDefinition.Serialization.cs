@@ -63,7 +63,7 @@ namespace Azure.AI.Agents
                 return null;
             }
             AgentKind kind = default;
-            RaiConfig raiConfig = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -78,7 +78,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownAgentDefinition(kind, raiConfig, additionalBinaryDataProperties);
+            return new UnknownAgentDefinition(kind, contentFilterConfiguration, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

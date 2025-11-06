@@ -89,7 +89,7 @@ namespace OpenAI
             }
             AgentResponseItemKind @type = default;
             string id = default;
-            CreatedBy createdBy = default;
+            AgentResponseItemSource createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FileSearchToolCallItemResourceStatus status = default;
             IList<string> queries = default;
@@ -112,7 +112,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    createdBy = CreatedBy.DeserializeCreatedBy(prop.Value, options);
+                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

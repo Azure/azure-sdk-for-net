@@ -7,22 +7,22 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The CreatedBy. </summary>
-    public partial class CreatedBy
+    /// <summary> The AgentResponseItemSource. </summary>
+    public partial class AgentResponseItemSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreatedBy"/>. </summary>
-        internal CreatedBy()
+        /// <summary> Initializes a new instance of <see cref="AgentResponseItemSource"/>. </summary>
+        internal AgentResponseItemSource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreatedBy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentResponseItemSource"/>. </summary>
         /// <param name="agent"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreatedBy(AgentInfo agent, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentResponseItemSource(AgentInfo agent, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Agent = agent;
             ResponseId = responseId;

@@ -66,7 +66,7 @@ namespace Azure.AI.Agents
                 return null;
             }
             AgentKind kind = default;
-            RaiConfig raiConfig = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<AgentTool> tools = default;
             IList<ProtocolVersionRecord> containerProtocolVersions = default;
@@ -87,7 +87,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
@@ -157,7 +157,7 @@ namespace Azure.AI.Agents
             }
             return new ImageBasedHostedAgentDefinition(
                 kind,
-                raiConfig,
+                contentFilterConfiguration,
                 additionalBinaryDataProperties,
                 tools ?? new ChangeTrackingList<AgentTool>(),
                 containerProtocolVersions,

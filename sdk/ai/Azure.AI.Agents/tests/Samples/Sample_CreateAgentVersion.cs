@@ -28,7 +28,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateAgentVersion_Async
@@ -38,7 +38,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         };
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: "myAgent",
-            definition: agentDefinition, options: null);
+            options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Async
         var agentVersions = client.GetAgentVersionsAsync(agentName: "myAgent");
@@ -93,7 +93,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgentVersion_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -102,7 +102,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         };
         AgentVersion agentVersion = client.CreateAgentVersion(
             agentName: "myAgent",
-            definition: agentDefinition, options: null);
+            options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_ListAgentVersions_Sync
         var agentVersions = client.GetAgentVersions(agentName: "myAgent");

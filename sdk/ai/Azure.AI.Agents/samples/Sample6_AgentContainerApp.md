@@ -9,7 +9,7 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOIN
 var containerAppResourceId = System.Environment.GetEnvironmentVariable("CONTAINER_APP_RESOURCE_ID");
 var ingressSubdomainSuffix = System.Environment.GetEnvironmentVariable("INGRESS_SUBDOMAIN_SUFFIX");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Create the `ContainerAppAgentDefinition` object, holding information about the Azure Container App and use it to create the versioned agent object.
@@ -18,24 +18,20 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Sync
 AgentVersion containerAgentVersion = client.CreateAgentVersion(
     agentName: "containerAgent",
-    definition: new ContainerAppAgentDefinition(
+    options: new(new ContainerAppAgentDefinition(
         containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
         containerAppResourceId: containerAppResourceId,
-        ingressSubdomainSuffix: ingressSubdomainSuffix),
-    options: null
-);
+        ingressSubdomainSuffix: ingressSubdomainSuffix)));
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
 AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
     agentName: "containerAgent",
-    definition: new ContainerAppAgentDefinition(
+    options: new(new ContainerAppAgentDefinition(
         containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
         containerAppResourceId: containerAppResourceId,
-        ingressSubdomainSuffix: ingressSubdomainSuffix),
-    options: null
-);
+        ingressSubdomainSuffix: ingressSubdomainSuffix)));
 ```
 
 4. Create an `AgentConversation` conversation object, containing the first question.

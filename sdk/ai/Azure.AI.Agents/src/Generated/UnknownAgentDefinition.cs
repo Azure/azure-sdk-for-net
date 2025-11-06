@@ -11,9 +11,9 @@ namespace Azure.AI.Agents
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", raiConfig, additionalBinaryDataProperties)
+        internal UnknownAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", contentFilterConfiguration, additionalBinaryDataProperties)
         {
         }
     }

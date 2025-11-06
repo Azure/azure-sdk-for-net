@@ -30,17 +30,15 @@ public class Sample_Container_App : AgentsTestBase
         var ingressSubdomainSuffix = TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateContainerApp_ContainerApp_Async
         AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
             agentName: "containerAgent",
-            definition: new ContainerAppAgentDefinition(
+            options: new(new ContainerAppAgentDefinition(
                 containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
                 containerAppResourceId: containerAppResourceId,
-                ingressSubdomainSuffix: ingressSubdomainSuffix),
-            options: null
-        );
+                ingressSubdomainSuffix: ingressSubdomainSuffix)));
         #endregion
         #region Snippet:Sample_CreateConversation_ContainerApp_Async
         OpenAIClient openAIClient = client.GetOpenAIClient();
@@ -96,16 +94,14 @@ public class Sample_Container_App : AgentsTestBase
         var ingressSubdomainSuffix = TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateContainerApp_ContainerApp_Sync
         AgentVersion containerAgentVersion = client.CreateAgentVersion(
             agentName: "containerAgent",
-            definition: new ContainerAppAgentDefinition(
+            options: new(new ContainerAppAgentDefinition(
                 containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
                 containerAppResourceId: containerAppResourceId,
-                ingressSubdomainSuffix: ingressSubdomainSuffix),
-            options: null
-        );
+                ingressSubdomainSuffix: ingressSubdomainSuffix)));
         #endregion
         #region Snippet:Sample_CreateConversation_ContainerApp_Sync
         OpenAIClient openAIClient = client.GetOpenAIClient();

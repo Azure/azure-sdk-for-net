@@ -32,7 +32,7 @@ namespace Azure.AI.Agents
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallItemResourceStatus status, IList<MemorySearchItem> results) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal MemorySearchToolCallItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallItemResourceStatus status, IList<MemorySearchItem> results) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;

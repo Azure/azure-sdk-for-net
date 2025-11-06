@@ -25,19 +25,16 @@ namespace Azure.AI.Agents
 
         /// <summary> Initializes a new instance of <see cref="AgentDefinition"/>. </summary>
         /// <param name="kind"></param>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
-            RaiConfig = raiConfig;
+            ContentFilterConfiguration = contentFilterConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Kind. </summary>
         internal AgentKind Kind { get; set; }
-
-        /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
-        public RaiConfig RaiConfig { get; set; }
     }
 }

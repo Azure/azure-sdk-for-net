@@ -14,7 +14,7 @@ namespace Azure.AI.Agents
         /// <summary> Initializes a new instance of <see cref="A2ATool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -23,15 +23,12 @@ namespace Azure.AI.Agents
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal A2ATool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        internal A2ATool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUri, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
-            BaseUrl = baseUrl;
+            BaseUri = baseUri;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
         }
-
-        /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUrl { get; set; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.

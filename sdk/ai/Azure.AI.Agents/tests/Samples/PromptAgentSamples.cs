@@ -32,18 +32,16 @@ public class PromptAgentSamples : AgentsTestBase
         string AGENT_NAME = TestEnvironment.AGENT_NAME;
 #endif
 
-        AgentsClient agentsClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+        AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
 
-        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
         #endregion
     }
@@ -64,15 +62,15 @@ public class PromptAgentSamples : AgentsTestBase
         string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
         string AGENT_NAME = TestEnvironment.AGENT_NAME;
 #endif
-        AgentsClient agentsClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+        AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
 
         ResponseCreationOptions responseCreationOptions = new();
         responseCreationOptions.SetAgentReference(AGENT_NAME);
 
         // Optionally, use a conversation to automatically maintain state between calls.
-        AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync();
+        AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync();
         responseCreationOptions.SetConversationReference(conversation);
 
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
@@ -98,8 +96,8 @@ public class PromptAgentSamples : AgentsTestBase
         string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
         string AGENT_NAME = TestEnvironment.AGENT_NAME;
 #endif
-        AgentsClient agentsClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+        AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
 
         //
@@ -110,11 +108,9 @@ public class PromptAgentSamples : AgentsTestBase
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
-        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
 
         //
         // Create a conversation to maintain state between calls
@@ -125,14 +121,14 @@ public class PromptAgentSamples : AgentsTestBase
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
             Metadata = { ["foo"] = "bar" },
         };
-        AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync(conversationOptions);
+        AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync(conversationOptions);
 
         //
         // Add items to an existing conversation to supplement the interaction state
         //
         string EXISTING_CONVERSATION_ID = conversation.Id;
 
-        _ = await agentsClient.GetConversationClient().CreateConversationItemsAsync(
+        _ = await agentClient.GetConversationClient().CreateConversationItemsAsync(
             EXISTING_CONVERSATION_ID,
             [ResponseItem.CreateSystemMessageItem("Story theme to use: department of licensing.")]);
 

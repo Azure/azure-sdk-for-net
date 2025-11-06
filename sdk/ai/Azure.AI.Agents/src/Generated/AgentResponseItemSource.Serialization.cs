@@ -9,12 +9,12 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The CreatedBy. </summary>
-    public partial class CreatedBy : IJsonModel<CreatedBy>
+    /// <summary> The AgentResponseItemSource. </summary>
+    public partial class AgentResponseItemSource : IJsonModel<AgentResponseItemSource>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreatedBy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentResponseItemSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -25,10 +25,10 @@ namespace Azure.AI.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreatedBy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentResponseItemSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreatedBy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentResponseItemSource)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Agent))
             {
@@ -59,24 +59,24 @@ namespace Azure.AI.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreatedBy IJsonModel<CreatedBy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentResponseItemSource IJsonModel<AgentResponseItemSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreatedBy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentResponseItemSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreatedBy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentResponseItemSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreatedBy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentResponseItemSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreatedBy(document.RootElement, options);
+            return DeserializeAgentResponseItemSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CreatedBy DeserializeCreatedBy(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentResponseItemSource DeserializeAgentResponseItemSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,47 +106,47 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreatedBy(agent, responseId, additionalBinaryDataProperties);
+            return new AgentResponseItemSource(agent, responseId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreatedBy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentResponseItemSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreatedBy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentResponseItemSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreatedBy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentResponseItemSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreatedBy IPersistableModel<CreatedBy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentResponseItemSource IPersistableModel<AgentResponseItemSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreatedBy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentResponseItemSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreatedBy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentResponseItemSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreatedBy(document.RootElement, options);
+                        return DeserializeAgentResponseItemSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreatedBy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentResponseItemSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreatedBy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentResponseItemSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

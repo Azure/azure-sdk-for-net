@@ -33,7 +33,7 @@ namespace OpenAI
         /// An object describing the specific action taken in this web search call.
         /// Includes details on how the model used the web (search, open_page, find).
         /// </param>
-        internal InternalWebSearchToolCallItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolCallItemResourceStatus status, InternalWebSearchAction action) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalWebSearchToolCallItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolCallItemResourceStatus status, InternalWebSearchAction action) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             Action = action;

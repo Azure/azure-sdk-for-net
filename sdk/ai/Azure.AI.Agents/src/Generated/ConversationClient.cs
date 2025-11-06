@@ -242,34 +242,6 @@ namespace Azure.AI.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Deletes a conversation. </summary>
-        /// <param name="conversationId"> The id of the conversation to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentConversationDeletionResult> DeleteConversation(string conversationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-
-            ClientResult result = DeleteConversation(conversationId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((AgentConversationDeletionResult)result, result.GetRawResponse());
-        }
-
-        /// <summary> Deletes a conversation. </summary>
-        /// <param name="conversationId"> The id of the conversation to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentConversationDeletionResult>> DeleteConversationAsync(string conversationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-
-            ClientResult result = await DeleteConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((AgentConversationDeletionResult)result, result.GetRawResponse());
-        }
-
         /// <summary>
         /// [Protocol Method] Create items in a conversation with the given ID.
         /// <list type="bullet">

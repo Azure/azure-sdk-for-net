@@ -26,19 +26,19 @@ Include a section after the install command that details any requirements that m
 
 ### Authenticate the client
 
-If you're already using an `AIProjectClient` from `Azure.AI.Projects`, you can initialize an `AgentsClient` instance directly via an extension method:
+If you're already using an `AIProjectClient` from `Azure.AI.Projects`, you can initialize an `AgentClient` instance directly via an extension method:
 
-```C# Snippet:CreateAgentsClientFromProjectsClient
+```C# Snippet:CreateAgentClientFromProjectsClient
 AIProjectClient projectClient = new(
     endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
     tokenProvider: new AzureCliCredential());
-AgentsClient agentsClient = projectClient.GetAgentsClient();
+AgentClient agentClient = projectClient.GetAgentClient();
 ```
 
-If you aren't yet using an `AIProjectClient`, you can also initialize an `AgentsClient` instance directly, against a Foundry Project endpoint:
+If you aren't yet using an `AIProjectClient`, you can also initialize an `AgentClient` instance directly, against a Foundry Project endpoint:
 
-```C# Snippet:CreateAgentsClientDirectlyFromProjectEndpoint
-AgentsClient agentsClient = new(
+```C# Snippet:CreateAgentClientDirectlyFromProjectEndpoint
+AgentClient agentClient = new(
     endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
     tokenProvider: new AzureCliCredential());
 ```
@@ -46,7 +46,7 @@ AgentsClient agentsClient = new(
 For operations based on OpenAI APIs like `/responses`, `/files`, and `/vector_stores`, you can retrieve an `OpenAIClient` instance (from the official `OpenAI` library for .NET) via `.GetOpenAIClient()` and the related subclient retrieval methods:
 
 ```C# Snippet:GetOpenAIClientsFromAgents
-OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+OpenAIClient openAIClient = agentClient.GetOpenAIClient();
 
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient("MODEL_DEPLOYMENT");
 OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
@@ -83,18 +83,16 @@ string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_M
 string AGENT_NAME = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_AGENT_NAME")
     ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_AGENT_NAME'");
 
-AgentsClient agentsClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
 
 AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
 {
     Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
 };
 
-AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
     agentName: AGENT_NAME,
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
 ```
 
@@ -107,15 +105,15 @@ To run an existing Prompt Agent, reference the Agent by ID when calling the Open
         ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_MODEL_DEPLOYMENT'");
     string AGENT_NAME = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_AGENT_NAME")
         ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_AGENT_NAME'");
-    AgentsClient agentsClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
-    OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+    AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+    OpenAIClient openAIClient = agentClient.GetOpenAIClient();
     OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
 
     ResponseCreationOptions responseCreationOptions = new();
     responseCreationOptions.SetAgentReference(AGENT_NAME);
 
     // Optionally, use a conversation to automatically maintain state between calls.
-    AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync();
+    AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync();
     responseCreationOptions.SetConversationReference(conversation);
 
     List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
@@ -133,8 +131,8 @@ string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_M
     ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_MODEL_DEPLOYMENT'");
 string AGENT_NAME = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_AGENT_NAME")
     ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_AGENT_NAME'");
-AgentsClient agentsClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
-OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+OpenAIClient openAIClient = agentClient.GetOpenAIClient();
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
 
 //
@@ -145,11 +143,9 @@ AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
 {
     Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
 };
-AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
     agentName: AGENT_NAME,
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 
 //
 // Create a conversation to maintain state between calls
@@ -160,14 +156,14 @@ AgentConversationCreationOptions conversationOptions = new()
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync(conversationOptions);
+AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state
 //
 string EXISTING_CONVERSATION_ID = conversation.Id;
 
-_ = await agentsClient.GetConversationClient().CreateConversationItemsAsync(
+_ = await agentClient.GetConversationClient().CreateConversationItemsAsync(
     EXISTING_CONVERSATION_ID,
     [ResponseItem.CreateSystemMessageItem("Story theme to use: department of licensing.")]);
 

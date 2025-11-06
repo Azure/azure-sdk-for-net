@@ -297,10 +297,10 @@ namespace Azure.AI.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                AgentRecord agentsClientResult = response.ToAgentsClientResult<AgentRecord>();
+                AgentRecord agentClientResult = response.ToAgentClientResult<AgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
-                _response.AgentId = agentsClientResult.Id;
+                _response.AgentId = agentClientResult.Id;
             }
         }
 
@@ -308,11 +308,11 @@ namespace Azure.AI.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                AgentRecord agentsClientResult = response.ToAgentsClientResult<AgentRecord>();
+                AgentRecord agentClientResult = response.ToAgentClientResult<AgentRecord>();
                 _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
-                _response.AgentId = agentsClientResult.Id;
-                _response.Version = agentsClientResult.Versions.Latest.Version;
+                _response.AgentId = agentClientResult.Id;
+                _response.Version = agentClientResult.Versions.Latest.Version;
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.AI.Agents.Telemetry
         {
             if (s_enableTelemetry)
             {
-                AgentVersion agentVersion = response.ToAgentsClientResult<AgentVersion>();
+                AgentVersion agentVersion = response.ToAgentClientResult<AgentVersion>();
                 _response = new RecordedResponse(s_traceContent);
                 //var agentResponse = Response.FromValue(PersistentAgent.FromResponse(response), response);
                 _response.AgentId = agentVersion.Id;

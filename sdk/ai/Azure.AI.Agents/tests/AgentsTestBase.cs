@@ -144,9 +144,9 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return new(new Uri(TestEnvironment.PROJECT_ENDPOINT), new DefaultAzureCredential());
     }
 
-    protected AgentsClient GetTestClient()
+    protected AgentClient GetTestClient()
     {
-        AgentsClientOptions options = new AgentsClientOptions();
+        AgentClientOptions options = new AgentClientOptions();
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
 
         if (Mode != RecordedTestMode.Live && Recording != null)
@@ -172,10 +172,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
 
         Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
-        return CreateProxyFromClient(new AgentsClient(connectionString, provider, InstrumentClientOptions(options)));
+        return CreateProxyFromClient(new AgentClient(connectionString, provider, InstrumentClientOptions(options)));
     }
 
-    protected OpenAIClient GetTestOpenAIClientFrom(AgentsClient client, OpenAIClientOptions options = null)
+    protected OpenAIClient GetTestOpenAIClientFrom(AgentClient client, OpenAIClientOptions options = null)
     {
         options ??= new();
         options.AddPolicy(AgentsTestBase.GetDumpPolicy(), PipelinePosition.BeforeTransport);
@@ -195,7 +195,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return response;
     }
 
-    protected async Task<AgentConversation> CreateConversation(AgentsClient client, AgentConversationCreationOptions opts=null)
+    protected async Task<AgentConversation> CreateConversation(AgentClient client, AgentConversationCreationOptions opts=null)
     {
         _conversations ??= client.GetConversationClient();
         AgentConversation conversation = await _conversations.CreateConversationAsync(options: opts);
@@ -203,14 +203,14 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return conversation;
     }
 
-    protected async Task<MemoryStoreObject> CreateMemoryStore(AgentsClient client)
+    protected async Task<MemoryStore> CreateMemoryStore(AgentClient client)
     {
         _stores ??= client.GetMemoryStoreClient();
         MemoryStoreDefaultDefinition memoryStoreDefinition = new(
             chatModel: TestEnvironment.MODELDEPLOYMENTNAME,
             embeddingModel: TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME
         );
-        MemoryStoreObject memoryStore = await _stores.CreateMemoryStoreAsync(
+        MemoryStore memoryStore = await _stores.CreateMemoryStoreAsync(
             name: "jokeMemory",
             definition: memoryStoreDefinition,
             description: "Memory store for test."
@@ -310,8 +310,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
-        AgentsClientOptions opts = new();
-        AgentsClient client = new(endpoint: connectionString, tokenProvider: TestEnvironment.Credential, options: opts);
+        AgentClientOptions opts = new();
+        AgentClient client = new(endpoint: connectionString, tokenProvider: TestEnvironment.Credential, options: opts);
         // Remove conversations.
         if (_conversations is not null)
         {
