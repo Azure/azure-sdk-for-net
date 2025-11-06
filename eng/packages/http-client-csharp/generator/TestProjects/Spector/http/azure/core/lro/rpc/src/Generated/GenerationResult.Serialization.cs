@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 
 namespace Specs.Azure.Core.Lro.Rpc
 {
@@ -33,7 +32,5 @@ namespace Specs.Azure.Core.Lro.Rpc
         protected virtual GenerationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<GenerationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator GenerationResult(Response response) => throw null;
     }
 }
