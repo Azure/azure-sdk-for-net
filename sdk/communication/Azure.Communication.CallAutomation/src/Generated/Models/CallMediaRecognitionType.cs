@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Determines the sub-type of the recognize operation.
-    /// In case of cancel operation the this field is not set and is returned empty
+    /// Recognition type determines the sub-type of the recognition operation
+    /// Possible values will be Dtmf, Speech, or Choices
     /// </summary>
     public readonly partial struct CallMediaRecognitionType : IEquatable<CallMediaRecognitionType>
     {
@@ -25,15 +25,15 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DtmfValue = "dtmf";
-        private const string SpeechValue = "speech";
-        private const string ChoicesValue = "choices";
+        private const string DtmfValue = "Dtmf";
+        private const string SpeechValue = "Speech";
+        private const string ChoicesValue = "Choices";
 
-        /// <summary> dtmf. </summary>
+        /// <summary> Dtmf. </summary>
         public static CallMediaRecognitionType Dtmf { get; } = new CallMediaRecognitionType(DtmfValue);
-        /// <summary> speech. </summary>
+        /// <summary> Speech. </summary>
         public static CallMediaRecognitionType Speech { get; } = new CallMediaRecognitionType(SpeechValue);
-        /// <summary> choices. </summary>
+        /// <summary> Choices. </summary>
         public static CallMediaRecognitionType Choices { get; } = new CallMediaRecognitionType(ChoicesValue);
         /// <summary> Determines if two <see cref="CallMediaRecognitionType"/> values are the same. </summary>
         public static bool operator ==(CallMediaRecognitionType left, CallMediaRecognitionType right) => left.Equals(right);

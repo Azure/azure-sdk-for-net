@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Defines the type of the play source. </summary>
+    /// <summary> Defines the types of play source. </summary>
     internal readonly partial struct PlaySourceTypeInternal : IEquatable<PlaySourceTypeInternal>
     {
         private readonly string _value;
@@ -22,15 +22,15 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string FileValue = "file";
-        private const string TextValue = "text";
-        private const string SsmlValue = "ssml";
+        private const string FileValue = "File";
+        private const string TextValue = "Text";
+        private const string SsmlValue = "Ssml";
 
-        /// <summary> file. </summary>
+        /// <summary> File. </summary>
         public static PlaySourceTypeInternal File { get; } = new PlaySourceTypeInternal(FileValue);
-        /// <summary> text. </summary>
+        /// <summary> Text. </summary>
         public static PlaySourceTypeInternal Text { get; } = new PlaySourceTypeInternal(TextValue);
-        /// <summary> ssml. </summary>
+        /// <summary> Ssml. </summary>
         public static PlaySourceTypeInternal Ssml { get; } = new PlaySourceTypeInternal(SsmlValue);
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are the same. </summary>
         public static bool operator ==(PlaySourceTypeInternal left, PlaySourceTypeInternal right) => left.Equals(right);

@@ -16,22 +16,22 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionFailed"/>. </summary>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal TranscriptionFailed(string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="transcriptionUpdateResult"></param>
+        internal TranscriptionFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult)
         {
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
-            TranscriptionUpdateResult = transcriptionUpdateResult;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            TranscriptionUpdateResult = transcriptionUpdateResult;
         }
-        /// <summary> Defines the result for TranscriptionUpdate with the current status and the details about the status. </summary>
+        /// <summary> Gets the transcription update result. </summary>
         public TranscriptionUpdate TranscriptionUpdateResult { get; }
     }
 }

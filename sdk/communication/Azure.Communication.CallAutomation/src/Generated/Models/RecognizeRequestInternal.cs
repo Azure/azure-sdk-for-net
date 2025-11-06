@@ -13,8 +13,8 @@ namespace Azure.Communication.CallAutomation
     internal partial class RecognizeRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
-        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
-        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <param name="recognizeInputType"> Defines the type of the recognize input. </param>
+        /// <param name="recognizeOptions"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
         public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeOptionsInternal recognizeOptions)
         {
@@ -25,10 +25,10 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
-        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
-        /// <param name="playPrompt"> The source of the audio to be played for recognition. </param>
+        /// <param name="recognizeInputType"> Defines the type of the recognize input. </param>
+        /// <param name="playPrompt"></param>
         /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
-        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -44,13 +44,13 @@ namespace Azure.Communication.CallAutomation
             OperationCallbackUri = operationCallbackUri;
         }
 
-        /// <summary> Determines the type of the recognition. </summary>
+        /// <summary> Defines the type of the recognize input. </summary>
         public RecognizeInputType RecognizeInputType { get; }
-        /// <summary> The source of the audio to be played for recognition. </summary>
+        /// <summary> Gets or sets the play prompt. </summary>
         public PlaySourceInternal PlayPrompt { get; set; }
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
         public bool? InterruptCallMediaOperation { get; set; }
-        /// <summary> Defines options for recognition. </summary>
+        /// <summary> Gets the recognize options. </summary>
         public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

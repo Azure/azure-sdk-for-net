@@ -22,12 +22,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ActiveValue = "active";
-        private const string InactiveValue = "inactive";
+        private const string ActiveValue = "Active";
+        private const string InactiveValue = "Inactive";
 
-        /// <summary> active. </summary>
+        /// <summary> Active. </summary>
         public static RecordingState Active { get; } = new RecordingState(ActiveValue);
-        /// <summary> inactive. </summary>
+        /// <summary> Inactive. </summary>
         public static RecordingState Inactive { get; } = new RecordingState(InactiveValue);
         /// <summary> Determines if two <see cref="RecordingState"/> values are the same. </summary>
         public static bool operator ==(RecordingState left, RecordingState right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The channel type of call recording. </summary>
+    /// <summary> Defines the channel type of call recording. </summary>
     public readonly partial struct RecordingChannel : IEquatable<RecordingChannel>
     {
         private readonly string _value;
@@ -22,12 +22,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MixedValue = "mixed";
-        private const string UnmixedValue = "unmixed";
+        private const string MixedValue = "Mixed";
+        private const string UnmixedValue = "Unmixed";
 
-        /// <summary> mixed. </summary>
+        /// <summary> Mixed. </summary>
         public static RecordingChannel Mixed { get; } = new RecordingChannel(MixedValue);
-        /// <summary> unmixed. </summary>
+        /// <summary> Unmixed. </summary>
         public static RecordingChannel Unmixed { get; } = new RecordingChannel(UnmixedValue);
         /// <summary> Determines if two <see cref="RecordingChannel"/> values are the same. </summary>
         public static bool operator ==(RecordingChannel left, RecordingChannel right) => left.Equals(right);

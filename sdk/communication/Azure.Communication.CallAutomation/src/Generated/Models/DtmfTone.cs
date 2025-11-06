@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The Tone. </summary>
+    /// <summary> List of valid stop tones. </summary>
     public readonly partial struct DtmfTone : IEquatable<DtmfTone>
     {
         private readonly string _value;
@@ -22,54 +22,54 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ZeroValue = "zero";
-        private const string OneValue = "one";
-        private const string TwoValue = "two";
-        private const string ThreeValue = "three";
-        private const string FourValue = "four";
-        private const string FiveValue = "five";
-        private const string SixValue = "six";
-        private const string SevenValue = "seven";
-        private const string EightValue = "eight";
-        private const string NineValue = "nine";
-        private const string AValue = "a";
-        private const string BValue = "b";
-        private const string CValue = "c";
-        private const string DValue = "d";
-        private const string PoundValue = "pound";
-        private const string AsteriskValue = "asterisk";
+        private const string ZeroValue = "Zero";
+        private const string OneValue = "One";
+        private const string TwoValue = "Two";
+        private const string ThreeValue = "Three";
+        private const string FourValue = "Four";
+        private const string FiveValue = "Five";
+        private const string SixValue = "Six";
+        private const string SevenValue = "Seven";
+        private const string EightValue = "Eight";
+        private const string NineValue = "Nine";
+        private const string AValue = "A";
+        private const string BValue = "B";
+        private const string CValue = "C";
+        private const string DValue = "D";
+        private const string PoundValue = "Pound";
+        private const string AsteriskValue = "Asterisk";
 
-        /// <summary> zero. </summary>
+        /// <summary> Zero. </summary>
         public static DtmfTone Zero { get; } = new DtmfTone(ZeroValue);
-        /// <summary> one. </summary>
+        /// <summary> One. </summary>
         public static DtmfTone One { get; } = new DtmfTone(OneValue);
-        /// <summary> two. </summary>
+        /// <summary> Two. </summary>
         public static DtmfTone Two { get; } = new DtmfTone(TwoValue);
-        /// <summary> three. </summary>
+        /// <summary> Three. </summary>
         public static DtmfTone Three { get; } = new DtmfTone(ThreeValue);
-        /// <summary> four. </summary>
+        /// <summary> Four. </summary>
         public static DtmfTone Four { get; } = new DtmfTone(FourValue);
-        /// <summary> five. </summary>
+        /// <summary> Five. </summary>
         public static DtmfTone Five { get; } = new DtmfTone(FiveValue);
-        /// <summary> six. </summary>
+        /// <summary> Six. </summary>
         public static DtmfTone Six { get; } = new DtmfTone(SixValue);
-        /// <summary> seven. </summary>
+        /// <summary> Seven. </summary>
         public static DtmfTone Seven { get; } = new DtmfTone(SevenValue);
-        /// <summary> eight. </summary>
+        /// <summary> Eight. </summary>
         public static DtmfTone Eight { get; } = new DtmfTone(EightValue);
-        /// <summary> nine. </summary>
+        /// <summary> Nine. </summary>
         public static DtmfTone Nine { get; } = new DtmfTone(NineValue);
-        /// <summary> a. </summary>
+        /// <summary> A. </summary>
         public static DtmfTone A { get; } = new DtmfTone(AValue);
-        /// <summary> b. </summary>
+        /// <summary> B. </summary>
         public static DtmfTone B { get; } = new DtmfTone(BValue);
-        /// <summary> c. </summary>
+        /// <summary> C. </summary>
         public static DtmfTone C { get; } = new DtmfTone(CValue);
-        /// <summary> d. </summary>
+        /// <summary> D. </summary>
         public static DtmfTone D { get; } = new DtmfTone(DValue);
-        /// <summary> pound. </summary>
+        /// <summary> Pound. </summary>
         public static DtmfTone Pound { get; } = new DtmfTone(PoundValue);
-        /// <summary> asterisk. </summary>
+        /// <summary> Asterisk. </summary>
         public static DtmfTone Asterisk { get; } = new DtmfTone(AsteriskValue);
         /// <summary> Determines if two <see cref="DtmfTone"/> values are the same. </summary>
         public static bool operator ==(DtmfTone left, DtmfTone right) => left.Equals(right);

@@ -29,20 +29,17 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="CreateCallRequestInternal"/>. </summary>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </param>
+        /// <param name="sourceCallerIdNumber"> A phone number. </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
-        /// <param name="source"> The identifier of the source of the call. </param>
+        /// <param name="source"> A user that got created with an Azure Communication Services resource. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
+        /// <param name="transcriptionConfiguration"> Configuration of live transcription. </param>
+        /// <param name="mediaStreamingConfiguration"> Configuration of Media streaming. </param>
+        /// <param name="teamsAppSource"> A Microsoft Teams application. </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
-        /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
+        /// <param name="dtmfOptions"> Represents the configuration for DTMF functionality in calls. </param>
         internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
         {
             Targets = targets;
@@ -61,14 +58,11 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary>
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </summary>
+        /// <summary> A phone number. </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; set; }
-        /// <summary> The identifier of the source of the call. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel Source { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
@@ -76,15 +70,15 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
+        /// <summary> Configuration of live transcription. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
+        /// <summary> Configuration of Media streaming. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
+        /// <summary> A Microsoft Teams application. </summary>
         public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? EnableLoopbackAudio { get; set; }
-        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        /// <summary> Represents the configuration for DTMF functionality in calls. </summary>
         public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
     }
 }

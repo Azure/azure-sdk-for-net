@@ -22,18 +22,18 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MediaStreamingStartedValue = "mediaStreamingStarted";
-        private const string MediaStreamingFailedValue = "mediaStreamingFailed";
-        private const string MediaStreamingStoppedValue = "mediaStreamingStopped";
-        private const string UnspecifiedErrorValue = "unspecifiedError";
+        private const string MediaStreamingStartedValue = "MediaStreamingStarted";
+        private const string MediaStreamingFailedValue = "MediaStreamingFailed";
+        private const string MediaStreamingStoppedValue = "MediaStreamingStopped";
+        private const string UnspecifiedErrorValue = "UnspecifiedError";
 
-        /// <summary> mediaStreamingStarted. </summary>
+        /// <summary> MediaStreamingStarted. </summary>
         public static MediaStreamingStatus MediaStreamingStarted { get; } = new MediaStreamingStatus(MediaStreamingStartedValue);
-        /// <summary> mediaStreamingFailed. </summary>
+        /// <summary> MediaStreamingFailed. </summary>
         public static MediaStreamingStatus MediaStreamingFailed { get; } = new MediaStreamingStatus(MediaStreamingFailedValue);
-        /// <summary> mediaStreamingStopped. </summary>
+        /// <summary> MediaStreamingStopped. </summary>
         public static MediaStreamingStatus MediaStreamingStopped { get; } = new MediaStreamingStatus(MediaStreamingStoppedValue);
-        /// <summary> unspecifiedError. </summary>
+        /// <summary> UnspecifiedError. </summary>
         public static MediaStreamingStatus UnspecifiedError { get; } = new MediaStreamingStatus(UnspecifiedErrorValue);
         /// <summary> Determines if two <see cref="MediaStreamingStatus"/> values are the same. </summary>
         public static bool operator ==(MediaStreamingStatus left, MediaStreamingStatus right) => left.Equals(right);

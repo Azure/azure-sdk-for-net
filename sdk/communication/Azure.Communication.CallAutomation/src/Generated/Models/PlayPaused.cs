@@ -7,12 +7,27 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The PlayPaused. </summary>
+    /// <summary> Play Paused event. </summary>
     public partial class PlayPaused
     {
         /// <summary> Initializes a new instance of <see cref="PlayPaused"/>. </summary>
         internal PlayPaused()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlayPaused"/>. </summary>
+        /// <param name="callConnectionId"> Gets or sets call connection ID. </param>
+        /// <param name="serverCallId"> Gets or sets server call ID. </param>
+        /// <param name="correlationId"> Gets or sets correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Gets or sets used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        internal PlayPaused(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
         }
     }
 }

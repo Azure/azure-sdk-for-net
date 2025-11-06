@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallRecordingRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
+        /// <param name="endpoint"> The endpoint of the Azure Communication Service resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-22-preview")
@@ -129,7 +129,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get call recording properties. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response<RecordingStateResult>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -156,7 +156,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Get call recording properties. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response<RecordingStateResult> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
@@ -198,7 +198,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stop recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -220,7 +220,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Stop recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response StopRecording(string recordingId, CancellationToken cancellationToken = default)
@@ -258,7 +258,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Pause recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> PauseRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -280,7 +280,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Pause recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response PauseRecording(string recordingId, CancellationToken cancellationToken = default)
@@ -318,7 +318,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Resume recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public async Task<Response> ResumeRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
@@ -340,7 +340,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Resume recording the call. </summary>
-        /// <param name="recordingId"> The recording id. </param>
+        /// <param name="recordingId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         public Response ResumeRecording(string recordingId, CancellationToken cancellationToken = default)

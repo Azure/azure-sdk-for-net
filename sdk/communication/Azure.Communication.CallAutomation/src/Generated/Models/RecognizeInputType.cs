@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Determines the type of the recognition. </summary>
+    /// <summary> Defines the type of the recognize input. </summary>
     public readonly partial struct RecognizeInputType : IEquatable<RecognizeInputType>
     {
         private readonly string _value;
@@ -22,18 +22,18 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DtmfValue = "dtmf";
-        private const string SpeechValue = "speech";
-        private const string SpeechOrDtmfValue = "speechOrDtmf";
-        private const string ChoicesValue = "choices";
+        private const string DtmfValue = "Dtmf";
+        private const string SpeechValue = "Speech";
+        private const string SpeechOrDtmfValue = "SpeechOrDtmf";
+        private const string ChoicesValue = "Choices";
 
-        /// <summary> dtmf. </summary>
+        /// <summary> Dtmf. </summary>
         public static RecognizeInputType Dtmf { get; } = new RecognizeInputType(DtmfValue);
-        /// <summary> speech. </summary>
+        /// <summary> Speech. </summary>
         public static RecognizeInputType Speech { get; } = new RecognizeInputType(SpeechValue);
-        /// <summary> speechOrDtmf. </summary>
+        /// <summary> SpeechOrDtmf. </summary>
         public static RecognizeInputType SpeechOrDtmf { get; } = new RecognizeInputType(SpeechOrDtmfValue);
-        /// <summary> choices. </summary>
+        /// <summary> Choices. </summary>
         public static RecognizeInputType Choices { get; } = new RecognizeInputType(ChoicesValue);
         /// <summary> Determines if two <see cref="RecognizeInputType"/> values are the same. </summary>
         public static bool operator ==(RecognizeInputType left, RecognizeInputType right) => left.Equals(right);

@@ -22,27 +22,27 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TranscriptionStartedValue = "transcriptionStarted";
-        private const string TranscriptionFailedValue = "transcriptionFailed";
-        private const string TranscriptionResumedValue = "transcriptionResumed";
-        private const string TranscriptionUpdatedValue = "transcriptionUpdated";
-        private const string TranscriptionStoppedValue = "transcriptionStopped";
-        private const string CallSummaryUpdatedValue = "callSummaryUpdated";
-        private const string UnspecifiedErrorValue = "unspecifiedError";
+        private const string TranscriptionStartedValue = "TranscriptionStarted";
+        private const string TranscriptionFailedValue = "TranscriptionFailed";
+        private const string TranscriptionResumedValue = "TranscriptionResumed";
+        private const string TranscriptionUpdatedValue = "TranscriptionUpdated";
+        private const string TranscriptionStoppedValue = "TranscriptionStopped";
+        private const string CallSummaryUpdatedValue = "CallSummaryUpdated";
+        private const string UnspecifiedErrorValue = "UnspecifiedError";
 
-        /// <summary> transcriptionStarted. </summary>
+        /// <summary> TranscriptionStarted. </summary>
         public static TranscriptionStatus TranscriptionStarted { get; } = new TranscriptionStatus(TranscriptionStartedValue);
-        /// <summary> transcriptionFailed. </summary>
+        /// <summary> TranscriptionFailed. </summary>
         public static TranscriptionStatus TranscriptionFailed { get; } = new TranscriptionStatus(TranscriptionFailedValue);
-        /// <summary> transcriptionResumed. </summary>
+        /// <summary> TranscriptionResumed. </summary>
         public static TranscriptionStatus TranscriptionResumed { get; } = new TranscriptionStatus(TranscriptionResumedValue);
-        /// <summary> transcriptionUpdated. </summary>
+        /// <summary> TranscriptionUpdated. </summary>
         public static TranscriptionStatus TranscriptionUpdated { get; } = new TranscriptionStatus(TranscriptionUpdatedValue);
-        /// <summary> transcriptionStopped. </summary>
+        /// <summary> TranscriptionStopped. </summary>
         public static TranscriptionStatus TranscriptionStopped { get; } = new TranscriptionStatus(TranscriptionStoppedValue);
-        /// <summary> callSummaryUpdated. </summary>
+        /// <summary> CallSummaryUpdated. </summary>
         public static TranscriptionStatus CallSummaryUpdated { get; } = new TranscriptionStatus(CallSummaryUpdatedValue);
-        /// <summary> unspecifiedError. </summary>
+        /// <summary> UnspecifiedError. </summary>
         public static TranscriptionStatus UnspecifiedError { get; } = new TranscriptionStatus(UnspecifiedErrorValue);
         /// <summary> Determines if two <see cref="TranscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(TranscriptionStatus left, TranscriptionStatus right) => left.Equals(right);

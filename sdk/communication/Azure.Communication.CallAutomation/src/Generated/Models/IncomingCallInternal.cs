@@ -16,13 +16,13 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="IncomingCallInternal"/>. </summary>
-        /// <param name="to"> The communication identifier of the target user. </param>
-        /// <param name="from"> The communication identifier of the user who initiated the call. </param>
+        /// <param name="to"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
+        /// <param name="from"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="customContext"> Custom Context of Incoming Call. </param>
+        /// <param name="customContext"> The custom calling context which will be sent to the target. </param>
         /// <param name="incomingCallContext"> Incoming call context. </param>
-        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
+        /// <param name="onBehalfOfCallee"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         internal IncomingCallInternal(CommunicationIdentifierModel to, CommunicationIdentifierModel @from, string callerDisplayName, string serverCallId, CustomCallingContextInternal customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
         {
@@ -36,19 +36,19 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = correlationId;
         }
 
-        /// <summary> The communication identifier of the target user. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel To { get; }
-        /// <summary> The communication identifier of the user who initiated the call. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel From { get; }
         /// <summary> Display name of caller. </summary>
         public string CallerDisplayName { get; }
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; }
-        /// <summary> Custom Context of Incoming Call. </summary>
+        /// <summary> The custom calling context which will be sent to the target. </summary>
         public CustomCallingContextInternal CustomContext { get; }
         /// <summary> Incoming call context. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The communication identifier of the user on behalf of whom the call is made. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel OnBehalfOfCallee { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }

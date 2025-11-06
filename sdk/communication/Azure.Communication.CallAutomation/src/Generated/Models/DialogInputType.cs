@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Determines the type of the dialog. </summary>
+    /// <summary> Defines the type of the dialog input. </summary>
     public readonly partial struct DialogInputType : IEquatable<DialogInputType>
     {
         private readonly string _value;
@@ -22,9 +22,9 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PowerVirtualAgentsValue = "powerVirtualAgents";
+        private const string PowerVirtualAgentsValue = "PowerVirtualAgents";
 
-        /// <summary> powerVirtualAgents. </summary>
+        /// <summary> PowerVirtualAgents. </summary>
         public static DialogInputType PowerVirtualAgents { get; } = new DialogInputType(PowerVirtualAgentsValue);
         /// <summary> Determines if two <see cref="DialogInputType"/> values are the same. </summary>
         public static bool operator ==(DialogInputType left, DialogInputType right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+    /// <summary> The format of the audio received from the audio subscription option. </summary>
     public readonly partial struct AudioFormat : IEquatable<AudioFormat>
     {
         private readonly string _value;
