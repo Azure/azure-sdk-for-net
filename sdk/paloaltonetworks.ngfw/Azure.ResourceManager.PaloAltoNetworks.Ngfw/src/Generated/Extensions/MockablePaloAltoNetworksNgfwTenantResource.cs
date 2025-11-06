@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return GetCachedClient(client => new GlobalRulestackCollection(client, Id));
         }
 
-        /// <summary> Get a GlobalRulestackResource. </summary>
+        /// <summary>
+        /// Get a GlobalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return await GetGlobalRulestacks().GetAsync(globalRulestackName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a GlobalRulestackResource. </summary>
+        /// <summary>
+        /// Get a GlobalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>

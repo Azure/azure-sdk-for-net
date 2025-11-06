@@ -15,7 +15,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> List firewalls response. </summary>
-    public partial class RulestackFirewallListResult : IJsonModel<RulestackFirewallListResult>
+    internal partial class RulestackFirewallListResult : IJsonModel<RulestackFirewallListResult>
     {
         /// <summary> Initializes a new instance of <see cref="RulestackFirewallListResult"/> for deserialization. </summary>
         internal RulestackFirewallListResult()

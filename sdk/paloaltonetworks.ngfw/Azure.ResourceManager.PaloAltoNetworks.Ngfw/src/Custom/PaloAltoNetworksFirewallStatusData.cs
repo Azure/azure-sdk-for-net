@@ -3,12 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
-
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class PaloAltoNetworksFirewallStatusData

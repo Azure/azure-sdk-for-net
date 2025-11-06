@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LocalRulestackPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="LocalRulestackPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LocalRulestackPatch patch)
+        /// <param name="localRulestackPatch"> The <see cref="LocalRulestackPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LocalRulestackPatch localRulestackPatch)
         {
-            if (patch == null)
+            if (localRulestackPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(localRulestackPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

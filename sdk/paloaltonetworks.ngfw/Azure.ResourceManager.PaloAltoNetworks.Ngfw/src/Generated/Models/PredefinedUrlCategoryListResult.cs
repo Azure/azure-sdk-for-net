@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> predefined url categories response. </summary>
-    public partial class PredefinedUrlCategoryListResult
+    internal partial class PredefinedUrlCategoryListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

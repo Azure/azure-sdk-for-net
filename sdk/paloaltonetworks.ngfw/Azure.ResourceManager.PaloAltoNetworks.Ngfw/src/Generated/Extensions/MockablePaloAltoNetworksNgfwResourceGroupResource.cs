@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return GetCachedClient(client => new PaloAltoNetworksFirewallCollection(client, Id));
         }
 
-        /// <summary> Get a FirewallResource. </summary>
+        /// <summary>
+        /// Get a FirewallResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="firewallName"> Firewall resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return await GetPaloAltoNetworksFirewalls().GetAsync(firewallName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a FirewallResource. </summary>
+        /// <summary>
+        /// Get a FirewallResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="firewallName"> Firewall resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallName"/> is null. </exception>
@@ -71,7 +103,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return GetCachedClient(client => new LocalRulestackCollection(client, Id));
         }
 
-        /// <summary> Get a LocalRulestackResource. </summary>
+        /// <summary>
+        /// Get a LocalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>
@@ -84,7 +132,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return await GetLocalRulestacks().GetAsync(localRulestackName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a LocalRulestackResource. </summary>
+        /// <summary>
+        /// Get a LocalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localRulestackName"/> is null. </exception>

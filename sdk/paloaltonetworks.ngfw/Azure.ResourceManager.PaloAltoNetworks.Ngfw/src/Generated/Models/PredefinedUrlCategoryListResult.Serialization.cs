@@ -15,7 +15,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> predefined url categories response. </summary>
-    public partial class PredefinedUrlCategoryListResult : IJsonModel<PredefinedUrlCategoryListResult>
+    internal partial class PredefinedUrlCategoryListResult : IJsonModel<PredefinedUrlCategoryListResult>
     {
         /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategoryListResult"/> for deserialization. </summary>
         internal PredefinedUrlCategoryListResult()

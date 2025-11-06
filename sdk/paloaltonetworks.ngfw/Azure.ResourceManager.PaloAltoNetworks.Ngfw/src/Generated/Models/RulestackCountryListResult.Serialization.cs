@@ -15,7 +15,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Countries Response Object. </summary>
-    public partial class RulestackCountryListResult : IJsonModel<RulestackCountryListResult>
+    internal partial class RulestackCountryListResult : IJsonModel<RulestackCountryListResult>
     {
         /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/> for deserialization. </summary>
         internal RulestackCountryListResult()

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateProductSerialNumber. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_CreateProductSerialNumber. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateProductSerialNumber. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_CreateProductSerialNumber. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetCloudManagerTenants. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ListCloudManagerTenants. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetCloudManagerTenants. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ListCloudManagerTenants. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetProductSerialNumberStatus. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ListProductSerialNumberStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetProductSerialNumberStatus. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ListProductSerialNumberStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetSupportInfo. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ListSupportInfo. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetSupportInfo. </description>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ListSupportInfo. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

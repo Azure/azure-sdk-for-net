@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="location"> Global Location. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
-        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IList<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, AzureLocation location = default, ManagedServiceIdentity identity = default)
+        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, AzureLocation location = default, ManagedServiceIdentity identity = default)
         {
             return new GlobalRulestackData(
                 id,
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     panETag,
                     panLocation,
                     scope,
-                    associatedSubscriptions,
+                    associatedSubscriptions.ToList(),
                     description,
                     defaultMode,
                     minAppIdVersion,
@@ -125,28 +125,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new NameDescriptionObject(name, description, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The RulestackAppIdListResult. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
-        /// <returns> A new <see cref="Models.RulestackAppIdListResult"/> instance for mocking. </returns>
-        public static RulestackAppIdListResult RulestackAppIdListResult(IEnumerable<string> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<string>();
-
-            return new RulestackAppIdListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Countries Response Object. </summary>
-        /// <param name="value"> The Country items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.RulestackCountryListResult"/> instance for mocking. </returns>
-        public static RulestackCountryListResult RulestackCountryListResult(IEnumerable<RulestackCountry> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<RulestackCountry>();
-
-            return new RulestackCountryListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Country Description. </summary>
         /// <param name="code"> country code. </param>
         /// <param name="description"> code description. </param>
@@ -154,28 +132,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static RulestackCountry RulestackCountry(string code = default, string description = default)
         {
             return new RulestackCountry(code, description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> List firewalls response. </summary>
-        /// <param name="value"> firewalls list. </param>
-        /// <param name="nextLink"> next link. </param>
-        /// <returns> A new <see cref="Models.RulestackFirewallListResult"/> instance for mocking. </returns>
-        public static RulestackFirewallListResult RulestackFirewallListResult(IEnumerable<string> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<string>();
-
-            return new RulestackFirewallListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> predefined url categories response. </summary>
-        /// <param name="value"> The PredefinedUrlCategory items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PredefinedUrlCategoryListResult"/> instance for mocking. </returns>
-        public static PredefinedUrlCategoryListResult PredefinedUrlCategoryListResult(IEnumerable<PredefinedUrlCategory> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<PredefinedUrlCategory>();
-
-            return new PredefinedUrlCategoryListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Predefined URL category object. </summary>
@@ -215,10 +171,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="certificateSelfSigned"> use certificate self signed. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="description"> user description for this object. </param>
-        /// <param name="eTag"> read only string representing last create or update. </param>
+        /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Ngfw.GlobalRulestackCertificateObjectData"/> instance for mocking. </returns>
-        public static GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certificateSignerResourceId = default, FirewallBooleanType? certificateSelfSigned = default, string auditComment = default, string description = default, ETag? eTag = default, FirewallProvisioningState? provisioningState = default)
+        public static GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certificateSignerResourceId = default, FirewallBooleanType? certificateSelfSigned = default, string auditComment = default, string description = default, ETag? etag = default, FirewallProvisioningState? provisioningState = default)
         {
             return new GlobalRulestackCertificateObjectData(
                 id,
@@ -226,12 +182,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                certificateSignerResourceId is null || certificateSelfSigned is null || auditComment is null || description is null || eTag is null || provisioningState is null ? default : new CertificateObject(
+                certificateSignerResourceId is null || certificateSelfSigned is null || auditComment is null || description is null || etag is null || provisioningState is null ? default : new CertificateObject(
                     certificateSignerResourceId,
                     certificateSelfSigned.Value,
                     auditComment,
                     description,
-                    eTag,
+                    etag,
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
         }
@@ -242,11 +198,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> fqdn object description. </param>
         /// <param name="fqdnList"> fqdn list. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.GlobalRulestackFqdnData"/> instance for mocking. </returns>
-        public static GlobalRulestackFqdnData GlobalRulestackFqdnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IList<string> fqdnList = default, ETag? eTag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
+        public static GlobalRulestackFqdnData GlobalRulestackFqdnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<string> fqdnList = default, ETag? etag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
         {
             return new GlobalRulestackFqdnData(
                 id,
@@ -254,10 +211,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || fqdnList is null || eTag is null || auditComment is null || provisioningState is null ? default : new FqdnObject(
+                description is null || fqdnList is null || etag is null || auditComment is null || provisioningState is null ? default : new FqdnObject(
                     description,
-                    fqdnList,
-                    eTag,
+                    fqdnList.ToList(),
+                    etag,
                     auditComment,
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
@@ -267,7 +224,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="ruleName"> rule name. </param>
         /// <param name="priority"> Gets the Priority. </param>
         /// <param name="description"> rule description. </param>
@@ -287,8 +244,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.PostRulestackRuleData"/> instance for mocking. </returns>
-        public static PostRulestackRuleData PostRulestackRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, string ruleName = default, int? priority = default, string description = default, RulestackStateType? ruleState = default, SourceAddressInfo source = default, FirewallBooleanType? negateSource = default, DestinationAddressInfo destination = default, FirewallBooleanType? negateDestination = default, IList<string> applications = default, EdlMatchCategory category = default, string protocol = default, IList<string> protocolPortList = default, string inboundInspectionCertificate = default, string auditComment = default, RulestackActionType? actionType = default, RulestackStateType? enableLogging = default, DecryptionRuleType? decryptionRuleType = default, IList<RulestackTagInfo> tags = default, FirewallProvisioningState? provisioningState = default)
+        public static PostRulestackRuleData PostRulestackRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string ruleName = default, int? priority = default, string description = default, RulestackStateType? ruleState = default, SourceAddressInfo source = default, FirewallBooleanType? negateSource = default, DestinationAddressInfo destination = default, FirewallBooleanType? negateDestination = default, IEnumerable<string> applications = default, EdlMatchCategory category = default, string protocol = default, IEnumerable<string> protocolPortList = default, string inboundInspectionCertificate = default, string auditComment = default, RulestackActionType? actionType = default, RulestackStateType? enableLogging = default, DecryptionRuleType? decryptionRuleType = default, IEnumerable<RulestackTagInfo> tags = default, FirewallProvisioningState? provisioningState = default)
         {
             return new PostRulestackRuleData(
                 id,
@@ -296,8 +254,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                eTag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
-                    eTag,
+                etag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
+                    etag,
                     ruleName,
                     priority,
                     description,
@@ -306,16 +264,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     negateSource,
                     destination,
                     negateDestination,
-                    applications,
+                    applications.ToList(),
                     category,
                     protocol,
-                    protocolPortList,
+                    protocolPortList.ToList(),
                     inboundInspectionCertificate,
                     auditComment,
                     actionType,
                     enableLogging,
                     decryptionRuleType,
-                    tags,
+                    tags.ToList(),
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
         }
@@ -457,11 +415,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> prefix description. </param>
         /// <param name="prefixList"> prefix list. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefixList"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.GlobalRulestackPrefixData"/> instance for mocking. </returns>
-        public static GlobalRulestackPrefixData GlobalRulestackPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IList<string> prefixList = default, ETag? eTag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
+        public static GlobalRulestackPrefixData GlobalRulestackPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<string> prefixList = default, ETag? etag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
         {
             return new GlobalRulestackPrefixData(
                 id,
@@ -469,10 +428,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || prefixList is null || eTag is null || auditComment is null || provisioningState is null ? default : new PrefixObject(
+                description is null || prefixList is null || etag is null || auditComment is null || provisioningState is null ? default : new PrefixObject(
                     description,
-                    prefixList,
-                    eTag,
+                    prefixList.ToList(),
+                    etag,
                     auditComment,
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
@@ -482,7 +441,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="ruleName"> rule name. </param>
         /// <param name="priority"> Gets the Priority. </param>
         /// <param name="description"> rule description. </param>
@@ -502,8 +461,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.PreRulestackRuleData"/> instance for mocking. </returns>
-        public static PreRulestackRuleData PreRulestackRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, string ruleName = default, int? priority = default, string description = default, RulestackStateType? ruleState = default, SourceAddressInfo source = default, FirewallBooleanType? negateSource = default, DestinationAddressInfo destination = default, FirewallBooleanType? negateDestination = default, IList<string> applications = default, EdlMatchCategory category = default, string protocol = default, IList<string> protocolPortList = default, string inboundInspectionCertificate = default, string auditComment = default, RulestackActionType? actionType = default, RulestackStateType? enableLogging = default, DecryptionRuleType? decryptionRuleType = default, IList<RulestackTagInfo> tags = default, FirewallProvisioningState? provisioningState = default)
+        public static PreRulestackRuleData PreRulestackRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string ruleName = default, int? priority = default, string description = default, RulestackStateType? ruleState = default, SourceAddressInfo source = default, FirewallBooleanType? negateSource = default, DestinationAddressInfo destination = default, FirewallBooleanType? negateDestination = default, IEnumerable<string> applications = default, EdlMatchCategory category = default, string protocol = default, IEnumerable<string> protocolPortList = default, string inboundInspectionCertificate = default, string auditComment = default, RulestackActionType? actionType = default, RulestackStateType? enableLogging = default, DecryptionRuleType? decryptionRuleType = default, IEnumerable<RulestackTagInfo> tags = default, FirewallProvisioningState? provisioningState = default)
         {
             return new PreRulestackRuleData(
                 id,
@@ -511,8 +471,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                eTag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
-                    eTag,
+                etag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
+                    etag,
                     ruleName,
                     priority,
                     description,
@@ -521,16 +481,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     negateSource,
                     destination,
                     negateDestination,
-                    applications,
+                    applications.ToList(),
                     category,
                     protocol,
-                    protocolPortList,
+                    protocolPortList.ToList(),
                     inboundInspectionCertificate,
                     auditComment,
                     actionType,
                     enableLogging,
                     decryptionRuleType,
-                    tags,
+                    tags.ToList(),
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
         }
@@ -555,7 +515,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
-        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, FirewallNetworkProfile networkProfile = default, FirewallBooleanType? isPanoramaManaged = default, FirewallBooleanType? isStrataCloudManaged = default, FirewallPanoramaConfiguration panoramaConfig = default, RulestackDetails associatedRulestack = default, FirewallDnsSettings dnsSettings = default, IList<FirewallFrontendSetting> frontEndSettings = default, FirewallProvisioningState? provisioningState = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default, string cloudManagerName = default, ManagedServiceIdentity identity = default)
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, FirewallNetworkProfile networkProfile = default, FirewallBooleanType? isPanoramaManaged = default, FirewallBooleanType? isStrataCloudManaged = default, FirewallPanoramaConfiguration panoramaConfig = default, RulestackDetails associatedRulestack = default, FirewallDnsSettings dnsSettings = default, IEnumerable<FirewallFrontendSetting> frontEndSettings = default, FirewallProvisioningState? provisioningState = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default, string cloudManagerName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -576,7 +536,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     new StrataCloudManagerConfig(cloudManagerName, new Dictionary<string, BinaryData>()),
                     associatedRulestack,
                     dnsSettings,
-                    frontEndSettings,
+                    frontEndSettings.ToList(),
                     provisioningState,
                     planData,
                     marketplaceDetails,
@@ -771,7 +731,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="securityServices"> Security Profile. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Ngfw.LocalRulestackData"/> instance for mocking. </returns>
-        public static LocalRulestackData LocalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IList<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, ManagedServiceIdentity identity = default)
+        public static LocalRulestackData LocalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -787,7 +747,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     panETag,
                     panLocation,
                     scope,
-                    associatedSubscriptions,
+                    associatedSubscriptions.ToList(),
                     description,
                     defaultMode,
                     minAppIdVersion,
@@ -912,10 +872,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="certificateSelfSigned"> use certificate self signed. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="description"> user description for this object. </param>
-        /// <param name="eTag"> read only string representing last create or update. </param>
+        /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Ngfw.LocalRulestackCertificateObjectData"/> instance for mocking. </returns>
-        public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certificateSignerResourceId = default, FirewallBooleanType? certificateSelfSigned = default, string auditComment = default, string description = default, ETag? eTag = default, FirewallProvisioningState? provisioningState = default)
+        public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certificateSignerResourceId = default, FirewallBooleanType? certificateSelfSigned = default, string auditComment = default, string description = default, ETag? etag = default, FirewallProvisioningState? provisioningState = default)
         {
             return new LocalRulestackCertificateObjectData(
                 id,
@@ -923,12 +883,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                certificateSignerResourceId is null || certificateSelfSigned is null || auditComment is null || description is null || eTag is null || provisioningState is null ? default : new CertificateObject(
+                certificateSignerResourceId is null || certificateSelfSigned is null || auditComment is null || description is null || etag is null || provisioningState is null ? default : new CertificateObject(
                     certificateSignerResourceId,
                     certificateSelfSigned.Value,
                     auditComment,
                     description,
-                    eTag,
+                    etag,
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
         }
@@ -939,11 +899,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> fqdn object description. </param>
         /// <param name="fqdnList"> fqdn list. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.LocalRulestackFqdnData"/> instance for mocking. </returns>
-        public static LocalRulestackFqdnData LocalRulestackFqdnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IList<string> fqdnList = default, ETag? eTag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
+        public static LocalRulestackFqdnData LocalRulestackFqdnData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<string> fqdnList = default, ETag? etag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
         {
             return new LocalRulestackFqdnData(
                 id,
@@ -951,10 +912,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || fqdnList is null || eTag is null || auditComment is null || provisioningState is null ? default : new FqdnObject(
+                description is null || fqdnList is null || etag is null || auditComment is null || provisioningState is null ? default : new FqdnObject(
                     description,
-                    fqdnList,
-                    eTag,
+                    fqdnList.ToList(),
+                    etag,
                     auditComment,
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
@@ -964,7 +925,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="ruleName"> rule name. </param>
         /// <param name="priority"> Gets the Priority. </param>
         /// <param name="description"> rule description. </param>
@@ -984,8 +945,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.LocalRulestackRuleData"/> instance for mocking. </returns>
-        public static LocalRulestackRuleData LocalRulestackRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, string ruleName = default, int? priority = default, string description = default, RulestackStateType? ruleState = default, SourceAddressInfo source = default, FirewallBooleanType? negateSource = default, DestinationAddressInfo destination = default, FirewallBooleanType? negateDestination = default, IList<string> applications = default, EdlMatchCategory category = default, string protocol = default, IList<string> protocolPortList = default, string inboundInspectionCertificate = default, string auditComment = default, RulestackActionType? actionType = default, RulestackStateType? enableLogging = default, DecryptionRuleType? decryptionRuleType = default, IList<RulestackTagInfo> tags = default, FirewallProvisioningState? provisioningState = default)
+        public static LocalRulestackRuleData LocalRulestackRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string ruleName = default, int? priority = default, string description = default, RulestackStateType? ruleState = default, SourceAddressInfo source = default, FirewallBooleanType? negateSource = default, DestinationAddressInfo destination = default, FirewallBooleanType? negateDestination = default, IEnumerable<string> applications = default, EdlMatchCategory category = default, string protocol = default, IEnumerable<string> protocolPortList = default, string inboundInspectionCertificate = default, string auditComment = default, RulestackActionType? actionType = default, RulestackStateType? enableLogging = default, DecryptionRuleType? decryptionRuleType = default, IEnumerable<RulestackTagInfo> tags = default, FirewallProvisioningState? provisioningState = default)
         {
             return new LocalRulestackRuleData(
                 id,
@@ -993,8 +955,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                eTag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
-                    eTag,
+                etag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
+                    etag,
                     ruleName,
                     priority,
                     description,
@@ -1003,16 +965,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     negateSource,
                     destination,
                     negateDestination,
-                    applications,
+                    applications.ToList(),
                     category,
                     protocol,
-                    protocolPortList,
+                    protocolPortList.ToList(),
                     inboundInspectionCertificate,
                     auditComment,
                     actionType,
                     enableLogging,
                     decryptionRuleType,
-                    tags,
+                    tags.ToList(),
                     provisioningState,
                     new Dictionary<string, BinaryData>()));
         }
@@ -1023,11 +985,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> prefix description. </param>
         /// <param name="prefixList"> prefix list. </param>
-        /// <param name="eTag"> etag info. </param>
+        /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefixList"/> is null. </exception>
         /// <returns> A new <see cref="Ngfw.LocalRulestackPrefixData"/> instance for mocking. </returns>
-        public static LocalRulestackPrefixData LocalRulestackPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IList<string> prefixList = default, ETag? eTag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
+        public static LocalRulestackPrefixData LocalRulestackPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<string> prefixList = default, ETag? etag = default, string auditComment = default, FirewallProvisioningState? provisioningState = default)
         {
             return new LocalRulestackPrefixData(
                 id,
@@ -1035,10 +998,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || prefixList is null || eTag is null || auditComment is null || provisioningState is null ? default : new PrefixObject(
+                description is null || prefixList is null || etag is null || auditComment is null || provisioningState is null ? default : new PrefixObject(
                     description,
-                    prefixList,
-                    eTag,
+                    prefixList.ToList(),
+                    etag,
                     auditComment,
                     provisioningState,
                     new Dictionary<string, BinaryData>()));

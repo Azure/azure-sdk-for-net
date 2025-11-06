@@ -15,7 +15,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> The RulestackAppIdListResult. </summary>
-    public partial class RulestackAppIdListResult : IJsonModel<RulestackAppIdListResult>
+    internal partial class RulestackAppIdListResult : IJsonModel<RulestackAppIdListResult>
     {
         /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/> for deserialization. </summary>
         internal RulestackAppIdListResult()

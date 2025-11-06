@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> List firewalls response. </summary>
-    public partial class RulestackFirewallListResult
+    internal partial class RulestackFirewallListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

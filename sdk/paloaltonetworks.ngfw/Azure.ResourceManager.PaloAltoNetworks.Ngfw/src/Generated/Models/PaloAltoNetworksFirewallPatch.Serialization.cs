@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PaloAltoNetworksFirewallPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="PaloAltoNetworksFirewallPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PaloAltoNetworksFirewallPatch patch)
+        /// <param name="paloAltoNetworksFirewallPatch"> The <see cref="PaloAltoNetworksFirewallPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PaloAltoNetworksFirewallPatch paloAltoNetworksFirewallPatch)
         {
-            if (patch == null)
+            if (paloAltoNetworksFirewallPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(paloAltoNetworksFirewallPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

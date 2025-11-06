@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> LocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> LocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -189,7 +189,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> Update a LocalRulestackResource. </summary>
+        /// <summary>
+        /// Update a LocalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -221,7 +241,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> Update a LocalRulestackResource. </summary>
+        /// <summary>
+        /// Update a LocalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -262,7 +302,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> LocalRulestackResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -311,7 +351,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> LocalRulestackResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -360,7 +400,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Commit. </description>
+        /// <description> LocalRulestackResources_Commit. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -409,7 +449,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Commit. </description>
+        /// <description> LocalRulestackResources_Commit. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -458,7 +498,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetChangeLog. </description>
+        /// <description> LocalRulestackResources_GetChangeLog. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -506,7 +546,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetChangeLog. </description>
+        /// <description> LocalRulestackResources_GetChangeLog. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -554,7 +594,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetSupportInfo. </description>
+        /// <description> LocalRulestackResources_GetSupportInfo. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -603,7 +643,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetSupportInfo. </description>
+        /// <description> LocalRulestackResources_GetSupportInfo. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -652,7 +692,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetAdvancedSecurityObjects. </description>
+        /// <description> LocalRulestackResources_ListAdvancedSecurityObjects. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -703,7 +743,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetAdvancedSecurityObjects. </description>
+        /// <description> LocalRulestackResources_ListAdvancedSecurityObjects. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -888,7 +928,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetSecurityServices. </description>
+        /// <description> LocalRulestackResources_ListSecurityServices. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -939,7 +979,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetSecurityServices. </description>
+        /// <description> LocalRulestackResources_ListSecurityServices. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -990,7 +1030,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Revert. </description>
+        /// <description> LocalRulestackResources_Revert. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1033,7 +1073,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Revert. </description>
+        /// <description> LocalRulestackResources_Revert. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
