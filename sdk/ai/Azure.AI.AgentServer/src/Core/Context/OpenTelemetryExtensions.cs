@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Azure.AI.AgentServer.Core.Common;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.Projects;
@@ -48,7 +51,6 @@ internal static class OpenTelemetryExtensions
                         // only add the OTLP exporter since App Insights is already added by UseAzureMonitor()
                         o.AddOtlpExporter(opt => { opt.Endpoint = new Uri(otelExporterEndpoint); });
                     }
-
                 });
             }
             else

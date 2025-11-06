@@ -1,5 +1,9 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Responses.Invocation;
+
 using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Responses.Endpoint;
