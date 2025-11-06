@@ -17,7 +17,6 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary> PaloAltoNetworks GlobalRulestack. </summary>
     public partial class GlobalRulestackData : ResourceData, IJsonModel<GlobalRulestackData>
     {
         /// <summary> Initializes a new instance of <see cref="GlobalRulestackData"/> for deserialization. </summary>

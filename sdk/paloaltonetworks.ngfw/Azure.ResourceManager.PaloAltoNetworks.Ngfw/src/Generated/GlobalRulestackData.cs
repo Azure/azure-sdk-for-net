@@ -14,7 +14,6 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary> PaloAltoNetworks GlobalRulestack. </summary>
     public partial class GlobalRulestackData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -19,45 +19,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="panETag"> PanEtag info. </param>
-        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
-        /// <param name="scope"> Rulestack Type. </param>
-        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
-        /// <param name="description"> rulestack description. </param>
-        /// <param name="defaultMode"> Mode for default rules creation. </param>
-        /// <param name="minAppIdVersion"> minimum version. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="securityServices"> Security Profile. </param>
-        /// <param name="location"> Global Location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
-        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, AzureLocation location = default, ManagedServiceIdentity identity = default)
-        {
-            return new GlobalRulestackData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                panETag is null || panLocation is null || scope is null || associatedSubscriptions is null || description is null || defaultMode is null || minAppIdVersion is null || provisioningState is null || securityServices is null ? default : new RulestackProperties(
-                    panETag,
-                    panLocation,
-                    scope,
-                    associatedSubscriptions.ToList(),
-                    description,
-                    defaultMode,
-                    minAppIdVersion,
-                    provisioningState,
-                    securityServices,
-                    new Dictionary<string, BinaryData>()),
-                location,
-                identity);
-        }
-
         /// <summary> The updatable properties of the GlobalRulestackResource. </summary>
         /// <param name="panETag"> PanEtag info. </param>
         /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
