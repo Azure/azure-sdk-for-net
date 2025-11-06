@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CloudHealth.Models;
 using Azure.ResourceManager.Models;
 
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(PrometheusMetricsSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(RelationshipListResult))]
     [ModelReaderWriterBuildable(typeof(ResourceMetricSignalDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SignalDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownHealthModelAuthenticationSettingProperties))]

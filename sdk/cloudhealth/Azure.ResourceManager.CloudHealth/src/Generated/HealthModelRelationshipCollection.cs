@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Relationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Relationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

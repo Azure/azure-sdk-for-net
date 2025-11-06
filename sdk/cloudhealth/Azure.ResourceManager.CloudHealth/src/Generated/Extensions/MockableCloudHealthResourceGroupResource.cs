@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> HealthModels_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> HealthModels_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
