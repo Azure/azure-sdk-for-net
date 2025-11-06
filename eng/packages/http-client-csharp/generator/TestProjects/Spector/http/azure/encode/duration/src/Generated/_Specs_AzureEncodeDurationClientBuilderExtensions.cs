@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Specs_.Azure.Encode.Duration;
+using Specs.Azure.Encode.Duration;
 
 namespace Microsoft.Extensions.Azure
 {

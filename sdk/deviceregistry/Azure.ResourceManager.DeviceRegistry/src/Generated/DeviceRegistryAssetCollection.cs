@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrReplace. </description>
+        /// <description> Assets_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrReplace. </description>
+        /// <description> Assets_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

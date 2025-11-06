@@ -174,6 +174,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlaywrightQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="playwrightQuotaData"> The <see cref="PlaywrightQuotaData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PlaywrightQuotaData playwrightQuotaData)
+        {
+            if (playwrightQuotaData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(playwrightQuotaData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightQuotaData"/> from. </param>
         internal static PlaywrightQuotaData FromResponse(Response result)
         {

@@ -1009,6 +1009,7 @@
           "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.Pageable",
       "apiVersions": [],
@@ -1343,6 +1344,7 @@
               "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination",
           "apiVersions": [],
@@ -2751,6 +2753,7 @@
                   "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
               "apiVersions": [],
@@ -3020,6 +3023,7 @@
               "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.Pageable.PageSize",
           "apiVersions": [],

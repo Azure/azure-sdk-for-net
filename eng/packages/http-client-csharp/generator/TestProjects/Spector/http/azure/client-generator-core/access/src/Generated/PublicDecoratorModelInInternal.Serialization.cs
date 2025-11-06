@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._InternalOperation
 {
     public partial class PublicDecoratorModelInInternal : IJsonModel<PublicDecoratorModelInInternal>
     {
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation
 
         string IPersistableModel<PublicDecoratorModelInInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator PublicDecoratorModelInInternal(Response result) => throw null;
+        public static explicit operator PublicDecoratorModelInInternal(Response response) => throw null;
     }
 }

@@ -411,6 +411,7 @@
           "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.TypeChangedFrom",
       "apiVersions": [

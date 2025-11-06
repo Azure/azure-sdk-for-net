@@ -38,6 +38,6 @@ namespace Encode.Duration._Property
         /// <param name="isO8601DurationProperty"> The <see cref="ISO8601DurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ISO8601DurationProperty isO8601DurationProperty) => throw null;
 
-        public static explicit operator ISO8601DurationProperty(Response result) => throw null;
+        public static explicit operator ISO8601DurationProperty(Response response) => throw null;
     }
 }

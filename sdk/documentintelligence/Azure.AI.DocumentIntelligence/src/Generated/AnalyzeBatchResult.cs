@@ -13,37 +13,8 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Batch document analysis result. </summary>
     public partial class AnalyzeBatchResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResult"/>. </summary>
         /// <param name="succeededCount"> Number of documents that completed with status succeeded. </param>
@@ -62,27 +33,25 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="failedCount"> Number of documents that completed with status failed. </param>
         /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
         /// <param name="details"> Operation detail for each document in the batch. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchResult(int succeededCount, int failedCount, int skippedCount, IReadOnlyList<AnalyzeBatchResultDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeBatchResult(int succeededCount, int failedCount, int skippedCount, IReadOnlyList<AnalyzeBatchResultDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;
             SkippedCount = skippedCount;
             Details = details;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchResult"/> for deserialization. </summary>
-        internal AnalyzeBatchResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of documents that completed with status succeeded. </summary>
         public int SucceededCount { get; }
+
         /// <summary> Number of documents that completed with status failed. </summary>
         public int FailedCount { get; }
+
         /// <summary> Number of documents that completed with status skipped. </summary>
         public int SkippedCount { get; }
+
         /// <summary> Operation detail for each document in the batch. </summary>
         public IReadOnlyList<AnalyzeBatchResultDetails> Details { get; }
     }

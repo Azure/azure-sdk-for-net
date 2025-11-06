@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
@@ -117,9 +116,24 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 new XmlDocStatement("description", [$"{operation.Path}"])));
 
             // Operation Id item
+            // Use CrossLanguageDefinitionId for accurate operation IDs
+            // For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")
+            // For non-resource operations, the format is: Namespace.Client.OperationName
+            string operationId = operation.Name;
+            if (!string.IsNullOrEmpty(serviceMethod.CrossLanguageDefinitionId))
+            {
+                var parts = serviceMethod.CrossLanguageDefinitionId.Split('.');
+                if (parts.Length >= 2)
+                {
+                    // Take the last two parts: ResourceClient and OperationName
+                    var resourceOrClientName = parts[^2];  // Second to last
+                    var methodName = parts[^1];            // Last
+                    operationId = $"{resourceOrClientName}_{methodName.FirstCharToUpperCase()}";
+                }
+            }
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Operation Id"]),
-                new XmlDocStatement("description", [$"{operation.Name}"])));
+                new XmlDocStatement("description", [$"{operationId}"])));
 
             // API Version item (if available)
             var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);

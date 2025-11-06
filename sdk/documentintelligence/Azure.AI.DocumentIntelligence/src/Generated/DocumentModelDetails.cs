@@ -13,45 +13,13 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document model info. </summary>
     public partial class DocumentModelDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         internal DocumentModelDetails(string modelId)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();
             DocumentTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
@@ -80,8 +48,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documentTypes"> Supported document types. </param>
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;
@@ -98,48 +66,57 @@ namespace Azure.AI.DocumentIntelligence
             DocumentTypes = documentTypes;
             Warnings = warnings;
             TrainingHours = trainingHours;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/> for deserialization. </summary>
-        internal DocumentModelDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
+
         /// <summary> Document model description. </summary>
         public string Description { get; }
+
         /// <summary> Date and time (UTC) when the document model was created. </summary>
         public DateTimeOffset CreatedOn { get; }
+
         /// <summary> Date and time (UTC) when the document model will expire. </summary>
         public DateTimeOffset? ExpiresOn { get; }
+
         /// <summary> Date and time (UTC) when the document model was last modified. </summary>
         public DateTimeOffset? ModifiedOn { get; }
+
         /// <summary> API version used to create this document model. </summary>
         public string ApiVersion { get; }
+
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
+
         /// <summary> Custom document model build mode. </summary>
         public DocumentBuildMode? BuildMode { get; }
+
         /// <summary>
         /// Azure Blob Storage location containing the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </summary>
         public BlobContentSource BlobSource { get; }
+
         /// <summary>
         /// Azure Blob Storage file list specifying the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </summary>
         public BlobFileListContentSource BlobFileListSource { get; }
+
         /// <summary> For composed models, the custom classifier to split and classify the input file. </summary>
         public string ClassifierId { get; }
+
         /// <summary> For composed models, the file splitting behavior. </summary>
         public SplitMode? Split { get; }
+
         /// <summary> Supported document types. </summary>
         public IReadOnlyDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
+
         /// <summary> List of warnings encountered while building the model. </summary>
         public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
+
         /// <summary> Number of V100-equivalent GPU hours consumed for model training. </summary>
         public float? TrainingHours { get; }
     }
