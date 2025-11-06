@@ -93,3 +93,11 @@ directive:
   transform: >
     $["x-accessibility"] = "internal";
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.OptOutResponse"
+  transform: >
+    $["x-accessibility"] = "internal";
+```

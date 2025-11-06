@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.Sms.Models
 {
-    public partial class OptOutResponse
+    internal partial class OptOutResponse
     {
         internal static OptOutResponse DeserializeOptOutResponse(JsonElement element)
         {

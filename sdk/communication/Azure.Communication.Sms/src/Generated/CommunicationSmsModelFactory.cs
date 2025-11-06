@@ -14,16 +14,6 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationSmsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.OptOutResponse"/>. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.OptOutResponse"/> instance for mocking. </returns>
-        public static OptOutResponse OptOutResponse(IEnumerable<OptOutResponseItem> value = null)
-        {
-            value ??= new List<OptOutResponseItem>();
-
-            return new OptOutResponse(value?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.OptOutResponseItem"/>. </summary>
         /// <param name="to"> The recipient phone number (in E.164 format). </param>
         /// <param name="httpStatusCode"></param>
