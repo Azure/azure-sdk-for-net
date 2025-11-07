@@ -230,7 +230,7 @@ namespace Azure.Identity
             try
             {
                 string pemContent = System.Text.Encoding.UTF8.GetString(caData);
-                X509Certificate2 caCertificate = PemReader.LoadCertificate(pemContent.AsSpan(), keyType: PemReader.KeyType.RSA);
+                X509Certificate2 caCertificate = PemReader.LoadCertificate(pemContent.AsSpan(), allowCertificateOnly: true);
 
                 handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
                 {
