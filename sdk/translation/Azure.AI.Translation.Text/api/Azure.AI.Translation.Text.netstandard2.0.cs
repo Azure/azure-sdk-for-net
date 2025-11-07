@@ -599,6 +599,9 @@ namespace Azure.AI.Translation.Text
     public partial class TransliterableScript : Azure.AI.Translation.Text.LanguageScript, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TransliterableScript>
     {
         internal TransliterableScript() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("TransliterableScript is deprecated and will be removed in a future release. Please use ToScripts instead.")]
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.LanguageScript> TargetLanguageScripts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Text.LanguageScript> ToScripts { get { throw null; } }
         protected override Azure.AI.Translation.Text.LanguageScript JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
