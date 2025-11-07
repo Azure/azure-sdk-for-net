@@ -13,12 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Visitors
 {
-    public class RequestClientIdHeaderVisitorTests
+    public class ClientRequestIdHeaderVisitorTests
     {
         [Test]
         public void RemovesTheRequestClientIdHeaderParameterFromServiceMethods()
         {
-            var visitor = new TestRequestClientIdHeaderVisitor();
+            var visitor = new TestClientRequestIdHeaderVisitor();
             var parameters = CreateHttpParameters();
             var methodParameters = CreateMethodParameters();
             var responseModel = InputFactory.Model("foo");
@@ -57,7 +57,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void DoesNotChangeExistingParameters()
         {
-            var visitor = new TestRequestClientIdHeaderVisitor();
+            var visitor = new TestClientRequestIdHeaderVisitor();
             var operationParameters = CreateHttpParameters();
             var serviceMethodParameters = CreateMethodParameters();
             var responseModel = InputFactory.Model("foo");
@@ -129,7 +129,7 @@ namespace Azure.Generator.Tests.Visitors
         [TestCase(false)]
         public void RemovesXMsClientRequestIdHeaderParameterFromServiceMethods(bool includeInRequest)
         {
-            var visitor = new TestRequestClientIdHeaderVisitor(includeInRequest);
+            var visitor = new TestClientRequestIdHeaderVisitor(includeInRequest);
             var parameters = new List<InputParameter>
             {
                 InputFactory.HeaderParameter(
@@ -185,9 +185,9 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(includeInRequest, hasHeaderSet);
         }
 
-        private class TestRequestClientIdHeaderVisitor : RequestClientIdHeaderVisitor
+        private class TestClientRequestIdHeaderVisitor : ClientRequestIdHeaderVisitor
         {
-            public TestRequestClientIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
+            public TestClientRequestIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
                 : base(includeXmsClientRequestIdInRequest)
             {
             }

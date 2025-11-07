@@ -20,7 +20,7 @@ namespace Client.Plugin
             // Rest of the visitors can be added in any order.
             generator.AddVisitor(new NamespaceVisitor());
             generator.AddVisitor(new SpecialHeadersVisitor());
-            generator.AddVisitor(new RequestClientIdHeaderVisitor(includeXmsClientRequestIdInRequest: true));
+            generator.AddVisitor(new ClientRequestIdHeaderVisitor(includeXmsClientRequestIdInRequest: true));
         }
     }
 }

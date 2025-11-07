@@ -16,13 +16,13 @@ namespace Azure.Generator.Visitors
     /// <summary>
     /// Visitor that modifies service methods to set the `client-request-id` and `x-ms-client-request-id` headers.
     /// </summary>
-    internal class RequestClientIdHeaderVisitor : ScmLibraryVisitor
+    internal class ClientRequestIdHeaderVisitor : ScmLibraryVisitor
     {
         private const string ClientRequestIdParameterName = "client-request-id";
         private const string XMsClientRequestIdParameterName = "x-ms-client-request-id";
         private readonly bool _includeXmsClientRequestIdInRequest;
 
-        public RequestClientIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
+        public ClientRequestIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
         {
             _includeXmsClientRequestIdInRequest = includeXmsClientRequestIdInRequest;
         }
