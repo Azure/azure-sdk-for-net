@@ -227,7 +227,7 @@ interface Users {
 
 // Language-specific names
 @@clientName(foo, "pythonicFoo", "python")
-@@clientName(foo, "csharpicFoo", "csharp")
+@@clientName(foo, "CSharpFoo", "csharp")
 ```
 
 ### @clientNamespace
@@ -247,7 +247,7 @@ interface Users {
 ### @clientInitialization
 
 **Purpose**: Add custom parameters to client initialization.
-**Important**: When `@clientInitialization` references a model defined in `client.tsp`, a file-level namespace (e.g. `namespace ClientCustomizations;`) should be added if one does not exist.
+**Important**: When `@clientInitialization` references a model defined in `client.tsp`, add a file-level namespace (e.g. `namespace ClientCustomizations;`) if one does not exist.
 **Syntax**: `@clientInitialization(options: ClientInitializationOptions, scope?: string)`
 **Usage**:
 
@@ -384,7 +384,7 @@ op myOperationCustom(options: MyOperationOptions): void;
 - Mix `@clientLocation` with `@client`/`@operationGroup`
 - Over-customize - prefer defaults when possible
 - Use legacy decorators for new services
-- Rename without considering breaking changes
+- Rename without considering the impact on breaking changes
 - Forget to specify scope for language-specific customizations
 
 ## Common Scenarios
