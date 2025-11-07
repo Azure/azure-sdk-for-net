@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "190",
+        "Content-Length": "213",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -42,7 +42,7 @@
         },
         "type": "Feature",
         "properties": {
-          "test": "test"
+          "description": "Test statistics area"
         }
       },
       "StatusCode": 200,
@@ -55,7 +55,7 @@
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
         "Connection": "keep-alive",
-        "Content-Length": "2036",
+        "Content-Length": "2059",
         "Content-Type": "application/geo+json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
         "Server-Timing": "total;dur=0.0",
@@ -272,7 +272,7 @@
               "percentile_98": 207.0
             }
           },
-          "test": "test"
+          "description": "Test statistics area"
         }
       }
     }
@@ -281,6 +281,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_ITEM_ID": "ga_m_3308421_se_16_060_20211114",
-    "RandomSeed": "1888870915"
+    "RandomSeed": "601012572"
   }
 }

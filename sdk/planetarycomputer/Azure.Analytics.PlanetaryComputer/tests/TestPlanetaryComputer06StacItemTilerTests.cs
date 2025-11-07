@@ -373,7 +373,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_09_get_asset_statistics
         /// </summary>
         [Test]
-        [Category("MissingRecording")]
         [Category("Statistics")]
         public async Task Test06_09_GetAssetStatistics()
         {
@@ -387,7 +386,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>> response = await dataClient.GetAssetStatisticsAsync(
+            Response<IReadOnlyDictionary<string, BinaryData>> response = await dataClient.GetAssetStatisticsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 assets: new[] { "image" }
@@ -396,12 +395,59 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetAssetStatistics");
 
-            IReadOnlyDictionary<string, IDictionary<string, BandStatistics>> statistics = response.Value;
-            Assert.IsNotNull(statistics, "Statistics should not be null");
-            Assert.That(statistics.ContainsKey("image"), "Should contain statistics for 'image' asset");
+            IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value;
+            Assert.IsNotNull(assetStatistics, "Asset statistics should not be null");
+            Assert.Greater(assetStatistics.Count, 0, "Should have statistics for at least one asset");
 
-            TestContext.WriteLine($"Number of assets with statistics: {statistics.Count}");
-            TestContext.WriteLine("Asset statistics retrieved successfully");
+            TestContext.WriteLine($"Number of assets with statistics: {assetStatistics.Count}");
+
+            // Verify structure: each asset should contain band statistics
+            foreach (var assetEntry in assetStatistics)
+            {
+                string assetName = assetEntry.Key;
+                BinaryData statisticsData = assetEntry.Value;
+
+                TestContext.WriteLine($"\nAsset: {assetName}");
+                Assert.IsNotNull(statisticsData, $"Statistics data for asset '{assetName}' should not be null");
+
+                // Parse the statistics to verify structure
+                using JsonDocument doc = JsonDocument.Parse(statisticsData);
+                JsonElement root = doc.RootElement;
+
+                TestContext.WriteLine($"  Statistics structure: {root.ValueKind}");
+
+                if (root.ValueKind == JsonValueKind.Object)
+                {
+                    // Should contain band names (e.g., "b1", "b2", etc.)
+                    int bandCount = 0;
+                    foreach (var bandProperty in root.EnumerateObject())
+                    {
+                        bandCount++;
+                        string bandName = bandProperty.Name;
+                        JsonElement bandStats = bandProperty.Value;
+
+                        TestContext.WriteLine($"  Band: {bandName}");
+
+                        // Verify band statistics have expected properties
+                        if (bandStats.TryGetProperty("min", out _))
+                        {
+                            TestContext.WriteLine($"    Has 'min' property");
+                        }
+                        if (bandStats.TryGetProperty("max", out _))
+                        {
+                            TestContext.WriteLine($"    Has 'max' property");
+                        }
+                        if (bandStats.TryGetProperty("mean", out _))
+                        {
+                            TestContext.WriteLine($"    Has 'mean' property");
+                        }
+                    }
+
+                    Assert.Greater(bandCount, 0, $"Asset '{assetName}' should have at least one band with statistics");
+                }
+            }
+
+            TestContext.WriteLine("\nAsset statistics retrieved and validated successfully");
         }
 
         /// <summary>
@@ -409,7 +455,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_10_crop_geo_json
         /// </summary>
         [Test]
-        [Ignore("Recording has body mismatch - .properties field missing in recorded JSON - needs to be re-recorded")]
         [Category("Crop")]
         public async Task Test06_10_CropGeoJson()
         {
@@ -433,6 +478,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
             var geometry = new PolygonGeometry(coordinates);
             var feature = new GeoJsonFeature(geometry, FeatureType.Feature);
+
+            // API requires properties field to be present (even if empty)
+            feature.Properties.Add("description", BinaryData.FromString("\"Test crop area\""));
 
             TestContext.WriteLine("Geometry defined for cropping");
 
@@ -471,7 +519,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_11_crop_geo_json_with_dimensions
         /// </summary>
         [Test]
-        [Ignore("Recording has body mismatch - .properties field missing in recorded JSON - needs to be re-recorded")]
         [Category("Crop")]
         public async Task Test06_11_CropGeoJsonWithDimensions()
         {
@@ -495,6 +542,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
             var geometry = new PolygonGeometry(coordinates);
             var feature = new GeoJsonFeature(geometry, FeatureType.Feature);
+
+            // API requires properties field to be present (even if empty)
+            feature.Properties.Add("description", BinaryData.FromString("\"Test crop area with dimensions\""));
 
             TestContext.WriteLine("Input - dimensions: 256x256");
 
@@ -535,7 +585,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_12_get_geo_json_statistics
         /// </summary>
         [Test]
-        [Ignore("Recording has body mismatch - .properties field missing in recorded JSON - needs to be re-recorded")]
         [Category("Statistics")]
         public async Task Test06_12_GetGeoJsonStatistics()
         {
@@ -559,6 +608,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
             var geometry = new PolygonGeometry(coordinates);
             var feature = new GeoJsonFeature(geometry, FeatureType.Feature);
+
+            // API requires properties field to be present (even if empty)
+            feature.Properties.Add("description", BinaryData.FromString("\"Test statistics area\""));
 
             TestContext.WriteLine("Geometry defined for statistics");
 

@@ -297,7 +297,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Deleting all existing ingestions...");
             await foreach (IngestionInformation existingIngestion in ingestionClient.GetAllAsync(collectionId))
             {
-                await ingestionClient.DeleteAsync(WaitUntil.Started, collectionId, existingIngestion.Id);
+                await ingestionClient.DeleteAsync(WaitUntil.Completed, collectionId, existingIngestion.Id);
                 TestContext.WriteLine($"  Deleted existing ingestion: {existingIngestion.Id}");
             }
 

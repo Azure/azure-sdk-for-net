@@ -1237,6 +1237,50 @@ namespace Azure.Analytics.PlanetaryComputer
             return new VariableMatrixWidth(coalesce, minTileRow, maxTileRow, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
+        /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
+        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
+        {
+            bounds ??= new ChangeTrackingList<float>();
+
+            return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> GeoJSON Feature object representing a geographic entity. </summary>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
+        /// <param name="type"> GeoJSON type identifier for Feature. </param>
+        /// <param name="properties"> Feature properties. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GeoJsonFeature"/> instance for mocking. </returns>
+        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = default, FeatureType @type = default, IDictionary<string, BinaryData> properties = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new GeoJsonFeature(geometry, @type, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
+        /// <param name="type"> GeoJSON type identifier for Feature. </param>
+        /// <param name="properties"> Feature properties. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJson"/> instance for mocking. </returns>
+        public static StacItemStatisticsGeoJson StacItemStatisticsGeoJson(GeoJsonGeometry geometry = default, FeatureType @type = default, StacItemStatisticsGeoJsonProperties properties = default)
+        {
+            return new StacItemStatisticsGeoJson(geometry, @type, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for STAC Item statistics GeoJSON Feature. </summary>
+        /// <param name="statistics"> Statistical information for each band in the asset. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJsonProperties"/> instance for mocking. </returns>
+        public static StacItemStatisticsGeoJsonProperties StacItemStatisticsGeoJsonProperties(IDictionary<string, BandStatistics> statistics = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            statistics ??= new ChangeTrackingDictionary<string, BandStatistics>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new StacItemStatisticsGeoJsonProperties(statistics, additionalProperties);
+        }
+
         /// <summary> Statistical information about a data band. </summary>
         /// <param name="minimum"> Minimum value in the band. </param>
         /// <param name="maximum"> Maximum value in the band. </param>
@@ -1283,50 +1327,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 percentile2,
                 percentile98,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
-        /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
-        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
-        {
-            bounds ??= new ChangeTrackingList<float>();
-
-            return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> GeoJSON Feature object representing a geographic entity. </summary>
-        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <param name="properties"> Feature properties. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.GeoJsonFeature"/> instance for mocking. </returns>
-        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = default, FeatureType @type = default, IDictionary<string, BinaryData> properties = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new GeoJsonFeature(geometry, @type, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
-        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <param name="properties"> Feature properties. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJson"/> instance for mocking. </returns>
-        public static StacItemStatisticsGeoJson StacItemStatisticsGeoJson(GeoJsonGeometry geometry = default, FeatureType @type = default, StacItemStatisticsGeoJsonProperties properties = default)
-        {
-            return new StacItemStatisticsGeoJson(geometry, @type, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Properties for STAC Item statistics GeoJSON Feature. </summary>
-        /// <param name="statistics"> Statistical information for each band in the asset. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJsonProperties"/> instance for mocking. </returns>
-        public static StacItemStatisticsGeoJsonProperties StacItemStatisticsGeoJsonProperties(IDictionary<string, BandStatistics> statistics = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            statistics ??= new ChangeTrackingDictionary<string, BandStatistics>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new StacItemStatisticsGeoJsonProperties(statistics, additionalProperties);
         }
 
         /// <summary> GeoJSON Feature object containing rio-tiler model information. </summary>

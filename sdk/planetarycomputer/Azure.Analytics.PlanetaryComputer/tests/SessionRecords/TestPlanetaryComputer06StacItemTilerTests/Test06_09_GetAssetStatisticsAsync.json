@@ -1,0 +1,222 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/items/ga_m_3308421_se_16_060_20211114/asset_statistics?api-version=2025-04-30-preview&assets=image",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "X-PC-Request-Entity,DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,Location",
+        "Access-Control-Allow-Methods": "PUT, GET, POST, OPTIONS, DELETE, PATCH",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Location",
+        "Access-Control-Max-Age": "1728000",
+        "Cache-Control": "public, max-age=3600",
+        "Connection": "keep-alive",
+        "Content-Length": "1792",
+        "Content-Type": "application/json",
+        "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
+        "Server-Timing": "total;dur=0.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-azure-ref": "Sanitized",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Request-ID": "00000000000000000000000000000000"
+      },
+      "ResponseBody": {
+        "image": {
+          "b1": {
+            "min": 11.0,
+            "max": 246.0,
+            "mean": 122.09540892575887,
+            "count": 893952.0,
+            "sum": 109147435.0,
+            "std": 60.36645444129488,
+            "median": 125.0,
+            "majority": 209.0,
+            "minority": 244.0,
+            "unique": 234.0,
+            "histogram": [
+              [
+                61766,
+                117028,
+                110859,
+                87913,
+                83879,
+                103424,
+                111240,
+                97825,
+                97615,
+                22403
+              ],
+              [
+                11.0,
+                34.5,
+                58.0,
+                81.5,
+                105.0,
+                128.5,
+                152.0,
+                175.5,
+                199.0,
+                222.5,
+                246.0
+              ]
+            ],
+            "valid_percent": 100.0,
+            "masked_pixels": 0.0,
+            "valid_pixels": 893952.0,
+            "percentile_2": 26.0,
+            "percentile_98": 226.0
+          },
+          "b2": {
+            "min": 38.0,
+            "max": 245.0,
+            "mean": 144.07083825529782,
+            "count": 893952.0,
+            "sum": 128792414.0,
+            "std": 48.5299357729891,
+            "median": 149.0,
+            "majority": 166.0,
+            "minority": 38.0,
+            "unique": 206.0,
+            "histogram": [
+              [
+                30430,
+                78066,
+                95120,
+                104046,
+                104894,
+                114066,
+                140175,
+                110035,
+                94264,
+                22856
+              ],
+              [
+                38.0,
+                58.7,
+                79.4,
+                100.1,
+                120.8,
+                141.5,
+                162.2,
+                182.9,
+                203.6,
+                224.29999999999998,
+                245.0
+              ]
+            ],
+            "valid_percent": 100.0,
+            "masked_pixels": 0.0,
+            "valid_pixels": 893952.0,
+            "percentile_2": 55.0,
+            "percentile_98": 227.0
+          },
+          "b3": {
+            "min": 49.0,
+            "max": 241.0,
+            "mean": 128.610202784937,
+            "count": 893952.0,
+            "sum": 114971348.0,
+            "std": 48.88558925037479,
+            "median": 122.0,
+            "majority": 81.0,
+            "minority": 49.0,
+            "unique": 193.0,
+            "histogram": [
+              [
+                75113,
+                179336,
+                124008,
+                84332,
+                96200,
+                79850,
+                80252,
+                105476,
+                47208,
+                22177
+              ],
+              [
+                49.0,
+                68.2,
+                87.4,
+                106.6,
+                125.8,
+                145.0,
+                164.2,
+                183.4,
+                202.6,
+                221.79999999999998,
+                241.0
+              ]
+            ],
+            "valid_percent": 100.0,
+            "masked_pixels": 0.0,
+            "valid_pixels": 893952.0,
+            "percentile_2": 60.0,
+            "percentile_98": 224.0
+          },
+          "b4": {
+            "min": 0.0,
+            "max": 244.0,
+            "mean": 134.29559752648913,
+            "count": 893952.0,
+            "sum": 120053818.0,
+            "std": 57.02485093862381,
+            "median": 149.0,
+            "majority": 188.0,
+            "minority": 244.0,
+            "unique": 244.0,
+            "histogram": [
+              [
+                38157,
+                65176,
+                68901,
+                71015,
+                82329,
+                110236,
+                144394,
+                213124,
+                84507,
+                16113
+              ],
+              [
+                0.0,
+                24.4,
+                48.8,
+                73.19999999999999,
+                97.6,
+                122.0,
+                146.39999999999998,
+                170.79999999999998,
+                195.2,
+                219.6,
+                244.0
+              ]
+            ],
+            "valid_percent": 100.0,
+            "masked_pixels": 0.0,
+            "valid_pixels": 893952.0,
+            "percentile_2": 17.0,
+            "percentile_98": 218.0
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
+    "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
+    "PLANETARYCOMPUTER_ITEM_ID": "ga_m_3308421_se_16_060_20211114",
+    "RandomSeed": "1209521738"
+  }
+}

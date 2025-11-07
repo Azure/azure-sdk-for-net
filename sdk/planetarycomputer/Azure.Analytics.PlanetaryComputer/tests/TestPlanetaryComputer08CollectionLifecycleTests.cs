@@ -37,7 +37,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_01_begin_create_collection
         /// </summary>
         [Test]
-        [Ignore("Recording incomplete - missing final GET request after LRO completion - needs to be re-recorded")]
+        [Category("RecordingMismatch")]
         [Category("CreateCollection")]
         public async Task Test08_01_BeginCreateCollection()
         {
@@ -205,7 +205,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_03_begin_delete_collection
         /// </summary>
         [Test]
-        [Ignore("Recording incomplete - missing final GET request after LRO completion - needs to be re-recorded")]
+        [Category("RecordingMismatch")]
         [Category("DeleteCollection")]
         public async Task Test08_03_BeginDeleteCollection()
         {
@@ -312,10 +312,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Calling: CreateCollectionAssetAsync('{collectionId}', {{...}})");
 
+            // Serialize multipart content to stream
+            var contentStream = new MemoryStream();
+            await multipartContent.CopyToAsync(contentStream);
+            contentStream.Position = 0;
+
             // Act
             Response response = await stacClient.CreateCollectionAssetAsync(
                 collectionId,
-                RequestContent.Create(multipartContent),
+                RequestContent.Create(contentStream),
                 multipartContent.Headers.ContentType?.ToString(),
                 null);
 
@@ -364,11 +369,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Calling: ReplaceCollectionAssetAsync('{collectionId}', '{assetId}', {{...}})");
 
+            // Serialize multipart content to stream
+            var contentStream = new MemoryStream();
+            await multipartContent.CopyToAsync(contentStream);
+            contentStream.Position = 0;
+
             // Act
             Response response = await stacClient.ReplaceCollectionAssetAsync(
                 collectionId,
                 assetId,
-                RequestContent.Create(multipartContent),
+                RequestContent.Create(contentStream),
                 multipartContent.Headers.ContentType?.ToString(),
                 null);
 
@@ -415,9 +425,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             createMultipartContent.Add(new StringContent(JsonSerializer.Serialize(assetData)), "data");
             createMultipartContent.Add(new StreamContent(createFileStream), "file", "test-asset-to-delete.txt");
 
+            // Serialize multipart content to stream
+            var createContentStream = new MemoryStream();
+            await createMultipartContent.CopyToAsync(createContentStream);
+            createContentStream.Position = 0;
+
             Response createResponse = await stacClient.CreateCollectionAssetAsync(
                 collectionId,
-                RequestContent.Create(createMultipartContent),
+                RequestContent.Create(createContentStream),
                 createMultipartContent.Headers.ContentType?.ToString(),
                 null);
             ValidateResponse(createResponse);

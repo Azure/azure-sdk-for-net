@@ -382,13 +382,27 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>>(), result);
+            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateObject())
+            {
+                if (item.Value.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(item.Name, null);
+                }
+                else
+                {
+                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
         /// <summary> Per Asset statistics. </summary>
@@ -430,13 +444,27 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
             Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyDictionary<string, IDictionary<string, BandStatistics>>>(), result);
+            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateObject())
+            {
+                if (item.Value.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(item.Name, null);
+                }
+                else
+                {
+                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
         /// <summary>
