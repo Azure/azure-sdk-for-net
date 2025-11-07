@@ -152,7 +152,12 @@ if ($relatedTypeSpecProjectFolder) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
         if ($apiVersion) {
-            $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
+            # Validate apiVersion format to prevent command injection - allow alphanumeric, dots, and dashes
+            if ($apiVersion -match '^[a-zA-Z0-9.\-]+$') {
+                $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
+            } else {
+                Write-Warning "apiVersion '$apiVersion' contains invalid characters and will be skipped. Only alphanumeric characters, dots, and dashes are allowed."
+            }
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
