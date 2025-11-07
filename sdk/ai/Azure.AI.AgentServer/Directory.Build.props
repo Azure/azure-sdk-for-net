@@ -5,7 +5,7 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props"/>
 
   <PropertyGroup>
-    <Version>1.0.0-alpha.1</Version>
+    <Version>1.0.0-beta.1</Version>
     <Nullable>enable</Nullable>
 
     <ImplicitUsings>enable</ImplicitUsings>
