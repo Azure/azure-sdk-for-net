@@ -234,11 +234,6 @@ namespace Azure.Identity
 
                 handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
                 {
-                    if (errors == System.Net.Security.SslPolicyErrors.None)
-                    {
-                        return true;
-                    }
-
                     // Return false if certificate is null
                     if (cert == null)
                     {
@@ -258,13 +253,18 @@ namespace Azure.Identity
                     if (chain.ChainElements.Count > 0)
                     {
                         var rootCert = chain.ChainElements[chain.ChainElements.Count - 1].Certificate;
-                        if (rootCert.Thumbprint.Equals(caCertificate.Thumbprint, StringComparison.OrdinalIgnoreCase))
+                        if (!rootCert.Thumbprint.Equals(caCertificate.Thumbprint, StringComparison.OrdinalIgnoreCase))
                         {
-                            return true;
+                            return false;
                         }
                     }
 
-                    return false;
+                    if (errors != System.Net.Security.SslPolicyErrors.None)
+                    {
+                        return false;
+                    }
+
+                    return true;
                 };
             }
             catch (Exception ex)
