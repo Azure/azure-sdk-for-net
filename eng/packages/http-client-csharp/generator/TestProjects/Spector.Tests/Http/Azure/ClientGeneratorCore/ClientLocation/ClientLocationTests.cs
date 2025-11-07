@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 using System.Threading.Tasks;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation;
+using Specs.Azure.ClientGenerator.Core.ClientLocation;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocation
 {

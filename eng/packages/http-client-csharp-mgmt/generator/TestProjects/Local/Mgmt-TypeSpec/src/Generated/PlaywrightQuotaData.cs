@@ -20,7 +20,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightQuotaData"/>. </summary>
-        internal PlaywrightQuotaData()
+        public PlaywrightQuotaData()
         {
         }
 
@@ -38,6 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PlaywrightQuotaProperties Properties { get; }
+        [WirePath("properties")]
+        public PlaywrightQuotaProperties Properties { get; set; }
     }
 }

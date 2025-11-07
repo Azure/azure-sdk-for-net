@@ -38,6 +38,6 @@ namespace _Type.Model.Usage
         /// <param name="inputOutputRecord"> The <see cref="InputOutputRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(InputOutputRecord inputOutputRecord) => throw null;
 
-        public static explicit operator InputOutputRecord(Response result) => throw null;
+        public static explicit operator InputOutputRecord(Response response) => throw null;
     }
 }

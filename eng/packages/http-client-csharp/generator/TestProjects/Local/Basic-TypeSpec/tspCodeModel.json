@@ -4682,6 +4682,7 @@
                 "namespace": "BasicTypeSpec",
                 "isFixed": false,
                 "isFlags": false,
+                "usage": "None",
                 "decorators": []
               },
               "location": "Body",
@@ -4734,6 +4735,7 @@
                 "namespace": "BasicTypeSpec",
                 "isFixed": false,
                 "isFlags": false,
+                "usage": "None",
                 "decorators": []
               },
               "location": "Body",
@@ -4786,6 +4788,7 @@
                 "namespace": "BasicTypeSpec",
                 "isFixed": false,
                 "isFlags": false,
+                "usage": "None",
                 "decorators": []
               },
               "location": "Body",
@@ -6974,6 +6977,7 @@
           "crossLanguageDefinitionId": "BasicTypeSpec.basicTypeSpecUrl"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "BasicTypeSpec",
       "apiVersions": [

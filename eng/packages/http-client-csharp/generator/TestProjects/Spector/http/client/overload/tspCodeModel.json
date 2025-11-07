@@ -380,6 +380,7 @@
           "crossLanguageDefinitionId": "Client.Overload.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Overload",
       "apiVersions": []

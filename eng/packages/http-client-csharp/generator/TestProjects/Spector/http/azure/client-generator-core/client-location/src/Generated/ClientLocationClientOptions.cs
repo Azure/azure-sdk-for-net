@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation
 {
     public partial class ClientLocationClientOptions : ClientOptions
     {

@@ -7,55 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary>
     /// SignalDefinition properties
-    /// Please note <see cref="HealthModelSignalDefinitionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ResourceMetricSignalDefinitionProperties"/>, <see cref="LogAnalyticsQuerySignalDefinitionProperties"/> and <see cref="PrometheusMetricsSignalDefinitionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceMetricSignalDefinitionProperties"/>, <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>, and <see cref="PrometheusMetricsSignalDefinitionProperties"/>.
     /// </summary>
     public abstract partial class HealthModelSignalDefinitionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthModelSignalDefinitionProperties"/>. </summary>
+        /// <param name="signalKind"> Kind of the signal definition. </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evaluationRules"/> is null. </exception>
-        protected HealthModelSignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules)
+        private protected HealthModelSignalDefinitionProperties(EntitySignalKind signalKind, EntitySignalEvaluationRule evaluationRules)
         {
-            Argument.AssertNotNull(evaluationRules, nameof(evaluationRules));
-
+            SignalKind = signalKind;
             Labels = new ChangeTrackingDictionary<string, string>();
             EvaluationRules = evaluationRules;
         }
@@ -69,8 +39,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -80,28 +50,30 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DataUnit = dataUnit;
             EvaluationRules = evaluationRules;
             DeletedOn = deletedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HealthModelSignalDefinitionProperties"/> for deserialization. </summary>
-        internal HealthModelSignalDefinitionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the last operation. </summary>
         public HealthModelProvisioningState? ProvisioningState { get; }
+
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Kind of the signal definition. </summary>
         internal EntitySignalKind SignalKind { get; set; }
+
         /// <summary> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </summary>
         public EntitySignalRefreshInterval? RefreshInterval { get; set; }
+
         /// <summary> Optional set of labels (key-value pairs). </summary>
         public IDictionary<string, string> Labels { get; }
+
         /// <summary> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </summary>
         public string DataUnit { get; set; }
+
         /// <summary> Evaluation rules for the signal definition. </summary>
         public EntitySignalEvaluationRule EvaluationRules { get; set; }
+
         /// <summary> Date when the signal definition was (soft-)deleted. </summary>
         public DateTimeOffset? DeletedOn { get; }
     }

@@ -1274,6 +1274,7 @@
           "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Property.Nullable",
       "apiVersions": [],
@@ -1715,6 +1716,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.String",
           "apiVersions": [],
@@ -2159,6 +2161,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes",
           "apiVersions": [],
@@ -2603,6 +2606,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime",
           "apiVersions": [],
@@ -3047,6 +3051,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Duration",
           "apiVersions": [],
@@ -3491,6 +3496,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte",
           "apiVersions": [],
@@ -3935,6 +3941,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel",
           "apiVersions": [],
@@ -4379,6 +4386,7 @@
               "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString",
           "apiVersions": [],

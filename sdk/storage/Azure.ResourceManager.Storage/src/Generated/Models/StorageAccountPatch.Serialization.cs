@@ -194,6 +194,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("dnsEndpointType"u8);
                 writer.WriteStringValue(DnsEndpointType.Value.ToString());
             }
+            if (Optional.IsDefined(GeoPriorityReplicationStatus))
+            {
+                writer.WritePropertyName("geoPriorityReplicationStatus"u8);
+                writer.WriteObjectValue(GeoPriorityReplicationStatus, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -261,6 +266,7 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutableStorageAccount immutableStorageWithVersioning = default;
             AllowedCopyScope? allowedCopyScope = default;
             StorageDnsEndpointType? dnsEndpointType = default;
+            GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -545,6 +551,15 @@ namespace Azure.ResourceManager.Storage.Models
                             dnsEndpointType = new StorageDnsEndpointType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("geoPriorityReplicationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoPriorityReplicationStatus = GeoPriorityReplicationStatus.DeserializeGeoPriorityReplicationStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -584,6 +599,7 @@ namespace Azure.ResourceManager.Storage.Models
                 immutableStorageWithVersioning,
                 allowedCopyScope,
                 dnsEndpointType,
+                geoPriorityReplicationStatus,
                 serializedAdditionalRawData);
         }
 

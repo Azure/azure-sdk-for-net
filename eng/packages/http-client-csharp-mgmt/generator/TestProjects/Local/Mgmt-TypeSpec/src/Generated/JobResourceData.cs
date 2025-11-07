@@ -43,9 +43,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal JobProperties Properties { get; }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get

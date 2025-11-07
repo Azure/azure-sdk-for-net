@@ -36,6 +36,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="stringLiteralProperty"> The <see cref="StringLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(StringLiteralProperty stringLiteralProperty) => throw null;
 
-        public static explicit operator StringLiteralProperty(Response result) => throw null;
+        public static explicit operator StringLiteralProperty(Response response) => throw null;
     }
 }

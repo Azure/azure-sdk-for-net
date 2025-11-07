@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceRegistry;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDeviceRegistryResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceRegistryResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDeviceRegistryResourceGroupResource for mocking. </summary>
         protected MockableDeviceRegistryResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceRegistryResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDeviceRegistryResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDeviceRegistryResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DeviceRegistryAssetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceRegistryAssetResources and their operations over a DeviceRegistryAssetResource. </returns>
+        /// <summary> Gets a collection of DeviceRegistryAssets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeviceRegistryAssets and their operations over a DeviceRegistryAssetResource. </returns>
         public virtual DeviceRegistryAssetCollection GetDeviceRegistryAssets()
         {
             return GetCachedClient(client => new DeviceRegistryAssetCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a Asset
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceRegistryAssetResource>> GetDeviceRegistryAssetAsync(string assetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
             return await GetDeviceRegistryAssets().GetAsync(assetName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a Asset
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Asset_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Assets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeviceRegistryAssetResource> GetDeviceRegistryAsset(string assetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
             return GetDeviceRegistryAssets().Get(assetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeviceRegistryAssetEndpointProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceRegistryAssetEndpointProfileResources and their operations over a DeviceRegistryAssetEndpointProfileResource. </returns>
+        /// <summary> Gets a collection of DeviceRegistryAssetEndpointProfiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeviceRegistryAssetEndpointProfiles and their operations over a DeviceRegistryAssetEndpointProfileResource. </returns>
         public virtual DeviceRegistryAssetEndpointProfileCollection GetDeviceRegistryAssetEndpointProfiles()
         {
             return GetCachedClient(client => new DeviceRegistryAssetEndpointProfileCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfile_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssetEndpointProfiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceRegistryAssetEndpointProfileResource>> GetDeviceRegistryAssetEndpointProfileAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
+
             return await GetDeviceRegistryAssetEndpointProfiles().GetAsync(assetEndpointProfileName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssetEndpointProfile_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssetEndpointProfiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,11 +156,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfile(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
+
             return GetDeviceRegistryAssetEndpointProfiles().Get(assetEndpointProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeviceRegistryNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceRegistryNamespaceResources and their operations over a DeviceRegistryNamespaceResource. </returns>
+        /// <summary> Gets a collection of DeviceRegistryNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeviceRegistryNamespaces and their operations over a DeviceRegistryNamespaceResource. </returns>
         public virtual DeviceRegistryNamespaceCollection GetDeviceRegistryNamespaces()
         {
             return GetCachedClient(client => new DeviceRegistryNamespaceCollection(client, Id));
@@ -182,20 +172,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a Namespace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Namespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +192,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceRegistryNamespaceResource>> GetDeviceRegistryNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return await GetDeviceRegistryNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -213,20 +201,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a Namespace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Namespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,11 +221,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeviceRegistryNamespaceResource> GetDeviceRegistryNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return GetDeviceRegistryNamespaces().Get(namespaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeviceRegistrySchemaRegistryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceRegistrySchemaRegistryResources and their operations over a DeviceRegistrySchemaRegistryResource. </returns>
+        /// <summary> Gets a collection of DeviceRegistrySchemaRegistries in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeviceRegistrySchemaRegistries and their operations over a DeviceRegistrySchemaRegistryResource. </returns>
         public virtual DeviceRegistrySchemaRegistryCollection GetDeviceRegistrySchemaRegistries()
         {
             return GetCachedClient(client => new DeviceRegistrySchemaRegistryCollection(client, Id));
@@ -251,20 +237,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaRegistries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +257,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceRegistrySchemaRegistryResource>> GetDeviceRegistrySchemaRegistryAsync(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
+
             return await GetDeviceRegistrySchemaRegistries().GetAsync(schemaRegistryName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -282,20 +266,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// Get a SchemaRegistry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaRegistry_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaRegistries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +286,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeviceRegistrySchemaRegistryResource> GetDeviceRegistrySchemaRegistry(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
+
             return GetDeviceRegistrySchemaRegistries().Get(schemaRegistryName, cancellationToken);
         }
     }
