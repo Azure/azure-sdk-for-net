@@ -50,3 +50,5 @@ using Microsoft.Extensions.Azure; // For QuestionAnsweringClientExtensions
 [assembly: TypeForwardedTo(typeof(PrebuiltQueryMatchingPolicy))]
 [assembly: TypeForwardedTo(typeof(QueryFilters))]
 [assembly: TypeForwardedTo(typeof(QueryPreferences))]
+
+[assembly: TypeForwardedTo(typeof(QuestionAnsweringClientExtensions))]
