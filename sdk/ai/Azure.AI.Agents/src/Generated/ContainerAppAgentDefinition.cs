@@ -29,12 +29,12 @@ namespace Azure.AI.Agents
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerProtocolVersions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="containerAppResourceId"> The resource ID of the Azure Container App that hosts this agent. Not mutable across versions. </param>
         /// <param name="ingressSubdomainSuffix"> The suffix to apply to the app subdomain when sending ingress to the agent. This can be a label (e.g., '---current'), a specific revision (e.g., '--0000001'), or empty to use the default endpoint for the container app. </param>
-        internal ContainerAppAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProtocolVersionRecord> containerProtocolVersions, string containerAppResourceId, string ingressSubdomainSuffix) : base(kind, raiConfig, additionalBinaryDataProperties)
+        internal ContainerAppAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProtocolVersionRecord> containerProtocolVersions, string containerAppResourceId, string ingressSubdomainSuffix) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ContainerProtocolVersions = containerProtocolVersions;
             ContainerAppResourceId = containerAppResourceId;

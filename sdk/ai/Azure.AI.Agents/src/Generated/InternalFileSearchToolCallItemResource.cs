@@ -36,7 +36,7 @@ namespace OpenAI
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"> The results of the file search tool call. </param>
-        internal InternalFileSearchToolCallItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileSearchToolCallItemResourceStatus status, IList<string> queries, IList<InternalFileSearchToolCallItemParamResult> results) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalFileSearchToolCallItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileSearchToolCallItemResourceStatus status, IList<string> queries, IList<InternalFileSearchToolCallItemParamResult> results) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             Queries = queries;

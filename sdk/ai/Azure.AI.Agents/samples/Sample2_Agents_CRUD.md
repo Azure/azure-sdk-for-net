@@ -7,7 +7,7 @@ In this example we will demonstrate creation and basic use of an agent step by s
 ```C# Snippet:Sample_CreateAgentClientCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create two versioned agent objects.
@@ -20,15 +20,11 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion1 = client.CreateAgentVersion(
     agentName: "myAgent1",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 AgentVersion agentVersion2 = client.CreateAgentVersion(
     agentName: "myAgent2",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
@@ -40,15 +36,11 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion1 = await client.CreateAgentVersionAsync(
     agentName: "myAgent1",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
     agentName: "myAgent2",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
@@ -88,16 +80,16 @@ await foreach (AgentRecord agent in client.GetAgentsAsync())
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteAgentCRUD_Sync
-DeleteAgentVersionResponse response = client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
-response = client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
-Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteAgentCRUD_Async
-DeleteAgentVersionResponse response = await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
-response = await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
-Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```

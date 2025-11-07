@@ -29,8 +29,8 @@ namespace Azure.AI.Agents;
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("_cachedInternalAgentResponses")]
-[CodeGenType("Agents")]
-public partial class AgentsClient
+[CodeGenType("AgentClient")]
+public partial class AgentClient
 {
     private OpenAIClient _cachedOpenAIClient;
     private ConversationClient _cachedConversations;
@@ -38,20 +38,20 @@ public partial class AgentsClient
     private readonly TelemetryDetails _telemetryDetails;
     private readonly AuthenticationTokenProvider _tokenProvider;
 
-    /// <summary> Initializes a new instance of AgentsClient. </summary>
+    /// <summary> Initializes a new instance of AgentClient. </summary>
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
-    public AgentsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentsClientOptions())
+    public AgentClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentClientOptions())
     {
     }
 
-    /// <summary> Initializes a new instance of AgentsClient. </summary>
+    /// <summary> Initializes a new instance of AgentClient. </summary>
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
     /// <param name="options"> The options for configuring the client. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
-    public AgentsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
+    public AgentClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentClientOptions options)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
@@ -60,7 +60,7 @@ public partial class AgentsClient
 
         _endpoint = endpoint;
         _tokenProvider = tokenProvider;
-        _telemetryDetails = new(typeof(AgentsClient).Assembly, options?.UserAgentApplicationId);
+        _telemetryDetails = new(typeof(AgentClient).Assembly, options?.UserAgentApplicationId);
         _apiVersion = options.Version;
 
         PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", _apiVersion);
@@ -75,80 +75,36 @@ public partial class AgentsClient
             beforeTransportPolicies: []);
     }
 
-    /// <summary> Creates the agent. </summary>
-    /// <param name="name"> The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent. </param>
-    /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-    /// <param name="options"> Additional options to use for the creation of the agent. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentRecord> CreateAgent(string name, AgentDefinition definition, AgentCreationOptions options = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(definition, nameof(definition));
-
-        options = CreatePerCallOptions(options, name, definition);
-
-        ClientResult result = CreateAgent(options, cancellationToken.ToRequestOptions());
-        return result.ToAgentsClientResult<AgentRecord>();
-    }
-
-    /// <summary> Creates the agent. </summary>
-    /// <param name="name"> The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent. </param>
-    /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-    /// <param name="options"> Additional options to use for the creation of the agent. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentRecord>> CreateAgentAsync(string name, AgentDefinition definition, AgentCreationOptions options = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(definition, nameof(definition));
-
-        options = CreatePerCallOptions(options, name, definition);
-
-        ClientResult result = await CreateAgentAsync(options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-    }
-
     /// <summary> Create a new agent version. </summary>
     /// <param name="agentName"> The name of the agent for which a new version should be created. </param>
-    /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-    /// <param name="options"> Additional options for the new agent version to create. </param>
+    /// <param name="options"> Options, including the definition, for the new agent version to create. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentVersion> CreateAgentVersion(string agentName, AgentDefinition definition, AgentVersionCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<AgentVersion> CreateAgentVersion(string agentName, AgentVersionCreationOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNull(definition, nameof(definition));
-
-        options = CreatePerCallOptions(options, definition);
+        Argument.AssertNotNull(options, nameof(options));
 
         ClientResult result = CreateAgentVersion(agentName, options, cancellationToken.ToRequestOptions());
-        return result.ToAgentsClientResult<AgentVersion>();
+        return result.ToAgentClientResult<AgentVersion>();
     }
 
     /// <summary> Create a new agent version. </summary>
     /// <param name="agentName"> The name of the agent for which a new version should be created. </param>
-    /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-    /// <param name="options"> Additional options for the new agent version to create. </param>
+    /// <param name="options"> Options, including the definition, for the new agent version to create. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="definition"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionAsync(string agentName, AgentDefinition definition, AgentVersionCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionAsync(string agentName, AgentVersionCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNull(definition, nameof(definition));
-
-        options = CreatePerCallOptions(options, definition);
+        Argument.AssertNotNull(options, nameof(options));
 
         ClientResult result = await CreateAgentVersionAsync(agentName, options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToAgentsClientResult<AgentVersion>();
+        return result.ToAgentClientResult<AgentVersion>();
     }
 
     public virtual ClientResult<AgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
@@ -160,7 +116,7 @@ public partial class AgentsClient
         options ??= new();
 
         ClientResult result = CreateAgentVersionFromManifest(agentName, options, cancellationToken.ToRequestOptions());
-        return result.ToAgentsClientResult<AgentVersion>();
+        return result.ToAgentClientResult<AgentVersion>();
     }
 
     public virtual async Task<ClientResult<AgentVersion>> CreateAgentVersionFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
@@ -170,147 +126,7 @@ public partial class AgentsClient
         Argument.AssertNotNull(options, nameof(options));
 
         ClientResult result = await CreateAgentVersionFromManifestAsync(agentName, options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToAgentsClientResult<AgentVersion>();
-    }
-
-    /// <summary> Creates an agent from a manifest. </summary>
-    /// <param name="agentName"> The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent. </param>
-    /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-    /// <param name="options"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentRecord> CreateAgentFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-
-        options ??= new();
-
-        CreateAgentFromManifestRequest1 spreadModel = new(
-            name: agentName,
-            description: options?.Description,
-            metadata: options?.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-            manifestId: manifestId,
-            parameterValues: options?.ParameterValues ?? new ChangeTrackingDictionary<string, BinaryData>(),
-            additionalBinaryDataProperties: default);
-        ClientResult result = CreateAgentFromManifest(spreadModel, cancellationToken.ToRequestOptions());
-        return result.ToAgentsClientResult<AgentRecord>();
-    }
-
-    /// <summary> Creates an agent from a manifest. </summary>
-    /// <param name="agentName"> The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent. </param>
-    /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-    /// <param name="options"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentRecord>> CreateAgentFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-
-        CreateAgentFromManifestRequest1 spreadModel = new(
-            name: agentName,
-            description: options?.Description,
-            metadata: options?.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-            manifestId: manifestId,
-            parameterValues: options?.ParameterValues ?? new ChangeTrackingDictionary<string, BinaryData>(),
-            additionalBinaryDataProperties: default);
-        ClientResult result = await CreateAgentFromManifestAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToAgentsClientResult<AgentRecord>();
-    }
-
-    /// <summary>
-    /// Updates the agent by adding a new version if there are any changes to the agent definition.
-    /// If no changes, returns the existing agent version.
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to retrieve. </param>
-    /// <param name="options"> The options describing the updates to make for the new agent version. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentRecord> UpdateAgent(string agentName, AgentUpdateOptions options, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNull(options, nameof(options));
-
-        ClientResult result = UpdateAgent(agentName, options, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-    }
-
-    /// <summary>
-    /// Updates the agent by adding a new version if there are any changes to the agent definition.
-    /// If no changes, returns the existing agent version.
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to retrieve. </param>
-    /// <param name="options"> The options describing the updates to make for the new agent version. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="options"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentRecord>> UpdateAgentAsync(string agentName, AgentUpdateOptions options, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNull(options, nameof(options));
-
-        ClientResult result = await UpdateAgentAsync(agentName, options, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        return ClientResult.FromValue((AgentRecord)result, result.GetRawResponse());
-    }
-
-    /// <summary>
-    /// Updates the agent from a manifest by adding a new version if there are any changes to the agent definition.
-    /// If no changes, returns the existing agent version.
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to update. </param>
-    /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-    /// <param name="options"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentRecord> UpdateAgentFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-
-        UpdateAgentFromManifestRequest1 spreadModel = new UpdateAgentFromManifestRequest1(
-            description: options?.Description,
-            metadata: options?.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-            manifestId: manifestId,
-            parameterValues: options?.ParameterValues ?? new ChangeTrackingDictionary<string, BinaryData>(),
-            additionalBinaryDataProperties: default);
-        ClientResult result = UpdateAgentFromManifest(agentName, spreadModel, cancellationToken.ToRequestOptions());
-        return result.ToAgentsClientResult<AgentRecord>();
-    }
-
-    /// <summary>
-    /// Updates the agent from a manifest by adding a new version if there are any changes to the agent definition.
-    /// If no changes, returns the existing agent version.
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to update. </param>
-    /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-    /// <param name="options"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="manifestId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentRecord>> UpdateAgentFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
-
-        UpdateAgentFromManifestRequest1 spreadModel = new UpdateAgentFromManifestRequest1(
-            description: options?.Description,
-            metadata: options?.Metadata ?? new ChangeTrackingDictionary<string, string>(),
-            manifestId: manifestId,
-            parameterValues: options?.ParameterValues ?? new ChangeTrackingDictionary<string, BinaryData>(),
-            additionalBinaryDataProperties: default);
-        ClientResult result = await UpdateAgentFromManifestAsync(agentName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return result.ToAgentsClientResult<AgentRecord>();
+        return result.ToAgentClientResult<AgentVersion>();
     }
 
     /// <summary> Returns the list of all agents. </summary>
@@ -335,7 +151,7 @@ public partial class AgentsClient
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentRecord> GetAgents(AgentKind? kind = default, int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentRecord> GetAgents(AgentKind? kind = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<AgentRecord>(
             Pipeline,
@@ -374,7 +190,7 @@ public partial class AgentsClient
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentRecord> GetAgentsAsync(AgentKind? kind = default, int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentRecord> GetAgentsAsync(AgentKind? kind = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<AgentRecord>(
             Pipeline,
@@ -415,7 +231,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentVersion> GetAgentVersions(string agentName, int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentVersion> GetAgentVersions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -461,7 +277,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentVersion> GetAgentVersionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -481,6 +297,66 @@ public partial class AgentsClient
                 ParentResourceId = agentName,
             },
             cancellationToken.ToRequestOptions());
+    }
+
+    /// <summary> Deletes an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteAgent(string agentName, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        ClientResult result = DeleteAgent(agentName, cancellationToken.ToRequestOptions());
+        return result;
+    }
+
+    /// <summary> Deletes an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        ClientResult result = await DeleteAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return result;
+    }
+
+    /// <summary> Deletes a specific version of an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="agentVersion"> The version of the agent to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteAgentVersion(string agentName, string agentVersion, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+        ClientResult result = DeleteAgentVersion(agentName, agentVersion, cancellationToken.ToRequestOptions());
+        return result;
+    }
+
+    /// <summary> Deletes a specific version of an agent. </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="agentVersion"> The version of the agent to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteAgentVersionAsync(string agentName, string agentVersion, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+        ClientResult result = await DeleteAgentVersionAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return result;
     }
 
     public virtual OpenAIClient GetOpenAIClient(OpenAIClientOptions options = null)
@@ -525,22 +401,5 @@ public partial class AgentsClient
     public virtual MemoryStoreClient GetMemoryStoreClient()
     {
         return Volatile.Read(ref _cachedMemoryStores) ?? Interlocked.CompareExchange(ref _cachedMemoryStores, new MemoryStoreClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedMemoryStores;
-    }
-
-    internal virtual AgentVersionCreationOptions CreatePerCallOptions(AgentVersionCreationOptions userOptions, AgentDefinition definition)
-    {
-        AgentVersionCreationOptions copiedOptions = userOptions is null ? new() : userOptions.GetClone();
-        copiedOptions.Definition = definition;
-
-        return copiedOptions;
-    }
-
-    internal virtual AgentCreationOptions CreatePerCallOptions(AgentCreationOptions userOptions, string name, AgentDefinition definition)
-    {
-        AgentCreationOptions copiedOptions = userOptions is null ? new() : userOptions.GetClone();
-        copiedOptions.Name = name;
-        copiedOptions.Definition = definition;
-
-        return copiedOptions;
     }
 }

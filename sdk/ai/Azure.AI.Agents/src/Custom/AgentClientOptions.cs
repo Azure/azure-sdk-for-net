@@ -6,8 +6,8 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Agents;
 
-/// <summary> Client options for <see cref="AgentsClient"/>. </summary>
-public partial class AgentsClientOptions : ClientPipelineOptions
+/// <summary> Client options for <see cref="AgentClient"/>. </summary>
+public partial class AgentClientOptions : ClientPipelineOptions
 {
     private string _userAgentApplicationId;
     /// <summary>
@@ -25,9 +25,9 @@ public partial class AgentsClientOptions : ClientPipelineOptions
 
     private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
 
-    /// <summary> Initializes a new instance of AgentsClientOptions. </summary>
+    /// <summary> Initializes a new instance of AgentClientOptions. </summary>
     /// <param name="version"> The service version. </param>
-    public AgentsClientOptions(ServiceVersion version = LatestVersion)
+    public AgentClientOptions(ServiceVersion version = LatestVersion)
     {
         Version = version switch
         {

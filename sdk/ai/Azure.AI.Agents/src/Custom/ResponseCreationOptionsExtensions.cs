@@ -22,58 +22,58 @@ public static partial class ResponseCreationOptionsExtensions
     /// <summary>
     /// Adds a provided reference to an Azure Agent to the request options for an OpenAI Responses API call.
     /// </summary>
-    /// <param name="responseCreationOptions"></param>
-    /// <param name="agentReference"></param>
-    public static void SetAgentReference(this ResponseCreationOptions responseCreationOptions, AgentReference agentReference)
+    /// <param name="options"></param>
+    /// <param name="agent"></param>
+    public static void SetAgentReference(this ResponseCreationOptions options, AgentReference agent)
     {
-        BinaryData agentReferenceBin = ModelReaderWriter.Write(agentReference, ModelSerializationExtensions.WireOptions, AzureAIAgentsContext.Default);
-        responseCreationOptions.Patch.Set("$.agent"u8, agentReferenceBin);
-        responseCreationOptions.Patch.Remove("$.model"u8);
+        BinaryData agentReferenceBin = ModelReaderWriter.Write(agent, ModelSerializationExtensions.WireOptions, AzureAIAgentsContext.Default);
+        options.Patch.Set("$.agent"u8, agentReferenceBin);
+        options.Patch.Remove("$.model"u8);
     }
 
     /// <summary>
     /// Adds a provided reference to an Azure Agent to the request options for an OpenAI Responses API call.
     /// </summary>
-    /// <param name="responseCreationOptions"></param>
+    /// <param name="options"></param>
     /// <param name="agentName"></param>
-    /// <param name="version"></param>
-    public static void SetAgentReference(this ResponseCreationOptions responseCreationOptions, string agentName, string version = null)
-        => SetAgentReference(responseCreationOptions, new AgentReference(agentName) { Version = version });
-
-    /// <summary>
-    /// Adds a provided reference to an Azure Agent to the request options for an OpenAI Responses API call.
-    /// </summary>
-    /// <param name="responseCreationOptions"></param>
     /// <param name="agentVersion"></param>
-    public static void SetAgentReference(this ResponseCreationOptions responseCreationOptions, AgentVersion agentVersion)
-        => SetAgentReference(responseCreationOptions, new AgentReference(agentVersion.Name) { Version = agentVersion.Version });
+    public static void SetAgentReference(this ResponseCreationOptions options, string agentName, string agentVersion = null)
+        => SetAgentReference(options, new AgentReference(agentName) { Version = agentVersion });
 
     /// <summary>
     /// Adds a provided reference to an Azure Agent to the request options for an OpenAI Responses API call.
     /// </summary>
-    /// <param name="responseCreationOptions"></param>
-    /// <param name="agentObject"></param>
-    /// <param name="version"></param>
-    public static void SetAgentReference(this ResponseCreationOptions responseCreationOptions, AgentRecord agentObject, string version = null)
-        => SetAgentReference(responseCreationOptions, new AgentReference(agentObject.Name) { Version = version ?? agentObject.Versions.Latest.Version });
+    /// <param name="options"></param>
+    /// <param name="agentVersion"></param>
+    public static void SetAgentReference(this ResponseCreationOptions options, AgentVersion agentVersion)
+        => SetAgentReference(options, new AgentReference(agentVersion.Name) { Version = agentVersion.Version });
+
+    /// <summary>
+    /// Adds a provided reference to an Azure Agent to the request options for an OpenAI Responses API call.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="agent"></param>
+    /// <param name="agentVersion"></param>
+    public static void SetAgentReference(this ResponseCreationOptions options, AgentRecord agent, string agentVersion = null)
+        => SetAgentReference(options, new AgentReference(agent.Name) { Version = agentVersion ?? agent.Versions.Latest.Version });
 
     /// <summary>
     /// Adds a provided reference to an OpenAI Conversation to the request options for an OpenAI Responses API call.
     /// </summary>
-    /// <param name="responseCreationOptions"></param>
+    /// <param name="options"></param>
     /// <param name="conversationId"></param>
-    public static void SetConversationReference(this ResponseCreationOptions responseCreationOptions, string conversationId)
+    public static void SetConversationReference(this ResponseCreationOptions options, string conversationId)
     {
-        responseCreationOptions.Patch.Set("$.conversation"u8, $"{conversationId}");
+        options.Patch.Set("$.conversation"u8, $"{conversationId}");
     }
 
     /// <summary>
     /// Adds a provided reference to an OpenAI Conversation to the request options for an OpenAI Responses API call.
     /// </summary>
-    /// <param name="responseCreationOptions"></param>
+    /// <param name="options"></param>
     /// <param name="conversation"></param>
-    public static void SetConversationReference(this ResponseCreationOptions responseCreationOptions, AgentConversation conversation)
-        => SetConversationReference(responseCreationOptions, conversation.Id);
+    public static void SetConversationReference(this ResponseCreationOptions options, AgentConversation conversation)
+        => SetConversationReference(options, conversation.Id);
 
     public static void AddStructuredInput(this ResponseCreationOptions options, string key, string value)
     {

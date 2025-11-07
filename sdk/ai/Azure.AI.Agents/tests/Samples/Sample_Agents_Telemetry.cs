@@ -37,7 +37,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -45,10 +45,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = await client.CreateAgentVersionAsync(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
 
@@ -79,7 +79,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -87,10 +87,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = client.CreateAgentVersion(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name} , version:  {agentVersion1.Version})");
         }
     }
 
@@ -112,7 +112,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -120,10 +120,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = await client.CreateAgentVersionAsync(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}  , version:   {agentVersion1.Version})");
         }
     }
 
@@ -147,7 +147,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -155,10 +155,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = client.CreateAgentVersion(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name} , version:  {agentVersion1.Version})");
         }
     }
 

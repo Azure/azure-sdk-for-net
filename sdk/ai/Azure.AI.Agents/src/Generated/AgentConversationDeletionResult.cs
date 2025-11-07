@@ -7,8 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The AgentConversationDeletionResult. </summary>
-    public partial class AgentConversationDeletionResult
+    internal partial class AgentConversationDeletionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

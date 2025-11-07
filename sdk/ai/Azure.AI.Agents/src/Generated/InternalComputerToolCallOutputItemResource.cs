@@ -41,7 +41,7 @@ namespace OpenAI
         /// developer.
         /// </param>
         /// <param name="output"></param>
-        internal InternalComputerToolCallOutputItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerToolCallOutputItemResourceStatus status, string callId, IList<InternalComputerToolCallSafetyCheck> acknowledgedSafetyChecks, InternalComputerToolCallOutputItemOutput output) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalComputerToolCallOutputItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerToolCallOutputItemResourceStatus status, string callId, IList<InternalComputerToolCallSafetyCheck> acknowledgedSafetyChecks, InternalComputerToolCallOutputItemOutput output) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             CallId = callId;

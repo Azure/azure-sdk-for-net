@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace Azure.AI.Agents;
 
-/// <summary> The AgentsClient. </summary>
+/// <summary> The AgentClient. </summary>
 internal static partial class CancellationTokenExtensions
 {
     public static RequestOptions ToRequestOptions(this CancellationToken cancellationToken)

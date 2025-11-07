@@ -31,7 +31,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateAgent_MemoryTool_Async
@@ -41,9 +41,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         };
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: "myAgent",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         #endregion
 
         #region Snippet:Sample_CreateConversation_MemoryTool_Async
@@ -80,7 +78,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             chatModel: modelDeploymentName,
             embeddingModel: embeddingDeploymentName
         );
-        MemoryStoreObject memoryStore = await memoryClient.CreateMemoryStoreAsync(
+        MemoryStore memoryStore = await memoryClient.CreateMemoryStoreAsync(
             name: "jokeMemory",
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
@@ -113,9 +111,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
             agentName: "myAgent2",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Async
@@ -153,7 +149,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_MemoryTool_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -161,9 +157,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         };
         AgentVersion agentVersion = client.CreateAgentVersion(
             agentName: "myAgent",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         #endregion
 
         #region Snippet:Sample_CreateConversation_MemoryTool_Sync
@@ -201,7 +195,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             chatModel: modelDeploymentName,
             embeddingModel: embeddingDeploymentName
         );
-        MemoryStoreObject memoryStore = memoryClient.CreateMemoryStore(
+        MemoryStore memoryStore = memoryClient.CreateMemoryStore(
             name: "jokeMemory",
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
@@ -234,9 +228,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = client.CreateAgentVersion(
             agentName: "myAgent2",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Sync

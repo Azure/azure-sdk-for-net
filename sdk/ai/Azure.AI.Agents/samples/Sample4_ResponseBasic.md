@@ -7,7 +7,7 @@ In this example we will demonstrate how to get a response without an Agent.
 ```C# Snippet:Sample_CreateAgentClient_ResponseBasic
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create a `Responses`, which will be used to create `AgentResponse` object.

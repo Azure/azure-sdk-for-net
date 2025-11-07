@@ -40,10 +40,10 @@ namespace Azure.AI.Agents
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(RaiConfig))
+            if (Optional.IsDefined(ContentFilterConfiguration))
             {
                 writer.WritePropertyName("rai_config"u8);
-                writer.WriteObjectValue(RaiConfig, options);
+                writer.WriteObjectValue(ContentFilterConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -11,16 +11,16 @@ using System.Text.Json;
 namespace Azure.AI.Agents
 {
     /// <summary> A memory store that can store and retrieve user memories. </summary>
-    public partial class MemoryStoreObject : IJsonModel<MemoryStoreObject>
+    public partial class MemoryStore : IJsonModel<MemoryStore>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreObject"/> for deserialization. </summary>
-        internal MemoryStoreObject()
+        /// <summary> Initializes a new instance of <see cref="MemoryStore"/> for deserialization. </summary>
+        internal MemoryStore()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemoryStoreObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MemoryStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.AI.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MemoryStoreObject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MemoryStore)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object);
@@ -88,24 +88,24 @@ namespace Azure.AI.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreObject IJsonModel<MemoryStoreObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MemoryStore IJsonModel<MemoryStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MemoryStoreObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MemoryStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MemoryStoreObject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MemoryStore)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryStoreObject(document.RootElement, options);
+            return DeserializeMemoryStore(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MemoryStoreObject DeserializeMemoryStoreObject(JsonElement element, ModelReaderWriterOptions options)
+        internal static MemoryStore DeserializeMemoryStore(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,7 +183,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MemoryStoreObject(
+            return new MemoryStore(
                 @object,
                 id,
                 createdAt,
@@ -196,51 +196,51 @@ namespace Azure.AI.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryStoreObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MemoryStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemoryStoreObject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MemoryStore)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryStoreObject IPersistableModel<MemoryStoreObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MemoryStore IPersistableModel<MemoryStore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MemoryStoreObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MemoryStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryStoreObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryStoreObject(document.RootElement, options);
+                        return DeserializeMemoryStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemoryStoreObject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MemoryStore)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryStoreObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MemoryStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryStoreObject"/> from. </param>
-        public static explicit operator MemoryStoreObject(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="MemoryStore"/> from. </param>
+        public static explicit operator MemoryStore(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMemoryStoreObject(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMemoryStore(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

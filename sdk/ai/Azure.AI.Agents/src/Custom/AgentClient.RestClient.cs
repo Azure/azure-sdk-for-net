@@ -4,12 +4,13 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Telemetry;
 
 namespace Azure.AI.Agents;
 
-public partial class AgentsClient
+public partial class AgentClient
 {
     /// <summary>
     /// [Protocol Method] Creates the agent.
@@ -24,6 +25,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgent(BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
@@ -56,6 +58,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentAsync(BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
@@ -90,6 +93,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgentVersion(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
@@ -125,6 +129,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentVersionAsync(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
@@ -160,6 +165,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgentVersionFromManifest(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
@@ -196,6 +202,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentVersionFromManifestAsync(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgentVersion(_endpoint, agentName, content, options);
@@ -230,6 +237,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult CreateAgentFromManifest(BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
@@ -263,6 +271,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> CreateAgentFromManifestAsync(BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartCreateAgent(_endpoint, content, options);
@@ -299,6 +308,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult UpdateAgent(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
@@ -335,6 +345,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> UpdateAgentAsync(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
@@ -371,6 +382,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult UpdateAgentFromManifest(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
@@ -407,6 +419,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> UpdateAgentFromManifestAsync(string agentName, BinaryContent content, RequestOptions options = null)
     {
         using var otelScope = OpenTelemetryScope.StartUpdateAgent(_endpoint, agentName, content, options);
@@ -425,5 +438,197 @@ public partial class AgentsClient
             otelScope?.RecordError(ex);
             throw;
         }
+    }
+
+    /// <summary>
+    /// [Protocol Method] Retrieves the agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual ClientResult GetAgent(string agentName, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        using PipelineMessage message = CreateGetAgentRequest(agentName, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Retrieves the agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual async Task<ClientResult> GetAgentAsync(string agentName, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        using PipelineMessage message = CreateGetAgentRequest(agentName, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Deletes an agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual ClientResult DeleteAgent(string agentName, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        using PipelineMessage message = CreateDeleteAgentRequest(agentName, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Deletes an agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        using PipelineMessage message = CreateDeleteAgentRequest(agentName, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Retrieves a specific version of an agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="agentVersion"> The version of the agent to retrieve. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual ClientResult GetAgentVersion(string agentName, string agentVersion, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+        using PipelineMessage message = CreateGetAgentVersionRequest(agentName, agentVersion, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Retrieves a specific version of an agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="agentVersion"> The version of the agent to retrieve. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual async Task<ClientResult> GetAgentVersionAsync(string agentName, string agentVersion, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+        using PipelineMessage message = CreateGetAgentVersionRequest(agentName, agentVersion, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Deletes a specific version of an agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="agentVersion"> The version of the agent to delete. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual ClientResult DeleteAgentVersion(string agentName, string agentVersion, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+        using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    /// <summary>
+    /// [Protocol Method] Deletes a specific version of an agent.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to delete. </param>
+    /// <param name="agentVersion"> The version of the agent to delete. </param>
+    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public virtual async Task<ClientResult> DeleteAgentVersionAsync(string agentName, string agentVersion, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+
+        using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 }

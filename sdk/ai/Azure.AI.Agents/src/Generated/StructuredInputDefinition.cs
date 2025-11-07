@@ -25,15 +25,15 @@ namespace Azure.AI.Agents
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="toolArgumentBindings"> When provided, the input value is bound to the specified tool arguments. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="required"> Whether the input property is required when the agent is invoked. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredInputDefinition(string description, BinaryData defaultValue, IList<ToolArgumentBinding> toolArgumentBindings, BinaryData schema, bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StructuredInputDefinition(string description, BinaryData defaultValue, IList<ToolArgumentBinding> toolArgumentBindings, BinaryData schema, bool? isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DefaultValue = defaultValue;
             ToolArgumentBindings = toolArgumentBindings;
             Schema = schema;
-            Required = @required;
+            IsRequired = isRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -98,8 +98,5 @@ namespace Azure.AI.Agents
         /// </para>
         /// </summary>
         public BinaryData Schema { get; set; }
-
-        /// <summary> Whether the input property is required when the agent is invoked. </summary>
-        public bool? Required { get; set; }
     }
 }

@@ -6,7 +6,7 @@ In this example we are demonstrating how to use the local functions with the Age
 ```C# Snippet:Sample_CreateAgentClient_Function
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 OpenAIClient openAIClient = client.GetOpenAIClient();
 ```
 

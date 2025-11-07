@@ -27,7 +27,7 @@ namespace Azure.AI.Agents
         /// <param name="id"></param>
         /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        internal OAuthConsentRequestItemResource(AgentResponseItemKind @type, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string consentLink, string serverLabel) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal OAuthConsentRequestItemResource(AgentResponseItemKind @type, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string consentLink, string serverLabel) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             ConsentLink = consentLink;
             ServerLabel = serverLabel;

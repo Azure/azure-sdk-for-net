@@ -113,7 +113,7 @@ namespace Azure.AI.Agents
                 return null;
             }
             AgentKind kind = default;
-            RaiConfig raiConfig = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string model = default;
             string instructions = default;
@@ -136,7 +136,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -210,7 +210,7 @@ namespace Azure.AI.Agents
             }
             return new PromptAgentDefinition(
                 kind,
-                raiConfig,
+                contentFilterConfiguration,
                 additionalBinaryDataProperties,
                 model,
                 instructions,

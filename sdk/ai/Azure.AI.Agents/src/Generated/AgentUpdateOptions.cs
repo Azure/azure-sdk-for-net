@@ -7,11 +7,18 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The AgentUpdateOptions. </summary>
-    public partial class AgentUpdateOptions
+    internal partial class AgentUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="AgentUpdateOptions"/>. </summary>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        internal AgentUpdateOptions(AgentDefinition definition)
+        {
+            Metadata = new ChangeTrackingDictionary<string, string>();
+            Definition = definition;
+        }
 
         /// <summary> Initializes a new instance of <see cref="AgentUpdateOptions"/>. </summary>
         /// <param name="metadata">

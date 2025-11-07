@@ -69,10 +69,10 @@ namespace Azure.AI.Agents
                 }
 #endif
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -120,7 +120,7 @@ namespace Azure.AI.Agents
             BinaryData defaultValue = default;
             IList<ToolArgumentBinding> toolArgumentBindings = default;
             BinaryData schema = default;
-            bool? @required = default;
+            bool? isRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    @required = prop.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,7 @@ namespace Azure.AI.Agents
                 defaultValue,
                 toolArgumentBindings ?? new ChangeTrackingList<ToolArgumentBinding>(),
                 schema,
-                @required,
+                isRequired,
                 additionalBinaryDataProperties);
         }
 

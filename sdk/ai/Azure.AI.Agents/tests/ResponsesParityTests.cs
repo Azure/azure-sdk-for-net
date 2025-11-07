@@ -30,8 +30,8 @@ public class ResponsesParityTests : AgentsTestBase
     [Ignore("Pending CI failure investigation (local recording seems fine)")]
     public async Task FileSearchToolWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
@@ -87,8 +87,8 @@ public class ResponsesParityTests : AgentsTestBase
     [RecordedTest]
     public async Task CodeInterpreterToolWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         ResponseTool codeInterpreterTool
@@ -123,8 +123,8 @@ public class ResponsesParityTests : AgentsTestBase
     [RecordedTest]
     public async Task FunctionToolWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         OpenAI.Responses.FunctionTool functionTool = ResponseTool.CreateFunctionTool(
@@ -164,8 +164,8 @@ public class ResponsesParityTests : AgentsTestBase
     // [AsyncOnly]
     public async Task StreamingResponsesWork()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         List<StreamingResponseUpdate> streamedUpdates = [];
@@ -199,8 +199,8 @@ public class ResponsesParityTests : AgentsTestBase
     [RecordedTest]
     public async Task GetResponseWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = GetTestOpenAIClientFrom(agentsClient);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = GetTestOpenAIClientFrom(agentClient);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync([ResponseItem.CreateUserMessageItem("Hello, model!")]);
@@ -216,8 +216,8 @@ public class ResponsesParityTests : AgentsTestBase
     [RecordedTest]
     public async Task ResponseBackgroundModeWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -243,8 +243,8 @@ public class ResponsesParityTests : AgentsTestBase
     [Ignore("Bug 4755034")]
     public async Task GetResponseStreamingWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -271,8 +271,8 @@ public class ResponsesParityTests : AgentsTestBase
     [Ignore("Bug 4755148")]
     public async Task ResponseDeletionWorks()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, model!");
@@ -289,11 +289,11 @@ public class ResponsesParityTests : AgentsTestBase
     [RecordedTest]
     public async Task FunctionToolWorksWithConversation()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync();
+        AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync();
         Assert.That(conversation.Id, Does.StartWith("conv_"));
 
         OpenAI.Responses.FunctionTool functionTool = ResponseTool.CreateFunctionTool(

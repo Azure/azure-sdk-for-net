@@ -17,35 +17,35 @@ namespace Azure.AI.Agents.Tests.Samples;
 public class ClientCreationAndAuthenticationSamples : AgentsTestBase
 {
     [RecordedTest]
-    public void CreateAgentsClientDirectlyFromProjectEndpoint()
+    public void CreateAgentClientDirectlyFromProjectEndpoint()
     {
-        #region Snippet:CreateAgentsClientDirectlyFromProjectEndpoint
-        AgentsClient agentsClient = new(
+        #region Snippet:CreateAgentClientDirectlyFromProjectEndpoint
+        AgentClient agentClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
         #endregion
     }
 
     [Test]
-    public void CreateAgentsClientFromProjectsClient()
+    public void CreateAgentClientFromProjectsClient()
     {
-        #region Snippet:CreateAgentsClientFromProjectsClient
+        #region Snippet:CreateAgentClientFromProjectsClient
         AIProjectClient projectClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
-        AgentsClient agentsClient = projectClient.GetAgentsClient();
+        AgentClient agentClient = projectClient.GetAgentClient();
         #endregion
     }
 
     [Test]
     public void GetOpenAIClientsFromAgents()
     {
-        AgentsClient agentsClient = new(
+        AgentClient agentClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
 
         #region Snippet:GetOpenAIClientsFromAgents
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient();
 
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient("MODEL_DEPLOYMENT");
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();

@@ -27,7 +27,7 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"></param>
         /// <param name="result"> The generated image encoded in base64. </param>
-        internal InternalImageGenToolCallItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolCallItemResourceStatus status, string result) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalImageGenToolCallItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolCallItemResourceStatus status, string result) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;

@@ -30,14 +30,14 @@ public partial class ConversationClient
     {
         options ??= new();
         ClientResult protocolResult = CreateConversation(BinaryContent.Create(options), cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentsClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<AgentConversation>();
     }
 
     public virtual async Task<ClientResult<AgentConversation>> CreateConversationAsync(AgentConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         ClientResult protocolResult = await CreateConversationAsync(options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentsClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<AgentConversation>();
     }
 
     /// <summary> Update a conversation. </summary>
@@ -53,7 +53,7 @@ public partial class ConversationClient
         Argument.AssertNotNull(options, nameof(options));
 
         ClientResult protocolResult = UpdateConversation(conversationId, options, cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentsClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<AgentConversation>();
     }
 
     /// <summary> Update a conversation. </summary>
@@ -69,7 +69,7 @@ public partial class ConversationClient
         Argument.AssertNotNull(options, nameof(options));
 
         ClientResult protocolResult = await UpdateConversationAsync(conversationId, options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentsClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<AgentConversation>();
     }
 
     /// <summary> Returns the list of all conversations. </summary>
@@ -95,7 +95,7 @@ public partial class ConversationClient
     /// <param name="agentId"> Filter by agent ID in the format `name:version`. If provided, only items associated with the specified agent ID will be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentConversation> GetConversations(int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentConversation> GetConversations(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<AgentConversation>(
             Pipeline,
@@ -136,7 +136,7 @@ public partial class ConversationClient
     /// <param name="agentId"> Filter by agent ID in the format `name:version`. If provided, only items associated with the specified agent ID will be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentConversation> GetConversationsAsync(int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentConversation> GetConversationsAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<AgentConversation>(
             Pipeline,
@@ -260,7 +260,7 @@ public partial class ConversationClient
     /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentResponseItem> GetConversationItems(string conversationId, int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, AgentResponseItemKind? itemType = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentResponseItem> GetConversationItems(string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentResponseItemKind? itemType = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
@@ -308,7 +308,7 @@ public partial class ConversationClient
     /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentResponseItem> GetConversationItemsAsync(string conversationId, int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, AgentResponseItemKind? itemType = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentResponseItem> GetConversationItemsAsync(string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentResponseItemKind? itemType = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
@@ -329,5 +329,33 @@ public partial class ConversationClient
                 ParentResourceId = conversationId,
             },
             cancellationToken.ToRequestOptions());
+    }
+
+    /// <summary> Deletes a conversation. </summary>
+    /// <param name="conversationId"> The id of the conversation to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult DeleteConversation(string conversationId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+        ClientResult result = DeleteConversation(conversationId, cancellationToken.ToRequestOptions());
+        return result;
+    }
+
+    /// <summary> Deletes a conversation. </summary>
+    /// <param name="conversationId"> The id of the conversation to delete. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> DeleteConversationAsync(string conversationId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+        ClientResult result = await DeleteConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return result;
     }
 }
