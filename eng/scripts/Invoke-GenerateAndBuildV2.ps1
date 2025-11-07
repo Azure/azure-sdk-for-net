@@ -80,7 +80,7 @@ function Update-PackageVersionSuffix {
         return
     }
     
-    $currentVersion = $versionElement.'#text'
+    $currentVersion = $versionElement.InnerText
     Write-Host "Current version: $currentVersion"
     
     $newVersion = $currentVersion
