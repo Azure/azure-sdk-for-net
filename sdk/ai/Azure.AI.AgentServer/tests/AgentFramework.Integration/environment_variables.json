@@ -1,0 +1,5 @@
+{
+    "AZURE_OPENAI_ENDPOINT": "https://junanchen-7850-resource.cognitiveservices.azure.com/",
+    "OPENAI_API_VERSION": "2024-12-01-preview",
+    "AZURE_OPENAI_DEPLOYMENT_NAME": "gpt-4o"
+}
