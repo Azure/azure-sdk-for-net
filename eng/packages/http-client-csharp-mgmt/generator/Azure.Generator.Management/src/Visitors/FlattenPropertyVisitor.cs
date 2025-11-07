@@ -357,7 +357,7 @@ namespace Azure.Generator.Management.Visitors
 
             if (isFlattenProperty)
             {
-                UpdatePublicConstructor(model, propertyNameMap, propertyTypeMap);
+                UpdatePublicConstructor(model, propertyNameMap);
             }
         }
 
@@ -495,7 +495,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> nameMap, Dictionary<CSharpType, List<FlattenPropertyInfo>> typeMap)
+        private void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map)
         {
             var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             if (publicConstructor is null)
@@ -507,7 +507,7 @@ namespace Azure.Generator.Management.Visitors
             var updateParameters = new List<ParameterProvider>();
             foreach (var parameter in publicConstructor.Signature.Parameters)
             {
-                if (nameMap.TryGetValue(parameter.Name, out var value))
+                if (map.TryGetValue(parameter.Name, out var value))
                 {
                     updated = true;
                     foreach (var (flattenedProperty, _) in value)
@@ -525,7 +525,7 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            UpdatePublicConstructorBody(model, nameMap, publicConstructor);
+            UpdatePublicConstructorBody(model, map, publicConstructor);
 
             if (updated)
             {
