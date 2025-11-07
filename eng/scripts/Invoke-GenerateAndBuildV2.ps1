@@ -43,6 +43,11 @@ $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 $apiVersion = $inputJson.apiVersion
+$sdkReleaseType = $inputJson.sdkReleaseType
+
+if ($sdkReleaseType) {
+    Write-Warning "sdkReleaseType is not supported by .NET and user will need to update the package version manually"
+}
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
