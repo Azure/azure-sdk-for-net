@@ -42,6 +42,7 @@ $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
+$apiVersion = $inputJson.apiVersion
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -149,6 +150,9 @@ if ($relatedTypeSpecProjectFolder) {
         $tspclientCommand = "npm exec --prefix $tspClientDir --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
+        }
+        if ($apiVersion) {
+            $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
