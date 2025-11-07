@@ -98,31 +98,6 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Translate Text. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output text. The target language must be one of the supported languages included
-        /// in the translation scope. For example, use to=de to translate to German.
-        /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
-        /// For example, use to=de&amp;to=it to translate to German and Italian.
-        /// </param>
-        /// <param name="content"> Array of the text to be translated. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies the language of the input text. Find which languages are available to translate from by
-        /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified,
-        /// automatic language detection is applied to determine the source language.
-        ///
-        /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature.
-        /// Note: the dynamic dictionary feature is case-sensitive.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(string targetLanguage, IEnumerable<string> content, string sourceLanguage = null, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("This method is no longer supported.");
-        }
-
-        /// <summary> Translate Text. </summary>
         /// <param name="targetLanguages">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. For example, use to=de to translate to German.
@@ -201,56 +176,6 @@ namespace Azure.AI.Translation.Text
             throw new NotSupportedException("This method is no longer supported.");
         }
 
-        /// <summary> Translate Text. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output text. The target language must be one of the supported languages included
-        /// in the translation scope. For example, use to=de to translate to German.
-        /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
-        /// For example, use to=de&amp;to=it to translate to German and Italian.
-        /// </param>
-        /// <param name="content"> Array of the text to be translated. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies the language of the input text. Find which languages are available to translate from by
-        /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified,
-        /// automatic language detection is applied to determine the source language.
-        ///
-        /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature.
-        /// Note: the dynamic dictionary feature is case-sensitive.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(string targetLanguage, IEnumerable<string> content, string sourceLanguage = null, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("This method is no longer supported.");
-        }
-
-        /// <summary> Transliterate Text. </summary>
-        /// <param name="language">
-        /// Specifies the language of the text to convert from one script to another.
-        /// Possible languages are listed in the transliteration scope obtained by querying the service
-        /// for its supported languages.
-        /// </param>
-        /// <param name="fromScript">
-        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
-        /// to find input scripts available for the selected language.
-        /// </param>
-        /// <param name="toScript">
-        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
-        /// scripts available for the selected combination of input language and input script.
-        /// </param>
-        /// <param name="content"> Array of the text to be transliterated. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("This method is no longer supported.");
-        }
-
         /// <summary>Transliterate Text. </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -259,31 +184,6 @@ namespace Azure.AI.Translation.Text
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
        {
-            throw new NotSupportedException("This method is no longer supported.");
-        }
-
-        /// <summary> Transliterate Text. </summary>
-        /// <param name="language">
-        /// Specifies the language of the text to convert from one script to another.
-        /// Possible languages are listed in the transliteration scope obtained by querying the service
-        /// for its supported languages.
-        /// </param>
-        /// <param name="fromScript">
-        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
-        /// to find input scripts available for the selected language.
-        /// </param>
-        /// <param name="toScript">
-        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
-        /// scripts available for the selected combination of input language and input script.
-        /// </param>
-        /// <param name="content"> Array of the text to be transliterated. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
-        {
             throw new NotSupportedException("This method is no longer supported.");
         }
 
