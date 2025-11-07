@@ -14,11 +14,10 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class SpecialHeadersVisitorTests
     {
-        [TestCase(true)]
-        [TestCase(false)]
-        public void RemovesSpecialHeaderParametersFromServiceMethod(bool addBackXMsClientRequestId)
+        [Test]
+        public void RemovesReturnClientRequestIdParameterFromServiceMethod()
         {
-            var visitor = new TestSpecialHeadersVisitor(addBackXMsClientRequestId);
+            var visitor = new TestSpecialHeadersVisitor();
             var parameters = CreateHttpParameters();
             var methodParameters = CreateMethodParameters();
             var responseModel = InputFactory.Model("foo");
@@ -54,7 +53,7 @@ namespace Azure.Generator.Tests.Visitors
                 visitors: () => [visitor]);
             var client = generator.Object.OutputLibrary.TypeProviders.OfType<ClientProvider>().First();
 
-            // Verify special headers are removed from both methods
+            // Verify return-client-request-id header is removed from both methods
             foreach (var serviceMethod in serviceMethods)
             {
                 var methodCollection = client.GetMethodCollectionByOperation(serviceMethod.Operation);
@@ -66,13 +65,14 @@ namespace Azure.Generator.Tests.Visitors
                 var restClientMethod = client.RestClient.Methods.First(m => m.Signature.Name == $"Create{serviceMethod.Name}Request");
 
                 visitor.InvokeVisit((restClientMethod as ScmMethodProvider)!);
-                Assert.AreEqual(1, serviceMethod.Parameters.Count);
+                // Should have 2 parameters now: x-ms-client-request-id and some-other-parameter
+                Assert.AreEqual(2, serviceMethod.Parameters.Count);
                 Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "return-client-request-id"));
-                Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
+                Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
                 Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "some-other-parameter"));
 
-                // Verify x-ms-client-request-id is added back in method body if specified
-                Assert.AreEqual(addBackXMsClientRequestId, restClientMethod.BodyStatements!.ToDisplayString().Contains("request.Headers.SetValue(\"x-ms-client-request-id\", request.ClientRequestId);"));
+                // Verify return-client-request-id is set in the method body
+                Assert.IsTrue(restClientMethod.BodyStatements!.ToDisplayString().Contains("request.Headers.SetValue(\"return-client-request-id\", \"true\");"));
             }
         }
 
@@ -169,10 +169,6 @@ namespace Azure.Generator.Tests.Visitors
 
         private class TestSpecialHeadersVisitor : SpecialHeadersVisitor
         {
-            public TestSpecialHeadersVisitor(bool addBackXMsClientRequestId = false)
-                : base(addBackXMsClientRequestId)
-            {
-            }
             public void InvokePreVisit(InputServiceMethod serviceMethod, ClientProvider client, ScmMethodProviderCollection methods)
             {
                 base.Visit(serviceMethod, client, methods);

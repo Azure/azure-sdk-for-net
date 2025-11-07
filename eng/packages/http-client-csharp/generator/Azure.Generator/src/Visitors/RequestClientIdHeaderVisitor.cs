@@ -14,11 +14,18 @@ using System.Linq;
 namespace Azure.Generator.Visitors
 {
     /// <summary>
-    /// Visitor that modifies service methods to set the `client-request-id` header.
+    /// Visitor that modifies service methods to set the `client-request-id` and `x-ms-client-request-id` headers.
     /// </summary>
     internal class RequestClientIdHeaderVisitor : ScmLibraryVisitor
     {
         private const string ClientRequestIdParameterName = "client-request-id";
+        private const string XMsClientRequestIdParameterName = "x-ms-client-request-id";
+        private readonly bool _includeXmsClientRequestIdInRequest;
+
+        public RequestClientIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
+        {
+            _includeXmsClientRequestIdInRequest = includeXmsClientRequestIdInRequest;
+        }
 
         protected override ScmMethodProviderCollection? Visit(
             InputServiceMethod serviceMethod,
@@ -27,12 +34,18 @@ namespace Azure.Generator.Visitors
         {
             var clientRequestIdParameter =
                 serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == ClientRequestIdParameterName);
+            var xMsClientRequestIdParameter =
+                serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == XMsClientRequestIdParameterName);
 
-            if (clientRequestIdParameter != null)
+            if (clientRequestIdParameter != null || xMsClientRequestIdParameter != null)
             {
-                // Update the service method to remove the client-request-id parameter from the request parameters
-                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.SerializedName != ClientRequestIdParameterName)]);
-                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.SerializedName != ClientRequestIdParameterName)]);
+                // Update the service method to remove the client-request-id and x-ms-client-request-id parameters from the request parameters
+                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p =>
+                    p.SerializedName != ClientRequestIdParameterName &&
+                    p.SerializedName != XMsClientRequestIdParameterName)]);
+                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p =>
+                    p.SerializedName != ClientRequestIdParameterName &&
+                    p.SerializedName != XMsClientRequestIdParameterName)]);
 
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
@@ -65,9 +78,20 @@ namespace Azure.Generator.Visitors
                 if (requestVariable != null)
                 {
                     // Set the client-request-id header
-                    newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
-                        clientRequestIdParameter.SerializedName,
-                        requestVariable.ClientRequestId()));
+                    if (clientRequestIdParameter != null)
+                    {
+                        newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
+                            clientRequestIdParameter.SerializedName,
+                            requestVariable.ClientRequestId()));
+                    }
+
+                    // Set the x-ms-client-request-id header if requested
+                    if (_includeXmsClientRequestIdInRequest && xMsClientRequestIdParameter != null)
+                    {
+                        newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
+                            xMsClientRequestIdParameter.SerializedName,
+                            requestVariable.ClientRequestId()));
+                    }
                 }
 
                 // Add the return statement back

@@ -18,14 +18,11 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class SpecialHeadersVisitor : ScmLibraryVisitor
     {
-        private readonly bool _includeClientRequestIdInRequest;
         private const string ReturnClientRequestIdParameterName = "return-client-request-id";
-        private const string XMsClientRequestIdParameterName = "x-ms-client-request-id";
-        private readonly Dictionary<InputServiceMethod, (InputMethodParameter? ReturnClientRequestId, InputMethodParameter? XmsClientRequestId)> _serviceMethodParameterMap;
+        private readonly Dictionary<InputServiceMethod, InputMethodParameter?> _serviceMethodParameterMap;
 
-        public SpecialHeadersVisitor(bool includeXmsClientRequestIdInRequest = false)
+        public SpecialHeadersVisitor()
         {
-            _includeClientRequestIdInRequest = includeXmsClientRequestIdInRequest;
             _serviceMethodParameterMap = [];
         }
 
@@ -36,19 +33,17 @@ namespace Azure.Generator.Visitors
         {
             var returnClientRequestIdParameter =
                 serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == ReturnClientRequestIdParameterName);
-            var xMsClientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == XMsClientRequestIdParameterName);
 
-            if (returnClientRequestIdParameter != null || xMsClientRequestIdParameter != null)
+            if (returnClientRequestIdParameter != null)
             {
-                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.SerializedName != ReturnClientRequestIdParameterName && p.SerializedName != XMsClientRequestIdParameterName)]);
-                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.SerializedName != ReturnClientRequestIdParameterName && p.SerializedName != XMsClientRequestIdParameterName)]);
+                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.SerializedName != ReturnClientRequestIdParameterName)]);
+                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.SerializedName != ReturnClientRequestIdParameterName)]);
 
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
 
                 // Store the parameters for the CreateRequest method
-                _serviceMethodParameterMap.TryAdd(serviceMethod, (returnClientRequestIdParameter, xMsClientRequestIdParameter));
+                _serviceMethodParameterMap.TryAdd(serviceMethod, returnClientRequestIdParameter);
 
                 // Reset the rest client so that its methods are rebuilt reflecting the new signatures
                 client.RestClient.Reset();
@@ -59,12 +54,10 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (method.ServiceMethod is null || !_serviceMethodParameterMap.TryGetValue(method.ServiceMethod, out var parameters))
+            if (method.ServiceMethod is null || !_serviceMethodParameterMap.TryGetValue(method.ServiceMethod, out var returnClientRequestIdParameter))
             {
                 return method;
             }
-
-            var (returnClientRequestIdParameter, xMsClientRequestIdParameter) = parameters;
 
             var originalBodyStatements = method.BodyStatements!.ToList();
 
@@ -100,16 +93,6 @@ namespace Azure.Generator.Visitors
                         Literal(value.ToString().ToLowerInvariant())
                     ]));
                 }
-            }
-
-            if (request != null && _includeClientRequestIdInRequest && xMsClientRequestIdParameter != null)
-            {
-                // Set the x-ms-client-request-id header
-                newStatements.Add(request.SetHeaders(
-                [
-                    Literal(xMsClientRequestIdParameter.SerializedName),
-                    request.Property("ClientRequestId")
-                ]));
             }
 
             // Add the return statement back

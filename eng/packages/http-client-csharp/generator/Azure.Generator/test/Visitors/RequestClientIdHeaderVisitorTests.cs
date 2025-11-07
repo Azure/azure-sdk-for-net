@@ -125,8 +125,73 @@ namespace Azure.Generator.Tests.Visitors
             return parameters;
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void RemovesXMsClientRequestIdHeaderParameterFromServiceMethods(bool includeInRequest)
+        {
+            var visitor = new TestRequestClientIdHeaderVisitor(includeInRequest);
+            var parameters = new List<InputParameter>
+            {
+                InputFactory.HeaderParameter(
+                    "x-ms-client-request-id",
+                    type: InputPrimitiveType.String,
+                    serializedName: "x-ms-client-request-id"),
+                InputFactory.HeaderParameter(
+                    "some-other-parameter",
+                    type: InputPrimitiveType.String,
+                    serializedName: "some-other-parameter")
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                InputFactory.MethodParameter(
+                    "x-ms-client-request-id",
+                    type: InputPrimitiveType.String,
+                    serializedName: "x-ms-client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.MethodParameter(
+                    "some-other-parameter",
+                    type: InputPrimitiveType.String,
+                    serializedName: "some-other-parameter",
+                    location: InputRequestLocation.Header)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
+            methodCollection = visitor.InvokeVisitServiceMethod(serviceMethod, clientProvider!, methodCollection);
+
+            // Verify parameter was removed from service method
+            Assert.AreEqual(1, serviceMethod.Parameters.Count);
+            Assert.IsFalse(serviceMethod.Parameters.Any(p => p.SerializedName == "x-ms-client-request-id"));
+            Assert.IsTrue(serviceMethod.Parameters.Any(p => p.SerializedName == "some-other-parameter"));
+
+            // Verify header is added to request body based on includeInRequest flag
+            var writer = new TypeProviderWriter(clientProvider!.RestClient);
+            var file = writer.Write();
+            var hasHeaderSet = file.Content.Contains("request.Headers.SetValue(\"x-ms-client-request-id\", request.ClientRequestId);");
+            Assert.AreEqual(includeInRequest, hasHeaderSet);
+        }
+
         private class TestRequestClientIdHeaderVisitor : RequestClientIdHeaderVisitor
         {
+            public TestRequestClientIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
+                : base(includeXmsClientRequestIdInRequest)
+            {
+            }
+
             public ScmMethodProviderCollection? InvokeVisitServiceMethod(
                 InputServiceMethod serviceMethod,
                 ClientProvider client,
