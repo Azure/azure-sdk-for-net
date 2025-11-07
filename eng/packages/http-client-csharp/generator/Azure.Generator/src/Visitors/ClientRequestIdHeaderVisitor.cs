@@ -62,10 +62,7 @@ namespace Azure.Generator.Visitors
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
 
-                if (hasRequestIdParameters)
-                {
-                    _serviceMethodParameterMap.TryAdd(serviceMethod, (returnClientRequestIdParameter, xMsClientRequestIdParameter, clientRequestIdParameter));
-                }
+                _serviceMethodParameterMap.TryAdd(serviceMethod, (returnClientRequestIdParameter, xMsClientRequestIdParameter, clientRequestIdParameter));
 
                 // Reset the rest client so that its methods are rebuilt.
                 client.RestClient.Reset();
