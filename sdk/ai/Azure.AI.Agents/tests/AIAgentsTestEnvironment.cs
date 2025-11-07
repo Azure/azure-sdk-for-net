@@ -16,6 +16,8 @@ namespace Azure.AI.Agents.Tests
         public string AGENT_NAME => GetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME");
         public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
 
+        public string COMPUTER_USE_DEPLOYMENT_NAME => GetRecordedVariable("COMPUTER_USE_DEPLOYMENT_NAME");
+
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
@@ -35,5 +37,6 @@ namespace Azure.AI.Agents.Tests
         public string CONTAINER_APP_RESOURCE_ID => GetRecordedVariable("CONTAINER_APP_RESOURCE_ID");
         public string INGRESS_SUBDOMAIN_SUFFIX => GetRecordedVariable("INGRESS_SUBDOMAIN_SUFFIX");
         public string OPENAI_FILE_ID => GetRecordedVariable("OPENAI_FILE_ID");
+        public string COMPUTER_SCREENSHOTS => GetRecordedVariable("COMPUTER_SCREENSHOTS");
     }
 }

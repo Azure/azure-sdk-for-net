@@ -6,6 +6,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -14,13 +16,13 @@ using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 
 namespace Azure.AI.Agents.Tests;
+#pragma warning disable OPENAICUA001
 
 public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 {
@@ -51,6 +53,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.None, "Hello, tell me a joke."},
         {ToolType.FunctionCall, "What is the nickname for Seattle, WA?" },
+        {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.OpenAPI, "What's the weather in Seattle?"},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
@@ -77,6 +80,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.None, "You are a prompt agent."},
         {ToolType.BingGrounding, "You are helpful agent."},
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
+        {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
+                               "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see." },
         {ToolType.OpenAPI, "You are helpful agent."},
         {ToolType.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
         {ToolType.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
@@ -258,6 +263,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
     }
 
+    protected static string GetTestFile(string fileName, [CallerFilePath] string pth = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        return Path.Combine(new string[] { dirName, "TestData", fileName });
+    }
+
     #region ToolHelper
     private async Task<VectorStore> GetVectorStore(OpenAIClient openAIClient)
     {
@@ -283,7 +294,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     /// </summary>
     /// <param name="toolType"></param>
     /// <returns></returns>
-    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, OpenAIClient oaiClient)
+    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, OpenAIClient oaiClient, string model=default)
     {
         ResponseTool tool = toolType switch
         {
@@ -326,9 +337,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 ),
                 strictModeEnabled: false
             ),
+            ToolType.ComputerUse => ResponseTool.CreateComputerTool(environment: new ComputerToolEnvironment("windows"), displayWidth: 1026, displayHeight: 769),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
-        return new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
         {
             Instructions = ToolInstructions[toolType],
             Tools = { tool },

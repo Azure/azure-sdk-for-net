@@ -5,18 +5,22 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Files;
 using OpenAI.Responses;
 
 namespace Azure.AI.Agents.Tests;
+#pragma warning disable OPENAICUA001
 
 public class AgentsTests : AgentsTestBase
 {
@@ -694,6 +698,115 @@ public class AgentsTests : AgentsTestBase
             }
         } while (funcionCalled);
         Assert.That(functionWasCalled, "The function was not called.");
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
+    }
+
+    private static ComputerCallOutputResponseItem ProcessComputerUseCallTest(ComputerCallResponseItem item, IReadOnlyDictionary<string, string> screenshots)
+    {
+        string currentScreenshot = item.Action.Kind switch
+        {
+            ComputerCallActionKind.Type => screenshots["search_typed"],
+            ComputerCallActionKind.KeyPress => (item.Action.KeyPressKeyCodes.Contains("Return") || item.Action.KeyPressKeyCodes.Contains("ENTER")) ? screenshots["search_results"] : screenshots["browser_search"],
+            ComputerCallActionKind.Click => screenshots["search_results"],
+            _ => screenshots["browser_search"]
+        };
+        if (currentScreenshot.StartsWith("data:image"))
+        {
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageUri: new Uri(currentScreenshot)));
+        }
+        return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: currentScreenshot));
+    }
+
+    private static async Task<string> UploadScreenshots(OpenAIClient openAIClient)
+    {
+        OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
+        Dictionary<string, string> screenshots = new() {
+            { "browser_search", (await fileClient.UploadFileAsync(GetTestFile("cua_browser_search.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "search_typed", (await fileClient.UploadFileAsync(GetTestFile("cua_search_typed.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "search_results", (await fileClient.UploadFileAsync(GetTestFile("cua_search_results.png"), FileUploadPurpose.Assistants)).Value.Id },
+        };
+        return JsonSerializer.Serialize(screenshots);
+    }
+
+    private static string UrlGetBase64Image(string name)
+    {
+        string imagePath = GetTestFile(name);
+        string base64EncodedData = Convert.ToBase64String(File.ReadAllBytes(imagePath));
+        return $"data:image/png;base64,{base64EncodedData}";
+    }
+
+    private static Dictionary<string, string> GetBase64Images()
+    {
+        return new() {
+            { "browser_search", UrlGetBase64Image("cua_browser_search.png")},
+            { "search_typed", UrlGetBase64Image("cua_search_typed.png")},
+            { "search_results", UrlGetBase64Image("cua_search_results.png")},
+        };
+    }
+
+    [RecordedTest]
+    [Ignore("File upload mecahnism is blocked by the Bug 4806071 (ADO), the URI mechanism will be available only on .NET 10" +
+            "(See issue https://github.com/dotnet/runtime/issues/96544 and a fix https://learn.microsoft.com/dotnet/core/compatibility/networking/10.0/uri-length-limits-removed)")]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestComputerUse(bool useFileUpload)
+    {
+        AgentsClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
+        // If the files are not in the foundry (used only for file upload),uncomment the code below and
+        // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
+        // comment out these lines and run the test again.
+        // string serializedScreenshots = await UploadScreenshots(openAIClient);
+        // Console.WriteLine(serializedScreenshots);
+        // End of file upload code.
+        Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : GetBase64Images();
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            definition: await GetAgentToolDefinition(ToolType.ComputerUse, openAIClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME),
+            options: null
+        );
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME);
+        AgentReference agentReference = new(name: agentVersion.Name)
+        {
+            Version = agentVersion.Version,
+        };
+        ResponseCreationOptions responseOptions = new();
+        responseOptions.TruncationMode = ResponseTruncationMode.Auto;
+        responseOptions.SetAgentReference(agentReference);
+
+        ResponseItem request = ResponseItem.CreateUserMessageItem(
+            [
+                ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
+                useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageUri: new Uri(screenshots["browser_search"]), imageDetailLevel: ResponseImageDetailLevel.High)
+            ]
+        );
+        List<ResponseItem> inputItems = [request];
+        bool computerUseCalled;
+        bool computerUseWasCalled = false;
+        int limitIteration = 10;
+        OpenAIResponse response;
+        do
+        {
+            response = await responseClient.CreateResponseAsync(
+                inputItems: inputItems,
+                options: responseOptions);
+            response = await WaitForRun(responseClient, response);
+            computerUseCalled = false;
+            foreach (ResponseItem responseItem in response.OutputItems)
+            {
+                inputItems.Add(responseItem);
+                if (responseItem is ComputerCallResponseItem computerCall)
+                {
+                    inputItems.Add(ProcessComputerUseCallTest(computerCall, screenshots));
+                    computerUseCalled = true;
+                    computerUseWasCalled = true;
+                }
+            }
+            limitIteration--;
+        } while (computerUseCalled && limitIteration > 0);
+        Assert.That(computerUseWasCalled, "The computer use tool was not called.");
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
         Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
     }
