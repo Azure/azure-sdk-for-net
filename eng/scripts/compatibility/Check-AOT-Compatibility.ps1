@@ -43,13 +43,9 @@ foreach ($line in $aotCompatLines) {
     }
 }
 
-exit 0
-
 ### Creating a test app ###
 
 Write-Host "Creating a test app to publish."
-
-$expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
 
 # Set the project reference path based on whether DirectoryName was provided
 if ([string]::IsNullOrEmpty($DirectoryName)) {
@@ -138,11 +134,12 @@ foreach ($line in $($publishOutput -split "`r`n"))
     }
 }
 
-Write-Host "There were $actualWarningCount warnings reported."
+### Compare to baselined warnings ###
 
-### Reading the contents of the text file path ###
+# Baselining warnings is only allowed for a couple of the Azure.Core.* packages, hard code the file path to the expected
+# warnings as a backdoor for those packages.
 
-Write-Host "Reading the list of patterns that represent the list of expected warnings."
+$expectedWarningsPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\tests\compatibility\ExpectedAotWarnings.txt"
 
 if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
@@ -150,13 +147,11 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
 } else {
     # If no correct expected warnings were provided, check that there are no warnings reported.
 
-    Write-Host "The specified file does not exist. Assuming no warnings are expected."
-
     $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
-      Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
+      Write-Host "Found $numWarnings AOT warnings:" -ForegroundColor Red
       foreach ($warning in $warnings) {
         Write-Host $warning -ForegroundColor Yellow
       }
@@ -174,9 +169,11 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
 
 ### Comparing expected warnings to the publish output ###
 
+Write-Host "There were $actualWarningCount warnings reported from the publish."
+
 $numExpectedWarnings = $expectedWarnings.Count
 
-Write-Host "Checking against the list of expected warnings. There are $numExpectedWarnings warnings expected."
+Write-Host "There are $numExpectedWarnings warnings expected."
 
 $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
