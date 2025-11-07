@@ -64,7 +64,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [PlaybackOnly("Requires AKS environment with Kubernetes token proxy configured.")]
+        [Ignore("Requires AKS environment with Kubernetes token proxy configured.")]
         public async Task AuthenticateWithWorkloadIdentity_KubernetesProxyWithCaFile()
         {
             // This test requires the following environment variables to be set:
@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [PlaybackOnly("Requires AKS environment with Kubernetes token proxy configured.")]
+        [Ignore("Requires AKS environment with Kubernetes token proxy configured.")]
         public async Task AuthenticateWithWorkloadIdentity_KubernetesProxyWithCaData()
         {
             // This test requires the following environment variables to be set:
@@ -171,7 +171,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [PlaybackOnly("Requires AKS environment with Kubernetes token proxy configured.")]
+        [Ignore("Requires AKS environment with Kubernetes token proxy configured.")]
         public async Task AuthenticateWithWorkloadIdentity_KubernetesProxyWithSniName()
         {
             // This test requires the following environment variables to be set:
