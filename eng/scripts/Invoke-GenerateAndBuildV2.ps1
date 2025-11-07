@@ -65,14 +65,22 @@ function Update-PackageVersionSuffix {
     
     # Load the csproj file as XML
     [xml]$csproj = Get-Content $csprojPath
-    $versionNode = $csproj.Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
     
-    if (-not $versionNode) {
+    # Find the PropertyGroup that contains the Version element
+    $versionElement = $null
+    foreach ($propertyGroup in $csproj.Project.PropertyGroup) {
+        if ($propertyGroup.Version) {
+            $versionElement = $propertyGroup.SelectSingleNode("Version")
+            break
+        }
+    }
+    
+    if (-not $versionElement) {
         Write-Warning "No Version element found in $csprojPath"
         return
     }
     
-    $currentVersion = $versionNode.InnerText
+    $currentVersion = $versionElement.'#text'
     Write-Host "Current version: $currentVersion"
     
     $newVersion = $currentVersion
@@ -104,7 +112,7 @@ function Update-PackageVersionSuffix {
     
     # Update and save if version changed
     if ($versionChanged) {
-        $versionNode.InnerText = $newVersion
+        $versionElement.'#text' = $newVersion
         $csproj.Save($csprojPath)
         Write-Host "Successfully updated version to $newVersion in $csprojPath"
     }
