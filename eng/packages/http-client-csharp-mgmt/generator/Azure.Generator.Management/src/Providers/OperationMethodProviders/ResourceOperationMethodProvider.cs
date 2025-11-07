@@ -98,7 +98,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <summary>
         /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
         /// </summary>
-        private static void BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
+        internal static void BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
         {
             if (existingXmlDocs == null)
             {

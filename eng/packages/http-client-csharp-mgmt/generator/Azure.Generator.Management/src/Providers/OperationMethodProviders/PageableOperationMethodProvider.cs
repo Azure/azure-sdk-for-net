@@ -72,10 +72,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new MethodProvider(
                 pageableOperationMethodProvider._signature,
                 pageableOperationMethodProvider._bodyStatements,
                 pageableOperationMethodProvider._enclosingType);
+
+            // Add enhanced XML documentation with structured tags
+            ResourceOperationMethodProvider.BuildEnhancedXmlDocs(
+                pageableOperationMethodProvider._method,
+                pageableOperationMethodProvider._convenienceMethod.Signature.Description,
+                pageableOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
         }
 
         protected MethodSignature CreateSignature()
