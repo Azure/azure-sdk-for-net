@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
@@ -34,7 +33,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
-            Properties = something is null && prop1 is null && nestedPropertyProperties is null ? default : new FooProperties(something, (prop1 ?? new ChangeTrackingList<string>()).ToList(), new NestedFooModel(nestedPropertyProperties, null));
+            Properties = new FooProperties(something, prop1, new NestedFooModel(nestedPropertyProperties, null));
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>

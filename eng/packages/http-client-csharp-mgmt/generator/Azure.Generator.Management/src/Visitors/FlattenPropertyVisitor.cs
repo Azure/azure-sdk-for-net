@@ -133,7 +133,7 @@ namespace Azure.Generator.Management.Visitors
                                     // If the property is not null, we can use the existing value.
                                     updatedInstanceParameters.Add(
                                     new TernaryConditionalExpression(
-                                        BuildConditionExpression(value, parameterMap),
+                                        BuildConditionExpression(value, parameterMap)!,
                                         Default,
                                         New.Instance(variable.Type, BuildConstructorParameters(variable.Type, value, parameterMap))));
                                 }
@@ -154,7 +154,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private static ValueExpression BuildConditionExpression(List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
+        private static ValueExpression? BuildConditionExpression(List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
         {
             ScopedApi<bool>? result = null;
             foreach (var (flattenProperty, _) in flattenedProperties)
@@ -171,7 +171,7 @@ namespace Azure.Generator.Management.Visitors
                         result = result.And(updatedParameter.Is(Null));
                     }
                 }
-                else if (publicConstructor && propertyParameter.Type.IsValueType && !propertyParameter.Type.IsNullable)
+                else if (publicConstructor && !propertyParameter.Type.IsNullable)
                 {
                     continue;
                 }
@@ -187,7 +187,7 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
             }
-            return result!;
+            return result;
         }
 
         // Use the flattened property as the parameter, if it is an overridden value type, we need to use the Value property.
@@ -238,7 +238,7 @@ namespace Azure.Generator.Management.Visitors
 
                     parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
                         ? parameter.Property("Value")
-                        : IsNonReadOnlyMemoryList(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
+                        : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
                     // only increase flattenedPropertyIndex when we use a flattened property
                     flattenedPropertyIndex++;
@@ -281,6 +281,9 @@ namespace Azure.Generator.Management.Visitors
                 }
                 return additionalPropertyIndex;
             }
+
+            bool NeedNullCoalesce(ParameterProvider parameter)
+                => (!publicConstructor || parameter.Type.IsNullable) && IsNonReadOnlyMemoryList(parameter);
 
             bool IsNonReadOnlyMemoryList(ParameterProvider parameter) =>
                 parameter.Type is { IsList: true, IsReadOnlyMemory: false };
@@ -602,12 +605,17 @@ namespace Azure.Generator.Management.Visitors
                             if (currentInternalProperty is not null)
                             {
                                 var properties = value.Where(x => flattenedProperties.Contains(x.FlattenedProperty)).ToList();
-                                var ternaryConditionalExpression = new TernaryConditionalExpression(
-                                    BuildConditionExpression(properties, publicConstructor: true),
+                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: true);
+                                var instanceExpression = New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: true));
+                                var assignmentExpression =
+                                    conditionExpression is null
+                                    ? instanceExpression
+                                    : new TernaryConditionalExpression(
+                                    conditionExpression,
                                     Default,
-                                    New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: true))
+                                    instanceExpression
                                     );
-                                updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(ternaryConditionalExpression).Terminate());
+                                updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(assignmentExpression).Terminate());
                             }
                         }
                         else

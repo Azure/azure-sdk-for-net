@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
@@ -39,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             StringArray = new ChangeTrackingList<string>();
             Property = propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value);
             AnotherProperty = anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value);
-            FlattenedNestedProperty = innerProp2 is null && middleProp2 is null && prop1 is null ? default : new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, (prop1 ?? new ChangeTrackingList<string>()).ToList(), prop2);
+            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
         }
 
