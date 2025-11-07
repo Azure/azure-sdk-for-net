@@ -25,6 +25,5 @@ steps:
         arguments: >-
           -ServiceDirectory ${{ parameters.ServiceDirectory }}
           -PackageName ${{ artifact.name }}
-          ${{ if ne(artifact.directoryName, '') }}:
           -DirectoryName ${{ artifact.directoryName }}
         workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
