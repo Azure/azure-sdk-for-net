@@ -108,7 +108,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                 targetWorkerCount = int.MaxValue;
             }
 
-            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
+            string details = $"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
+            _logger.LogFunctionScaleVote(_functionId, targetWorkerCount, (int)messageCount, concurrency, details);
 
             return new TargetScalerResult
             {
