@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
+    <TargetFrameworks>net9.0</TargetFrameworks>
 		<RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
   </PropertyGroup>
 

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
+    <TargetFrameworks>net9.0</TargetFrameworks>
 		<RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
     <!--Ensure all dependencies are copied to the output directory so that they can be packaged up for npm.-->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
