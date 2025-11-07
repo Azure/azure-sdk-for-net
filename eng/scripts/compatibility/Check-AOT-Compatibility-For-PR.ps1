@@ -37,9 +37,12 @@ $failedAotChecks = $false
 foreach ($package in $filteredPackages) {
     Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName) Service $($package.ServiceDirectory)"
     
-    & $PSScriptRoot/Check-AOT-Compatibility.ps1 `
-        -PackageName $package.ArtifactName `
+    $scriptPath = Join-Path $PSScriptRoot "Check-AOT-Compatibility.ps1"
+    Write-Host "Calling: $scriptPath -ServiceDirectory $($package.ServiceDirectory) -PackageName $($package.ArtifactName)"
+    
+    & $scriptPath `
         -ServiceDirectory $package.ServiceDirectory `
+        -PackageName $package.ArtifactName
 
     if ($LASTEXITCODE -ne 0) {
         $failedAotChecks = $true
