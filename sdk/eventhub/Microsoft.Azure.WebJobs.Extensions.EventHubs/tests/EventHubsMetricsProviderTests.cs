@@ -211,7 +211,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        public async Task CreateTriggerMetrics_HandlesExceptions()
+        public void CreateTriggerMetrics_HandlesExceptions()
         {
             // StorageException
             _mockCheckpointStore
@@ -225,11 +225,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 new TestPartitionProperties()
             };
 
-            var metrics = await _metricsProvider.GetMetricsAsync();
-
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.EventCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _metricsProvider.GetMetricsAsync());
+            Assert.AreEqual(ex.Message, _errorMessage);
             AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, _errorMessage);
 
             // Generic Exception
@@ -244,11 +241,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 new TestPartitionProperties()
             };
 
-            metrics = await _metricsProvider.GetMetricsAsync();
-
-            Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreEqual(1, metrics.EventCount);
-            Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
+            var genericException = Assert.ThrowsAsync<Exception>(async () => await _metricsProvider.GetMetricsAsync());
+            Assert.AreEqual(genericException.Message, _errorMessage);
             AssertGetCheckpointAsyncErrorLogs(_partitions.First().Id, _errorMessage);
 
             _loggerProvider.ClearAllLogMessages();
@@ -260,9 +254,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.That(logs.Any(l =>
                     l.Level == LogLevel.Debug),
                 $"Requesting cancellation of other checkpoint tasks. Error while getting checkpoint for eventhub '{_eventHubName}', partition '{partitionId}': {message}");
-            Assert.That(logs.Any(l =>
-                    l.Level == LogLevel.Warning),
-                $"Encountered an exception while getting checkpoints for Event Hub '{_eventHubName}' used for scaling. Error: {message}");
         }
 
         [TestCase(false, 0, -1, -1, 0)] // Microsoft.Azure.Functions.Worker.Extensions.EventHubs < 5.0.0, auto created checkpoint, no events sent
@@ -322,14 +313,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        public async Task CreateTriggerMetric_CancellationCascades_AfterFirstFailure()
+        public void CreateTriggerMetric_CancellationCascades_AfterFirstFailure()
         {
             _partitions = new List<PartitionProperties>
-            {
-                new TestPartitionProperties(partitionId: "0"),
-                new TestPartitionProperties(partitionId: "1"),
-                new TestPartitionProperties(partitionId: "2")
-            };
+             {
+                 new TestPartitionProperties(partitionId: "0"),
+                 new TestPartitionProperties(partitionId: "1"),
+                 new TestPartitionProperties(partitionId: "2")
+             };
 
             _checkpoints = Array.Empty<EventProcessorCheckpoint>();
 
@@ -353,9 +344,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 .Returns<string, string, string, string, CancellationToken>((ns, hub, cg, pid, ct) =>
                     WaitTillCancelled(ct, pid));
 
-            var metrics = await _metricsProvider.GetMetricsAsync();
+            var ex = Assert.ThrowsAsync<Exception>(async () => await _metricsProvider.GetMetricsAsync());
+            Assert.AreEqual(_errorMessage, ex.Message);
 
-            Assert.AreEqual(3, metrics.PartitionCount);
             var logs = _loggerProvider.GetAllLogMessages().ToList();
 
             AssertGetCheckpointAsyncErrorLogs("0", _errorMessage);
