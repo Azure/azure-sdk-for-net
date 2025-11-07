@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HealthModelPatch(identity, tags, healthModelUpdateDiscovery is null ? default : new HealthModelUpdateProperties(healthModelUpdateDiscovery, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new HealthModelPatch(identity, tags, healthModelUpdateDiscovery is null ? default : new HealthModelUpdateProperties(healthModelUpdateDiscovery, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A signal definition in a health model. </summary>
