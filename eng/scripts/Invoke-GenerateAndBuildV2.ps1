@@ -112,7 +112,7 @@ function Update-PackageVersionSuffix {
     
     # Update and save if version changed
     if ($versionChanged) {
-        $versionElement.'#text' = $newVersion
+        $versionElement.InnerText = $newVersion
         $csproj.Save($csprojPath)
         Write-Host "Successfully updated version to $newVersion in $csprojPath"
     }
