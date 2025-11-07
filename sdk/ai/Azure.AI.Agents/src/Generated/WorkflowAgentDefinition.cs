@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The workflow specification in CSDL format. </summary>
+    /// <summary> The workflow agent definition. </summary>
     public partial class WorkflowAgentDefinition : AgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>

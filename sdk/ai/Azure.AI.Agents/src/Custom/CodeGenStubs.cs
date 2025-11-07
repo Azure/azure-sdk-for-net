@@ -5,8 +5,6 @@ namespace Azure.AI.Agents;
 
 // Public type renames
 
-[CodeGenType("AgentContainerObject")] public partial class AgentContainer { }
-[CodeGenType("AgentContainerOperationObject")] public partial class AgentContainerOperation { }
 [CodeGenType("ConversationResource")] public partial class AgentConversation { }
 [CodeGenType("AgentId")] public partial class AgentInfo { }
 [CodeGenType("AgentObject")] public partial class AgentRecord { }

@@ -307,10 +307,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<DeviceRegistrySchemaVersionResource>> UpdateAsync(DeviceRegistrySchemaVersionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceRegistrySchemaVersionResource>> UpdateAsync(WaitUntil waitUntil, DeviceRegistrySchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -325,11 +326,14 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _schemaVersionsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeviceRegistrySchemaVersionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
-                if (response.Value == null)
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceRegistryArmOperation<DeviceRegistrySchemaVersionResource> operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaVersionResource>(Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -359,10 +363,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<DeviceRegistrySchemaVersionResource> Update(DeviceRegistrySchemaVersionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceRegistrySchemaVersionResource> Update(WaitUntil waitUntil, DeviceRegistrySchemaVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -377,11 +382,14 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _schemaVersionsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeviceRegistrySchemaVersionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
-                if (response.Value == null)
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceRegistryArmOperation<DeviceRegistrySchemaVersionResource> operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaVersionResource>(Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                return Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {

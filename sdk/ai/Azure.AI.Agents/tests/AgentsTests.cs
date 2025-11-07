@@ -6,10 +6,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
@@ -258,18 +260,6 @@ public class AgentsTests : AgentsTestBase
             allItems.Add(item);
         }
         Assert.That(allItems, Has.Count.EqualTo(40));
-    }
-
-    [RecordedTest]
-    [Ignore("Operation not working yet")]
-    public async Task TestAgentContainerCRUD()
-    {
-        AgentClient client = GetTestClient();
-
-        await foreach (AgentContainerOperation agentContainerOperation in client.GetAgentContainerOperationsAsync("fake-agent-name"))
-        {
-            Assert.Fail("Shouldn't have found any container operations for a fake agent!");
-        }
     }
 
     [RecordedTest]
@@ -600,7 +590,7 @@ public class AgentsTests : AgentsTestBase
         };
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(agentReference);
-        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
+        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [request],
             responseOptions);
@@ -611,6 +601,57 @@ public class AgentsTests : AgentsTestBase
         {
             Assert.That(response.GetOutputText(), Does.Contain(expectedResponse), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
         }
+    }
+
+    [RecordedTest]
+    public async Task TestFunctions()
+    {
+        AgentClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, openAIClient))
+        );
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentReference agentReference = new(name: agentVersion.Name)
+        {
+            Version = agentVersion.Version,
+        };
+        ResponseCreationOptions responseOptions = new();
+        responseOptions.SetAgentReference(agentReference);
+        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[ToolType.FunctionCall]);
+        List<ResponseItem> inputItems = [request];
+        bool funcionCalled;
+        bool functionWasCalled = false;
+        OpenAIResponse response;
+        do
+        {
+            response = await responseClient.CreateResponseAsync(
+                inputItems: inputItems,
+                options: responseOptions);
+            response = await WaitForRun(responseClient, response);
+            funcionCalled = false;
+            foreach (ResponseItem responseItem in response.OutputItems)
+            {
+                inputItems.Add(responseItem);
+                if (responseItem is FunctionCallResponseItem functionToolCall)
+                {
+                    Assert.That(functionToolCall.FunctionName, Is.EqualTo("GetCityNicknameForTest"));
+                    using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.FunctionArguments);
+                    string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+                    inputItems.Add(ResponseItem.CreateFunctionCallOutputItem(
+                        callId: functionToolCall.CallId,
+                        functionOutput: GetCityNicknameForTest(locationArgument)
+                    ));
+                    funcionCalled = true;
+                    functionWasCalled = true;
+                }
+            }
+        } while (funcionCalled);
+        Assert.That(functionWasCalled, "The function was not called.");
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
     }
 
     [RecordedTest]

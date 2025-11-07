@@ -10,7 +10,7 @@ namespace OpenAI
 {
     /// <summary>
     /// Indicates that the model should use a built-in tool to generate a response.
-    /// [Learn more about built-in tools](/docs/guides/tools).
+    /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
     internal readonly partial struct ToolChoiceObjectType : IEquatable<ToolChoiceObjectType>
     {

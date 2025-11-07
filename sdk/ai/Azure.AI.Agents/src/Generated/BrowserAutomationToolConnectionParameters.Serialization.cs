@@ -35,8 +35,8 @@ namespace Azure.AI.Agents
             {
                 throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionParameters)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -79,13 +79,13 @@ namespace Azure.AI.Agents
             {
                 return null;
             }
-            string id = default;
+            string projectConnectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    id = prop.Value.GetString();
+                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationToolConnectionParameters(id, additionalBinaryDataProperties);
+            return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
