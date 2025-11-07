@@ -189,14 +189,14 @@ namespace Azure.Generator.Tests.Visitors
         public void RemovesReturnClientRequestIdParameterFromServiceMethod()
         {
             var visitor = new TestClientRequestIdHeaderVisitor();
-            var parameters = CreateHttpParametersWithReturnClientRequestId();
-            var methodParameters = CreateMethodParametersWithReturnClientRequestId();
             var responseModel = InputFactory.Model("foo");
             var serviceMethods = new List<InputServiceMethod>();
 
             // Create two operations and service methods
             for (int i = 1; i <= 2; i++)
             {
+                var parameters = CreateHttpParametersWithReturnClientRequestId();
+                var methodParameters = CreateMethodParametersWithReturnClientRequestId();
                 var operation = InputFactory.Operation(
                     $"operation{i}",
                     parameters: parameters,

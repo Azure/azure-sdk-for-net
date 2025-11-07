@@ -82,12 +82,9 @@ namespace Azure.Generator.Visitors
             {
                 var originalBodyStatements = method.BodyStatements!.ToList();
 
-                // Exclude the last statement which is the return statement. We will add it back later.
-                var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
-
                 // Find the request variable
                 VariableExpression? requestVariable = null;
-                foreach (var statement in newStatements)
+                foreach (var statement in originalBodyStatements)
                 {
                     if (statement is ExpressionStatement
                         {
@@ -98,6 +95,7 @@ namespace Azure.Generator.Visitors
                         if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
                         {
                             requestVariable = variable;
+                            break;
                         }
                     }
                 }
@@ -107,19 +105,22 @@ namespace Azure.Generator.Visitors
                 {
                     if (bool.TryParse(returnClientRequestIdParameter.DefaultValue.Value.ToString(), out bool value))
                     {
+                        // Exclude the last statement which is the return statement. We will add it back later.
+                        var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
+
                         // Set the return-client-request-id header
                         newStatements.Add(request.SetHeaders(
                         [
                             Literal(returnClientRequestIdParameter.SerializedName),
                             Literal(value.ToString().ToLowerInvariant())
                         ]));
+
+                        // Add the return statement back
+                        newStatements.Add(originalBodyStatements[^1]);
+
+                        method.Update(bodyStatements: newStatements);
                     }
                 }
-
-                // Add the return statement back
-                newStatements.Add(originalBodyStatements[^1]);
-
-                method.Update(bodyStatements: newStatements);
             }
 
             return method;
@@ -137,12 +138,9 @@ namespace Azure.Generator.Visitors
                 var createRequestMethod = client.RestClient.GetCreateRequestMethod(serviceMethod.Operation);
                 var originalBodyStatements = createRequestMethod.BodyStatements!.ToList();
 
-                // Exclude the last statement which is the return statement. We will add it back later.
-                var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
-
                 // Find the request variable
                 HttpRequestApi? requestVariable = null;
-                foreach (var statement in newStatements)
+                foreach (var statement in originalBodyStatements)
                 {
                     if (statement is ExpressionStatement
                         {
@@ -153,12 +151,16 @@ namespace Azure.Generator.Visitors
                         if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
                         {
                             requestVariable = variable.ToApi<HttpRequestApi>();
+                            break;
                         }
                     }
                 }
 
                 if (requestVariable != null)
                 {
+                    // Exclude the last statement which is the return statement. We will add it back later.
+                    var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
+
                     // Set the client-request-id header
                     if (clientRequestIdParameter != null)
                     {
@@ -174,11 +176,11 @@ namespace Azure.Generator.Visitors
                             xMsClientRequestIdParameter.SerializedName,
                             requestVariable.ClientRequestId()));
                     }
-                }
 
-                // Add the return statement back
-                newStatements.Add(originalBodyStatements[^1]);
-                createRequestMethod.Update(bodyStatements: newStatements);
+                    // Add the return statement back
+                    newStatements.Add(originalBodyStatements[^1]);
+                    createRequestMethod.Update(bodyStatements: newStatements);
+                }
             }
 
             return methods;
