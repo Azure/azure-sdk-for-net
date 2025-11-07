@@ -93,7 +93,7 @@ OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(model
 ResponseCreationOptions responseOptions = new();
 responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
 OpenAIResponse response = responseClient.CreateResponse(
     [request],
     responseOptions);
@@ -105,7 +105,7 @@ OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(model
 ResponseCreationOptions responseOptions = new();
 responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
 OpenAIResponse response = await responseClient.CreateResponseAsync(
     [request],
     responseOptions);
