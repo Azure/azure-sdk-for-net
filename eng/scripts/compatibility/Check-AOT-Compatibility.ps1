@@ -5,13 +5,11 @@ param(
 
 ### Check if AOT compatibility is opted out ###
 
-# Set up paths like other eng scripts do
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
 $EngDir = Join-Path $RepoRoot "eng"
 $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
 $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "aot-compat-$([System.Guid]::NewGuid()).txt"
 
-# Get the AotCompatOptOut property value from the project
 dotnet msbuild `
     /nologo `
     /t:GetAotCompatOptOut `
@@ -162,11 +160,10 @@ if (Test-Path $expectedWarningsPath -PathType Leaf) {
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
     Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
+    Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $ServiceDirectory $PackageName'"
 
     exit $warnings.Count
 }
-
-### Comparing expected warnings to the publish output ###
 
 Write-Host "There were $actualWarningCount warnings reported from the publish."
 
@@ -193,8 +190,10 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
   Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
+  Write-Host "To run locally, run eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $ServiceDirectory $PackageName"
   exit 2
 }
-
+  
 Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
+Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $ServiceDirectory $PackageName'"
 exit $warnings.Count
