@@ -13,17 +13,17 @@ using Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
 
 namespace Specs.Azure.ClientGenerator.Core.Access
 {
-    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInInternal))]
-    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInInternal))]
-    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInPublic))]
-    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInPublic))]
     [ModelReaderWriterBuildable(typeof(AbstractModel))]
     [ModelReaderWriterBuildable(typeof(BaseModel))]
     [ModelReaderWriterBuildable(typeof(InnerModel))]
+    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInInternal))]
+    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInPublic))]
     [ModelReaderWriterBuildable(typeof(OuterModel))]
+    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInInternal))]
+    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInPublic))]
     [ModelReaderWriterBuildable(typeof(RealModel))]
-    [ModelReaderWriterBuildable(typeof(UnknownAbstractModel))]
     [ModelReaderWriterBuildable(typeof(SharedModel))]
+    [ModelReaderWriterBuildable(typeof(UnknownAbstractModel))]
     public partial class SpecsAzureClientGeneratorCoreAccessContext : ModelReaderWriterContext
     {
     }

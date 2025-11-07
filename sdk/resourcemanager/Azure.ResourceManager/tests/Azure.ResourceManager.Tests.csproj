@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.9.0" />
 
     <!-- TEMP: Overrides until central packages bumped, needed for new extensions -->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" VersionOverride="8.0.2" />
   </ItemGroup>

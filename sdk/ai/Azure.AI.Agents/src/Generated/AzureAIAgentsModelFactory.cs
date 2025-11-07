@@ -82,7 +82,7 @@ namespace Azure.AI.Agents
             return new RaiConfig(raiPolicyName, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The workflow specification in CSDL format. </summary>
+        /// <summary> The workflow agent definition. </summary>
         /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
@@ -401,19 +401,19 @@ namespace Azure.AI.Agents
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
-        /// <param name="projectConnection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolParameters"/> instance for mocking. </returns>
-        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters projectConnection = default)
+        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
         {
-            return new BrowserAutomationToolParameters(projectConnection, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
-        /// <param name="id"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
-        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string id = default)
+        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = default)
         {
-            return new BrowserAutomationToolConnectionParameters(id, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
@@ -506,9 +506,9 @@ namespace Azure.AI.Agents
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
-        /// <param name="updateDelay"> The amount of time to wait after inactivity before updating memories with messages from the call (e.g., '0s', '5m'). Defaults to '60s'. </param>
+        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchTool"/> instance for mocking. </returns>
-        public static MemorySearchTool MemorySearchTool(string memoryStoreName = default, string scope = default, MemorySearchOptions searchOptions = default, TimeSpan? updateDelay = default)
+        public static MemorySearchTool MemorySearchTool(string memoryStoreName = default, string scope = default, MemorySearchOptions searchOptions = default, int? updateDelay = default)
         {
             return new MemorySearchTool(
                 ToolType.MemorySearch,
@@ -736,57 +736,6 @@ namespace Azure.AI.Agents
         public static DeleteAgentVersionResponse DeleteAgentVersionResponse(string name = default, string version = default, bool deleted = default)
         {
             return new DeleteAgentVersionResponse("agent.version.deleted", name, version, deleted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The container operation for a specific version of an agent. </summary>
-        /// <param name="id"> The ID of the container operation. This id is unique identifier across the system. </param>
-        /// <param name="agentId"> The ID of the agent. </param>
-        /// <param name="agentVersionId"> The ID of the agent version. </param>
-        /// <param name="status"> The status of the container operation. </param>
-        /// <param name="error"> The error of the container operation, if any. </param>
-        /// <param name="container"> The container of the specific version of an agent. </param>
-        /// <returns> A new <see cref="Agents.AgentContainerOperation"/> instance for mocking. </returns>
-        public static AgentContainerOperation AgentContainerOperation(string id = default, string agentId = default, string agentVersionId = default, AgentContainerOperationStatus status = default, AgentContainerOperationError error = default, AgentContainer container = default)
-        {
-            return new AgentContainerOperation(
-                id,
-                agentId,
-                agentVersionId,
-                status,
-                error,
-                container,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The error details of the container operation, if any. </summary>
-        /// <param name="code"> The error code of the container operation, if any. </param>
-        /// <param name="type"> The error type of the container operation, if any. </param>
-        /// <param name="message"> The error message of the container operation, if any. </param>
-        /// <returns> A new <see cref="Agents.AgentContainerOperationError"/> instance for mocking. </returns>
-        public static AgentContainerOperationError AgentContainerOperationError(string code = default, string @type = default, string message = default)
-        {
-            return new AgentContainerOperationError(code, @type, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The details of the container of a specific version of an agent. </summary>
-        /// <param name="status"> The status of the container of a specific version of an agent. </param>
-        /// <param name="maxReplicas"> The maximum number of replicas for the container. Default is 1. </param>
-        /// <param name="minReplicas"> The minimum number of replicas for the container. Default is 1. </param>
-        /// <param name="errorMessage"> The error message if the container failed to operate, if any. </param>
-        /// <param name="createdAt"> The creation time of the container. </param>
-        /// <param name="updatedAt"> The last update time of the container. </param>
-        /// <returns> A new <see cref="Agents.AgentContainer"/> instance for mocking. </returns>
-        public static AgentContainer AgentContainer(AgentContainerStatus status = default, int? maxReplicas = default, int? minReplicas = default, string errorMessage = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default)
-        {
-            return new AgentContainer(
-                "agent.container",
-                status,
-                maxReplicas,
-                minReplicas,
-                errorMessage,
-                createdAt,
-                updatedAt,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A retrieved memory item from memory search. </summary>
@@ -1127,7 +1076,7 @@ namespace Azure.AI.Agents
         /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
         /// <param name="cachedTokens">
         /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](/docs/guides/prompt-caching).
+        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
         /// </param>
         /// <returns> A new <see cref="OpenAI.MemoryStoreOperationUsageInputTokensDetails"/> instance for mocking. </returns>
         public static MemoryStoreOperationUsageInputTokensDetails MemoryStoreOperationUsageInputTokensDetails(int cachedTokens = default)

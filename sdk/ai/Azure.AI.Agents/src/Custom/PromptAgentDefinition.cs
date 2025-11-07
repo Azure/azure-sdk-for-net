@@ -11,8 +11,8 @@ namespace Azure.AI.Agents;
 
 [CodeGenType("PromptAgentDefinition")]
 [CodeGenSerialization(nameof(Tools), DeserializationValueHook = nameof(DeserializeToolsValue))]
-[CodeGenSerialization(propertyName: nameof(ReasoningOptions), PropertySerializationName = "reasoning", DeserializationValueHook = nameof(DeserializeReasoningValue))]
-[CodeGenSerialization(propertyName: nameof(TextOptions), PropertySerializationName = "text", DeserializationValueHook = nameof(DeserializeTextValue))]
+[CodeGenSerialization(propertyName: nameof(ReasoningOptions), SerializationName = "reasoning", DeserializationValueHook = nameof(DeserializeReasoningValue))]
+[CodeGenSerialization(propertyName: nameof(TextOptions), SerializationName = "text", DeserializationValueHook = nameof(DeserializeTextValue))]
 public partial class PromptAgentDefinition
 {
     /// <summary>

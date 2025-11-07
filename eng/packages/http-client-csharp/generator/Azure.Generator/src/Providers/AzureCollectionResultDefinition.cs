@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -150,9 +151,9 @@ namespace Azure.Generator.Providers
             [
                 Declare("items", new CSharpType(typeof(List<>), typeof(BinaryData)),
                     New.Instance(new CSharpType(typeof(List<>), typeof(BinaryData))), out itemsVariable),
-                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable)
+                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<object>>(), out var itemVariable)
                 {
-                    itemsVariable.Invoke("Add", [Static<BinaryData>().Invoke("FromObjectAsJson", [itemVariable])]).Terminate()
+                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write), new ValueExpression[] { itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions") })).Terminate()
                 }
             ];
         }

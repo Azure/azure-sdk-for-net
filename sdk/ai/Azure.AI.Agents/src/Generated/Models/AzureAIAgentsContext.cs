@@ -12,9 +12,6 @@ namespace Azure.AI.Agents
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(A2ATool))]
-    [ModelReaderWriterBuildable(typeof(AgentContainer))]
-    [ModelReaderWriterBuildable(typeof(AgentContainerOperation))]
-    [ModelReaderWriterBuildable(typeof(AgentContainerOperationError))]
     [ModelReaderWriterBuildable(typeof(AgentConversation))]
     [ModelReaderWriterBuildable(typeof(AgentConversationCreationOptions))]
     [ModelReaderWriterBuildable(typeof(AgentConversationDeletionResult))]
@@ -228,7 +225,6 @@ namespace Azure.AI.Agents
     [ModelReaderWriterBuildable(typeof(ResponseUsage))]
     [ModelReaderWriterBuildable(typeof(SharepointAgentTool))]
     [ModelReaderWriterBuildable(typeof(SharepointGroundingToolParameters))]
-    [ModelReaderWriterBuildable(typeof(StartAgentContainerRequest))]
     [ModelReaderWriterBuildable(typeof(StructuredInputDefinition))]
     [ModelReaderWriterBuildable(typeof(StructuredOutputDefinition))]
     [ModelReaderWriterBuildable(typeof(ToolArgumentBinding))]
@@ -254,10 +250,10 @@ namespace Azure.AI.Agents
     [ModelReaderWriterBuildable(typeof(UnknownToolChoiceObject))]
     [ModelReaderWriterBuildable(typeof(UnknownWebSearchAction))]
     [ModelReaderWriterBuildable(typeof(UnknownWorkflowActionOutputItemResource))]
-    [ModelReaderWriterBuildable(typeof(UpdateAgentContainerRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateAgentFromManifestRequest1))]
     [ModelReaderWriterBuildable(typeof(UpdateMemoryStoreRequest))]
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
+    [ModelReaderWriterBuildable(typeof(WebSearchActionSearchSources))]
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
     public partial class AzureAIAgentsContext : ModelReaderWriterContext
     {

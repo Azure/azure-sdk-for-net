@@ -54,6 +54,13 @@ public class AgentsSmokeTests : AgentsTestBase
     [Test]
     public void TestUseAnAgentTool()
     {
+        AzureAISearchIndex searchIndex = new()
+        {
+            ProjectConnectionId = "connection-id",
+            TopK = 42,
+        };
+        AzureAISearchToolOptions searchToolOptions = new(indexes: [searchIndex]);
+
         ResponseCreationOptions responseOptions = new()
         {
             Tools =
@@ -61,20 +68,16 @@ public class AgentsSmokeTests : AgentsTestBase
                 ResponseTool.CreateWebSearchTool(),
                 AgentTool.CreateA2ATool(new Uri("https://test-uri.microsoft.com")),
                 new A2ATool(new Uri("https://test-uri.microsoft.com")),
-                AgentTool.CreateAzureAISearchTool(),
-                new AzureAISearchAgentTool(),
-                AgentTool.CreateAzureAISearchTool(new AzureAISearchToolOptions()
-                {
-                    Indexes = { new AzureAISearchIndex(projectConnectionId: "project-foo") { TopK = 42 } }
-                }),
+                new AzureAISearchAgentTool(searchToolOptions),
+                AgentTool.CreateAzureAISearchTool(searchToolOptions),
             }
         };
 
-        Assert.That(responseOptions.Tools, Has.Count.EqualTo(6));
+        Assert.That(responseOptions.Tools, Has.Count.EqualTo(5));
 
         string serializedOptions = ModelReaderWriter.Write(responseOptions).ToString();
         Assert.That(serializedOptions, Does.Contain("base_url"));
-        Assert.That(serializedOptions, Does.Contain("topK"));
+        Assert.That(serializedOptions, Does.Contain("top_k"));
 
         OpenAIResponse mockResponse = ModelReaderWriter.Read<OpenAIResponse>(BinaryData.FromString("""
             {

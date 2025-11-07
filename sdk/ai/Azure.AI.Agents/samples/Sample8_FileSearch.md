@@ -16,23 +16,23 @@ OpenAIClient openAIClient = client.GetOpenAIClient();
 Synchronous sample: 
 ```C# Snippet:Sample_UploadFile_FileSearch_Sync
 string filePath = "sample_file_for_upload.txt";
-System.IO.File.WriteAllText(
+File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
 OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-System.IO.File.Delete(filePath);
+File.Delete(filePath);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_UploadFile_FileSearch_Async
 string filePath = "sample_file_for_upload.txt";
-System.IO.File.WriteAllText(
+File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-System.IO.File.Delete(filePath);
+File.Delete(filePath);
 ```
 
 3. Create the `VectorStore` and provide it with uploaded file ID.
@@ -40,25 +40,23 @@ System.IO.File.Delete(filePath);
 Synchronous sample:
 ```C# Snippet:Sample_CreateVectorStore_FileSearch_Sync
 VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-VectorStoreCreationOptions vctOptions = new()
+VectorStoreCreationOptions options = new()
 {
     Name = "MySampleStore",
     FileIds = { uploadedFile.Id }
 };
-VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: vctOptions);
+VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: options);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateVectorStore_FileSearch_Async
 VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-VectorStoreCreationOptions vctOptions = new()
+VectorStoreCreationOptions options = new()
 {
     Name = "MySampleStore",
     FileIds = { uploadedFile.Id }
 };
-VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(
-    new VectorStoreCreationOptions()
-);
+VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
 ```
 
 2. Now we can create an agent capable of using File search. 
@@ -68,13 +66,12 @@ Synchronous sample:
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
-    Tools = {
-        ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]),
-    }
+    Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    definition: agentDefinition, options: null);
+    definition: agentDefinition,
+    options: null);
 ```
 
 Asynchronous sample:
@@ -82,13 +79,12 @@ Asynchronous sample:
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
-    Tools = {
-        ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]),
-    }
+    Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    definition: agentDefinition, options: null);
+    definition: agentDefinition,
+    options: null);
 ```
 
 3. In this example we will ask a question to the file contents.
