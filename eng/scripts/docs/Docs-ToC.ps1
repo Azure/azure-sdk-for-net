@@ -58,11 +58,12 @@ function DownloadNugetPackage($package, $version, $destination) {
     # Download package from nuget, if no package found in nuget, then search devops public feeds if set.
     LogDebug "Downloading source: '$customPackageSource'. If it is empty, we default to use nuget gallery."
     if ($customPackageSource) {
-        nuget install -FallbackSource $customPackageSource $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination
+        nuget install -FallbackSource $customPackageSource $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination | Out-Null
     }
     else {
-        nuget install $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination
+        nuget install $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination | Out-Null
     }
+    return $LASTEXITCODE
 }
 
 function Fetch-NamespacesFromNupkg ($package, $version) {
@@ -71,9 +72,9 @@ function Fetch-NamespacesFromNupkg ($package, $version) {
         New-Item -ItemType Directory -Path $tempLocation -Force | Out-Null
     }
     LogDebug "Downloading nupkg package $package with version $version to $tempLocation ...."
-    DownloadNugetPackage -package $package -version $version -destination $tempLocation | Out-Null
+    $exitCode = DownloadNugetPackage -package $package -version $version -destination $tempLocation
     $packageFolder = "$package.$version"
-    if ($LASTEXITCODE -ne 0 -or !$(Test-Path $tempLocation/$packageFolder)) {
+    if ($exitCode -ne 0 -or !$(Test-Path $tempLocation/$packageFolder)) {
         LogDebug "Did not download the package correctly. Skipping..."
         return @()
     }
