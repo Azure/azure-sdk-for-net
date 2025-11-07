@@ -9,13 +9,14 @@ namespace Azure.Identity
 {
     internal class KubernetesProxyConfig
     {
-        public Uri ProxyUrl { get; private set; }
-        public string CaFilePath { get; private set; }
-        public string CaData { get; private set; }
-        public string SniName { get; private set; }
+        public Uri ProxyUrl { get; set; }
+        public string CaFilePath { get; set; }
+        public string CaData { get; set; }
+        public string SniName { get; set; }
         public HttpPipelineTransport Transport { get; set; }
 
-        private KubernetesProxyConfig() { }
+        // For testing purposes.
+        internal KubernetesProxyConfig() { }
 
         /// <summary>
         /// Attempts to create a KubernetesProxyConfig from environment variables.

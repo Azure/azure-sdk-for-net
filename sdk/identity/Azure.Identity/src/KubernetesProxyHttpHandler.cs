@@ -239,6 +239,12 @@ namespace Azure.Identity
                         return true;
                     }
 
+                    // Return false if certificate is null
+                    if (cert == null)
+                    {
+                        return false;
+                    }
+
                     chain.ChainPolicy.ExtraStore.Add(caCertificate);
                     chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
                     chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
