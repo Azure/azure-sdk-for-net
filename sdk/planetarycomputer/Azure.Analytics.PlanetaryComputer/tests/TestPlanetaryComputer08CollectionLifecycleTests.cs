@@ -261,7 +261,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_04_create_collection_asset
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
+        [Category("MissingRecording")]
         [Category("CollectionAsset")]
         public async Task Test08_04_CreateCollectionAsset()
         {
@@ -330,7 +330,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_05_replace_collection_asset
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
+        [Category("MissingRecording")]
         [Category("CollectionAsset")]
         public async Task Test08_05_ReplaceCollectionAsset()
         {
@@ -383,7 +383,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_06_delete_collection_asset
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
+        [Category("MissingRecording")]
         [Category("CollectionAsset")]
         public async Task Test08_06_DeleteCollectionAsset()
         {

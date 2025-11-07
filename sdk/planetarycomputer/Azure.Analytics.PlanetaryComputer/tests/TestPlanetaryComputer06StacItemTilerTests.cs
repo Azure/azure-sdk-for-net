@@ -121,7 +121,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_19_get_item_asset_details (moved here for logical ordering)
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
+        [Category("MissingRecording")]
         [Category("Assets")]
         public async Task Test06_03_GetItemAssetDetails()
         {
@@ -373,7 +373,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_09_get_asset_statistics
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
+        [Category("MissingRecording")]
         [Category("Statistics")]
         public async Task Test06_09_GetAssetStatistics()
         {
@@ -877,7 +877,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Keeping it for backwards compatibility.
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
+        [Category("MissingRecording")]
         [Category("Assets")]
         public async Task Test06_19_ListAvailableAssets()
         {

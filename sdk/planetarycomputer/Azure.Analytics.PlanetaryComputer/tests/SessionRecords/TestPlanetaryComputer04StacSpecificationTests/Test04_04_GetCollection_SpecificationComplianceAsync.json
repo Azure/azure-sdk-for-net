@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -55,7 +55,7 @@
             "href": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/stac/collections/naip-atl"
           }
         ],
-        "title": "NAIP Atlanta (MPC Pro Sample Datasets)",
+        "title": "MPC Pro Sample Datasets",
         "assets": {
           "thumbnail": {
             "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/thumbnail/thumbnail.png",
@@ -63,7 +63,32 @@
             "roles": [
               "thumbnail"
             ],
-            "title": "NAIP thumbnail"
+            "title": "Thumbnail"
+          },
+          "test-asset-js": {
+            "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js/test-asset-js.txt",
+            "type": "text/plain",
+            "roles": [
+              "metadata"
+            ],
+            "title": "Test Asset"
+          },
+          "test-asset-js-sdk": {
+            "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js-sdk/test-asset-sdk.txt",
+            "type": "text/plain",
+            "roles": [
+              "metadata"
+            ],
+            "title": "Test Asset from SDK Script",
+            "description": "Testing multipart upload with SDK"
+          },
+          "test-asset-js-standalone": {
+            "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js-standalone/test-asset-standalone.txt",
+            "type": "text/plain",
+            "roles": [
+              "metadata"
+            ],
+            "title": "Test Asset from Standalone Script"
           }
         },
         "extent": {
@@ -80,8 +105,8 @@
           "temporal": {
             "interval": [
               [
-                "2010-01-01T00:00:00Z",
-                "2023-12-31T00:00:00Z"
+                "2020-01-01T00:00:00Z",
+                "2099-12-31T23:59:59Z"
               ]
             ]
           }
@@ -141,7 +166,7 @@
             }
           ]
         },
-        "description": "A Subset of NAIP imagery for sample MPC Pro GeoCatalog deployments. Includes multiple city and national park focus areas, useful for quick product evaluation. - Updated for testing",
+        "description": "A Subset of imagery for sample MPC Pro GeoCatalog deployments. - Updated for testing",
         "item_assets": {
           "image": {
             "type": "image/tiff; application=geotiff; profile=cloud-optimized",
@@ -185,8 +210,8 @@
           }
         },
         "stac_version": "1.0.0",
-        "msft:_created": "2025-10-22T11:14:31.811918Z",
-        "msft:_updated": "2025-10-31T02:30:09.036472Z",
+        "msft:_created": "2025-11-03T14:16:10.3539672Z",
+        "msft:_updated": "2025-11-06T17:10:29.701082Z",
         "stac_extensions": [
           "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
           "https://stac-extensions.github.io/table/v1.2.0/schema.json"
@@ -197,6 +222,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1082330591"
+    "RandomSeed": "485302305"
   }
 }

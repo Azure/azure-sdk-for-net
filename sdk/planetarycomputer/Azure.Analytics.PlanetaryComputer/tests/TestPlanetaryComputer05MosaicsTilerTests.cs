@@ -27,11 +27,51 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         }
 
         /// <summary>
+        /// Creates a CQL2-JSON filter for temporal range matching the Python implementation.
+        /// </summary>
+        private static Dictionary<string, BinaryData> CreateTemporalFilter(string collectionId)
+        {
+            return new Dictionary<string, BinaryData>
+            {
+                ["op"] = BinaryData.FromString("\"and\""),
+                ["args"] = BinaryData.FromObjectAsJson(new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = "=",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "collection" },
+                            collectionId
+                        }
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = ">=",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "datetime" },
+                            "2021-01-01T00:00:00Z"
+                        }
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = "<=",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "datetime" },
+                            "2022-12-31T23:59:59Z"
+                        }
+                    }
+                })
+            };
+        }
+
+        /// <summary>
         /// Tests registering a mosaics search with STAC search parameters.
         /// Maps to Python test: test_01_register_mosaics_search
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
         [Category("RegisterSearch")]
         public async Task Test05_01_RegisterMosaicsSearch()
         {
@@ -42,21 +82,20 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Input - collection_id: {collectionId}");
 
-            // Create search parameters - filter to 2021-2022 date range with CQL2-Text
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Create CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             var sortBy = new[]
             {
                 new StacSortExtension("datetime", StacSearchSortingDirection.Desc)
             };
 
-            TestContext.WriteLine($"Filter: {filter}");
-            TestContext.WriteLine($"Filter Language: cql2-text");
+            TestContext.WriteLine($"Filter Language: CQL2-JSON");
 
-            // Act - Use convenience method instead of JSON serialization
+            // Act
             Response<TilerMosaicSearchRegistrationResult> response = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text,
+                filterLanguage: FilterLanguage.Cql2Json,
                 sortBy: sortBy
             );
 
@@ -85,7 +124,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_02_get_mosaics_search_info
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
         [Category("SearchInfo")]
         public async Task Test05_02_GetMosaicsSearchInfo()
         {
@@ -94,12 +132,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            // First, register a search to get a search ID with CQL2-Text
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Create CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text
+                filterLanguage: FilterLanguage.Cql2Json
             );
 
             ValidateResponse(registerResponse);
@@ -125,7 +163,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_03_get_mosaics_tile_json
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
         [Category("TileJson")]
         public async Task Test05_03_GetMosaicsTileJson()
         {
@@ -134,12 +171,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            // Register search first
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Register search first with CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text
+                filterLanguage: FilterLanguage.Cql2Json
             );
 
             string searchId = registerResponse.Value.SearchId;
@@ -179,8 +216,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_04_get_mosaics_tile
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
-        [Category("Tile")]
+        [Category("MosaicTile")]
         public async Task Test05_04_GetMosaicsTile()
         {
             // Arrange
@@ -188,14 +224,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            TestContext.WriteLine("Input - tile coordinates: z=13, x=2174, y=3282");
+            TestContext.WriteLine("Using tile coordinates: z=13, x=2174, y=3282");
 
-            // Register search first
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Register search first with CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text
+                filterLanguage: FilterLanguage.Cql2Json
             );
 
             string searchId = registerResponse.Value.SearchId;
@@ -242,8 +278,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_05_get_mosaics_wmts_capabilities
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
-        [Category("WMTS")]
+        [Category("WmtsCapabilities")]
         public async Task Test05_05_GetMosaicsWmtsCapabilities()
         {
             // Arrange
@@ -251,12 +286,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            // Register search first
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Register search first with CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text
+                filterLanguage: FilterLanguage.Cql2Json
             );
 
             string searchId = registerResponse.Value.SearchId;
@@ -298,7 +333,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_06_get_mosaics_assets_for_point
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
         [Category("Assets")]
         public async Task Test05_06_GetMosaicsAssetsForPoint()
         {
@@ -312,12 +346,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Input - point: longitude={longitude}, latitude={latitude}");
 
-            // Register search first
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Register search first with CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text
+                filterLanguage: FilterLanguage.Cql2Json
             );
 
             string searchId = registerResponse.Value.SearchId;
@@ -365,8 +399,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_07_get_mosaics_assets_for_tile
         /// </summary>
         [Test]
-        [Ignore("Missing session recording - needs to be recorded")]
-        [Category("Assets")]
+        [Category("AssetsForTile")]
         public async Task Test05_07_GetMosaicsAssetsForTile()
         {
             // Arrange
@@ -374,14 +407,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var dataClient = client.GetDataClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            TestContext.WriteLine("Input - tile coordinates: z=13, x=2174, y=3282");
+            TestContext.WriteLine("Using tile coordinates: z=13, x=2174, y=3282");
 
-            // Register search first
-            string filter = $"collection = '{collectionId}' AND datetime >= TIMESTAMP('2021-01-01T00:00:00Z') AND datetime <= TIMESTAMP('2022-12-31T23:59:59Z')";
+            // Register search first with CQL2-JSON filter (matching Python implementation)
+            var filter = CreateTemporalFilter(collectionId);
 
             Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
                 filter: filter,
-                filterLanguage: FilterLanguage.Cql2Text
+                filterLanguage: FilterLanguage.Cql2Json
             );
 
             string searchId = registerResponse.Value.SearchId;
@@ -438,20 +471,34 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Geometry defined with coordinates");
 
-            // Create CQL2-JSON filter (as dictionary)
+            // Create CQL2-JSON filter (matching Python implementation)
             var cqlFilter = new Dictionary<string, BinaryData>
             {
                 ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromString($@"[
-                    {{""op"": ""="", ""args"": [{{""property"": ""collection""}}, ""{collectionId}""]}},
-                    {{
-                        ""op"": ""anyinteracts"",
-                        ""args"": [
-                            {{""property"": ""datetime""}},
-                            {{""interval"": [""2023-01-01T00:00:00Z"", ""2023-12-31T00:00:00Z""]}}
-                        ]
-                    }}
-                ]")
+                ["args"] = BinaryData.FromObjectAsJson(new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = "=",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "collection" },
+                            collectionId
+                        }
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = "anyinteracts",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "datetime" },
+                            new Dictionary<string, object>
+                            {
+                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
+                            }
+                        }
+                    }
+                })
             };
 
             // Create image request - all required parameters in constructor
@@ -515,19 +562,34 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             };
             var geometry = new PolygonGeometry(coordinates);
 
+            // Create CQL2-JSON filter (matching Python implementation)
             var cqlFilter = new Dictionary<string, BinaryData>
             {
                 ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromString($@"[
-                    {{""op"": ""="", ""args"": [{{""property"": ""collection""}}, ""{collectionId}""]}},
-                    {{
-                        ""op"": ""anyinteracts"",
-                        ""args"": [
-                            {{""property"": ""datetime""}},
-                            {{""interval"": [""2023-01-01T00:00:00Z"", ""2023-12-31T00:00:00Z""]}}
-                        ]
-                    }}
-                ]")
+                ["args"] = BinaryData.FromObjectAsJson(new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = "=",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "collection" },
+                            collectionId
+                        }
+                    },
+                    new Dictionary<string, object>
+                    {
+                        ["op"] = "anyinteracts",
+                        ["args"] = new object[]
+                        {
+                            new Dictionary<string, string> { ["property"] = "datetime" },
+                            new Dictionary<string, object>
+                            {
+                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
+                            }
+                        }
+                    }
+                })
             };
 
             var imageRequest = new ImageParameters(
