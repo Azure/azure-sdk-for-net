@@ -32,10 +32,10 @@ namespace Azure.AI.Agents
                 throw new FormatException($"The model {nameof(A2ATool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(BaseUrl))
+            if (Optional.IsDefined(BaseUri))
             {
                 writer.WritePropertyName("base_url"u8);
-                writer.WriteStringValue(BaseUrl.AbsoluteUri);
+                writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(AgentCardPath))
             {
@@ -76,7 +76,7 @@ namespace Azure.AI.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri baseUrl = default;
+            Uri baseUri = default;
             string agentCardPath = default;
             string projectConnectionId = default;
             foreach (var prop in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    baseUrl = new Uri(prop.Value.GetString());
+                    baseUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agent_card_path"u8))
@@ -110,7 +110,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new A2ATool(@type, additionalBinaryDataProperties, baseUrl, agentCardPath, projectConnectionId);
+            return new A2ATool(@type, additionalBinaryDataProperties, baseUri, agentCardPath, projectConnectionId);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

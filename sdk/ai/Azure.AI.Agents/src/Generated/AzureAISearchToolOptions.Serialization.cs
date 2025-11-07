@@ -12,6 +12,11 @@ namespace Azure.AI.Agents
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
     public partial class AzureAISearchToolOptions : IJsonModel<AzureAISearchToolOptions>
     {
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/> for deserialization. </summary>
+        internal AzureAISearchToolOptions()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureAISearchToolOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -30,16 +35,13 @@ namespace Azure.AI.Agents
             {
                 throw new FormatException($"The model {nameof(AzureAISearchToolOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            writer.WritePropertyName("indexes"u8);
+            writer.WriteStartArray();
+            foreach (AzureAISearchIndex item in Indexes)
             {
-                writer.WritePropertyName("indexes"u8);
-                writer.WriteStartArray();
-                foreach (AzureAISearchIndex item in Indexes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -88,10 +90,6 @@ namespace Azure.AI.Agents
             {
                 if (prop.NameEquals("indexes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AzureAISearchIndex> array = new List<AzureAISearchIndex>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -105,7 +103,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchToolOptions(indexes ?? new ChangeTrackingList<AzureAISearchIndex>(), additionalBinaryDataProperties);
+            return new AzureAISearchToolOptions(indexes, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

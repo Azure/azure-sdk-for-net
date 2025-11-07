@@ -87,14 +87,14 @@ namespace Azure.AI.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStoreObject> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<MemoryStore> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
             CreateMemoryStoreRequest spreadModel = new CreateMemoryStoreRequest(name, description, metadata, definition, default);
             ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
         /// <summary> Create a memory store. </summary>
@@ -106,14 +106,14 @@ namespace Azure.AI.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStoreObject>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<MemoryStore>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
             CreateMemoryStoreRequest spreadModel = new CreateMemoryStoreRequest(name, description, metadata, definition, default);
             ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -172,13 +172,13 @@ namespace Azure.AI.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStoreObject> UpdateMemoryStore(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<MemoryStore> UpdateMemoryStore(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata, default);
             ClientResult result = UpdateMemoryStore(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
         /// <summary> Update a memory store. </summary>
@@ -189,13 +189,13 @@ namespace Azure.AI.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStoreObject>> UpdateMemoryStoreAsync(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<MemoryStore>> UpdateMemoryStoreAsync(string name, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             UpdateMemoryStoreRequest spreadModel = new UpdateMemoryStoreRequest(description, metadata, default);
             ClientResult result = await UpdateMemoryStoreAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -248,12 +248,12 @@ namespace Azure.AI.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<MemoryStoreObject> GetMemoryStore(string name, CancellationToken cancellationToken = default)
+        public virtual ClientResult<MemoryStore> GetMemoryStore(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             ClientResult result = GetMemoryStore(name, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieve a memory store. </summary>
@@ -262,12 +262,12 @@ namespace Azure.AI.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<MemoryStoreObject>> GetMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<MemoryStore>> GetMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             ClientResult result = await GetMemoryStoreAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStoreObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
         /// <summary>

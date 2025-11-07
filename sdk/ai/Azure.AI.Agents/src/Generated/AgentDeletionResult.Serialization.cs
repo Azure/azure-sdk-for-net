@@ -10,8 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> A deleted agent Object. </summary>
-    public partial class AgentDeletionResult : IJsonModel<AgentDeletionResult>
+    internal partial class AgentDeletionResult : IJsonModel<AgentDeletionResult>
     {
         /// <summary> Initializes a new instance of <see cref="AgentDeletionResult"/> for deserialization. </summary>
         internal AgentDeletionResult()

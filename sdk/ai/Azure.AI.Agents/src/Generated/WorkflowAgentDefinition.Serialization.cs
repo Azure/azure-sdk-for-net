@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The workflow specification in CSDL format. </summary>
+    /// <summary> The workflow agent definition. </summary>
     public partial class WorkflowAgentDefinition : AgentDefinition, IJsonModel<WorkflowAgentDefinition>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents
                 return null;
             }
             AgentKind kind = default;
-            RaiConfig raiConfig = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string workflowYaml = default;
             foreach (var prop in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workflow"u8))
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowAgentDefinition(kind, raiConfig, additionalBinaryDataProperties, workflowYaml);
+            return new WorkflowAgentDefinition(kind, contentFilterConfiguration, additionalBinaryDataProperties, workflowYaml);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -27,7 +27,7 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"></param>
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
-        internal InternalLocalShellToolCallOutputItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, LocalShellToolCallOutputItemResourceStatus status, string output) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalLocalShellToolCallOutputItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, LocalShellToolCallOutputItemResourceStatus status, string output) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             Output = output;

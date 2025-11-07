@@ -77,7 +77,7 @@ namespace OpenAI
             }
             AgentResponseItemKind @type = default;
             string id = default;
-            CreatedBy createdBy = default;
+            AgentResponseItemSource createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string encryptedContent = default;
             IList<InternalReasoningItemSummaryPart> summary = default;
@@ -99,7 +99,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    createdBy = CreatedBy.DeserializeCreatedBy(prop.Value, options);
+                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encrypted_content"u8))

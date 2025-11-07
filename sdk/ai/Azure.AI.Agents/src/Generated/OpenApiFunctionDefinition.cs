@@ -40,7 +40,7 @@ namespace Azure.AI.Agents
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -92,6 +92,6 @@ namespace Azure.AI.Agents
         public IList<string> DefaultParams { get; }
 
         /// <summary> List of function definitions used by OpenApi tool. </summary>
-        public IList<OpenApiFunctionDefinitionFunction> Functions { get; }
+        public IReadOnlyList<OpenApiFunctionDefinitionFunction> Functions { get; }
     }
 }

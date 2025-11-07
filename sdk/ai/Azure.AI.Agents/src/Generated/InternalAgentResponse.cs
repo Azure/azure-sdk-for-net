@@ -36,7 +36,7 @@ namespace OpenAI
         /// 
         /// We generally recommend altering this or `temperature` but not both.
         /// </param>
-        /// <param name="user"> A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids). </param>
+        /// <param name="user"> A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more about safety best practices](https://platform.openai.com/docs/guides/safety-best-practices#end-user-ids). </param>
         /// <param name="id"> Unique identifier for this Response. </param>
         /// <param name="createdAt"> Unix timestamp (in seconds) of when this Response was created. </param>
         /// <param name="error"></param>
@@ -99,26 +99,26 @@ namespace OpenAI
         /// 
         /// We generally recommend altering this or `temperature` but not both.
         /// </param>
-        /// <param name="user"> A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids). </param>
+        /// <param name="user"> A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more about safety best practices](https://platform.openai.com/docs/guides/safety-best-practices#end-user-ids). </param>
         /// <param name="serviceTier"> Note: service_tier is not applicable to Azure OpenAI. </param>
         /// <param name="topLogprobs"> An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. </param>
         /// <param name="previousResponseId">
         /// The unique ID of the previous response to the model. Use this to
         /// create multi-turn conversations. Learn more about
-        /// [conversation state](/docs/guides/conversation-state).
+        /// [managing conversation state](https://platform.openai.com/docs/guides/conversation-state).
         /// </param>
         /// <param name="model"> The model deployment to use for the creation of this response. </param>
         /// <param name="reasoning"></param>
         /// <param name="background">
         /// Whether to run the model response in the background.
-        /// [Learn more](/docs/guides/background).
+        /// [Learn more about background responses](https://platform.openai.com/docs/guides/background).
         /// </param>
-        /// <param name="maxOutputTokens"> An upper bound for the number of tokens that can be generated for a response, including visible output tokens and [reasoning tokens](/docs/guides/reasoning). </param>
+        /// <param name="maxOutputTokens"> An upper bound for the number of tokens that can be generated for a response, including visible output tokens and [reasoning tokens](https://platform.openai.com/docs/guides/reasoning). </param>
         /// <param name="maxToolCalls"> The maximum number of total calls to built-in tools that can be processed in a response. This maximum number applies across all built-in tool calls, not per individual tool. Any further attempts to call a tool by the model will be ignored. </param>
         /// <param name="text">
         /// Configuration options for a text response from the model. Can be plain
-        /// text or structured JSON data. See [Text inputs and outputs](/docs/guides/text)
-        /// and [Structured Outputs](/docs/guides/structured-outputs)
+        /// text or structured JSON data. See [Text inputs and outputs](https://platform.openai.com/docs/guides/text)
+        /// and [Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs)
         /// </param>
         /// <param name="tools">
         /// An array of tools the model may call while generating a response. You
@@ -127,12 +127,12 @@ namespace OpenAI
         /// The two categories of tools you can provide the model are:
         /// 
         /// * **Built-in tools**: Tools that are provided by OpenAI that extend the
-        ///   model's capabilities, like [web search](/docs/guides/tools-web-search)
-        ///   or [file search](/docs/guides/tools-file-search). Learn more about
-        ///   [built-in tools](/docs/guides/tools).
+        ///   model's capabilities, like [web search](https://platform.openai.com/docs/guides/tools-web-search)
+        ///   or [file search](https://platform.openai.com/docs/guides/tools-file-search). Learn more about
+        ///   [built-in tools](https://platform.openai.com/docs/guides/tools).
         /// * **Function calls (custom tools)**: Functions that are defined by you,
         ///   enabling the model to call your own code. Learn more about
-        ///   [function calling](/docs/guides/function-calling).
+        ///   [function calling](https://platform.openai.com/docs/guides/function-calling).
         /// 
         /// </param>
         /// <param name="toolChoice">
@@ -249,7 +249,7 @@ namespace OpenAI
         /// </summary>
         public float? TopP { get; }
 
-        /// <summary> A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices#end-user-ids). </summary>
+        /// <summary> A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more about safety best practices](https://platform.openai.com/docs/guides/safety-best-practices#end-user-ids). </summary>
         public string User { get; }
 
         /// <summary> Note: service_tier is not applicable to Azure OpenAI. </summary>
@@ -261,7 +261,7 @@ namespace OpenAI
         /// <summary>
         /// The unique ID of the previous response to the model. Use this to
         /// create multi-turn conversations. Learn more about
-        /// [conversation state](/docs/guides/conversation-state).
+        /// [managing conversation state](https://platform.openai.com/docs/guides/conversation-state).
         /// </summary>
         public string PreviousResponseId { get; }
 
@@ -273,11 +273,11 @@ namespace OpenAI
 
         /// <summary>
         /// Whether to run the model response in the background.
-        /// [Learn more](/docs/guides/background).
+        /// [Learn more about background responses](https://platform.openai.com/docs/guides/background).
         /// </summary>
         public bool? Background { get; }
 
-        /// <summary> An upper bound for the number of tokens that can be generated for a response, including visible output tokens and [reasoning tokens](/docs/guides/reasoning). </summary>
+        /// <summary> An upper bound for the number of tokens that can be generated for a response, including visible output tokens and [reasoning tokens](https://platform.openai.com/docs/guides/reasoning). </summary>
         public int? MaxOutputTokens { get; }
 
         /// <summary> The maximum number of total calls to built-in tools that can be processed in a response. This maximum number applies across all built-in tool calls, not per individual tool. Any further attempts to call a tool by the model will be ignored. </summary>
@@ -285,8 +285,8 @@ namespace OpenAI
 
         /// <summary>
         /// Configuration options for a text response from the model. Can be plain
-        /// text or structured JSON data. See [Text inputs and outputs](/docs/guides/text)
-        /// and [Structured Outputs](/docs/guides/structured-outputs)
+        /// text or structured JSON data. See [Text inputs and outputs](https://platform.openai.com/docs/guides/text)
+        /// and [Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs)
         /// </summary>
         public ResponseText Text { get; }
 
@@ -297,12 +297,12 @@ namespace OpenAI
         /// The two categories of tools you can provide the model are:
         /// 
         /// * **Built-in tools**: Tools that are provided by OpenAI that extend the
-        ///   model's capabilities, like [web search](/docs/guides/tools-web-search)
-        ///   or [file search](/docs/guides/tools-file-search). Learn more about
-        ///   [built-in tools](/docs/guides/tools).
+        ///   model's capabilities, like [web search](https://platform.openai.com/docs/guides/tools-web-search)
+        ///   or [file search](https://platform.openai.com/docs/guides/tools-file-search). Learn more about
+        ///   [built-in tools](https://platform.openai.com/docs/guides/tools).
         /// * **Function calls (custom tools)**: Functions that are defined by you,
         ///   enabling the model to call your own code. Learn more about
-        ///   [function calling](/docs/guides/function-calling).
+        ///   [function calling](https://platform.openai.com/docs/guides/function-calling).
         /// 
         /// </summary>
         public IList<AgentTool> Tools { get; }

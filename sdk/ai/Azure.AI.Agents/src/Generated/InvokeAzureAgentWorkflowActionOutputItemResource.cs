@@ -35,7 +35,7 @@ namespace Azure.AI.Agents
         /// <param name="agent"> Agent id. </param>
         /// <param name="conversationId"> ID of the conversation for the agent invocation. </param>
         /// <param name="responseId"> The response id for the agent invocation. </param>
-        internal InvokeAzureAgentWorkflowActionOutputItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowActionStatus? status, AgentInfo agent, string conversationId, string responseId) : base(@type, id, createdBy, additionalBinaryDataProperties, kind, actionId, parentActionId, previousActionId, status)
+        internal InvokeAzureAgentWorkflowActionOutputItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowActionStatus? status, AgentInfo agent, string conversationId, string responseId) : base(@type, id, createdBy, additionalBinaryDataProperties, kind, actionId, parentActionId, previousActionId, status)
         {
             Agent = agent;
             ConversationId = conversationId;

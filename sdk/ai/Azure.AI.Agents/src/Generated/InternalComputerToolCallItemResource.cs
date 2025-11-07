@@ -40,7 +40,7 @@ namespace OpenAI
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
         /// <param name="action"></param>
         /// <param name="pendingSafetyChecks"> The pending safety checks for the computer call. </param>
-        internal InternalComputerToolCallItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerToolCallItemResourceStatus status, string callId, InternalComputerAction action, IList<InternalComputerToolCallSafetyCheck> pendingSafetyChecks) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalComputerToolCallItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerToolCallItemResourceStatus status, string callId, InternalComputerAction action, IList<InternalComputerToolCallSafetyCheck> pendingSafetyChecks) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             CallId = callId;

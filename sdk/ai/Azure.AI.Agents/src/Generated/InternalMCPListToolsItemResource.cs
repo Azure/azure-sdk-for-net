@@ -29,7 +29,7 @@ namespace OpenAI
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"> Error message if the server could not list tools. </param>
-        internal InternalMCPListToolsItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalMCPListToolsItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Tools = tools;

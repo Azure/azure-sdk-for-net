@@ -38,6 +38,16 @@ namespace OpenAI
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (WebSearchActionSearchSources item in Sources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -68,6 +78,7 @@ namespace OpenAI
             WebSearchActionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string query = default;
+            IList<WebSearchActionSearchSources> sources = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -80,12 +91,26 @@ namespace OpenAI
                     query = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sources"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WebSearchActionSearchSources> array = new List<WebSearchActionSearchSources>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(WebSearchActionSearchSources.DeserializeWebSearchActionSearchSources(item, options));
+                    }
+                    sources = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalWebSearchActionSearch(@type, additionalBinaryDataProperties, query);
+            return new InternalWebSearchActionSearch(@type, additionalBinaryDataProperties, query, sources ?? new ChangeTrackingList<WebSearchActionSearchSources>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -103,7 +103,7 @@ public class Sample_ComputerUse : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
         #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
@@ -128,8 +128,8 @@ public class Sample_ComputerUse : AgentsTestBase
         };
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: "myAgent",
-            definition: agentDefinition,
-            options: null);
+            options: new(agentDefinition)
+        );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Async
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
@@ -220,7 +220,7 @@ public class Sample_ComputerUse : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         Dictionary<string, BinaryData> screenshots = new() {
             {"browser_search", ReadImageFile("Assets/cua_browser_search.png")},
@@ -242,8 +242,8 @@ public class Sample_ComputerUse : AgentsTestBase
         };
         AgentVersion agentVersion = client.CreateAgentVersion(
             agentName: "myAgent",
-            definition: agentDefinition,
-            options: null);
+            options: new(agentDefinition)
+        );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Sync
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);

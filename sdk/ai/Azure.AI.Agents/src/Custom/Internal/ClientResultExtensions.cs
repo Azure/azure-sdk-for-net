@@ -9,14 +9,14 @@ using System.Threading;
 
 namespace Azure.AI.Agents;
 
-/// <summary> The AgentsClient. </summary>
+/// <summary> The AgentClient. </summary>
 internal static partial class ClientResultExtensions
 {
     public static ClientResult<T> ToOpenAIResult<T>(this ClientResult protocolResult)
         where T : IJsonModel<T>
             => ToTypedResult<T>(protocolResult, OpenAI.OpenAIContext.Default);
 
-    public static ClientResult<T> ToAgentsClientResult<T>(this ClientResult protocolResult)
+    public static ClientResult<T> ToAgentClientResult<T>(this ClientResult protocolResult)
         where T : IJsonModel<T>
             => ToTypedResult<T>(protocolResult, AzureAIAgentsContext.Default);
 

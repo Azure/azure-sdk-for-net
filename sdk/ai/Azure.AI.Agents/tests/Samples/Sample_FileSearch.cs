@@ -31,7 +31,7 @@ public class Sample_FileSearch : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
         #region Snippet:Sample_UploadFile_FileSearch_Async
@@ -60,8 +60,7 @@ public class Sample_FileSearch : AgentsTestBase
         };
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: "myAgent",
-            definition: agentDefinition,
-            options: null);
+            options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Async
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
@@ -104,7 +103,7 @@ public class Sample_FileSearch : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
 
         #region Snippet:Sample_UploadFile_FileSearch_Sync
@@ -133,8 +132,7 @@ public class Sample_FileSearch : AgentsTestBase
         };
         AgentVersion agentVersion = client.CreateAgentVersion(
             agentName: "myAgent",
-            definition: agentDefinition,
-            options: null);
+            options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);

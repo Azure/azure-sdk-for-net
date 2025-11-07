@@ -34,7 +34,7 @@ namespace OpenAI
         /// </param>
         /// <param name="role"> The role associated with the message. </param>
         /// <param name="content"> The content associated with the message. </param>
-        internal InternalResponsesUserMessageItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesMessageItemResourceStatus status, ResponsesMessageRole role, IList<InternalItemContent> content) : base(@type, id, createdBy, additionalBinaryDataProperties, status, role)
+        internal InternalResponsesUserMessageItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesMessageItemResourceStatus status, ResponsesMessageRole role, IList<InternalItemContent> content) : base(@type, id, createdBy, additionalBinaryDataProperties, status, role)
         {
             Content = content;
         }

@@ -17,11 +17,6 @@ public partial class AzureAISearchAgentTool
     [CodeGenMember("AzureAiSearch")]
     public AzureAISearchToolOptions Options { get; set; }
 
-    /// <summary> Initializes a new instance of <see cref="AzureAISearchAgentTool"/>. </summary>
-    public AzureAISearchAgentTool() : this(options: new())
-    {
-    }
-
     /// <param name="options"> The azure ai search index resource. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
     public AzureAISearchAgentTool(AzureAISearchToolOptions options) : base(ToolType.AzureAiSearch)
@@ -30,4 +25,7 @@ public partial class AzureAISearchAgentTool
 
         Options = options;
     }
+
+    internal AzureAISearchAgentTool()
+    { }
 }

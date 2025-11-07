@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Agents
 {
@@ -14,9 +15,16 @@ namespace Azure.AI.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/>. </summary>
-        public AzureAISearchToolOptions()
+        /// <param name="indexes">
+        /// The indices attached to this agent. There can be a maximum of 1 index
+        /// resource attached to the agent.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
+        public AzureAISearchToolOptions(IEnumerable<AzureAISearchIndex> indexes)
         {
-            Indexes = new ChangeTrackingList<AzureAISearchIndex>();
+            Argument.AssertNotNull(indexes, nameof(indexes));
+
+            Indexes = indexes.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchToolOptions"/>. </summary>

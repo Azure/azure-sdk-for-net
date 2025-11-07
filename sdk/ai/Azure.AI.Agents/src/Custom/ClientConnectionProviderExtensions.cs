@@ -9,11 +9,11 @@ namespace Azure.AI.Agents;
 
 public static partial class ClientConnectionProviderExtensions
 {
-    public static AgentsClient GetAgentsClient(this ClientConnectionProvider clientConnectionProvider, AgentsClientOptions agentsClientOptions = default)
+    public static AgentClient GetAgentClient(this ClientConnectionProvider clientConnectionProvider, AgentClientOptions agentClientOptions = default)
     {
         ClientConnection chatConnection = clientConnectionProvider.GetConnection("OpenAI.Chat.ChatClient");
         Uri endpoint = new(chatConnection.Locator);
         AuthenticationTokenProvider tokenProvider = chatConnection.Credential as AuthenticationTokenProvider;
-        return new AgentsClient(endpoint, tokenProvider, agentsClientOptions);
+        return new AgentClient(endpoint, tokenProvider, agentClientOptions);
     }
 }

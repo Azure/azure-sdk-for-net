@@ -30,66 +30,43 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task TestAgentCRUD()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
         {
-            AgentDeletionResult initialDeletionResult = await client.DeleteAgentAsync(emptyPromptAgentName);
-            Assert.That(initialDeletionResult, Is.Not.Null);
+            await client.DeleteAgentAsync(emptyPromptAgentName);
         }
         catch (ClientResultException){
             // We do not have the agent to begin with.
         }
-        AgentRecord agent = await client.CreateAgentAsync(
+        AgentVersion newAgentVersion = await client.CreateAgentVersionAsync(
             emptyPromptAgentName,
-            emptyAgentDefinition,
-            new AgentCreationOptions()
+            new(emptyAgentDefinition)
             {
                 Metadata = { ["delete_me"] = "please " },
             });
-        Assert.That(agent?.Id, Is.Not.Null.And.Not.Empty);
+        Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
 
         AgentRecord retrievedAgent = await client.GetAgentAsync(emptyPromptAgentName);
-        Assert.That(retrievedAgent?.Id, Is.EqualTo(agent.Id));
+        Assert.That(retrievedAgent?.Id, Is.EqualTo(newAgentVersion.Name));
 
-        AgentRecord updatedAgent = await client.UpdateAgentAsync(agent.Name, new AgentUpdateOptions(emptyAgentDefinition)
-        {
-            Metadata = { ["updated"] = "yes" },
-        });
-        Assert.That(updatedAgent?.Versions.Latest, Is.Not.EqualTo(agent.Versions.Latest));
+        await client.DeleteAgentAsync(newAgentVersion.Name);
 
-        AgentDeletionResult deletionResult = await client.DeleteAgentAsync(agent.Name);
-        Assert.That(deletionResult.Deleted, Is.True);
-
-        AgentVersion agentVersion = await client.CreateAgentVersionAsync(AGENT_NAME, emptyAgentDefinition, options: null);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(AGENT_NAME, new(emptyAgentDefinition));
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersion.Name));
         AgentVersion agentVersionObject_ = await client.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersionObject_.Name));
         Assert.That(agentVersion.Version, Is.EqualTo(agentVersionObject_.Version));
         Assert.That(agentVersion.Description, Is.Empty);
         Assert.That(agentVersion.Metadata, Is.Empty);
-        updatedAgent = await client.UpdateAgentAsync(
-            AGENT_NAME,
-            new AgentUpdateOptions(emptyAgentDefinition)
-            {
-                Description = "this is a description!",
-                Metadata =
-                {
-                    ["foo"] = "bar"
-                }
-            });
-        Assert.That(updatedAgent.Versions.Latest.Version, Is.Not.EqualTo(agentVersion.Version));
-        Assert.That(updatedAgent.Versions.Latest.Description, Is.Not.Null.And.Not.Empty);
-        Assert.That(updatedAgent.Versions.Latest.Metadata, Has.Count.EqualTo(1));
-        Assert.That(updatedAgent.Versions.Latest.Metadata["foo"], Is.EqualTo("bar"));
         // TODO: uncomment this code when the ADO work item 4740406
         // agentVersionObject_ = await client.CreateAgentVersionAsync(AGENT_NAME2, new PromptAgentDefinition(MODEL_DEPLOYMENT));
         // List<string> agentNames = [.. (await client.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME, AGENT_NAME2], agentNames);
-        DeleteAgentVersionResponse respone = await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        Assert.That(respone.Deleted, Is.True);
+        await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await client.GetAgentVersionAsync(agentVersion.Name, agentVersion.Version));
         // agentNames = [.. (await client.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME2], agentNames);
     }
@@ -98,7 +75,7 @@ public class AgentsTests : AgentsTestBase
     // [Ignore("Does not work on service side: see ADO work item 4740406.")]
     public async Task TestListAgentsAfterAndBefore()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         // In this test we are assuming that workspace has more then 10 agents.
         // If it is not the case create these agents.
         int agentLimit = 10;
@@ -110,7 +87,7 @@ public class AgentsTests : AgentsTestBase
             for (int i = ids.Count; i < agentLimit; i++)
             {
                 AgentDefinition definition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
-                AgentRecord agent = await client.CreateAgentAsync(name: $"MyAgent_{i}", definition: definition, options: null);
+                AgentVersion agent = await client.CreateAgentVersionAsync($"MyAgent_{i}", new(definition));
                 ids.Add(agent.Id);
             }
         }
@@ -138,7 +115,7 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task TestConversationCRUD()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
 
         AgentConversation firstConversation = await client.GetConversationClient().CreateConversationAsync();
         AgentConversation secondConversation = await client.GetConversationClient().CreateConversationAsync(
@@ -212,7 +189,7 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task TestConversationItemsOrderingWithMultipleMessages()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
 
         // Create a conversation
         AgentConversation conversation = await client.GetConversationClient().CreateConversationAsync();
@@ -252,7 +229,7 @@ public class AgentsTests : AgentsTestBase
         await foreach (AgentResponseItem item in client.GetConversationClient().GetConversationItemsAsync(
             conversation.Id,
             limit: 5,
-            order: AgentsListOrder.Asc))
+            order: AgentListOrder.Ascending))
         {
             ascendingItems.Add(item);
         }
@@ -263,7 +240,7 @@ public class AgentsTests : AgentsTestBase
         await foreach (AgentResponseItem item in client.GetConversationClient().GetConversationItemsAsync(
             conversation.Id,
             limit: 5,
-            order: AgentsListOrder.Desc))
+            order: AgentListOrder.Descending))
         {
             descendingItems.Add(item);
         }
@@ -288,22 +265,10 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("Operation not working yet")]
-    public async Task TestAgentContainerCRUD()
-    {
-        AgentsClient client = GetTestClient();
-
-        await foreach (AgentContainerOperation agentContainerOperation in client.GetAgentContainerOperationsAsync("fake-agent-name"))
-        {
-            Assert.Fail("Shouldn't have found any container operations for a fake agent!");
-        }
-    }
-
-    [RecordedTest]
     public async Task SimplePromptAgentWithConversation()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
@@ -311,12 +276,10 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        AgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
-            definition: agentDefinition,
-            options: null
-        );
-        AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync(
+            options: new(agentDefinition));
+        AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync(
             new AgentConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
@@ -336,8 +299,8 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task SimplePromptAgentWithoutConversation()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
@@ -345,11 +308,9 @@ public class AgentsTests : AgentsTestBase
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
 
-        AgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
 
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(agentVersion);
@@ -363,7 +324,7 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task ErrorsGiveGoodExceptionMessages()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
 
         ClientResultException exception = null;
         try
@@ -381,24 +342,24 @@ public class AgentsTests : AgentsTestBase
     [Test]
     public async Task StructuredInputsWork()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        AgentVersion agent = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion agent = await agentClient.CreateAgentVersionAsync(
             "TestPromptAgentFromDotnetTests2343",
-            new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
-            {
-                Instructions = "You are a friendly agent. The name of the user talking to you is {{user_name}}.",
-                StructuredInputs =
+            new AgentVersionCreationOptions(
+                new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
                 {
-                    ["user_name"] = new StructuredInputDefinition()
+                    Instructions = "You are a friendly agent. The name of the user talking to you is {{user_name}}.",
+                    StructuredInputs =
                     {
-                        DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
+                        ["user_name"] = new StructuredInputDefinition()
+                        {
+                            DefaultValue = BinaryData.FromObjectAsJson(JsonValue.Create("Ishmael")),
+                        }
                     }
-                }
-            },
-            new AgentVersionCreationOptions()
+                })
             {
                 Metadata =
                 {
@@ -430,8 +391,8 @@ public class AgentsTests : AgentsTestBase
     [Test]
     public async Task SimpleWorkflowAgent()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
@@ -439,10 +400,9 @@ public class AgentsTests : AgentsTestBase
         string agentName = null;
         string agentVersion = null;
 
-        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
-            workflowAgentDefinition,
-            new AgentVersionCreationOptions()
+            new AgentVersionCreationOptions(workflowAgentDefinition)
             {
                 Description = "A test agent created from the .NET SDK automation suite",
                 Metadata = { ["freely_deleteable"] = "true" },
@@ -450,7 +410,7 @@ public class AgentsTests : AgentsTestBase
         agentName = newAgentVersion.Name;
         agentVersion = newAgentVersion.Version;
 
-        AgentConversation newConversation = await agentsClient.GetConversationClient().CreateConversationAsync();
+        AgentConversation newConversation = await agentClient.GetConversationClient().CreateConversationAsync();
 
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(agentName, agentVersion);
@@ -475,8 +435,8 @@ public class AgentsTests : AgentsTestBase
     [Test]
     public async Task SimpleWorkflowAgentStreaming()
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
@@ -484,10 +444,9 @@ public class AgentsTests : AgentsTestBase
         string agentName = null;
         string agentVersion = null;
 
-        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
-            workflowAgentDefinition,
-            new AgentVersionCreationOptions()
+            new AgentVersionCreationOptions(workflowAgentDefinition)
             {
                 Description = "A test agent created from the .NET SDK automation suite",
                 Metadata = { ["freely_deleteable"] = "true" },
@@ -495,7 +454,7 @@ public class AgentsTests : AgentsTestBase
         agentName = newAgentVersion.Name;
         agentVersion = newAgentVersion.Version;
 
-        AgentConversation newConversation = await agentsClient.GetConversationClient().CreateConversationAsync();
+        AgentConversation newConversation = await agentClient.GetConversationClient().CreateConversationAsync();
 
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(agentName, agentVersion);
@@ -525,12 +484,12 @@ public class AgentsTests : AgentsTestBase
     [Ignore("The working V2 endpoint does not have the embeddings model yet.")]
     public async Task TestMemoryStoreCRUD()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         // Create
-        MemoryStoreObject store = await CreateMemoryStore(client);
+        MemoryStore store = await CreateMemoryStore(client);
         MemoryStoreClient memoryClient = client.GetMemoryStoreClient();
         //Read
-        MemoryStoreObject result = await memoryClient.GetMemoryStoreAsync(store.Id);
+        MemoryStore result = await memoryClient.GetMemoryStoreAsync(store.Id);
         Assert.That(store.Id, Is.EqualTo(result.Id));
         Assert.That(store.Description, Is.EqualTo(result.Description));
         Assert.That(store.Name, Is.EqualTo(result.Name));
@@ -571,8 +530,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(false)]
     public async Task TestMemorySearch(bool useConversation)
     {
-        AgentsClient client = GetTestClient();
-        MemoryStoreObject store = await CreateMemoryStore(client);
+        AgentClient client = GetTestClient();
+        MemoryStore store = await CreateMemoryStore(client);
         MemoryStoreClient memoryClient = client.GetMemoryStoreClient();
         // Create an empty scope and make sure we cannot find anything.
         string scope = "Test scope";
@@ -620,13 +579,11 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FileSearch)]
     public async Task TestTool(ToolType toolType)
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: await GetAgentToolDefinition(toolType, openAIClient),
-            options: null
-        );
+            options: new(await GetAgentToolDefinition(toolType, openAIClient)));
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
             TestEnvironment.MODELDEPLOYMENTNAME);
         AgentReference agentReference = new(name: agentVersion.Name)
@@ -651,12 +608,11 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     public async Task TestFunctions()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: await GetAgentToolDefinition(ToolType.FunctionCall, openAIClient),
-            options: null
+            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, openAIClient))
         );
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
             TestEnvironment.MODELDEPLOYMENTNAME);
@@ -755,7 +711,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         // If the files are not in the foundry (used only for file upload),uncomment the code below and
         // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
@@ -767,8 +723,7 @@ public class AgentsTests : AgentsTestBase
         Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: await GetAgentToolDefinition(ToolType.ComputerUse, openAIClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME),
-            options: null
+            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, openAIClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
             TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME);
@@ -820,15 +775,13 @@ public class AgentsTests : AgentsTestBase
     [Ignore("Needs recording update for 2025-11-15-preview")]
     public async Task TestAzureContainerApp()
     {
-        AgentsClient client = GetTestClient();
+        AgentClient client = GetTestClient();
         AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            definition: new ContainerAppAgentDefinition(
+            options: new(new ContainerAppAgentDefinition(
                 containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
                 containerAppResourceId: TestEnvironment.CONTAINER_APP_RESOURCE_ID,
-                ingressSubdomainSuffix: TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX),
-            options: null
-        );
+                ingressSubdomainSuffix: TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX)));
         OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
             TestEnvironment.MODELDEPLOYMENTNAME);
@@ -856,8 +809,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(false)]
     public async Task PerRequestToolsRejectedWithAgent(bool agentIsPresent)
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         ResponseCreationOptions responseOptions = new()
@@ -880,11 +833,9 @@ public class AgentsTests : AgentsTestBase
                 Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
             };
 
-            AgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+            AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
                 agentName: "TestPromptAgentFromDotnet",
-                definition: agentDefinition,
-                options: null
-            );
+                options: new(agentDefinition));
 
             responseOptions.SetAgentReference(agentVersion);
         }
@@ -915,8 +866,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(TestItemPersistenceMode.UsingLocalItemsOnly)]
     public async Task TestFunctionToolMultiturnWithPersistence(TestItemPersistenceMode persistenceMode)
     {
-        AgentsClient agentsClient = GetTestClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentClient agentClient = GetTestClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         CancellationTokenSource cts = new(TimeSpan.FromSeconds(60));
@@ -935,10 +886,9 @@ public class AgentsTests : AgentsTestBase
             }
         };
 
-        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+        AgentVersion newAgentVersion = await agentClient.CreateAgentVersionAsync(
             "TestPiratePromptAgentWithToolsFromDotnetTests",
-            agentDefinition,
-            new AgentVersionCreationOptions()
+            new AgentVersionCreationOptions(agentDefinition)
             {
                 Metadata =
                 {
@@ -956,7 +906,7 @@ public class AgentsTests : AgentsTestBase
         // Using a conversation: here, a new conversation is created for this interaction.
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
-            AgentConversation conversation = await agentsClient.GetConversationClient().CreateConversationAsync(options: null, cts.Token);
+            AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync(options: null, cts.Token);
             responseCreationOptions.SetConversationReference(conversation);
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)

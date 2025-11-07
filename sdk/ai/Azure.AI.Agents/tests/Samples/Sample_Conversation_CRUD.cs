@@ -22,7 +22,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Async
@@ -58,10 +58,10 @@ public class Sample_conversation_CRUD : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_DeleteConversations_ConversationCRUD_Async
-        AgentConversationDeletionResult result = await conversationClient.DeleteConversationAsync(conversationId: conversation1.Id);
-        Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
-        result = await conversationClient.DeleteConversationAsync(conversationId: conversation2.Id);
-        Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
+        await conversationClient.DeleteConversationAsync(conversationId: conversation1.Id);
+        Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
+        await conversationClient.DeleteConversationAsync(conversationId: conversation2.Id);
+        Console.WriteLine($"Conversation deleted(id: {conversation2.Id})");
         #endregion
     }
 
@@ -74,7 +74,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Sync
         ConversationClient conversationClient = client.GetConversationClient();
@@ -110,10 +110,10 @@ public class Sample_conversation_CRUD : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_DeleteConversations_ConversationCRUD_Sync
-        AgentConversationDeletionResult result = conversationClient.DeleteConversation(conversationId: conversation1.Id);
-        Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
-        result = conversationClient.DeleteConversation(conversationId: conversation2.Id);
-        Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
+        conversationClient.DeleteConversation(conversationId: conversation1.Id);
+        Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
+        conversationClient.DeleteConversation(conversationId: conversation2.Id);
+        Console.WriteLine($"Conversation deleted(id: {conversation2.Id})");
         #endregion
     }
 

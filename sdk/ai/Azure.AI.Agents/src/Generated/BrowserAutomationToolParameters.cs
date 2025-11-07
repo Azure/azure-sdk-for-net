@@ -14,25 +14,25 @@ namespace Azure.AI.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolParameters"/>. </summary>
-        /// <param name="projectConnection"> The project connection parameters associated with the Browser Automation Tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnection"/> is null. </exception>
-        public BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters projectConnection)
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
+        public BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection)
         {
-            Argument.AssertNotNull(projectConnection, nameof(projectConnection));
+            Argument.AssertNotNull(connection, nameof(connection));
 
-            ProjectConnection = projectConnection;
+            Connection = connection;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolParameters"/>. </summary>
-        /// <param name="projectConnection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters projectConnection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProjectConnection = projectConnection;
+            Connection = connection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The project connection parameters associated with the Browser Automation Tool. </summary>
-        public BrowserAutomationToolConnectionParameters ProjectConnection { get; set; }
+        public BrowserAutomationToolConnectionParameters Connection { get; set; }
     }
 }

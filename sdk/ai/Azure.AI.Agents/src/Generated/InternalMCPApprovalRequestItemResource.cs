@@ -30,7 +30,7 @@ namespace OpenAI
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal InternalMCPApprovalRequestItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalMCPApprovalRequestItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;

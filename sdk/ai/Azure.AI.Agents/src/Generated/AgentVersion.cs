@@ -77,9 +77,6 @@ namespace Azure.AI.Agents
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
 
-        /// <summary> The object type, which is always 'agent.version'. </summary>
-        public string Object { get; } = "agent.version";
-
         /// <summary> The unique identifier of the agent version. </summary>
         public string Id { get; }
 

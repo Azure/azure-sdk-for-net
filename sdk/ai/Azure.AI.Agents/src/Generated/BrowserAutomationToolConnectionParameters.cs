@@ -14,25 +14,25 @@ namespace Azure.AI.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionParameters"/>. </summary>
-        /// <param name="id"> The ID of the project connection to your Azure Playwright resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public BrowserAutomationToolConnectionParameters(string id)
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public BrowserAutomationToolConnectionParameters(string projectConnectionId)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
-            Id = id;
+            ProjectConnectionId = projectConnectionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionParameters"/>. </summary>
-        /// <param name="id"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolConnectionParameters(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolConnectionParameters(string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            ProjectConnectionId = projectConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the project connection to your Azure Playwright resource. </summary>
-        public string Id { get; set; }
+        public string ProjectConnectionId { get; set; }
     }
 }

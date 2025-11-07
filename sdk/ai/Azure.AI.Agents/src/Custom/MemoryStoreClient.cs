@@ -88,9 +88,9 @@ public partial class MemoryStoreClient
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<MemoryStoreObject> GetMemoryStores(int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<MemoryStore> GetMemoryStores(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAICollectionResultOfT<MemoryStoreObject>(
+        return new InternalOpenAICollectionResultOfT<MemoryStore>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoryStoresRequest(
@@ -99,7 +99,7 @@ public partial class MemoryStoreClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: MemoryStoreObject.DeserializeMemoryStoreObject,
+            dataItemDeserializer: MemoryStore.DeserializeMemoryStore,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
             cancellationToken.ToRequestOptions());
     }
@@ -125,9 +125,9 @@ public partial class MemoryStoreClient
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<MemoryStoreObject> GetMemoryStoresAsync(int? limit = default, AgentsListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<MemoryStore> GetMemoryStoresAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAIAsyncCollectionResultOfT<MemoryStoreObject>(
+        return new InternalOpenAIAsyncCollectionResultOfT<MemoryStore>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetMemoryStoresRequest(
@@ -136,7 +136,7 @@ public partial class MemoryStoreClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: MemoryStoreObject.DeserializeMemoryStoreObject,
+            dataItemDeserializer: MemoryStore.DeserializeMemoryStore,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
             cancellationToken.ToRequestOptions());
     }

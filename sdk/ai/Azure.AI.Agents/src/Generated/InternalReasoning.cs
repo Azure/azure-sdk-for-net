@@ -24,7 +24,7 @@ namespace OpenAI
         /// useful for debugging and understanding the model's reasoning process.
         /// One of `auto`, `concise`, or `detailed`.
         /// </param>
-        /// <param name="generateSummary"> **Deprecated:** use `summary` instead. A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of `auto`, `concise`, or `detailed`. </param>
+        /// <param name="generateSummary"> **Deprecated**: use `summary` instead. A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of `auto`, `concise`, or `detailed`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalReasoning(ReasoningEffort? effort, ReasoningSummary? summary, ReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -44,7 +44,7 @@ namespace OpenAI
         /// </summary>
         public ReasoningSummary? Summary { get; set; }
 
-        /// <summary> **Deprecated:** use `summary` instead. A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of `auto`, `concise`, or `detailed`. </summary>
+        /// <summary> **Deprecated**: use `summary` instead. A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of `auto`, `concise`, or `detailed`. </summary>
         public ReasoningGenerateSummary? GenerateSummary { get; set; }
     }
 }

@@ -7,20 +7,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The workflow specification in CSDL format. </summary>
+    /// <summary> The workflow agent definition. </summary>
     public partial class WorkflowAgentDefinition : AgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>
-        public WorkflowAgentDefinition() : base(AgentKind.Workflow)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
-        internal WorkflowAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workflowYaml) : base(kind, raiConfig, additionalBinaryDataProperties)
+        internal WorkflowAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workflowYaml) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             WorkflowYaml = workflowYaml;
         }

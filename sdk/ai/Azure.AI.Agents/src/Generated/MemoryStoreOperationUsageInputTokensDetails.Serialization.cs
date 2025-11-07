@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Agents
 {
     /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
     public partial class MemoryStoreOperationUsageInputTokensDetails : IJsonModel<MemoryStoreOperationUsageInputTokensDetails>

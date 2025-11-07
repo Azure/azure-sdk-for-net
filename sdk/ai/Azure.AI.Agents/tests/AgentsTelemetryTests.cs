@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -97,11 +98,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        AgentRecord agentRecord = await client.CreateAgentAsync(
-            name: agentName,
-            definition: agentDefinition, options: null);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName,
+            new AgentVersionCreationOptions(agentDefinition));
 
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentRecord.Versions.Latest.Version);
+        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -126,11 +127,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        AgentRecord agentRecord = await client.CreateAgentAsync(
-            name: agentName,
-            definition: agentDefinition, options: null  );
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
 
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentRecord.Versions.Latest.Version);
+        await client.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -156,11 +157,11 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        AgentRecord agentRecord = await client.CreateAgentAsync(
-            name: agentName,
-            definition: agentDefinition, options: null);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
 
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentRecord.Versions.Latest.Version);
+        await client.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -186,21 +187,28 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        AgentRecord agentRecord = await client.CreateAgentAsync(
-            name: agentName,
-            definition: agentDefinition, options: null);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
 
         PromptAgentDefinition updateAgentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful prompt agent."
         };
 
-        AgentRecord updateAgentRecord = await client.UpdateAgentAsync(
+        ClientResult protocolUpdateResult = await client.UpdateAgentAsync(
             agentName: agentName,
-            options: new AgentUpdateOptions(updateAgentDefinition));
+            content: BinaryContent.Create(BinaryData.FromString($$"""
+                {
+                  "definition": {
+                    "kind": "prompt",
+                    "model": "{{updateAgentDefinition.Model}}",
+                    "instructions": "{{updateAgentDefinition.Instructions}}"
+                  }
+                }
+                """)));
 
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: updateAgentRecord.Versions.Latest.Version);
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentRecord.Versions.Latest.Version);
+        await client.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -237,23 +245,28 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             Instructions = "You are a prompt agent."
         };
 
-        AgentRecord agentRecord = await client.CreateAgentAsync(
-            name: agentName,
-            definition: agentDefinition,
-            options: null
-        );
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: agentName,
+            options: new(agentDefinition));
 
         PromptAgentDefinition updateAgentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful prompt agent."
         };
 
-        AgentRecord updateAgentRecord = await client.UpdateAgentAsync(
+        ClientResult protocolUpdateResult = await client.UpdateAgentAsync(
             agentName: agentName,
-            options: new AgentUpdateOptions(updateAgentDefinition));
+            content: BinaryContent.Create(BinaryData.FromString($$"""
+                {
+                  "definition": {
+                    "kind": "prompt",
+                    "model": "{{agentDefinition.Model}}",
+                    "instructions": "{{agentDefinition.Instructions}}"
+                  }
+                }
+                """)));
 
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: updateAgentRecord.Versions.Latest.Version);
-        await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentRecord.Versions.Latest.Version);
+        await client.DeleteAgentAsync(agentName: agentName);
 
         // Force flush spans
         _exporter.ForceFlush();
@@ -292,9 +305,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: agentName,
-            definition: agentDefinition,
-            options: null
-        );
+            options: new AgentVersionCreationOptions(agentDefinition));
 
         await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
 
@@ -324,7 +335,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: agentName,
-            definition: agentDefinition, options: null);
+            options: new(agentDefinition));
 
         await client.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
 
@@ -338,7 +349,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
     private static void ReinitializeOpenTelemetryScopeConfiguration()
     {
-        Assembly assembly = typeof(AgentsClient).Assembly;
+        Assembly assembly = typeof(AgentClient).Assembly;
         Assert.That(assembly, Is.Not.Null);
         Type openTelemetryScopeType = assembly.GetType("Azure.AI.Agents.Telemetry.OpenTelemetryScope");
         Assert.That(openTelemetryScopeType, Is.Not.Null);

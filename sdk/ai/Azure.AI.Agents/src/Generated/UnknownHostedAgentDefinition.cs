@@ -11,7 +11,7 @@ namespace Azure.AI.Agents
     {
         /// <summary> Initializes a new instance of <see cref="UnknownHostedAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tools">
         /// An array of tools the hosted agent's model may call while generating a response. You
@@ -21,7 +21,7 @@ namespace Azure.AI.Agents
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
-        internal UnknownHostedAgentDefinition(AgentKind kind, RaiConfig raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory, IDictionary<string, string> environmentVariables) : base(kind != default ? kind : "unknown", raiConfig, additionalBinaryDataProperties, tools, containerProtocolVersions, cpu, memory, environmentVariables)
+        internal UnknownHostedAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory, IDictionary<string, string> environmentVariables) : base(kind != default ? kind : "unknown", contentFilterConfiguration, additionalBinaryDataProperties, tools, containerProtocolVersions, cpu, memory, environmentVariables)
         {
         }
     }

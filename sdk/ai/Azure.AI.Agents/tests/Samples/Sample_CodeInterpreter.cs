@@ -28,7 +28,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
         #region Snippet:Sample_CreateAgent_CodeInterpreter_Async
@@ -45,7 +45,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         };
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: "myAgent",
-            definition: agentDefinition, options: null);
+            options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_CodeInterpreter_Async
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
@@ -86,7 +86,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
 
         #region Snippet:Sample_CreateAgent_CodeInterpreter_Sync
@@ -105,7 +105,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         };
         AgentVersion agentVersion = client.CreateAgentVersion(
             agentName: "myAgent",
-            definition: agentDefinition, options: null);
+            options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_CodeInterpreter_Sync
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);

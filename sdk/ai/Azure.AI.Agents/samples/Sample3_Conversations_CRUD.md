@@ -6,7 +6,7 @@ In this example we will demonstrate creation and basic use of an `ConversationRe
 
 ```C# Snippet:Sample_CreateAgentClient_ConversationCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create a `ConversationClient`, which will be used to create two `AgentConversation` objects.
@@ -94,16 +94,16 @@ Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversa
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteConversations_ConversationCRUD_Sync
-AgentConversationDeletionResult result = conversationClient.DeleteConversation(conversationId: conversation1.Id);
-Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
-result = conversationClient.DeleteConversation(conversationId: conversation2.Id);
-Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
+conversationClient.DeleteConversation(conversationId: conversation1.Id);
+Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
+conversationClient.DeleteConversation(conversationId: conversation2.Id);
+Console.WriteLine($"Conversation deleted(id: {conversation2.Id})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteConversations_ConversationCRUD_Async
-AgentConversationDeletionResult result = await conversationClient.DeleteConversationAsync(conversationId: conversation1.Id);
-Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
-result = await conversationClient.DeleteConversationAsync(conversationId: conversation2.Id);
-Console.WriteLine($"Conversation deleted(id: {result.Id}, deleted:{result.Deleted})");
+await conversationClient.DeleteConversationAsync(conversationId: conversation1.Id);
+Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
+await conversationClient.DeleteConversationAsync(conversationId: conversation2.Id);
+Console.WriteLine($"Conversation deleted(id: {conversation2.Id})");
 ```

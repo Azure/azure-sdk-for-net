@@ -10,6 +10,9 @@ namespace Azure.AI.Agents
     /// <summary> The AgentVersionCreationOptions. </summary>
     public partial class AgentVersionCreationOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AgentVersionCreationOptions"/>. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -39,5 +42,8 @@ namespace Azure.AI.Agents
         /// with a maximum length of 512 characters.
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
+
+        /// <summary> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </summary>
+        public AgentDefinition Definition { get; }
     }
 }

@@ -14,38 +14,57 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct AnalyzeOutputOption : IEquatable<AnalyzeOutputOption>
     {
         private readonly string _value;
+        /// <summary> Generate searchable PDF output. </summary>
+        private const string PdfValue = "pdf";
+        /// <summary> Generate cropped images of detected figures. </summary>
+        private const string FiguresValue = "figures";
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnalyzeOutputOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PdfValue = "pdf";
-        private const string FiguresValue = "figures";
+            _value = value;
+        }
 
         /// <summary> Generate searchable PDF output. </summary>
         public static AnalyzeOutputOption Pdf { get; } = new AnalyzeOutputOption(PdfValue);
+
         /// <summary> Generate cropped images of detected figures. </summary>
         public static AnalyzeOutputOption Figures { get; } = new AnalyzeOutputOption(FiguresValue);
+
         /// <summary> Determines if two <see cref="AnalyzeOutputOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnalyzeOutputOption left, AnalyzeOutputOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AnalyzeOutputOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnalyzeOutputOption left, AnalyzeOutputOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeOutputOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AnalyzeOutputOption(string value) => new AnalyzeOutputOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AnalyzeOutputOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AnalyzeOutputOption?(string value) => value == null ? null : new AnalyzeOutputOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AnalyzeOutputOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AnalyzeOutputOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

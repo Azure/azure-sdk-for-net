@@ -14,13 +14,8 @@ namespace Azure.AI.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
-        /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public AzureAISearchIndex(string projectConnectionId)
+        public AzureAISearchIndex()
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
-
-            ProjectConnectionId = projectConnectionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>

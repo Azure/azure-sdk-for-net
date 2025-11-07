@@ -10,8 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The AgentUpdateOptions. </summary>
-    public partial class AgentUpdateOptions : IJsonModel<AgentUpdateOptions>
+    internal partial class AgentUpdateOptions : IJsonModel<AgentUpdateOptions>
     {
         /// <summary> Initializes a new instance of <see cref="AgentUpdateOptions"/> for deserialization. </summary>
         internal AgentUpdateOptions()

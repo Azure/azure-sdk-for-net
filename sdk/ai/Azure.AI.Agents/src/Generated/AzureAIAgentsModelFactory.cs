@@ -67,32 +67,32 @@ namespace Azure.AI.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.WorkflowAgentDefinition"/>, <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.ContainerAppAgentDefinition"/>, and <see cref="PromptAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <returns> A new <see cref="Agents.AgentDefinition"/> instance for mocking. </returns>
-        public static AgentDefinition AgentDefinition(string kind = default, RaiConfig raiConfig = default)
+        public static AgentDefinition AgentDefinition(string kind = default, ContentFilterConfiguration contentFilterConfiguration = default)
         {
-            return new UnknownAgentDefinition(new AgentKind(kind), raiConfig, additionalBinaryDataProperties: null);
+            return new UnknownAgentDefinition(new AgentKind(kind), contentFilterConfiguration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
-        /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
-        /// <returns> A new <see cref="Agents.RaiConfig"/> instance for mocking. </returns>
-        public static RaiConfig RaiConfig(string raiPolicyName = default)
+        /// <param name="policyName"> The name of the RAI policy to apply. </param>
+        /// <returns> A new <see cref="Agents.ContentFilterConfiguration"/> instance for mocking. </returns>
+        public static ContentFilterConfiguration ContentFilterConfiguration(string policyName = default)
         {
-            return new RaiConfig(raiPolicyName, additionalBinaryDataProperties: null);
+            return new ContentFilterConfiguration(policyName, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The workflow specification in CSDL format. </summary>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <summary> The workflow agent definition. </summary>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
-        public static WorkflowAgentDefinition WorkflowAgentDefinition(RaiConfig raiConfig = default, string workflowYaml = default)
+        public static WorkflowAgentDefinition WorkflowAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
         {
-            return new WorkflowAgentDefinition(AgentKind.Workflow, raiConfig, additionalBinaryDataProperties: null, workflowYaml);
+            return new WorkflowAgentDefinition(AgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
         }
 
         /// <summary> The hosted agent definition. </summary>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="tools">
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
@@ -102,7 +102,7 @@ namespace Azure.AI.Agents
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(RaiConfig raiConfig = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default)
         {
             tools ??= new ChangeTrackingList<AgentTool>();
             containerProtocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -110,7 +110,7 @@ namespace Azure.AI.Agents
 
             return new HostedAgentDefinition(
                 AgentKind.Hosted,
-                raiConfig,
+                contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 tools.ToList(),
                 containerProtocolVersions.ToList(),
@@ -401,19 +401,19 @@ namespace Azure.AI.Agents
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
-        /// <param name="projectConnection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolParameters"/> instance for mocking. </returns>
-        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters projectConnection = default)
+        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
         {
-            return new BrowserAutomationToolParameters(projectConnection, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
-        /// <param name="id"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
-        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string id = default)
+        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = default)
         {
-            return new BrowserAutomationToolConnectionParameters(id, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
@@ -483,7 +483,7 @@ namespace Azure.AI.Agents
         }
 
         /// <summary> An agent implementing the A2A protocol. </summary>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
@@ -493,9 +493,9 @@ namespace Azure.AI.Agents
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
         /// <returns> A new <see cref="Agents.A2ATool"/> instance for mocking. </returns>
-        public static A2ATool A2ATool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default)
+        public static A2ATool A2ATool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
         {
-            return new A2ATool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUrl, agentCardPath, projectConnectionId);
+            return new A2ATool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUri, agentCardPath, projectConnectionId);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -506,9 +506,9 @@ namespace Azure.AI.Agents
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
-        /// <param name="updateDelay"> The amount of time to wait after inactivity before updating memories with messages from the call (e.g., '0s', '5m'). Defaults to '60s'. </param>
+        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchTool"/> instance for mocking. </returns>
-        public static MemorySearchTool MemorySearchTool(string memoryStoreName = default, string scope = default, MemorySearchOptions searchOptions = default, TimeSpan? updateDelay = default)
+        public static MemorySearchTool MemorySearchTool(string memoryStoreName = default, string scope = default, MemorySearchOptions searchOptions = default, int? updateDelay = default)
         {
             return new MemorySearchTool(
                 ToolType.MemorySearch,
@@ -529,7 +529,7 @@ namespace Azure.AI.Agents
         }
 
         /// <summary> The image-based deployment definition for a hosted agent. </summary>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="tools">
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
@@ -540,7 +540,7 @@ namespace Azure.AI.Agents
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image for the hosted agent. </param>
         /// <returns> A new <see cref="Agents.ImageBasedHostedAgentDefinition"/> instance for mocking. </returns>
-        public static ImageBasedHostedAgentDefinition ImageBasedHostedAgentDefinition(RaiConfig raiConfig = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
+        public static ImageBasedHostedAgentDefinition ImageBasedHostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
         {
             tools ??= new ChangeTrackingList<AgentTool>();
             containerProtocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -548,7 +548,7 @@ namespace Azure.AI.Agents
 
             return new ImageBasedHostedAgentDefinition(
                 AgentKind.Hosted,
-                raiConfig,
+                contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 tools.ToList(),
                 containerProtocolVersions.ToList(),
@@ -559,18 +559,18 @@ namespace Azure.AI.Agents
         }
 
         /// <summary> The container app agent definition. </summary>
-        /// <param name="raiConfig"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="containerProtocolVersions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="containerAppResourceId"> The resource ID of the Azure Container App that hosts this agent. Not mutable across versions. </param>
         /// <param name="ingressSubdomainSuffix"> The suffix to apply to the app subdomain when sending ingress to the agent. This can be a label (e.g., '---current'), a specific revision (e.g., '--0000001'), or empty to use the default endpoint for the container app. </param>
         /// <returns> A new <see cref="Agents.ContainerAppAgentDefinition"/> instance for mocking. </returns>
-        public static ContainerAppAgentDefinition ContainerAppAgentDefinition(RaiConfig raiConfig = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string containerAppResourceId = default, string ingressSubdomainSuffix = default)
+        public static ContainerAppAgentDefinition ContainerAppAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string containerAppResourceId = default, string ingressSubdomainSuffix = default)
         {
             containerProtocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
 
             return new ContainerAppAgentDefinition(
                 AgentKind.ContainerApp,
-                raiConfig,
+                contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 containerProtocolVersions.ToList(),
                 containerAppResourceId,
@@ -582,9 +582,9 @@ namespace Azure.AI.Agents
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="toolArgumentBindings"> When provided, the input value is bound to the specified tool arguments. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="required"> Whether the input property is required when the agent is invoked. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
         /// <returns> A new <see cref="Agents.StructuredInputDefinition"/> instance for mocking. </returns>
-        public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IEnumerable<ToolArgumentBinding> toolArgumentBindings = default, BinaryData schema = default, bool? @required = default)
+        public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IEnumerable<ToolArgumentBinding> toolArgumentBindings = default, BinaryData schema = default, bool? isRequired = default)
         {
             toolArgumentBindings ??= new ChangeTrackingList<ToolArgumentBinding>();
 
@@ -593,7 +593,7 @@ namespace Azure.AI.Agents
                 defaultValue,
                 toolArgumentBindings.ToList(),
                 schema,
-                @required,
+                isRequired,
                 additionalBinaryDataProperties: null);
         }
 
@@ -635,59 +635,6 @@ namespace Azure.AI.Agents
             return new ApiInnerError(code, innererror, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AgentCreationOptions. </summary>
-        /// <param name="name">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// - Must start and end with alphanumeric characters, 
-        /// - Can contain hyphens in the middle
-        /// - Must not exceed 63 characters.
-        /// </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <returns> A new <see cref="Agents.AgentCreationOptions"/> instance for mocking. </returns>
-        public static AgentCreationOptions AgentCreationOptions(string name = default, IDictionary<string, string> metadata = default, string description = default, AgentDefinition definition = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AgentCreationOptions(name, metadata, description, definition, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentUpdateOptions. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <returns> A new <see cref="Agents.AgentUpdateOptions"/> instance for mocking. </returns>
-        public static AgentUpdateOptions AgentUpdateOptions(IDictionary<string, string> metadata = default, string description = default, AgentDefinition definition = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AgentUpdateOptions(metadata, description, definition, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A deleted agent Object. </summary>
-        /// <param name="name"> The name of the agent. </param>
-        /// <param name="deleted"> Whether the agent was successfully deleted. </param>
-        /// <returns> A new <see cref="Agents.AgentDeletionResult"/> instance for mocking. </returns>
-        public static AgentDeletionResult AgentDeletionResult(string name = default, bool deleted = default)
-        {
-            return new AgentDeletionResult("agent.deleted", name, deleted, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The AgentVersionCreationOptions. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -726,67 +673,6 @@ namespace Azure.AI.Agents
             parameterValues ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new AgentManifestOptions(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A deleted agent version Object. </summary>
-        /// <param name="name"> The name of the agent. </param>
-        /// <param name="version"> The version identifier of the agent. </param>
-        /// <param name="deleted"> Whether the agent was successfully deleted. </param>
-        /// <returns> A new <see cref="Agents.DeleteAgentVersionResponse"/> instance for mocking. </returns>
-        public static DeleteAgentVersionResponse DeleteAgentVersionResponse(string name = default, string version = default, bool deleted = default)
-        {
-            return new DeleteAgentVersionResponse("agent.version.deleted", name, version, deleted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The container operation for a specific version of an agent. </summary>
-        /// <param name="id"> The ID of the container operation. This id is unique identifier across the system. </param>
-        /// <param name="agentId"> The ID of the agent. </param>
-        /// <param name="agentVersionId"> The ID of the agent version. </param>
-        /// <param name="status"> The status of the container operation. </param>
-        /// <param name="error"> The error of the container operation, if any. </param>
-        /// <param name="container"> The container of the specific version of an agent. </param>
-        /// <returns> A new <see cref="Agents.AgentContainerOperation"/> instance for mocking. </returns>
-        public static AgentContainerOperation AgentContainerOperation(string id = default, string agentId = default, string agentVersionId = default, AgentContainerOperationStatus status = default, AgentContainerOperationError error = default, AgentContainer container = default)
-        {
-            return new AgentContainerOperation(
-                id,
-                agentId,
-                agentVersionId,
-                status,
-                error,
-                container,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The error details of the container operation, if any. </summary>
-        /// <param name="code"> The error code of the container operation, if any. </param>
-        /// <param name="type"> The error type of the container operation, if any. </param>
-        /// <param name="message"> The error message of the container operation, if any. </param>
-        /// <returns> A new <see cref="Agents.AgentContainerOperationError"/> instance for mocking. </returns>
-        public static AgentContainerOperationError AgentContainerOperationError(string code = default, string @type = default, string message = default)
-        {
-            return new AgentContainerOperationError(code, @type, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The details of the container of a specific version of an agent. </summary>
-        /// <param name="status"> The status of the container of a specific version of an agent. </param>
-        /// <param name="maxReplicas"> The maximum number of replicas for the container. Default is 1. </param>
-        /// <param name="minReplicas"> The minimum number of replicas for the container. Default is 1. </param>
-        /// <param name="errorMessage"> The error message if the container failed to operate, if any. </param>
-        /// <param name="createdAt"> The creation time of the container. </param>
-        /// <param name="updatedAt"> The last update time of the container. </param>
-        /// <returns> A new <see cref="Agents.AgentContainer"/> instance for mocking. </returns>
-        public static AgentContainer AgentContainer(AgentContainerStatus status = default, int? maxReplicas = default, int? minReplicas = default, string errorMessage = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default)
-        {
-            return new AgentContainer(
-                "agent.container",
-                status,
-                maxReplicas,
-                minReplicas,
-                errorMessage,
-                createdAt,
-                updatedAt,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A retrieved memory item from memory search. </summary>
@@ -888,15 +774,6 @@ namespace Azure.AI.Agents
             return new AgentConversationUpdateOptions(metadata, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AgentConversationDeletionResult. </summary>
-        /// <param name="deleted"></param>
-        /// <param name="id"></param>
-        /// <returns> A new <see cref="Agents.AgentConversationDeletionResult"/> instance for mocking. </returns>
-        public static AgentConversationDeletionResult AgentConversationDeletionResult(bool deleted = default, string id = default)
-        {
-            return new AgentConversationDeletionResult("conversation.deleted", deleted, id, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// Content item used to generate a response.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentStructuredOutputsResponseItem"/>, <see cref="Agents.AgentWorkflowActionResponseItem"/>, <see cref="Agents.OAuthConsentRequestItemResource"/>, and <see cref="Agents.MemorySearchToolCallItemResource"/>.
@@ -905,18 +782,18 @@ namespace Azure.AI.Agents
         /// <param name="id"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <returns> A new <see cref="Agents.AgentResponseItem"/> instance for mocking. </returns>
-        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, CreatedBy createdBy = default)
+        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentResponseItemSource createdBy = default)
         {
             return new UnknownItemResource(new AgentResponseItemKind(@type), id, createdBy, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The CreatedBy. </summary>
+        /// <summary> The AgentResponseItemSource. </summary>
         /// <param name="agent"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
-        /// <returns> A new <see cref="Agents.CreatedBy"/> instance for mocking. </returns>
-        public static CreatedBy CreatedBy(AgentInfo agent = default, string responseId = default)
+        /// <returns> A new <see cref="Agents.AgentResponseItemSource"/> instance for mocking. </returns>
+        public static AgentResponseItemSource AgentResponseItemSource(AgentInfo agent = default, string responseId = default)
         {
-            return new CreatedBy(agent, responseId, additionalBinaryDataProperties: null);
+            return new AgentResponseItemSource(agent, responseId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentInfo. </summary>
@@ -933,7 +810,7 @@ namespace Azure.AI.Agents
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="output"> The structured output captured during the response. </param>
         /// <returns> A new <see cref="Agents.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, CreatedBy createdBy = default, BinaryData output = default)
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentResponseItemSource createdBy = default, BinaryData output = default)
         {
             return new AgentStructuredOutputsResponseItem(AgentResponseItemKind.StructuredOutputs, id, createdBy, additionalBinaryDataProperties: null, output);
         }
@@ -946,7 +823,7 @@ namespace Azure.AI.Agents
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
         /// <returns> A new <see cref="Agents.AgentWorkflowActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, CreatedBy createdBy = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
+        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, AgentResponseItemSource createdBy = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
         {
             return new AgentWorkflowActionResponseItem(
                 AgentResponseItemKind.WorkflowAction,
@@ -971,7 +848,7 @@ namespace Azure.AI.Agents
         /// <param name="conversationId"> ID of the conversation for the agent invocation. </param>
         /// <param name="responseId"> The response id for the agent invocation. </param>
         /// <returns> A new <see cref="Agents.InvokeAzureAgentWorkflowActionOutputItemResource"/> instance for mocking. </returns>
-        public static InvokeAzureAgentWorkflowActionOutputItemResource InvokeAzureAgentWorkflowActionOutputItemResource(string id = default, CreatedBy createdBy = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default, AgentInfo agent = default, string conversationId = default, string responseId = default)
+        public static InvokeAzureAgentWorkflowActionOutputItemResource InvokeAzureAgentWorkflowActionOutputItemResource(string id = default, AgentResponseItemSource createdBy = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default, AgentInfo agent = default, string conversationId = default, string responseId = default)
         {
             return new InvokeAzureAgentWorkflowActionOutputItemResource(
                 AgentResponseItemKind.WorkflowAction,
@@ -994,7 +871,7 @@ namespace Azure.AI.Agents
         /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
         /// <returns> A new <see cref="Agents.OAuthConsentRequestItemResource"/> instance for mocking. </returns>
-        public static OAuthConsentRequestItemResource OAuthConsentRequestItemResource(CreatedBy createdBy = default, string id = default, string consentLink = default, string serverLabel = default)
+        public static OAuthConsentRequestItemResource OAuthConsentRequestItemResource(AgentResponseItemSource createdBy = default, string id = default, string consentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestItemResource(
                 AgentResponseItemKind.OauthConsentRequest,
@@ -1014,7 +891,7 @@ namespace Azure.AI.Agents
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
         /// <returns> A new <see cref="Agents.MemorySearchToolCallItemResource"/> instance for mocking. </returns>
-        public static MemorySearchToolCallItemResource MemorySearchToolCallItemResource(string id = default, CreatedBy createdBy = default, MemorySearchToolCallItemResourceStatus status = default, IEnumerable<MemorySearchItem> results = default)
+        public static MemorySearchToolCallItemResource MemorySearchToolCallItemResource(string id = default, AgentResponseItemSource createdBy = default, MemorySearchToolCallItemResourceStatus status = default, IEnumerable<MemorySearchItem> results = default)
         {
             results ??= new ChangeTrackingList<MemorySearchItem>();
 
@@ -1066,13 +943,13 @@ namespace Azure.AI.Agents
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="definition"> The definition of the memory store. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreObject"/> instance for mocking. </returns>
-        public static MemoryStoreObject MemoryStoreObject(string id = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string name = default, string description = default, IDictionary<string, string> metadata = default, MemoryStoreDefinition definition = default)
+        /// <returns> A new <see cref="Agents.MemoryStore"/> instance for mocking. </returns>
+        public static MemoryStore MemoryStore(string id = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string name = default, string description = default, IDictionary<string, string> metadata = default, MemoryStoreDefinition definition = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MemoryStoreObject(
-                "memory_store",
+            return new MemoryStore(
+                "agent.version",
                 id,
                 createdAt,
                 updatedAt,
@@ -1127,9 +1004,9 @@ namespace Azure.AI.Agents
         /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
         /// <param name="cachedTokens">
         /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](/docs/guides/prompt-caching).
+        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
         /// </param>
-        /// <returns> A new <see cref="OpenAI.MemoryStoreOperationUsageInputTokensDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsageInputTokensDetails"/> instance for mocking. </returns>
         public static MemoryStoreOperationUsageInputTokensDetails MemoryStoreOperationUsageInputTokensDetails(int cachedTokens = default)
         {
             return new MemoryStoreOperationUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
@@ -1137,7 +1014,7 @@ namespace Azure.AI.Agents
 
         /// <summary> The MemoryStoreOperationUsageOutputTokensDetails. </summary>
         /// <param name="reasoningTokens"> The number of reasoning tokens. </param>
-        /// <returns> A new <see cref="OpenAI.MemoryStoreOperationUsageOutputTokensDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsageOutputTokensDetails"/> instance for mocking. </returns>
         public static MemoryStoreOperationUsageOutputTokensDetails MemoryStoreOperationUsageOutputTokensDetails(int reasoningTokens = default)
         {
             return new MemoryStoreOperationUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
