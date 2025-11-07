@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureGeneratorSource)\Visitors\ClientRequestIdHeaderVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\NamespaceVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/" />
