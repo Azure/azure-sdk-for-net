@@ -23,8 +23,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public FooData(AzureLocation location) : base(location)
+        /// <param name="something"> something. </param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooData(AzureLocation location, ManagedServiceIdentity something, FooProperties nestedPropertyProperties) : base(location)
         {
+            Argument.AssertNotNull(something, nameof(something));
+            Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
+
+            Something = something;
+            NestedPropertyProperties = nestedPropertyProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -148,7 +156,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.Prop1;
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.Prop1;
             }
         }
 
@@ -158,7 +170,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.Prop2;
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.Prop2;
             }
         }
 
@@ -195,6 +211,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new FooProperties();
                 }
                 Properties.NestedPropertyProperties = value;
+            }
+        }
+
+        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        [WirePath("properties.optionalProperty.flattenedProperty")]
+        public string FlattenedProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlattenedProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.FlattenedProperty = value;
             }
         }
     }

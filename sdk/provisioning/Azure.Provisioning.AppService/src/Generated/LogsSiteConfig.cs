@@ -117,7 +117,7 @@ public partial class LogsSiteConfig : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the LogsSiteConfig.</param>
     public LogsSiteConfig(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -126,6 +126,7 @@ public partial class LogsSiteConfig : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _applicationLogs = DefineModelProperty<ApplicationLogsConfig>("ApplicationLogs", ["properties", "applicationLogs"]);
         _httpLogs = DefineModelProperty<AppServiceHttpLogsConfig>("HttpLogs", ["properties", "httpLogs"]);
@@ -142,6 +143,11 @@ public partial class LogsSiteConfig : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>
