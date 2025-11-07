@@ -110,6 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 await RegisterWithSharedBlobListenerAsync(
                     hostId,
                     sharedBlobListener,
+                    primaryBlobClient,
                     targetBlobClient,
                     blobTriggerQueueWriter,
                     cancellationToken).ConfigureAwait(false);
@@ -169,14 +170,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private async Task RegisterWithSharedBlobListenerAsync(
             string hostId,
             SharedBlobListener sharedBlobListener,
-            BlobServiceClient blobClient,
+            BlobServiceClient primaryBlobClient,
+            BlobServiceClient targetBlobClient,
             BlobTriggerQueueWriter blobTriggerQueueWriter,
             CancellationToken cancellationToken)
         {
-            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(hostId, _functionDescriptor, _input, new BlobReceiptManager(blobClient),
-                blobTriggerQueueWriter, _loggerFactory.CreateLogger<BlobListener>());
+            BlobTriggerExecutor triggerExecutor = new BlobTriggerExecutor(
+                hostId,
+                _functionDescriptor,
+                _input,
+                new BlobReceiptManager(primaryBlobClient),
+                blobTriggerQueueWriter,
+                _loggerFactory.CreateLogger<BlobListener>());
 
-            await sharedBlobListener.RegisterAsync(blobClient, _container, triggerExecutor, cancellationToken).ConfigureAwait(false);
+            await sharedBlobListener.RegisterAsync(
+                targetBlobClient,
+                _container,
+                triggerExecutor,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private void RegisterWithSharedBlobQueueListenerAsync(
