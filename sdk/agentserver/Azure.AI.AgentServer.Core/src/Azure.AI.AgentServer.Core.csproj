@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Azure.AI.AgentServer.Contracts.csproj"/>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj"/>
   </ItemGroup>
 
   <ItemGroup>

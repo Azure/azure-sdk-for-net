@@ -21,7 +21,8 @@ public static class HostedAgentTelemetry
     /// </summary>
     public static readonly ActivitySource Source = new("Azure.AI.AgentServer");
 
-    internal static IDisposable StartActivity(this AgentInvocationContext context, ILogger logger, CreateResponseRequest request)
+    internal static IDisposable StartActivity(this AgentInvocationContext context, ILogger logger,
+        CreateResponseRequest request)
     {
         var logging = logger.BeginScope(new Dictionary<string, object?>
         {
@@ -30,10 +31,14 @@ public static class HostedAgentTelemetry
             ["Streaming"] = request.Stream ?? false,
         });
 
-        var span = Source.StartActivity($"ContainerAgentsAdapter-{context.ResponseId}",
+        var span = Source.StartActivity($"HostedAgents-{context.ResponseId}",
             ActivityKind.Server);
 
         span?.SetServiceTag()
+            .SetTag("gen_ai.agent.id",
+                request.Agent != null ? $"{request.Agent.Name}:{request.Agent.Version}" : string.Empty)
+            .SetTag("gen_ai.provider.name", "AzureAI Hosted Agents")
+            .SetTag("gen_ai.response.id", context.ResponseId)
             .SetResponsesTag("response_id", context.ResponseId)
             .SetResponsesTag("conversation_id", context.ConversationId)
             .SetResponsesTag("streaming", request.Stream ?? false);

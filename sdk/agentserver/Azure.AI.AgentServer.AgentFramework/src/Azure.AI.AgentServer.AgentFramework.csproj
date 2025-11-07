@@ -3,7 +3,7 @@
     <!-- Approved override to LtsTargetFramework -->
     <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
     <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
-    
+
     <PackageTags>Azure.AI.AgentServer.AgentFramework</PackageTags>
   </PropertyGroup>
 
@@ -12,6 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Azure.AI.AgentServer.Core.csproj"/>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj"/>
   </ItemGroup>
 </Project>
