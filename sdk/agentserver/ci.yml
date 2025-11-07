@@ -27,6 +27,7 @@ extends:
     SDKType: client
     ServiceDirectory: agentserver
     ArtifactName: packages
+    BuildSnippets: false
     Artifacts:
       - name: Azure.AI.AgentServer.Core
         safeName: AzureAIAgentServerCore
