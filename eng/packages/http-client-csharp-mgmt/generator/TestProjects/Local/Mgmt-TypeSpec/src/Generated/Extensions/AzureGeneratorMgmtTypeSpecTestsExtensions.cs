@@ -620,6 +620,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
         }
 
+        /// <summary>
+        /// Query network sibling set - a provider-level async action.
+        /// This is a non-resource LRO operation that returns NetworkSiblingSet.
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(this TenantResource tenantResource, WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).QueryNetworkSiblingSetAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Query network sibling set - a provider-level async action.
+        /// This is a non-resource LRO operation that returns NetworkSiblingSet.
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation<NetworkSiblingSet> QueryNetworkSiblingSet(this TenantResource tenantResource, WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).QueryNetworkSiblingSet(waitUntil, content, cancellationToken);
+        }
+
         /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="ManagementGroupResource"/>. </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>

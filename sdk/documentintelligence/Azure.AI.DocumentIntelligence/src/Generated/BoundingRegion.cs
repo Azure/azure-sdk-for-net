@@ -14,37 +14,8 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Bounding polygon on a specific page of the input. </summary>
     public readonly partial struct BoundingRegion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
@@ -54,11 +25,8 @@ namespace Azure.AI.DocumentIntelligence
         /// represent the x, y values of the polygon vertices, clockwise from the left
         /// (-180 degrees inclusive) relative to the element orientation.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="polygon"/> is null. </exception>
         internal BoundingRegion(int pageNumber, IEnumerable<float> polygon)
         {
-            Argument.AssertNotNull(polygon, nameof(polygon));
-
             PageNumber = pageNumber;
             Polygon = polygon.ToList();
         }
@@ -71,21 +39,17 @@ namespace Azure.AI.DocumentIntelligence
         /// represent the x, y values of the polygon vertices, clockwise from the left
         /// (-180 degrees inclusive) relative to the element orientation.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PageNumber = pageNumber;
             Polygon = polygon;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/> for deserialization. </summary>
-        public BoundingRegion()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> 1-based page number of page containing the bounding region. </summary>
         public int PageNumber { get; }
+
         /// <summary>
         /// Bounding polygon on the page, or the entire page if not specified.
         /// Coordinates specified relative to the top-left of the page. The numbers

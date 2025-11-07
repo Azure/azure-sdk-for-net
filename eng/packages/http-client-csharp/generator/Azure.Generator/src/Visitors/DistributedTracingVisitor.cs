@@ -107,7 +107,7 @@ namespace Azure.Generator.Visitors
                 return base.VisitMethod(method);
             }
 
-            if (method.IsProtocolMethod)
+            if (method.Kind == ScmMethodKind.Protocol)
             {
                 UpdateProtocolMethodsWithDistributedTracing(method);
             }

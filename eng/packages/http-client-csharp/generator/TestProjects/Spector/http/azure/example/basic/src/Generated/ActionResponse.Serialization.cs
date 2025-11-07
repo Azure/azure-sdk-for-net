@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     public partial class ActionResponse : IJsonModel<ActionResponse>
     {

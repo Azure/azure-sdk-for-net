@@ -13,37 +13,8 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Request body to build a new custom document model. </summary>
     public partial class BuildDocumentModelOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BuildDocumentModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
@@ -60,8 +31,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
         /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentModelOptions(string modelId, string description, DocumentBuildMode buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, string> tags, float? maxTrainingHours, bool? allowOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BuildDocumentModelOptions(string modelId, string description, DocumentBuildMode buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, IDictionary<string, string> tags, float? maxTrainingHours, bool? allowOverwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;
@@ -71,24 +42,24 @@ namespace Azure.AI.DocumentIntelligence
             Tags = tags;
             MaxTrainingHours = maxTrainingHours;
             AllowOverwrite = allowOverwrite;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelOptions"/> for deserialization. </summary>
-        internal BuildDocumentModelOptions()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
+
         /// <summary> Document model description. </summary>
         public string Description { get; set; }
+
         /// <summary> Custom document model build mode. </summary>
         public DocumentBuildMode BuildMode { get; }
+
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </summary>
         public float? MaxTrainingHours { get; set; }
+
         /// <summary> Allow overwriting an existing model with the same name. </summary>
         public bool? AllowOverwrite { get; set; }
     }

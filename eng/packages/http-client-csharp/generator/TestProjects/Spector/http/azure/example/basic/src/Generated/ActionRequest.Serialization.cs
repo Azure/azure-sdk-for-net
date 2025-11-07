@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     public partial class ActionRequest : IJsonModel<ActionRequest>
     {
