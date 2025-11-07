@@ -88,8 +88,6 @@ known_presence_issues:
   - ['sdk/provisioning/Generator','Not a package']
 
 known_content_issues:
-  - ['sdk/ai/Azure.AI.AgentServer/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Authenticate the [Cc]lient']
-
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','Track 1']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
   - ['sdk/cognitiveservices/FormRecognizer/README.md','Track 1']
