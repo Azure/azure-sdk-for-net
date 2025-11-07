@@ -73,8 +73,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
             Assert.AreEqual("{\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
-            var ex = Assert.Throws<InvalidOperationException>(() => jp.GetString("$[0].property1"u8));
-            Assert.AreEqual("$[0].property1 was not found in the JSON structure.", ex!.Message);
+            var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetString("$[0].property1"u8));
+            Assert.AreEqual("No value found at JSON path '$[0].property1'.", ex!.Message);
             Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
 
             Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.ToString("J"));
@@ -550,6 +550,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
             Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void NonExistentPathShouldNotThrow()
+        {
+            JsonPatch patch = new("{\"choices\":[{\"delta\":{\"content\":\"hello\"}}]}"u8.ToArray());
+
+            Assert.DoesNotThrow(() => patch.TryGetValue("$.reasoning"u8, out string? value));
         }
     }
 }
