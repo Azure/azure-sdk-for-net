@@ -13,6 +13,7 @@
       AZC0034;
       SA1649;
       SA1402;
+      IDT002;
     </NoWarn>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
