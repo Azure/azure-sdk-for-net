@@ -4,7 +4,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.Core;
-using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
@@ -34,16 +33,14 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(ModelDeployment))]
     [ModelReaderWriterBuildable(typeof(ModelDeploymentSku))]
     [ModelReaderWriterBuildable(typeof(NoAuthenticationCredentials))]
+    [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]
+    [ModelReaderWriterBuildable(typeof(PagedIndex))]
     [ModelReaderWriterBuildable(typeof(PendingUploadConfiguration))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResult))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectConnectionBaseCredential))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDataset))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectIndex))]
-    [ModelReaderWriterBuildable(typeof(PagedConnection))]
-    [ModelReaderWriterBuildable(typeof(PagedDeployment))]
-    [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]
-    [ModelReaderWriterBuildable(typeof(PagedIndex))]
     public partial class AzureAIProjectsContext : ModelReaderWriterContext
     {
     }
