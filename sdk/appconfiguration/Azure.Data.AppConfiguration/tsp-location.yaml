@@ -1,4 +1,6 @@
+directory: specification/appconfiguration/data-plane/AppConfiguration
+commit: 24747fc6e6a10f593f8de5b02f997e8d68d9a3c5
 repo: Azure/azure-rest-api-specs
-directory: "specification/appconfiguration/data-plane/AppConfiguration"
-commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
