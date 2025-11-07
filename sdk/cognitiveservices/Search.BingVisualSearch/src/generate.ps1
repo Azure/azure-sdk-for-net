@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/VisualSearch" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated"
