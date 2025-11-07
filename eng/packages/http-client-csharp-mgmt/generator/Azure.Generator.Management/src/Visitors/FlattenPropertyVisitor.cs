@@ -225,7 +225,7 @@ namespace Azure.Generator.Management.Visitors
                 var constructorParameterType = constructorParameters[fullConstructorParameterIndex].Type;
 
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
-                if (publicConstructor && constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) || constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                if ((publicConstructor && constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType)) || constructorParameterType.AreNamesEqual(flattenedPropertyType))
                 {
                     var propertyParameter = flattenedProperty.AsParameter;
                     var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
@@ -253,8 +253,8 @@ namespace Azure.Generator.Management.Visitors
                             // Theoretically there should be only one flattened property for the constructor parameter type, and the corresponding parameter should be singleton as well.
                             // For some reason, there are multiple parameters of the same type in some constructors, we need to enforce that we use the correct one.
                             var flattenPropertyNames = list.Select(x => x.FlattenedProperty.Name).ToHashSet();
-                            var innerFalttenProperties = flattenedProperties.Where(x => flattenPropertyNames.Contains(x.FlattenedProperty.Name)).ToList();
-                            var innerParameters = BuildConstructorParameters(constructorParameterType, innerFalttenProperties, parameterMap);
+                            var innerFlattenedProperties = flattenedProperties.Where(x => flattenPropertyNames.Contains(x.FlattenedProperty.Name)).ToList();
+                            var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                             parameters.Add(New.Instance(constructorParameterType, innerParameters));
                         }
                     }
@@ -262,7 +262,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             // If the additionalProperties parameter is missing at the end, we need to pass a new instance for it.
-            if (parameters.Count < constructorParameters.Count && additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
+            if (parameters.Count < constructorParameters.Count && additionalPropertyIndex == constructorParameters.Count - 1)
             {
                 parameters.Add(Null);
             }
