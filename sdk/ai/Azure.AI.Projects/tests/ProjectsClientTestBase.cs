@@ -2,22 +2,16 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable OPENAI001 // Type is for evaluation purposes only
 
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
-using Azure.AI.Agents;
-using Azure.AI.OpenAI;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 using Azure.AI.Projects.Tests.Utils;
-using OpenAI;
-using OpenAI.Files;
-using OpenAI.FineTuning;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -81,70 +75,6 @@ namespace Azure.AI.Projects.Tests
 
             // Instrument the client for sync/async testing
             return InstrumentClient(client);
-        }
-
-        /// <summary>
-        /// Gets an AgentsClient with recording support configured.
-        /// </summary>
-        /// <param name="projectClient">The AIProjectClient to get the AgentsClient from. If null, GetTestClient() will be used.</param>
-        /// <returns>An AgentsClient configured for recording/playback.</returns>
-        protected AgentsClient GetTestAgentsClient(AIProjectClient projectClient = null)
-        {
-            projectClient ??= GetTestClient();
-
-            // Create AgentsClientOptions with test-proxy transport
-            AgentsClientOptions agentsOptions = new AgentsClientOptions();
-
-            if (Mode != RecordedTestMode.Live && Recording != null)
-            {
-                // Inject the test-proxy transport for recording/playback
-                agentsOptions.Transport = new ProjectsProxyTransport(Recording);
-
-                // Configure retry policy for faster playback
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    agentsOptions.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-                }
-            }
-
-            return projectClient.GetAgentsClient(agentsOptions);
-        }
-
-        /// <summary>
-        /// Gets an OpenAIClient with recording support configured.
-        /// </summary>
-        /// <param name="agentClient">The AgentsClient to get the OpenAIClient from. If null, GetTestAgentsClient() will be used.</param>
-        /// <returns>An OpenAIClient configured for recording/playback.</returns>
-        protected OpenAIClient GetTestOpenAIClient(AgentsClient agentClient = null)
-        {
-            agentClient ??= GetTestAgentsClient();
-
-            // Create OpenAI client options with test-proxy transport for recording
-            OpenAIClientOptions openAIOptions = new OpenAIClientOptions();
-
-            if (Mode != RecordedTestMode.Live && Recording != null)
-            {
-                // Inject the test-proxy transport for recording/playback
-                openAIOptions.Transport = new ProjectsProxyTransport(Recording);
-
-                // Configure retry policy for faster playback
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    openAIOptions.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-                }
-            }
-
-            return agentClient.GetOpenAIClient(openAIOptions);
-        }
-
-        /// <summary>
-        /// Gets OpenAIFileClient and FineTuningClient with recording support configured.
-        /// </summary>
-        /// <returns>A tuple containing OpenAIFileClient and FineTuningClient configured for recording/playback.</returns>
-        protected (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetFineTuningClients()
-        {
-            OpenAIClient oaiClient = GetTestOpenAIClient();
-            return (oaiClient.GetOpenAIFileClient(), oaiClient.GetFineTuningClient());
         }
 
         /// <summary>
