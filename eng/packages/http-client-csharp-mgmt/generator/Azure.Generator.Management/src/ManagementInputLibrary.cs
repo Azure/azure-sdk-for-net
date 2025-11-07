@@ -101,8 +101,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<InputModelType, string> map = new();
-            HashSet<InputModelType> duplicateUpdateModels = new();
+            Dictionary<InputModelType, (string ResourceName, int Count)> tempMap = new();
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -113,24 +112,24 @@ namespace Azure.Generator.Management
                     {
                         if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
                         {
-                            if (map.ContainsKey(updateModel))
+                            if (tempMap.TryGetValue(updateModel, out var existing))
                             {
-                                duplicateUpdateModels.Add(updateModel);
+                                tempMap[updateModel] = (existing.ResourceName, existing.Count + 1);
                             }
-                            map[updateModel] = metadata.ResourceModel.Name;
+                            else
+                            {
+                                tempMap[updateModel] = (metadata.ResourceModel.Name, 1);
+                            }
                             break;
                         }
                     }
                 }
             }
 
-            // Remove update models that are used in more than one resource
-            foreach (var duplicateModel in duplicateUpdateModels)
-            {
-                map.Remove(duplicateModel);
-            }
-
-            return map;
+            // Only keep update models that are used in exactly one resource (count == 1)
+            return tempMap
+                .Where(kvp => kvp.Value.Count == 1)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ResourceName);
         }
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
