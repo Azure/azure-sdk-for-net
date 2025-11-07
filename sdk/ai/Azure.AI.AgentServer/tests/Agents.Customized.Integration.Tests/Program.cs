@@ -4,9 +4,9 @@ using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace  SimpleCustomized.Samples;
+namespace  Agents.Customized.Integration.Tests;
 
-public class Program
+public partial class Program
 {
     private static async Task Main()
     {

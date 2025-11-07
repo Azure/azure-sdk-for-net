@@ -3,6 +3,7 @@
 
 using System.Net.Http.Json;
 using System.Text.Json;
+using Agents.Customized.Integration.Tests;
 using Azure.AI.AgentServer.Tests.Utils;
 using Microsoft.AspNetCore.Mvc.Testing;
 
@@ -10,13 +11,13 @@ namespace Azure.AI.AgentServer.Tests
 {
     public class CustomizedAgentTests
     {
-        private WebApplicationFactory<SimpleCustomized.Samples.Program> factory = null!;
+        private WebApplicationFactory<Program> factory = null!;
         private HttpClient client = null!;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            this.factory = new WebApplicationFactory<SimpleCustomized.Samples.Program>();
+            this.factory = new WebApplicationFactory<Program>();
             this.client = this.factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false,

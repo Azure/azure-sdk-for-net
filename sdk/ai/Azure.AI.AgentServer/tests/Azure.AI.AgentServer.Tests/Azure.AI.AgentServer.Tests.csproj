@@ -11,13 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)"/>
 
-    <ProjectReference Include="..\..\samples\Customized\SimpleCustomized\SimpleCustomized.Samples.csproj"/>
-    <ProjectReference Include="..\..\src\Core\Azure.AI.AgentServer.Core.csproj"/>
-    <ProjectReference Include="..\..\src\AgentFramework\Azure.AI.AgentServer.AgentFramework.csproj"/>
+    <ProjectReference Include="..\Agents.Customized.Integration.Tests\Agents.Customized.Integration.Tests.csproj"/>
   </ItemGroup>
-
-  <PropertyGroup>
-  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" />

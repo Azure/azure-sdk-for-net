@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Agents.AI.Workflows"/>
-    <PackageReference Include="Microsoft.Agents.AI.OpenAI"/>
-    <ProjectReference Include="..\..\..\src\AgentFramework\Azure.AI.AgentServer.AgentFramework.csproj"/>
-  </ItemGroup>
-</Project>

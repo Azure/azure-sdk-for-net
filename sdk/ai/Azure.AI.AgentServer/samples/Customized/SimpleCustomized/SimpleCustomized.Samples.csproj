@@ -1,5 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Core\Azure.AI.AgentServer.Core.csproj"/>
-  </ItemGroup>
-</Project>
