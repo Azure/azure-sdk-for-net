@@ -69,6 +69,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             ServiceBusProcessor messageProcessor = _client.CreateProcessor(_entityPath);
 
             _mockAdminClient = new Mock<ServiceBusAdministrationClient>(MockBehavior.Strict);
+            _mockAdminClient.Setup(c => c.GetSubscriptionRuntimePropertiesAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Throws(new UnauthorizedAccessException("UnauthorizedAccessException exception"));
+            _mockAdminClient.Setup(c => c.GetQueueRuntimePropertiesAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Throws(new UnauthorizedAccessException("UnauthorizedAccessException exception"));
 
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
             var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
@@ -355,6 +359,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(message);
 
+            _mockAdminClient.Reset();
             if (_entityType == ServiceBusEntityType.Queue)
             {
                 _mockAdminClient.Setup(x => x.GetQueueRuntimePropertiesAsync(_entityPath, It.IsAny<CancellationToken>()))
@@ -408,6 +413,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockMessageReceiver.Setup(x => x.PeekMessageAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(message);
 
+            _mockAdminClient.Reset();
             if (_entityType == ServiceBusEntityType.Queue)
             {
                 _mockAdminClient.Setup(x => x.GetQueueRuntimePropertiesAsync(_entityPath, It.IsAny<CancellationToken>()))
