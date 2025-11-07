@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.AI.Projects" VersionOverride="1.0.0"/>
+    <PackageReference Include="Azure.AI.Projects"/>
     <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore"/>
     <PackageReference Include="ModelContextProtocol"/>
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
