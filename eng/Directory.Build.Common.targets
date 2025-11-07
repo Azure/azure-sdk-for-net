@@ -22,7 +22,7 @@
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
@@ -387,7 +387,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
 
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' </PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
@@ -398,6 +398,16 @@
   <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
     <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
       <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GetAotCompatOptOut" Returns="@(AotCompatOptOutLine)">
+    <PropertyGroup>
+      <AotCompatOptOutText>$(PackageId):AotCompatOptOut=$(AotCompatOptOut)</AotCompatOptOutText>
+    </PropertyGroup>
+    
+    <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
+      <AotCompatOptOutLine Include="$(AotCompatOptOutText)" />
     </ItemGroup>
   </Target>
 

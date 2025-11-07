@@ -17,12 +17,6 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: TestSetupSteps
     type: stepList
     default: []
@@ -75,8 +69,6 @@ jobs:
           TestPipeline: ${{ parameters.TestPipeline }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
-          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
@@ -116,8 +108,6 @@ jobs:
             TestPipeline: ${{ parameters.TestPipeline }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             SDKType: ${{ parameters.SDKType }}
-            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

@@ -51,7 +51,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $AotCompatOptOut = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -67,49 +67,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # First, check if this artifact has baselined warnings in AOTTestInputs
-      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
-      $hasBaselinedWarnings = $false
-      if ($aotArtifacts) {
-        $matchingAotArtifact = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-        if ($matchingAotArtifact -and $matchingAotArtifact.ExpectedWarningsFilepath) {
-          $hasBaselinedWarnings = $true
-        }
-      }
-
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
-      # if artifact has baselined warnings, run AOT checks; 
-      # otherwise use AotCompatOptOut from project settings
-      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      if ($null -ne $shouldAot) {
-        $parsedBool = $null
-        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
-        }
-      }
-      elseif ($hasBaselinedWarnings) {
-        # If artifact has baselined warnings, enable AOT checks
-        $pkgProp.CIParameters["CheckAOTCompat"] = $true
-      }
-      else {
-        # If not explicitly opted out of AOT compat, run the check
-        $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -ne 'true'
-      }
-
-      # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
-      if ($pkgProp.CIParameters["CheckAOTCompat"]) {
-        if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
-        }
-        else {
-          $pkgProp.CIParameters["AOTTestInputs"] = @()
-        }
-      }
-      else {
-        $pkgProp.CIParameters["AOTTestInputs"] = @()
-      }
-
       # BuildSnippets is opt _out_, so we should default to true if not specified
       $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
       if ($null -ne $shouldSnippet) {
@@ -123,11 +80,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
-    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    # so that when we are checking the package set for which need to "Build Snippets"
     else {
-      # No CI.yml found, use IsAotCompatible from csproj for CheckAOTCompat
-      $pkgProp.CIParameters["CheckAOTCompat"] = $AotCompatOptOut -eq 'false'
-      $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 

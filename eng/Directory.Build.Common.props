@@ -111,6 +111,7 @@
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
     <AotCompatOptOut>false</AotCompatOptOut>
+    <AotAnalyzersOptOut>false</AotAnalyzersOptOut>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == '$(LtsTargetFramework)'">netstandard2.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 

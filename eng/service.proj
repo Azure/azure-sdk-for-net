@@ -200,4 +200,25 @@
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>
 
+  <Target Name="GetAotCompatOptOut">
+    <MSBuild Projects="@(ProjectReference)"
+            Targets="GetAotCompatOptOut"
+            BuildInParallel="$(BuildInParallel)"
+            SkipNonexistentProjects="false"
+            SkipNonexistentTargets="true">
+      <Output ItemName="AotCompatOptOutLines" TaskParameter="TargetOutputs" />
+    </MSBuild>
+
+    <!-- Deduplicate lines -->
+    <RemoveDuplicates Inputs="@(AotCompatOptOutLines)">
+      <Output TaskParameter="Filtered" ItemName="AotCompatOptOutLinesFiltered"/>
+    </RemoveDuplicates>
+
+    <!-- Write aggregated output to file if OutputProjectInfoListFilePath is specified -->
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''"
+                      File="$(OutputProjectInfoListFilePath)"
+                      Lines="@(AotCompatOptOutLinesFiltered)"
+                      Overwrite="true" />
+  </Target>
+
 </Project>

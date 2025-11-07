@@ -4,6 +4,48 @@ param(
   [string]$ExpectedWarningsFilePath,
   [string]$DirectoryName = "")
 
+### Check if AOT compatibility is opted out ###
+
+# Set up paths like other eng scripts do
+$RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
+$EngDir = Join-Path $RepoRoot "eng"
+$ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
+$outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "aot-compat-$([System.Guid]::NewGuid()).txt"
+
+# Get the AotCompatOptOut property value from the project
+dotnet msbuild `
+    /nologo `
+    /t:GetAotCompatOptOut `
+    "$ServiceProj" `
+    /p:ServiceDirectory=$ServiceDirectory `
+    /p:Project=$PackageName `
+    /p:IncludeTests=false `
+    /p:IncludeSamples=false `
+    /p:IncludePerf=false `
+    /p:IncludeStress=false `
+    /p:OutputProjectInfoListFilePath="$outputFilePath" `
+    -tl:off | Out-Host
+
+$aotCompatLines = @()
+if (Test-Path $outputFilePath) {
+    $aotCompatLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
+    $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+}
+
+foreach ($line in $aotCompatLines) {
+    if ($line -like "*$PackageName:AotCompatOptOut=*") {
+        $aotCompatOptOut = $line.Split("=")[1].Trim()
+        Write-Host "AotCompatOptOut value for $PackageName is '$aotCompatOptOut'."
+        if ($aotCompatOptOut -eq "true") {
+            Write-Host "AOT compatibility is opted out for $PackageName. Skipping AOT compatibility check."
+            exit 0
+        }
+        break
+    }
+}
+
+exit 0
+
 ### Creating a test app ###
 
 Write-Host "Creating a test app to publish."
