@@ -78,7 +78,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 pageableOperationMethodProvider._enclosingType);
 
             // Add enhanced XML documentation with structured tags
-            ResourceOperationMethodProvider.BuildEnhancedXmlDocs(
+            ResourceHelpers.BuildEnhancedXmlDocs(
                 pageableOperationMethodProvider._method,
                 pageableOperationMethodProvider._convenienceMethod.Signature.Description,
                 pageableOperationMethodProvider._enclosingType,
