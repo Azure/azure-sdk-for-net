@@ -554,6 +554,50 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new AllocatedToSubscription(subscriptionId, quotaAllocated, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Request for querying network sibling set. </summary>
+        /// <param name="location"> Location to query. </param>
+        /// <param name="subscriptionId"> Subscription ID to query. </param>
+        /// <returns> A new <see cref="Models.QueryNetworkSiblingSetRequest"/> instance for mocking. </returns>
+        public static QueryNetworkSiblingSetRequest QueryNetworkSiblingSetRequest(string location = default, string subscriptionId = default)
+        {
+            return new QueryNetworkSiblingSetRequest(location, subscriptionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Network sibling set information returned by the query operation.
+        /// This is a non-resource model used in a provider-level LRO operation.
+        /// </summary>
+        /// <param name="id"> Unique identifier for the sibling set. </param>
+        /// <param name="name"> Name of the sibling set. </param>
+        /// <param name="type"> Type of the resource. </param>
+        /// <param name="properties"> Properties of the network sibling set. </param>
+        /// <returns> A new <see cref="Models.NetworkSiblingSet"/> instance for mocking. </returns>
+        public static NetworkSiblingSet NetworkSiblingSet(string id = default, string name = default, string @type = default, NetworkSiblingSetProperties properties = default)
+        {
+            return new NetworkSiblingSet(id, name, @type, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of the network sibling set. </summary>
+        /// <param name="siblings"> List of network siblings. </param>
+        /// <param name="status"> Status of the query. </param>
+        /// <returns> A new <see cref="Models.NetworkSiblingSetProperties"/> instance for mocking. </returns>
+        public static NetworkSiblingSetProperties NetworkSiblingSetProperties(IEnumerable<NetworkSibling> siblings = default, string status = default)
+        {
+            siblings ??= new ChangeTrackingList<NetworkSibling>();
+
+            return new NetworkSiblingSetProperties(siblings.ToList(), status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about a network sibling. </summary>
+        /// <param name="subscriptionId"> Subscription ID. </param>
+        /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="networkInterfaceId"> Network interface ID. </param>
+        /// <returns> A new <see cref="Models.NetworkSibling"/> instance for mocking. </returns>
+        public static NetworkSibling NetworkSibling(string subscriptionId = default, string resourceGroupName = default, string networkInterfaceId = default)
+        {
+            return new NetworkSibling(subscriptionId, resourceGroupName, networkInterfaceId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
