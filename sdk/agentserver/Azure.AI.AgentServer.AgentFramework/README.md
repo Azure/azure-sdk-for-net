@@ -8,6 +8,10 @@ frameworks or custom code — into Microsoft AI Foundry with minimal effort.
 
 ### Install the package
 
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.AgentFramework --prerelease
+```
+
 ### Authenticate the client
 
 A secure, keyless authentication approach is to use Microsoft Entra ID (formerly Azure Active Directory) via the [Azure Identity library][azure_identity]. To use this library, you need to install the [Azure.Identity package](https://www.nuget.org/packages/Azure.Identity):
