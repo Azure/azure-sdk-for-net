@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataProtectionBackup
       safeName: AzureResourceManagerDataProtectionBackup
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DataProtectionBackup
-      ExpectedWarningsFilepath: None

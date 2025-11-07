@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DisconnectedOperations
       safeName: AzureResourceManagerDisconnectedOperations
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.DisconnectedOperations
-      ExpectedWarningsFilepath: None
