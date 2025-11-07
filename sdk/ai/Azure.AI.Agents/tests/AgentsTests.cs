@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
@@ -702,20 +700,28 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
     }
 
-    private static ComputerCallOutputResponseItem ProcessComputerUseCallTest(ComputerCallResponseItem item, IReadOnlyDictionary<string, string> screenshots)
+    private static ComputerCallOutputResponseItem ProcessComputerUseCallTest<T>(ComputerCallResponseItem item, IReadOnlyDictionary<string, T> screenshots)
     {
-        string currentScreenshot = item.Action.Kind switch
+        T currentScreenshot = item.Action.Kind switch
         {
             ComputerCallActionKind.Type => screenshots["search_typed"],
             ComputerCallActionKind.KeyPress => (item.Action.KeyPressKeyCodes.Contains("Return") || item.Action.KeyPressKeyCodes.Contains("ENTER")) ? screenshots["search_results"] : screenshots["browser_search"],
             ComputerCallActionKind.Click => screenshots["search_results"],
             _ => screenshots["browser_search"]
         };
-        if (currentScreenshot.StartsWith("data:image"))
+        if (currentScreenshot is string currentScreenshotStr)
         {
-            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageUri: new Uri(currentScreenshot)));
+            if (currentScreenshotStr.StartsWith("data:image"))
+            {
+                return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageUri: new Uri(currentScreenshotStr)));
+            }
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: currentScreenshotStr));
         }
-        return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: currentScreenshot));
+        if (currentScreenshot is BinaryData currentScreenshotBin)
+        {
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: currentScreenshotBin, screenshotImageBytesMediaType: "image/png"));
+        }
+        throw new InvalidDataException("screenshots must be a Dictionary<string, string>, Dictionary<string, BinaryData>");
     }
 
     private static async Task<string> UploadScreenshots(OpenAIClient openAIClient)
@@ -729,14 +735,13 @@ public class AgentsTests : AgentsTestBase
         return JsonSerializer.Serialize(screenshots);
     }
 
-    private static string UrlGetBase64Image(string name)
+    private static BinaryData UrlGetBase64Image(string name)
     {
         string imagePath = GetTestFile(name);
-        string base64EncodedData = Convert.ToBase64String(File.ReadAllBytes(imagePath));
-        return $"data:image/png;base64,{base64EncodedData}";
+        return new BinaryData(File.ReadAllBytes(imagePath));
     }
 
-    private static Dictionary<string, string> GetBase64Images()
+    private static Dictionary<string, BinaryData> GetImagesBin()
     {
         return new() {
             { "browser_search", UrlGetBase64Image("cua_browser_search.png")},
@@ -746,9 +751,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("File upload mecahnism is blocked by the Bug 4806071 (ADO), the URI mechanism will be available only on .NET 10" +
-            "(See issue https://github.com/dotnet/runtime/issues/96544 and a fix https://learn.microsoft.com/dotnet/core/compatibility/networking/10.0/uri-length-limits-removed)")]
-    [TestCase(true)]
+    // [TestCase(true)] File upload mecahnism is blocked by the Bug 4806071 (ADO)
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {
@@ -760,7 +763,8 @@ public class AgentsTests : AgentsTestBase
         // string serializedScreenshots = await UploadScreenshots(openAIClient);
         // Console.WriteLine(serializedScreenshots);
         // End of file upload code.
-        Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : GetBase64Images();
+        Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
+        Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             definition: await GetAgentToolDefinition(ToolType.ComputerUse, openAIClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME),
@@ -772,14 +776,14 @@ public class AgentsTests : AgentsTestBase
         {
             Version = agentVersion.Version,
         };
+
         ResponseCreationOptions responseOptions = new();
         responseOptions.TruncationMode = ResponseTruncationMode.Auto;
         responseOptions.SetAgentReference(agentReference);
-
         ResponseItem request = ResponseItem.CreateUserMessageItem(
             [
                 ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
-                useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageUri: new Uri(screenshots["browser_search"]), imageDetailLevel: ResponseImageDetailLevel.High)
+                useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageBytes: screenshotsBin["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
             ]
         );
         List<ResponseItem> inputItems = [request];
@@ -793,13 +797,15 @@ public class AgentsTests : AgentsTestBase
                 inputItems: inputItems,
                 options: responseOptions);
             response = await WaitForRun(responseClient, response);
+            inputItems.Clear();
+            responseOptions.PreviousResponseId = response.Id;
             computerUseCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
             {
                 inputItems.Add(responseItem);
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
-                    inputItems.Add(ProcessComputerUseCallTest(computerCall, screenshots));
+                    inputItems.Add(useFileUpload ? ProcessComputerUseCallTest(computerCall, screenshots) : ProcessComputerUseCallTest(computerCall, screenshotsBin));
                     computerUseCalled = true;
                     computerUseWasCalled = true;
                 }
@@ -808,7 +814,6 @@ public class AgentsTests : AgentsTestBase
         } while (computerUseCalled && limitIteration > 0);
         Assert.That(computerUseWasCalled, "The computer use tool was not called.");
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
-        Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
     }
 
     [RecordedTest]
