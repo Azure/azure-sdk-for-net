@@ -531,7 +531,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void SeedWithEscapedCharacters()
         {
-            // Start with a seeded json patch with escapped characters
+            // Start with a seeded json patch with escaped characters
             JsonPatch jp = new("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"u8.ToArray());
 
             // GetString should return single escape
