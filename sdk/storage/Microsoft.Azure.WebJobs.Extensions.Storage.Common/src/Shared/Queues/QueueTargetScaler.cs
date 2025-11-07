@@ -63,8 +63,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             }
 
             int targetWorkerCount = (int)Math.Ceiling(queueLength / (decimal)concurrency);
+            string details = $"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (QueueName='{_queueName}', QueueLength ='{queueLength}', Concurrency='{concurrency}').";
+            _logger.LogFunctionScaleVote(_functionId, targetWorkerCount, queueLength, concurrency, details);
 
-            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (QueueName='{_queueName}', QueueLength ='{queueLength}', Concurrency='{concurrency}').");
             return new TargetScalerResult
             {
                 TargetWorkerCount = targetWorkerCount
