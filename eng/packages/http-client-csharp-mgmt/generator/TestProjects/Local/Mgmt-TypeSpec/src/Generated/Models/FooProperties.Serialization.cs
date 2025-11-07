@@ -90,6 +90,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             writer.WritePropertyName("nestedProperty"u8);
             writer.WriteObjectValue(NestedProperty, options);
+            if (Optional.IsDefined(OptionalProperty))
+            {
+                writer.WritePropertyName("optionalProperty"u8);
+                writer.WriteObjectValue(OptionalProperty, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -145,6 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             IList<string> prop1 = default;
             IList<int> prop2 = default;
             NestedFooModel nestedProperty = default;
+            SafeFlattenModel optionalProperty = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -226,6 +232,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("optionalProperty"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -249,6 +264,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
+                optionalProperty,
                 eTag,
                 additionalBinaryDataProperties);
         }
