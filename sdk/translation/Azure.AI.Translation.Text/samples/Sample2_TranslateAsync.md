@@ -13,8 +13,9 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<TranslatedTextItem> response = await client.TranslateAsync(inputText, targetLanguage, sourceLanguage: sourceLanguage).ConfigureAwait(false);
-    TranslatedTextItem translation = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    TranslatedTextItem translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
@@ -39,8 +40,9 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<TranslatedTextItem> response = await client.TranslateAsync(inputText, targetLanguage).ConfigureAwait(false);
-    TranslatedTextItem translation = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    TranslatedTextItem translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
@@ -97,7 +99,7 @@ try
         "Dies ist ein Test."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(inputTextElements, targetLanguage).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)

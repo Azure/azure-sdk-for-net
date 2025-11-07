@@ -15,8 +15,9 @@ try
 
     string inputText = "这是个测试。";
 
-    Response<TransliteratedText> response = client.Transliterate(inputText, language, fromScript, toScript);
-    TransliteratedText transliteration = response.Value;
+    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(language, fromScript, toScript, inputText);
+    IReadOnlyList<TransliteratedText> transliterations = response.Value;
+    TransliteratedText transliteration = transliterations.FirstOrDefault();
 
     Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
 }

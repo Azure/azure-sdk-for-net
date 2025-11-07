@@ -13,8 +13,9 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<TranslatedTextItem> response = client.Translate(inputText, targetLanguage, sourceLanguage: sourceLanguage);
-    TranslatedTextItem translation = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText, sourceLanguage);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    TranslatedTextItem translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
@@ -39,8 +40,9 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<TranslatedTextItem> response = client.Translate(inputText, targetLanguage);
-    TranslatedTextItem translation = response.Value;
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    TranslatedTextItem translation = translations.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
@@ -97,7 +99,7 @@ try
         "Dies ist ein Test."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(inputTextElements, targetLanguage);
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputTextElements);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)
