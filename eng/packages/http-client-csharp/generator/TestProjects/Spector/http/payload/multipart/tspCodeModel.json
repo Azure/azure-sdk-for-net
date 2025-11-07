@@ -1764,6 +1764,7 @@
           "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.MultiPart",
       "apiVersions": [],
@@ -2598,6 +2599,7 @@
               "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.MultiPart.FormData",
           "apiVersions": [],
@@ -2757,6 +2759,7 @@
                   "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts",
               "apiVersions": [],
@@ -3142,6 +3145,7 @@
                       "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType",
                   "apiVersions": [],
@@ -3301,6 +3305,7 @@
                       "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString",
                   "apiVersions": [],

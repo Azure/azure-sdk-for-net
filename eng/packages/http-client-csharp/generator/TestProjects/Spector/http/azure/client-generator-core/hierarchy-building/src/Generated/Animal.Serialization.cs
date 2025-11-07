@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     [PersistableModelProxy(typeof(UnknownAnimal))]
     public abstract partial class Animal : IJsonModel<Animal>

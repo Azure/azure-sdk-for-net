@@ -178,7 +178,7 @@ namespace Microsoft.Extensions.Azure
                     return new WorkloadIdentityCredential(workloadIdentityOptions);
                 }
 
-                throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
+                throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via the configuration.");
             }
 
             if (string.Equals(credentialType, "managedidentityasfederatedidentity", StringComparison.OrdinalIgnoreCase))
@@ -189,7 +189,7 @@ namespace Microsoft.Extensions.Azure
                     string.IsNullOrWhiteSpace(clientId) ||
                     string.IsNullOrWhiteSpace(azureCloud))
                 {
-                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'resourceId', 'objectId'] must be specified via environment variables or the configuration.");
+                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'managedIdentityResourceId', 'managedIdentityObjectId'] must be specified via the configuration.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
@@ -413,8 +413,8 @@ namespace Microsoft.Extensions.Azure
             idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
 
             var validIdentifiers = isFederated
-                ? "'clientId', 'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'"
-                : "'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'";
+                ? "'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'"
+                : "'clientId', 'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'";
 
             if (idCount > 1)
             {
@@ -423,7 +423,7 @@ namespace Microsoft.Extensions.Azure
 
             if (isFederated && idCount < 1)
             {
-                throw new ArgumentException($"At least one of [{validIdentifiers}] must be specified for managed identity.");
+                throw new ArgumentException($"A clientId and exactly one of [{validIdentifiers}] must be specified for federated managed identity.");
             }
         }
 

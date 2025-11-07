@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ReadAMaintenance()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/MaintenanceRead.json
-            // this example is just showing the usage of "Maintenances_Read" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/MaintenanceRead.json
+            // this example is just showing the usage of "Maintenance_Read" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateMaintenanceOnAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/MaintenanceUpdate.json
-            // this example is just showing the usage of "Maintenances_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/MaintenanceUpdate.json
+            // this example is just showing the usage of "Maintenance_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,10 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerMaintenanceResource mySqlFlexibleServerMaintenance = client.GetMySqlFlexibleServerMaintenanceResource(mySqlFlexibleServerMaintenanceResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerMaintenancePatch patch = new MySqlFlexibleServerMaintenancePatch
-            {
-                MaintenanceStartOn = DateTimeOffset.Parse("2024-01-20T00:00:00"),
-            };
+            MySqlFlexibleServerMaintenancePatch patch = new MySqlFlexibleServerMaintenancePatch();
             ArmOperation<MySqlFlexibleServerMaintenanceResource> lro = await mySqlFlexibleServerMaintenance.UpdateAsync(WaitUntil.Completed, patch);
             MySqlFlexibleServerMaintenanceResource result = lro.Value;
 

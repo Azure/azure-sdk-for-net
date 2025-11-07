@@ -369,6 +369,8 @@ function getOperationScope(path: string): ResourceScope {
     return ResourceScope.ResourceGroup;
   } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
     return ResourceScope.Subscription;
+  } else if (path.startsWith("/providers/Microsoft.Management/managementGroups/{managementGroupId}/")) {
+    return ResourceScope.ManagementGroup;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }

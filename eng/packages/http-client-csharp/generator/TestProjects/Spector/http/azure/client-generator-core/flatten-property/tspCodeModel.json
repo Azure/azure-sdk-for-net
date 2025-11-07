@@ -659,6 +659,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
       "apiVersions": []

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 arcAgentProfile,
                 securityProfile,
                 oidcIssuerProfile,
-                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, new Dictionary<string, BinaryData>()),
+                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, null),
                 arcAgentryConfigurations.ToList(),
                 miscellaneousProperties,
                 additionalBinaryDataProperties: null);

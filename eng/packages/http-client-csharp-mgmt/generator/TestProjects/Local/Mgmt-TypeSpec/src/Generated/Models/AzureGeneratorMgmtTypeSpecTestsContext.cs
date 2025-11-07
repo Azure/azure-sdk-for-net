@@ -78,6 +78,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SafeFlattenModel))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
