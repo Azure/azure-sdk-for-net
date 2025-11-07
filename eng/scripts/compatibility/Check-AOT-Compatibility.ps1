@@ -1,7 +1,6 @@
 param(
   [string]$ServiceDirectory,
   [string]$PackageName,
-  [string]$ExpectedWarningsFilePath,
   [string]$DirectoryName = "")
 
 ### Check if AOT compatibility is opted out ###

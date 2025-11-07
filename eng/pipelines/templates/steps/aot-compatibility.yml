@@ -1,14 +1,30 @@
 parameters:
   ServiceDirectory: ''
+  Artifacts: ''
   PackageInfoFolder: ''
 
 steps:
-- task: Powershell@2
-  displayName: Check for AOT compatibility regressions for PR
-  inputs:
-    targetType: filepath
-    filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility-For-PR.ps1
-    arguments: >-
-      -PackageInfoFolder "${{ parameters.PackageInfoFolder }}"
-      -ProjectNames "$(ProjectNames)"
-    workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
+
+- ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+  - task: Powershell@2
+    displayName: Check for AOT compatibility regressions for PR
+    inputs:
+      targetType: filepath
+      filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility-For-PR.ps1
+      arguments: >-
+        -PackageInfoFolder "${{ parameters.PackageInfoFolder }}"
+        -ProjectNames "$(ProjectNames)"
+      workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
+- ${{ else }}:
+  - ${{ each artifact in parameters.Artifacts }}:
+    - task: Powershell@2
+      displayName: Check for AOT compatibility regressions in ${{ artifact.name }}
+      inputs:
+        targetType: filepath
+        filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
+        arguments: >-
+          -ServiceDirectory ${{ parameters.ServiceDirectory }}
+          -PackageName ${{ artifact.name }}
+          ${{ if ne(artifact.directoryName, '') }}:
+          -DirectoryName ${{ artifact.directoryName }}
+        workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
