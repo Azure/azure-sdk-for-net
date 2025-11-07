@@ -86,12 +86,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
                     _logListeners.Add(blobServiceClient, logListener);
                 }
-                // TODO: verify if this is the only permissions error code, or other possible permissions errors
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.AuthorizationPermissionMismatch ||
-                                                        ex.ErrorCode == BlobErrorCode.InsufficientAccountPermissions)
+                                                        ex.ErrorCode == BlobErrorCode.InsufficientAccountPermissions ||
+                                                        ex.ErrorCode == BlobErrorCode.AuthorizationFailure)
                 {
-                    // TODO: Remove SAS on Uri if present before logging to prevent secrets from being logged.
-                    Logger.LoggingNotEnabledOnTargetAccount(_logger, blobServiceClient.Uri.AbsoluteUri);
+                    // Log which account we couldn't enable logging on due to permissions. Ensure that no SAS token is logged on the Uri.
+                    BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobServiceClient.Uri){ Sas = null };
+                    Logger.LoggingNotEnabledOnTargetAccount(_logger, blobUriBuilder.ToUri().AbsoluteUri);
                 }
             }
         }
