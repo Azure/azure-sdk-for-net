@@ -3,24 +3,14 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary>
-    /// A Class representing an ElasticSanVolume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanVolumeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanVolumeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource"/> using the GetElasticSanVolume method.
-    /// </summary>
-    public partial class ElasticSanVolumeResource : ArmResource
+    public partial class ElasticSanVolumeResource
     {
         /// <summary>
         /// Delete an Volume.
@@ -49,7 +39,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, XmsDeleteSnapshot? xmsDeleteSnapshots, XmsForceDelete? xmsForceDelete, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, xmsDeleteSnapshots.ToString(), xmsForceDelete.ToString(), null, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, deleteSnapshots: xmsDeleteSnapshots.ToString(), forceDelete: xmsForceDelete.ToString(), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Delete an Volume.
@@ -78,6 +68,6 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, XmsDeleteSnapshot? xmsDeleteSnapshots, XmsForceDelete? xmsForceDelete, CancellationToken cancellationToken)
-            => Delete(waitUntil, xmsDeleteSnapshots.ToString(), xmsForceDelete.ToString(), null, cancellationToken);
+            => Delete(waitUntil, deleteSnapshots: xmsDeleteSnapshots.ToString(), forceDelete: xmsForceDelete.ToString(), cancellationToken);
     }
 }

@@ -82,18 +82,9 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.IsFalse(await _collection.ExistsAsync(volumeGroupName));
 
             string volumeGroupSoftDeleteName = Recording.GenerateAssetName("testvolumegroupsd-");
-            ElasticSanVolumeGroupData volumeGroupSoftDeleteData = new ElasticSanVolumeGroupData()
-            {
-                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy()
-                {
-                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
-                    RetentionPeriodDays = 1
-                }
-            };
+            ElasticSanVolumeGroupData volumeGroupSoftDeleteData = new ElasticSanVolumeGroupData();
             ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
             Assert.AreEqual(volumeGroupSoftDelete.Id.Name, volumeGroupSoftDeleteName);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, ElasticSanDeleteRetentionPolicyState.Enabled);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, 1);
             await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
             int count = 0;
             await foreach (ElasticSanVolumeGroupResource _ in _collection.GetAllAsync())

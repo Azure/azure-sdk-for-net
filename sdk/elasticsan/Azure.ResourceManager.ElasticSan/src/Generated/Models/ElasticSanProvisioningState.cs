@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private const string DeletingValue = "Deleting";
         private const string DeletedValue = "Deleted";
         private const string RestoringValue = "Restoring";
-        private const string SoftDeletingValue = "SoftDeleting";
 
         /// <summary> Invalid. </summary>
         public static ElasticSanProvisioningState Invalid { get; } = new ElasticSanProvisioningState(InvalidValue);
@@ -54,8 +53,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static ElasticSanProvisioningState Deleted { get; } = new ElasticSanProvisioningState(DeletedValue);
         /// <summary> Restoring. </summary>
         public static ElasticSanProvisioningState Restoring { get; } = new ElasticSanProvisioningState(RestoringValue);
-        /// <summary> SoftDeleting. </summary>
-        public static ElasticSanProvisioningState SoftDeleting { get; } = new ElasticSanProvisioningState(SoftDeletingValue);
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ElasticSanProvisioningState left, ElasticSanProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are not the same. </summary>

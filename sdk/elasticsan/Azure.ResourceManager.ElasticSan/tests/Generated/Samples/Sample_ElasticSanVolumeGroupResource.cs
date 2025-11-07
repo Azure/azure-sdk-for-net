@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeGroupsDeleteMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/VolumeGroups_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeGroupsDeleteMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Delete_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/VolumeGroups_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsUpdateMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/VolumeGroups_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroup_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsUpdateMinimumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Update_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/VolumeGroups_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroup_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PreBackupVolume_VolumeGroupsPreBackupMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_PreBackup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_PreBackup_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_PreBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PreRestoreVolume_VolumeGroupsPreRestoreMaximumSetGen()
         {
-            // Generated from example definition: 2024-07-01-preview/Volumes_PreRestore_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/Volumes_PreRestore_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_PreRestore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

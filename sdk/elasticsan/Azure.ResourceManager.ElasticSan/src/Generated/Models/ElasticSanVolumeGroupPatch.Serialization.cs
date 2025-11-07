@@ -68,11 +68,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
                 writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
-            {
-                writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,7 +112,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanEncryptionProperties encryptionProperties = default;
             ElasticSanNetworkRuleSet networkAcls = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
-            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,15 +179,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             enforceDataIntegrityCheckForIscsi = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deleteRetentionPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -210,7 +195,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 encryptionProperties,
                 networkAcls,
                 enforceDataIntegrityCheckForIscsi,
-                deleteRetentionPolicy,
                 serializedAdditionalRawData);
         }
 
