@@ -34,7 +34,6 @@ if (Test-Path $outputFilePath) {
 foreach ($line in $aotCompatLines) {
     if ($line -like "*$PackageName:AotCompatOptOut=*") {
         $aotCompatOptOut = $line.Split("=")[1].Trim()
-        Write-Host "AotCompatOptOut value for $PackageName is '$aotCompatOptOut'."
         if ($aotCompatOptOut -eq "true") {
             Write-Host "AOT compatibility is opted out for $PackageName. Skipping AOT compatibility check."
             exit 0
@@ -141,9 +140,9 @@ foreach ($line in $($publishOutput -split "`r`n"))
 
 $expectedWarningsPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\tests\compatibility\ExpectedAotWarnings.txt"
 
-if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
+if (Test-Path $expectedWarningsPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
-    $expectedWarnings = Get-Content -Path $expectedWarningsFullPath
+    $expectedWarnings = Get-Content -Path $expectedWarningsPath
 } else {
     # If no correct expected warnings were provided, check that there are no warnings reported.
 
