@@ -332,7 +332,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
 
-            return TransliterateAsync(language, fromScript, toScript, [text], cancellationToken);
+            return TransliterateAsync(language, fromScript, toScript, [text], cancellationToken: cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -350,16 +350,17 @@ namespace Azure.AI.Translation.Text
         /// scripts available for the selected combination of input language and input script.
         /// </param>
         /// <param name="content"> Array of the text to be transliterated. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
 
-            return TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), cancellationToken: cancellationToken);
+            return TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -386,7 +387,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
 
-            return Transliterate(language, fromScript, toScript, new[] { new InputTextItem(text) }, cancellationToken: cancellationToken);
+            return Transliterate(language, fromScript, toScript, [text], cancellationToken: cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -404,16 +405,17 @@ namespace Azure.AI.Translation.Text
         /// scripts available for the selected combination of input language and input script.
         /// </param>
         /// <param name="content"> Array of the text to be transliterated. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
 
-            return Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), cancellationToken: cancellationToken);
+            return Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
