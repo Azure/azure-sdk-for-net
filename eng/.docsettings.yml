@@ -146,6 +146,10 @@ known_content_issues:
   - ['sdk/provisioning/Azure.Provisioning.Kubernetes/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Deployment/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
+  - ['sdk/agentserver/Azure.AI.AgentServer.AgentFramework/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Contracts/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'

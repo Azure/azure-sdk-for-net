@@ -154,7 +154,8 @@ public static class ResponseConverterExtensions
             inputTokensDetails: inputTokensDetails,
             outputTokens: (int)(usage.OutputTokenCount ?? 0),
             outputTokensDetails: outputTokensDetails,
-            totalTokens: (int)(usage.TotalTokenCount ?? 0)
+            totalTokens: (int)(usage.TotalTokenCount ?? 0),
+            serializedAdditionalRawData: null
         );
     }
 

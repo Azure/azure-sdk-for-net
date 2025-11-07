@@ -26,7 +26,7 @@ public record AppConfiguration
     /// <summary>
     /// Gets the Application Insights connection string.
     /// </summary>
-    [ConfigurationKeyName("AGENT_APP_INSIGHTS_CONNECTION_STRING")]
+    [ConfigurationKeyName("APPLICATIONINSIGHTS_CONNECTION_STRING")]
     public string AppInsightsConnectionString { get; init; } = "";
 
     /// <summary>

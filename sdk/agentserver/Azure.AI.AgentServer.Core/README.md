@@ -1,32 +1,14 @@
-# Azure AI AgentServer client library for .NET
+# Azure AI.AgentServer.Core client library for .NET
 With hosted agents developers can deploy existing agents — whether built with supported agent
 frameworks or custom code — into Microsoft AI Foundry with minimal effort.
 
 ## Getting started
-
-### Prerequisites
 
 ### Install the package
 
 ```dotnetcli
 dotnet add package Azure.AI.AgentServer.Core --prerelease
 ```
-
-### Authenticate the client
-
-A secure, keyless authentication approach is to use Microsoft Entra ID (formerly Azure Active Directory) via the [Azure Identity library][azure_identity]. To use this library, you need to install the [Azure.Identity package](https://www.nuget.org/packages/Azure.Identity):
-
-```dotnetcli
-dotnet add package Azure.Identity
-```
-
-## Key concepts
-
-## Examples
-
-## Troubleshooting
-
-## Next steps
 
 ## Contributing
 
