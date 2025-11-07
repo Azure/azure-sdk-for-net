@@ -84,10 +84,8 @@ namespace Azure.Generator.Visitors
 
             // Find the request variable
             VariableExpression? requestVariable = null;
-            var sb = new StringBuilder();
             foreach (var statement in originalBodyStatements)
             {
-                sb.Append(statement.ToDisplayString());
                 if (statement is ExpressionStatement
                     {
                         Expression: AssignmentExpression { Variable: DeclarationExpression declaration }
