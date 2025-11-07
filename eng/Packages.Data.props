@@ -249,8 +249,8 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.29.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.29.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.41" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.41" PrivateAssets="All"/>
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.42" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.42" PrivateAssets="All"/>
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.41" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
