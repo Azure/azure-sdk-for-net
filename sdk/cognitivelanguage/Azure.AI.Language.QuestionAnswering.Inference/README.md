@@ -1,6 +1,6 @@
 # Azure Cognitive Language Services Question Answering client library for .NET
 
-The Question Answering service is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users¡¯ questions with the best answers from the QnAs in your knowledge base¡ªautomatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
+The Question Answering service is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer usersâ€™ questions with the best answers from the QnAs in your knowledge baseâ€”automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
 
 [Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Samples][questionanswering_samples] | [Migration guide][migration_guide] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs] | [Authoring REST API documentation][questionanswering_rest_docs_projects]
 

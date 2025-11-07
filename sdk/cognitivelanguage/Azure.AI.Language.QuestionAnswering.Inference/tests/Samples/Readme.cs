@@ -6,9 +6,6 @@ using System;
 using Azure.Core;
 using Azure.AI.Language.QuestionAnswering;
 #endregion
-#region Snippet:QuestionAnsweringAuthoringClient_Namespace
-using Azure.AI.Language.QuestionAnswering.Authoring;
-#endregion
 #region Snippet:QuestionAnswering_Identity_Namespace
 using Azure.Identity;
 #endregion
@@ -25,16 +22,6 @@ namespace Azure.AI.Language.QuestionAnswering.Inference.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
-            #endregion
-        }
-
-        public void CreateQuestionAnsweringAuthoringClient()
-        {
-            #region Snippet:QuestionAnsweringAuthoringClient_Create
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
-            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-
-            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
             #endregion
         }
 
