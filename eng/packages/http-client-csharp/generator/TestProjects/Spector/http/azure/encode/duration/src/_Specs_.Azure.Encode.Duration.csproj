@@ -3,7 +3,7 @@
     <Description>This is the _Specs_.Azure.Encode.Duration client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation _Specs_.Azure.Encode.Duration</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>_Specs_.Azure.Encode.Duration</PackageTags>
+    <PackageTags>Specs.Azure.Encode.Duration</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

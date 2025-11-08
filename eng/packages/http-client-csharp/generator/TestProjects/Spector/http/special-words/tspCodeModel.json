@@ -1814,6 +1814,7 @@
           "crossLanguageDefinitionId": "SpecialWords.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "SpecialWords",
       "apiVersions": [],
@@ -5587,6 +5588,7 @@
               "crossLanguageDefinitionId": "SpecialWords.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "SpecialWords.Models",
           "apiVersions": [],
@@ -5747,6 +5749,7 @@
               "crossLanguageDefinitionId": "SpecialWords.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "SpecialWords.ModelProperties",
           "apiVersions": [],
@@ -7015,6 +7018,7 @@
               "crossLanguageDefinitionId": "SpecialWords.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "SpecialWords.Operations",
           "apiVersions": [],
@@ -9782,6 +9786,7 @@
               "crossLanguageDefinitionId": "SpecialWords.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "SpecialWords.Parameters",
           "apiVersions": [],

@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeReceiveResult(document.RootElement, options);
                     }
@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReceiveResult"/> from. </param>
         public static explicit operator ReceiveResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeReceiveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
