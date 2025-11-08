@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -100,6 +101,17 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FileSearch, "673457"},
         {ToolType.FunctionCall, "emerald"},
     };
+
+    public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
+    {
+        {ToolType.FileSearch, typeof(StreamingResponseFileSearchCallCompletedUpdate) }
+    };
+
+    public Dictionary<ToolType, Type> ExpectedAnnotations = new()
+    {
+        {ToolType.FileSearch, typeof(FileCitationMessageAnnotation) }
+    };
+
     #endregion
     protected OpenAIClientOptions TestOpenAIClientOptions
     {

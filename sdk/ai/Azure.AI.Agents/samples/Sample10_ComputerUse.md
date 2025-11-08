@@ -6,7 +6,7 @@ To enable your Agent to Computer Use tool, you need to use `ComputerTool` while 
 ```C# Snippet:Sample_CreateAgentClient_ComputerUse
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 OpenAIClient openAIClient = client.GetOpenAIClient();
 ```
 
@@ -49,8 +49,8 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    definition: agentDefinition,
-    options: null);
+    options: new(agentDefinition)
+);
 ```
 
 Asynchronous sample:
@@ -69,8 +69,8 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    definition: agentDefinition,
-    options: null);
+    options: new(agentDefinition)
+);
 ```
 
 4. Create a helper method to parse the ComputerTool outputs and to respond to Agents queries with new screenshots. Please note that throughout this sample we set the media type for image. Agents support `image/jpeg`, `image/png`, `image/gif` and `image/webp` media types.

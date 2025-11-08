@@ -606,6 +606,85 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [TestCase(ToolType.FileSearch)]
+    public async Task TestToolStreaming(ToolType toolType)
+    {
+        AgentClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(await GetAgentToolDefinition(toolType, openAIClient)));
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentReference agentReference = new(name: agentVersion.Name)
+        {
+            Version = agentVersion.Version,
+        };
+        ResponseCreationOptions responseOptions = new();
+        responseOptions.SetAgentReference(agentReference);
+        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
+        bool isStarted = false;
+        bool isFinished = false;
+        bool annotationMet = false;
+        bool isStatusGood = false;
+        //Type expectedUpdateType = null;
+        bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
+        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
+        {
+            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+            {
+                isStarted = true;
+            }
+            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
+            {
+                isFinished = true;
+                Assert.That(textDoneUpdate.Text, Is.Not.Null.And.Not.Empty);
+                if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
+                {
+                    Assert.That(textDoneUpdate.Text, Does.Contain(expectedResponse), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
+                }
+            }
+            else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
+            {
+                if (ExpectedAnnotations.TryGetValue(toolType, out Type annotationType))
+                {
+                    if (itemDoneUpdate.Item is MessageResponseItem messageItem)
+                    {
+                        foreach (ResponseContentPart part in messageItem.Content)
+                        {
+                            foreach (ResponseMessageAnnotation annotation in part.OutputTextAnnotations)
+                            {
+                                annotationMet |= annotation.GetType() == annotationType;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    annotationMet = true;
+                }
+            }
+            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
+            {
+                Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+            }
+            else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
+            {
+                Assert.That(streamResponseCompletedUpdate.Response.Status, Is.EqualTo(ResponseStatus.Completed));
+                isStatusGood = true;
+            }
+            if (expectedUpdateType is not null)
+            {
+                updateFound |= streamResponse.GetType() == expectedUpdateType;
+            }
+        }
+        Assert.That(annotationMet, Is.True);
+        Assert.That(isStarted, Is.True, "The stream did not started.");
+        Assert.That(isFinished, Is.True, "The stream did not finished.");
+        Assert.That(isStatusGood, Is.True, "No StreamingResponseCompletedUpdate were met.");
+    }
+
+    [RecordedTest]
     public async Task TestFunctions()
     {
         AgentClient client = GetTestClient();
