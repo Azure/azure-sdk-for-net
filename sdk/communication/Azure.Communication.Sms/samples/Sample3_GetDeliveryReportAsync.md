@@ -20,9 +20,9 @@ After sending an SMS message, you can retrieve its delivery report using the mes
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_GetDeliveryReportAsync
 var deliveryReport = await smsClient.GetDeliveryReportAsync(outgoingMessageId: "<message-id>");
-Console.WriteLine($"Delivery Status: {deliveryReport.Value.DeliveryStatus}");
-Console.WriteLine($"From: {deliveryReport.Value.From}, To: {deliveryReport.Value.To}");
-Console.WriteLine($"Message Id: {deliveryReport.Value.MessageId}");
+Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");
+Console.WriteLine($"Message ID: {deliveryReport.Value.MessageId}");
+Console.WriteLine($"Received timestamp: {deliveryReport.Value.ReceivedTimestamp}");
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Sms/README.md#getting-started

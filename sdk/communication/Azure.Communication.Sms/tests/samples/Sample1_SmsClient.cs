@@ -133,9 +133,35 @@ namespace Azure.Communication.Sms.Tests.samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Error: {ex.Message}");
             }
             #endregion Snippet:Azure_Communication_Sms_Tests_Troubleshooting
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetDeliveryReportAsync()
+        {
+            SmsClient smsClient = CreateSmsClient();
+            #region Snippet:Azure_Communication_Sms_Tests_Samples_GetDeliveryReportAsync
+            var deliveryReport = await smsClient.GetDeliveryReportAsync(outgoingMessageId: "<message-id>");
+            Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");
+            Console.WriteLine($"Message ID: {deliveryReport.Value.MessageId}");
+            Console.WriteLine($"Received timestamp: {deliveryReport.Value.ReceivedTimestamp}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetDeliveryReport()
+        {
+            SmsClient smsClient = CreateSmsClient();
+            #region Snippet:Azure_Communication_Sms_Tests_Samples_GetDeliveryReport
+            var deliveryReport = smsClient.GetDeliveryReport(outgoingMessageId: "<message-id>");
+            Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");
+            Console.WriteLine($"Message ID: {deliveryReport.Value.MessageId}");
+            Console.WriteLine($"Received timestamp: {deliveryReport.Value.ReceivedTimestamp}");
+            #endregion
         }
     }
 }

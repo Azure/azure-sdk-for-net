@@ -94,9 +94,9 @@ To get delivery report for a specific outgoing message, call the `GetDeliveryRep
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_GetDeliveryReportAsync
 var deliveryReport = await smsClient.GetDeliveryReportAsync(outgoingMessageId: "<message-id>");
-Console.WriteLine($"Delivery Status: {deliveryReport.Value.DeliveryStatus}");
-Console.WriteLine($"From: {deliveryReport.Value.From}, To: {deliveryReport.Value.To}");
-Console.WriteLine($"Message Id: {deliveryReport.Value.MessageId}");
+Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");
+Console.WriteLine($"Message ID: {deliveryReport.Value.MessageId}");
+Console.WriteLine($"Received timestamp: {deliveryReport.Value.ReceivedTimestamp}");
 ```
 
 The delivery report also includes a `MessagingConnectPartnerMessageId` property when messages are sent through Messaging Connect partners, which contains the partner-specific message identifier.
@@ -204,7 +204,7 @@ try
 }
 catch (RequestFailedException ex)
 {
-    Console.WriteLine(ex.Message);
+    Console.WriteLine($"Error: {ex.Message}");
 }
 ```
 
