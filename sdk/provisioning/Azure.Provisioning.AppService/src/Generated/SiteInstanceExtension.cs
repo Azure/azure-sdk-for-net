@@ -196,6 +196,7 @@ public partial class SiteInstanceExtension : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _connectionString = DefineProperty<string>("ConnectionString", ["properties", "connectionString"]);
         _dBType = DefineProperty<string>("DBType", ["properties", "dbType"]);

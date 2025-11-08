@@ -8,7 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -23,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop1"></param>
         /// <param name="nestedProperty"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedProperty"/> is null. </exception>
-        public FooProperties(string something, IEnumerable<string> prop1, NestedFooModel nestedProperty)
+        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, NestedFooModel nestedProperty)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
@@ -44,8 +46,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
         /// <param name="nestedProperty"></param>
+        /// <param name="optionalProperty"></param>
+        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, string something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -55,6 +59,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             Prop1 = prop1;
             Prop2 = prop2;
             NestedProperty = nestedProperty;
+            OptionalProperty = optionalProperty;
+            ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,7 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> something. </summary>
         [WirePath("something")]
-        public string Something { get; set; }
+        public ManagedServiceIdentity Something { get; set; }
 
         /// <summary> boolean value. </summary>
         [WirePath("boolValue")]
@@ -90,6 +96,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         [WirePath("nestedProperty")]
         internal NestedFooModel NestedProperty { get; set; }
 
+        /// <summary> Gets or sets the OptionalProperty. </summary>
+        [WirePath("optionalProperty")]
+        internal SafeFlattenModel OptionalProperty { get; set; }
+
+        /// <summary> ETag property for testing etag parameter name generation. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; set; }
+
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
@@ -101,6 +115,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             set
             {
                 NestedProperty = new NestedFooModel(value);
+            }
+        }
+
+        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        [WirePath("optionalProperty.flattenedProperty")]
+        public string FlattenedProperty
+        {
+            get
+            {
+                return OptionalProperty is null ? default : OptionalProperty.FlattenedProperty;
+            }
+            set
+            {
+                OptionalProperty = new SafeFlattenModel(value);
             }
         }
     }

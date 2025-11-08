@@ -46,7 +46,6 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
@@ -90,12 +89,6 @@ internal class NameVisitor : ScmLibraryVisitor
             newName = $"{enclosingResourceName}Patch";
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
-
-            _resourceUpdateModelTypes.Add(type.Type);
-            foreach (var serializationProvider in type.SerializationProviders)
-            {
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
-            }
         }
         return base.PreVisitModel(model, type);
     }
@@ -116,6 +109,7 @@ internal class NameVisitor : ScmLibraryVisitor
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
+        DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -196,24 +190,22 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
+    // Dictionary to hold property name renaming mappings
+    private static readonly Dictionary<string, string> _propertyNameRenamingMap = new()
+        {
+            {"Etag", "ETag"}
+        };
+
+    private void DoPreVisitPropertyNameRenaming(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && _propertyNameRenamingMap.TryGetValue(propertyProvider.Name, out var newPropertyName))
+        {
+            propertyProvider.Update(name: newPropertyName);
+        }
+    }
+
     protected override MethodProvider? VisitMethod(MethodProvider method)
     {
-        var parameterUpdated = false;
-        foreach (var parameter in method.Signature.Parameters)
-        {
-            if (_resourceUpdateModelTypes.Contains(parameter.Type))
-            {
-                parameter.Update(name: "patch");
-                parameterUpdated = true;
-            }
-        }
-
-        if (parameterUpdated)
-        {
-            // This is required as a workaround to update documentation for the method signature
-            method.Update(signature: method.Signature);
-        }
-
         // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
         if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
         {

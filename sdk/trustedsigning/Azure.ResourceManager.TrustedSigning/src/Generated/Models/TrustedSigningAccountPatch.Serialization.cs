@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrustedSigningAccountPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="TrustedSigningAccountPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TrustedSigningAccountPatch patch)
+        /// <param name="trustedSigningAccountPatch"> The <see cref="TrustedSigningAccountPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrustedSigningAccountPatch trustedSigningAccountPatch)
         {
-            if (patch == null)
+            if (trustedSigningAccountPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(trustedSigningAccountPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

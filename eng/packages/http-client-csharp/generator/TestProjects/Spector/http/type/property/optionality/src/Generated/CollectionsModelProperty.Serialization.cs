@@ -36,6 +36,6 @@ namespace _Type.Property.Optional
         /// <param name="collectionsModelProperty"> The <see cref="CollectionsModelProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(CollectionsModelProperty collectionsModelProperty) => throw null;
 
-        public static explicit operator CollectionsModelProperty(Response result) => throw null;
+        public static explicit operator CollectionsModelProperty(Response response) => throw null;
     }
 }

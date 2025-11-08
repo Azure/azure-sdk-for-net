@@ -292,6 +292,7 @@
           "crossLanguageDefinitionId": "Type.Enum.Extensible.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Enum.Extensible",
       "apiVersions": [],
@@ -737,6 +738,7 @@
               "crossLanguageDefinitionId": "Type.Enum.Extensible.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Enum.Extensible.String",
           "apiVersions": [],

@@ -156,7 +156,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDetectedTextWord(document.RootElement, options);
                     }
