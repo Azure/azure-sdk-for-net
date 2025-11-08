@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <OutputType>Exe</OutputType>
+
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props"/>
+</Project>
