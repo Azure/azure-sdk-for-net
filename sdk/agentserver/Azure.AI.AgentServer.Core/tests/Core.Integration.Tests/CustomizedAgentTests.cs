@@ -7,7 +7,7 @@ using Agents.Customized.Integration.Tests;
 using Azure.AI.AgentServer.Tests.Utils;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace Azure.AI.AgentServer.Tests
+namespace Azure.AI.AgentServer.Core.Integration.Tests
 {
     public class CustomizedAgentTests
     {
