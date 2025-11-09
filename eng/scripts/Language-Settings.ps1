@@ -29,7 +29,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     /p:OutputProjectInfoListFilePath="$outputFilePath" `
     -tl:off | Out-Host
 
-  Write-Host "Exit code: $LASTEXITCODE"
   # Check if msbuild succeeded
   if ($LASTEXITCODE -ne 0) {
     # Clean up temp file before failing
