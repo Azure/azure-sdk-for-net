@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- Approved override to LtsTargetFramework -->
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
+    <!-- Approved override -->
+    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <PackageTags>Azure.AI.AgentServer.Core</PackageTags>
   </PropertyGroup>

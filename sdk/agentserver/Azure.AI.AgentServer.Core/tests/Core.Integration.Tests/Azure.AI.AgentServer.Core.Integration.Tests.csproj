@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
-
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591;SA1010;SA1200;SA1600;</NoWarn>
   </PropertyGroup>
