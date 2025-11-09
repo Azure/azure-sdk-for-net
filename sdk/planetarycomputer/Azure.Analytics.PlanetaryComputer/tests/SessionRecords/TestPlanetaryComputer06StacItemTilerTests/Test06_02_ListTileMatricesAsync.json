@@ -21,7 +21,7 @@
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
         "Cache-Control": "public, max-age=3600",
-        "Connection": "keep-alive",
+        "Connection": "close",
         "Content-Length": "261",
         "Content-Type": "application/json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
@@ -36,6 +36,6 @@
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "834827425"
+    "RandomSeed": "1383336337"
   }
 }

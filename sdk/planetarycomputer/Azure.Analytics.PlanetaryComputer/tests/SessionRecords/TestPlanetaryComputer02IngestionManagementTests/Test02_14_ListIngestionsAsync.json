@@ -8,7 +8,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "274",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -41,7 +41,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T11:46:51.0375888Z",
+        "creationTime": "2025-11-08T00:08:08.4658189Z",
         "importType": "StaticCatalog",
         "displayName": "Ingestion for Lists Test",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -56,7 +56,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -84,7 +84,7 @@
         "value": [
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:44:49.3573566Z",
+            "creationTime": "2025-11-08T00:04:47.629056Z",
             "importType": "StaticCatalog",
             "displayName": "Ingestion",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -94,7 +94,7 @@
           },
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:45:02.3390061Z",
+            "creationTime": "2025-11-08T00:05:06.0358033Z",
             "importType": "StaticCatalog",
             "displayName": "Updated Ingestion Name",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -104,7 +104,7 @@
           },
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:45:13.7603548Z",
+            "creationTime": "2025-11-08T00:05:23.928273Z",
             "importType": "StaticCatalog",
             "displayName": "Ingestion for Run",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -114,7 +114,7 @@
           },
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:45:24.5858268Z",
+            "creationTime": "2025-11-08T00:05:41.186815Z",
             "importType": "StaticCatalog",
             "displayName": "Ingestion for Status Check",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -124,7 +124,7 @@
           },
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:45:45.4567969Z",
+            "creationTime": "2025-11-08T00:06:16.2833123Z",
             "importType": "StaticCatalog",
             "displayName": "Ingestion for Operation",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -134,7 +134,7 @@
           },
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:46:06.9412243Z",
+            "creationTime": "2025-11-08T00:06:58.1260066Z",
             "importType": "StaticCatalog",
             "displayName": "Ingestion for Cancel Test",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -144,7 +144,7 @@
           },
           {
             "id": "00000000-0000-0000-0000-000000000000",
-            "creationTime": "2025-10-31T11:46:51.0375888Z",
+            "creationTime": "2025-11-08T00:08:08.4658189Z",
             "importType": "StaticCatalog",
             "displayName": "Ingestion for Lists Test",
             "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -160,6 +160,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_INGESTION_CATALOG_URL": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
-    "RandomSeed": "172901483"
+    "RandomSeed": "549378667"
   }
 }

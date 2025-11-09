@@ -5,7 +5,7 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -19,7 +19,7 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
-        "Connection": "keep-alive",
+        "Connection": "close",
         "Content-Length": "0",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -37,7 +37,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "141",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -77,6 +77,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "996926084"
+    "RandomSeed": "592467707"
   }
 }

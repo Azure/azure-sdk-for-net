@@ -7,24 +7,24 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "487",
-        "Content-Type": "multipart/form-data; boundary=\"973ff4ef-d0cd-4f36-b274-6a234cd6a7bd\"",
+        "Content-Type": "multipart/form-data; boundary=\"2401ae3f-ac37-42f6-9f3a-2cdfa30100ba\"",
         "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": [
-        "--973ff4ef-d0cd-4f36-b274-6a234cd6a7bd\r\n",
+        "--2401ae3f-ac37-42f6-9f3a-2cdfa30100ba\r\n",
         "Content-Type: text/plain; charset=utf-8\r\n",
         "Content-Disposition: form-data; name=data\r\n",
         "\r\n",
         "{\"key\":\"test-asset\",\"href\":\"https://example.com/test-asset-updated.txt\",\"type\":\"text/plain\",\"roles\":[\"metadata\"],\"title\":\"Test Asset - Updated\"}",
         "\r\n",
-        "--973ff4ef-d0cd-4f36-b274-6a234cd6a7bd\r\n",
+        "--2401ae3f-ac37-42f6-9f3a-2cdfa30100ba\r\n",
         "Content-Disposition: form-data; name=file; filename=test-asset.txt; filename*=utf-8''test-asset.txt\r\n",
         "\r\n",
         "b64:VGVzdCBhc3NldCBjb250ZW50IC0gdXBkYXRlZA==",
         "\r\n",
-        "--973ff4ef-d0cd-4f36-b274-6a234cd6a7bd--\r\n"
+        "--2401ae3f-ac37-42f6-9f3a-2cdfa30100ba--\r\n"
       ],
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -118,7 +118,7 @@
           }
         },
         "msft:_created": "2025-11-03T14:16:10.3539672Z",
-        "msft:_updated": "2025-11-07T22:17:19.151804Z",
+        "msft:_updated": "2025-11-08T00:22:54.059318Z",
         "title": "MPC Pro Sample Datasets",
         "extent": {
           "spatial": {
@@ -244,6 +244,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "885457690"
+    "RandomSeed": "1925532129"
   }
 }

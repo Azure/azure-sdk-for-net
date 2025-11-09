@@ -21,7 +21,7 @@
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
         "Cache-Control": "public, max-age=3600",
-        "Connection": "keep-alive",
+        "Connection": "close",
         "Content-Length": "122",
         "Content-Type": "application/json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
@@ -55,6 +55,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_ITEM_ID": "ga_m_3308421_se_16_060_20211114",
-    "RandomSeed": "1218556252"
+    "RandomSeed": "772003878"
   }
 }

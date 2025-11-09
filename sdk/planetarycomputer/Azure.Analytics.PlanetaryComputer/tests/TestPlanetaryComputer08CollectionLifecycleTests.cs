@@ -60,12 +60,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
                     await deleteOperation.WaitForCompletionResponseAsync();
                     TestContext.WriteLine($"Deleted existing collection '{TestCollectionId}'");
-
-                    // Wait for deletion to complete in live mode
-                    if (Mode == RecordedTestMode.Live)
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(30));
-                    }
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -113,12 +107,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             ValidateResponse(createResult);
 
             TestContext.WriteLine($"Collection creation operation completed with status: {createResult.Status}");
-
-            // Wait for collection to be fully available in live mode
-            if (Mode == RecordedTestMode.Live)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(15));
-            }
 
             // Verify creation by retrieving the collection
             Response verifyResponse = await stacClient.GetCollectionAsync(TestCollectionId, null, null, null);
@@ -178,12 +166,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Collection update completed with status: {updateResponse.GetRawResponse().Status}");
 
-            // Wait for update to propagate in live mode
-            if (Mode == RecordedTestMode.Live)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(10));
-            }
-
             // Verify update by retrieving the collection
             Response verifyResponse = await stacClient.GetCollectionAsync(TestCollectionId, null, null, null);
 
@@ -232,12 +214,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             TestContext.WriteLine($"Collection deletion operation completed with status: {deleteResult.Status}");
 
-            // Wait for deletion to propagate in live mode
-            if (Mode == RecordedTestMode.Live)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(15));
-            }
-
             // Verify deletion - collection should not be found
             try
             {
@@ -261,7 +237,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_04_create_collection_asset
         /// </summary>
         [Test]
-        [Category("MissingRecording")]
         [Category("CollectionAsset")]
         public async Task Test08_04_CreateCollectionAsset()
         {
@@ -280,11 +255,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 TestContext.WriteLine($"Checking if asset '{assetId}' already exists and deleting if found...");
                 await stacClient.DeleteCollectionAssetAsync(collectionId, assetId);
                 TestContext.WriteLine($"Deleted existing '{assetId}'");
-
-                if (Mode == RecordedTestMode.Live)
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(5));
-                }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -335,7 +305,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_05_replace_collection_asset
         /// </summary>
         [Test]
-        [Category("MissingRecording")]
         [Category("CollectionAsset")]
         public async Task Test08_05_ReplaceCollectionAsset()
         {
@@ -393,7 +362,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_06_delete_collection_asset
         /// </summary>
         [Test]
-        [Category("MissingRecording")]
         [Category("CollectionAsset")]
         public async Task Test08_06_DeleteCollectionAsset()
         {

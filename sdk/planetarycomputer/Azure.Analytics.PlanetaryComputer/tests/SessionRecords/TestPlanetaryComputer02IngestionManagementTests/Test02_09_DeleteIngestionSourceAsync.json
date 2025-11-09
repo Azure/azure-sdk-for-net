@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -47,7 +47,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "211",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -82,7 +82,7 @@
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
         "kind": "BlobManagedIdentity",
-        "created": "2025-10-31T11:45:56.5083157Z",
+        "created": "2025-11-08T00:06:37.6706665Z",
         "connectionInfo": {
           "containerUrl": "https://SANITIZED.blob.core.windows.net/SANITIZED",
           "objectId": "ebad594e-84af-49da-89db-7bffc9c39f3a"
@@ -94,7 +94,7 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -124,7 +124,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -153,7 +153,7 @@
           {
             "id": "00000000-0000-0000-0000-000000000000",
             "kind": "BlobManagedIdentity",
-            "created": "2025-10-31T11:40:21.6339102Z"
+            "created": "2025-11-07T23:59:34.3319065Z"
           }
         ]
       }
@@ -161,6 +161,6 @@
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "949526633"
+    "RandomSeed": "1765632159"
   }
 }

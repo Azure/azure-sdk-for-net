@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251105.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1548,6 +1548,39 @@
                   "thumbnail"
                 ],
                 "title": "Thumbnail"
+              },
+              "test-asset": {
+                "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset/test-asset.txt",
+                "type": "text/plain",
+                "roles": [
+                  "metadata"
+                ],
+                "title": "Test Asset - Updated"
+              },
+              "test-asset-js": {
+                "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js/test-asset-js.txt",
+                "type": "text/plain",
+                "roles": [
+                  "metadata"
+                ],
+                "title": "Test Asset"
+              },
+              "test-asset-js-sdk": {
+                "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js-sdk/test-asset-sdk.txt",
+                "type": "text/plain",
+                "roles": [
+                  "metadata"
+                ],
+                "title": "Test Asset from SDK Script",
+                "description": "Testing multipart upload with SDK"
+              },
+              "test-asset-js-standalone": {
+                "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js-standalone/test-asset-standalone.txt",
+                "type": "text/plain",
+                "roles": [
+                  "metadata"
+                ],
+                "title": "Test Asset from Standalone Script"
               }
             },
             "extent": {
@@ -1670,7 +1703,7 @@
             },
             "stac_version": "1.0.0",
             "msft:_created": "2025-11-03T14:16:10.3539672Z",
-            "msft:_updated": "2025-11-05T13:34:16.831941Z",
+            "msft:_updated": "2025-11-07T22:17:38.529790Z",
             "stac_extensions": [
               "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
               "https://stac-extensions.github.io/table/v1.2.0/schema.json"
@@ -2391,6 +2424,6 @@
   ],
   "Variables": {
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1254595601"
+    "RandomSeed": "2068871265"
   }
 }

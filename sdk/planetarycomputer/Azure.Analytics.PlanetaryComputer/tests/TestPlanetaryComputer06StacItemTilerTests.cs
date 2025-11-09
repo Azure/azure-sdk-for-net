@@ -121,8 +121,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Maps to Python test: test_19_get_item_asset_details (moved here for logical ordering)
         /// </summary>
         [Test]
+        [Ignore("Backend API returns HTTP 424 Failed Dependency error")]
         [Category("MissingRecording")]
         [Category("Assets")]
+        [Category("UnknownReferenceSpecVersion")]
         public async Task Test06_03_GetItemAssetDetails()
         {
             // Arrange
@@ -929,8 +931,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Keeping it for backwards compatibility.
         /// </summary>
         [Test]
+        [Ignore("Backend API returns HTTP 424 Failed Dependency error")]
         [Category("MissingRecording")]
         [Category("Assets")]
+        [Category("UnknownReferenceSpecVersion")]
         public async Task Test06_19_ListAvailableAssets()
         {
             // Arrange

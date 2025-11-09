@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,7 +21,7 @@
         "Access-Control-Expose-Headers": "Location",
         "Access-Control-Max-Age": "1728000",
         "Connection": "keep-alive",
-        "Content-Length": "260",
+        "Content-Length": "323",
         "Content-Type": "application/json",
         "Date": "Mon, 01 Jan 2024 00:00:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -29,12 +29,12 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Request-ID": "00000000000000000000000000000000"
       },
-      "ResponseBody": "[{\"id\":\"default\",\"name\":\"Default\",\"description\":\"\",\"cql\":[]},{\"id\":\"mos1\",\"name\":\"Most recent available\",\"description\":\"Most recent available imagery in this collection\",\"cql\":[]},{\"id\":\"test-mosaic-1\",\"name\":\"Test Mosaic Updated\",\"description\":null,\"cql\":[]}]"
+      "ResponseBody": "[{\"id\":\"default\",\"name\":\"Default\",\"description\":\"\",\"cql\":[]},{\"id\":\"mos1\",\"name\":\"Most recent available\",\"description\":\"Most recent available imagery in this collection\",\"cql\":[]},{\"id\":\"test-mosaic-1\",\"name\":\"Test Most recent available\",\"description\":\"Most recent available imagery in this collection - updated\",\"cql\":[]}]"
     }
   ],
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "783542045"
+    "RandomSeed": "1124799505"
   }
 }

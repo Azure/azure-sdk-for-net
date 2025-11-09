@@ -8,7 +8,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "276",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -41,7 +41,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T11:45:24.5858268Z",
+        "creationTime": "2025-11-08T00:05:41.186815Z",
         "importType": "StaticCatalog",
         "displayName": "Ingestion for Status Check",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
@@ -57,7 +57,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -84,7 +84,7 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T11:45:24.6677317Z",
+        "creationTime": "2025-11-08T00:05:41.815125Z",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
         "skipExistingItems": true,
         "keepOriginalAssets": true,
@@ -94,10 +94,10 @@
           "statusHistory": [
             {
               "status": "Pending",
-              "timestamp": "2025-10-31T11:45:24.6317459Z"
+              "timestamp": "2025-11-08T00:05:41.7887241Z"
             }
           ],
-          "creationTime": "2025-10-31T11:45:24.6317416Z",
+          "creationTime": "2025-11-08T00:05:41.7887231Z",
           "totalItems": 0,
           "totalPendingItems": 0,
           "totalSuccessfulItems": 0,
@@ -111,7 +111,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251031.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251107.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -137,22 +137,27 @@
       },
       "ResponseBody": {
         "id": "00000000-0000-0000-0000-000000000000",
-        "creationTime": "2025-10-31T11:45:24.6677317Z",
+        "creationTime": "2025-11-08T00:05:41.815125Z",
         "sourceCatalogUrl": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
         "skipExistingItems": true,
         "keepOriginalAssets": true,
         "operation": {
           "id": "00000000-0000-0000-0000-000000000000",
-          "status": "Pending",
+          "status": "Running",
           "statusHistory": [
             {
               "status": "Pending",
-              "timestamp": "2025-10-31T11:45:24.6317459Z"
+              "timestamp": "2025-11-08T00:05:41.788723Z"
+            },
+            {
+              "status": "Running",
+              "timestamp": "2025-11-08T00:05:42.774789Z"
             }
           ],
-          "creationTime": "2025-10-31T11:45:24.6317416Z",
-          "totalItems": 0,
-          "totalPendingItems": 0,
+          "creationTime": "2025-11-08T00:05:41.788723Z",
+          "startTime": "2025-11-08T00:05:41.788723Z",
+          "totalItems": 46,
+          "totalPendingItems": 46,
           "totalSuccessfulItems": 0,
           "totalFailedItems": 0
         }
@@ -163,6 +168,6 @@
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
     "PLANETARYCOMPUTER_INGESTION_CATALOG_URL": "https://raw.githubusercontent.com/chahibi/mpcpro-sample-datasets/refs/heads/main/datasets/planetary_computer/naip/atl/catalog.json",
-    "RandomSeed": "1237997753"
+    "RandomSeed": "1781214059"
   }
 }

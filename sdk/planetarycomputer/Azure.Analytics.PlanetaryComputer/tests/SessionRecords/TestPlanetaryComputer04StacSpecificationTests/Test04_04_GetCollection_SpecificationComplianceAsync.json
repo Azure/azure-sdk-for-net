@@ -65,6 +65,14 @@
             ],
             "title": "Thumbnail"
           },
+          "test-asset": {
+            "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset/test-asset.txt",
+            "type": "text/plain",
+            "roles": [
+              "metadata"
+            ],
+            "title": "Test Asset - Updated"
+          },
           "test-asset-js": {
             "href": "https://SANITIZED.blob.core.windows.net/naip-atl-bde3e846/collection-assets/test-asset-js/test-asset-js.txt",
             "type": "text/plain",
@@ -211,7 +219,7 @@
         },
         "stac_version": "1.0.0",
         "msft:_created": "2025-11-03T14:16:10.3539672Z",
-        "msft:_updated": "2025-11-06T17:10:29.701082Z",
+        "msft:_updated": "2025-11-07T22:17:38.529790Z",
         "stac_extensions": [
           "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
           "https://stac-extensions.github.io/table/v1.2.0/schema.json"
@@ -222,6 +230,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "485302305"
+    "RandomSeed": "815795850"
   }
 }
