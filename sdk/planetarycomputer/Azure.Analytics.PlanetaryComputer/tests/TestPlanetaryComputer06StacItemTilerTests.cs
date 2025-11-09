@@ -117,14 +117,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         }
 
         /// <summary>
-        /// Tests getting detailed information about item assets.
-        /// Maps to Python test: test_19_get_item_asset_details (moved here for logical ordering)
+        /// Tests listing available assets for a STAC item.
+        /// Maps to Python test: test_03_list_available_assets
         /// </summary>
         [Test]
-        [Ignore("Backend API returns HTTP 424 Failed Dependency error")]
-        [Category("MissingRecording")]
         [Category("Assets")]
-        [Category("UnknownReferenceSpecVersion")]
         public async Task Test06_03_GetItemAssetDetails()
         {
             // Arrange
@@ -137,26 +134,26 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<IReadOnlyDictionary<string, TilerInfo>> response = await dataClient.GetItemAssetDetailsAsync(
+            Response<IReadOnlyList<string>> response = await dataClient.GetAvailableAssetsAsync(
                 collectionId: collectionId,
                 itemId: itemId
             );
 
             // Assert
-            ValidateResponse(response, "GetItemAssetDetails");
+            ValidateResponse(response, "GetAvailableAssets");
 
-            IReadOnlyDictionary<string, TilerInfo> assets = response.Value;
-            Assert.IsNotNull(assets, "Assets dictionary should not be null");
+            IReadOnlyList<string> assets = response.Value;
+            Assert.IsNotNull(assets, "Assets list should not be null");
             Assert.Greater(assets.Count, 0, "Should have at least one asset");
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");
-            TestContext.WriteLine($"Available assets: {string.Join(", ", assets.Keys.Take(10))}");
+            TestContext.WriteLine($"Available assets: {string.Join(", ", assets.Take(10))}");
 
-            if (assets.Count > 0)
+            // All items should be asset names (strings)
+            foreach (var asset in assets)
             {
-                var firstAsset = assets.First();
-                TestContext.WriteLine($"First asset name: {firstAsset.Key}");
-                TestContext.WriteLine($"First asset info: {firstAsset.Value}");
+                Assert.IsNotNull(asset, "Asset name should not be null");
+                Assert.IsNotEmpty(asset, "Asset name should not be empty");
             }
         }
 
@@ -927,14 +924,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Tests listing available assets for a STAC item (legacy test from original file).
         /// Maps to Python test: test_03_list_available_assets
-        /// Note: This test was in the original C# file but appears to be the same as Test06_03.
+        /// Note: This test is the same as Test06_03.
         /// Keeping it for backwards compatibility.
         /// </summary>
         [Test]
-        [Ignore("Backend API returns HTTP 424 Failed Dependency error")]
-        [Category("MissingRecording")]
         [Category("Assets")]
-        [Category("UnknownReferenceSpecVersion")]
         public async Task Test06_19_ListAvailableAssets()
         {
             // Arrange
@@ -946,11 +940,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - collection_id: {collectionId}");
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
-            // Act - use protocol method to see raw request/response
+            // Act
             TestContext.WriteLine("\n=== Making Request ===");
-            TestContext.WriteLine($"GET /stac/collections/{collectionId}/items/{itemId}/tilejson/assets");
+            TestContext.WriteLine($"GET /data/collections/{collectionId}/items/{itemId}/assets");
 
-            Response<IReadOnlyDictionary<string, TilerInfo>> response = await dataClient.GetItemAssetDetailsAsync(collectionId, itemId);
+            Response<IReadOnlyList<string>> response = await dataClient.GetAvailableAssetsAsync(collectionId, itemId);
 
             // Log raw response
             TestContext.WriteLine("\n=== Raw Response ===");
@@ -963,27 +957,23 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             Assert.That(response, Is.Not.Null, "Response should not be null");
             Assert.That(response.Value, Is.Not.Null, "Response value should not be null");
-            IReadOnlyDictionary<string, TilerInfo> assets = response.Value;
+            IReadOnlyList<string> assets = response.Value;
 
             TestContext.WriteLine($"\n=== Parsed Assets ===");
             TestContext.WriteLine($"Number of assets: {assets.Count}");
 
-            // All items should be asset names (dictionary keys)
-            var assetNames = assets.Keys.ToList();
-
-            TestContext.WriteLine($"Available assets: {string.Join(", ", assetNames.Take(10))}");
-            if (assetNames.Count > 10)
+            // All items should be asset names (strings)
+            TestContext.WriteLine($"Available assets: {string.Join(", ", assets.Take(10))}");
+            if (assets.Count > 10)
             {
-                TestContext.WriteLine($"... and {assetNames.Count - 10} more");
+                TestContext.WriteLine($"... and {assets.Count - 10} more");
             }
 
-            // Log detailed info about first asset to help debug
-            if (assets.Count > 0)
+            // Validate asset names
+            foreach (var asset in assets)
             {
-                var firstAsset = assets.First();
-                TestContext.WriteLine($"\n=== First Asset Details ===");
-                TestContext.WriteLine($"Asset Name: {firstAsset.Key}");
-                TestContext.WriteLine($"TilerInfo: {firstAsset.Value}");
+                Assert.IsNotNull(asset, "Asset name should not be null");
+                Assert.IsNotEmpty(asset, "Asset name should not be empty");
             }
         }
     }
