@@ -142,8 +142,11 @@
   </Target>
 
   <Target Name="GetPackageInfo">
-    <Message Text="ProjectListOverrideFile: $(ProjectListOverrideFile)" Importance="High" />
-    <Message Text="Projects: @(ProjectReference)" Importance="High" />
+    <Message Text="SDKType: $(SDKType)" Importance="High" />
+    <Message Text="ProjectsToRemove: $(ProjectsToRemove)" Importance="High" />
+    <Message Text="ProjectsToIncludeBySDKType: $(ProjectsToIncludeBySDKType)" Importance="High" />
+    <Message Text="IncludeSrc: $(IncludeSrc)" Importance="High" />
+    <Message Text="SrcProjects: $(SrcProjects)" Importance="High" />
     <MSBuild Projects="@(ProjectReference)"
             Targets="GetPackageInfo"
             BuildInParallel="$(BuildInParallel)"
@@ -151,7 +154,6 @@
             SkipNonexistentTargets="true">
       <Output ItemName="PackageInfoLines" TaskParameter="TargetOutputs" />
     </MSBuild>
-    <Message Text="PackageInfoLines: @(PackageInfoLines)" Importance="High" />
 
     <!-- Deduplicate package info lines -->
     <RemoveDuplicates Inputs="@(PackageInfoLines)">

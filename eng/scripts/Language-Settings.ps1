@@ -41,11 +41,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   $packageInfoLines = @()
   if (Test-Path $outputFilePath) {
-    Write-Host "Getting package info from file: $outputFilePath"
     $packageInfoLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
     $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
   }
-  Write-Host "Package info lines found: $outputFilePath"
 
   foreach ($projectOutput in $packageInfoLines)
   {
