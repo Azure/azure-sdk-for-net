@@ -142,11 +142,6 @@
   </Target>
 
   <Target Name="GetPackageInfo">
-    <Message Text="SDKType: $(SDKType)" Importance="High" />
-    <Message Text="ProjectsToRemove: @(ProjectsToRemove)" Importance="High" />
-    <Message Text="ProjectsToIncludeBySDKType: @(ProjectsToIncludeBySDKType)" Importance="High" />
-    <Message Text="IncludeSrc: $(IncludeSrc)" Importance="High" />
-    <Message Text="SrcProjects: @(SrcProjects)" Importance="High" />
     <MSBuild Projects="@(ProjectReference)"
             Targets="GetPackageInfo"
             BuildInParallel="$(BuildInParallel)"
