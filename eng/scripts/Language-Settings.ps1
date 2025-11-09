@@ -27,7 +27,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion `
     /p:OutputProjectInfoListFilePath="$outputFilePath" `
-    -v:n
+    -v:n `
     -tl:off | Out-Host
 
   # Check if msbuild succeeded
