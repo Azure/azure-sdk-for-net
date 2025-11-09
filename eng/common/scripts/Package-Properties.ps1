@@ -515,6 +515,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null) {
     $pkgPropsResult = @()
 
     if (Test-Path "Function:Get-AllPackageInfoFromRepo") {
+        Write-Host "Get-AllPackageInfoFromRepo"
         $pkgPropsResult = Get-AllPackageInfoFromRepo -ServiceDirectory $serviceDirectory
     }
     else {
@@ -524,6 +525,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null) {
             }
         }
         else {
+            Write-Host "Get-PkgPropsForEntireService"
             $pkgPropsResult = Get-PkgPropsForEntireService -serviceDirectoryPath (Join-Path $RepoRoot "sdk" $ServiceDirectory)
         }
     }
@@ -541,6 +543,8 @@ function Get-CSVMetadata ([string]$MetadataUri = $MetadataUri) {
 function Get-PkgPropsForEntireService ($serviceDirectoryPath) {
     $projectProps = @() # Properties from every project in the service
     $serviceDirectory = $serviceDirectoryPath -replace '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'
+    Write-Host "$serviceDirectory"
+    Write-Host "$GetPackageInfoFromRepoFn"
 
     if (!$GetPackageInfoFromRepoFn -or !(Test-Path "Function:$GetPackageInfoFromRepoFn")) {
         LogError "The function for '$GetPackageInfoFromRepoFn' was not found.`

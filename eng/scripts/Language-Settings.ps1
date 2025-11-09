@@ -17,7 +17,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
-  
+
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
   dotnet msbuild `
@@ -29,6 +29,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     /p:OutputProjectInfoListFilePath="$outputFilePath" `
     -tl:off | Out-Host
 
+  Write-Host "Exit code: $LASTEXITCODE"
   # Check if msbuild succeeded
   if ($LASTEXITCODE -ne 0) {
     # Clean up temp file before failing
@@ -43,6 +44,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $packageInfoLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
     $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
   }
+  Write-Host "Package info lines found: $packageInfoLines"
 
   foreach ($projectOutput in $packageInfoLines)
   {
@@ -77,8 +79,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         }
       }
 
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
-      # if artifact has baselined warnings, run AOT checks; 
+      # CheckAOTCompat logic: if set in CI.yml, respect that value;
+      # if artifact has baselined warnings, run AOT checks;
       # otherwise use AotCompatOptOut from project settings
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
