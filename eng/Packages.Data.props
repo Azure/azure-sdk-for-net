@@ -474,7 +474,14 @@
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
   </ItemGroup>
 
-  <ItemGroup Condition="('$(TargetFramework)' == 'net9.0' AND ('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true'))">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'
+  and (
+        '$(IsTestProject)' == 'true'
+     or '$(IsTestSupportProject)' == 'true'
+     or '$(IsPerfProject)' == 'true'
+     or '$(IsStressProject)' == 'true'
+     or '$(IsSamplesProject)' == 'true'
+  )">
     <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="9.*" />
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.*" />
   </ItemGroup>
