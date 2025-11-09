@@ -119,6 +119,7 @@ else
 {
   Write-Host "Getting package properties for service directory: $serviceDirectory"
   $allPackageProperties = Get-AllPkgProperties $serviceDirectory
+  Write-Host "$allPackageProperties"
 
   if (!$allPackageProperties)
   {
