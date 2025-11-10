@@ -68,7 +68,7 @@ try
     string inputText = "hudha akhtabar.";
 
     TranslationTarget target = new TranslationTarget(toLanguage, script: toScript);
-    TranslateInputItem inputItem = new TranslateInputItem(inputText, [target], language: fromLanguage, script: fromScript);
+    TranslateInputItem inputItem = new TranslateInputItem(inputText, target, language: fromLanguage, script: fromScript);
 
     Response<TranslatedTextItem> response = client.Translate(inputItem);
     TranslatedTextItem translation = response.Value;
@@ -151,7 +151,7 @@ try
     string targetLanguage = "cs";
     string inputText = "<html><body>This <b>is</b> a test.</body></html>";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], textType: TextType.Html);
+    TranslateInputItem input = new TranslateInputItem(inputText, new TranslationTarget(targetLanguage), textType: TextType.Html);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -178,7 +178,7 @@ try
     string targetLanguage = "cs";
     string inputText = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
+    TranslateInputItem input = new TranslateInputItem(inputText, new TranslationTarget(targetLanguage), language: sourceLanguage, textType: TextType.Html);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -207,7 +207,7 @@ try
     string targetLanguage = "cs";
     string inputText = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.";
 
-    TranslateInputItem input = new TranslateInputItem(inputText, [new TranslationTarget(targetLanguage)], language: sourceLanguage, textType: TextType.Html);
+    TranslateInputItem input = new TranslateInputItem(inputText, new TranslationTarget(targetLanguage), language: sourceLanguage, textType: TextType.Html);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -239,7 +239,7 @@ try
     string inputText = "This is ***.";
 
     TranslationTarget target = new TranslationTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
-    TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -271,7 +271,7 @@ try
     string inputText = "This is a test.";
 
     TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: category, allowFallback: true);
-    TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
@@ -299,7 +299,7 @@ try
     string inputText = "This is a test.";
 
     TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: llmModelname);
-    TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
 
     Response<TranslatedTextItem> response = client.Translate(input);
     TranslatedTextItem translation = response.Value;
