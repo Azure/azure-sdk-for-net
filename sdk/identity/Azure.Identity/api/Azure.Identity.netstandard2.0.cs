@@ -177,10 +177,16 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    public partial class ConfigurableCredential : Azure.Core.TokenCredential
+    {
+        public ConfigurableCredential() { }
+        public ConfigurableCredential(Microsoft.Extensions.Configuration.IConfigurationSection configurationSection) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public static partial class ConfigurationManagerExtensions
     {
-        [System.Runtime.CompilerServices.OverloadResolutionPriorityAttribute(100)]
-        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.ClientConnection GetAzureConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
@@ -508,15 +514,5 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
-    }
-}
-namespace System.Runtime.CompilerServices
-{
-    [System.AttributeUsageAttribute(System.AttributeTargets.Constructor | System.AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
-    public sealed partial class OverloadResolutionPriorityAttribute : System.Attribute
-    {
-        public OverloadResolutionPriorityAttribute() { }
-        public OverloadResolutionPriorityAttribute(int priority) { }
-        public int Priority { get { throw null; } }
     }
 }
