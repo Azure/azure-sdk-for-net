@@ -271,9 +271,9 @@ def main():
     """Main analysis function."""
     repo_root = "/home/runner/work/azure-sdk-for-net/azure-sdk-for-net"
     
-    # Calculate date 3 months ago
-    three_months_ago = datetime.now() - timedelta(days=90)
-    since_date = three_months_ago.strftime("%Y-%m-%d")
+    # Calculate date 6 months ago
+    six_months_ago = datetime.now() - timedelta(days=180)
+    since_date = six_months_ago.strftime("%Y-%m-%d")
     
     print(f"Analyzing CHANGELOG.md files...")
     print(f"Looking for releases since: {since_date}")
