@@ -23,8 +23,7 @@ namespace Azure.Identity
         {
             host.ConfigureServices((context, services) =>
             {
-                DefaultAzureCredentialOptions options = new();
-                ConfigurationManagerExtensions.ConfigureDefaultAzureCredentialOptions(context.Configuration.GetSection(sectionName), options);
+                DefaultAzureCredentialOptions options = new(context.Configuration.GetSection(sectionName));
                 DefaultAzureCredential credential = new DefaultAzureCredential(options);
                 services.AddSingleton<TokenCredential>(sp => credential);
                 services.AddSingleton<AuthenticationTokenProvider>(sp => credential);

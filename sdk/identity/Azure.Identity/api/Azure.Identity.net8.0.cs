@@ -181,7 +181,8 @@ namespace Azure.Identity
     }
     public static partial class ConfigurationManagerExtensions
     {
-        public static System.ClientModel.Primitives.ClientConnection GetAzureConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
+        [System.Runtime.CompilerServices.OverloadResolutionPriorityAttribute(100)]
+        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
@@ -510,5 +511,15 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
+    }
+}
+namespace System.Runtime.CompilerServices
+{
+    [System.AttributeUsageAttribute(System.AttributeTargets.Constructor | System.AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
+    public sealed partial class OverloadResolutionPriorityAttribute : System.Attribute
+    {
+        public OverloadResolutionPriorityAttribute() { }
+        public OverloadResolutionPriorityAttribute(int priority) { }
+        public int Priority { get { throw null; } }
     }
 }

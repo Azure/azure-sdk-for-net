@@ -152,4 +152,23 @@ public readonly struct ClientConnection
         }
         return metadata;
     }
+
+    internal static CredentialKind GetCredentialKind(IConfigurationSection section)
+    {
+        CredentialKind credentialKind;
+        if (section["Credential:CredentialSource"] is null)
+        {
+            credentialKind = CredentialKind.None;
+        }
+        else if (section["Credential:CredentialSource"]!.Equals("ApiKey", StringComparison.Ordinal))
+        {
+            credentialKind = CredentialKind.ApiKeyString;
+        }
+        else
+        {
+            credentialKind = CredentialKind.TokenCredential;
+        }
+
+        return credentialKind;
+    }
 }

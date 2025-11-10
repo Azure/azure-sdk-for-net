@@ -2,6 +2,7 @@ namespace Azure.Identity
 {
     public partial class AuthenticationFailedException : System.Exception
     {
+        [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
         protected AuthenticationFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public AuthenticationFailedException(string message) { }
         public AuthenticationFailedException(string message, System.Exception innerException) { }
@@ -21,6 +22,7 @@ namespace Azure.Identity
     }
     public partial class AuthenticationRequiredException : Azure.Identity.CredentialUnavailableException
     {
+        [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
         protected AuthenticationRequiredException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context) : base (default(string)) { }
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context, System.Exception innerException) : base (default(string)) { }
@@ -184,6 +186,7 @@ namespace Azure.Identity
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
+        [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
         protected CredentialUnavailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(string)) { }
         public CredentialUnavailableException(string message) : base (default(string)) { }
         public CredentialUnavailableException(string message, System.Exception innerException) : base (default(string)) { }
@@ -508,15 +511,5 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
-    }
-}
-namespace System.Runtime.CompilerServices
-{
-    [System.AttributeUsageAttribute(System.AttributeTargets.Constructor | System.AttributeTargets.Method, AllowMultiple=false, Inherited=false)]
-    public sealed partial class OverloadResolutionPriorityAttribute : System.Attribute
-    {
-        public OverloadResolutionPriorityAttribute() { }
-        public OverloadResolutionPriorityAttribute(int priority) { }
-        public int Priority { get { throw null; } }
     }
 }

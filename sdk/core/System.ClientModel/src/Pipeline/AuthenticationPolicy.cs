@@ -19,7 +19,7 @@ public abstract class AuthenticationPolicy : PipelinePolicy
         return connection.CredentialKind switch
         {
             CredentialKind.TokenCredential => CreateWithTokenCredential(connection, scope),
-            CredentialKind.ApiKeyString => CreateWithApiKey(connection),
+            CredentialKind.ApiKeyString => CreateWithApiKey(connection, scope),
             _ => throw new InvalidOperationException($"Unsupported CredentialKind: {connection.CredentialKind}")
         };
     }
@@ -30,9 +30,21 @@ public abstract class AuthenticationPolicy : PipelinePolicy
         return new BearerTokenPolicy(tokenCredential, scope);
     }
 
-    private static AuthenticationPolicy CreateWithApiKey(ClientConnection connection)
+    private static AuthenticationPolicy CreateWithApiKey(ClientConnection connection, string scope)
     {
-        var apiKey = (string)connection.Credential!;
+        string apiKey;
+        if (connection.Credential is AuthenticationTokenProvider apiKeyProvider)
+        {
+            GetTokenOptions options = new GetTokenOptions(new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, scope }
+            });
+            apiKey = apiKeyProvider.GetToken(options, default).TokenValue;
+        }
+        else
+        {
+            apiKey = (string)connection.Credential!;
+        }
         return ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(new ApiKeyCredential(apiKey));
     }
 }

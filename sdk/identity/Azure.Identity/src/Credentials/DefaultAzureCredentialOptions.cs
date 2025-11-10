@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
 {
@@ -38,6 +39,25 @@ namespace Azure.Identity
             public bool Updated => _updated;
         }
 
+        /// <summary>
+        /// .
+        /// </summary>
+        public DefaultAzureCredentialOptions()
+        {
+        }
+
+        internal DefaultAzureCredentialOptions(IConfigurationSection configurationSection)
+        {
+            if (configurationSection["CredentialSource"] is string credentialSource)
+            {
+                CredentialSource = credentialSource;
+            }
+            if (configurationSection["Key"] is string apiKey)
+            {
+                ApiKey = apiKey;
+            }
+        }
+
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _interactiveBrowserTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
         private UpdateTracker<string> _sharedTokenCacheTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -57,9 +77,11 @@ namespace Azure.Identity
             }
         }
 
+        internal string ApiKey { get; private set; }
+
         private static string ConvertCredentialSource(string value) => value switch
         {
-            "AzureCli" => "azureclicredential",
+            "AzureCli" => Constants.AzureCliCredential,
             _ => value,
         };
 
@@ -347,6 +369,7 @@ namespace Azure.Identity
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
                 dacClone.CredentialSource = CredentialSource;
+                dacClone.ApiKey = ApiKey;
             }
 
             return clone;

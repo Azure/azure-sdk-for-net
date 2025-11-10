@@ -23,32 +23,17 @@ public static class ConfigurationManagerExtensions
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="section"></param>
+    /// <param name="configuration"></param>
+    /// <param name="sectionName"></param>
+    /// <param name="tokenProvider"></param>
     /// <returns></returns>
-    public static ClientConnection GetConnection(this IConfigurationSection section)
-    {
-        var credential = CreateCredentials(section);
-        return new ClientConnection(section.Key, section["Endpoint"], credential.Credential, credential.Kind, section);
-    }
+    public static ClientConnection GetConnection(this IConfigurationManager configuration, string sectionName, AuthenticationTokenProvider tokenProvider)
+        => configuration.GetSection(sectionName).GetConnection(tokenProvider);
 
-    internal static (object? Credential, CredentialKind Kind) CreateCredentials(IConfigurationSection section)
+    private static ClientConnection GetConnection(this IConfigurationSection section, AuthenticationTokenProvider? tokenProvider = null)
     {
-        CredentialKind credentialKind;
-        object? credential = default;
-        if (section["Credential:CredentialSource"] is null)
-        {
-            credentialKind = CredentialKind.None;
-        }
-        else if (section["Credential:CredentialSource"]!.Equals("ApiKey", StringComparison.Ordinal))
-        {
-            credentialKind = CredentialKind.ApiKeyString;
-            credential = section["Credential:Key"];
-        }
-        else
-        {
-            throw new Exception($"Unsupported credential source '{section["Credential:CredentialSource"]}'.");
-        }
-
-        return (credential, credentialKind);
+        CredentialKind kind = ClientConnection.GetCredentialKind(section);
+        bool useKey = tokenProvider is null && kind == CredentialKind.ApiKeyString;
+        return new ClientConnection(section.Key, section["Endpoint"], useKey ? section["Credential:Key"] : tokenProvider, kind, section);
     }
 }

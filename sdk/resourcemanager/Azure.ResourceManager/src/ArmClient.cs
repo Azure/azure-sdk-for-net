@@ -14,7 +14,6 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.ResourceManager
 {
@@ -91,29 +90,18 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
-        /// <param name="clientConnection"></param>
+        /// <param name="clientConnection">The <see cref="ClientConnection"/> to construct the client from.</param>
+        /// <param name="configureOptions">Optional callback to confiure the <see cref="ArmClientOptions"/>.</param>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public ArmClient(ClientConnection clientConnection)
+        public ArmClient(ClientConnection clientConnection, Action<ArmClientOptions> configureOptions = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-            : this((TokenCredential)clientConnection.Credential, clientConnection.Configuration["DefaultSubscriptionId"], ArmClientOptions.Create(clientConnection))
+            : this(
+                  (TokenCredential)clientConnection.Credential,
+                  clientConnection.Configuration["DefaultSubscriptionId"],
+                  ArmClientOptions.Create(clientConnection, configureOptions))
         {
-            if (clientConnection.Configuration is not null)
-            {
-                RegisterConfigReload(clientConnection.Configuration);
-            }
-        }
-
-        internal void RegisterConfigReload(IConfiguration configuration)
-        {
-            configuration.GetReloadToken().RegisterChangeCallback(state =>
-            {
-                var newDefaultSubscription = configuration["DefaultSubscriptionId"];
-                _defaultSubscription = newDefaultSubscription is null
-                    ? null
-                    : new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(newDefaultSubscription));
-            }, null);
         }
 
         internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)

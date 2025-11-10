@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
@@ -42,20 +41,11 @@ namespace Azure.Identity
             else
             {
                 credentialKind = CredentialKind.TokenCredential;
-                DefaultAzureCredentialOptions dacOptions = new();
-                ConfigureDefaultAzureCredentialOptions(credentialSection, dacOptions);
+                DefaultAzureCredentialOptions dacOptions = new(credentialSection);
                 credential = new DefaultAzureCredential(dacOptions);
             }
 
             return (credential, credentialKind);
-        }
-
-        internal static void ConfigureDefaultAzureCredentialOptions(IConfigurationSection section, DefaultAzureCredentialOptions options)
-        {
-            if (section["CredentialSource"] is string credentialSource)
-            {
-                options.CredentialSource = credentialSource;
-            }
         }
     }
 }
