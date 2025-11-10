@@ -252,8 +252,8 @@ def main():
     print(f"Looking for releases since: {since_date}")
     print()
     
-    # Find first 10 changelog files for testing
-    changelog_files = find_changelog_files(repo_root, limit=10)
+    # Find all changelog files
+    changelog_files = find_changelog_files(repo_root, limit=None)
     print(f"Found {len(changelog_files)} CHANGELOG.md files to analyze")
     print()
     
