@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(ruleName, nameof(ruleName));
 
-            RuleName = ruleName;
+            Properties = new RuleEntry(ruleName);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostRulestackRuleData"/>. </summary>

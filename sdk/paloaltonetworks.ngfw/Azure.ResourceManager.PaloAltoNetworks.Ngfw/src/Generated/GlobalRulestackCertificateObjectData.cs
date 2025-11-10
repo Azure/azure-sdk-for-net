@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public GlobalRulestackCertificateObjectData(FirewallBooleanType certificateSelfSigned)
         {
 
-            CertificateSelfSigned = certificateSelfSigned;
+            Properties = new CertificateObject(certificateSelfSigned);
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalRulestackCertificateObjectData"/>. </summary>

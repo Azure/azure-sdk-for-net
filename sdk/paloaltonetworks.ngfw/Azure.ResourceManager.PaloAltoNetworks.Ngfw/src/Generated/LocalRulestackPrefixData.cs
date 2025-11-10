@@ -21,6 +21,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixData"/>. </summary>
+        /// <param name="prefixList"> prefix list. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefixList"/> is null. </exception>
+        public LocalRulestackPrefixData(IEnumerable<string> prefixList)
+        {
+            Argument.AssertNotNull(prefixList, nameof(prefixList));
+
+            Properties = new PrefixObject(prefixList);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

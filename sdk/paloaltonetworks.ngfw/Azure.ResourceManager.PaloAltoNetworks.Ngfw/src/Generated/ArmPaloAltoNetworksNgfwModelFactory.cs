@@ -19,6 +19,45 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="panETag"> PanEtag info. </param>
+        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
+        /// <param name="scope"> Rulestack Type. </param>
+        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
+        /// <param name="description"> rulestack description. </param>
+        /// <param name="defaultMode"> Mode for default rules creation. </param>
+        /// <param name="minAppIdVersion"> minimum version. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="securityServices"> Security Profile. </param>
+        /// <param name="location"> Global Location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
+        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, AzureLocation location = default, ManagedServiceIdentity identity = default)
+        {
+            return new GlobalRulestackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                panETag is null && panLocation is null && scope is null && associatedSubscriptions is null && description is null && defaultMode is null && minAppIdVersion is null && provisioningState is null && securityServices is null ? default : new RulestackProperties(
+                    panETag,
+                    panLocation,
+                    scope,
+                    (associatedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    defaultMode,
+                    minAppIdVersion,
+                    provisioningState,
+                    securityServices,
+                    null),
+                location,
+                identity);
+        }
+
         /// <summary> The updatable properties of the GlobalRulestackResource. </summary>
         /// <param name="panETag"> PanEtag info. </param>
         /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
@@ -143,14 +182,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                certificateSignerResourceId is null || certificateSelfSigned is null || auditComment is null || description is null || etag is null || provisioningState is null ? default : new CertificateObject(
+                certificateSignerResourceId is null && certificateSelfSigned is null && auditComment is null && description is null && etag is null && provisioningState is null ? default : new CertificateObject(
                     certificateSignerResourceId,
                     certificateSelfSigned.Value,
                     auditComment,
                     description,
                     etag,
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -172,13 +211,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || fqdnList is null || etag is null || auditComment is null || provisioningState is null ? default : new FqdnObject(
+                description is null && fqdnList is null && etag is null && auditComment is null && provisioningState is null ? default : new FqdnObject(
                     description,
-                    fqdnList.ToList(),
+                    (fqdnList ?? new ChangeTrackingList<string>()).ToList(),
                     etag,
                     auditComment,
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -215,7 +254,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                etag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
+                etag is null && ruleName is null && priority is null && description is null && ruleState is null && source is null && negateSource is null && destination is null && negateDestination is null && applications is null && category is null && protocol is null && protocolPortList is null && inboundInspectionCertificate is null && auditComment is null && actionType is null && enableLogging is null && decryptionRuleType is null && tags is null && provisioningState is null ? default : new RuleEntry(
                     etag,
                     ruleName,
                     priority,
@@ -225,18 +264,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     negateSource,
                     destination,
                     negateDestination,
-                    applications.ToList(),
+                    (applications ?? new ChangeTrackingList<string>()).ToList(),
                     category,
                     protocol,
-                    protocolPortList.ToList(),
+                    (protocolPortList ?? new ChangeTrackingList<string>()).ToList(),
                     inboundInspectionCertificate,
                     auditComment,
                     actionType,
                     enableLogging,
                     decryptionRuleType,
-                    tags.ToList(),
+                    (tags ?? new ChangeTrackingList<RulestackTagInfo>()).ToList(),
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <summary> Address properties. </summary>
@@ -389,13 +428,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || prefixList is null || etag is null || auditComment is null || provisioningState is null ? default : new PrefixObject(
+                description is null && prefixList is null && etag is null && auditComment is null && provisioningState is null ? default : new PrefixObject(
                     description,
-                    prefixList.ToList(),
+                    (prefixList ?? new ChangeTrackingList<string>()).ToList(),
                     etag,
                     auditComment,
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -432,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                etag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
+                etag is null && ruleName is null && priority is null && description is null && ruleState is null && source is null && negateSource is null && destination is null && negateDestination is null && applications is null && category is null && protocol is null && protocolPortList is null && inboundInspectionCertificate is null && auditComment is null && actionType is null && enableLogging is null && decryptionRuleType is null && tags is null && provisioningState is null ? default : new RuleEntry(
                     etag,
                     ruleName,
                     priority,
@@ -442,18 +481,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     negateSource,
                     destination,
                     negateDestination,
-                    applications.ToList(),
+                    (applications ?? new ChangeTrackingList<string>()).ToList(),
                     category,
                     protocol,
-                    protocolPortList.ToList(),
+                    (protocolPortList ?? new ChangeTrackingList<string>()).ToList(),
                     inboundInspectionCertificate,
                     auditComment,
                     actionType,
                     enableLogging,
                     decryptionRuleType,
-                    tags.ToList(),
+                    (tags ?? new ChangeTrackingList<RulestackTagInfo>()).ToList(),
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -488,20 +527,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                panETag is null || networkProfile is null || isPanoramaManaged is null || isStrataCloudManaged is null || panoramaConfig is null || associatedRulestack is null || dnsSettings is null || frontEndSettings is null || provisioningState is null || planData is null || marketplaceDetails is null || cloudManagerName is null ? default : new FirewallDeploymentProperties(
+                panETag is null && networkProfile is null && isPanoramaManaged is null && isStrataCloudManaged is null && panoramaConfig is null && associatedRulestack is null && dnsSettings is null && frontEndSettings is null && provisioningState is null && planData is null && marketplaceDetails is null && cloudManagerName is null ? default : new FirewallDeploymentProperties(
                     panETag,
                     networkProfile,
                     isPanoramaManaged,
                     isStrataCloudManaged,
                     panoramaConfig,
-                    new StrataCloudManagerConfig(cloudManagerName, new Dictionary<string, BinaryData>()),
+                    new StrataCloudManagerConfig(cloudManagerName, null),
                     associatedRulestack,
                     dnsSettings,
-                    frontEndSettings.ToList(),
+                    (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
                     provisioningState,
                     planData,
                     marketplaceDetails,
-                    new Dictionary<string, BinaryData>()),
+                    null),
                 identity);
         }
 
@@ -626,7 +665,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 isPanoramaManaged,
                 isStrataCloudManaged,
                 panoramaConfig,
-                cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, new Dictionary<string, BinaryData>()),
+                cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, null),
                 associatedRulestack,
                 dnsSettings,
                 frontEndSettings.ToList(),
@@ -704,17 +743,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                panETag is null || panLocation is null || scope is null || associatedSubscriptions is null || description is null || defaultMode is null || minAppIdVersion is null || provisioningState is null || securityServices is null ? default : new RulestackProperties(
+                panETag is null && panLocation is null && scope is null && associatedSubscriptions is null && description is null && defaultMode is null && minAppIdVersion is null && provisioningState is null && securityServices is null ? default : new RulestackProperties(
                     panETag,
                     panLocation,
                     scope,
-                    associatedSubscriptions.ToList(),
+                    (associatedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
                     description,
                     defaultMode,
                     minAppIdVersion,
                     provisioningState,
                     securityServices,
-                    new Dictionary<string, BinaryData>()),
+                    null),
                 identity);
         }
 
@@ -773,7 +812,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                applicationInsightsResourceId is null || applicationInsightsConnectionString is null || panETag is null || provisioningState is null ? default : new MetricsObject(applicationInsightsResourceId, applicationInsightsConnectionString, panETag, provisioningState, new Dictionary<string, BinaryData>()));
+                applicationInsightsResourceId is null && applicationInsightsConnectionString is null && panETag is null && provisioningState is null ? default : new MetricsObject(applicationInsightsResourceId, applicationInsightsConnectionString, panETag, provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -796,7 +835,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isPanoramaManaged is null || healthStatus is null || healthReason is null || panoramaStatus is null || provisioningState is null || isStrataCloudManaged is null || strataCloudManagerInfo is null ? default : new FirewallStatusProperty(
+                isPanoramaManaged is null && healthStatus is null && healthReason is null && panoramaStatus is null && provisioningState is null && isStrataCloudManaged is null && strataCloudManagerInfo is null ? default : new FirewallStatusProperty(
                     isPanoramaManaged,
                     healthStatus,
                     healthReason,
@@ -804,7 +843,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     provisioningState,
                     isStrataCloudManaged,
                     strataCloudManagerInfo,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <summary> Panorama connectivity information. </summary>
@@ -844,14 +883,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                certificateSignerResourceId is null || certificateSelfSigned is null || auditComment is null || description is null || etag is null || provisioningState is null ? default : new CertificateObject(
+                certificateSignerResourceId is null && certificateSelfSigned is null && auditComment is null && description is null && etag is null && provisioningState is null ? default : new CertificateObject(
                     certificateSignerResourceId,
                     certificateSelfSigned.Value,
                     auditComment,
                     description,
                     etag,
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -873,13 +912,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || fqdnList is null || etag is null || auditComment is null || provisioningState is null ? default : new FqdnObject(
+                description is null && fqdnList is null && etag is null && auditComment is null && provisioningState is null ? default : new FqdnObject(
                     description,
-                    fqdnList.ToList(),
+                    (fqdnList ?? new ChangeTrackingList<string>()).ToList(),
                     etag,
                     auditComment,
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -916,7 +955,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                etag is null || ruleName is null || priority is null || description is null || ruleState is null || source is null || negateSource is null || destination is null || negateDestination is null || applications is null || category is null || protocol is null || protocolPortList is null || inboundInspectionCertificate is null || auditComment is null || actionType is null || enableLogging is null || decryptionRuleType is null || tags is null || provisioningState is null ? default : new RuleEntry(
+                etag is null && ruleName is null && priority is null && description is null && ruleState is null && source is null && negateSource is null && destination is null && negateDestination is null && applications is null && category is null && protocol is null && protocolPortList is null && inboundInspectionCertificate is null && auditComment is null && actionType is null && enableLogging is null && decryptionRuleType is null && tags is null && provisioningState is null ? default : new RuleEntry(
                     etag,
                     ruleName,
                     priority,
@@ -926,18 +965,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     negateSource,
                     destination,
                     negateDestination,
-                    applications.ToList(),
+                    (applications ?? new ChangeTrackingList<string>()).ToList(),
                     category,
                     protocol,
-                    protocolPortList.ToList(),
+                    (protocolPortList ?? new ChangeTrackingList<string>()).ToList(),
                     inboundInspectionCertificate,
                     auditComment,
                     actionType,
                     enableLogging,
                     decryptionRuleType,
-                    tags.ToList(),
+                    (tags ?? new ChangeTrackingList<RulestackTagInfo>()).ToList(),
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -959,13 +998,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null || prefixList is null || etag is null || auditComment is null || provisioningState is null ? default : new PrefixObject(
+                description is null && prefixList is null && etag is null && auditComment is null && provisioningState is null ? default : new PrefixObject(
                     description,
-                    prefixList.ToList(),
+                    (prefixList ?? new ChangeTrackingList<string>()).ToList(),
                     etag,
                     auditComment,
                     provisioningState,
-                    new Dictionary<string, BinaryData>()));
+                    null));
         }
 
         /// <summary> Create Product Serial Number Request status. </summary>

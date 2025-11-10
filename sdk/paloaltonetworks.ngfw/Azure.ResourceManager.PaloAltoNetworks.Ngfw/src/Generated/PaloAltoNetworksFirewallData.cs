@@ -26,21 +26,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkProfile"/>, <paramref name="dnsSettings"/>, <paramref name="planData"/>, <paramref name="marketplaceDetails"/> or <paramref name="cloudManagerName"/> is null. </exception>
-        public PaloAltoNetworksFirewallData(AzureLocation location, FirewallNetworkProfile networkProfile, FirewallDnsSettings dnsSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, string cloudManagerName) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkProfile"/>, <paramref name="dnsSettings"/>, <paramref name="planData"/> or <paramref name="marketplaceDetails"/> is null. </exception>
+        public PaloAltoNetworksFirewallData(AzureLocation location, FirewallNetworkProfile networkProfile, FirewallDnsSettings dnsSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails) : base(location)
         {
             Argument.AssertNotNull(networkProfile, nameof(networkProfile));
             Argument.AssertNotNull(dnsSettings, nameof(dnsSettings));
             Argument.AssertNotNull(planData, nameof(planData));
             Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
-            Argument.AssertNotNull(cloudManagerName, nameof(cloudManagerName));
 
-            NetworkProfile = networkProfile;
-            DnsSettings = dnsSettings;
-            PlanData = planData;
-            MarketplaceDetails = marketplaceDetails;
-            CloudManagerName = cloudManagerName;
+            Properties = new FirewallDeploymentProperties(networkProfile, dnsSettings, planData, marketplaceDetails);
         }
 
         /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallData"/>. </summary>

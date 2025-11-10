@@ -29,8 +29,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Argument.AssertNotNull(applicationInsightsResourceId, nameof(applicationInsightsResourceId));
             Argument.AssertNotNull(applicationInsightsConnectionString, nameof(applicationInsightsConnectionString));
 
-            ApplicationInsightsResourceId = applicationInsightsResourceId;
-            ApplicationInsightsConnectionString = applicationInsightsConnectionString;
+            Properties = new MetricsObject(applicationInsightsResourceId, applicationInsightsConnectionString);
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallData"/>. </summary>
