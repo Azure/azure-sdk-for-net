@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251109.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251110.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -103,7 +103,7 @@
           }
         },
         "msft:_created": "2025-11-03T14:16:10.3539672Z",
-        "msft:_updated": "2025-11-09T16:32:35.749354Z",
+        "msft:_updated": "2025-11-10T14:45:54.190398Z",
         "title": "MPC Pro Sample Datasets",
         "extent": {
           "spatial": {
@@ -224,24 +224,24 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "459",
-        "Content-Type": "multipart/form-data; boundary=\"f02c881e-0c9b-40cb-8dd1-2361ea57fd6d\"",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251109.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
+        "Content-Type": "multipart/form-data; boundary=\"78576f4b-c0bd-438d-bec0-b75ec78c088a\"",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251110.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": [
-        "--f02c881e-0c9b-40cb-8dd1-2361ea57fd6d\r\n",
+        "--78576f4b-c0bd-438d-bec0-b75ec78c088a\r\n",
         "Content-Type: text/plain; charset=utf-8\r\n",
         "Content-Disposition: form-data; name=data\r\n",
         "\r\n",
         "{\"key\":\"test-asset\",\"href\":\"https://example.com/test-asset.txt\",\"type\":\"text/plain\",\"roles\":[\"metadata\"],\"title\":\"Test Asset\"}",
         "\r\n",
-        "--f02c881e-0c9b-40cb-8dd1-2361ea57fd6d\r\n",
+        "--78576f4b-c0bd-438d-bec0-b75ec78c088a\r\n",
         "Content-Disposition: form-data; name=file; filename=test-asset.txt; filename*=utf-8''test-asset.txt\r\n",
         "\r\n",
         "b64:VGVzdCBhc3NldCBjb250ZW50",
         "\r\n",
-        "--f02c881e-0c9b-40cb-8dd1-2361ea57fd6d--\r\n"
+        "--78576f4b-c0bd-438d-bec0-b75ec78c088a--\r\n"
       ],
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -334,7 +334,7 @@
           }
         },
         "msft:_created": "2025-11-03T14:16:10.3539672Z",
-        "msft:_updated": "2025-11-09T16:32:36.514679Z",
+        "msft:_updated": "2025-11-10T14:45:54.696045Z",
         "title": "MPC Pro Sample Datasets",
         "extent": {
           "spatial": {
@@ -460,6 +460,6 @@
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "1960313549"
+    "RandomSeed": "143074296"
   }
 }
