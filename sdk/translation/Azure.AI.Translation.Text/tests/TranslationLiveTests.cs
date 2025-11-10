@@ -106,6 +106,23 @@ namespace Azure.AI.Translation.Text.Tests
         }
 
         [RecordedTest]
+        public async Task TranslateWithLlmModel()
+        {
+            string targetLanguage = "es";
+            string inputText = "This is a test.";
+            string llmModel = "gpt-4o-mini";
+            TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: llmModel);
+            TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+            TextTranslationClient client = GetClient();
+            var response = await client.TranslateAsync(input).ConfigureAwait(false);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.NotNull(response.Value);
+            Assert.AreEqual(1, response.Value.Translations.Count);
+            Assert.AreEqual(targetLanguage, response.Value.Translations.FirstOrDefault().Language);
+            Assert.NotNull(response.Value.Translations.FirstOrDefault().Text);
+        }
+
+        [RecordedTest]
         public async Task TranslateWithCustomEndpoint()
         {
             string targetLanguage = "cs";
