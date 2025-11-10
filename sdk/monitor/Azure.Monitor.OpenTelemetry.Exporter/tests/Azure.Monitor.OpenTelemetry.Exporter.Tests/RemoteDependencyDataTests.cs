@@ -36,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         [Theory]
         [InlineData("mssql")]
+        [InlineData("microsoft.sql_server")]
         [InlineData("redis")]
         public void ValidateDBDependencyType(string dbSystem)
         {
