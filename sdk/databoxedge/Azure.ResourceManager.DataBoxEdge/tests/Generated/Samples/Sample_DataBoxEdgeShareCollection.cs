@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SharePut()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/SharePut.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/stable/2023-12-01/examples/SharePut.json
             // this example is just showing the usage of "Shares_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ShareGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/ShareGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/stable/2023-12-01/examples/ShareGet.json
             // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ShareGetAllInDevice()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/ShareGetAllInDevice.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/stable/2023-12-01/examples/ShareGetAllInDevice.json
             // this example is just showing the usage of "Shares_ListByDataBoxEdgeDevice" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ShareGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/ShareGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/stable/2023-12-01/examples/ShareGet.json
             // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ShareGet()
         {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2023-12-01/examples/ShareGet.json
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/stable/2023-12-01/examples/ShareGet.json
             // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

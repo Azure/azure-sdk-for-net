@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: DataBoxEdge
 namespace: Azure.ResourceManager.DataBoxEdge
-require: https://github.com/Azure/azure-rest-api-specs/blob/78fd8f85507c9a12d47bd8953b864353a6005080/specification/databoxedge/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d90b6facf816cc5d9c8cb3597fbb11ec657d9229/specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/DataBoxEdge/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
