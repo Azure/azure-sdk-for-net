@@ -5,7 +5,6 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
-    <ProjectReference Include="..\..\Azure.Provisioning.AppService\src\Azure.Provisioning.AppService.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.AppContainers\src\Azure.Provisioning.AppContainers.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.CognitiveServices\src\Azure.Provisioning.CognitiveServices.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj" />
