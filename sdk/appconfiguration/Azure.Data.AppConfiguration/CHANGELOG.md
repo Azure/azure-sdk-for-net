@@ -1,14 +1,10 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0 (2025-11-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added internal pipeline policy to normalize (case-insensitive alphabetical) ordering of query parameters for deterministic request URLs.
 
 ## 1.6.1 (2025-05-09)
 
