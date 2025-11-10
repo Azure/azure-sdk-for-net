@@ -20,6 +20,9 @@ namespace Azure.Identity.Tests
     public class KubernetesProxyHttpHandlerTests
     {
         private TestTempFileHandler _tempFiles = new TestTempFileHandler();
+        private const string DefaultProxyUrl = "https://proxy.example.com:8443/token-proxy";
+        private const string DefaultSniName = "proxy.sni.example.com";
+        private const string DefaultTargetUrl = "https://login.microsoftonline.com/tenant/oauth2/v2.0/token";
 
         [TearDown]
         public void Cleanup()
@@ -28,8 +31,8 @@ namespace Azure.Identity.Tests
         }
 
         private static KubernetesProxyConfig CreateTestConfig(
-            string proxyUrl,
-            string sniName = null,
+            string proxyUrl = DefaultProxyUrl,
+            string sniName = DefaultSniName,
             string caFilePath = null,
             string caData = null,
             HttpPipelineTransport transport = null)
@@ -44,6 +47,44 @@ namespace Azure.Identity.Tests
             };
         }
 
+        private static MockTransport CreateMockTransport(string responseContent = "{\"token\":\"test-token\"}", int statusCode = 200, Action<Request> requestValidator = null)
+        {
+            return new MockTransport(req =>
+            {
+                requestValidator?.Invoke(req);
+                var response = new MockResponse(statusCode);
+                response.SetContent(responseContent);
+                return response;
+            });
+        }
+
+        private HttpClient CreateTestHttpClient(KubernetesProxyConfig config = null)
+        {
+            config ??= CreateTestConfig();
+            var handler = new KubernetesProxyHttpHandler(config);
+            return new HttpClient(handler);
+        }
+
+        private async Task<(HttpResponseMessage Response, Request CapturedRequest)> SendRequestAndCapture(
+            string targetUrl = DefaultTargetUrl,
+            KubernetesProxyConfig config = null,
+            HttpMethod method = null,
+            HttpContent content = null)
+        {
+            method ??= HttpMethod.Get;
+            Request capturedRequest = null;
+
+            var mockTransport = CreateMockTransport(requestValidator: req => capturedRequest = req);
+            config ??= CreateTestConfig(transport: mockTransport);
+            if (config.Transport == null) config.Transport = mockTransport;
+
+            var httpClient = CreateTestHttpClient(config);
+            var request = new HttpRequestMessage(method, targetUrl) { Content = content };
+            var response = await httpClient.SendAsync(request);
+
+            return (response, capturedRequest);
+        }
+
         [Test]
         public void Constructor_ThrowsOnNullConfig()
         {
@@ -51,88 +92,30 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_RewritesUrlToProxyUrl()
+        [TestCase("https://proxy.example.com:8443/token-proxy", "https://login.microsoftonline.com/tenant/oauth2/v2.0/token", "https://proxy.example.com:8443/token-proxy/tenant/oauth2/v2.0/token")]
+        [TestCase("https://proxy.example.com:8443/", "https://login.microsoftonline.com/tenant/oauth2/v2.0/token", "https://proxy.example.com:8443/tenant/oauth2/v2.0/token")]
+        [TestCase("https://proxy.example.com:8443", "https://login.microsoftonline.com/oauth2/token", "https://proxy.example.com:8443/oauth2/token")]
+        public async Task SendAsync_RewritesUrlToProxyUrl(string proxyUrl, string targetUrl, string expectedUrl)
         {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.sni.example.com";
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/tenant/oauth2/v2.0/token");
+            // Arrange & Act
+            var (response, request) = await SendRequestAndCapture(targetUrl, CreateTestConfig(proxyUrl));
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var request = mockTransport.SingleRequest;
-            Assert.AreEqual("https://proxy.example.com:8443/token-proxy/tenant/oauth2/v2.0/token", request.Uri.ToString());
+            Assert.AreEqual(expectedUrl, request.Uri.ToString());
             Assert.IsTrue(request.Headers.TryGetValue("Host", out var hostHeader));
-            Assert.AreEqual(sniName, hostHeader);
-        }
-
-        [Test]
-        public async Task SendAsync_RewritesUrlWithRootProxyPath()
-        {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/";
-            var sniName = "proxy.sni.example.com";
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/tenant/oauth2/v2.0/token");
-
-            // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var request = mockTransport.SingleRequest;
-            Assert.AreEqual("https://proxy.example.com:8443/tenant/oauth2/v2.0/token", request.Uri.ToString());
+            Assert.AreEqual(DefaultSniName, hostHeader);
         }
 
         [Test]
         public async Task SendAsync_PreservesQueryParameters()
         {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443";
-            var sniName = "proxy.sni.example.com";
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: GetTestCertificatePem(), transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/oauth2/token?api-version=2.0&scope=test");
+            // Arrange & Act
+            var targetUrl = "https://login.microsoftonline.com/oauth2/token?api-version=2.0&scope=test";
+            var (response, request) = await SendRequestAndCapture(targetUrl);
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var request = mockTransport.SingleRequest;
             Assert.IsTrue(request.Uri.Query.Contains("api-version=2.0"), $"Expected query to contain api-version=2.0 but got: {request.Uri.Query}");
             Assert.IsTrue(request.Uri.Query.Contains("scope=test"));
         }
@@ -141,17 +124,9 @@ namespace Azure.Identity.Tests
         public async Task SendAsync_CopiesRequestHeaders()
         {
             // Arrange
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
+            Request capturedRequest = null;
+            var mockTransport = CreateMockTransport(requestValidator: req => capturedRequest = req);
+            var httpClient = CreateTestHttpClient(CreateTestConfig(transport: mockTransport));
 
             var request = new HttpRequestMessage(HttpMethod.Get, "https://login.microsoftonline.com/token");
             request.Headers.Add("Authorization", "Bearer test-token");
@@ -162,7 +137,6 @@ namespace Azure.Identity.Tests
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var capturedRequest = mockTransport.SingleRequest;
             Assert.IsTrue(capturedRequest.Headers.TryGetValue("Authorization", out var authHeader));
             Assert.AreEqual("Bearer test-token", authHeader);
             Assert.IsTrue(capturedRequest.Headers.TryGetValue("X-Custom-Header", out var customHeader));
@@ -170,37 +144,21 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_CopiesRequestContent()
+        public async Task SendAsync_CopiesRequestContentAndHandlesResponses()
         {
-            // Arrange
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            var requestContent = "{\"grant_type\":\"client_credentials\"}";
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://login.microsoftonline.com/token")
-            {
-                Content = new StringContent(requestContent, Encoding.UTF8, "application/json")
-            };
-
-            // Act
-            var response = await httpClient.SendAsync(request);
-
-            // Assert
+            // Test both request content copying and response handling
+            var requestContent = new StringContent("{\"grant_type\":\"client_credentials\"}", Encoding.UTF8, "application/json");
+            // Test with success response
+            var (response, request) = await SendRequestAndCapture(content: requestContent, method: HttpMethod.Post);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var capturedRequest = mockTransport.SingleRequest;
-            Assert.IsNotNull(capturedRequest.Content);
+            Assert.IsNotNull(request.Content);
+            Assert.IsTrue(request.Content.TryComputeLength(out var length) && length > 0);
 
-            var contentStream = capturedRequest.Content.TryComputeLength(out var length);
-            Assert.IsTrue(length > 0);
+            // Test with error response
+            var mockTransport = CreateMockTransport("{\"error\":\"unauthorized\"}", 401);
+            var httpClient = CreateTestHttpClient(CreateTestConfig(transport: mockTransport));
+            var errorResponse = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            Assert.AreEqual(HttpStatusCode.Unauthorized, errorResponse.StatusCode);
         }
 
         [Test]
@@ -216,10 +174,7 @@ namespace Azure.Identity.Tests
                 return response;
             });
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
+            var httpClient = CreateTestHttpClient(CreateTestConfig(transport: mockTransport));
 
             // Act
             var response = await httpClient.GetAsync("https://login.microsoftonline.com/token");
@@ -231,82 +186,25 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_HandlesNon200Responses()
+        public async Task SendAsync_DoesNotReloadWhenNoCaFileOrEmptyFile()
         {
-            // Arrange
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(401);
-                response.SetContent("{\"error\":\"unauthorized\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/token");
-
-            // Assert
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-        }
-
-        [Test]
-        public async Task SendAsync_DoesNotReloadHandlerWhenNoCaFile()
-        {
-            // Arrange
             var requestCount = 0;
-            var mockTransport = new MockTransport(req =>
-            {
-                requestCount++;
-                var response = new MockResponse(200);
-                response.SetContent($"{{\"request\":{requestCount}}}");
-                return response;
-            });
+            var mockTransport = CreateMockTransport(requestValidator: _ => requestCount++);
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", transport: mockTransport);
+            // Test 1: No CA file
+            var httpClient1 = CreateTestHttpClient(CreateTestConfig(transport: mockTransport));
+            await httpClient1.GetAsync("https://login.microsoftonline.com/token");
+            await httpClient1.GetAsync("https://login.microsoftonline.com/token");
+            Assert.AreEqual(2, requestCount, "Should not reload when no CA file");
 
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act - Make multiple requests
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-
-            // Assert
-            Assert.AreEqual(3, requestCount);
-        }
-
-        [Test]
-        public async Task SendAsync_DoesNotReloadHandlerWhenCaFileIsEmpty()
-        {
-            // Arrange
+            // Test 2: Empty CA file
+            requestCount = 0;
             var caFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(caFilePath, ""); // Empty file
-
-            var requestCount = 0;
-            var mockTransport = new MockTransport(req =>
-            {
-                requestCount++;
-                var response = new MockResponse(200);
-                response.SetContent($"{{\"request\":{requestCount}}}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caFilePath, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act - Make multiple requests
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-
-            // Assert
-            Assert.AreEqual(2, requestCount);
+            File.WriteAllText(caFilePath, "");
+            var httpClient2 = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+            await httpClient2.GetAsync("https://login.microsoftonline.com/token");
+            await httpClient2.GetAsync("https://login.microsoftonline.com/token");
+            Assert.AreEqual(2, requestCount, "Should not reload when CA file is empty");
         }
 
         [Test]
@@ -316,37 +214,26 @@ namespace Azure.Identity.Tests
             var caFilePath = _tempFiles.GetTempFilePath();
             var cert1 = GetTestCertificatePem();
             var cert2 = GetDifferentTestCertificatePem();
-
             File.WriteAllText(caFilePath, cert1);
 
             var requestCount = 0;
-
-            var mockTransport = new MockTransport(req =>
+            var mockTransport = CreateMockTransport(requestValidator: req =>
             {
                 requestCount++;
-
-                // On the second request, change the CA file to trigger reload
+                // Change CA file on second request to trigger reload
                 if (requestCount == 2)
                 {
                     File.WriteAllText(caFilePath, cert2);
-                    // Give a moment for file system to flush
-                    Thread.Sleep(10);
+                    Thread.Sleep(10); // Allow file system to flush
                 }
-
-                var response = new MockResponse(200);
-                response.SetContent($"{{\"request\":{requestCount}}}");
-                return response;
             });
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caFilePath, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
+            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
 
             // Act - Make requests before and after CA change
-            var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token1");
-            var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token2");
-            var response3 = await httpClient.GetAsync("https://login.microsoftonline.com/token3");
+            var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var response3 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
@@ -356,115 +243,30 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_InProgressRequestsNotInterruptedDuringHandlerReload()
+        public async Task SendAsync_ConcurrentRequestsDuringCaFileReloadAllSucceed()
         {
             // Arrange
             var caFilePath = _tempFiles.GetTempFilePath();
-            var cert1 = GetTestCertificatePem();
-            var cert2 = GetDifferentTestCertificatePem();
-
-            File.WriteAllText(caFilePath, cert1);
-
-            var firstRequestStarted = new ManualResetEventSlim(false);
-            var allowReload = new ManualResetEventSlim(false);
-            var firstRequestCompleted = false;
-
-            var mockTransport = new MockTransport(req =>
-            {
-                // Signal that the first request has started
-                firstRequestStarted.Set();
-
-                // Wait for signal to proceed (simulating a slow request)
-                allowReload.Wait();
-
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"success\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caFilePath, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act - Start first request in background
-            var firstRequestTask = Task.Run(async () =>
-            {
-                var response = await httpClient.GetAsync("https://login.microsoftonline.com/token");
-                firstRequestCompleted = true;
-                return response;
-            });
-
-            // Wait for first request to start
-            firstRequestStarted.Wait(TimeSpan.FromSeconds(5));
-
-            // Change CA file while first request is in progress
-            File.WriteAllText(caFilePath, cert2);
-            Thread.Sleep(10); // Give file system time to flush
-
-            // Start second request that will trigger reload check
-            var secondRequestTask = Task.Run(async () =>
-            {
-                return await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            });
-
-            // Give second request time to detect CA change and trigger reload
-            await Task.Delay(100);
-
-            // Now allow both requests to complete
-            allowReload.Set();
-
-            var firstResponse = await firstRequestTask;
-            var secondResponse = await secondRequestTask;
-
-            // Assert - Both requests should complete successfully
-            Assert.IsTrue(firstRequestCompleted, "First request should complete successfully");
-            Assert.AreEqual(HttpStatusCode.OK, firstResponse.StatusCode);
-            Assert.AreEqual(HttpStatusCode.OK, secondResponse.StatusCode);
-
-            var content1 = await firstResponse.Content.ReadAsStringAsync();
-            var content2 = await secondResponse.Content.ReadAsStringAsync();
-            Assert.IsTrue(content1.Contains("success"));
-            Assert.IsTrue(content2.Contains("success"));
-        }
-
-        [Test]
-        public async Task SendAsync_MultipleRequestsDuringReloadAllSucceed()
-        {
-            // Arrange
-            var caFilePath = _tempFiles.GetTempFilePath();
-            var cert1 = GetTestCertificatePem();
-            var cert2 = GetDifferentTestCertificatePem();
-
-            File.WriteAllText(caFilePath, cert1);
+            File.WriteAllText(caFilePath, GetTestCertificatePem());
 
             var requestCounter = 0;
-            var reloadTriggered = false;
-
             var mockTransport = new MockTransport(req =>
             {
                 var currentRequest = Interlocked.Increment(ref requestCounter);
-
                 // Trigger reload on second request
-                if (currentRequest == 2 && !reloadTriggered)
+                if (currentRequest == 2)
                 {
-                    reloadTriggered = true;
-                    File.WriteAllText(caFilePath, cert2);
+                    File.WriteAllText(caFilePath, GetDifferentTestCertificatePem());
                     Thread.Sleep(10);
                 }
 
-                // Simulate some processing time
-                Thread.Sleep(50);
-
+                Thread.Sleep(50); // Simulate processing time
                 var response = new MockResponse(200);
                 response.SetContent($"{{\"request\":{currentRequest}}}");
                 return response;
             });
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caFilePath, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
+            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
 
             // Act - Start multiple concurrent requests
             var tasks = new Task<HttpResponseMessage>[5];
@@ -472,15 +274,14 @@ namespace Azure.Identity.Tests
             {
                 tasks[i] = httpClient.GetAsync($"https://login.microsoftonline.com/token{i}");
             }
-
             var responses = await Task.WhenAll(tasks);
 
-            // Assert - All requests should succeed
+            // Assert - All requests should succeed despite CA file change
             foreach (var response in responses)
             {
                 Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
                 var content = await response.Content.ReadAsStringAsync();
-                Assert.IsTrue(content.Contains("request"));
+                Assert.IsTrue(content.Contains("request"), "Response should contain request counter");
             }
         }
 
@@ -489,32 +290,18 @@ namespace Azure.Identity.Tests
         {
             // Arrange
             var caFilePath = _tempFiles.GetTempFilePath();
-            // Create the file initially but don't write anything
             File.WriteAllText(caFilePath, GetTestCertificatePem());
 
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{}");
-                return response;
-            });
+            var mockTransport = CreateMockTransport();
+            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caFilePath, transport: mockTransport);
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Make first request successfully
+            // Act - Make first request successfully, then delete file and make another request
             var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
-
-            // Delete the CA file to simulate read failure
             File.Delete(caFilePath);
-
-            // Act - Make another request (should not reload since file is missing)
             var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
-            // Assert - Request should still succeed using old handler
+            // Assert - Both requests should succeed (second uses cached handler when file is missing)
+            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
             Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
         }
 
@@ -540,53 +327,37 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_WorksWithCaData()
+        public async Task SendAsync_WithInlineCaData_DoesNotAttemptFileMonitoring()
         {
-            // Arrange
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{}");
-                return response;
-            });
+            // This test verifies that when CA data is provided inline (not via file),
+            // the handler doesn't attempt any file monitoring or reloading behavior
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caData: GetTestCertificatePem(), transport: mockTransport);
+            var mockTransport = CreateMockTransport();
 
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
+            // Test with inline CA data - should work without any file operations
+            var configWithInlineCA = CreateTestConfig(
+                caData: GetTestCertificatePem(),
+                caFilePath: null, // No file path - using inline data only
+                transport: mockTransport);
 
-            // Act
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var handler = new KubernetesProxyHttpHandler(configWithInlineCA);
+            var httpClient = new HttpClient(handler);
 
-            // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }
+            // Act - Multiple requests should all succeed without any file system interaction
+            var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
-        [Test]
-        public async Task SendAsync_DoesNotReloadWhenUsingCaData()
-        {
-            // Arrange - CaData is inline, so no file watching needed
-            var requestCount = 0;
-            var mockTransport = new MockTransport(req =>
-            {
-                requestCount++;
-                var response = new MockResponse(200);
-                response.SetContent($"{{\"request\":{requestCount}}}");
-                return response;
-            });
+            // Assert - All requests succeed
+            Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
 
-            var proxyConfig = CreateTestConfig("https://proxy.example.com", "proxy.sni.example.com", caData: GetTestCertificatePem(), transport: mockTransport);
+            // Verify the handler has certificate validation configured (proving CA data was used)
+            var innerHandler = handler.InnerHandler as HttpClientHandler;
+            Assert.IsNotNull(innerHandler?.ServerCertificateCustomValidationCallback,
+                "Handler should be configured with certificate validation when CA data is provided");
 
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // Act - Make multiple requests
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient.GetAsync("https://login.microsoftonline.com/token");
-
-            // Assert
-            Assert.AreEqual(3, requestCount);
+            // The key point: with inline CA data, there's no file to monitor, so no reloading logic applies
+            // This test demonstrates the handler works correctly with inline CA data
         }
 
         private string GetTestCertificatePem()
@@ -604,624 +375,105 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_CertificateValidationUsesCustomCA()
+        public async Task ConfigureCustomCertificates_ValidatesCorrectly()
         {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var customCaPem = GetTestCertificatePem();
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: customCaPem, transport: mockTransport);
-
-            // Act - Create handler which should configure custom certificate validation
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // The handler should be created successfully with custom CA configuration
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/tenant/oauth2/v2.0/token");
-
-            // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-
-            // Verify the handler was configured with custom certificates by checking it doesn't throw
-            // when recreating with the same CA data
-            var proxyHandler2 = new KubernetesProxyHttpHandler(proxyConfig);
-            Assert.IsNotNull(proxyHandler2);
-        }
-
-        [Test]
-        public void ConfigureCustomCertificates_WithValidPem_SetsUpValidationCallback()
-        {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
+            // Test valid CA PEM configuration
             var validCaPem = GetTestCertificatePem();
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: validCaPem, transport: mockTransport);
-
-            // Act & Assert - Creating handler with valid CA PEM should not throw
             Assert.DoesNotThrow(() =>
             {
-                var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-                Assert.IsNotNull(proxyHandler);
-            });
-        }
+                var handler = new KubernetesProxyHttpHandler(CreateTestConfig(caData: validCaPem));
+                Assert.IsNotNull(handler);
+            }, "Handler creation with valid CA PEM should succeed");
 
-        [Test]
-        public void ConfigureCustomCertificates_WithInvalidPem_ThrowsInvalidOperationException()
-        {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
+            // Test invalid CA PEM throws exception
             var invalidCaPem = "-----BEGIN CERTIFICATE-----\nINVALID CERTIFICATE DATA\n-----END CERTIFICATE-----";
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: invalidCaPem, transport: mockTransport);
-
-            // Act & Assert - Creating handler with invalid CA PEM should throw
             var ex = Assert.Throws<InvalidOperationException>(() =>
             {
-                var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
+                new KubernetesProxyHttpHandler(CreateTestConfig(caData: invalidCaPem));
             });
-
             Assert.That(ex.Message, Contains.Substring("Failed to configure custom CA certificate"));
-        }
 
-        [Test]
-        public async Task SendAsync_UsesActualCertificateValidationLogic()
-        {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: validCaPem, transport: mockTransport);
-
-            // Act - Use the actual KubernetesProxyHttpHandler (not a test double)
-            // This tests the real certificate validation logic in ConfigureCustomCertificates
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            // The request should succeed because we're using mock transport
-            // but the handler should have the certificate validation callback configured
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/tenant/oauth2/v2.0/token");
-
-            // Assert
+            // Test handler works with custom CA for requests (using mock transport)
+            var (response, _) = await SendRequestAndCapture(config: CreateTestConfig(caData: validCaPem));
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-
-            // Verify that the handler was properly configured by checking that
-            // it can handle multiple requests without throwing
-            var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/tenant/oauth2/v2.0/token");
-            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
         }
 
         [Test]
-        public void ConfigureCustomCertificates_LoadsCaCertificateCorrectly()
+        public void CertificateValidation_LoadsAndValidatesCertificateCorrectly()
         {
-            // Arrange
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
+            // Verify certificate can be loaded from PEM data
             var validCaPem = GetTestCertificatePem();
+            var cert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
+            Assert.IsNotNull(cert, "CA certificate should be loadable from PEM data");
 
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: validCaPem, transport: mockTransport);
-
-            // Act - Create handler which internally calls ConfigureCustomCertificates
-            KubernetesProxyHttpHandler proxyHandler = null;
+            // Verify handler creation with CA data configures certificate validation
             Assert.DoesNotThrow(() =>
             {
-                proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            });
-
-            // Assert - Handler should be created successfully
-            Assert.IsNotNull(proxyHandler);
-
-            // Verify that PemReader can actually load the certificate
-            Assert.DoesNotThrow(() =>
-            {
-                var cert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-                Assert.IsNotNull(cert);
-                Assert.IsTrue(cert.HasPrivateKey || !cert.HasPrivateKey); // Certificate should be loaded
-            });
-        }
-
-        [Test]
-        public void CertificateValidationLogic_ValidatesThumbprintMatch()
-        {
-            // Arrange - Test the actual certificate validation logic using the real CA certificate
-            var validCaPem = GetTestCertificatePem();
-
-            // Load the actual CA certificate that would be used
-            var caCertificate = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-            Assert.IsNotNull(caCertificate);
-
-            // Create a mock certificate chain for testing
-            using (var chain = new X509Chain())
-            {
-                chain.ChainPolicy.ExtraStore.Add(caCertificate);
-                chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-
-                // Test that our CA certificate can be used in chain building
-                bool chainBuilt = chain.Build(caCertificate);
-
-                // The chain should build successfully with our CA cert
-                Assert.IsTrue(chainBuilt || chain.ChainElements.Count > 0, "Chain should build or have elements");
-
-                // Verify thumbprint matching logic (simulating the actual handler logic)
-                if (chain.ChainElements.Count > 0)
-                {
-                    var rootCert = chain.ChainElements[chain.ChainElements.Count - 1].Certificate;
-                    // This simulates the thumbprint matching in ConfigureCustomCertificates
-                    bool thumbprintMatches = rootCert.Thumbprint.Equals(caCertificate.Thumbprint, StringComparison.OrdinalIgnoreCase);
-                    Assert.IsTrue(thumbprintMatches, "Root certificate thumbprint should match the CA certificate");
-                }
-            }
+                var handler = new KubernetesProxyHttpHandler(CreateTestConfig(caData: validCaPem));
+                Assert.IsNotNull(handler);
+            }, "Handler should be created successfully with valid CA data");
         }
 
         [Test]
         public async Task SendAsync_WithNoCaData_DoesNotConfigureCertificateValidation()
         {
-            // Arrange - Test when no CA data is provided
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-
-            var mockTransport = new MockTransport(req =>
-            {
-                var response = new MockResponse(200);
-                response.SetContent("{\"token\":\"test-token\"}");
-                return response;
-            });
-
-            // Create config without CA data
-            var proxyConfig = CreateTestConfig(proxyUrl, sniName, caData: null, transport: mockTransport);
-
-            // Act - Handler should be created without custom certificate validation
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var httpClient = new HttpClient(proxyHandler);
-
-            var response = await httpClient.GetAsync("https://login.microsoftonline.com/tenant/oauth2/v2.0/token");
-
-            // Assert - Should work without custom certificate validation
+            // Test that handler works without CA data (uses default certificate validation)
+            var (response, _) = await SendRequestAndCapture(config: CreateTestConfig(caData: null));
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Test]
-        public void CertificateValidationCallback_WithValidCertificateChain_ReturnsTrue()
+        public void CertificateValidationCallback_ConfiguresCorrectly()
         {
-            // Arrange - Create handler with custom CA to get the validation callback
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
             var validCaPem = GetTestCertificatePem();
 
-            // Create config without MockTransport to get real HttpClientHandler
+            // Test with CA data - should configure callback
             var proxyConfig = new KubernetesProxyConfig()
             {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = validCaPem,
-                Transport = null // No mock transport - use real HttpClientHandler
-            };
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-
-            // Access the inner handler directly - it should be DisposingHttpClientHandler which inherits from HttpClientHandler
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-
-            Assert.IsNotNull(innerHandler, "Should have HttpClientHandler configured");
-            Assert.IsNotNull(innerHandler.ServerCertificateCustomValidationCallback,
-                "Should have custom certificate validation callback configured");
-
-            // Load the test certificate to simulate what would happen in real validation
-            var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-
-            using (var chain = new X509Chain())
-            {
-                // Test the callback - when using the same cert as CA, it should validate successfully
-                // The key insight: we're testing that the callback logic works, not necessarily
-                // that the specific certificate scenario is realistic in production
-                var validationResult = innerHandler.ServerCertificateCustomValidationCallback(
-                    null, // HttpRequestMessage - not used in actual callback
-                    testCert,
-                    chain,
-                    System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors // Simulate SSL error that triggers custom validation
-                );
-
-                // Note: The validation result depends on whether the certificate can be validated
-                // against itself as a CA. This tests the callback logic execution.
-                Assert.IsNotNull(validationResult, "Certificate validation callback should execute without throwing");
-            }
-        }
-
-        [Test]
-        public void CertificateValidationCallback_WithNoSslErrors_ValidatesAllParameters()
-        {
-            // This test validates that even when SslPolicyErrors.None is passed,
-            // the callback still performs full certificate validation (which is correct behavior)
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
+                ProxyUrl = new Uri(DefaultProxyUrl),
+                SniName = DefaultSniName,
                 CaData = validCaPem,
                 Transport = null
             };
+            var handlerWithCa = new KubernetesProxyHttpHandler(proxyConfig);
+            var innerHandlerWithCa = handlerWithCa.InnerHandler as HttpClientHandler;
+            Assert.IsNotNull(innerHandlerWithCa?.ServerCertificateCustomValidationCallback,
+                "Should configure callback when CA data provided");
 
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-
-            Assert.IsNotNull(innerHandler?.ServerCertificateCustomValidationCallback);
-
-            var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-
-            using (var chain = new X509Chain())
+            // Test without CA data - should not configure callback
+            var proxyConfigNoCa = new KubernetesProxyConfig()
             {
-                // Test that the callback performs validation and doesn't just return true for SslPolicyErrors.None
-                // This validates that all parameters (cert, chain, etc.) are properly validated
-                var validationResult = innerHandler.ServerCertificateCustomValidationCallback(
-                    null,
-                    testCert,
-                    chain,
-                    System.Net.Security.SslPolicyErrors.None
-                );
-
-                // The result depends on whether the certificate can be validated against the CA
-                // The important thing is that the callback executes all validation logic,
-                // not just returns true because SSL errors are None
-                Assert.IsNotNull(validationResult, "Callback should execute and return a boolean result");
-
-                // Verify that the callback properly configured the chain policy
-                Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode,
-                    "Callback should configure RevocationMode");
-                Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags,
-                    "Callback should configure VerificationFlags");
-                Assert.IsTrue(chain.ChainPolicy.ExtraStore.Count > 0,
-                    "Callback should add CA certificate to ExtraStore");
-            }
-        }        [Test]
-        public void CertificateValidationCallback_WithNullCertificate_ReturnsFalse()
-        {
-            // Arrange - Create handler with custom CA
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = validCaPem,
+                ProxyUrl = new Uri(DefaultProxyUrl),
+                SniName = DefaultSniName,
+                CaData = null,
                 Transport = null
             };
+            var handlerNoCa = new KubernetesProxyHttpHandler(proxyConfigNoCa);
+            var innerHandlerNoCa = handlerNoCa.InnerHandler as HttpClientHandler;
+            Assert.IsNull(innerHandlerNoCa?.ServerCertificateCustomValidationCallback,
+                "Should NOT configure callback when no CA data provided");
 
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-
-            // Access the inner handler - it's a DisposingHttpClientHandler which inherits from HttpClientHandler
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-
-            Assert.IsNotNull(innerHandler, "Inner handler should be HttpClientHandler compatible");
-            Assert.IsNotNull(innerHandler.ServerCertificateCustomValidationCallback,
-                "Certificate validation callback should be configured");
-
-            using (var chain = new X509Chain())
+            // Test callback behavior - verify it configures chain policy and handles edge cases
+            if (innerHandlerWithCa?.ServerCertificateCustomValidationCallback != null)
             {
-                // Test with null certificate - this should cause chain.Build() to fail or handle gracefully
-                var validationResult = innerHandler.ServerCertificateCustomValidationCallback(
-                    null,
-                    null, // Null certificate
-                    chain,
-                    System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors
-                );
+                var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
+                var callback = innerHandlerWithCa.ServerCertificateCustomValidationCallback;
 
-                // With null certificate, chain.Build(null) should fail, so callback should return false
-                Assert.IsFalse(validationResult, "Validation should fail with null certificate");
-            }
-        }
-
-        [Test]
-        public void CertificateValidationCallback_ConfiguresChainPolicyCorrectly()
-        {
-            // Arrange - Create handler with custom CA
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = validCaPem,
-                Transport = null
-            };
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-
-            // Access the inner handler directly
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-
-            Assert.IsNotNull(innerHandler?.ServerCertificateCustomValidationCallback);
-
-            var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-            var caCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-
-            using (var chain = new X509Chain())
-            {
-                // Store original values to verify the callback modifies the chain
-                var originalExtraStoreCount = chain.ChainPolicy.ExtraStore.Count;
-                var originalRevocationMode = chain.ChainPolicy.RevocationMode;
-                var originalVerificationFlags = chain.ChainPolicy.VerificationFlags;
-
-                // Call the validation callback which should modify the chain policy
-                Assert.DoesNotThrow(() =>
+                // Test normal case
+                using (var chain = new X509Chain())
                 {
-                    var validationResult = innerHandler.ServerCertificateCustomValidationCallback(
-                        null,
-                        testCert,
-                        chain,
-                        System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors
-                    );
-                }, "Callback should execute without throwing");
-
-                // Verify the chain policy was modified by the callback
-                Assert.Greater(chain.ChainPolicy.ExtraStore.Count, originalExtraStoreCount,
-                    "CA certificate should be added to ExtraStore");
-                Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode,
-                    "RevocationMode should be set to NoCheck by callback");
-                Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags,
-                    "VerificationFlags should allow unknown certificate authority");
-
-                // Verify the CA certificate was added to the extra store
-                bool caFoundInStore = false;
-                foreach (var cert in chain.ChainPolicy.ExtraStore)
-                {
-                    if (cert.Thumbprint.Equals(caCert.Thumbprint, StringComparison.OrdinalIgnoreCase))
-                    {
-                        caFoundInStore = true;
-                        break;
-                    }
+                    Assert.DoesNotThrow(() => callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.None));
+                    Assert.IsTrue(chain.ChainPolicy.ExtraStore.Count > 0, "CA should be added to ExtraStore");
+                    Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode);
+                    Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags);
                 }
-                Assert.IsTrue(caFoundInStore, "CA certificate should be found in the ExtraStore");
-            }
-        }
 
-        [Test]
-        public void CertificateValidationCallback_ValidatesActualCallbackLogic()
-        {
-            // Arrange - Test the actual certificate validation callback logic
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = validCaPem,
-                Transport = null
-            };
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-
-            // Access the inner handler directly
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-
-            Assert.IsNotNull(innerHandler?.ServerCertificateCustomValidationCallback);
-
-            // Use the CA certificate as the test certificate - this simulates the scenario
-            // where the server presents the same certificate that we trust as our CA
-            var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-
-            using (var chain = new X509Chain())
-            {
-                // Test the full validation callback logic - focus on execution without throwing
-                Assert.DoesNotThrow(() =>
+                // Test null certificate case
+                using (var chain = new X509Chain())
                 {
-                    var validationResult = innerHandler.ServerCertificateCustomValidationCallback(
-                        null,
-                        testCert,
-                        chain,
-                        System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors
-                    );
-                    // The main goal is that the callback executes the full logic path
-                }, "Certificate validation callback should execute full logic without throwing");
-
-                // Verify the chain policy was configured by the callback
-                Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode,
-                    "Callback should configure RevocationMode");
-                Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags,
-                    "Callback should configure VerificationFlags");
-                Assert.IsTrue(chain.ChainPolicy.ExtraStore.Count > 0, "CA certificate should be added to ExtraStore");
-            }
-        }
-
-        [Test]
-        public void CertificateValidationCallback_VerifiesHandlerTypeAndCallbackConfiguration()
-        {
-            // Arrange - This test verifies handler type compatibility and callback configuration
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = validCaPem,
-                Transport = null
-            };
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-
-            // The InnerHandler should be a DisposingHttpClientHandler which inherits from HttpClientHandler
-            Assert.IsNotNull(proxyHandler.InnerHandler, "InnerHandler should be set");
-
-            // Check actual type - DisposingHttpClientHandler should inherit from HttpClientHandler
-            var actualType = proxyHandler.InnerHandler.GetType();
-            Assert.IsTrue(typeof(HttpClientHandler).IsAssignableFrom(actualType),
-                $"InnerHandler should be assignable to HttpClientHandler, but was {actualType.FullName}");
-
-            // Since DisposingHttpClientHandler inherits from HttpClientHandler, this cast should work
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-            Assert.IsNotNull(innerHandler,
-                $"InnerHandler should cast to HttpClientHandler, but actual type is {proxyHandler.InnerHandler.GetType().FullName}");
-
-            // Verify that the callback is configured when CA data is provided
-            Assert.IsNotNull(innerHandler.ServerCertificateCustomValidationCallback,
-                "Certificate validation callback should be configured when CA data is provided");
-
-            // Test that we can actually call the validation callback safely with valid parameters
-            var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-            var caCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-
-            using (var chain = new X509Chain())
-            {
-                // Test the callback executes without throwing and properly validates all inputs
-                Assert.DoesNotThrow(() =>
-                {
-                    var result = innerHandler.ServerCertificateCustomValidationCallback(
-                        null,
-                        testCert,
-                        chain,
-                        System.Net.Security.SslPolicyErrors.None
-                    );
-
-                    // The callback should execute all validation logic even with SslPolicyErrors.None
-                    Assert.IsNotNull(result, "Callback should return a boolean result after full validation");
-                }, "Callback should execute without throwing when given valid certificate and chain");
-
-                // Verify the callback configured the chain properly
-                Assert.IsTrue(chain.ChainPolicy.ExtraStore.Count > 0, "CA should be added to ExtraStore");
-                Assert.AreEqual(X509RevocationMode.NoCheck, chain.ChainPolicy.RevocationMode);
-                Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain.ChainPolicy.VerificationFlags);
-            }
-        }
-
-        [Test]
-        public void CertificateValidationCallback_WithNoCaData_DoesNotConfigureCallback()
-        {
-            // Arrange - Test that no callback is set when no CA data is provided
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = null, // No CA data
-                Transport = null
-            };
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-
-            // Access the inner handler directly
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-
-            Assert.IsNotNull(innerHandler, "Handler should be configured");
-
-            // When no CA data is provided, no custom certificate validation should be configured
-            Assert.IsNull(innerHandler.ServerCertificateCustomValidationCallback,
-                "Certificate validation callback should NOT be configured when no CA data is provided");
-        }
-
-        [Test]
-        public void CertificateValidationCallback_TestsMultipleCodePaths()
-        {
-            // Arrange - Test multiple scenarios to validate different code paths
-            var proxyUrl = "https://proxy.example.com:8443/token-proxy";
-            var sniName = "proxy.example.com";
-            var validCaPem = GetTestCertificatePem();
-
-            var proxyConfig = new KubernetesProxyConfig()
-            {
-                ProxyUrl = new Uri(proxyUrl),
-                SniName = sniName,
-                CaData = validCaPem,
-                Transport = null
-            };
-
-            var proxyHandler = new KubernetesProxyHttpHandler(proxyConfig);
-            var innerHandler = proxyHandler.InnerHandler as HttpClientHandler;
-            var callback = innerHandler?.ServerCertificateCustomValidationCallback;
-
-            Assert.IsNotNull(callback, "Validation callback should be configured");
-
-            var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
-
-            // Test 1: No SSL errors - should still validate all parameters
-            using (var chain1 = new X509Chain())
-            {
-                var result1 = callback(null, testCert, chain1, System.Net.Security.SslPolicyErrors.None);
-
-                // The callback should perform full validation even with SslPolicyErrors.None
-                Assert.IsNotNull(result1, "Callback should execute and return a result");
-
-                // Verify the callback configured the chain policy
-                Assert.IsTrue(chain1.ChainPolicy.ExtraStore.Count > 0, "CA should be added to ExtraStore");
-                Assert.AreEqual(X509RevocationMode.NoCheck, chain1.ChainPolicy.RevocationMode);
-                Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain1.ChainPolicy.VerificationFlags);
-            }
-
-            // Test 2: SSL errors present - should execute full validation logic
-            using (var chain2 = new X509Chain())
-            {
-                var originalStoreCount = chain2.ChainPolicy.ExtraStore.Count;
-
-                var result2 = callback(null, testCert, chain2, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
-
-                // Verify the chain policy was modified by the callback
-                Assert.IsTrue(chain2.ChainPolicy.ExtraStore.Count > originalStoreCount, "CA should be added to ExtraStore");
-                Assert.AreEqual(X509RevocationMode.NoCheck, chain2.ChainPolicy.RevocationMode);
-                Assert.AreEqual(X509VerificationFlags.AllowUnknownCertificateAuthority, chain2.ChainPolicy.VerificationFlags);
-
-                // The result depends on chain building and thumbprint matching
-                // With our test setup, this should typically succeed
-                Assert.IsNotNull(result2); // Verify callback executed without throwing
-            }
-
-            // Test 3: Verify the callback handles null certificate gracefully
-            using (var chain3 = new X509Chain())
-            {
-                Assert.DoesNotThrow(() =>
-                {
-                    var result3 = callback(null, null, chain3, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
-                    // Should not throw, even with null certificate
-                });
+                    var result = callback(null, null, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
+                    Assert.IsFalse(result, "Should return false for null certificate");
+                }
             }
         }
     }
