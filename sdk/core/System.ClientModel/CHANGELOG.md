@@ -1,14 +1,17 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.8.1 (2025-11-10)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue with JsonPatch.TryGetValue throwing instead of returning false in some cases.
+- Fixed an issue with JsonPatch decoding special characters in json when using GetString.
+
+## 1.8.0 (2025-10-31)
+
+### Features Added
+
+- Added `ClientRequestId` property to `PipelineRequest` which exposes the value that is used in logging and distributed tracing.
 
 ## 1.7.0 (2025-09-22)
 

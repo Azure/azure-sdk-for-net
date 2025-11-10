@@ -55,7 +55,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Create a GeoCatalog. </summary>
+        /// <summary>
+        /// Create a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -97,7 +113,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Create a GeoCatalog. </summary>
+        /// <summary>
+        /// Create a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -139,7 +171,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Get a GeoCatalog. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
@@ -172,7 +220,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Get a GeoCatalog. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
@@ -229,7 +293,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
@@ -270,7 +350,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
@@ -311,7 +407,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
@@ -356,7 +468,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a GeoCatalog
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>

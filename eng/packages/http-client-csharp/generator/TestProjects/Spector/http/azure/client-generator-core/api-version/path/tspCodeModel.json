@@ -154,8 +154,39 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.endpoint"
+        },
+        {
+          "$id": "13",
+          "kind": "method",
+          "name": "version",
+          "serializedName": "version",
+          "type": {
+            "$id": "14",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "15",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2025-01-01"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path",
       "apiVersions": [

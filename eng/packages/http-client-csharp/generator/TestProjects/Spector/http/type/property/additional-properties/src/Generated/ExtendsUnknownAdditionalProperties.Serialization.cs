@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="extendsUnknownAdditionalProperties"> The <see cref="ExtendsUnknownAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ExtendsUnknownAdditionalProperties extendsUnknownAdditionalProperties) => throw null;
 
-        public static explicit operator ExtendsUnknownAdditionalProperties(Response result) => throw null;
+        public static explicit operator ExtendsUnknownAdditionalProperties(Response response) => throw null;
     }
 }

@@ -32,11 +32,11 @@
 
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
-    <PackageReference Update="System.Data.SqlClient" Version="4.3.1" />
+    <PackageReference Update="System.Data.SqlClient" Version="4.9.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Update="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Update="System.Globalization" Version="4.3.0" />
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.7.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
@@ -86,9 +86,9 @@
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
-    <PackageReference Update="System.ClientModel" Version="1.7.0" />
+    <PackageReference Update="System.ClientModel" Version="1.8.0" />
     <PackageReference Update="System.IO.Hashing" Version="8.0.0" />
-    <PackageReference Update="System.Memory" Version="4.5.5" />
+    <PackageReference Update="System.Memory" Version="4.6.3" />
     <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
@@ -98,7 +98,7 @@
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cose" Version="8.0.1" />
     <PackageReference Update="System.Threading.Channels" Version="8.0.0" />
-    <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.6.0" />
     <PackageReference Update="System.Text.Json" Version="8.0.6" />
     <PackageReference Update="System.Text.Encodings.Web" Version="8.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
@@ -122,25 +122,25 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageReference Update="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
-    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
+    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.6.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
-    <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
+    <PackageReference Update="Azure.Monitor.Query.Logs" Version="1.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.16.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.7.0" />
-    <PackageReference Update="Azure.Storage.Common" Version="12.24.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.25.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.23.0" />
-    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.23.0" />
-    <PackageReference Update="Azure.Storage.DataMovement" Version="12.0.0" />
+    <PackageReference Update="Azure.Storage.Common" Version="12.25.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.24.0" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.24.0" />
+    <PackageReference Update="Azure.Storage.DataMovement" Version="12.2.2" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.2" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.AppContainers" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.1" />
-    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.4.1" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.4" />
     <PackageReference Update="Azure.ResourceManager.Batch" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0" />
@@ -148,6 +148,7 @@
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerService" Version="1.2.3" />
     <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.12" />
+    <PackageReference Update="Azure.ResourceManager.Dns" Version="1.2.0-beta.2" />
     <PackageReference Update="Azure.ResourceManager.EventGrid" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.FrontDoor" Version="1.4.1" />
@@ -183,13 +184,13 @@
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.7.0" />
-    <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
+    <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
+    <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
@@ -203,6 +204,14 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
+    <PackageReference Update="Azure.AI.Projects" Version="1.1.0" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
+    <PackageReference Update="ModelContextProtocol" Version="0.4.0-preview.3" />
+    <PackageReference Update="Microsoft.Agents.AI" Version="1.0.0-preview.251104.1" />
+    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0"/>
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
     <PackageReference Update="OpenAI" Version="2.5.0" />
   </ItemGroup>
@@ -214,7 +223,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
-    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.8.0"/>
+    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.10.1"/>
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
@@ -300,7 +309,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250926.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250715.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
@@ -348,8 +357,8 @@
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.24.1" />
-    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.21.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.24.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
     <PackageReference Update="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.4" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
@@ -357,15 +366,18 @@
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
+    <PackageReference Update="Microsoft.Agents.AI.OpenAI" Version="1.0.0-preview.251104.1" />
+    <PackageReference Update="Microsoft.Agents.AI.Workflows" Version="1.0.0-preview.251104.1" />
     <PackageReference Update="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageReference Update="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.*" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
+    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="8.0.21"/>
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
@@ -401,6 +413,7 @@
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
@@ -422,6 +435,7 @@
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Update="NAudio" Version="2.2.1" />
     <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
@@ -436,7 +450,8 @@
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.ClientModel" Version="1.7.0" />
+    <PackageReference Update="System.ClientModel" Version="1.8.0" />
+    <PackageReference Update="System.CommandLine" VersionOverride="2.0.0-beta4.22272.1" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
@@ -450,6 +465,7 @@
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
+    <PackageReference Update="System.Threading.Channels" Version="8.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
@@ -469,7 +485,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251016.1</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20250929.3</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251107.3</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20251022.3</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

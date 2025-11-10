@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> The recommended value. </summary>
+        [WirePath("recommendedValue")]
         public string RecommendedValue { get; }
 
         /// <summary> The reason for the recommendation. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

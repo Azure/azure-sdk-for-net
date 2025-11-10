@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseGet.json
             // this example is just showing the usage of "RedisEnterprise_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisEnterpriseDelete()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseDelete.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseDelete.json
             // this example is just showing the usage of "RedisEnterprise_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisEnterpriseUpdate()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseUpdate.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseUpdate.json
             // this example is just showing the usage of "RedisEnterprise_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 ["tag1"] = "value1"
 },
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled,
             };
             ArmOperation<RedisEnterpriseClusterResource> lro = await redisEnterpriseCluster.UpdateAsync(WaitUntil.Completed, patch);
             RedisEnterpriseClusterResource result = lro.Value;
@@ -117,9 +118,35 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetSkusForScaling_RedisEnterpriseListSkusForScaling()
+        {
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseListSkusForScaling.json
+            // this example is just showing the usage of "RedisEnterprise_ListSkusForScaling" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RedisEnterpriseClusterResource created on azure
+            // for more information of creating RedisEnterpriseClusterResource, please refer to the document of RedisEnterpriseClusterResource
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
+            string resourceGroupName = "rg1";
+            string clusterName = "cache1";
+            ResourceIdentifier redisEnterpriseClusterResourceId = RedisEnterpriseClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
+
+            // invoke the operation
+            RedisEnterpriseSkuDetailsList result = await redisEnterpriseCluster.GetSkusForScalingAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResourcesByCluster_RedisEnterpriseListPrivateLinkResources()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseListPrivateLinkResources.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseListPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

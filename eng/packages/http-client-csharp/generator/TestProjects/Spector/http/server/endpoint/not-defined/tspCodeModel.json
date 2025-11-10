@@ -73,6 +73,7 @@
           "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
       "apiVersions": []

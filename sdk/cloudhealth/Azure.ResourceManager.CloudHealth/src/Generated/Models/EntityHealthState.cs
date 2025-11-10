@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct EntityHealthState : IEquatable<EntityHealthState>
     {
         private readonly string _value;
+        /// <summary> Healthy status. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> Degraded status. </summary>
+        private const string DegradedValue = "Degraded";
+        /// <summary> Error status (Unhealthy). </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Unknown status. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Deleted status. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="EntityHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityHealthState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HealthyValue = "Healthy";
-        private const string DegradedValue = "Degraded";
-        private const string ErrorValue = "Error";
-        private const string UnknownValue = "Unknown";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> Healthy status. </summary>
         public static EntityHealthState Healthy { get; } = new EntityHealthState(HealthyValue);
+
         /// <summary> Degraded status. </summary>
         public static EntityHealthState Degraded { get; } = new EntityHealthState(DegradedValue);
+
         /// <summary> Error status (Unhealthy). </summary>
         public static EntityHealthState Error { get; } = new EntityHealthState(ErrorValue);
+
         /// <summary> Unknown status. </summary>
         public static EntityHealthState Unknown { get; } = new EntityHealthState(UnknownValue);
+
         /// <summary> Deleted status. </summary>
         public static EntityHealthState Deleted { get; } = new EntityHealthState(DeletedValue);
+
         /// <summary> Determines if two <see cref="EntityHealthState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityHealthState left, EntityHealthState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityHealthState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityHealthState left, EntityHealthState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityHealthState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityHealthState(string value) => new EntityHealthState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityHealthState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityHealthState?(string value) => value == null ? null : new EntityHealthState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityHealthState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityHealthState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

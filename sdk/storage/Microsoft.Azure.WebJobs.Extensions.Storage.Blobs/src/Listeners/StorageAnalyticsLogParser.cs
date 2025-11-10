@@ -93,28 +93,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                             break;
                         }
 
-                        Version version = TryParseVersion(line);
-                        if (version == null)
+                        var entry = ParseLine(line, blob.Name, lineNumber.ToString(CultureInfo.CurrentCulture));
+                        if (entry != null)
                         {
-                            string message = String.Format(CultureInfo.CurrentCulture,
-                                "Unable to detect a version of log entry on line {1} of Storage Analytics log file '{0}'.",
-                                blob.Name, lineNumber);
-
-                            _logger.LogWarning(message);
-                        }
-
-                        if (version == supportedVersion)
-                        {
-                            StorageAnalyticsLogEntry entry = TryParseLogEntry(line);
-                            if (entry == null)
-                            {
-                                string message = String.Format(CultureInfo.CurrentCulture,
-                                    "Unable to parse the log entry on line {1} of Storage Analytics log file '{0}'.",
-                                    blob.Name, lineNumber);
-
-                                _logger.LogWarning(message);
-                            }
-
                             entries.Add(entry);
                         }
                     }
@@ -173,6 +154,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             return StorageAnalyticsLogEntry.TryParse(fieldsArray);
+        }
+
+        internal StorageAnalyticsLogEntry ParseLine(string line, string blobName, string lineNumber)
+        {
+            Version version = TryParseVersion(line);
+            if (version == null)
+            {
+                string message = String.Format(CultureInfo.CurrentCulture,
+                    "Unable to detect a version of log entry on line {1} of Storage Analytics log file '{0}'.",
+                    blobName, lineNumber);
+
+                _logger.LogWarning(message);
+            }
+
+            if (version == supportedVersion)
+            {
+                StorageAnalyticsLogEntry entry = TryParseLogEntry(line);
+                if (entry == null)
+                {
+                    string message = String.Format(CultureInfo.CurrentCulture,
+                        "Unable to parse the log entry on line {1} of Storage Analytics log file '{0}'.",
+                        blobName, lineNumber);
+
+                    _logger.LogWarning(message);
+                }
+                return entry;
+            }
+            return null;
         }
     }
 }

@@ -39,9 +39,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> The action to be performed. </summary>
+        [WirePath("action")]
         public string Action { get; set; }
 
         /// <summary> Gets the Result. </summary>
+        [WirePath("result")]
         public string Result { get; }
     }
 }

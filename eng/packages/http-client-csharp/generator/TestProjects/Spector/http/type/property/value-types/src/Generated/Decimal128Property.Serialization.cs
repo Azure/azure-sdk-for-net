@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="decimal128Property"> The <see cref="Decimal128Property"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Decimal128Property decimal128Property) => throw null;
 
-        public static explicit operator Decimal128Property(Response result) => throw null;
+        public static explicit operator Decimal128Property(Response response) => throw null;
     }
 }

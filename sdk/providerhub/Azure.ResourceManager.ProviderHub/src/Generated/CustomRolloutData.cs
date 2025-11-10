@@ -13,10 +13,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary>
-    /// A class representing the CustomRollout data model.
-    /// Rollout details.
-    /// </summary>
+    /// <summary> A class representing the CustomRollout data model. </summary>
     public partial class CustomRolloutData : ResourceData
     {
         /// <summary>
