@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.ObjectModel;
 using Azure.AI.AgentServer.Contracts.Generated.Agents;
 using Azure.AI.AgentServer.Contracts.Generated.Conversations;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
@@ -56,7 +57,7 @@ public static class ResponsesExtensions
             createdAt: createdAt ?? DateTimeOffset.UtcNow,
             error: null,
             incompleteDetails: null,
-            output: output?.ToList(),
+            output: output?.ToList() ?? ReadOnlyCollection<ItemResource>.Empty.ToList(),
             instructions: string.IsNullOrEmpty(request.Instructions) ? null : new BinaryData(request.Instructions),
             outputText: null,
             usage: usage,
@@ -64,8 +65,7 @@ public static class ResponsesExtensions
             conversation: context == null ? null : new ResponseConversation1(context.ConversationId),
             agent: request.Agent.ToAgentId(),
             structuredInputs: request.StructuredInputs,
-            serializedAdditionalRawData: null
-        );
+            serializedAdditionalRawData: null);
     }
 
     /// <summary>
@@ -77,7 +77,8 @@ public static class ResponsesExtensions
     {
         return agent == null
             ? null
-            : new AgentId(type: new AgentIdType(agent.Type.ToString()),
+            : new AgentId(
+                type: new AgentIdType(agent.Type.ToString()),
                 name: agent.Name,
                 version: agent.Version,
                 serializedAdditionalRawData: null);
