@@ -14,35 +14,24 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal partial class GroupQuotasEntitiesGetAllCollectionResultOfT : Pageable<GroupQuotaResourceUsages>
+    internal partial class GroupQuotasEntitiesGetAllCollectionResultOfT : Pageable<GroupQuotaEntityData>
     {
         private readonly GroupQuotasEntities _client;
         private readonly string _managementGroupId;
-        private readonly string _groupQuotaName;
-        private readonly string _resourceProviderName;
-        private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of GroupQuotasEntitiesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GroupQuotasEntities client used to send requests. </param>
         /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public GroupQuotasEntitiesGetAllCollectionResultOfT(GroupQuotasEntities client, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public GroupQuotasEntitiesGetAllCollectionResultOfT(GroupQuotasEntities client, string managementGroupId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
             _client = client;
             _managementGroupId = managementGroupId;
-            _groupQuotaName = groupQuotaName;
-            _resourceProviderName = resourceProviderName;
-            _location = location;
             _context = context;
         }
 
@@ -50,18 +39,18 @@ namespace Azure.ResourceManager.Quota
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GroupQuotasEntitiesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GroupQuotaResourceUsages>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<GroupQuotaEntityData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ResourceUsageList result = ResourceUsageList.FromResponse(response);
-                yield return Page<GroupQuotaResourceUsages>.FromValues((IReadOnlyList<GroupQuotaResourceUsages>)result.Value, nextPage?.AbsoluteUri, response);
+                GroupQuotaList result = GroupQuotaList.FromResponse(response);
+                yield return Page<GroupQuotaEntityData>.FromValues((IReadOnlyList<GroupQuotaEntityData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -75,8 +64,8 @@ namespace Azure.ResourceManager.Quota
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _groupQuotaName, _resourceProviderName, _location, _context) : _client.CreateGetAllRequest(_managementGroupId, _groupQuotaName, _resourceProviderName, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaEntityResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _context) : _client.CreateGetAllRequest(_managementGroupId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaEntityCollection.GetAll");
             scope.Start();
             try
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The subscription Id. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("requestSubmitTime")]
         public DateTimeOffset? RequestSubmitOn { get; set; }
 
         /// <summary> Status of this subscriptionId being associated with the GroupQuotasEntity. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
     }
 }

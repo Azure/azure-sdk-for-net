@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Quota properties for the specified resource, based on the API called, Quotas or Usages. </summary>
+        [WirePath("properties")]
         public QuotaProperties Properties { get; set; }
     }
 }

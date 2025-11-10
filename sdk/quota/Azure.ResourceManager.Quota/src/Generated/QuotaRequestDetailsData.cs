@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Quota request details. </summary>
+        [WirePath("properties")]
         internal QuotaRequestProperties Properties { get; }
 
         /// <summary> The quota request status. </summary>
+        [WirePath("properties.provisioningState")]
         public QuotaRequestState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> User-friendly status message. </summary>
+        [WirePath("properties.message")]
         public string Message
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Error details of the quota request. </summary>
+        [WirePath("properties.error")]
         public ServiceErrorDetail Error
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("properties.requestSubmitTime")]
         public DateTimeOffset? RequestSubmitOn
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Quota request details. </summary>
+        [WirePath("properties.value")]
         public IList<QuotaSubRequestDetail> Value
         {
             get

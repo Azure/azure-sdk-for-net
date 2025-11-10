@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> Resource display name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

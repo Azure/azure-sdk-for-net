@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Requested Resource. </summary>
+        [WirePath("requestedResource")]
         public GroupQuotaRequestBase RequestedResource { get; set; }
 
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("requestSubmitTime")]
         public DateTimeOffset? RequestSubmittedOn { get; }
 
         /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
 
         /// <summary> Details of the failure. </summary>
+        [WirePath("faultCode")]
         public string FaultCode { get; }
     }
 }

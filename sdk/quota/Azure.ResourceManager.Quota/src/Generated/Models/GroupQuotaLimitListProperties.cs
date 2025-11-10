@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
 
         /// <summary> List of Group Quota Limit details. </summary>
+        [WirePath("value")]
         public IList<GroupQuotaLimit> Value { get; }
 
         /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The resource name, such as SKU name. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; set; }
 
         /// <summary> The current Group Quota Limit at the parentId level. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
 
         /// <summary> Any comment related to quota request. </summary>
+        [WirePath("comment")]
         public string Comment { get; set; }
 
         /// <summary> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </summary>
+        [WirePath("name")]
         internal GroupQuotaDetailsName Name { get; }
 
         /// <summary> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </summary>
+        [WirePath("availableLimit")]
         public long? AvailableLimit { get; }
 
         /// <summary> Quota allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions")]
         internal AllocatedQuotaToSubscriptionList AllocatedToSubscriptions { get; }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name.value")]
         public string Value
         {
             get
@@ -73,6 +82,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource display name. </summary>
+        [WirePath("name.localizedValue")]
         public string LocalizedValue
         {
             get
@@ -82,6 +92,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions.value")]
         public IList<SubscriptionAllocatedQuota> AllocatedToSubscriptionsValue
         {
             get

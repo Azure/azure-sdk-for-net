@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal QuotaAllocationRequestBaseProperties Properties { get; set; }
 
         /// <summary> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </summary>
+        [WirePath("properties.limit")]
         public long? Limit
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The location for which the subscription is allocated. </summary>
+        [WirePath("properties.region")]
         public string Region
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("properties.name.value")]
         public string Value
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource display name. </summary>
+        [WirePath("properties.name.localizedValue")]
         public string LocalizedValue
         {
             get

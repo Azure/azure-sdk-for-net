@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.GroupQuotaUsagesBase"/> instance for mocking. </returns>
         public static GroupQuotaUsagesBase GroupQuotaUsagesBase(string value = default, string localizedValue = default, long? limit = default, long? usages = default, string unit = default)
         {
-            return new GroupQuotaUsagesBase(value is null || localizedValue is null ? default : new GroupQuotaUsagesBaseName(value, localizedValue, new Dictionary<string, BinaryData>()), limit, usages, unit, additionalBinaryDataProperties: null);
+            return new GroupQuotaUsagesBase(value is null && localizedValue is null ? default : new GroupQuotaUsagesBaseName(value, localizedValue, null), limit, usages, unit, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This represents a Azure subscriptionId that is associated with a GroupQuotasEntity. </summary>
@@ -275,16 +275,16 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IList<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
+        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaLimitProperties(
                 resourceName,
                 limit,
                 comment,
                 unit,
-                value is null || localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, new Dictionary<string, BinaryData>()),
+                value is null && localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, null),
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<SubscriptionAllocatedQuota>()).ToList(), null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -297,16 +297,16 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IList<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
+        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaDetails(
                 resourceName,
                 limit,
                 comment,
                 unit,
-                value is null || localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, new Dictionary<string, BinaryData>()),
+                value is null && localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, null),
                 availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<SubscriptionAllocatedQuota>()).ToList(), null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsProperties"/> instance for mocking. </returns>
         public static SubscriptionQuotaAllocationsProperties SubscriptionQuotaAllocationsProperties(string resourceName = default, long? limit = default, long? shareableQuota = default, string value = default, string localizedValue = default)
         {
-            return new SubscriptionQuotaAllocationsProperties(resourceName, limit, shareableQuota, value is null || localizedValue is null ? default : new SubscriptionQuotaDetailsName(value, localizedValue, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new SubscriptionQuotaAllocationsProperties(resourceName, limit, shareableQuota, value is null && localizedValue is null ? default : new SubscriptionQuotaDetailsName(value, localizedValue, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.SubscriptionQuotaDetails"/> instance for mocking. </returns>
         public static SubscriptionQuotaDetails SubscriptionQuotaDetails(string resourceName = default, long? limit = default, long? shareableQuota = default, string value = default, string localizedValue = default)
         {
-            return new SubscriptionQuotaDetails(resourceName, limit, shareableQuota, value is null || localizedValue is null ? default : new SubscriptionQuotaDetailsName(value, localizedValue, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new SubscriptionQuotaDetails(resourceName, limit, shareableQuota, value is null && localizedValue is null ? default : new SubscriptionQuotaDetailsName(value, localizedValue, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Quota.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                requestedResource is null || requestSubmittedOn is null || provisioningState is null || faultCode is null ? default : new QuotaAllocationRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, new Dictionary<string, BinaryData>()));
+                requestedResource is null && requestSubmittedOn is null && provisioningState is null && faultCode is null ? default : new QuotaAllocationRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, null));
         }
 
         /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
         /// <returns> A new <see cref="Quota.QuotaRequestDetailsData"/> instance for mocking. </returns>
-        public static QuotaRequestDetailsData QuotaRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IList<QuotaSubRequestDetail> value = default)
+        public static QuotaRequestDetailsData QuotaRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<QuotaSubRequestDetail> value = default)
         {
             return new QuotaRequestDetailsData(
                 id,
@@ -548,13 +548,13 @@ namespace Azure.ResourceManager.Quota.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null || message is null || error is null || requestSubmitOn is null || value is null ? default : new QuotaRequestProperties(
+                provisioningState is null && message is null && error is null && requestSubmitOn is null && value is null ? default : new QuotaRequestProperties(
                     provisioningState,
                     message,
                     error,
                     requestSubmitOn,
-                    value,
-                    new Dictionary<string, BinaryData>()));
+                    (value ?? new ChangeTrackingList<QuotaSubRequestDetail>()).ToList(),
+                    null));
         }
 
         /// <summary> Request property. </summary>

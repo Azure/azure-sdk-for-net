@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The resource name, such as SKU name. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; set; }
 
         /// <summary> The total quota limit for the subscription. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
 
         /// <summary> The shareable quota for the subscription. </summary>
+        [WirePath("shareableQuota")]
         public long? ShareableQuota { get; }
 
         /// <summary> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </summary>
+        [WirePath("name")]
         internal SubscriptionQuotaDetailsName Name { get; }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name.value")]
         public string Value
         {
             get
@@ -58,6 +64,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource display name. </summary>
+        [WirePath("name.localizedValue")]
         public string LocalizedValue
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Gets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the Display. </summary>
+        [WirePath("display")]
         public QuotaOperationDisplay Display { get; }
 
         /// <summary> Gets the Origin. </summary>
+        [WirePath("origin")]
         public string Origin { get; }
     }
 }

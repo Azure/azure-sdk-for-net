@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupQuotaResourceUsages> GetAllAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GroupQuotaResourceUsages> GetGroupQuotaUsagesAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(
+            return new GroupQuotasEntitiesGetGroupQuotaUsagesAsyncCollectionResultOfT(
                 _groupQuotasEntitiesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupQuotaResourceUsages> GetAll(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<GroupQuotaResourceUsages> GetGroupQuotaUsages(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new GroupQuotasEntitiesGetAllCollectionResultOfT(
+            return new GroupQuotasEntitiesGetGroupQuotaUsagesCollectionResultOfT(
                 _groupQuotasEntitiesRestClient,
                 Id.Parent.Name,
                 Id.Name,

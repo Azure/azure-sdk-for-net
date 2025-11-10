@@ -311,66 +311,6 @@ namespace Azure.ResourceManager.Quota
             return await GetMockableQuotaArmClient(client).GetQuotaRequestDetailsAsync(scope, id, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="TenantResource"/>. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionQuotaAllocationsLists and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
-        public static SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(this TenantResource tenantResource)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableQuotaTenantResource(tenantResource).GetSubscriptionQuotaAllocationsLists();
-        }
-
-        /// <summary> Gets a collection of QuotaAllocationRequestStatuses in the <see cref="TenantResource"/>. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of QuotaAllocationRequestStatuses and their operations over a QuotaAllocationRequestStatusResource. </returns>
-        public static QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this TenantResource tenantResource, string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableQuotaTenantResource(tenantResource).GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName);
-        }
-
-        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
-        /// <param name="allocationId"> Request Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this TenantResource tenantResource, string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableQuotaTenantResource(tenantResource).GetQuotaAllocationRequestStatusAsync(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName, allocationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
-        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
-        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
-        /// <param name="allocationId"> Request Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this TenantResource tenantResource, string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableQuotaTenantResource(tenantResource).GetQuotaAllocationRequestStatus(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName, allocationId, cancellationToken);
-        }
-
         /// <summary> Get a list of current usage for all resources for the scope specified. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
@@ -528,6 +468,63 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntity(groupQuotaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of SubscriptionQuotaAllocationsLists and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
+        public static SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(this ManagementGroupResource managementGroupResource)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsLists();
+        }
+
+        /// <summary> Gets a collection of QuotaAllocationRequestStatuses in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of QuotaAllocationRequestStatuses and their operations over a QuotaAllocationRequestStatusResource. </returns>
+        public static QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatuses(subscriptionId, groupQuotaName, resourceProviderName);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatusAsync(subscriptionId, groupQuotaName, resourceProviderName, allocationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetQuotaAllocationRequestStatus(subscriptionId, groupQuotaName, resourceProviderName, allocationId, cancellationToken);
         }
     }
 }

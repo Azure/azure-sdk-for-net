@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         public GroupQuotaRequestStatusProperties Properties { get; set; }
     }
 }

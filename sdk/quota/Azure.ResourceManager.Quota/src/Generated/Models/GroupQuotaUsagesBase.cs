@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </summary>
+        [WirePath("name")]
         internal GroupQuotaUsagesBaseName Name { get; }
 
         /// <summary> Quota/limits for the resource. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
 
         /// <summary> Usages for the resource. </summary>
+        [WirePath("usages")]
         public long? Usages { get; }
 
         /// <summary> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. Based on - https://armwiki.azurewebsites.net/api_contracts/UsagesAPIContract.html?q=usages . Different RPs may have different units, Count, type as int64 should work for most of the integer values. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name.value")]
         public string Value
         {
             get
@@ -58,6 +64,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource display name. </summary>
+        [WirePath("name.localizedValue")]
         public string LocalizedValue
         {
             get

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -50,15 +51,19 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource quota limit properties. </summary>
+        [WirePath("limit")]
         public QuotaLimitJsonObject Limit { get; set; }
 
         /// <summary> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>
+        [WirePath("name")]
         public QuotaRequestResourceName Name { get; set; }
 
         /// <summary> The name of the resource type. Optional field. </summary>
+        [WirePath("resourceType")]
         public string ResourceTypeName { get; set; }
 
         /// <summary>
@@ -68,9 +73,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// *PT1S (per one second).
         /// This parameter is optional because, for some resources like compute, the period is irrelevant.
         /// </summary>
+        [WirePath("quotaPeriod")]
         public TimeSpan? QuotaPeriod { get; }
 
         /// <summary> States if quota can be requested for this resource. </summary>
+        [WirePath("isQuotaApplicable")]
         public bool? IsQuotaApplicable { get; }
 
         /// <summary>
@@ -99,6 +106,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Properties. </summary>
+        [WirePath("properties")]
         public GroupQuotasEntityPatchProperties Properties { get; set; }
     }
 }

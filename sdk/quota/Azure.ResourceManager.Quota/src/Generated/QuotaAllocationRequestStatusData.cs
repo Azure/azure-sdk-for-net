@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal QuotaAllocationRequestStatusProperties Properties { get; set; }
 
         /// <summary> The new quota request allocated to subscription. </summary>
+        [WirePath("properties.requestedResource")]
         public QuotaAllocationRequestBase RequestedResource
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("properties.requestSubmitTime")]
         public DateTimeOffset? RequestSubmittedOn
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Request status. </summary>
+        [WirePath("properties.provisioningState")]
         public Models.QuotaRequestStatus? ProvisioningState
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Details of the failure. </summary>
+        [WirePath("properties.faultCode")]
         public string FaultCode
         {
             get

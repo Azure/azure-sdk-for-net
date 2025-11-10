@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Is the GroupQuota Enforcement enabled for the Azure region. </summary>
+        [WirePath("enforcementEnabled")]
         public EnforcementState? EnforcementEnabled { get; set; }
 
         /// <summary> The name of the group that is enforced. </summary>
+        [WirePath("enforcedGroupName")]
         public string EnforcedGroupName { get; }
 
         /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
 
         /// <summary> Details of the failure. </summary>
+        [WirePath("faultCode")]
         public string FaultCode { get; }
     }
 }

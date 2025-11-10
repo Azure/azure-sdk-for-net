@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> An Azure subscriptionId. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
 
         /// <summary> The amount of quota allocated to this subscriptionId from the GroupQuotasEntity. </summary>
+        [WirePath("quotaAllocated")]
         public long? QuotaAllocated { get; }
     }
 }

@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
 
         /// <summary> Subscription quota list. </summary>
+        [WirePath("value")]
         public IList<SubscriptionQuotaAllocations> Value { get; }
 
         /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

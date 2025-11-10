@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The limit object type. </summary>
+        [WirePath("limitObjectType")]
         internal LimitType LimitObjectType { get; set; }
     }
 }

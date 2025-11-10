@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Quota
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetGroupQuotaUsagesRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Quota
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateNextGetGroupQuotaUsagesRequest(Uri nextPage, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

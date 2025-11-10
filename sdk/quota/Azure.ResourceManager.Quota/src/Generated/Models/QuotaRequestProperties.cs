@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The quota request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestState? ProvisioningState { get; }
 
         /// <summary> User-friendly status message. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Error details of the quota request. </summary>
+        [WirePath("error")]
         public ServiceErrorDetail Error { get; }
 
         /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("requestSubmitTime")]
         public DateTimeOffset? RequestSubmitOn { get; }
 
         /// <summary> Quota request details. </summary>
+        [WirePath("value")]
         public IList<QuotaSubRequestDetail> Value { get; } = new ChangeTrackingList<QuotaSubRequestDetail>();
     }
 }

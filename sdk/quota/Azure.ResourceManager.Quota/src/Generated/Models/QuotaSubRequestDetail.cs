@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public QuotaRequestResourceName Name { get; }
 
         /// <summary> Resource type for which the quota properties were requested. </summary>
+        [WirePath("resourceType")]
         public string ResourceTypeName { get; }
 
         /// <summary> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> The quota request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestState? ProvisioningState { get; }
 
         /// <summary> User-friendly status message. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Quota request ID. </summary>
+        [WirePath("subRequestId")]
         public Guid? SubRequestId { get; }
 
         /// <summary> Resource quota limit properties. </summary>
+        [WirePath("limit")]
         public QuotaLimitJsonObject Limit { get; }
     }
 }

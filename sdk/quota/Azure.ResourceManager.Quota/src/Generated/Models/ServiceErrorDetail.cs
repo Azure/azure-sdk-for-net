@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

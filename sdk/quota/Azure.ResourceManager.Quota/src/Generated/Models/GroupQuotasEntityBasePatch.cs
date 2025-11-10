@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Display name of the GroupQuota entity. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Provisioning state of the operation. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
     }
 }
