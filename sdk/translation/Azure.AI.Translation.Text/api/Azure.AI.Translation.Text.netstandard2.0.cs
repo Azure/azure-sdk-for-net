@@ -489,6 +489,7 @@ namespace Azure.AI.Translation.Text
     }
     public partial class TranslateInputItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateInputItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateInputItem>
     {
+        public TranslateInputItem(string text, Azure.AI.Translation.Text.TranslationTarget target, string language = null, string script = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?)) { }
         public TranslateInputItem(string text, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationTarget> translationTargets) { }
         public TranslateInputItem(string text, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationTarget> targets, string language = null, string script = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?)) { }
         public string Language { get { throw null; } set { } }
