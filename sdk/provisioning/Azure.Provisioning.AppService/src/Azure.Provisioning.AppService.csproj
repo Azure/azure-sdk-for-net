@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.AppService simplifies declarative resource provisioning in .NET.</Description>
-    <Version>1.3.0-beta.1</Version>
+    <Version>1.3.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Provisioning" />
+    <PackageReference Include="Azure.Provisioning" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
 </Project>

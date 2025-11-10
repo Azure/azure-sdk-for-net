@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 authentication,
                 additionalConfiguration,
                 discoveredAssetEndpointProfileRef,
-                statusErrors is null ? default : new AssetEndpointProfileStatus(statusErrors.ToList(), new Dictionary<string, BinaryData>()),
+                statusErrors is null ? default : new AssetEndpointProfileStatus((statusErrors ?? new ChangeTrackingList<AssetEndpointProfileStatusError>()).ToList(), null),
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, new Dictionary<string, BinaryData>()),
+                billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, null),
                 etag);
         }
 
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
         public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
-            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), provisioningState, additionalBinaryDataProperties: null);
+            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints, null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Managed service identity (either system assigned, or none). </summary>
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DeviceStatus"/> instance for mocking. </returns>
         public static DeviceStatus DeviceStatus(DeviceRegistryStatusConfig config = default, IReadOnlyDictionary<string, DeviceStatusEndpoint> endpointsInbound = default)
         {
-            return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the device status properties. </summary>
@@ -1290,7 +1290,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             inbound ??= new ChangeTrackingDictionary<string, DiscoveredInboundEndpoints>();
 
-            return new DiscoveredMessagingEndpoints(inbound, outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DiscoveredMessagingEndpoints(inbound, outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> An endpoint to connect to the device. </summary>

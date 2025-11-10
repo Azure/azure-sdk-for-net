@@ -30,6 +30,7 @@
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
     <PackageReference Include="Azure.ResourceManager.ContainerService" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
+    <PackageReference Include="Azure.ResourceManager.Dns" />
     <PackageReference Include="Azure.ResourceManager.EventGrid" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
 		<PackageReference Include="Azure.ResourceManager.FrontDoor" />

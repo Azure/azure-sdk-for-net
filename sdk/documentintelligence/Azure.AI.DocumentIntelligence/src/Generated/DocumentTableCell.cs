@@ -14,49 +14,16 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing the location and content of a table cell. </summary>
     public partial class DocumentTableCell
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentTableCell(int rowIndex, int columnIndex, string content, IEnumerable<DocumentSpan> spans)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(spans, nameof(spans));
-
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
             Content = content;
@@ -75,8 +42,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             RowIndex = rowIndex;
@@ -87,30 +54,33 @@ namespace Azure.AI.DocumentIntelligence
             BoundingRegions = boundingRegions;
             Spans = spans;
             Elements = elements;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/> for deserialization. </summary>
-        internal DocumentTableCell()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Table cell kind. </summary>
         public DocumentTableCellKind? Kind { get; }
+
         /// <summary> Row index of the cell. </summary>
         public int RowIndex { get; }
+
         /// <summary> Column index of the cell. </summary>
         public int ColumnIndex { get; }
+
         /// <summary> Number of rows spanned by this cell. </summary>
         public int? RowSpan { get; }
+
         /// <summary> Number of columns spanned by this cell. </summary>
         public int? ColumnSpan { get; }
+
         /// <summary> Concatenated content of the table cell in reading order. </summary>
         public string Content { get; }
+
         /// <summary> Bounding regions covering the table cell. </summary>
         public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+
         /// <summary> Location of the table cell in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
+
         /// <summary> Child elements of the table cell. </summary>
         public IReadOnlyList<string> Elements { get; }
     }
