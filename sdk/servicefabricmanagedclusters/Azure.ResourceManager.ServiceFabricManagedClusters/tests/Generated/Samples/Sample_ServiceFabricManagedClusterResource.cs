@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACluster()
         {
-            // Generated from example definition: 2025-06-01-preview/ManagedClusterGetOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ManagedClusterGetOperation_example.json
             // this example is just showing the usage of "ManagedCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACluster()
         {
-            // Generated from example definition: 2025-06-01-preview/ManagedClusterDeleteOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ManagedClusterDeleteOperation_example.json
             // this example is just showing the usage of "ManagedCluster_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAManagedCluster()
         {
-            // Generated from example definition: 2025-06-01-preview/ManagedClusterPatchOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ManagedClusterPatchOperation_example.json
             // this example is just showing the usage of "ManagedCluster_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 ["a"] = "b"
 },
             };
-            ServiceFabricManagedClusterResource result = await serviceFabricManagedCluster.UpdateAsync(patch);
+            ArmOperation<ServiceFabricManagedClusterResource> lro = await serviceFabricManagedCluster.UpdateAsync(WaitUntil.Completed, patch);
+            ServiceFabricManagedClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFaultSimulation_GetManagedClusterFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/ManagedClusterGetFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/ManagedClusterGetFaultSimulation_example.json
             // this example is just showing the usage of "ManagedClusters_GetFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFaultSimulation_ListManagedClusterFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/ManagedClusterListFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/ManagedClusterListFaultSimulation_example.json
             // this example is just showing the usage of "ManagedClusters_ListFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartFaultSimulation_StartManagedClusterFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/ManagedClusterStartFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/ManagedClusterStartFaultSimulation_example.json
             // this example is just showing the usage of "ManagedClusters_StartFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StopFaultSimulation_StopManagedClusterFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/ManagedClusterStopFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/ManagedClusterStopFaultSimulation_example.json
             // this example is just showing the usage of "ManagedClusters_StopFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedAzResiliencyStatus_AzResiliencyStatusOfBaseResources()
         {
-            // Generated from example definition: 2025-06-01-preview/managedAzResiliencyStatusGet_example.json
+            // Generated from example definition: 2025-10-01-preview/managedAzResiliencyStatusGet_example.json
             // this example is just showing the usage of "ManagedAzResiliencyStatus_GetManagedAzResiliencyStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PostManagedApplyMaintenanceWindow_ApplyMaintenanceWindowStatus()
         {
-            // Generated from example definition: 2025-06-01-preview/ManagedApplyMaintenanceWindowPost_example.json
+            // Generated from example definition: 2025-10-01-preview/ManagedApplyMaintenanceWindowPost_example.json
             // this example is just showing the usage of "ManagedApplyMaintenanceWindow_Post" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedMaintenanceWindowStatu_GetMaintenanceWindowStatus()
         {
-            // Generated from example definition: 2025-06-01-preview/ManagedMaintenanceWindowStatusGet_example.json
+            // Generated from example definition: 2025-10-01-preview/ManagedMaintenanceWindowStatusGet_example.json
             // this example is just showing the usage of "ManagedMaintenanceWindowStatus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

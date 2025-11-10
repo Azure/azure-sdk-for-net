@@ -17,11 +17,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdditionalNetworkInterfaceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ApplicationFetchHealthContent))]
     [ModelReaderWriterBuildable(typeof(ApplicationHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationResourceList))]
     [ModelReaderWriterBuildable(typeof(ApplicationTypeResourceList))]
     [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionResourceList))]
     [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionsCleanupPolicy))]
+    [ModelReaderWriterBuildable(typeof(ApplicationUpdateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationUserAssignedIdentityInfo))]
     [ModelReaderWriterBuildable(typeof(AveragePartitionLoadScalingTrigger))]
@@ -79,6 +81,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(PartitionInstanceCountScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(ResourceAzStatus))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RestartDeployedCodePackageContent))]
+    [ModelReaderWriterBuildable(typeof(RestartReplicaContent))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradeMonitoringPolicy))]
     [ModelReaderWriterBuildable(typeof(RuntimeApplicationHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(RuntimeResumeApplicationUpgradeContent))]

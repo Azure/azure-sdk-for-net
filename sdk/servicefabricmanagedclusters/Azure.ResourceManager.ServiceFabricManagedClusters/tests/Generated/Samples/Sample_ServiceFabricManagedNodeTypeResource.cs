@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetANodeType()
         {
-            // Generated from example definition: 2025-06-01-preview/NodeTypeGetOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteANodeType()
         {
-            // Generated from example definition: 2025-06-01-preview/NodeTypeDeleteOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/NodeTypeDeleteOperation_example.json
             // this example is just showing the usage of "NodeType_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchANodeTypeWhileAutoScaling()
         {
-            // Generated from example definition: 2025-06-01-preview/NodeTypePatchOperationAutoScale_example.json
+            // Generated from example definition: 2025-10-01-preview/NodeTypePatchOperationAutoScale_example.json
             // this example is just showing the usage of "NodeType_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchANodeType()
         {
-            // Generated from example definition: 2025-06-01-preview/NodeTypePatchOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/NodeTypePatchOperation_example.json
             // this example is just showing the usage of "NodeType_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_DeallocateNodes()
         {
-            // Generated from example definition: 2025-06-01-preview/DeallocateNodes_example.json
+            // Generated from example definition: 2025-10-01-preview/DeallocateNodes_example.json
             // this example is just showing the usage of "NodeTypes_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteNode_DeleteNodes()
         {
-            // Generated from example definition: 2025-06-01-preview/DeleteNodes_example.json
+            // Generated from example definition: 2025-10-01-preview/DeleteNodes_example.json
             // this example is just showing the usage of "NodeTypes_DeleteNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_RedeployAllNodesByUpgradeDomain()
         {
-            // Generated from example definition: 2025-06-01-preview/RedeployNodes_UD_example.json
+            // Generated from example definition: 2025-10-01-preview/RedeployNodes_UD_example.json
             // this example is just showing the usage of "NodeTypes_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Redeploy_RedeployNodes()
         {
-            // Generated from example definition: 2025-06-01-preview/RedeployNodes_example.json
+            // Generated from example definition: 2025-10-01-preview/RedeployNodes_example.json
             // this example is just showing the usage of "NodeTypes_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageAllNodesByUpgradeDomain()
         {
-            // Generated from example definition: 2025-06-01-preview/ReimageNodes_UD_example.json
+            // Generated from example definition: 2025-10-01-preview/ReimageNodes_UD_example.json
             // this example is just showing the usage of "NodeTypes_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageNodes()
         {
-            // Generated from example definition: 2025-06-01-preview/ReimageNodes_example.json
+            // Generated from example definition: 2025-10-01-preview/ReimageNodes_example.json
             // this example is just showing the usage of "NodeTypes_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartNodes()
         {
-            // Generated from example definition: 2025-06-01-preview/RestartNodes_example.json
+            // Generated from example definition: 2025-10-01-preview/RestartNodes_example.json
             // this example is just showing the usage of "NodeTypes_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartNodes()
         {
-            // Generated from example definition: 2025-06-01-preview/StartNodes_example.json
+            // Generated from example definition: 2025-10-01-preview/StartNodes_example.json
             // this example is just showing the usage of "NodeTypes_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartFaultSimulation_StartNodeTypeFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/NodeTypeStartFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/NodeTypeStartFaultSimulation_example.json
             // this example is just showing the usage of "NodeTypes_StartFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StopFaultSimulation_StopNodeTypeFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/NodeTypeStopFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/NodeTypeStopFaultSimulation_example.json
             // this example is just showing the usage of "NodeTypes_StopFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFaultSimulation_GetNodeTypeFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/NodeTypeGetFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/NodeTypeGetFaultSimulation_example.json
             // this example is just showing the usage of "NodeTypes_GetFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFaultSimulation_ListNodeTypeFaultSimulation()
         {
-            // Generated from example definition: 2025-06-01-preview/faultSimulation/NodeTypeListFaultSimulation_example.json
+            // Generated from example definition: 2025-10-01-preview/faultSimulation/NodeTypeListFaultSimulation_example.json
             // this example is just showing the usage of "NodeTypes_ListFaultSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSkus_ListANodeTypeSKUs()
         {
-            // Generated from example definition: 2025-06-01-preview/NodeTypeSkusListOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/NodeTypeSkusListOperation_example.json
             // this example is just showing the usage of "NodeTypeSkus_GetAvailableSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

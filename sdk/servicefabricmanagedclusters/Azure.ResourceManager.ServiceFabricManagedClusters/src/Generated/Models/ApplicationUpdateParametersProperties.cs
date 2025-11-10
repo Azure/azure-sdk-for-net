@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Application update request. </summary>
-    public partial class ServiceFabricManagedApplicationPatch
+    /// <summary> Properties for application update request. </summary>
+    internal partial class ApplicationUpdateParametersProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +45,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationPatch"/>. </summary>
-        public ServiceFabricManagedApplicationPatch()
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpdateParametersProperties"/>. </summary>
+        public ApplicationUpdateParametersProperties()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationPatch"/>. </summary>
-        /// <param name="tags"> Application update parameters. </param>
-        /// <param name="properties"> Application update parameters properties. </param>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpdateParametersProperties"/>. </summary>
+        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedApplicationPatch(IDictionary<string, string> tags, ApplicationUpdateParametersProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationUpdateParametersProperties(IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            Parameters = parameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Application update parameters. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Application update parameters properties. </summary>
-        internal ApplicationUpdateParametersProperties Properties { get; set; }
         /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
-        public IDictionary<string, string> ApplicationUpdateParameters
-        {
-            get
-            {
-                if (Properties is null)
-                    Properties = new ApplicationUpdateParametersProperties();
-                return Properties.Parameters;
-            }
-        }
+        public IDictionary<string, string> Parameters { get; }
     }
 }
