@@ -7,7 +7,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
-    <NoWarn>$(NoWarn);AZC0034;AZC0012</NoWarn>
+    <AssemblyName>Azure.AI.Language.QuestionAnswering.Inference</AssemblyName>
+    <PackageId>Azure.AI.Language.QuestionAnswering.Inference</PackageId>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -18,9 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.AI.Language.QuestionAnswering.Inference\src\Azure.AI.Language.QuestionAnswering.Inference.csproj" />
   </ItemGroup>
 
 </Project>
