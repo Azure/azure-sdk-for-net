@@ -48,6 +48,9 @@ namespace Azure.AI.Projects
 
             options ??= new AIProjectClientOptions();
 
+            _apiVersion = options.Version;
+            _endpoint = endpoint;
+            _tokenProvider = tokenProvider;
             _telemetryDetails = new(typeof(AIProjectAgentsOperations).Assembly, options?.UserAgentApplicationId);
 
             PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", _apiVersion);
@@ -57,10 +60,7 @@ namespace Azure.AI.Projects
             PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
             PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
-            _endpoint = endpoint;
-            _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
-            _apiVersion = options.Version;
 
             _cacheManager = new ClientConnectionCacheManager(_endpoint, Pipeline, tokenProvider);
         }

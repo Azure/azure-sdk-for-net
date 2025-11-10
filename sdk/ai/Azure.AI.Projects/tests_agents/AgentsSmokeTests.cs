@@ -30,7 +30,7 @@ public class AgentsSmokeTests : AgentsTestBase
         ProjectOpenAIClient openAIClient = projectClient.OpenAI;
         Assert.That(openAIClient, Is.Not.Null);
 
-        ProjectOpenAIClient projectOpenAIClient = projectClient.GetProjectOpenAIClient(new OpenAIClientOptions());
+        ProjectOpenAIClient projectOpenAIClient = projectClient.GetProjectOpenAIClient(new ProjectOpenAIClientOptions());
         Assert.That(projectOpenAIClient, Is.Not.Null);
     }
 

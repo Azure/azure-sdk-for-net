@@ -11,7 +11,7 @@ public static partial class ClientConnectionProviderExtensions
 {
     extension(ClientConnectionProvider connectionProvider)
     {
-        public ProjectOpenAIClient GetProjectOpenAIClient(OpenAIClientOptions options = null)
+        public ProjectOpenAIClient GetProjectOpenAIClient(ProjectOpenAIClientOptions options = null)
         {
             ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.DirectPipelinePassthrough");
             if (pipelineConnection.CredentialKind == CredentialKind.None)

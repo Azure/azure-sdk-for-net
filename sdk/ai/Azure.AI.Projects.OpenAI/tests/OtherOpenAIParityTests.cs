@@ -10,7 +10,7 @@ using OpenAI.Files;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
-public class OtherOpenAIParityTests : AgentsTestBase
+public class OtherOpenAIParityTests : ProjectsOpenAITestBase
 {
     public OtherOpenAIParityTests(bool isAsync) : base(isAsync)
     {
@@ -29,11 +29,10 @@ public class OtherOpenAIParityTests : AgentsTestBase
     [TestCase(OpenAIClientMode.UseFDPOpenAI, "fine-tune")]
     public async Task FileUploadWorks(OpenAIClientMode clientMode, string rawPurpose)
     {
-        AgentClient agentClient = GetTestClient();
         OpenAIClient openAIClient = clientMode switch
         {
             OpenAIClientMode.UseExternalOpenAI => new OpenAIClient(new ApiKeyCredential(TestEnvironment.ParseEnvironmentFile()["OPEN-API-KEY"]), TestOpenAIClientOptions),
-            OpenAIClientMode.UseFDPOpenAI => agentClient.GetOpenAIClient(TestOpenAIClientOptions),
+            OpenAIClientMode.UseFDPOpenAI => GetTestClient(),
             _ => throw new NotImplementedException()
         };
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();

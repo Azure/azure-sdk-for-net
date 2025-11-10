@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
@@ -9,6 +9,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Tests", "tests\Azure.AI.Projects.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Agents.Tests", "tests_agents\Azure.AI.Agents.Tests.csproj", "{9FA7297A-688F-54A7-CB3B-B218D605BD39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.OpenAI", "..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj", "{455D4CEC-1BB6-92B9-BB23-F52A9E409337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

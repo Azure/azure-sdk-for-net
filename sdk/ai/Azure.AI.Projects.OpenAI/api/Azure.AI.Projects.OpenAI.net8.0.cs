@@ -667,11 +667,11 @@ namespace Azure.AI.Projects.OpenAI
     }
     public static partial class ClientConnectionProviderExtensions
     {
-        public static Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, OpenAI.OpenAIClientOptions options = null) { throw null; }
+        public static Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
         public sealed partial class <>E__0
         {
             internal <>E__0() { }
-            public Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(OpenAI.OpenAIClientOptions options = null) { throw null; }
+            public Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
         }
     }
     public partial class ContainerApplicationAgentDefinition : Azure.AI.Projects.OpenAI.AgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.ContainerApplicationAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.ContainerApplicationAgentDefinition>
@@ -805,19 +805,11 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemorySearchTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemorySearchTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum MemorySearchToolCallItemResourceStatus
-    {
-        InProgress = 0,
-        Searching = 1,
-        Completed = 2,
-        Incomplete = 3,
-        Failed = 4,
-    }
     public partial class MemorySearchToolCallResponseItem : Azure.AI.Projects.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.MemorySearchToolCallResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemorySearchToolCallResponseItem>
     {
         internal MemorySearchToolCallResponseItem() { }
         public System.Collections.Generic.IList<Azure.AI.Projects.OpenAI.MemorySearchItem> Results { get { throw null; } }
-        public Azure.AI.Projects.OpenAI.MemorySearchToolCallItemResourceStatus Status { get { throw null; } }
+        public Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus Status { get { throw null; } }
         protected override Azure.AI.Projects.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.OpenAI.AgentResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -828,9 +820,27 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemorySearchToolCallResponseItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemorySearchToolCallResponseItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-    public readonly partial struct MemorySearchToolCallStatus
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MemorySearchToolCallStatus : System.IEquatable<Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus>
     {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MemorySearchToolCallStatus(string value) { throw null; }
+        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus Completed { get { throw null; } }
+        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus Incomplete { get { throw null; } }
+        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus InProgress { get { throw null; } }
+        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus Searching { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus left, Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus left, Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MemorySearchToolOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.MemorySearchToolOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemorySearchToolOptions>
     {
@@ -931,7 +941,7 @@ namespace Azure.AI.Projects.OpenAI
         public Azure.AI.Projects.OpenAI.OpenAPIAuthenticationDetails Auth { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DefaultParams { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction> Functions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry> Functions { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public System.BinaryData Spec { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -944,25 +954,21 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenApiFunctionDefinitionFunction : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>
+    public partial class OpenAPIFunctionEntry : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>
     {
-        public OpenApiFunctionDefinitionFunction(string name, System.BinaryData parameters) { }
+        public OpenAPIFunctionEntry(string name, System.BinaryData parameters) { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.BinaryData Parameters { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OpenAPIFunctionEntry
-    {
-        public OpenAPIFunctionEntry() { }
+        Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OpenAPIManagedAuthenticationDetails : Azure.AI.Projects.OpenAI.OpenAPIAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenAPIManagedAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIManagedAuthenticationDetails>
     {
@@ -1052,11 +1058,12 @@ namespace Azure.AI.Projects.OpenAI
     public partial class ProjectOpenAIClient : OpenAI.OpenAIClient
     {
         protected ProjectOpenAIClient() { }
-        public ProjectOpenAIClient(System.ClientModel.Primitives.AuthenticationPolicy authenticationPolicy, OpenAI.OpenAIClientOptions options) { }
-        protected internal ProjectOpenAIClient(System.ClientModel.Primitives.ClientPipeline pipeline, OpenAI.OpenAIClientOptions options) { }
+        public ProjectOpenAIClient(System.ClientModel.Primitives.AuthenticationPolicy authenticationPolicy, Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options) { }
+        protected internal ProjectOpenAIClient(System.ClientModel.Primitives.ClientPipeline pipeline, Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options) { }
         public Azure.AI.Projects.OpenAI.ProjectOpenAIConversationClient Conversations { get { throw null; } }
         public Azure.AI.Projects.OpenAI.ProjectOpenAIFileClient Files { get { throw null; } }
         public Azure.AI.Projects.OpenAI.ProjectOpenAIResponseClient Responses { get { throw null; } }
+        public Azure.AI.Projects.OpenAI.ProjectOpenAIVectorStoreClient VectorStores { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1068,6 +1075,12 @@ namespace Azure.AI.Projects.OpenAI
         public virtual Azure.AI.Projects.OpenAI.ProjectOpenAIResponseClient GetProjectOpenAIResponseClient() { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForAgent(string agentName, string agentVersion = null) { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForModel(string model) { throw null; }
+        public virtual Azure.AI.Projects.OpenAI.ProjectOpenAIVectorStoreClient GetProjectOpenAIVectorStoreClient() { throw null; }
+    }
+    public partial class ProjectOpenAIClientOptions : OpenAI.OpenAIClientOptions
+    {
+        public ProjectOpenAIClientOptions() { }
+        public string ApiVersion { get { throw null; } set { } }
     }
     public partial class ProjectOpenAIConversationClient : OpenAI.Conversations.ConversationClient
     {
@@ -1093,6 +1106,10 @@ namespace Azure.AI.Projects.OpenAI
     public partial class ProjectOpenAIResponseClient : OpenAI.Responses.OpenAIResponseClient
     {
         protected ProjectOpenAIResponseClient() { }
+    }
+    public partial class ProjectOpenAIVectorStoreClient : OpenAI.VectorStores.VectorStoreClient
+    {
+        protected ProjectOpenAIVectorStoreClient() { }
     }
     public static partial class ProjectsOpenAIModelFactory
     {
@@ -1139,15 +1156,15 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.MemoryItem MemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.MemorySearchItem MemorySearchItem(Azure.AI.Projects.OpenAI.MemoryItem memoryItem = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.MemorySearchTool MemorySearchTool(string memoryStoreName = null, string scope = null, Azure.AI.Projects.OpenAI.MemorySearchToolOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
-        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = null, Azure.AI.Projects.OpenAI.AgentResponseItemSource createdBy = null, Azure.AI.Projects.OpenAI.MemorySearchToolCallItemResourceStatus status = Azure.AI.Projects.OpenAI.MemorySearchToolCallItemResourceStatus.InProgress, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.MemorySearchItem> results = null) { throw null; }
+        public static Azure.AI.Projects.OpenAI.MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = null, Azure.AI.Projects.OpenAI.AgentResponseItemSource createdBy = null, Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus status = default(Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus), System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.MemorySearchItem> results = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.MemorySearchToolOptions MemorySearchToolOptions(int? maxMemories = default(int?)) { throw null; }
         public static Azure.AI.Projects.OpenAI.MicrosoftFabricAgentTool MicrosoftFabricAgentTool(Azure.AI.Projects.OpenAI.FabricDataAgentToolOptions fabricDataagentPreview = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(Azure.AI.Projects.OpenAI.AgentResponseItemSource createdBy = null, string id = null, string consentLink = null, string serverLabel = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenAPIAgentTool OpenAPIAgentTool(Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition openapi = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails() { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenAPIAuthenticationDetails OpenAPIAuthenticationDetails(string type = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition OpenAPIFunctionDefinition(string name = null, string description = null, System.BinaryData spec = null, Azure.AI.Projects.OpenAI.OpenAPIAuthenticationDetails auth = null, System.Collections.Generic.IEnumerable<string> defaultParams = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction> functions = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.OpenApiFunctionDefinitionFunction OpenApiFunctionDefinitionFunction(string name = null, string description = null, System.BinaryData parameters = null) { throw null; }
+        public static Azure.AI.Projects.OpenAI.OpenAPIFunctionDefinition OpenAPIFunctionDefinition(string name = null, string description = null, System.BinaryData spec = null, Azure.AI.Projects.OpenAI.OpenAPIAuthenticationDetails auth = null, System.Collections.Generic.IEnumerable<string> defaultParams = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry> functions = null) { throw null; }
+        public static Azure.AI.Projects.OpenAI.OpenAPIFunctionEntry OpenAPIFunctionEntry(string name = null, string description = null, System.BinaryData parameters = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenAPIManagedAuthenticationDetails OpenAPIManagedAuthenticationDetails(Azure.AI.Projects.OpenAI.OpenApiManagedSecurityScheme securityScheme = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.OpenAPIProjectConnectionAuthenticationDetails OpenAPIProjectConnectionAuthenticationDetails(Azure.AI.Projects.OpenAI.OpenAPIProjectConnectionSecurityScheme securityScheme = null) { throw null; }

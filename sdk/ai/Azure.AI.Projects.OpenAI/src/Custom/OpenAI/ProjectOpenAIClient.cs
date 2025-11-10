@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
@@ -15,32 +14,33 @@ namespace Azure.AI.Projects.OpenAI;
 
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    // For use in derived clients, including across library boundaries
-    protected internal ProjectOpenAIClient(ClientPipeline pipeline, OpenAIClientOptions options)
-        : base(pipeline, options)
-    {
-        _options = options;
-    }
-
-    // For use in the same library
-    internal static ProjectOpenAIClient Create(ClientPipeline pipeline, OpenAIClientOptions options) => new(pipeline, options);
+    public ProjectOpenAIConversationClient Conversations => GetProjectOpenAIConversationClient();
+    public ProjectOpenAIResponseClient Responses => GetProjectOpenAIResponseClient();
+    public ProjectOpenAIFileClient Files => GetProjectOpenAIFileClient();
+    public ProjectOpenAIVectorStoreClient VectorStores => GetProjectOpenAIVectorStoreClient();
 
     private ProjectOpenAIConversationClient _cachedConversationClient;
     private ProjectOpenAIResponseClient _cachedResponseClient;
     private ProjectOpenAIFileClient _cachedFileClient;
-    public ProjectOpenAIConversationClient Conversations => GetProjectOpenAIConversationClient() as ProjectOpenAIConversationClient;
-    public ProjectOpenAIResponseClient Responses => GetProjectOpenAIResponseClient() as ProjectOpenAIResponseClient;
-    public ProjectOpenAIFileClient Files => GetProjectOpenAIFileClient() as ProjectOpenAIFileClient;
+    private ProjectOpenAIVectorStoreClient _cachedVectorStoreClient;
 
-    private OpenAIClientOptions _options;
+    private readonly ProjectOpenAIClientOptions _options;
 
-    public ProjectOpenAIClient(AuthenticationPolicy authenticationPolicy, OpenAIClientOptions options)
-        : base(authenticationPolicy, options)
+    public ProjectOpenAIClient(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
+        : base(
+            pipeline: CreatePipeline(authenticationPolicy, options),
+            options: options)
     {
         Argument.AssertNotNull(authenticationPolicy, nameof(authenticationPolicy));
         Argument.AssertNotNull(options, nameof(options));
         Argument.AssertNotNull(options.Endpoint, nameof(options.Endpoint));
 
+        _options = options;
+    }
+
+    protected internal ProjectOpenAIClient(ClientPipeline pipeline, ProjectOpenAIClientOptions options)
+        : base(pipeline, options)
+    {
         _options = options;
     }
 
@@ -72,6 +72,13 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override OpenAIFileClient GetOpenAIFileClient() => GetProjectOpenAIFileClient();
 
+    public virtual ProjectOpenAIVectorStoreClient GetProjectOpenAIVectorStoreClient()
+    {
+        return Volatile.Read(ref _cachedVectorStoreClient)
+            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectOpenAIVectorStoreClient(Pipeline, _options), null)
+            ?? _cachedVectorStoreClient;
+    }
+
     public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
@@ -89,5 +96,21 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         Argument.AssertNotNullOrEmpty(model, nameof(model));
         return new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model);
+    }
+
+    private static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
+    {
+        options ??= new ProjectOpenAIClientOptions();
+
+        TelemetryDetails telemetryDetails = new(typeof(ProjectOpenAIClient).Assembly, options?.UserAgentApplicationId);
+
+        PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", telemetryDetails.UserAgent.ToString());
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
+        PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
+        PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
+        PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
+
+        return ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { authenticationPolicy }, Array.Empty<PipelinePolicy>());
     }
 }

@@ -13,7 +13,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class Sample_ResponseBasic : AgentsTestBase
+public class Sample_ResponseBasic : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
@@ -27,11 +27,10 @@ public class Sample_ResponseBasic : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        ProjectOpenAIClient client = GetTestClient();
         #endregion
         #region Snippet:Sample_CreateResponse_Async
-        OpenAIClient openAIClient = client.GetOpenAIClient();
-        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+        OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
         OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 
         #endregion
@@ -58,19 +57,17 @@ public class Sample_ResponseBasic : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        ProjectOpenAIClient client = GetTestClient();
         #region Snippet:Sample_CreateResponse_Sync
-        OpenAIClient openAIClient = client.GetOpenAIClient();
-        OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-
-        OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
+        OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+        OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseBasic_Sync
         while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responsesClient.GetResponse(responseId: response.Id);
+            response = responseClient.GetResponse(responseId: response.Id);
         }
 
         Console.WriteLine(response.GetOutputText());

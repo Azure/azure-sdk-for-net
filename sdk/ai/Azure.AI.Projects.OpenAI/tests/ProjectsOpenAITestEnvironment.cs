@@ -10,7 +10,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Azure.AI.Projects.OpenAI.Tests
 {
-    public class AIAgentsTestEnvironment : TestEnvironment
+    public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
         public string PROJECT_ENDPOINT => GetRecordedVariable("PROJECT_ENDPOINT");
         public string AGENT_NAME => GetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME");

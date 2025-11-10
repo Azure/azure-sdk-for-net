@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -16,13 +15,11 @@ using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Responses;
-using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
-public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
+public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
     #region Enumertions
     public enum ToolType
@@ -97,11 +94,11 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FunctionCall, "emerald"},
     };
     #endregion
-    protected OpenAIClientOptions TestOpenAIClientOptions
+    protected ProjectOpenAIClientOptions TestOpenAIClientOptions
     {
         get
         {
-            OpenAIClientOptions options = new();
+            ProjectOpenAIClientOptions options = new();
             options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
 
             if (Mode != RecordedTestMode.Live && Recording != null)
@@ -119,14 +116,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
     }
 
-    protected const string AGENT_NAME = "cs_e2e_tests_client";
-    protected const string AGENT_NAME2 = "cs_e2e_tests_client2";
-    protected const string VECTOR_STORE = "cs_e2e_tests_vector_store";
-    protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
-    private readonly List<string> _memoryStoreIDs = [];
     private ProjectOpenAIConversationClient _conversations = null;
-    private MemoryStoreClient _stores = null;
 
     private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
         {
@@ -136,9 +127,9 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             _ => null
         };
 
-    public AgentsTestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
+    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
 
-    public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
+    public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
         // TestDiagnostics = false;
     }
@@ -148,20 +139,24 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return new(new Uri(TestEnvironment.PROJECT_ENDPOINT), new DefaultAzureCredential());
     }
 
-    protected AgentClient GetTestClient()
+    protected ProjectOpenAIClient GetTestClient()
     {
-        AgentClientOptions options = new AgentClientOptions();
-        options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        ProjectOpenAIClientOptions clientOptions = new()
+        {
+            Endpoint = new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai"),
+            ApiVersion = "2025-11-15-preview",
+        };
+        clientOptions.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
 
         if (Mode != RecordedTestMode.Live && Recording != null)
         {
             // Set up proxy transport for recording/playback
-            options.Transport = new AgentsProxyTransport(Recording);
+            clientOptions.Transport = new AgentsProxyTransport(Recording);
 
             // Configure retry policy for faster playback
             if (Mode == RecordedTestMode.Playback)
             {
-                options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
+                clientOptions.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
             }
         }
         AuthenticationTokenProvider provider = TestEnvironment.Credential;
@@ -176,16 +171,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
 
         Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
-        return CreateProxyFromClient(new AgentClient(connectionString, provider, InstrumentClientOptions(options)));
-    }
-
-    protected OpenAIClient GetTestOpenAIClientFrom(AgentClient client, OpenAIClientOptions options = null)
-    {
-        options ??= new();
-        options.AddPolicy(AgentsTestBase.GetDumpPolicy(), PipelinePosition.BeforeTransport);
-        options = InstrumentClientOptions(options);
-        OpenAIClient unproxiedClient = client.GetOpenAIClient(options);
-        return CreateProxyFromClient(unproxiedClient);
+        return CreateProxyFromClient(
+            new ProjectOpenAIClient(
+                new BearerTokenPolicy(provider, "https://ai.azure.com/.default"),
+                InstrumentClientOptions(clientOptions)));
     }
 
     protected async Task<OpenAIResponse> WaitForRun(OpenAIResponseClient responses, OpenAIResponse response, int waitTime=500)
@@ -197,29 +186,6 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             response = await responses.GetResponseAsync(responseId: response.Id);
         }
         return response;
-    }
-
-    protected async Task<AgentConversation> CreateConversation(AgentClient client, ProjectConversationCreationOptions options = null)
-    {
-        AgentConversation conversation = await client.OpenAI.Conversations.CreateAgentConversationAsync(options).ConfigureAwait(false);
-        _conversationIDs.Add(conversation.Id);
-        return conversation;
-    }
-
-    protected async Task<MemoryStore> CreateMemoryStore(AgentClient client)
-    {
-        _stores ??= client.GetMemoryStoreClient();
-        MemoryStoreDefaultDefinition memoryStoreDefinition = new(
-            chatModel: TestEnvironment.MODELDEPLOYMENTNAME,
-            embeddingModel: TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME
-        );
-        MemoryStore memoryStore = await _stores.CreateMemoryStoreAsync(
-            name: "jokeMemory",
-            definition: memoryStoreDefinition,
-            description: "Memory store for test."
-        );
-        _memoryStoreIDs.Add(memoryStore.Id);
-        return memoryStore;
     }
 
     public static void AssertListEqual(string[] expected, List<string> observed)
@@ -258,18 +224,6 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     }
 
     #region ToolHelper
-    private async Task<VectorStore> GetVectorStore(OpenAIClient openAIClient)
-    {
-        VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-        VectorStoreCreationOptions vctOptions = new()
-        {
-            Name = VECTOR_STORE,
-            FileIds = { TestEnvironment.OPENAI_FILE_ID }
-        };
-        return await vctStoreClient.CreateVectorStoreAsync(
-            vctOptions
-        );
-    }
 
     protected static string GetCityNicknameForTest(string location) => location switch
     {
@@ -277,62 +231,6 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         _ => throw new NotImplementedException(),
     };
 
-    /// <summary>
-    /// Get the AgentDefinition, containing tool of a certain type.
-    /// </summary>
-    /// <param name="toolType"></param>
-    /// <returns></returns>
-    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, OpenAIClient oaiClient)
-    {
-        ResponseTool tool = toolType switch
-        {
-            // To run the Code interpreter and file search sample, please upload the file using code below.
-            // This code cannot be run during tests as recordings are not properly handled by the file upload.
-            // Upload the file.
-            // string filePath = "sample_file_for_upload.txt";
-            // System.IO.File.WriteAllText(
-            //     path: filePath,
-            //     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-            // OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
-            // OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-            // Console.WriteLine(uploadedFile.id)
-            ToolType.CodeInterpreter => ResponseTool.CreateCodeInterpreterTool(
-                    new CodeInterpreterToolContainer(
-                        CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
-                            fileIds: [TestEnvironment.OPENAI_FILE_ID]
-                        )
-                    )
-                ),
-            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(oaiClient)).Id]),
-            ToolType.FunctionCall => ResponseTool.CreateFunctionTool(
-                functionName: "GetCityNicknameForTest",
-                functionDescription: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
-                functionParameters: BinaryData.FromObjectAsJson(
-                    new
-                    {
-                        Type = "object",
-                        Properties = new
-                        {
-                            Location = new
-                            {
-                                Type = "string",
-                                Description = "The city and state, e.g. San Francisco, CA",
-                            },
-                        },
-                        Required = new[] { "location" },
-                    },
-                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
-                ),
-                strictModeEnabled: false
-            ),
-            _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
-        };
-        return new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
-        {
-            Instructions = ToolInstructions[toolType],
-            Tools = { tool },
-        };
-    }
     #endregion
     #region Cleanup
     [TearDown]
@@ -340,9 +238,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
-        AgentClientOptions opts = new();
-        AgentClient client = new(endpoint: connectionString, tokenProvider: TestEnvironment.Credential, options: opts);
+        ProjectOpenAIClient openAIClient = GetTestClient();
         // Remove conversations.
         if (_conversations is not null)
         {
@@ -350,7 +246,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             {
                 try
                 {
-                    _conversations.DeleteConversation(conversationId: id);
+                    openAIClient.Conversations.DeleteConversation(conversationId: id);
                 }
                 catch (RequestFailedException ex)
                 {
@@ -360,38 +256,13 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 }
             }
         }
-        if (_stores != null)
-        {
-            foreach (string name in _memoryStoreIDs)
-            {
-                try
-                {
-                    _stores.DeleteMemoryStore(name: name);
-                }
-                catch (RequestFailedException ex)
-                {
-                    // Throw only if it is the error other then "Not found."
-                    if (ex.Status != 404)
-                        throw;
-                }
-            }
-        }
-        // Remove Vector stores
-        OpenAIClient oaiClient = client.GetOpenAIClient();
-        VectorStoreClient oaiVctStoreClient = oaiClient.GetVectorStoreClient();
-        foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
-        {
-            oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
-        }
-        // Remove Agents.
-        foreach (AgentVersion ag in client.GetAgentVersions(agentName: AGENT_NAME))
-        {
-            client.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
-        }
-        foreach (AgentVersion ag in client.GetAgentVersions(agentName: AGENT_NAME2))
-        {
-            client.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
-        }
+        //// Remove Vector stores
+        //OpenAIClient oaiClient = client.GetOpenAIClient();
+        //VectorStoreClient oaiVctStoreClient = oaiClient.GetVectorStoreClient();
+        //foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
+        //{
+        //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
+        //}
     }
     #endregion
     #region Debug Method
