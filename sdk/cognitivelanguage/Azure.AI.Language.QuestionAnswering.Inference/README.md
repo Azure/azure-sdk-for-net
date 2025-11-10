@@ -2,8 +2,7 @@
 
 The Question Answering service is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users’ questions with the best answers from the QnAs in your knowledge base—automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
 
-[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Samples][questionanswering_samples] | [Migration guide][migration_guide] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs] | [Authoring REST API documentation][questionanswering_rest_docs_projects]
-
+[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Samples][questionanswering_samples] | [Migration guide][migration_guide] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs]
 ## Getting started
 
 ### Install the package
@@ -23,7 +22,7 @@ Though you can use this SDK to create and import conversation projects, [Languag
 
 ### Authenticate the client
 
-In order to interact with the Question Answering service, you'll need to either create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class for querying existing projects or an instance of the [`QuestionAnsweringAuthoringClient`][questionansweringauthoring_client_class] for managing projects within your resource. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Question Answering service, you'll need to either create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class for querying existing projects within your resource. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -53,26 +52,9 @@ AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
 
-#### Create a QuestionAnsweringAuthoringClient
-
-To use the `QuestionAnsweringAuthoringClient`, use the following namespace in addition to those above, if needed.
-
-```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
-using Azure.AI.Language.QuestionAnswering.Authoring;
-```
-
-With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringAuthoringClient`:
-
-```C# Snippet:QuestionAnsweringAuthoringClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-
-QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-```
-
 #### Create a client using Azure Active Directory authentication
 
-You can also create a `QuestionAnsweringClient` or `QuestionAnsweringAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+You can also create a `QuestionAnsweringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
@@ -102,10 +84,6 @@ Note that regional endpoints do not support AAD authentication. Instead, create 
 ### QuestionAnsweringClient
 
 The [`QuestionAnsweringClient`][questionanswering_client_class] is the primary interface for asking questions using a knowledge base with your own information, or text input using pre-trained models. It provides both synchronous and asynchronous APIs to ask questions.
-
-### QuestionAnsweringAuthoringClient
-
-The [`QuestionAnsweringAuthoringClient`][questionansweringauthoring_client_class] provides an interface for managing Question Answering projects. Examples of the available operations include creating and deploying projects, updating your knowledge sources, and updating question and answer pairs. It provides both synchronous and asynchronous APIs.
 
 ### Thread safety
 
@@ -173,94 +151,6 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
     Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
     Console.WriteLine();
-}
-```
-
-### QuestionAnsweringAuthoringClient
-
-The following examples show common scenarios using the `QuestionAnsweringAuthoringClient` instance [created in this section](#create-a-questionansweringauthoringclient).
-
-#### Create a new project
-
-To create a new project, you must specify the project's name and a create a `RequestContent` instance with the parameters needed to set up the project.
-
-```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
-// Set project name and request content parameters
-string newProjectName = "{ProjectName}";
-RequestContent creationRequestContent = RequestContent.Create(
-    new {
-        description = "This is the description for a test project",
-        language = "en",
-        multilingualResource = false,
-        settings = new {
-            defaultAnswer = "No answer found for your question."
-            }
-        }
-    );
-
-Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
-
-// Projects can be retrieved as follows
-Pageable<BinaryData> projects = client.GetProjects();
-
-Console.WriteLine("Projects: ");
-foreach (BinaryData project in projects)
-{
-    Console.WriteLine(project);
-}
-```
-
-#### Deploy your project
-
-Your projects can be deployed using the `DeployProjectAsync` or the synchronous `DeployProject`. All you need to specify is the project's name and the deployment name that you wish to use. Please note that the service will not allow you to deploy empty projects.
-
-```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
-// Set deployment name and start operation
-string newDeploymentName = "{DeploymentName}";
-
-Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
-
-// Deployments can be retrieved as follows
-Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
-Console.WriteLine("Deployments: ");
-foreach (BinaryData deployment in deployments)
-{
-    Console.WriteLine(deployment);
-}
-```
-
-#### Add a knowledge source
-
-One way to add content to your project is to add a knowledge source. The following example shows how you can set up a `RequestContent` instance to add a new knowledge source of the type "url".
-
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
-// Set request content parameters for updating our new project's sources
-string sourceUri = "{KnowledgeSourceUri}";
-RequestContent updateSourcesRequestContent = RequestContent.Create(
-    new[] {
-        new {
-                op = "add",
-                value = new
-                {
-                    displayName = "MicrosoftFAQ",
-                    source = sourceUri,
-                    sourceUri = sourceUri,
-                    sourceKind = "url",
-                    contentStructureKind = "unstructured",
-                    refresh = false
-                }
-            }
-    });
-
-Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
-
-// Knowledge Sources can be retrieved as follows
-Pageable<BinaryData> sources = updateSourcesOperation.Value;
-
-Console.WriteLine("Sources: ");
-foreach (BinaryData source in sources)
-{
-    Console.WriteLine(source);
 }
 ```
 
@@ -366,4 +256,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/language/question-answering-projects
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
-[questionansweringauthoring_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringAuthoringClient.cs
