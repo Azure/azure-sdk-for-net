@@ -67,7 +67,7 @@ public class PromptAgentSamples : AgentsTestBase
         #region Snippet:CreateAgent_Basic_Async
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
-            Instructions = "You are physics teacher with a sense of humor.",
+            Instructions = "You are a physics teacher with a sense of humor.",
         };
         AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -79,7 +79,7 @@ public class PromptAgentSamples : AgentsTestBase
         ResponseCreationOptions responseCreationOptions = new();
         responseCreationOptions.SetAgentReference(agentReference);
         OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Write the Maxwell's eqution in LaTeX format.")],
+            [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
             responseCreationOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -115,7 +115,7 @@ public class PromptAgentSamples : AgentsTestBase
         #region Snippet:CreateAgent_Basic_Sync
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
-            Instructions = "You are physics teacher with a sense of humor.",
+            Instructions = "You are a physics teacher with a sense of humor.",
         };
         AgentVersion agentVersion = agentClient.CreateAgentVersion(
             agentName: "myAgent",
@@ -126,7 +126,7 @@ public class PromptAgentSamples : AgentsTestBase
         ResponseCreationOptions responseCreationOptions = new();
         responseCreationOptions.SetAgentReference(agentReference);
         OpenAIResponse response = responseClient.CreateResponse(
-            [ResponseItem.CreateUserMessageItem("Write the Maxwell's eqution in LaTeX format.")],
+            [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
             responseCreationOptions);
         Console.WriteLine(response.GetOutputText());
         responseCreationOptions.PreviousResponseId = response.Id;

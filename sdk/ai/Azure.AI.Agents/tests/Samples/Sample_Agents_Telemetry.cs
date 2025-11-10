@@ -99,6 +99,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
     [AsyncOnly]
     public async Task TracingToAzureMonitorExample()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -132,6 +133,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
     [SyncOnly]
     public void TracingToAzureMonitorExampleSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

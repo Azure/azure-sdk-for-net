@@ -2,7 +2,7 @@
 
 Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers.
 
-**Note:** While this package can be used independently, we recommend using the Azure AI Projects client library (Azure.AI.Agents) for enhanced experience. The Projects library provides simplified access to advanced functionality, such as creating and managing Agents, enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance, and enabling OpenTelemetry tracing.
+**Note:** While this package can be used independently, we recommend using the Azure AI Projects client library (Azure.AI.Projects) for enhanced experience. The Projects library provides simplified access to advanced functionality, such as creating and managing Agents, enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance, and enabling OpenTelemetry tracing.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -106,11 +106,11 @@ AgentClient client = new(
 ### Additional concepts
 The Azure.AI.Agents framework organized in a way that for each call, requiring the REST API request, there are synchronous and asynchronous counterparts where the letter has the "Async" suffix. For example, the following code demonstrates the creation of an Agent.
 
-Syncronous call:
+Synchronous call:
 ```C# Snippet:CreateAgent_Basic_Sync
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
-    Instructions = "You are physics teacher with a sense of humor.",
+    Instructions = "You are a physics teacher with a sense of humor.",
 };
 AgentVersion agentVersion = agentClient.CreateAgentVersion(
     agentName: "myAgent",
@@ -123,7 +123,7 @@ Asynchronous call:
 ```C# Snippet:CreateAgent_Basic_Async
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
-    Instructions = "You are physics teacher with a sense of humor.",
+    Instructions = "You are a physics teacher with a sense of humor.",
 };
 AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -214,7 +214,7 @@ Responses can be used with the agents. First we need to create an `AgentVersion`
 ```C# Snippet:CreateAgent_Basic_Async
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
-    Instructions = "You are physics teacher with a sense of humor.",
+    Instructions = "You are a physics teacher with a sense of humor.",
 };
 AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
     agentName: "myAgent",
