@@ -1,7 +1,8 @@
 #Requires -Version 7.0
 <#
 .How-To-Run
-You can run the test by pester.
+This test file uses Pester, a testing framework for PowerShell.
+For more information about Pester, see: https://pester.dev/docs/quick-start
 
 First, ensure you have `pester` installed:
 
