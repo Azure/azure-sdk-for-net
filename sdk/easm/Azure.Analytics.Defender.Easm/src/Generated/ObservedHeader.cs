@@ -23,18 +23,19 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="headerName"></param>
         /// <param name="headerValue"></param>
-        internal ObservedHeader(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, string headerName, string headerValue) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
+        internal ObservedHeader(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties, string headerName, string headerValue) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
         {
             HeaderName = headerName;
             HeaderValue = headerValue;
         }
 
-        /// <summary> Gets the header name. </summary>
+        /// <summary> Gets the HeaderName. </summary>
         public string HeaderName { get; }
-        /// <summary> Gets the header value. </summary>
+
+        /// <summary> Gets the HeaderValue. </summary>
         public string HeaderValue { get; }
     }
 }

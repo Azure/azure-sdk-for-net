@@ -19,11 +19,11 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionProperties"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clusterName"> The azure data explorer cluster name. </param>
         /// <param name="region"> The azure data explorer region. </param>
         /// <param name="databaseName"> The azure data explorer database name. </param>
-        internal AzureDataExplorerDataConnectionProperties(IDictionary<string, BinaryData> serializedAdditionalRawData, string clusterName, string region, string databaseName) : base(serializedAdditionalRawData)
+        internal AzureDataExplorerDataConnectionProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties, string clusterName, string region, string databaseName) : base(additionalBinaryDataProperties)
         {
             ClusterName = clusterName;
             Region = region;
@@ -32,8 +32,10 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> The azure data explorer cluster name. </summary>
         public string ClusterName { get; set; }
+
         /// <summary> The azure data explorer region. </summary>
         public string Region { get; set; }
+
         /// <summary> The azure data explorer database name. </summary>
         public string DatabaseName { get; set; }
     }

@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ReportBillableAssetSnapshotResult. </summary>
     public partial class ReportBillableAssetSnapshotResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReportBillableAssetSnapshotResult"/>. </summary>
         internal ReportBillableAssetSnapshotResult()
@@ -55,20 +26,22 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="date"> The date these assets were billed on. </param>
         /// <param name="total"> The total number of billable assets for this date. </param>
         /// <param name="assetBreakdown"> The breakdown of billable asset counts for each asset type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportBillableAssetSnapshotResult(DateTimeOffset? date, long? total, IReadOnlyList<ReportBillableAssetBreakdown> assetBreakdown, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReportBillableAssetSnapshotResult(DateTimeOffset? date, long? total, IList<ReportBillableAssetBreakdown> assetBreakdown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Date = date;
             Total = total;
             AssetBreakdown = assetBreakdown;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date these assets were billed on. </summary>
         public DateTimeOffset? Date { get; }
+
         /// <summary> The total number of billable assets for this date. </summary>
         public long? Total { get; }
+
         /// <summary> The breakdown of billable asset counts for each asset type. </summary>
-        public IReadOnlyList<ReportBillableAssetBreakdown> AssetBreakdown { get; }
+        public IList<ReportBillableAssetBreakdown> AssetBreakdown { get; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The ObservedLocationDetails. </summary>
     public partial class ObservedLocationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObservedLocationDetails"/>. </summary>
         internal ObservedLocationDetails()
@@ -62,8 +33,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="longitude"></param>
         /// <param name="dmaCode"></param>
         /// <param name="metroCodeId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObservedLocationDetails(string countryCode, string countryName, string region, string regionName, string city, int? areaCode, string postalCode, float? latitude, float? longitude, int? dmaCode, int? metroCodeId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ObservedLocationDetails(string countryCode, string countryName, string region, string regionName, string city, int? areaCode, string postalCode, float? latitude, float? longitude, int? dmaCode, int? metroCodeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CountryCode = countryCode;
             CountryName = countryName;
@@ -76,30 +47,40 @@ namespace Azure.Analytics.Defender.Easm
             Longitude = longitude;
             DmaCode = dmaCode;
             MetroCodeId = metroCodeId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the country code. </summary>
+        /// <summary> Gets the CountryCode. </summary>
         public string CountryCode { get; }
-        /// <summary> Gets the country name. </summary>
+
+        /// <summary> Gets the CountryName. </summary>
         public string CountryName { get; }
-        /// <summary> Gets the region. </summary>
+
+        /// <summary> Gets the Region. </summary>
         public string Region { get; }
-        /// <summary> Gets the region name. </summary>
+
+        /// <summary> Gets the RegionName. </summary>
         public string RegionName { get; }
-        /// <summary> Gets the city. </summary>
+
+        /// <summary> Gets the City. </summary>
         public string City { get; }
-        /// <summary> Gets the area code. </summary>
+
+        /// <summary> Gets the AreaCode. </summary>
         public int? AreaCode { get; }
-        /// <summary> Gets the postal code. </summary>
+
+        /// <summary> Gets the PostalCode. </summary>
         public string PostalCode { get; }
-        /// <summary> Gets the latitude. </summary>
+
+        /// <summary> Gets the Latitude. </summary>
         public float? Latitude { get; }
-        /// <summary> Gets the longitude. </summary>
+
+        /// <summary> Gets the Longitude. </summary>
         public float? Longitude { get; }
-        /// <summary> Gets the dma code. </summary>
+
+        /// <summary> Gets the DmaCode. </summary>
         public int? DmaCode { get; }
-        /// <summary> Gets the metro code id. </summary>
+
+        /// <summary> Gets the MetroCodeId. </summary>
         public int? MetroCodeId { get; }
     }
 }

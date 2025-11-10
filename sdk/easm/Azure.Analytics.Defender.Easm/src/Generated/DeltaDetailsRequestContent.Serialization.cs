@@ -13,10 +13,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DeltaDetailsRequestContent : IUtf8JsonSerializable, IJsonModel<DeltaDetailsRequestContent>
+    /// <summary> A request body used to retrieve a list of deltas. </summary>
+    public partial class DeltaDetailsRequestContent : IJsonModel<DeltaDetailsRequestContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeltaDetailsRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DeltaDetailsRequestContent"/> for deserialization. </summary>
+        internal DeltaDetailsRequestContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeltaDetailsRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeltaDetailsRequestContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("deltaDetailType"u8);
             writer.WriteStringValue(DeltaDetailType.ToString());
             if (Optional.IsDefined(PriorDays))
@@ -48,15 +53,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,22 +70,27 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DeltaDetailsRequestContent IJsonModel<DeltaDetailsRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeltaDetailsRequestContent IJsonModel<DeltaDetailsRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeltaDetailsRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeltaDetailsRequestContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeltaDetailsRequestContent(document.RootElement, options);
         }
 
-        internal static DeltaDetailsRequestContent DeserializeDeltaDetailsRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeltaDetailsRequestContent DeserializeDeltaDetailsRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,47 +99,48 @@ namespace Azure.Analytics.Defender.Easm
             int? priorDays = default;
             GlobalAssetType kind = default;
             string date = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deltaDetailType"u8))
+                if (prop.NameEquals("deltaDetailType"u8))
                 {
-                    deltaDetailType = new DeltaDetailType(property.Value.GetString());
+                    deltaDetailType = new DeltaDetailType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priorDays"u8))
+                if (prop.NameEquals("priorDays"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    priorDays = property.Value.GetInt32();
+                    priorDays = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = new GlobalAssetType(property.Value.GetString());
+                    kind = new GlobalAssetType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("date"u8))
+                if (prop.NameEquals("date"u8))
                 {
-                    date = property.Value.GetString();
+                    date = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeltaDetailsRequestContent(deltaDetailType, priorDays, kind, date, serializedAdditionalRawData);
+            return new DeltaDetailsRequestContent(deltaDetailType, priorDays, kind, date, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DeltaDetailsRequestContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeltaDetailsRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -139,15 +150,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DeltaDetailsRequestContent IPersistableModel<DeltaDetailsRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeltaDetailsRequestContent IPersistableModel<DeltaDetailsRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeltaDetailsRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaDetailsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeltaDetailsRequestContent(document.RootElement, options);
                     }
                 default:
@@ -155,21 +171,18 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeltaDetailsRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DeltaDetailsRequestContent FromResponse(Response response)
+        /// <param name="deltaDetailsRequestContent"> The <see cref="DeltaDetailsRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(DeltaDetailsRequestContent deltaDetailsRequestContent)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeltaDetailsRequestContent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (deltaDetailsRequestContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deltaDetailsRequestContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

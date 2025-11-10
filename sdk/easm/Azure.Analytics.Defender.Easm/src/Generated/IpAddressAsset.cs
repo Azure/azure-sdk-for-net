@@ -38,7 +38,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="IpAddressAsset"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipAddress"></param>
         /// <param name="asns"></param>
         /// <param name="reputations"></param>
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sslServerConfig"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpAddressAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, string ipAddress, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ReputationDetails> reputations, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedString> netRanges, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<AttributeDetails> attributes, IReadOnlyList<CookieDetails> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<AssetService> services, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<BannerDetails> banners, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedString> hosts, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(serializedAdditionalRawData)
+        internal IpAddressAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipAddress, IList<ObservedLong> asns, IList<ReputationDetails> reputations, IList<WebComponent> webComponents, IList<ObservedString> netRanges, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<AssetService> services, IList<IpBlock> ipBlocks, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<BannerDetails> banners, IList<ScanMetadata> scanMetadata, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedLocation> location, IList<ObservedString> hosts, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
         {
             IpAddress = ipAddress;
             Asns = asns;
@@ -93,55 +93,79 @@ namespace Azure.Analytics.Defender.Easm
             Ipv6 = ipv6;
         }
 
-        /// <summary> Gets the ip address. </summary>
+        /// <summary> Gets the IpAddress. </summary>
         public string IpAddress { get; }
-        /// <summary> Gets the asns. </summary>
-        public IReadOnlyList<ObservedLong> Asns { get; }
-        /// <summary> Gets the reputations. </summary>
-        public IReadOnlyList<ReputationDetails> Reputations { get; }
-        /// <summary> Gets the web components. </summary>
-        public IReadOnlyList<WebComponent> WebComponents { get; }
-        /// <summary> Gets the net ranges. </summary>
-        public IReadOnlyList<ObservedString> NetRanges { get; }
-        /// <summary> Gets the headers. </summary>
-        public IReadOnlyList<ObservedHeader> Headers { get; }
-        /// <summary> Gets the attributes. </summary>
-        public IReadOnlyList<AttributeDetails> Attributes { get; }
-        /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<CookieDetails> Cookies { get; }
-        /// <summary> Gets the ssl certs. </summary>
-        public IReadOnlyList<SslCertAsset> SslCerts { get; }
-        /// <summary> Gets the services. </summary>
-        public IReadOnlyList<AssetService> Services { get; }
-        /// <summary> Gets the ip blocks. </summary>
-        public IReadOnlyList<IpBlock> IpBlocks { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the Asns. </summary>
+        public IList<ObservedLong> Asns { get; }
+
+        /// <summary> Gets the Reputations. </summary>
+        public IList<ReputationDetails> Reputations { get; }
+
+        /// <summary> Gets the WebComponents. </summary>
+        public IList<WebComponent> WebComponents { get; }
+
+        /// <summary> Gets the NetRanges. </summary>
+        public IList<ObservedString> NetRanges { get; }
+
+        /// <summary> Gets the Headers. </summary>
+        public IList<ObservedHeader> Headers { get; }
+
+        /// <summary> Gets the Attributes. </summary>
+        public IList<AttributeDetails> Attributes { get; }
+
+        /// <summary> Gets the Cookies. </summary>
+        public IList<CookieDetails> Cookies { get; }
+
+        /// <summary> Gets the SslCerts. </summary>
+        public IList<SslCertAsset> SslCerts { get; }
+
+        /// <summary> Gets the Services. </summary>
+        public IList<AssetService> Services { get; }
+
+        /// <summary> Gets the IpBlocks. </summary>
+        public IList<IpBlock> IpBlocks { get; }
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the banners. </summary>
-        public IReadOnlyList<BannerDetails> Banners { get; }
-        /// <summary> Gets the scan metadata. </summary>
-        public IReadOnlyList<ScanMetadata> ScanMetadata { get; }
-        /// <summary> Gets the ns record. </summary>
-        public IReadOnlyList<ObservedBoolean> NsRecord { get; }
-        /// <summary> Gets the mx record. </summary>
-        public IReadOnlyList<ObservedBoolean> MxRecord { get; }
-        /// <summary> Gets the location. </summary>
-        public IReadOnlyList<ObservedLocation> Location { get; }
-        /// <summary> Gets the hosts. </summary>
-        public IReadOnlyList<ObservedString> Hosts { get; }
-        /// <summary> Gets the nxdomain. </summary>
-        public IReadOnlyList<ObservedBoolean> Nxdomain { get; }
-        /// <summary> Gets the ssl server config. </summary>
-        public IReadOnlyList<SslServerConfig> SslServerConfig { get; }
-        /// <summary> Gets the ipv 4. </summary>
+
+        /// <summary> Gets the Banners. </summary>
+        public IList<BannerDetails> Banners { get; }
+
+        /// <summary> Gets the ScanMetadata. </summary>
+        public IList<ScanMetadata> ScanMetadata { get; }
+
+        /// <summary> Gets the NsRecord. </summary>
+        public IList<ObservedBoolean> NsRecord { get; }
+
+        /// <summary> Gets the MxRecord. </summary>
+        public IList<ObservedBoolean> MxRecord { get; }
+
+        /// <summary> Gets the Location. </summary>
+        public IList<ObservedLocation> Location { get; }
+
+        /// <summary> Gets the Hosts. </summary>
+        public IList<ObservedString> Hosts { get; }
+
+        /// <summary> Gets the Nxdomain. </summary>
+        public IList<ObservedBoolean> Nxdomain { get; }
+
+        /// <summary> Gets the SslServerConfig. </summary>
+        public IList<SslServerConfig> SslServerConfig { get; }
+
+        /// <summary> Gets the Ipv4. </summary>
         public bool? Ipv4 { get; }
-        /// <summary> Gets the ipv 6. </summary>
+
+        /// <summary> Gets the Ipv6. </summary>
         public bool? Ipv6 { get; }
     }
 }

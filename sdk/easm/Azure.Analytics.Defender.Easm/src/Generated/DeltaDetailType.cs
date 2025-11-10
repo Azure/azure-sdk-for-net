@@ -14,38 +14,57 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct DeltaDetailType : IEquatable<DeltaDetailType>
     {
         private readonly string _value;
+        /// <summary> added. </summary>
+        private const string AddedValue = "added";
+        /// <summary> removed. </summary>
+        private const string RemovedValue = "removed";
 
         /// <summary> Initializes a new instance of <see cref="DeltaDetailType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeltaDetailType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AddedValue = "added";
-        private const string RemovedValue = "removed";
+            _value = value;
+        }
 
         /// <summary> added. </summary>
         public static DeltaDetailType Added { get; } = new DeltaDetailType(AddedValue);
+
         /// <summary> removed. </summary>
         public static DeltaDetailType Removed { get; } = new DeltaDetailType(RemovedValue);
+
         /// <summary> Determines if two <see cref="DeltaDetailType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeltaDetailType left, DeltaDetailType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeltaDetailType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeltaDetailType left, DeltaDetailType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeltaDetailType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeltaDetailType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeltaDetailType(string value) => new DeltaDetailType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeltaDetailType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeltaDetailType?(string value) => value == null ? null : new DeltaDetailType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeltaDetailType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeltaDetailType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

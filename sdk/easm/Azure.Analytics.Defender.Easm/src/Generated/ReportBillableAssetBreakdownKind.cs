@@ -14,41 +14,59 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct ReportBillableAssetBreakdownKind : IEquatable<ReportBillableAssetBreakdownKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReportBillableAssetBreakdownKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DomainValue = "domain";
         private const string HostValue = "host";
         private const string IpAddressValue = "ipAddress";
 
-        /// <summary> domain. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ReportBillableAssetBreakdownKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Domain. </summary>
         public static ReportBillableAssetBreakdownKind Domain { get; } = new ReportBillableAssetBreakdownKind(DomainValue);
-        /// <summary> host. </summary>
+
+        /// <summary> Gets the Host. </summary>
         public static ReportBillableAssetBreakdownKind Host { get; } = new ReportBillableAssetBreakdownKind(HostValue);
-        /// <summary> ipAddress. </summary>
+
+        /// <summary> Gets the IpAddress. </summary>
         public static ReportBillableAssetBreakdownKind IpAddress { get; } = new ReportBillableAssetBreakdownKind(IpAddressValue);
+
         /// <summary> Determines if two <see cref="ReportBillableAssetBreakdownKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportBillableAssetBreakdownKind left, ReportBillableAssetBreakdownKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportBillableAssetBreakdownKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportBillableAssetBreakdownKind left, ReportBillableAssetBreakdownKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportBillableAssetBreakdownKind(string value) => new ReportBillableAssetBreakdownKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportBillableAssetBreakdownKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportBillableAssetBreakdownKind?(string value) => value == null ? null : new ReportBillableAssetBreakdownKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportBillableAssetBreakdownKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportBillableAssetBreakdownKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

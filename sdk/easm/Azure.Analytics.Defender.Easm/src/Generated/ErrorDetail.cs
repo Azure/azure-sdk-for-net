@@ -13,47 +13,14 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> This is the top-level error object whose code matches the x-ms-error-code response header. </summary>
     public partial class ErrorDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> This is one of a server-defined set of error codes. </param>
         /// <param name="message"> This is a human-readable representation of the error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorDetail(string code, string message)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(message, nameof(message));
-
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<ErrorDetail>();
@@ -65,30 +32,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="target"> This is the error target. </param>
         /// <param name="details"> This is an array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> This is an object containing more specific information than the current object about the error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetail(string code, string message, string target, IList<ErrorDetail> details, InnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/> for deserialization. </summary>
-        internal ErrorDetail()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is one of a server-defined set of error codes. </summary>
         public string Code { get; }
+
         /// <summary> This is a human-readable representation of the error. </summary>
         public string Message { get; }
+
         /// <summary> This is the error target. </summary>
         public string Target { get; }
+
         /// <summary> This is an array of details about specific errors that led to this reported error. </summary>
-        public IReadOnlyList<ErrorDetail> Details { get; }
+        public IList<ErrorDetail> Details { get; }
+
         /// <summary> This is an object containing more specific information than the current object about the error. </summary>
         public InnerError Innererror { get; }
     }

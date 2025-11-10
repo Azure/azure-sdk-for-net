@@ -8,15 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Analytics.Defender.Easm
 {
+    /// <summary>
+    /// The items in the current page of results.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownAssetResource))]
-    public partial class AssetResource : IUtf8JsonSerializable, IJsonModel<AssetResource>
+    public abstract partial class AssetResource : IJsonModel<AssetResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AssetResource"/> for deserialization. </summary>
+        internal AssetResource()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssetResource)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (options.Format != "W")
@@ -80,8 +88,13 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (var item in Labels)
+                foreach (string item in Labels)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -100,7 +113,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("auditTrail"u8);
                 writer.WriteStartArray();
-                foreach (var item in AuditTrail)
+                foreach (AuditTrailItem item in AuditTrail)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -111,15 +124,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,47 +141,63 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        AssetResource IJsonModel<AssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetResource IJsonModel<AssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssetResource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAssetResource(document.RootElement, options);
         }
 
-        internal static AssetResource DeserializeAssetResource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AssetResource DeserializeAssetResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "as": return AsAssetResource.DeserializeAsAssetResource(element, options);
-                    case "contact": return ContactAssetResource.DeserializeContactAssetResource(element, options);
-                    case "domain": return DomainAssetResource.DeserializeDomainAssetResource(element, options);
-                    case "host": return HostAssetResource.DeserializeHostAssetResource(element, options);
-                    case "ipAddress": return IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
-                    case "ipBlock": return IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
-                    case "page": return PageAssetResource.DeserializePageAssetResource(element, options);
-                    case "sslCert": return SslCertAssetResource.DeserializeSslCertAssetResource(element, options);
+                    case "as":
+                        return AsAssetResource.DeserializeAsAssetResource(element, options);
+                    case "contact":
+                        return ContactAssetResource.DeserializeContactAssetResource(element, options);
+                    case "domain":
+                        return DomainAssetResource.DeserializeDomainAssetResource(element, options);
+                    case "host":
+                        return HostAssetResource.DeserializeHostAssetResource(element, options);
+                    case "ipAddress":
+                        return IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
+                    case "ipBlock":
+                        return IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
+                    case "page":
+                        return PageAssetResource.DeserializePageAssetResource(element, options);
+                    case "sslCert":
+                        return SslCertAssetResource.DeserializeSslCertAssetResource(element, options);
                 }
             }
             return UnknownAssetResource.DeserializeUnknownAssetResource(element, options);
         }
 
-        BinaryData IPersistableModel<AssetResource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssetResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -178,15 +207,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        AssetResource IPersistableModel<AssetResource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetResource IPersistableModel<AssetResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAssetResource(document.RootElement, options);
                     }
                 default:
@@ -194,22 +228,14 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AssetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AssetResource FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AssetResource"/> from. </param>
+        public static explicit operator AssetResource(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAssetResource(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAssetResource(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

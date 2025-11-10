@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The PageCause. </summary>
     public partial class PageCause
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PageCause"/>. </summary>
         internal PageCause()
@@ -58,8 +29,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="loopDetected"></param>
         /// <param name="version"></param>
         /// <param name="domChangeIndex"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PageCause(string cause, string causeElementXPath, string location, int? possibleMatches, bool? loopDetected, int? version, int? domChangeIndex, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PageCause(string cause, string causeElementXPath, string location, int? possibleMatches, bool? loopDetected, int? version, int? domChangeIndex, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cause = cause;
             CauseElementXPath = causeElementXPath;
@@ -68,22 +39,28 @@ namespace Azure.Analytics.Defender.Easm
             LoopDetected = loopDetected;
             Version = version;
             DomChangeIndex = domChangeIndex;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the cause. </summary>
+        /// <summary> Gets the Cause. </summary>
         public string Cause { get; }
-        /// <summary> Gets the cause element x path. </summary>
+
+        /// <summary> Gets the CauseElementXPath. </summary>
         public string CauseElementXPath { get; }
-        /// <summary> Gets the location. </summary>
+
+        /// <summary> Gets the Location. </summary>
         public string Location { get; }
-        /// <summary> Gets the possible matches. </summary>
+
+        /// <summary> Gets the PossibleMatches. </summary>
         public int? PossibleMatches { get; }
-        /// <summary> Gets the loop detected. </summary>
+
+        /// <summary> Gets the LoopDetected. </summary>
         public bool? LoopDetected { get; }
-        /// <summary> Gets the version. </summary>
+
+        /// <summary> Gets the Version. </summary>
         public int? Version { get; }
-        /// <summary> Gets the dom change index. </summary>
+
+        /// <summary> Gets the DomChangeIndex. </summary>
         public int? DomChangeIndex { get; }
     }
 }
