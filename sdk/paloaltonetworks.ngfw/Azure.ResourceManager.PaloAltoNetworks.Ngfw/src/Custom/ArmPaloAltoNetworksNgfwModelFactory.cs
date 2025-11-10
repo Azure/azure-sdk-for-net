@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="panoramaStatus"> Panorama Status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallStatusData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState)
             => PaloAltoNetworksFirewallStatusData(id, name, resourceType, systemData, isPanoramaManaged, healthStatus, healthReason, panoramaStatus, provisioningState, default, default);
 
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag = null, FirewallNetworkProfile networkProfile = null, FirewallBooleanType? isPanoramaManaged = null, FirewallPanoramaConfiguration panoramaConfig = null, RulestackDetails associatedRulestack = null, FirewallDnsSettings dnsSettings = null, IEnumerable<FirewallFrontendSetting> frontEndSettings = null, FirewallProvisioningState? provisioningState = null, FirewallBillingPlanInfo planData = null, PanFirewallMarketplaceDetails marketplaceDetails = null)
             => PaloAltoNetworksFirewallData(id, name, resourceType, systemData, tags, location, panETag, networkProfile, isPanoramaManaged, default, panoramaConfig, associatedRulestack, dnsSettings, frontEndSettings, provisioningState, planData, marketplaceDetails, default, identity);
 
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="securityServices"> Security Profile. </param>
         /// <returns> A new <see cref="Ngfw.LocalRulestackData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LocalRulestackData LocalRulestackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag = null, AzureLocation? panLocation = null, RulestackScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, RuleCreationDefaultMode? defaultMode = null, string minAppIdVersion = null, FirewallProvisioningState? provisioningState = null, RulestackSecurityServices securityServices = null)
             => LocalRulestackData(id, name, resourceType, systemData, tags, location, panETag, panLocation, scope, associatedSubscriptions, description, defaultMode, minAppIdVersion, provisioningState, securityServices = default, identity = default);
 
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Ngfw.LocalRulestackCertificateObjectData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
             => LocalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
 
@@ -100,6 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="securityServices"> Security Profile. </param>
         /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, ManagedServiceIdentity identity = null, ETag? panETag = null, AzureLocation? panLocation = null, RulestackScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, RuleCreationDefaultMode? defaultMode = null, string minAppIdVersion = null, FirewallProvisioningState? provisioningState = null, RulestackSecurityServices securityServices = null)
             => GlobalRulestackData(id, name, resourceType, systemData, panETag, panLocation, scope, associatedSubscriptions, description, defaultMode, minAppIdVersion, provisioningState, securityServices, location, identity);
 
@@ -115,6 +121,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="etag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Ngfw.GlobalRulestackCertificateObjectData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
             => GlobalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
     }

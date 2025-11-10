@@ -30,33 +30,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListAppIdsRequestUri(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listAppIds", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (appIdVersion != null)
-            {
-                uri.AppendQuery("appIdVersion", appIdVersion, true);
-            }
-            if (appPrefix != null)
-            {
-                uri.AppendQuery("appPrefix", appPrefix, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            return uri;
-        }
-
         internal HttpMessage CreateListAppIdsRequest(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -90,25 +63,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal RequestUriBuilder CreateListCountriesRequestUri(string globalRulestackName, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listCountries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            return uri;
-        }
-
         internal HttpMessage CreateListCountriesRequest(string globalRulestackName, string skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -134,17 +88,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal RequestUriBuilder CreateListFirewallsRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listFirewalls", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
         internal HttpMessage CreateListFirewallsRequest(string globalRulestackName)
         {
             var message = _pipeline.CreateMessage();
@@ -160,25 +103,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
-        }
-
-        internal RequestUriBuilder CreateListPredefinedUrlCategoriesRequestUri(string globalRulestackName, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listPredefinedUrlCategories", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            return uri;
         }
 
         internal HttpMessage CreateListPredefinedUrlCategoriesRequest(string globalRulestackName, string skip, int? top)
