@@ -13,67 +13,35 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> Definition of the client authentication mechanism to the host. </summary>
     public partial class HostAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HostAuthentication"/>. </summary>
         /// <param name="method"> Defines the method to authenticate the user of the client at the server. </param>
-        public HostAuthentication(AuthenticationMethod method)
+        public HostAuthentication(AuthenticationMethod @method)
         {
-            Method = method;
+            Method = @method;
         }
 
         /// <summary> Initializes a new instance of <see cref="HostAuthentication"/>. </summary>
         /// <param name="method"> Defines the method to authenticate the user of the client at the server. </param>
         /// <param name="usernamePasswordCredentials"> Defines the username and password references when UsernamePassword user authentication mode is selected. </param>
         /// <param name="x509Credentials"> Defines the certificate reference when Certificate user authentication mode is selected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostAuthentication(AuthenticationMethod method, DeviceRegistryUsernamePasswordCredentials usernamePasswordCredentials, X509CertificateCredentials x509Credentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostAuthentication(AuthenticationMethod @method, DeviceRegistryUsernamePasswordCredentials usernamePasswordCredentials, X509CertificateCredentials x509Credentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Method = method;
+            Method = @method;
             UsernamePasswordCredentials = usernamePasswordCredentials;
             X509Credentials = x509Credentials;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HostAuthentication"/> for deserialization. </summary>
-        internal HostAuthentication()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the method to authenticate the user of the client at the server. </summary>
         public AuthenticationMethod Method { get; set; }
+
         /// <summary> Defines the username and password references when UsernamePassword user authentication mode is selected. </summary>
         public DeviceRegistryUsernamePasswordCredentials UsernamePasswordCredentials { get; set; }
+
         /// <summary> Defines the certificate reference when Certificate user authentication mode is selected. </summary>
         public X509CertificateCredentials X509Credentials { get; set; }
     }

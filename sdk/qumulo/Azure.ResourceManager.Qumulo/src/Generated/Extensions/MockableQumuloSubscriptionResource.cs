@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

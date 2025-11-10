@@ -54,7 +54,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Create a certificate profile. </summary>
+        /// <summary>
+        /// Create a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="data"> Parameters to create the certificate profile. </param>
@@ -96,7 +112,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Create a certificate profile. </summary>
+        /// <summary>
+        /// Create a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="data"> Parameters to create the certificate profile. </param>
@@ -138,7 +170,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Get details of a certificate profile. </summary>
+        /// <summary>
+        /// Get details of a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
@@ -171,7 +219,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Get details of a certificate profile. </summary>
+        /// <summary>
+        /// Get details of a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
@@ -228,7 +292,23 @@ namespace Azure.ResourceManager.TrustedSigning
             return new PageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get details of a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
@@ -269,7 +349,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get details of a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
@@ -310,7 +406,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get details of a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
@@ -355,7 +467,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get details of a certificate profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="profileName"> Certificate profile name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>

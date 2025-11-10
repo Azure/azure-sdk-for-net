@@ -1,18 +1,20 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20251017.1"
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20251109.2"
   },
   "devDependencies": {
-    "@azure-tools/typespec-azure-core": "0.60.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.60.0",
-    "@azure-tools/typespec-azure-rulesets": "0.60.0",
-    "@azure-tools/typespec-client-generator-core": "0.60.0",
-    "@azure-tools/typespec-liftr-base": "0.8.0",
-    "@typespec/compiler": "1.4.0",
-    "@typespec/http": "1.4.0",
-    "@typespec/openapi": "1.4.0",
-    "@typespec/rest": "0.74.0",
-    "@typespec/versioning": "0.74.0"
+    "@azure-tools/typespec-autorest": "0.61.0",
+    "@azure-tools/typespec-azure-core": "0.61.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.61.0",
+    "@azure-tools/typespec-azure-rulesets": "0.61.0",
+    "@azure-tools/typespec-client-generator-core": "0.61.2",
+    "@azure-tools/typespec-liftr-base": "0.11.0",
+    "@typespec/compiler": "1.5.0",
+    "@typespec/http": "1.5.0",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20251022.4",
+    "@typespec/openapi": "1.5.0",
+    "@typespec/rest": "0.75.0",
+    "@typespec/versioning": "0.75.0"
   }
 }

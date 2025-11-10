@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="isModelAdditionalProperties"> The <see cref="IsModelAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsModelAdditionalProperties isModelAdditionalProperties) => throw null;
 
-        public static explicit operator IsModelAdditionalProperties(Response result) => throw null;
+        public static explicit operator IsModelAdditionalProperties(Response response) => throw null;
     }
 }

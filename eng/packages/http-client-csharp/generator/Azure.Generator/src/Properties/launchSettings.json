@@ -30,11 +30,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-azure-client-generator-core-alternate-type": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/alternate-type -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-azure-client-generator-core-api-version-header": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/api-version/header -g AzureStubGenerator",
       "commandName": "Executable",

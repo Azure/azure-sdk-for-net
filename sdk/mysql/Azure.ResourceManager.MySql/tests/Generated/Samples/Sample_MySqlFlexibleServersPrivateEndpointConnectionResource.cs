@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/PrivateEndpointConnectionGet.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +50,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/PrivateEndpointConnectionDelete.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/PrivateEndpointConnectionDelete.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +77,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/PrivateEndpointConnectionUpdate.json
-            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/PrivateEndpointConnectionUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnection_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,14 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServersPrivateEndpointConnectionResource mySqlFlexibleServersPrivateEndpointConnection = client.GetMySqlFlexibleServersPrivateEndpointConnectionResource(mySqlFlexibleServersPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            MySqlFlexibleServersPrivateEndpointConnectionData data = new MySqlFlexibleServersPrivateEndpointConnectionData
-            {
-                ConnectionState = new MySqlFlexibleServersPrivateLinkServiceConnectionState
-                {
-                    Status = MySqlFlexibleServersPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Approved by johndoe@contoso.com",
-                },
-            };
+            MySqlFlexibleServersPrivateEndpointConnectionData data = new MySqlFlexibleServersPrivateEndpointConnectionData();
             ArmOperation<MySqlFlexibleServersPrivateEndpointConnectionResource> lro = await mySqlFlexibleServersPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
             MySqlFlexibleServersPrivateEndpointConnectionResource result = lro.Value;
 

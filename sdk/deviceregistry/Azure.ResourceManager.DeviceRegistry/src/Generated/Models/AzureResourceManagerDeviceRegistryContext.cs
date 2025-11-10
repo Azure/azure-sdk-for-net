@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileListResult))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatus))]
@@ -106,7 +107,6 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(EventStorageDestination))]
     [ModelReaderWriterBuildable(typeof(HostAuthentication))]
     [ModelReaderWriterBuildable(typeof(InboundEndpoints))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagementAction))]
     [ModelReaderWriterBuildable(typeof(ManagementGroup))]
     [ModelReaderWriterBuildable(typeof(MessageSchemaReference))]
@@ -147,6 +147,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(StreamDestination))]
     [ModelReaderWriterBuildable(typeof(StreamMqttDestination))]
     [ModelReaderWriterBuildable(typeof(StreamStorageDestination))]
+    [ModelReaderWriterBuildable(typeof(Models.SystemAssignedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownDatasetDestination))]

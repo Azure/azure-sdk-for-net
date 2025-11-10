@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 type,
                 systemData,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupMetadata,
                 error,
                 status,
                 startTime,
                 endTime,
                 percentComplete,
-                datasourceSizeInBytes,
-                dataTransferredInBytes,
-                backupMetadata,
                 serializedAdditionalRawData);
         }
 

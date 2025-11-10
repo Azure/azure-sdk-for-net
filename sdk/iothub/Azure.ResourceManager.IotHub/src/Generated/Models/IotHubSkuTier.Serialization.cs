@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IotHubSkuTier.Free => "Free",
             IotHubSkuTier.Standard => "Standard",
             IotHubSkuTier.Basic => "Basic",
+            IotHubSkuTier.Generation2 => "Generation2",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.")
         };
 
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return IotHubSkuTier.Free;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return IotHubSkuTier.Standard;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return IotHubSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Generation2")) return IotHubSkuTier.Generation2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.");
         }
     }

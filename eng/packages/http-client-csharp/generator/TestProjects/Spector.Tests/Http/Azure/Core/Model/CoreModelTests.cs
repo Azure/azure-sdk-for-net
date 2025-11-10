@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Model;
+using Specs.Azure.Core.Model;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.Core.Model

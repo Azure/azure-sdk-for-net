@@ -14,38 +14,57 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentFontStyle : IEquatable<DocumentFontStyle>
     {
         private readonly string _value;
+        /// <summary> Characters are represented normally. </summary>
+        private const string NormalValue = "normal";
+        /// <summary> Characters are visually slanted to the right. </summary>
+        private const string ItalicValue = "italic";
 
         /// <summary> Initializes a new instance of <see cref="DocumentFontStyle"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentFontStyle(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NormalValue = "normal";
-        private const string ItalicValue = "italic";
+            _value = value;
+        }
 
         /// <summary> Characters are represented normally. </summary>
         public static DocumentFontStyle Normal { get; } = new DocumentFontStyle(NormalValue);
+
         /// <summary> Characters are visually slanted to the right. </summary>
         public static DocumentFontStyle Italic { get; } = new DocumentFontStyle(ItalicValue);
+
         /// <summary> Determines if two <see cref="DocumentFontStyle"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentFontStyle left, DocumentFontStyle right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentFontStyle"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentFontStyle left, DocumentFontStyle right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFontStyle"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentFontStyle"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentFontStyle(string value) => new DocumentFontStyle(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentFontStyle"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentFontStyle?(string value) => value == null ? null : new DocumentFontStyle(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentFontStyle other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentFontStyle other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
