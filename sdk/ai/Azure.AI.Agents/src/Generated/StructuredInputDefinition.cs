@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Agents;
 
-namespace Azure.AI.Agents
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>
     public partial class StructuredInputDefinition

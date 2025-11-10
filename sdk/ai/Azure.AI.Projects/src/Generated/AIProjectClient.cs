@@ -6,7 +6,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace Azure.AI.Projects
 {
@@ -36,44 +35,10 @@ namespace Azure.AI.Projects
         private Evaluators _cachedEvaluators;
         private Insights _cachedInsights;
         private Schedules _cachedSchedules;
+        private AIProjectAgentsOperations _cachedAIProjectAgentsOperations;
+        private AIProjectMemoryStoresOperations _cachedAIProjectMemoryStoresOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
-
-        /// <summary> Initializes a new instance of RedTeams. </summary>
-        public virtual RedTeams GetRedTeamsClient()
-        {
-            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
-        }
-
-        /// <summary> Initializes a new instance of EvaluationRules. </summary>
-        public virtual EvaluationRules GetEvaluationRulesClient()
-        {
-            return Volatile.Read(ref _cachedEvaluationRules) ?? Interlocked.CompareExchange(ref _cachedEvaluationRules, new EvaluationRules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationRules;
-        }
-
-        /// <summary> Initializes a new instance of EvaluationTaxonomies. </summary>
-        public virtual EvaluationTaxonomies GetEvaluationTaxonomiesClient()
-        {
-            return Volatile.Read(ref _cachedEvaluationTaxonomies) ?? Interlocked.CompareExchange(ref _cachedEvaluationTaxonomies, new EvaluationTaxonomies(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationTaxonomies;
-        }
-
-        /// <summary> Initializes a new instance of Evaluators. </summary>
-        public virtual Evaluators GetEvaluatorsClient()
-        {
-            return Volatile.Read(ref _cachedEvaluators) ?? Interlocked.CompareExchange(ref _cachedEvaluators, new Evaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluators;
-        }
-
-        /// <summary> Initializes a new instance of Insights. </summary>
-        public virtual Insights GetInsightsClient()
-        {
-            return Volatile.Read(ref _cachedInsights) ?? Interlocked.CompareExchange(ref _cachedInsights, new Insights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedInsights;
-        }
-
-        /// <summary> Initializes a new instance of Schedules. </summary>
-        public virtual Schedules GetSchedulesClient()
-        {
-            return Volatile.Read(ref _cachedSchedules) ?? Interlocked.CompareExchange(ref _cachedSchedules, new Schedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedSchedules;
-        }
     }
 }

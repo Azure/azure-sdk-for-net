@@ -36,9 +36,9 @@ namespace OpenAI
         }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "url";
+        internal string Type { get; } = "url";
 
-        /// <summary> Gets or sets the Url. </summary>
-        public string Url { get; set; }
+        /// <summary> Gets the Url. </summary>
+        public string Url { get; }
     }
 }

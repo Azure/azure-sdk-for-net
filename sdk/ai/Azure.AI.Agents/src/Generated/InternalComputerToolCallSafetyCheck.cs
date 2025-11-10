@@ -43,12 +43,12 @@ namespace OpenAI
         }
 
         /// <summary> The ID of the pending safety check. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The type of the pending safety check. </summary>
-        public string Code { get; set; }
+        public string Code { get; }
 
         /// <summary> Details about the pending safety check. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }

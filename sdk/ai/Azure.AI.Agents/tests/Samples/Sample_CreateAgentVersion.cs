@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -49,8 +50,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_CreateCoversation_Async
-        ConversationClient coversations = client.GetConversationClient();
-        AgentConversation conversation = await coversations.CreateConversationAsync();
+        AgentConversation conversation = await client.OpenAI.Conversations.CreateAgentConversationAsync();
         ModelReaderWriterOptions options = new("W");
         BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
         #endregion
@@ -77,7 +77,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async
-        await coversations.DeleteConversationAsync(conversationId: conversation.Id);
+        await client.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation.Id);
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -113,8 +113,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_CreateCoversation_Sync
-        ConversationClient coversations = client.GetConversationClient();
-        AgentConversation conversation = coversations.CreateConversation();
+        AgentConversation conversation = client.OpenAI.Conversations.CreateAgentConversation();
         ModelReaderWriterOptions options = new("W");
         BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
         #endregion
@@ -142,7 +141,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync
-        coversations.DeleteConversation(conversationId: conversation.Id);
+        client.OpenAI.Conversations.DeleteConversation(conversationId: conversation.Id);
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

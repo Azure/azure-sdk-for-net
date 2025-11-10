@@ -29,7 +29,7 @@ namespace OpenAI
             Text = text;
         }
 
-        /// <summary> Gets or sets the Text. </summary>
-        public string Text { get; set; }
+        /// <summary> Gets the Text. </summary>
+        public string Text { get; }
     }
 }

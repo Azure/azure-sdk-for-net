@@ -34,9 +34,9 @@ namespace OpenAI
         }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; set; }
+        public string FileId { get; }
 
         /// <summary> The index of the file in the list of files. </summary>
-        public int Index { get; set; }
+        public int Index { get; }
     }
 }

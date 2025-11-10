@@ -40,12 +40,12 @@ namespace OpenAI
         }
 
         /// <summary> Base64-encoded audio data. </summary>
-        public string Data { get; set; }
+        public string Data { get; }
 
         /// <summary>
         /// The format of the audio data. Currently supported formats are `mp3` and
         /// `wav`.
         /// </summary>
-        public ItemContentInputAudioFormat Format { get; set; }
+        public ItemContentInputAudioFormat Format { get; }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -26,42 +27,39 @@ public class Sample_conversation_CRUD : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Async
-        ConversationClient conversationClient = client.GetConversationClient();
-        AgentConversation conversation1 = await conversationClient.CreateConversationAsync();
+        AgentConversation conversation1 = await client.OpenAI.Conversations.CreateAgentConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-        AgentConversation conversation2 = await conversationClient.CreateConversationAsync();
+        AgentConversation conversation2 = await client.OpenAI.Conversations.CreateAgentConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
         #region Snippet:Sample_GetConversation_ConversationCRUD_Async
-        AgentConversation conversation = await conversationClient.GetConversationAsync(conversationId: conversation1.Id);
+        AgentConversation conversation = await client.OpenAI.Conversations.GetAgentConversationAsync(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Async
-        await foreach (AgentConversation res in conversationClient.GetConversationsAsync()){
+        await foreach (AgentConversation res in client.OpenAI.Conversations.GetAgentConversationsAsync()){
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
 
         #region Snippet:Sample_UpdateConversations_ConversationCRUD_Async
-        AgentConversationUpdateOptions updateOptions = new()
+        ProjectConversationUpdateOptions updateOptions = new()
         {
             Metadata = { ["key"] = "value" },
         };
-        await conversationClient.UpdateConversationAsync(conversation.Id, updateOptions);
+        await client.OpenAI.Conversations.UpdateAgentConversationAsync(conversation.Id, updateOptions);
 
         // Get the updated conversation.
-        conversation = await conversationClient.GetConversationAsync(conversation1.Id);
+        conversation = await client.OpenAI.Conversations.GetAgentConversationAsync(conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_DeleteConversations_ConversationCRUD_Async
-        await conversationClient.DeleteConversationAsync(conversationId: conversation1.Id);
-        Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
-        await conversationClient.DeleteConversationAsync(conversationId: conversation2.Id);
-        Console.WriteLine($"Conversation deleted(id: {conversation2.Id})");
+        await client.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation1.Id);
+        await client.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation2.Id);
         #endregion
     }
 
@@ -77,43 +75,40 @@ public class Sample_conversation_CRUD : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Sync
-        ConversationClient conversationClient = client.GetConversationClient();
-        AgentConversation conversation1 = conversationClient.CreateConversation();
+        AgentConversation conversation1 = client.OpenAI.Conversations.CreateAgentConversation();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-        AgentConversation conversation2 = conversationClient.CreateConversation();
+        AgentConversation conversation2 = client.OpenAI.Conversations.CreateAgentConversation();
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
         #region Snippet:Sample_GetConversation_ConversationCRUD_Sync
-        AgentConversation conversation = conversationClient.GetConversation(conversationId: conversation1.Id);
+        AgentConversation conversation = client.OpenAI.Conversations.GetAgentConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Sync
-        foreach (AgentConversation res in conversationClient.GetConversations())
+        foreach (AgentConversation res in client.OpenAI.Conversations.GetAgentConversations())
         {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
 
         #region Snippet:Sample_UpdateConversations_ConversationCRUD_Sync
-        AgentConversationUpdateOptions updateOptions = new()
+        ProjectConversationUpdateOptions updateOptions = new()
         {
             Metadata = { ["key"] = "value" },
         };
-        conversationClient.UpdateConversation(conversation1.Id, updateOptions);
+        client.OpenAI.Conversations.UpdateAgentConversation(conversation1.Id, updateOptions);
 
         // Get the updated conversation.
-        conversation = conversationClient.GetConversation(conversationId: conversation1.Id);
+        conversation = client.OpenAI.Conversations.GetAgentConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_DeleteConversations_ConversationCRUD_Sync
-        conversationClient.DeleteConversation(conversationId: conversation1.Id);
-        Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
-        conversationClient.DeleteConversation(conversationId: conversation2.Id);
-        Console.WriteLine($"Conversation deleted(id: {conversation2.Id})");
+        client.OpenAI.Conversations.DeleteConversation(conversationId: conversation1.Id);
+        client.OpenAI.Conversations.DeleteConversation(conversationId: conversation2.Id);
         #endregion
     }
 

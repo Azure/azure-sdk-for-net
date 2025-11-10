@@ -142,7 +142,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    options: new(agentDefinition));
+    definition: agentDefinition, options: null);
 ```
 
 Asynchronous sample:
@@ -156,7 +156,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    options: new(agentDefinition));
+    definition: agentDefinition, options: null);
 ```
 
 5. To supply functions outputs, we will need to wait for response multiple times. We will define methods `CreateAndWaitForResponse` and `CreateAndWaitForResponseAsync` for brevity.

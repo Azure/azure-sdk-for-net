@@ -35,9 +35,9 @@ namespace OpenAI
         }
 
         /// <summary> Base64-encoded audio data from the model. </summary>
-        public string Data { get; set; }
+        public string Data { get; }
 
         /// <summary> The transcript of the audio data from the model. </summary>
-        public string Transcript { get; set; }
+        public string Transcript { get; }
     }
 }

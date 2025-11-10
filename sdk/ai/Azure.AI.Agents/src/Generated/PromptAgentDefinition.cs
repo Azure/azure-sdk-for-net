@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.OpenAI;
 using OpenAI;
 
 namespace Azure.AI.Agents

@@ -12,8 +12,11 @@ namespace Azure.AI.Projects
     {
         /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
-        internal CodeBasedEvaluatorDefinition(string codeText) : base(EvaluatorDefinitionType.Code)
+        /// <exception cref="ArgumentNullException"> <paramref name="codeText"/> is null. </exception>
+        public CodeBasedEvaluatorDefinition(string codeText) : base(EvaluatorDefinitionType.Code)
         {
+            Argument.AssertNotNull(codeText, nameof(codeText));
+
             CodeText = codeText;
         }
 
@@ -30,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Inline code text for the evaluator. </summary>
-        public string CodeText { get; }
+        public string CodeText { get; set; }
     }
 }

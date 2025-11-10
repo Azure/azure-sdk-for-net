@@ -33,7 +33,7 @@ namespace OpenAI
         }
 
         /// <summary> The search query. </summary>
-        public string Query { get; set; }
+        public string Query { get; }
 
         /// <summary> The sources used in the search. </summary>
         public IList<WebSearchActionSearchSources> Sources { get; }

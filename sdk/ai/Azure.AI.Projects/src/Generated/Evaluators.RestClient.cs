@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects
@@ -117,7 +118,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateCreateVersionRequest(string name, RequestOptions options)
+        internal PipelineMessage CreateCreateVersionRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -127,12 +128,14 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
+            request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
+            request.Content = content;
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateUpdateVersionRequest(string name, string version, RequestOptions options)
+        internal PipelineMessage CreateUpdateVersionRequest(string name, string version, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -143,7 +146,9 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
+            request.Content = content;
             message.Apply(options);
             return message;
         }

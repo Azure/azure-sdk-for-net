@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Agents;

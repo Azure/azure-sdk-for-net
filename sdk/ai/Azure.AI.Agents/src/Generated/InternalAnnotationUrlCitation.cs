@@ -43,15 +43,15 @@ namespace OpenAI
         }
 
         /// <summary> The URL of the web resource. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
 
         /// <summary> The index of the first character of the URL citation in the message. </summary>
-        public int StartIndex { get; set; }
+        public int StartIndex { get; }
 
         /// <summary> The index of the last character of the URL citation in the message. </summary>
-        public int EndIndex { get; set; }
+        public int EndIndex { get; }
 
         /// <summary> The title of the web resource. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
     }
 }

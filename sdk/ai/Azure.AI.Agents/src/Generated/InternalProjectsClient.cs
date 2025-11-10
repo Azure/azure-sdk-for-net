@@ -26,7 +26,6 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
-        private ConversationClient _cachedConversationClient;
         private MemoryStoreClient _cachedMemoryStoreClient;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
@@ -62,12 +61,6 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
-
-        /// <summary> Initializes a new instance of ConversationClient. </summary>
-        public virtual ConversationClient GetConversationClient()
-        {
-            return Volatile.Read(ref _cachedConversationClient) ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ConversationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConversationClient;
-        }
 
         /// <summary> Initializes a new instance of MemoryStoreClient. </summary>
         public virtual MemoryStoreClient GetMemoryStoreClient()

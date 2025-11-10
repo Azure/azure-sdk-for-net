@@ -47,7 +47,7 @@ namespace OpenAI
         }
 
         /// <summary> The type of the local shell action. Always `exec`. </summary>
-        public string Type { get; } = "exec";
+        internal string Type { get; } = "exec";
 
         /// <summary> The command to run. </summary>
         public IList<string> Command { get; }
