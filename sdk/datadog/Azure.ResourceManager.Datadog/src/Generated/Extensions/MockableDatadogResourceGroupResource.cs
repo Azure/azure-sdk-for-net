@@ -33,73 +33,148 @@ namespace Azure.ResourceManager.Datadog.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DatadogMonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DatadogMonitorResources and their operations over a DatadogMonitorResource. </returns>
-        public virtual DatadogMonitorResourceCollection GetDatadogMonitorResources()
+        /// <summary> Gets a collection of LocationDryrunResources in the ResourceGroupResource. </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <returns> An object representing collection of LocationDryrunResources and their operations over a LocationDryrunResource. </returns>
+        public virtual LocationDryrunCollection GetLocationDryruns(AzureLocation location)
         {
-            return GetCachedClient(client => new DatadogMonitorResourceCollection(client, Id));
+            return new LocationDryrunCollection(Client, Id, location);
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// get a dryrun job
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>Connector_GetDryrun</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// <description><see cref="LocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="dryrunName"> The name of dryrun. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatadogMonitorResource>> GetDatadogMonitorResourceAsync(string monitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationDryrunResource>> GetLocationDryrunAsync(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
         {
-            return await GetDatadogMonitorResources().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetLocationDryruns(location).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// get a dryrun job
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>Connector_GetDryrun</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// <description><see cref="LocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="dryrunName"> The name of dryrun. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatadogMonitorResource> GetDatadogMonitorResource(string monitorName, CancellationToken cancellationToken = default)
+        public virtual Response<LocationDryrunResource> GetLocationDryrun(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
         {
-            return GetDatadogMonitorResources().Get(monitorName, cancellationToken);
+            return GetLocationDryruns(location).Get(dryrunName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LocationConnectorResources in the ResourceGroupResource. </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <returns> An object representing collection of LocationConnectorResources and their operations over a LocationConnectorResource. </returns>
+        public virtual LocationConnectorCollection GetLocationConnectors(AzureLocation location)
+        {
+            return new LocationConnectorCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Returns Connector resource for a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocationConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="connectorName"> The name of resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LocationConnectorResource>> GetLocationConnectorAsync(AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetLocationConnectors(location).GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns Connector resource for a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocationConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="connectorName"> The name of resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LocationConnectorResource> GetLocationConnector(AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return GetLocationConnectors(location).Get(connectorName, cancellationToken);
         }
     }
 }
