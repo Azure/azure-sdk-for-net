@@ -140,10 +140,10 @@ def analyze_version_changes(repo_root: str, changelog_path: str, since_date: str
     Analyze version changes for a single CHANGELOG.md file.
     
     Algorithm:
-    1. Go through commits chronologically
-    2. Track the "top" version (first in changelog) at each commit
-    3. When a version transitions from unreleased to released, count how many
-       distinct unreleased version numbers appeared before that release
+    1. Read the current CHANGELOG content and extract ALL releases
+    2. Filter releases by date range
+    3. For each release in range, check git history to count version changes while unreleased
+    4. If no git history exists (file was regenerated), assume 0 changes
     
     Example:
     - Commit 1: ## 1.0.0-beta.1 (Unreleased)  <- Start tracking
@@ -152,10 +152,11 @@ def analyze_version_changes(repo_root: str, changelog_path: str, since_date: str
     
     Returns: Dictionary with analysis results
     """
-    # Get git history for this file
-    history = get_git_history_for_file(repo_root, changelog_path, since_date)
-    
-    if not history:
+    # First, read the current CHANGELOG to get all releases
+    try:
+        with open(changelog_path, 'r') as f:
+            current_content = f.read()
+    except FileNotFoundError:
         return {
             "path": changelog_path,
             "releases": [],
@@ -163,71 +164,97 @@ def analyze_version_changes(repo_root: str, changelog_path: str, since_date: str
             "avg_changes": 0.0
         }
     
-    # Build sequence of top versions commit by commit
-    commit_sequence = []
+    # Extract all versions from current changelog
+    all_versions = extract_versions_from_changelog(current_content)
     
-    # Process commits in chronological order (oldest first)
-    for commit_hash, commit_date, content in reversed(history):
-        versions = extract_versions_from_changelog(content)
-        
-        if versions:
-            top_version, top_release_date = versions[0]
-            commit_sequence.append({
-                "commit": commit_hash[:7],
-                "date": commit_date.split()[0],
-                "version": top_version,
-                "released": top_release_date is not None,
-                "release_date": top_release_date
-            })
+    # Filter to only released versions within date range
+    cutoff_dt = datetime.strptime(since_date, "%Y-%m-%d")
+    releases_in_range = []
     
-    # Find release events and count preceding unreleased version changes
-    releases = []
-    i = 0
-    
-    while i < len(commit_sequence):
-        commit = commit_sequence[i]
-        
-        # Found a release
-        if commit["released"]:
-            # Filter by date range
+    for version, release_date in all_versions:
+        if release_date:  # Only released versions
             try:
-                release_dt = datetime.strptime(commit["release_date"], "%Y-%m-%d")
-                cutoff_dt = datetime.strptime(since_date, "%Y-%m-%d")
-                
+                release_dt = datetime.strptime(release_date, "%Y-%m-%d")
                 if release_dt >= cutoff_dt:
-                    # Count distinct unreleased versions that came before this release
-                    # Look backwards from this point
-                    unreleased_versions = set()
-                    
-                    # Go back through commits to find unreleased versions leading to this
-                    j = i - 1
-                    while j >= 0:
-                        prev_commit = commit_sequence[j]
-                        
-                        # Stop when we hit another release or a completely different version series
-                        if prev_commit["released"]:
-                            break
-                        
-                        # Add this unreleased version
-                        unreleased_versions.add(prev_commit["version"])
-                        j -= 1
-                    
-                    # Number of changes = distinct versions - 1 (first doesn't count as change)
-                    # But if the released version itself appeared as unreleased, include it
-                    if commit["version"] in [commit_sequence[k]["version"] for k in range(max(0, i-10), i) if not commit_sequence[k]["released"]]:
-                        unreleased_versions.add(commit["version"])
-                    
-                    num_changes = max(0, len(unreleased_versions) - 1) if unreleased_versions else 0
-                    
-                    releases.append({
-                        "version": commit["version"],
-                        "changes": num_changes,
-                        "release_date": commit["release_date"]
-                    })
+                    releases_in_range.append((version, release_date))
             except ValueError:
                 pass
+    
+    if not releases_in_range:
+        return {
+            "path": changelog_path,
+            "releases": [],
+            "total_changes": 0,
+            "avg_changes": 0.0
+        }
+    
+    # Now get git history to track version changes
+    history = get_git_history_for_file(repo_root, changelog_path, since_date)
+    
+    # Build sequence of top versions commit by commit
+    commit_sequence = []
+    if history:
+        # Process commits in chronological order (oldest first)
+        for commit_hash, commit_date, content in reversed(history):
+            versions = extract_versions_from_changelog(content)
+            
+            if versions:
+                top_version, top_release_date = versions[0]
+                commit_sequence.append({
+                    "commit": commit_hash[:7],
+                    "date": commit_date.split()[0],
+                    "version": top_version,
+                    "released": top_release_date is not None,
+                    "release_date": top_release_date
+                })
+    
+    # For each release in range, count version changes
+    releases = []
+    
+    for version, release_date in releases_in_range:
+        # Try to find this release in commit history
+        num_changes = 0
         
-        i += 1
+        if commit_sequence:
+            # Find the release event in commit sequence
+            release_idx = None
+            for i, commit in enumerate(commit_sequence):
+                if commit["version"] == version and commit["released"]:
+                    release_idx = i
+                    break
+            
+            if release_idx is not None:
+                # Count distinct unreleased versions that came before this release
+                unreleased_versions = set()
+                
+                # Go back through commits to find unreleased versions leading to this
+                j = release_idx - 1
+                while j >= 0:
+                    prev_commit = commit_sequence[j]
+                    
+                    # Stop when we hit another release
+                    if prev_commit["released"]:
+                        break
+                    
+                    # Add this unreleased version
+                    unreleased_versions.add(prev_commit["version"])
+                    j -= 1
+                
+                # Check if the released version itself appeared as unreleased
+                for k in range(max(0, release_idx - 10), release_idx):
+                    if (commit_sequence[k]["version"] == version and 
+                        not commit_sequence[k]["released"]):
+                        unreleased_versions.add(version)
+                        break
+                
+                # Number of changes = distinct versions - 1 (first doesn't count as change)
+                num_changes = max(0, len(unreleased_versions) - 1) if unreleased_versions else 0
+        
+        releases.append({
+            "version": version,
+            "changes": num_changes,
+            "release_date": release_date
+        })
     
     total_changes = sum(r["changes"] for r in releases)
     avg_changes = total_changes / len(releases) if releases else 0.0
