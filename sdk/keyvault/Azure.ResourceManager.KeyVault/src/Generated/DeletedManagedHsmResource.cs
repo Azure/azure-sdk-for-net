@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedManagedHsmResource>> GetDeletedAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedManagedHsmResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmResource.GetDeleted");
+            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedManagedHsmData> response = Response.FromValue(DeletedManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedManagedHsmResource> GetDeleted(CancellationToken cancellationToken = default)
+        public virtual Response<DeletedManagedHsmResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmResource.GetDeleted");
+            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedManagedHsmData> response = Response.FromValue(DeletedManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)

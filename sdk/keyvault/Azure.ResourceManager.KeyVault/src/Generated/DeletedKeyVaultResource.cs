@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedKeyVaultResource>> GetDeletedAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedKeyVaultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultResource.GetDeleted");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedKeyVaultData> response = Response.FromValue(DeletedKeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedKeyVaultResource> GetDeleted(CancellationToken cancellationToken = default)
+        public virtual Response<DeletedKeyVaultResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultResource.GetDeleted");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedKeyVaultData> response = Response.FromValue(DeletedKeyVaultData.FromResponse(result), result);
                 if (response.Value == null)

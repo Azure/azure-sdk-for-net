@@ -15,16 +15,16 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for creating or updating a vault. </summary>
-    public partial class VaultCreateOrUpdateParameters : IJsonModel<VaultCreateOrUpdateParameters>
+    public partial class KeyVaultCreateOrUpdateContent : IJsonModel<KeyVaultCreateOrUpdateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="VaultCreateOrUpdateParameters"/> for deserialization. </summary>
-        internal VaultCreateOrUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/> for deserialization. </summary>
+        internal KeyVaultCreateOrUpdateContent()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VaultCreateOrUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyVaultCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VaultCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultCreateOrUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -79,24 +79,24 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VaultCreateOrUpdateParameters IJsonModel<VaultCreateOrUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyVaultCreateOrUpdateContent IJsonModel<KeyVaultCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VaultCreateOrUpdateParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KeyVaultCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VaultCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultCreateOrUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVaultCreateOrUpdateParameters(document.RootElement, options);
+            return DeserializeKeyVaultCreateOrUpdateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VaultCreateOrUpdateParameters DeserializeVaultCreateOrUpdateParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyVaultCreateOrUpdateContent DeserializeKeyVaultCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,58 +144,58 @@ namespace Azure.ResourceManager.KeyVault.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VaultCreateOrUpdateParameters(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new KeyVaultCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VaultCreateOrUpdateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyVaultCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VaultCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VaultCreateOrUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VaultCreateOrUpdateParameters IPersistableModel<VaultCreateOrUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyVaultCreateOrUpdateContent IPersistableModel<KeyVaultCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VaultCreateOrUpdateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KeyVaultCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VaultCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeVaultCreateOrUpdateParameters(document.RootElement, options);
+                        return DeserializeKeyVaultCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultCreateOrUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VaultCreateOrUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyVaultCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="vaultCreateOrUpdateParameters"> The <see cref="VaultCreateOrUpdateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VaultCreateOrUpdateParameters vaultCreateOrUpdateParameters)
+        /// <param name="keyVaultCreateOrUpdateContent"> The <see cref="KeyVaultCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KeyVaultCreateOrUpdateContent keyVaultCreateOrUpdateContent)
         {
-            if (vaultCreateOrUpdateParameters == null)
+            if (keyVaultCreateOrUpdateContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(vaultCreateOrUpdateParameters, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(keyVaultCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

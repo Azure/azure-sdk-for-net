@@ -13,16 +13,16 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for creating or updating a vault. </summary>
-    public partial class VaultCreateOrUpdateParameters
+    public partial class KeyVaultCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VaultCreateOrUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public VaultCreateOrUpdateParameters(AzureLocation location, KeyVaultProperties properties)
+        public KeyVaultCreateOrUpdateContent(AzureLocation location, KeyVaultProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VaultCreateOrUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VaultCreateOrUpdateParameters(AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Tags = tags;

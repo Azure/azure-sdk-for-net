@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(KeyVaultAccessPolicy))]
     [ModelReaderWriterBuildable(typeof(KeyVaultAccessPolicyParameters))]
     [ModelReaderWriterBuildable(typeof(KeyVaultAccessPolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(KeyVaultData))]
     [ModelReaderWriterBuildable(typeof(KeyVaultIPRule))]
     [ModelReaderWriterBuildable(typeof(KeyVaultNameAvailabilityContent))]
@@ -86,7 +87,6 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VaultCreateOrUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(VaultListResult))]
     public partial class AzureResourceManagerKeyVaultContext : ModelReaderWriterContext
     {

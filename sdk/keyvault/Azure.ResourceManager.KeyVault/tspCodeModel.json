@@ -5433,7 +5433,7 @@
     {
       "$id": "454",
       "kind": "model",
-      "name": "VaultCreateOrUpdateParameters",
+      "name": "KeyVaultCreateOrUpdateContent",
       "namespace": "Azure.ResourceManager.KeyVault",
       "crossLanguageDefinitionId": "Microsoft.KeyVault.VaultCreateOrUpdateParameters",
       "usage": "Input,Json",
@@ -21322,7 +21322,7 @@
             {
               "$id": "1876",
               "kind": "basic",
-              "name": "getDeleted",
+              "name": "get",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -21330,7 +21330,7 @@
               "doc": "Gets the deleted Azure key vault.",
               "operation": {
                 "$id": "1877",
-                "name": "getDeleted",
+                "name": "get",
                 "resourceName": "DeletedVault",
                 "doc": "Gets the deleted Azure key vault.",
                 "accessibility": "public",
@@ -28824,7 +28824,7 @@
             {
               "$id": "2506",
               "kind": "basic",
-              "name": "getDeleted",
+              "name": "get",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -28832,7 +28832,7 @@
               "doc": "Gets the specified deleted managed HSM.",
               "operation": {
                 "$id": "2507",
-                "name": "getDeleted",
+                "name": "get",
                 "resourceName": "DeletedManagedHsm",
                 "doc": "Gets the specified deleted managed HSM.",
                 "accessibility": "public",

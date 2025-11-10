@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        /// <returns> A new <see cref="Models.VaultCreateOrUpdateParameters"/> instance for mocking. </returns>
-        public static VaultCreateOrUpdateParameters VaultCreateOrUpdateParameters(AzureLocation location = default, IDictionary<string, string> tags = default, KeyVaultProperties properties = default)
+        /// <returns> A new <see cref="Models.KeyVaultCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultCreateOrUpdateContent KeyVaultCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, KeyVaultProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VaultCreateOrUpdateParameters(location, tags, properties, additionalBinaryDataProperties: null);
+            return new KeyVaultCreateOrUpdateContent(location, tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for creating or updating a vault. </summary>

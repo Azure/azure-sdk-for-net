@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDeletedRequest(Guid subscriptionId, AzureLocation location, string name, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

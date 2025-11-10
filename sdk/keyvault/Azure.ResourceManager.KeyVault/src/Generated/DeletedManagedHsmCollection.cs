@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeletedManagedHsmResource>> GetDeletedAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedManagedHsmResource>> GetAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetDeleted");
+            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedManagedHsmData> response = Response.FromValue(DeletedManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeletedManagedHsmResource> GetDeleted(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedManagedHsmResource> Get(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetDeleted");
+            using DiagnosticScope scope = _deletedManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
             scope.Start();
             try
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedManagedHsmData> response = Response.FromValue(DeletedManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeletedManagedHsmData> response = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeletedManagedHsmData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeletedManagedHsmData> response = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
+                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeletedManagedHsmData> response = default;
