@@ -11,6 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
+    /// <summary>
+    /// A class representing the DnsSecurityRule data model.
+    /// Describes a DNS security rule.
+    /// </summary>
     public partial class DnsSecurityRuleData
     {
         /// <param name="location"> The location. </param>
