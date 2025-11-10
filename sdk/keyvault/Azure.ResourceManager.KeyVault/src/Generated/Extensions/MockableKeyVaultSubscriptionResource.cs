@@ -59,19 +59,17 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         private ManagedHsmsOperationGroup ManagedHsmsOperationGroupRestClient => _managedHsmsOperationGroupRestClient ??= new ManagedHsmsOperationGroup(ManagedHsmsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         /// <summary> Gets a collection of DeletedKeyVaults in the <see cref="SubscriptionResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of DeletedKeyVaults and their operations over a DeletedKeyVaultResource. </returns>
-        public virtual DeletedKeyVaultCollection GetDeletedKeyVaults(AzureLocation location)
+        public virtual DeletedKeyVaultCollection GetDeletedKeyVaults()
         {
-            return GetCachedClient(client => new DeletedKeyVaultCollection(client, Id, location));
+            return GetCachedClient(client => new DeletedKeyVaultCollection(client, Id));
         }
 
         /// <summary> Gets a collection of DeletedManagedHsms in the <see cref="SubscriptionResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of DeletedManagedHsms and their operations over a DeletedManagedHsmResource. </returns>
-        public virtual DeletedManagedHsmCollection GetDeletedManagedHsms(AzureLocation location)
+        public virtual DeletedManagedHsmCollection GetDeletedManagedHsms()
         {
-            return GetCachedClient(client => new DeletedManagedHsmCollection(client, Id, location));
+            return GetCachedClient(client => new DeletedManagedHsmCollection(client, Id));
         }
 
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>

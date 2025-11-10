@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Secrets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -190,13 +190,33 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Update a secret in the specified subscription.  NOTE: This API is intended for internal use in ARM deployments.  Users should use the data-plane REST service for interaction with vault secrets. </summary>
-        /// <param name="patch"> Parameters to patch the secret. </param>
+        /// <summary>
+        /// Update a secret in the specified subscription.  NOTE: This API is intended for internal use in ARM deployments.  Users should use the data-plane REST service for interaction with vault secrets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KeyVaultSecretResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyVaultSecretPatch"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<KeyVaultSecretResource>> UpdateAsync(KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultSecretPatch"/> is null. </exception>
+        public virtual async Task<Response<KeyVaultSecretResource>> UpdateAsync(KeyVaultSecretPatch keyVaultSecretPatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(keyVaultSecretPatch, nameof(keyVaultSecretPatch));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Update");
             scope.Start();
@@ -206,7 +226,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(patch), context);
+                HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(keyVaultSecretPatch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,13 +242,33 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Update a secret in the specified subscription.  NOTE: This API is intended for internal use in ARM deployments.  Users should use the data-plane REST service for interaction with vault secrets. </summary>
-        /// <param name="patch"> Parameters to patch the secret. </param>
+        /// <summary>
+        /// Update a secret in the specified subscription.  NOTE: This API is intended for internal use in ARM deployments.  Users should use the data-plane REST service for interaction with vault secrets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="KeyVaultSecretResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyVaultSecretPatch"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<KeyVaultSecretResource> Update(KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultSecretPatch"/> is null. </exception>
+        public virtual Response<KeyVaultSecretResource> Update(KeyVaultSecretPatch keyVaultSecretPatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(keyVaultSecretPatch, nameof(keyVaultSecretPatch));
 
             using DiagnosticScope scope = _secretsClientDiagnostics.CreateScope("KeyVaultSecretResource.Update");
             scope.Start();
@@ -238,7 +278,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(patch), context);
+                HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(keyVaultSecretPatch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 if (response.Value == null)

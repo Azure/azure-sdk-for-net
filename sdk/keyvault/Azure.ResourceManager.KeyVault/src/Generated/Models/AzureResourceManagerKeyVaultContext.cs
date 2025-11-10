@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
 
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(MhsmPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretAttributes))]
     [ModelReaderWriterBuildable(typeof(SecretBaseAttributes))]
     [ModelReaderWriterBuildable(typeof(SecretCreateOrUpdateParameters))]

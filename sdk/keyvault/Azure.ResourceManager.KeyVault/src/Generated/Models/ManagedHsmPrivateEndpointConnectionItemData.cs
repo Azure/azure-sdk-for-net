@@ -57,14 +57,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return Properties.PrivateLinkServiceConnectionState;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    this.Properties = new ManagedHsmPrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateLinkServiceConnectionState = value;
-            }
         }
 
         /// <summary> Provisioning state of the private endpoint connection. </summary>

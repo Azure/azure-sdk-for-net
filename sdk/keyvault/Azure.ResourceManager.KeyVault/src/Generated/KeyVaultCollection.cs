@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Vaults_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="parameters"> Parameters to create or update the vault. </param>
+        /// <param name="vaultCreateOrUpdateParameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="vaultCreateOrUpdateParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<KeyVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KeyVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, VaultCreateOrUpdateParameters vaultCreateOrUpdateParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(vaultCreateOrUpdateParameters, nameof(vaultCreateOrUpdateParameters));
 
             using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("KeyVaultCollection.CreateOrUpdate");
             scope.Start();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, VaultCreateOrUpdateParameters.ToRequestContent(parameters), context);
+                HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, VaultCreateOrUpdateParameters.ToRequestContent(vaultCreateOrUpdateParameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation<KeyVaultResource> operation = new KeyVaultArmOperation<KeyVaultResource>(
                     new KeyVaultOperationSource(Client),
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Vaults_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="parameters"> Parameters to create or update the vault. </param>
+        /// <param name="vaultCreateOrUpdateParameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="vaultCreateOrUpdateParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<KeyVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KeyVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, VaultCreateOrUpdateParameters vaultCreateOrUpdateParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(vaultCreateOrUpdateParameters, nameof(vaultCreateOrUpdateParameters));
 
             using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("KeyVaultCollection.CreateOrUpdate");
             scope.Start();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, VaultCreateOrUpdateParameters.ToRequestContent(parameters), context);
+                HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, VaultCreateOrUpdateParameters.ToRequestContent(vaultCreateOrUpdateParameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation<KeyVaultResource> operation = new KeyVaultArmOperation<KeyVaultResource>(
                     new KeyVaultOperationSource(Client),
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Vaults_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

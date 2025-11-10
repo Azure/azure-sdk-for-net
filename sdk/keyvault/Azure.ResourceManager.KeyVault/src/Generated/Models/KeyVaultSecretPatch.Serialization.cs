@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultSecretPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="KeyVaultSecretPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(KeyVaultSecretPatch patch)
+        /// <param name="keyVaultSecretPatch"> The <see cref="KeyVaultSecretPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KeyVaultSecretPatch keyVaultSecretPatch)
         {
-            if (patch == null)
+            if (keyVaultSecretPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(keyVaultSecretPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

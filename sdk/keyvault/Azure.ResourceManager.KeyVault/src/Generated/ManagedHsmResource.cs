@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ManagedHsms_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ManagedHsms_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> ManagedHsms_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> ManagedHsms_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ManagedHsms_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ManagedHsms_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetPrivateLinkResources. </description>
+        /// <description> ManagedHsms_ListByMHSMResource. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetPrivateLinkResources. </description>
+        /// <description> ManagedHsms_ListByMHSMResource. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

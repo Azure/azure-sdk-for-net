@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetDeleted. </description>
+        /// <description> DeletedVaults_GetDeleted. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetDeleted. </description>
+        /// <description> DeletedVaults_GetDeleted. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PurgeDeleted. </description>
+        /// <description> DeletedVaults_PurgeDeleted. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PurgeDeleted. </description>
+        /// <description> DeletedVaults_PurgeDeleted. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

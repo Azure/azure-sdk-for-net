@@ -56,14 +56,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return Properties.ConnectionState;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    this.Properties = new PrivateEndpointConnectionProperties();
-                }
-                Properties.ConnectionState = value;
-            }
         }
 
         /// <summary> Provisioning state of the private endpoint connection. </summary>

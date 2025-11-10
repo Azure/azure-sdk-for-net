@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? eTag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
         {
-            return new KeyVaultPrivateEndpointConnectionItemData(id, eTag, connectionState is null || provisioningState is null || privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, new Dictionary<string, BinaryData>()), connectionState, provisioningState, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for creating or updating a vault. </summary>
@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         /// <returns> A new <see cref="Models.KeyVaultAccessPolicyParameters"/> instance for mocking. </returns>
-        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(string id = default, string name = default, string @type = default, AzureLocation? location = default, IList<KeyVaultAccessPolicy> accessPolicies = default)
+        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(string id = default, string name = default, string @type = default, AzureLocation? location = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
         {
             return new KeyVaultAccessPolicyParameters(
                 id,
                 name,
                 @type,
                 location,
-                accessPolicies is null ? default : new KeyVaultAccessPolicyProperties(accessPolicies, new Dictionary<string, BinaryData>()),
+                accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IReadOnlyList<string> requiredMembers = default, IList<string> requiredZoneNames = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
+        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                groupId is null || requiredMembers is null || requiredZoneNames is null ? default : new KeyVaultPrivateLinkResourceProperties(groupId, requiredMembers, requiredZoneNames, new Dictionary<string, BinaryData>()),
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KeyVaultPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null),
                 location,
                 tags);
         }
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ETag? eTag = default)
+        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -310,10 +310,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                connectionState is null || provisioningState is null || privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, new Dictionary<string, BinaryData>()), connectionState, provisioningState, new Dictionary<string, BinaryData>()),
+                connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null),
                 location,
                 tags,
-                eTag);
+                etag);
         }
 
         /// <summary> Resource information with extended details. </summary>
@@ -419,14 +419,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? eTag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
         {
-            return new ManagedHsmPrivateEndpointConnectionItemData(id, eTag, privateLinkServiceConnectionState is null || provisioningState is null || privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The security domain properties of the managed hsm. </summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedHsmProvisioningState? provisioningState = default, string groupId = default, IReadOnlyList<string> requiredMembers = default, IList<string> requiredZoneNames = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default)
+        public static ManagedHsmPrivateLinkResourceData ManagedHsmPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedHsmProvisioningState? provisioningState = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null || groupId is null || requiredMembers is null || requiredZoneNames is null ? default : new MhsmPrivateLinkResourceProperties(provisioningState, groupId, requiredMembers, requiredZoneNames, new Dictionary<string, BinaryData>()),
+                provisioningState is null && groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new MhsmPrivateLinkResourceProperties(provisioningState, groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null),
                 sku,
                 identity);
         }
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="identity"> Managed service identity. </param>
-        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -541,12 +541,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                privateLinkServiceConnectionState is null || provisioningState is null || privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, new Dictionary<string, BinaryData>()),
+                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
                 tags,
                 location,
                 sku,
                 identity,
-                eTag);
+                etag);
         }
 
         /// <summary> Resource information with extended details. </summary>

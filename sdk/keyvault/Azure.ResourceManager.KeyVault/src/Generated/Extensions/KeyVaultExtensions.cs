@@ -226,26 +226,24 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets a collection of DeletedKeyVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of DeletedKeyVaults and their operations over a DeletedKeyVaultResource. </returns>
-        public static DeletedKeyVaultCollection GetDeletedKeyVaults(this SubscriptionResource subscriptionResource, AzureLocation location)
+        public static DeletedKeyVaultCollection GetDeletedKeyVaults(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults(location);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults();
         }
 
         /// <summary> Gets a collection of DeletedManagedHsms in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of DeletedManagedHsms and their operations over a DeletedManagedHsmResource. </returns>
-        public static DeletedManagedHsmCollection GetDeletedManagedHsms(this SubscriptionResource subscriptionResource, AzureLocation location)
+        public static DeletedManagedHsmCollection GetDeletedManagedHsms(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsms(location);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsms();
         }
 
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
