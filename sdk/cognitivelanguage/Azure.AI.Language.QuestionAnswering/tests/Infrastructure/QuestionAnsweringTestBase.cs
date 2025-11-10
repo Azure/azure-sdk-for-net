@@ -11,7 +11,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
-        QuestionAnsweringClientOptions.ServiceVersion.V2021_10_01
+        QuestionAnsweringClientOptions.ServiceVersion.V2025_05_15_Preview
     )]
     [IgnoreServiceError(429, "429")]
     public abstract class QuestionAnsweringTestBase<TClient> : RecordedTestBase<QuestionAnsweringTestEnvironment> where TClient : class
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
             CompareBodies = false;
 
-            SanitizedHeaders.Add(QuestionAnsweringClient.AuthorizationHeader);
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
             ServiceVersion = serviceVersion;
         }
 

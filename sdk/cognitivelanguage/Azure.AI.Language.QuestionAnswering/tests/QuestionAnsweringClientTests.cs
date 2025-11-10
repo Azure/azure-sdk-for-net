@@ -124,11 +124,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [Test]
         public void GetAnswersFromTextOptionsNull()
         {
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText(null));
-            Assert.AreEqual("options", ex.ParamName);
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => Client.GetAnswersFromText((AnswersFromTextOptions)null));
+            Assert.AreEqual("textQueryOptions", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync(null));
-            Assert.AreEqual("options", ex.ParamName);
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.GetAnswersFromTextAsync((AnswersFromTextOptions)null));
+            Assert.AreEqual("textQueryOptions", ex.ParamName);
         }
     }
 }

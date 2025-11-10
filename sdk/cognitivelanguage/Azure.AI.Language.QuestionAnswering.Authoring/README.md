@@ -1,21 +1,15 @@
-# Azure Authoring client library for .NET
+# Azure Cognitive Language Services Question Answering Authoring client library for .NET
 
-This section should give out brief introduction of the client library.
+The Question Answering Authoring client library lets you manage Question Answering projects: create and configure projects, add and update knowledge sources, add QnA pairs, deploy a project, and delete it. Use this library to automate lifecycle management while using the runtime (Inference) library to ask questions.
 
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://learn.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
+[Source code][authoring_src] | [Package (NuGet)][authoring_package] | [API reference][authoring_refdocs] | [Samples][authoring_samples] | [Product documentation][questionanswering_docs] | [REST API docs][authoring_rest_docs]
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering.Authoring) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure)
+> If you only need to query deployed projects, use the runtime package (`Azure.AI.Language.QuestionAnswering.Inference`).
+> If you need to create/update/deploy projects, use this Authoring package.
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
-
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
 dotnet add package Azure.AI.Language.QuestionAnswering.Authoring --prerelease
@@ -23,27 +17,56 @@ dotnet add package Azure.AI.Language.QuestionAnswering.Authoring --prerelease
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://learn.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+* An Azure subscription
+* A Cognitive Services Language resource with Question Answering enabled
+* Endpoint (e.g. `https://<resource>.cognitiveservices.azure.com/`)
+* API key (or Azure AD role: "Cognitive Services Language Contributor" / appropriate permissions)
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+You can use an API key or Azure Active Directory (AAD) credentials.
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+#### Namespaces
+
+```C# Snippet:QuestionAnsweringClient_Namespaces
+```
+
+Add the authoring namespace:
+
+```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
+```
+
+#### Create a QuestionAnsweringAuthoringClient (API key)
+
+```C# Snippet:QuestionAnsweringAuthoringClient_Create
+```
+
+#### Create a client using Azure Active Directory
+
+```C# Snippet:QuestionAnswering_Identity_Namespace
+```
+
+```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
+```
+
+> Regional endpoints require a custom domain to use AAD. See the official authentication docs for details.
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
-
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+| Concept | Description |
+|--------|-------------|
+| Project | A container for language configuration, knowledge sources, QnA pairs, and deployments. |
+| Deployment | A named, queryable snapshot of a project used by runtime clients. |
+| Knowledge Source | A URL / file / structured or unstructured content ingested into the project. |
+| QnA Pair | A question with one or more answers that can be updated incrementally. |
+| Long‑running Operations | Creation of deployments, updating sources, updating QnAs, export operations return `Operation<T>`. |
 
 ### Thread safety
 
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+Client instances are thread-safe and intended to be reused.
 
 ### Additional concepts
+
 <!-- CLIENT COMMON BAR -->
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
@@ -56,34 +79,58 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/samples).
+### Create a project
 
-### <scenario>
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
+```
 
-You can create a client and call the client's `<operation>` method.
+### Deploy a project
 
-```C# Snippet:Azure_AI_Language_QuestionAnswering_Authoring_Scenario
-Console.WriteLine("Hello, world!");
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
+```
+
+### Add (or update) knowledge sources
+
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
+```
+
+> Additional operations (update QnAs, export, delete) follow similar patterns using `Operation<T>` or direct `Response` objects.
+
+### Error handling (example from runtime client, same pattern applies)
+
+```C# Snippet:QuestionAnsweringClient_BadRequest
 ```
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+| Issue | Possible Cause | Mitigation |
+|-------|----------------|-----------|
+| 401/403 | Invalid key or missing AAD role | Regenerate key or assign proper role |
+| 404 | Project or deployment name incorrect | Verify spelling and casing |
+| 409 | Concurrent modification conflict | Introduce retry / sequence operations |
+| Operation timeout | Long-running network or service delay | Poll with backoff, check `Operation.HasCompleted` and diagnostics |
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+Enable diagnostics logging:
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+```csharp
+using Azure.Core.Diagnostics;
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+* Export a project and store the snapshot in version control.
+* Automate deployment after source updates.
+* Integrate with CI/CD for promoting projects between environments.
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+See the root repository contributing guide for how to build, test, and submit changes.
 
 <!-- LINKS -->
-[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[authoring_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/src/
+[authoring_package]: https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering.Authoring
+[authoring_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering.Authoring
+[authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/samples/
+[questionanswering_docs]: https://learn.microsoft.com/azure/cognitive-services/
+[authoring_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering-projects

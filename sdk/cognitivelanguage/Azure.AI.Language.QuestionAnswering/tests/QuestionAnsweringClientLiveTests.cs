@@ -111,7 +111,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 {
                     MetadataFilter = new()
                     {
-                        LogicalOperation = LogicalOperationKind.Or,
+                        LogicalOperation = LogicalOperationKind.OR,
                         Metadata =
                         {
                             new("explicitlytaggedheading", "check the battery level"),
