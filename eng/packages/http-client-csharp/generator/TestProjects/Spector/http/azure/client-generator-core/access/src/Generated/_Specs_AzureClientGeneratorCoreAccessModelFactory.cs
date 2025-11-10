@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation;
-using _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation;
-using _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation;
-using _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
+using Specs.Azure.ClientGenerator.Core.Access._InternalOperation;
+using Specs.Azure.ClientGenerator.Core.Access._PublicOperation;
+using Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation;
+using Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access
+namespace Specs.Azure.ClientGenerator.Core.Access
 {
     public static partial class _Specs_AzureClientGeneratorCoreAccessModelFactory
     {

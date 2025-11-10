@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using client.clientnamespace.first;
+using Client.Clientnamespace.First;
 
-namespace client.clientnamespace
+namespace Client.Clientnamespace
 {
     public partial class ClientNamespaceFirstClient
     {

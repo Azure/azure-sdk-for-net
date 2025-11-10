@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -46,7 +47,7 @@ namespace Azure.Data.SchemaRegistry
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(BinaryData.FromObjectAsJson(item));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;

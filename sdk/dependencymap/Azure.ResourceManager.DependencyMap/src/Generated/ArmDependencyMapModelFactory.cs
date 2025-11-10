@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                dependencyMapProvisioningState is null ? default : new DependencyMapProperties(dependencyMapProvisioningState, new Dictionary<string, BinaryData>()));
+                dependencyMapProvisioningState is null ? default : new DependencyMapProperties(dependencyMapProvisioningState, null));
         }
 
         /// <summary> The type used for updating tags in MapsResource resources. </summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <returns> A new <see cref="Models.ExportDependenciesResultProperties"/> instance for mocking. </returns>
         public static ExportDependenciesResultProperties ExportDependenciesResultProperties(string exportedDataSasUri = default, ExportDependenciesStatusCode? statusCode = default, int? additionalInfoAvailableDaysCount = default)
         {
-            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfoAvailableDaysCount is null ? default : new ExportDependenciesAdditionalInfo(additionalInfoAvailableDaysCount, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfoAvailableDaysCount is null ? default : new ExportDependenciesAdditionalInfo(additionalInfoAvailableDaysCount, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> The status URL of the asynchronous operation. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 error,
                 startOn,
                 endOn,
-                getDependencyViewForAllMachinesResultLayoutFileSasUri is null ? default : new GetDependencyViewForAllMachinesResultProperties(getDependencyViewForAllMachinesResultLayoutFileSasUri, new Dictionary<string, BinaryData>()),
+                getDependencyViewForAllMachinesResultLayoutFileSasUri is null ? default : new GetDependencyViewForAllMachinesResultProperties(getDependencyViewForAllMachinesResultLayoutFileSasUri, null),
                 additionalBinaryDataProperties: null);
         }
 

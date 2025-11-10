@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace _Specs_.Azure.Encode.Duration
+namespace Specs.Azure.Encode.Duration
 {
     public partial class DurationModel : IJsonModel<DurationModel>
     {

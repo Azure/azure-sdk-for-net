@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     internal partial class UnknownAnimal : Animal
     {

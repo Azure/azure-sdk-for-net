@@ -154,7 +154,7 @@ namespace Azure.Data.SchemaRegistry.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSchemaVersions(document.RootElement, options);
                     }
@@ -169,7 +169,7 @@ namespace Azure.Data.SchemaRegistry.Models
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SchemaVersions"/> from. </param>
         public static explicit operator SchemaVersions(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSchemaVersions(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
