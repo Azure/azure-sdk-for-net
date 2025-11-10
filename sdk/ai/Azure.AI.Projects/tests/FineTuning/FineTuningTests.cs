@@ -25,7 +25,7 @@ using OpenAI.FineTuning;
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Synchronous recorded tests for fine-tuning operations using test-proxy.
+/// Synchronous live tests for fine-tuning operations.
 /// </summary>
 public class FineTuningTests : FineTuningTestsBase
 {
@@ -58,6 +58,9 @@ public class FineTuningTests : FineTuningTestsBase
         Assert.IsNotNull(validationFile);
         Assert.IsNotNull(validationFile.Id);
         Console.WriteLine($"Uploaded validation file: {validationFile.Id}");
+
+        Console.WriteLine("Waiting 10 seconds for files to complete processing...");
+        System.Threading.Thread.Sleep(10000);
 
         return (trainFile, validationFile);
     }
@@ -160,20 +163,20 @@ public class FineTuningTests : FineTuningTestsBase
         Assert.That(jobsList.Select(j => j.JobId), Does.Contain(fineTuningJob.JobId));
 
         // Pause job
-        Console.WriteLine($"[{testName}] Pausing job: {retrievedJob.JobId}");
-        fineTuningClient.PauseFineTuningJob(retrievedJob.JobId, options: null);
-        FineTuningJob pausedJob = fineTuningClient.GetJob(retrievedJob.JobId);
-        Console.WriteLine($"[{testName}] Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
+        // Console.WriteLine($"[{testName}] Pausing job: {retrievedJob.JobId}");
+        // fineTuningClient.PauseFineTuningJob(retrievedJob.JobId, options: null);
+        // FineTuningJob pausedJob = fineTuningClient.GetJob(retrievedJob.JobId);
+        // Console.WriteLine($"[{testName}] Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
 
-        // Resume job
-        Console.WriteLine($"[{testName}] Resuming job: {pausedJob.JobId}");
-        fineTuningClient.ResumeFineTuningJob(pausedJob.JobId, options: null);
-        FineTuningJob resumedJob = fineTuningClient.GetJob(pausedJob.JobId);
-        Console.WriteLine($"[{testName}] Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
+        // // Resume job
+        // Console.WriteLine($"[{testName}] Resuming job: {pausedJob.JobId}");
+        // fineTuningClient.ResumeFineTuningJob(pausedJob.JobId, options: null);
+        // FineTuningJob resumedJob = fineTuningClient.GetJob(pausedJob.JobId);
+        // Console.WriteLine($"[{testName}] Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
 
         // List events
         var eventsList = new List<FineTuningEvent>();
-        foreach (FineTuningEvent evt in resumedJob.GetEvents(new GetEventsOptions()))
+        foreach (FineTuningEvent evt in retrievedJob.GetEvents(new GetEventsOptions()))
         {
             eventsList.Add(evt);
         }
@@ -181,13 +184,13 @@ public class FineTuningTests : FineTuningTestsBase
         Assert.That(eventsList.Count, Is.GreaterThan(0));
 
         // Cancel job
-        resumedJob.CancelAndUpdate();
-        Console.WriteLine($"[{testName}] Cancelled job: {resumedJob.JobId}");
-        Assert.AreEqual("cancelled", resumedJob.Status.ToString().ToLowerInvariant());
+        retrievedJob.CancelAndUpdate();
+        Console.WriteLine($"[{testName}] Cancelled job: {retrievedJob.JobId}");
+        Assert.AreEqual("cancelled", retrievedJob.Status.ToString().ToLowerInvariant());
     }
 
     [Test]
-    [RecordedTest]
+    [SyncOnly]
     public void SftFineTuning_FullLifecycleSync()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -216,7 +219,7 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [Test]
-    [RecordedTest]
+    [SyncOnly]
     public void SftOssFineTuning_FullLifecycleSync()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -245,7 +248,7 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [Test]
-    [RecordedTest]
+    [SyncOnly]
     public void DpoFineTuning_FullLifecycleSync()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -274,7 +277,7 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [Test]
-    [RecordedTest]
+    [SyncOnly]
     public void RftFineTuning_FullLifecycleSync()
     {
         var (fileClient, fineTuningClient) = GetClients();

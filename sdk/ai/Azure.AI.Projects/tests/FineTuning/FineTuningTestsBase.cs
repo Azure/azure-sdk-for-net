@@ -6,7 +6,9 @@
 
 using System;
 using System.IO;
+using Azure.AI.Agents;
 using NUnit.Framework;
+using OpenAI;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
@@ -31,9 +33,17 @@ public abstract class FineTuningTestsBase : ProjectsClientTestBase
         return Path.Combine(testDirectory!, "sdk", "ai", "Azure.AI.Projects", "tests", "FineTuning", "data");
     }
 
+    /// <summary>
+    /// Gets OpenAIFileClient and FineTuningClient for live testing.
+    /// </summary>
+    /// <returns>A tuple containing OpenAIFileClient and FineTuningClient.</returns>
     protected (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetClients()
     {
-        return GetFineTuningClients();
+        AIProjectClient projectClient = GetLiveClient();
+        AgentsClient agentClient = projectClient.GetAgentsClient();
+        OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+
+        return (oaiClient.GetOpenAIFileClient(), oaiClient.GetFineTuningClient());
     }
 
     protected void ValidateFineTuningJob(FineTuningJob job, string expectedJobId = null, string expectedStatus = null)

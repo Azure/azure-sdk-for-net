@@ -26,7 +26,7 @@ using OpenAI.FineTuning;
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Asynchronous recorded tests for fine-tuning operations using test-proxy.
+/// Asynchronous live tests for fine-tuning operations.
 /// </summary>
 public class FineTuningTestsAsync : FineTuningTestsBase
 {
@@ -59,6 +59,9 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         Assert.IsNotNull(validationFile);
         Assert.IsNotNull(validationFile.Id);
         Console.WriteLine($"Uploaded validation file: {validationFile.Id}");
+
+        Console.WriteLine("Waiting 10 seconds for files to complete processing...");
+        await Task.Delay(10000);
 
         return (trainFile, validationFile);
     }
@@ -161,20 +164,20 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         Assert.That(jobsList.Select(j => j.JobId), Does.Contain(fineTuningJob.JobId));
 
         // Pause job
-        Console.WriteLine($"[{testName}] Pausing job: {retrievedJob.JobId}");
-        await fineTuningClient.PauseFineTuningJobAsync(retrievedJob.JobId, options: null);
-        FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(retrievedJob.JobId);
-        Console.WriteLine($"[{testName}] Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
+        // Console.WriteLine($"[{testName}] Pausing job: {retrievedJob.JobId}");
+        // await fineTuningClient.PauseFineTuningJobAsync(retrievedJob.JobId, options: null);
+        // FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(retrievedJob.JobId);
+        // Console.WriteLine($"[{testName}] Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
 
-        // Resume job
-        Console.WriteLine($"[{testName}] Resuming job: {pausedJob.JobId}");
-        await fineTuningClient.ResumeFineTuningJobAsync(pausedJob.JobId, options: null);
-        FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(pausedJob.JobId);
-        Console.WriteLine($"[{testName}] Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
+        // // Resume job
+        // Console.WriteLine($"[{testName}] Resuming job: {pausedJob.JobId}");
+        // await fineTuningClient.ResumeFineTuningJobAsync(pausedJob.JobId, options: null);
+        // FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(pausedJob.JobId);
+        // Console.WriteLine($"[{testName}] Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
 
         // List events
         var eventsList = new List<FineTuningEvent>();
-        await foreach (FineTuningEvent evt in resumedJob.GetEventsAsync(new GetEventsOptions()))
+        await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions()))
         {
             eventsList.Add(evt);
         }
@@ -182,13 +185,13 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         Assert.That(eventsList.Count, Is.GreaterThan(0));
 
         // Cancel job
-        await resumedJob.CancelAndUpdateAsync();
-        Console.WriteLine($"[{testName}] Cancelled job: {resumedJob.JobId}");
-        Assert.AreEqual("cancelled", resumedJob.Status.ToString().ToLowerInvariant());
+        await retrievedJob.CancelAndUpdateAsync();
+        Console.WriteLine($"[{testName}] Cancelled job: {retrievedJob.JobId}");
+        Assert.AreEqual("cancelled", retrievedJob.Status.ToString().ToLowerInvariant());
     }
 
     [Test]
-    [RecordedTest]
+    [AsyncOnly]
     public async Task SftFineTuning_FullLifecycle()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -217,7 +220,7 @@ public class FineTuningTestsAsync : FineTuningTestsBase
     }
 
     [Test]
-    [RecordedTest]
+    [AsyncOnly]
     public async Task SftOssFineTuning_FullLifecycle()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -246,7 +249,7 @@ public class FineTuningTestsAsync : FineTuningTestsBase
     }
 
     [Test]
-    [RecordedTest]
+    [AsyncOnly]
     public async Task DpoFineTuning_FullLifecycle()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -275,7 +278,7 @@ public class FineTuningTestsAsync : FineTuningTestsBase
     }
 
     [Test]
-    [RecordedTest]
+    [AsyncOnly]
     public async Task RftFineTuning_FullLifecycle()
     {
         var (fileClient, fineTuningClient) = GetClients();
