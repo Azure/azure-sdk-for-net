@@ -12,6 +12,7 @@ import "./playwright.tsp";
 import "./databox.tsp";
 import "./hcivm.tsp";
 import "./quota.tsp";
+import "./networkaction.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -39,3 +40,4 @@ enum Versions {
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
 
 @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
+@@clientName(Employees.listByParent, "GetEmployees", "csharp");

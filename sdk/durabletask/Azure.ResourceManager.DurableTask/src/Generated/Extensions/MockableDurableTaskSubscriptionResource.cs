@@ -5,98 +5,61 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DurableTask;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DurableTask.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDurableTaskSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _schedulerClientDiagnostics;
-        private SchedulersRestOperations _schedulerRestClient;
+        private ClientDiagnostics _schedulersClientDiagnostics;
+        private Schedulers _schedulersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDurableTaskSubscriptionResource for mocking. </summary>
         protected MockableDurableTaskSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDurableTaskSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDurableTaskSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDurableTaskSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SchedulerClientDiagnostics => _schedulerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask", SchedulerResource.ResourceType.Namespace, Diagnostics);
-        private SchedulersRestOperations SchedulerRestClient => _schedulerRestClient ??= new SchedulersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SchedulerResource.ResourceType));
+        private ClientDiagnostics SchedulersClientDiagnostics => _schedulersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+
+        /// <summary> List Schedulers by subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DurableTaskSchedulerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DurableTaskSchedulerResource> GetDurableTaskSchedulersAsync(CancellationToken cancellationToken = default)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionAsyncCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DurableTaskSchedulerResource(Client, data));
         }
 
-        /// <summary>
-        /// List Schedulers by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DurableTask/schedulers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Schedulers by subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SchedulerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SchedulerResource> GetSchedulersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DurableTaskSchedulerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DurableTaskSchedulerResource> GetDurableTaskSchedulers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SchedulerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SchedulerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SchedulerResource(Client, SchedulerData.DeserializeSchedulerData(e)), SchedulerClientDiagnostics, Pipeline, "MockableDurableTaskSubscriptionResource.GetSchedulers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List Schedulers by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DurableTask/schedulers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SchedulerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SchedulerResource> GetSchedulers(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SchedulerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SchedulerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SchedulerResource(Client, SchedulerData.DeserializeSchedulerData(e)), SchedulerClientDiagnostics, Pipeline, "MockableDurableTaskSubscriptionResource.GetSchedulers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetBySubscriptionCollectionResultOfT(SchedulersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DurableTaskSchedulerResource(Client, data));
         }
     }
 }

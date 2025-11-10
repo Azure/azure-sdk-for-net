@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="collectionsStringProperty"> The <see cref="CollectionsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(CollectionsStringProperty collectionsStringProperty) => throw null;
 
-        public static explicit operator CollectionsStringProperty(Response result) => throw null;
+        public static explicit operator CollectionsStringProperty(Response response) => throw null;
     }
 }

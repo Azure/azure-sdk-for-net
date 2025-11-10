@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -38,6 +37,7 @@ namespace Azure.Generator.Management.Providers
         // Cached Get method providers
         private MethodProvider? _getAsyncMethodProvider;
         private MethodProvider? _getSyncMethodProvider;
+        private MethodProvider? _getAllSyncMethodProvider;
 
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
@@ -53,14 +53,15 @@ namespace Azure.Generator.Management.Providers
             _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
-            _pathParameterMap = BuildPathParameterMap();
-
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this);
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
+
+            // this depends on _getAll being initialized
+            _pathParameterMap = BuildPathParameterMap();
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Azure.Generator.Management.Providers
 
         private bool ShouldSkipIEnumerableImplementation()
         {
-            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
+            return _getAllSyncMethodProvider is null || _getAllSyncMethodProvider.Signature.Parameters.Any(p => p.DefaultValue is null);
         }
 
         protected override PropertyProvider[] BuildProperties()
@@ -173,12 +174,14 @@ namespace Azure.Generator.Management.Providers
         private Dictionary<ParameterProvider, FieldProvider> BuildPathParameterMap()
         {
             var map = new Dictionary<ParameterProvider, FieldProvider>();
-            var diff = ContextualPath.TrimAncestorFrom(Resource.ContextualPath);
-            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
-            if (variableSegments.Count > 0)
+            if (_getAll is null)
             {
-                variableSegments.RemoveAt(variableSegments.Count - 1);
+                return map;
             }
+
+            var diff = ContextualPath.TrimAncestorFrom(new RequestPathPattern(_getAll.OperationPath));
+            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
+
             foreach (var seg in variableSegments)
             {
                 var parameter = new ParameterProvider(
@@ -296,10 +299,10 @@ namespace Azure.Generator.Management.Providers
             }
 
             // implement paging method GetAll
-            var getAll = BuildGetAllMethod(_getAll, false);
+            _getAllSyncMethodProvider = BuildGetAllMethod(_getAll, false);
             var getAllAsync = BuildGetAllMethod(_getAll, true);
 
-            return [getAllAsync, getAll];
+            return [getAllAsync, _getAllSyncMethodProvider];
         }
 
         private MethodProvider[] BuildEnumeratorMethods()
@@ -338,7 +341,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
-                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
+                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
                 result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
@@ -348,7 +351,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(ResourceMethod getAll, bool isAsync)
         {
             var restClientInfo = _clientInfos[getAll.InputClient];
-            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),

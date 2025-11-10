@@ -1049,4 +1049,153 @@ interface Employees {
     strictEqual(getMethodEntry.kind, "Get");
     strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
   });
+
+  it("parent-child resource with list operation", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee parent resource */
+model EmployeeParent is TrackedResource<EmployeeParentProperties> {
+  ...ResourceNameParameter<EmployeeParent>;
+}
+
+/** Employee parent properties */
+model EmployeeParentProperties {
+  /** Name of parent */
+  name?: string;
+}
+
+/** An Employee resource */
+@parentResource(EmployeeParent)
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface EmployeeParents {
+  get is ArmResourceRead<EmployeeParent>;
+}
+
+@armResourceOperations
+interface Employees {
+  listByParent is ArmResourceListByParent<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+    
+    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+    ok(employeeClient);
+    const employeeParentClient = getAllClients(root).find((c) => c.name === "EmployeeParents");
+    ok(employeeParentClient);
+    
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+    const employeeParentModel = root.models.find((m) => m.name === "EmployeeParent");
+    ok(employeeParentModel);
+    
+    const listByParentMethod = employeeClient.methods.find((m) => m.name === "listByParent");
+    ok(listByParentMethod);
+    const getMethod = employeeParentClient.methods.find((m) => m.name === "get");
+    ok(getMethod);
+
+    // Validate Employee resource metadata should be null (no CRUD operations)
+    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    strictEqual(employeeResourceMetadataDecorator, undefined, "Employee should not have resource metadata decorator without CRUD operations");
+
+    // Validate EmployeeParent resource metadata
+    const parentResourceMetadataDecorator = employeeParentModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(parentResourceMetadataDecorator);
+    ok(parentResourceMetadataDecorator.arguments);
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/employeeParents"
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceScope,
+      "ResourceGroup"
+    );
+    strictEqual(parentResourceMetadataDecorator.arguments.parentResourceId, undefined);
+    strictEqual(parentResourceMetadataDecorator.arguments.resourceName, "EmployeeParent");
+    strictEqual(parentResourceMetadataDecorator.arguments.methods.length, 2);
+
+    // Validate EmployeeParent listByParent method
+    const listByParentEntry = parentResourceMetadataDecorator.arguments.methods.find(
+      (m: any) => m.methodId === listByParentMethod.crossLanguageDefinitionId
+    );
+    ok(listByParentEntry);
+  });
+
+  it("resource scope as ManagementGroup", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+    get is Extension.Read<
+    Extension.ManagementGroup<"managementGroupId">,
+    Employee
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+    
+    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+    ok(employeeClient);
+    
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+
+    // Validate Employee resource metadata should be null (no CRUD operations)
+    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(employeeResourceMetadataDecorator);
+    strictEqual(
+      employeeResourceMetadataDecorator.arguments.resourceScope,
+      "ManagementGroup"
+    );
+  });
 });

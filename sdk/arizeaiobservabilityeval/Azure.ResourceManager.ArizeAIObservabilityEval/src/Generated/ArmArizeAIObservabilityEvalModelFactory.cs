@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ArizeAIObservabilityEval;
 using Azure.ResourceManager.Models;
@@ -49,7 +50,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerDescription"> Description of the Organization's purpose. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerDescription"/> is null. </exception>
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOrganizationProperties"/> instance for mocking. </returns>
         public static ArizeAIObservabilityEvalOrganizationProperties ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace = default, ArizeAIObservabilityEvalUserDetails user = default, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState = default, string partnerDescription = default, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, new Dictionary<string, BinaryData>()),
+                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

@@ -81,10 +81,6 @@ namespace Azure.AI.Agents.Persistent
 
             // Get the thread ID.
             string? threadId = options?.ConversationId ?? _defaultThreadId;
-            if (threadId is null && toolResults is not null)
-            {
-                throw new ArgumentException("No thread ID was provided, but chat messages includes tool results.", nameof(messages));
-            }
 
             // Get any active run ID for this thread.
             ThreadRun? threadRun = null;
@@ -107,7 +103,7 @@ namespace Azure.AI.Agents.Persistent
                 ConvertFunctionResultsToToolOutput(toolResults, approvalResults, out List<ToolOutput> toolOutputs, out List<ToolApproval> toolApprovals) is { } toolRunId &&
                 toolRunId == threadRun.Id)
             {
-                // There's an active run and we have tool results to submit, so submit the results and continue streaming.
+                // There's an active run and we have tool results to submit for that run, so submit the results and continue streaming.
                 // This is going to ignore any additional messages in the run options, as we are only submitting tool outputs,
                 // but there doesn't appear to be a way to submit additional messages, and having such additional messages is rare.
                 updates = _client!.Runs.SubmitToolOutputsToStreamAsync(threadRun, toolOutputs, toolApprovals, cancellationToken);

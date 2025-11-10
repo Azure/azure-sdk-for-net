@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAzureAdAdministrator()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AzureADAdministratorGet.json
-            // this example is just showing the usage of "AzureADAdministrators_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AzureADAdministratorGet.json
+            // this example is just showing the usage of "AzureADAdministrator_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAzureAdAdministrator()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AzureADAdministratorDelete.json
-            // this example is just showing the usage of "AzureADAdministrators_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AzureADAdministratorDelete.json
+            // this example is just showing the usage of "AzureADAdministrator_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAnAzureAdAdministrator()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AzureADAdministratorCreate.json
-            // this example is just showing the usage of "AzureADAdministrators_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AzureADAdministratorCreate.json
+            // this example is just showing the usage of "AzureADAdministrator_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,14 +96,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerAadAdministratorResource mySqlFlexibleServerAadAdministrator = client.GetMySqlFlexibleServerAadAdministratorResource(mySqlFlexibleServerAadAdministratorResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerAadAdministratorData data = new MySqlFlexibleServerAadAdministratorData
-            {
-                AdministratorType = MySqlFlexibleServerAdministratorType.ActiveDirectory,
-                Login = "bob@contoso.com",
-                Sid = "c6b82b90-a647-49cb-8a62-0d2d3cb7ac7c",
-                TenantId = Guid.Parse("c12b7025-bfe2-46c1-b463-993b5e4cd467"),
-                IdentityResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/test-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-umi"),
-            };
+            MySqlFlexibleServerAadAdministratorData data = new MySqlFlexibleServerAadAdministratorData();
             ArmOperation<MySqlFlexibleServerAadAdministratorResource> lro = await mySqlFlexibleServerAadAdministrator.UpdateAsync(WaitUntil.Completed, data);
             MySqlFlexibleServerAadAdministratorResource result = lro.Value;
 

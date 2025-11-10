@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageTaskPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="StorageTaskPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StorageTaskPatch patch)
+        /// <param name="storageTaskPatch"> The <see cref="StorageTaskPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageTaskPatch storageTaskPatch)
         {
-            if (patch == null)
+            if (storageTaskPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(storageTaskPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

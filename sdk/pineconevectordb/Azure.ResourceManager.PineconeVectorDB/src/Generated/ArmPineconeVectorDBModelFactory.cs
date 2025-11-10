@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PineconeVectorDB;
@@ -49,7 +50,6 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerDisplayName"> Pinecone Organization Name. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerDisplayName"/> is null. </exception>
         /// <returns> A new <see cref="Models.PineconeVectorDBOrganizationProperties"/> instance for mocking. </returns>
         public static PineconeVectorDBOrganizationProperties PineconeVectorDBOrganizationProperties(PineconeVectorDBMarketplaceDetails marketplace = default, PineconeVectorDBUserDetails user = default, PineconeVectorDBProvisioningState? provisioningState = default, string partnerDisplayName = default, PineconeVectorDBSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, new Dictionary<string, BinaryData>()),
+                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

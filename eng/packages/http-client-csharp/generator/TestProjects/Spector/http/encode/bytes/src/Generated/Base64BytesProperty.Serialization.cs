@@ -38,6 +38,6 @@ namespace Encode.Bytes
         /// <param name="base64BytesProperty"> The <see cref="Base64BytesProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Base64BytesProperty base64BytesProperty) => throw null;
 
-        public static explicit operator Base64BytesProperty(Response result) => throw null;
+        public static explicit operator Base64BytesProperty(Response response) => throw null;
     }
 }

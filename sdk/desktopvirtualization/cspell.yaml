@@ -1,0 +1,10 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/desktopvirtualization/**/*.cs'
+    words:
+      - adfs
+      - logix
+      - msix
+      - msix
+      - redirector

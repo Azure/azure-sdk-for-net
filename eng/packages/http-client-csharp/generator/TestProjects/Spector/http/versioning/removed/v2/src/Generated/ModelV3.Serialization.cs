@@ -38,6 +38,6 @@ namespace Versioning.Removed
         /// <param name="modelV3"> The <see cref="ModelV3"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelV3 modelV3) => throw null;
 
-        public static explicit operator ModelV3(Response result) => throw null;
+        public static explicit operator ModelV3(Response response) => throw null;
     }
 }

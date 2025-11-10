@@ -154,7 +154,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedDeidentificationJob(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedDeidentificationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PagedDeidentificationJob"/> from. </param>
-        public static explicit operator PagedDeidentificationJob(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedDeidentificationJob"/> from. </param>
+        public static explicit operator PagedDeidentificationJob(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedDeidentificationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
