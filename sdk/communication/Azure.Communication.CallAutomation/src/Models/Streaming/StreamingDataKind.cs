@@ -34,6 +34,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Mark data type
         /// </summary>
-        Mark
+        MarkData,
     }
 }

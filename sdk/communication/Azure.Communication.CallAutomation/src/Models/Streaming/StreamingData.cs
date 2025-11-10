@@ -60,14 +60,11 @@ namespace Azure.Communication.CallAutomation
                 case "AudioData":
                     AudioDataInternal audioInternal = JsonSerializer.Deserialize<AudioDataInternal>(streamingData.GetProperty("audioData").ToString());
                     return new AudioData(
-                        audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent);
+                        audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent, audioInternal.Mark);
 
-                case "Mark":
-                    MarkAudioInternal markAudioInternal = JsonSerializer.Deserialize<MarkAudioInternal>(streamingData.GetProperty("markAudio").ToString());
-                    return new MarkAudio()
-                    {
-                        Sequence = markAudioInternal.Sequence
-                    };
+                case "MarkData":
+                    MarkDataInternal markDataInternal = JsonSerializer.Deserialize<MarkDataInternal>(streamingData.GetProperty("markData").ToString());
+                    return new MarkData(markDataInternal.Id, markDataInternal.Status);
 
                 #endregion
 

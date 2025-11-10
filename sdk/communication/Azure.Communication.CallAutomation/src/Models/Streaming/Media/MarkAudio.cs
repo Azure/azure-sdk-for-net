@@ -9,8 +9,8 @@ namespace Azure.Communication.CallAutomation
     public class MarkAudio : StreamingData
     {
         /// <summary>
-        /// Sequence for the mark.
+        /// The id of this mark data
         /// </summary>
-        public string Sequence { get; set; }
+        public string Id { get; set; }
     }
 }

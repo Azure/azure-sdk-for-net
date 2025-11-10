@@ -33,5 +33,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         [JsonPropertyName("silent")]
         public bool Silent { get; set; }
+
+        /// <summary>
+        /// Mark this audio data which signals the player when it reaches the mark position
+        /// </summary>
+        [JsonPropertyName("mark")]
+        public MarkAudio Mark { get; set; }
     }
 }
