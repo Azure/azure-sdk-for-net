@@ -59,13 +59,13 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
-        responseOptions.SetConversationReference(conversation.Id);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+            AgentConversationId = conversation,
+        };
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")],
-            responseOptions);
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Async
@@ -122,13 +122,9 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(agentVersion.Name));
-        responseOptions.SetConversationReference(conversation.Id);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation.Id);
 
-        OpenAIResponse response = responsesClient.CreateResponse(
-            [ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")],
-            responseOptions);
+        OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync

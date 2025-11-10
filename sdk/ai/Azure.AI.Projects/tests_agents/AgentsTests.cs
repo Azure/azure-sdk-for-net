@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
@@ -267,7 +268,6 @@ public class AgentsTests : AgentsTestBase
     public async Task SimplePromptAgentWithConversation()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
@@ -283,13 +283,9 @@ public class AgentsTests : AgentsTestBase
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentVersion);
-        responseOptions.SetConversationReference(conversation);
+        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion, conversation);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.")],
-            responseOptions);
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
 
         Console.WriteLine($"Response from prompt agent: {response.GetOutputText()}");
     }
@@ -298,7 +294,6 @@ public class AgentsTests : AgentsTestBase
     public async Task SimplePromptAgentWithoutConversation()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
@@ -309,12 +304,9 @@ public class AgentsTests : AgentsTestBase
             agentName: "TestPromptAgentFromDotnet",
             options: new(agentDefinition));
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentVersion);
+        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.")],
-            responseOptions);
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
         Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
     }
 
@@ -363,8 +355,10 @@ public class AgentsTests : AgentsTestBase
                 }
             });
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agent);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agent,
+        };
 
         ResponseItem item = ResponseItem.CreateUserMessageItem("What's my name?");
 
@@ -388,12 +382,8 @@ public class AgentsTests : AgentsTestBase
     public async Task SimpleWorkflowAgent()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
 
         AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
-
-        string agentName = null;
-        string agentVersion = null;
 
         AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -402,17 +392,12 @@ public class AgentsTests : AgentsTestBase
                 Description = "A test agent created from the .NET SDK automation suite",
                 Metadata = { ["freely_deleteable"] = "true" },
             });
-        agentName = newAgentVersion.Name;
-        agentVersion = newAgentVersion.Version;
 
         AgentConversation newConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentName, agentVersion);
-        responseOptions.SetConversationReference(newConversation.Id);
+        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion, newConversation);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            inputItems: [ResponseItem.CreateUserMessageItem("Hello, agent!")], responseOptions);
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, agent!");
 
         Assert.That(response.Id, Does.StartWith("wfresp"));
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -432,12 +417,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
-
         AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
-
-        string agentName = null;
-        string agentVersion = null;
 
         AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -446,19 +426,14 @@ public class AgentsTests : AgentsTestBase
                 Description = "A test agent created from the .NET SDK automation suite",
                 Metadata = { ["freely_deleteable"] = "true" },
             });
-        agentName = newAgentVersion.Name;
-        agentVersion = newAgentVersion.Version;
 
         AgentConversation newConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
 
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentName, agentVersion);
-        responseOptions.SetConversationReference(newConversation.Id);
+        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion, newConversation);
 
         AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
 
-        await foreach (StreamingResponseUpdate responseUpdate
-            in responseClient.CreateResponseStreamingAsync([ResponseItem.CreateUserMessageItem("Hello, agent!")], responseOptions))
+        await foreach (StreamingResponseUpdate responseUpdate in responseClient.CreateResponseStreamingAsync("Hello, agent!"))
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
@@ -586,17 +561,9 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
-        AgentReference agentReference = new(name: agentVersion.Name)
-        {
-            Version = agentVersion.Version,
-        };
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentReference);
+        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [request],
-            responseOptions);
+        OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
         response = await WaitForRun(responseClient, response);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -615,8 +582,10 @@ public class AgentsTests : AgentsTestBase
             options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient.OpenAI))
         );
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentVersion);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[ToolType.FunctionCall]);
         List<ResponseItem> inputItems = [request];
         bool funcionCalled;
@@ -669,15 +638,13 @@ public class AgentsTests : AgentsTestBase
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
         AgentConversation conversation = await conversationClient.CreateAgentConversationAsync(conversationOptions);
-        AgentReference agentReference = new(name: containerAgentVersion.Name)
+        ResponseCreationOptions responseOptions = new()
         {
-            Version = containerAgentVersion.Version,
+            Agent = containerAgentVersion,
+            AgentConversationId = conversation.Id,
         };
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            agentRef: agentReference,
-            conversation: conversation
-        );
+        OpenAIResponse response = await responseClient.CreateResponseAsync([], responseOptions);
         response = await WaitForRun(responseClient, response);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -715,7 +682,7 @@ public class AgentsTests : AgentsTestBase
                 agentName: "TestPromptAgentFromDotnet",
                 options: new(agentDefinition));
 
-            responseOptions.SetAgentReference(agentVersion);
+            responseOptions.Agent = agentVersion;
         }
         else
         {
@@ -750,8 +717,6 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
-
         CancellationTokenSource cts = new(TimeSpan.FromSeconds(60));
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
@@ -779,8 +744,9 @@ public class AgentsTests : AgentsTestBase
             },
             cts.Token);
 
+        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion);
+
         ResponseCreationOptions responseCreationOptions = new();
-        responseCreationOptions.SetAgentReference(newAgentVersion);
 
         string userInput = "Hello, agent! Greet me by name.";
         List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem(userInput)];
@@ -789,7 +755,7 @@ public class AgentsTests : AgentsTestBase
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
             AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(options: null, cts.Token);
-            responseCreationOptions.SetConversationReference(conversation);
+            responseCreationOptions.AgentConversationId = conversation;
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
         {

@@ -3,12 +3,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
-using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Agents.Tests.Samples;
@@ -44,11 +42,13 @@ public class Sample_Container_App : AgentsTestBase
         #endregion
         #region Snippet:Sample_CreateConversation_ContainerApp_Async
         OpenAIClient openAIClient = client.GetOpenAIClient();
-        ProjectConversationCreationOptions conversationOptions = new();
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+        ConversationClient conversationClient = client.GetConversationClient();
+        AgentConversationCreationOptions conversationOptions = new();
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = await client.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
+        AgentConversation conversation = await conversationClient.CreateConversationAsync(options: conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
         AgentReference agentReference = new(name: containerAgentVersion.Name)
@@ -56,25 +56,25 @@ public class Sample_Container_App : AgentsTestBase
             Version = containerAgentVersion.Version,
         };
 
-        OpenAIResponse response = await client.OpenAI.Responses.CreateResponseAsync(
+        OpenAIResponse response = await responseClient.CreateResponseAsync(
             agentRef: agentReference,
             conversation: conversation
         );
-        response = await WaitResponseAsync(client.OpenAI.Responses, response);
+        response = await WaitResponseAsync(responseClient, response);
         Console.WriteLine(response.GetOutputText());
 
-        await client.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        await conversationClient.CreateConversationItemsAsync(
             conversationId: conversation.Id,
             items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
-        response = await client.OpenAI.Responses.CreateResponseAsync(
+        response = await responseClient.CreateResponseAsync(
             agentRef: agentReference,
             conversation: conversation
         );
-        response = await WaitResponseAsync(client.OpenAI.Responses, response);
+        response = await WaitResponseAsync(responseClient, response);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ContainerApp_Async
-        await client.OpenAI.Conversations.DeleteConversationAsync(conversationId:conversation.Id);
+        await conversationClient.DeleteConversationAsync(conversationId:conversation.Id);
         await client.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
         #endregion
     }
@@ -104,11 +104,14 @@ public class Sample_Container_App : AgentsTestBase
                 ingressSubdomainSuffix: ingressSubdomainSuffix)));
         #endregion
         #region Snippet:Sample_CreateConversation_ContainerApp_Sync
-        ProjectConversationCreationOptions conversationOptions = new();
+        OpenAIClient openAIClient = client.GetOpenAIClient();
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+        ConversationClient conversationClient = client.GetConversationClient();
+        AgentConversationCreationOptions conversationOptions = new();
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = client.OpenAI.Conversations.CreateAgentConversation(options: conversationOptions);
+        AgentConversation conversation = conversationClient.CreateConversation(options: conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
         AgentReference agentReference = new(name: containerAgentVersion.Name)
@@ -116,25 +119,25 @@ public class Sample_Container_App : AgentsTestBase
             Version = containerAgentVersion.Version,
         };
 
-        OpenAIResponse response = client.OpenAI.Responses.CreateResponse(
+        OpenAIResponse response = responseClient.CreateResponse(
             agentRef: agentReference,
             conversation: conversation
         );
-        response = WaitResponse(client.OpenAI.Responses, response);
+        response = WaitResponse(responseClient, response);
         Console.WriteLine(response.GetOutputText());
 
-        client.OpenAI.Conversations.CreateAgentConversationItems(
+        conversationClient.CreateConversationItems(
             conversationId: conversation.Id,
             items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
-        response = client.OpenAI.Responses.CreateResponse(
+        response = responseClient.CreateResponse(
             agentRef: agentReference,
             conversation: conversation
         );
-        response = WaitResponse(client.OpenAI.Responses, response);
+        response = WaitResponse(responseClient, response);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ContainerApp_Sync
-        client.OpenAI.Conversations.DeleteConversation(conversationId: conversation.Id);
+        conversationClient.DeleteConversation(conversationId: conversation.Id);
         client.DeleteAgentVersion(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
         #endregion
     }

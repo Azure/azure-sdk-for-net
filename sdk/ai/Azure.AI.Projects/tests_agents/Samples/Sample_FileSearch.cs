@@ -66,7 +66,7 @@ public class Sample_FileSearch : AgentsTestBase
         #region Snippet:Sample_CreateResponse_FileSearch_Async
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        responseOptions.Agent = agentVersion;
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -137,7 +137,7 @@ public class Sample_FileSearch : AgentsTestBase
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        responseOptions.Agent = agentVersion;
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
         OpenAIResponse response = responseClient.CreateResponse(

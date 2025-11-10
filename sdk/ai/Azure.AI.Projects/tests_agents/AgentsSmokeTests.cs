@@ -199,11 +199,10 @@ public class AgentsSmokeTests : AgentsTestBase
     {
         ResponseCreationOptions responseOptions = new()
         {
+            Agent = "my-test-agent",
+            AgentConversationId = "conv_abcd1234",
             Instructions = "You talk like a pirate."
         };
-
-        responseOptions.SetAgentReference(new AgentReference("my-test-agent"));
-        responseOptions.SetConversationReference("conv_abcd1234");
 
         Assert.That(ModelReaderWriter.Write(responseOptions).ToString(), Does.Contain("my-test-agent"));
         Assert.That(ModelReaderWriter.Write(responseOptions).ToString(), Does.Contain("conv_abcd1234"));

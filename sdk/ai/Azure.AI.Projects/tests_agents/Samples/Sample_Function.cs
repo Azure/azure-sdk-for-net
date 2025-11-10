@@ -162,7 +162,7 @@ public class Sample_Function : AgentsTestBase
         #region Snippet:Sample_CreateResponse_Function_Async
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        responseOptions.Agent = agentVersion;
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
         List<ResponseItem> inputItems = [request];
@@ -255,7 +255,7 @@ public class Sample_Function : AgentsTestBase
         #region Snippet:Sample_CreateResponse_Function_Sync
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        responseOptions.Agent = agentVersion;
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
         List<ResponseItem> inputItems = [request];

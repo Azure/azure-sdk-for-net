@@ -63,16 +63,12 @@ public class PromptAgentSamples : AgentsTestBase
         string AGENT_NAME = TestEnvironment.AGENT_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new DefaultAzureCredential());
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
-
-        ResponseCreationOptions responseOptions = new();
 
         // Optionally, use a conversation to automatically maintain state between calls.
         AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-        responseOptions.SetConversationReference(conversation);
 
-        List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
-        OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseOptions);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation);
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Tell me a one-line story.");
 
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -134,8 +130,10 @@ public class PromptAgentSamples : AgentsTestBase
 
         ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
 
-        ResponseCreationOptions responseCreationOptions = new();
-        responseCreationOptions.SetConversationReference(EXISTING_CONVERSATION_ID);
+        ResponseCreationOptions responseCreationOptions = new()
+        {
+            AgentConversationId = EXISTING_CONVERSATION_ID,
+        };
 
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
         OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseCreationOptions);

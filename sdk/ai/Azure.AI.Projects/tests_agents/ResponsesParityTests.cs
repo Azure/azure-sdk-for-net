@@ -295,9 +295,9 @@ public class ResponsesParityTests : AgentsTestBase
         ResponseCreationOptions responseCreationOptions = new()
         {
             Model = TestEnvironment.MODELDEPLOYMENTNAME,
+            AgentConversationId = conversation,
             Tools = { functionTool },
         };
-        responseCreationOptions.SetConversationReference(conversation);
 
         OpenAIResponse response = await projectClient.OpenAI.Responses.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("What's my favorite food?")],

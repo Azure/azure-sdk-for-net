@@ -82,20 +82,20 @@ public partial class ProjectOpenAIClient : OpenAIClient
     public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
-            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model: null), null)
+            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model: null, agentConversationId: null), null)
             ?? _cachedResponseClient;
     }
 
-    public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForAgent(string agentName, string agentVersion = null)
+    public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForAgent(AgentReference agent, string agentConversationId = null)
     {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        return new ProjectOpenAIResponseClient(Pipeline, _options, agentName, agentVersion, null);
+        Argument.AssertNotNull(agent, nameof(agent));
+        return new ProjectOpenAIResponseClient(Pipeline, _options, agent.Name, agent.Version, model: null, agentConversationId);
     }
 
     public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForModel(string model)
     {
         Argument.AssertNotNullOrEmpty(model, nameof(model));
-        return new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model);
+        return new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model, agentConversationId: null);
     }
 
     private static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)

@@ -49,7 +49,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        responseOptions.Agent = agentVersion;
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -113,7 +113,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Async
         responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
+        responseOptions.Agent = agentVersion2;
 
         response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
@@ -162,7 +162,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+        responseOptions.Agent = agentVersion;
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
         OpenAIResponse response = responseClient.CreateResponse(
@@ -232,7 +232,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Sync
         responseOptions = new();
-        responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
+        responseOptions.Agent = agentVersion2;
 
         response = responseClient.CreateResponse(
             [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],

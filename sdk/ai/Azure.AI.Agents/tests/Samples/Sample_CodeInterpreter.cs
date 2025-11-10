@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
