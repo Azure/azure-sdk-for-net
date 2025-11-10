@@ -15,13 +15,13 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.AI.Agents.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public partial class Sample_Agents_Telemetry : AgentsTestBase
 {
     [Test]
     [AsyncOnly]
     public async Task TracingToConsoleExample()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -30,7 +30,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
+                        .AddSource("Azure.AI.Agents.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
@@ -56,6 +56,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
     [SyncOnly]
     public void TracingToConsoleExampleSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -71,7 +72,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         #endregion
         #region Snippet:AgentTelemetrySetupTracingToConsole
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
+                        .AddSource("Azure.AI.Agents.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
@@ -106,7 +107,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource("Azure.AI.Agents.Persistent.*")
+            .AddSource("Azure.AI.Agents.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
             .AddAzureMonitorTraceExporter().Build();
 
@@ -140,7 +141,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 #endif
         #region Snippet:AgentTelemetrySetupTracingToAzureMonitor
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource("Azure.AI.Agents.Persistent.*")
+            .AddSource("Azure.AI.Agents.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
             .AddAzureMonitorTraceExporter().Build();
         #endregion
