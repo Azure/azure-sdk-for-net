@@ -1147,4 +1147,55 @@ interface Employees {
     );
     ok(listByParentEntry);
   });
+
+  it("resource scope as ManagementGroup", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+    get is Extension.Read<
+    Extension.ManagementGroup<"managementGroupId">,
+    Employee
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+    
+    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+    ok(employeeClient);
+    
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+
+    // Validate Employee resource metadata should be null (no CRUD operations)
+    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(employeeResourceMetadataDecorator);
+    strictEqual(
+      employeeResourceMetadataDecorator.arguments.resourceScope,
+      "ManagementGroup"
+    );
+  });
 });

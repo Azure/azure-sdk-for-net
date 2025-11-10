@@ -38,6 +38,6 @@ namespace Encode.Numeric._Property
         /// <param name="safeintAsStringProperty"> The <see cref="SafeintAsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SafeintAsStringProperty safeintAsStringProperty) => throw null;
 
-        public static explicit operator SafeintAsStringProperty(Response result) => throw null;
+        public static explicit operator SafeintAsStringProperty(Response response) => throw null;
     }
 }

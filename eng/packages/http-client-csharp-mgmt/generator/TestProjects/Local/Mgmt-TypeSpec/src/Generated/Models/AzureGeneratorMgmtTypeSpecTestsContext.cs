@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -42,6 +43,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(EndpointResource))]
     [ModelReaderWriterBuildable(typeof(EndpointResourceData))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(FooActionRequest))]
+    [ModelReaderWriterBuildable(typeof(FooActionResult))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooPreviewAction))]
@@ -74,6 +77,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SafeFlattenModel))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]

@@ -307,5 +307,27 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.AreEqual("name", contextualParameters[2].VariableName);
             Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
         }
+
+        [TestCase]
+        public void ValidateContextualParameters_SubscriptionSingletonResource()
+        {
+            // This test case represents the Spot Placement Scores scenario
+            // Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot
+            // This is a singleton resource (ends with constant "spot")
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot");
+            var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
+
+            Assert.AreEqual(2, contextualParameters.Count, "Should have subscriptionId and location parameters");
+
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+
+            Assert.AreEqual("locations", contextualParameters[1].Key);
+            Assert.AreEqual("location", contextualParameters[1].VariableName);
+            // For a singleton resource, the location should be extracted from Id.Parent.Name
+            // because Id.Name would return "spot" (the singleton name)
+            Assert.AreEqual("id.Parent.Name", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+        }
     }
 }

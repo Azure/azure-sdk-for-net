@@ -34,6 +34,6 @@ namespace Payload.ContentNegotiation._DifferentBody
 
         string IPersistableModel<PngImageAsJson>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator PngImageAsJson(Response result) => throw null;
+        public static explicit operator PngImageAsJson(Response response) => throw null;
     }
 }

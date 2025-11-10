@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Versioning.PreviewVersion
+namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class ListWidgetsResponse : IJsonModel<ListWidgetsResponse>
     {
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Versioning.PreviewVersion
 
         string IPersistableModel<ListWidgetsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator ListWidgetsResponse(Response result) => throw null;
+        public static explicit operator ListWidgetsResponse(Response response) => throw null;
     }
 }

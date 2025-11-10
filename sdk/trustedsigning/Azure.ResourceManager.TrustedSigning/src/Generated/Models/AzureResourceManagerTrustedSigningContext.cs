@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrustedSigning.Models;
 
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.TrustedSigning
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountListResult))]
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountPatchProperties))]
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(Revocation))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

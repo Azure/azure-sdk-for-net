@@ -13,37 +13,8 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing the content and location of a field value. </summary>
     public partial class DocumentField
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DocumentField"/>. </summary>
         /// <param name="fieldType"> Data type of the field value. </param>
@@ -78,8 +49,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IReadOnlyList<string> valueSelectionGroup, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IReadOnlyList<string> valueSelectionGroup, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FieldType = fieldType;
             ValueString = valueString;
@@ -101,50 +72,63 @@ namespace Azure.AI.DocumentIntelligence
             BoundingRegions = boundingRegions;
             Spans = spans;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentField"/> for deserialization. </summary>
-        internal DocumentField()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Data type of the field value. </summary>
         public DocumentFieldType FieldType { get; }
+
         /// <summary> String value. </summary>
         public string ValueString { get; }
+
         /// <summary> Date value in YYYY-MM-DD format (ISO 8601). </summary>
         public DateTimeOffset? ValueDate { get; }
+
         /// <summary> Time value in hh:mm:ss format (ISO 8601). </summary>
         public TimeSpan? ValueTime { get; }
+
         /// <summary> Phone number value in E.164 format (ex. +19876543210). </summary>
         public string ValuePhoneNumber { get; }
+
         /// <summary> Floating point value. </summary>
         public double? ValueDouble { get; }
+
         /// <summary> Integer value. </summary>
         public long? ValueInt64 { get; }
+
         /// <summary> Selection mark value. </summary>
         public DocumentSelectionMarkState? ValueSelectionMark { get; }
+
         /// <summary> Presence of signature. </summary>
         public DocumentSignatureType? ValueSignature { get; }
+
         /// <summary> 3-letter country code value (ISO 3166-1 alpha-3). </summary>
         public string ValueCountryRegion { get; }
+
         /// <summary> Array of field values. </summary>
         public IReadOnlyList<DocumentField> ValueList { get; }
+
         /// <summary> Currency value. </summary>
         public CurrencyValue ValueCurrency { get; }
+
         /// <summary> Address value. </summary>
         public AddressValue ValueAddress { get; }
+
         /// <summary> Boolean value. </summary>
         public bool? ValueBoolean { get; }
+
         /// <summary> Selection group value. </summary>
         public IReadOnlyList<string> ValueSelectionGroup { get; }
+
         /// <summary> Field content. </summary>
         public string Content { get; }
+
         /// <summary> Bounding regions covering the field. </summary>
         public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
+
         /// <summary> Location of the field in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
+
         /// <summary> Confidence of correctly extracting the field. </summary>
         public float? Confidence { get; }
     }

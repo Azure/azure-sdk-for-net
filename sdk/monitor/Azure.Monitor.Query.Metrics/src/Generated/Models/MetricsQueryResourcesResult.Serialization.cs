@@ -141,7 +141,7 @@ namespace Azure.Monitor.Query.Metrics.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeMetricsQueryResourcesResult(document.RootElement, options);
                     }
@@ -153,11 +153,10 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MetricsQueryResourcesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MetricsQueryResourcesResult"/> from. </param>
-        public static explicit operator MetricsQueryResourcesResult(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MetricsQueryResourcesResult"/> from. </param>
+        public static explicit operator MetricsQueryResourcesResult(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMetricsQueryResourcesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

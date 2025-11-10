@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
@@ -16,6 +17,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
+        /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? RestorePointInTime { get => RestorePointInOn; set => RestorePointInOn = value; }
+
         /// <summary> PrivateEndpointConnections related properties of a server. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections
@@ -34,7 +39,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             modelGroupIds.Add(gid);
                     }
                     model.PrivateEndpoint = item.PrivateEndpoint;
-                    model.ConnectionState = item.ConnectionState;
+                    model.ConnectionState = item.PrivateLinkServiceConnectionState;
                     list.Add(model);
                 }
                 return list;

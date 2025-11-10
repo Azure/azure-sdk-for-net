@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
+namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
 {
     public static partial class _Specs_AzureClientGeneratorCoreFlattenPropertyModelFactory
     {

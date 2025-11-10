@@ -70,7 +70,7 @@
 /sdk/identity/                                                     @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
-# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# AzureSdkOwners:                                                  @JonathanCrd
 
 # PRLabel: %Extensions
 /sdk/extensions/                                                   @jsquire
@@ -818,30 +818,6 @@
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @vicancy @JialinXin @Y-Sindo
 
-# PRLabel: %SQL
-/sdk/sqlmanagement/                                                @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL - Backup & Restore
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL - Data Security
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL - Elastic Jobs
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL - Managed Instance
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL - Replication & Failover
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
-# ServiceLabel: %SQL - VM
-# ServiceOwners:                                                   @ericshape @jeremyfrosti
-
 # PRLabel: %Storage
 /sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
@@ -1144,14 +1120,38 @@
 # PRLabel: %Service Fabric
 /sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
 
-# ServiceLabel: %Service Fabric
+# ServiceLabel: %Service Fabric %Mgmt
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
 
 # PRLabel: %SiteManager
-/sdk/sitemanager/Azure.ResourceManager.*/                          @bsomeshekar
+/sdk/sitemanager/Azure.ResourceManager.*/                          @bsomeshekar @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %SiteManager %Mgmt
-# ServiceOwners:                                                   @bsomeshekar
+# ServiceOwners:                                                   @bsomeshekar @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %SQL
+/sdk/sqlmanagement/                                                @ericshape @ArcturusZhang @ArthurMa1978
+
+# ServiceLabel: %SQL %Mgmt
+# ServiceOwners:                                                   @ericshape
+
+# ServiceLabel: %SQL - Backup & Restore %Mgmt
+# ServiceOwners:                                                   @ericshape
+
+# ServiceLabel: %SQL - Data Security %Mgmt
+# ServiceOwners:                                                   @ericshape
+
+# ServiceLabel: %SQL - Elastic Jobs %Mgmt
+# ServiceOwners:                                                   @ericshape
+
+# ServiceLabel: %SQL - Managed Instance %Mgmt
+# ServiceOwners:                                                   @ericshape
+
+# ServiceLabel: %SQL - Replication & Failover %Mgmt
+# ServiceOwners:                                                   @ericshape
+
+# ServiceLabel: %SQL - VM %Mgmt
+# ServiceOwners:                                                   @ericshape
 
 # ServiceLabel: %Virtual Enclaves %Mgmt
 # ServiceOwners:                                                   @jchavaherrera
@@ -1171,6 +1171,7 @@
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
 /.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
+/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
 /.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
