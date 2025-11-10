@@ -91,6 +91,6 @@ public static class ResponsesExtensions
     /// <returns>The conversation ID, or null if not present.</returns>
     public static string? GetConversationId(this CreateResponseRequest request)
     {
-        return request.Conversation?.ToObject<ResponseConversation1>()?.Id ?? request.Conversation?.ToString();
+        return request.Conversation?.ToObject<ResponseConversation1>()?.Id ?? request.Conversation?.ToObject<string>();
     }
 }

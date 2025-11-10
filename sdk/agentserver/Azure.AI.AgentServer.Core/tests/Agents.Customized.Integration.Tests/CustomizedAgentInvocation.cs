@@ -110,7 +110,7 @@ public class CustomizedAgentInvocation : IAgentInvocation
         }
 
         // implicit user message of text input
-        return request.Input.ToString();
+        return request.Input.ToObject<string>() ?? string.Empty;
     }
 
     private static Response ToResponse(CreateResponseRequest request, AgentInvocationContext context,
