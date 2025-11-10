@@ -18,7 +18,7 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
     public string Scope { get; }
     public string ConversationId { get; set; }
     public string PreviousSearchId { get; set; }
-    public MemorySearchResultOptions ResultOptions { get; private set; }
+    public MemorySearchResultOptions ResultOptions { get; set; }
 
     public MemorySearchOptions(string scope)
     {

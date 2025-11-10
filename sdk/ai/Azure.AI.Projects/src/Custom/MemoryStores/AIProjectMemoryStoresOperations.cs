@@ -128,7 +128,7 @@ public partial class AIProjectMemoryStoresOperations
             cancellationToken.ToRequestOptions());
     }
 
-    public virtual async Task<ClientResult<MemoryUpdateResult>> UpdateMemoriesAsync(string memoryStoreName, MemoryUpdateOptions options = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<MemoryUpdateResult>> UpdateMemoriesAsync(string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));
         Argument.AssertNotNull(options, nameof(options));
