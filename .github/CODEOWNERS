@@ -947,10 +947,7 @@
 # ServiceOwners:                                                   @armleads-azure
 
 # PRLabel: %Astronomer
-/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
-
-# ServiceLabel: %Astronomer %Mgmt
-# ServiceOwners:                                                   @banggaurav
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
@@ -1171,6 +1168,7 @@
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
 /.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
+/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
 /.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
