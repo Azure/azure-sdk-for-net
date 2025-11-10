@@ -13,37 +13,8 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Request body to create a composed document model from component document models. </summary>
     public partial class ComposeModelOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComposeModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
@@ -69,8 +40,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="split"> File splitting behavior. </param>
         /// <param name="documentTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComposeModelOptions(string modelId, string description, string classifierId, SplitMode? split, IDictionary<string, DocumentTypeDetails> documentTypes, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComposeModelOptions(string modelId, string description, string classifierId, SplitMode? split, IDictionary<string, DocumentTypeDetails> documentTypes, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;
@@ -78,24 +49,24 @@ namespace Azure.AI.DocumentIntelligence
             Split = split;
             DocumentTypes = documentTypes;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComposeModelOptions"/> for deserialization. </summary>
-        internal ComposeModelOptions()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique document model name. </summary>
         public string ModelId { get; }
+
         /// <summary> Document model description. </summary>
         public string Description { get; set; }
+
         /// <summary> Custom classifier to split and classify the input file. </summary>
         public string ClassifierId { get; }
+
         /// <summary> File splitting behavior. </summary>
         public SplitMode? Split { get; set; }
+
         /// <summary> Dictionary mapping supported docTypes to the corresponding document models. </summary>
         public IDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
+
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -279,11 +279,24 @@ public partial struct JsonPatch
                 else
                 {
                     var valueSpan = kvp.Value.Value.Span;
-                    if (valueSpan.SequenceEqual(currentValue.Span) ||
-                        (valueSpan.Length > 2 && valueSpan[0] == (byte)'"' && valueSpan[valueSpan.Length - 1] == '"' && valueSpan.Slice(1, valueSpan.Length - 2).SequenceEqual(currentValue.Span)))
+                    if (valueSpan.SequenceEqual(currentValue.Span))
                     {
                         // same value we can skip
                         continue;
+                    }
+                    if (kvp.Value.Kind.HasFlag(ValueKind.Utf8String))
+                    {
+                        // currentValue comes from _rawJson which means strings will be quoted
+                        // if kvp is Utf8String we need to remove quotes from currentValue to compare
+                        ReadOnlySpan<byte> currentValueSpan = currentValue.Span;
+                        if (currentValueSpan.Length >= 2 &&
+                            currentValueSpan[0] == (byte)'"' &&
+                            currentValueSpan[currentValueSpan.Length - 1] == (byte)'"' &&
+                            currentValueSpan.Slice(1, currentValueSpan.Length - 2).SequenceEqual(valueSpan))
+                        {
+                            // same value we can skip
+                            continue;
+                        }
                     }
                     opType = "replace"u8;
                 }

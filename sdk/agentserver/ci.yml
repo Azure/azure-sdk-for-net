@@ -1,0 +1,36 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+      - main
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - sdk/agentserver
+
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - sdk/agentserver
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: client
+    ServiceDirectory: agentserver
+    ArtifactName: packages
+    Artifacts:
+      - name: Azure.AI.AgentServer.Core
+        safeName: AzureAIAgentServerCore
+      - name: Azure.AI.AgentServer.Contracts
+        safeName: AzureAIAgentServerContracts
+      - name: Azure.AI.AgentServer.AgentFramework
+        safeName: AzureAIAgentServerAgentFramework

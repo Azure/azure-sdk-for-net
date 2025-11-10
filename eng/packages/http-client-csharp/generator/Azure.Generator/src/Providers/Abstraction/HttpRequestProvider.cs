@@ -4,10 +4,10 @@
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Snippets;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -28,6 +28,9 @@ namespace Azure.Generator.Providers
 
         public override HttpRequestApi FromExpression(ValueExpression original)
             => new HttpRequestProvider(original);
+
+        public override ValueExpression ClientRequestId()
+            => Original.Property(nameof(Request.ClientRequestId));
 
         public override MethodBodyStatement SetHeaders(IReadOnlyList<ValueExpression> arguments)
             => Original.Property(nameof(Request.Headers)).Invoke(nameof(RequestHeaders.SetValue), arguments).Terminate();

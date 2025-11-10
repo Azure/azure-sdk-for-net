@@ -889,6 +889,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion",
       "apiVersions": [

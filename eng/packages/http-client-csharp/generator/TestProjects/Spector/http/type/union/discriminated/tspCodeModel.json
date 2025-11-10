@@ -360,6 +360,7 @@
           "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Union.Discriminated",
       "apiVersions": [],
@@ -402,6 +403,7 @@
               "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope",
           "apiVersions": [],
@@ -447,6 +449,7 @@
                   "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object",
               "apiVersions": [],
@@ -784,6 +787,7 @@
                       "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default",
                   "apiVersions": [],
@@ -1121,6 +1125,7 @@
                       "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties",
                   "apiVersions": [],
@@ -1170,6 +1175,7 @@
               "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope",
           "apiVersions": [],
@@ -1507,6 +1513,7 @@
                   "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default",
               "apiVersions": [],
@@ -1844,6 +1851,7 @@
                   "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator",
               "apiVersions": [],

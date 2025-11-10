@@ -42,6 +42,12 @@ $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
+$apiVersion = $inputJson.apiVersion
+$sdkReleaseType = $inputJson.sdkReleaseType
+
+if ($sdkReleaseType) {
+    Write-Warning "sdkReleaseType is not supported by .NET and user will need to update the package version manually"
+}
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -149,6 +155,14 @@ if ($relatedTypeSpecProjectFolder) {
         $tspclientCommand = "npm exec --prefix $tspClientDir --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
+        }
+        if ($apiVersion) {
+            # Validate apiVersion format to prevent command injection - allow alphanumeric, dots, and dashes
+            if ($apiVersion -match '^[a-zA-Z0-9.-]+$') {
+                $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
+            } else {
+                Write-Warning "apiVersion '$apiVersion' contains invalid characters and will be skipped. Only alphanumeric characters, dots, and dashes are allowed."
+            }
         }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
