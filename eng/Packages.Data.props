@@ -372,12 +372,12 @@
     <PackageReference Update="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.*" />
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.21" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
-    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="8.*" />
+    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="8.0.21" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
@@ -482,8 +482,8 @@
      or '$(IsStressProject)' == 'true'
      or '$(IsSamplesProject)' == 'true'
   )">
-    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="9.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.*" />
+    <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="9.0.10" />
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
