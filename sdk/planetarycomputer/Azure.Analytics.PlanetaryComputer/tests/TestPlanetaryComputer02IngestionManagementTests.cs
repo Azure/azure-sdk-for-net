@@ -277,6 +277,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Test creating an ingestion definition.
         /// Python equivalent: test_03_create_ingestion_definition
         /// C# method: Create(string collectionId, IngestionInformation) - returns Response<IngestionInformation>
+        /// Simplified to avoid LRO polling issues during cleanup.
         /// </summary>
         [Test]
         [Category("Ingestion")]
@@ -293,12 +294,19 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Collection ID: {collectionId}");
             TestContext.WriteLine($"Source Catalog URL: {sourceCatalogUrl}");
 
-            // Delete all existing ingestions first
+            // Delete all existing ingestions first (simplified - no polling)
             TestContext.WriteLine("Deleting all existing ingestions...");
             await foreach (IngestionInformation existingIngestion in ingestionClient.GetAllAsync(collectionId))
             {
-                await ingestionClient.DeleteAsync(WaitUntil.Completed, collectionId, existingIngestion.Id);
-                TestContext.WriteLine($"  Deleted existing ingestion: {existingIngestion.Id}");
+                await ingestionClient.DeleteAsync(WaitUntil.Started, collectionId, existingIngestion.Id);
+                TestContext.WriteLine($"  Started delete for ingestion: {existingIngestion.Id}");
+            }
+
+            // Wait for deletions to complete (only in Record/Live mode)
+            if (Mode != RecordedTestMode.Playback)
+            {
+                TestContext.WriteLine("Waiting 30 seconds for deletions to complete...");
+                await Task.Delay(TimeSpan.FromSeconds(30));
             }
 
             // Create ingestion definition
