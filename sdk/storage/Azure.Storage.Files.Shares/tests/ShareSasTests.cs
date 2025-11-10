@@ -1014,7 +1014,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
-            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.Read, expiresOn: Recording.UtcNow.AddHours(1))
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions: ShareSasPermissions.All, expiresOn: Recording.UtcNow.AddHours(1))
             {
                 ShareName = share.Name,
                 DelegatedUserObjectId = objectId?.ToString()
@@ -1027,10 +1027,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasQueryParameters
             };
 
-            ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+            ShareClientOptions clientOptions = GetOptions();
+            clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareClient sasShare = InstrumentClient(new ShareClient(shareUriBuilder.ToUri(), TestEnvironment.Credential, clientOptions));
 
             // Act
-            Response<ShareProperties> response = await sasShare.GetPropertiesAsync();
+            Response<ShareDirectoryClient> response = await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1085,7 +1087,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act & Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                sasShare.GetPropertiesAsync(),
+                sasShare.CreateDirectoryAsync(GetNewDirectoryName()),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 

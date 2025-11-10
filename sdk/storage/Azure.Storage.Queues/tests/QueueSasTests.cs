@@ -294,7 +294,7 @@ namespace Azure.Storage.Queues.Test
         [RecordedTest]
         [LiveOnly]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_04_06)]
-        public async Task QueueClient_UserDelegationSAS_Roundtrip()
+        public async Task QueueClient_UserDelegationSAS_DelegatedTenantId_Roundtrip()
         {
             // Arrange
             QueueServiceClient service = GetServiceClient_OAuth();
