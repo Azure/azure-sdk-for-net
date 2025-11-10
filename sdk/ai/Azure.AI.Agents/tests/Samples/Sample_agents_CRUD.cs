@@ -9,13 +9,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.Agents.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_agents_CRUD : AgentsTestBase
 {
     [Test]
     [AsyncOnly]
     public async Task AgentCRUDAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClientCRUD
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -66,6 +66,7 @@ public class Sample_agents_CRUD : AgentsTestBase
     [SyncOnly]
     public void AgentCRUD()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -107,6 +108,28 @@ public class Sample_agents_CRUD : AgentsTestBase
         Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void SelectAPIVersion()
+    {
+        IgnoreSampleMayBe();
+        #region Snippet:SelectAPIVersion
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+#endif
+        AgentClientOptions options = new(version: AgentClientOptions.ServiceVersion.V2025_11_01);
+        AgentClient client = new(
+            endpoint: new Uri(projectEndpoint),
+            tokenProvider: new DefaultAzureCredential(),
+            options: options
+        );
         #endregion
     }
 
