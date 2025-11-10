@@ -8,8 +8,6 @@
 - Added `BicepFunction.GetResourceId` corresponding to bicep built-in function `resourceId`.
 - Added `BicepFunction.GetExtensionResourceId` corresponding to bicep built-in function `extensionResourceId`.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
