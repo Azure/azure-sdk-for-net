@@ -1,6 +1,6 @@
 # Release History
 
-## 11.8.0-beta.1 (2025-10-20)
+## 11.8.0-beta.1 (2025-11-13)
 
 ### Features Added
 - Added support for `2025-11-01-preview` service version.

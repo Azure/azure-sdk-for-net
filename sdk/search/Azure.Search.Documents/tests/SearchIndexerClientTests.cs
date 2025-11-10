@@ -653,8 +653,8 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
                     Type _ when t == typeof(AzureMachineLearningSkill) => new AzureMachineLearningSkill(inputs, outputs, new Uri("https://microsoft.com")),
-                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri("https://test-sample.openai.azure.com"), ApiKey = "api-key", DeploymentName = "model", ModelName = "text-embedding-3-large" },
-                    Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, "https://microsoft.com"),
+                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri(TestEnvironment.OpenAIEndpoint), ApiKey = TestEnvironment.OpenAIKey, DeploymentName = "model", ModelName = "text-embedding-3-large" },
+                    Type _ when t == typeof(ChatCompletionSkill) => new ChatCompletionSkill(inputs, outputs, TestEnvironment.OpenAIEndpoint),
                     Type _ when t == typeof(VisionVectorizeSkill) => new VisionVectorizeSkill(inputs, outputs, "latest"),
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };

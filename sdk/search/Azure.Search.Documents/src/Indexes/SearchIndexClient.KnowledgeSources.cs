@@ -325,7 +325,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         public virtual Response<KnowledgeSourceStatus> GetKnowledgeSourceStatus(string sourceName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSource)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSourceStatus)}");
             scope.Start();
             try
             {
@@ -344,7 +344,7 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         public virtual async Task<Response<KnowledgeSourceStatus>> GetKnowledgeSourceStatusAsync(string sourceName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSource)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSourceStatus)}");
             scope.Start();
             try
             {

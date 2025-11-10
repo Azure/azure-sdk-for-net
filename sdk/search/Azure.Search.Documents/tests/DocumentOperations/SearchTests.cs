@@ -1108,6 +1108,25 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.HybridSearch.CountAndFacetMode, clonedSearchOptions.HybridSearch.CountAndFacetMode);
         }
 
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+        public async Task SearchDocumentsWithElevatedReadPermission()
+        {
+            SearchResources resource = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resource.GetSearchClient();
+            SearchResults<Hotel> results = await client.SearchAsync<Hotel>("*", querySourceAuthorization: null ,enableElevatedRead: true);
+
+            Assert.IsNotNull(results);
+            Assert.AreEqual(10, results.Values.Count);
+
+            // Using a simulated GUID should fail since it is malformed.
+            var fakeGuid = Recording.Random.NewGuid().ToString();
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await client.SearchAsync<Hotel>("*", querySourceAuthorization: fakeGuid, enableElevatedRead: true);
+            });
+        }
+
         /* TODO: Enable these Track 1 tests when we have support for index creation
         protected void TestCanSearchWithDateTimeInStaticModel()
         {
