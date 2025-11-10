@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ToolChoiceFunctionObject : IJsonModel<ToolChoiceFunctionObject>
+    internal partial class ToolChoiceFunctionObject : ToolChoiceObject, IJsonModel<ToolChoiceFunctionObject>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/> for deserialization. </summary>
         internal ToolChoiceFunctionObject()
@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeToolChoiceFunctionObject(document.RootElement, options);
                     }

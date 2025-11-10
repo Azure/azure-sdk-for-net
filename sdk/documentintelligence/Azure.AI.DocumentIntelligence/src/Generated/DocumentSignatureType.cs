@@ -14,38 +14,57 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentSignatureType : IEquatable<DocumentSignatureType>
     {
         private readonly string _value;
+        /// <summary> A signature is detected. </summary>
+        private const string SignedValue = "signed";
+        /// <summary> No signatures are detected. </summary>
+        private const string UnsignedValue = "unsigned";
 
         /// <summary> Initializes a new instance of <see cref="DocumentSignatureType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentSignatureType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SignedValue = "signed";
-        private const string UnsignedValue = "unsigned";
+            _value = value;
+        }
 
         /// <summary> A signature is detected. </summary>
         public static DocumentSignatureType Signed { get; } = new DocumentSignatureType(SignedValue);
+
         /// <summary> No signatures are detected. </summary>
         public static DocumentSignatureType Unsigned { get; } = new DocumentSignatureType(UnsignedValue);
+
         /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentSignatureType left, DocumentSignatureType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentSignatureType left, DocumentSignatureType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentSignatureType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentSignatureType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentSignatureType(string value) => new DocumentSignatureType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentSignatureType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentSignatureType?(string value) => value == null ? null : new DocumentSignatureType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentSignatureType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentSignatureType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

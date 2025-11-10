@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The NotificationMode. </summary>
+    /// <summary> The notification mode. </summary>
     public readonly partial struct NotificationMode : IEquatable<NotificationMode>
     {
         private readonly string _value;

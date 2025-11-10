@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class DifferentSpreadModelArrayDerived : IJsonModel<DifferentSpreadModelArrayDerived>
+    public partial class DifferentSpreadModelArrayDerived : DifferentSpreadModelArrayRecord, IJsonModel<DifferentSpreadModelArrayDerived>
     {
         internal DifferentSpreadModelArrayDerived() => throw null;
 
@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="differentSpreadModelArrayDerived"> The <see cref="DifferentSpreadModelArrayDerived"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadModelArrayDerived differentSpreadModelArrayDerived) => throw null;
 
-        public static explicit operator DifferentSpreadModelArrayDerived(Response result) => throw null;
+        public static explicit operator DifferentSpreadModelArrayDerived(Response response) => throw null;
     }
 }

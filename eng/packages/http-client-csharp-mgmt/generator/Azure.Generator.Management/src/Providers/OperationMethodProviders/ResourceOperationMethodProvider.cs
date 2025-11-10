@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -17,6 +17,8 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -93,6 +95,80 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _bodyStatements = BuildBodyStatements();
         }
 
+        /// <summary>
+        /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
+        /// </summary>
+        private static void BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
+        {
+            if (existingXmlDocs == null)
+            {
+                return;
+            }
+
+            var operation = serviceMethod.Operation;
+
+            // Build list items for the operation metadata
+            var listItems = new List<XmlDocStatement>();
+
+            // Request Path item
+            listItems.Add(new XmlDocStatement("item", [],
+                new XmlDocStatement("term", [$"Request Path"]),
+                new XmlDocStatement("description", [$"{operation.Path}"])));
+
+            // Operation Id item
+            // Use CrossLanguageDefinitionId for accurate operation IDs
+            // For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")
+            // For non-resource operations, the format is: Namespace.Client.OperationName
+            string operationId = operation.Name;
+            if (!string.IsNullOrEmpty(serviceMethod.CrossLanguageDefinitionId))
+            {
+                var parts = serviceMethod.CrossLanguageDefinitionId.Split('.');
+                if (parts.Length >= 2)
+                {
+                    // Take the last two parts: ResourceClient and OperationName
+                    var resourceOrClientName = parts[^2];  // Second to last
+                    var methodName = parts[^1];            // Last
+                    operationId = $"{resourceOrClientName}_{methodName.FirstCharToUpperCase()}";
+                }
+            }
+            listItems.Add(new XmlDocStatement("item", [],
+                new XmlDocStatement("term", [$"Operation Id"]),
+                new XmlDocStatement("description", [$"{operationId}"])));
+
+            // API Version item (if available)
+            var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
+            if (apiVersionParam != null && apiVersionParam.DefaultValue?.Value != null)
+            {
+                listItems.Add(new XmlDocStatement("item", [],
+                    new XmlDocStatement("term", [$"Default Api Version"]),
+                    new XmlDocStatement("description", [$"{apiVersionParam.DefaultValue.Value}"])));
+            }
+
+            // Resource item (if enclosing type is a ResourceClientProvider)
+            if (enclosingType is ResourceClientProvider resourceClient)
+            {
+                listItems.Add(new XmlDocStatement("item", [],
+                    new XmlDocStatement("term", [$"Resource"]),
+                    new XmlDocStatement("description", [$"{resourceClient.Type:C}"])));
+            }
+
+            // Create the list statement
+            var listStatement = new XmlDocStatement($"<list type=\"bullet\">", $"</list>", [], innerStatements: listItems.ToArray());
+
+            // Build the complete summary with base description and metadata list
+            var summaryContent = new List<FormattableString>();
+            if (baseDescription != null)
+            {
+                summaryContent.Add(baseDescription);
+            }
+
+            // Create summary statement with the list as inner content
+            var summaryStatement = new XmlDocSummaryStatement(summaryContent, listStatement);
+
+            // Update the XmlDocs with the new summary
+            existingXmlDocs.Update(summary: summaryStatement);
+        }
+
         private static void InitializeLroFlags(
             in InputServiceMethod serviceMethod,
             in bool forceLro,
@@ -129,10 +205,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
                 resourceOperationMethodProvider._enclosingType);
+
+            // Add enhanced XML documentation with structured tags
+            BuildEnhancedXmlDocs(
+                resourceOperationMethodProvider._serviceMethod,
+                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
@@ -200,7 +285,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
-        private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
+        protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
@@ -221,6 +306,84 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     contextVariable,
                     _isAsync,
                     out responseVariable);
+            }
+        }
+
+        /// <summary>
+        /// Builds client pipeline handling with status code switch logic for exists/get-if-exists operations.
+        /// Handles 200 (success) and 404 (not found) status codes specifically.
+        /// </summary>
+        protected IReadOnlyList<MethodBodyStatement> BuildExistsOperationPipelineProcessing(
+            VariableExpression messageVariable,
+            VariableExpression contextVariable,
+            out ScopedApi<Response> responseVariable)
+        {
+            var statements = new List<MethodBodyStatement>();
+
+            var sendMethod = _isAsync ? "SendAsync" : "Send";
+            var sendArguments = new ValueExpression[] { messageVariable, contextVariable.Property(nameof(RequestContext.CancellationToken)) };
+
+            var sendStatement = _isAsync
+                ? This.Property("Pipeline").Invoke(sendMethod, sendArguments, null, _isAsync).Terminate()
+                : This.Property("Pipeline").Invoke(sendMethod, sendArguments).Terminate();
+            statements.Add(sendStatement);
+
+            var resultDeclaration = Declare(
+                "result",
+                typeof(Response),
+                messageVariable.Property("Response"),
+                out var resultVariable);
+            statements.Add(resultDeclaration);
+
+            var responseDeclaration = Declare(
+                "response",
+                new CSharpType(typeof(Response<>), _originalBodyType!),
+                Default,
+                out var responseVar);
+            responseVariable = responseVar.As<Response>();
+            statements.Add(responseDeclaration);
+
+            var switchStatement = new SwitchStatement(resultVariable.Property("Status"));
+
+            // Case 200: response = Response.FromValue(FooData.FromResponse(result), result);
+            var case200Body = CreateSwitchCaseBody(
+                responseVar,
+                Static(_originalBodyType!).Invoke(SerializationVisitor.FromResponseMethodName, new ValueExpression[] { resultVariable }),
+                resultVariable);
+            var case200 = new SwitchCaseStatement(new ValueExpression[] { Literal(200) }, case200Body);
+            switchStatement.Add(case200);
+
+            // Case 404: response = Response.FromValue((FooData)null, result);
+            var case404Body = CreateSwitchCaseBody(
+                responseVar,
+                Null.CastTo(_originalBodyType!),
+                resultVariable);
+            var case404 = new SwitchCaseStatement(new ValueExpression[] { Literal(404) }, case404Body);
+            switchStatement.Add(case404);
+
+            // Default case: throw new RequestFailedException(result);
+            var defaultBody = new List<MethodBodyStatement>
+            {
+                Throw(New.Instance(typeof(RequestFailedException), resultVariable))
+            };
+            var defaultCase = new SwitchCaseStatement(new ValueExpression[0], defaultBody);
+            switchStatement.Add(defaultCase);
+
+            statements.Add(switchStatement);
+
+            return statements;
+
+            // Helper method to create switch case body
+            static List<MethodBodyStatement> CreateSwitchCaseBody(VariableExpression responseVar, ValueExpression valueExpression, VariableExpression resultVariable)
+            {
+                return new List<MethodBodyStatement>
+                {
+                    responseVar.Assign(
+                        Static(typeof(Response)).Invoke(
+                            nameof(Response.FromValue),
+                            new ValueExpression[] { valueExpression, resultVariable })).Terminate(),
+                    Break
+                };
             }
         }
 
@@ -279,7 +442,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     .MakeGenericType([_returnBodyType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
-            ValueExpression[] armOperationArguments = [
+            ValueExpression[] commonArmOperationArguments = [
                 _clientDiagnosticsField,
                 This.As<ArmResource>().Pipeline(),
                 messageVariable.Property("Request"),
@@ -287,17 +450,28 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _returnBodyResourceClient != null
-                ? [
-                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
-                    .. armOperationArguments
-                  ]
-                : armOperationArguments;
+            ValueExpression? operationSourceInstance = null;
+            if (_returnBodyResourceClient != null)
+            {
+                // Resource type - pass client to operation source constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.ResourceData.Type].Type;
+                operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
+            }
+            else if (_originalBodyType != null)
+            {
+                // Non-resource type - use parameterless constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_originalBodyType].Type;
+                operationSourceInstance = New.Instance(operationSourceType);
+            }
+
+            var armOperationArguments = operationSourceInstance != null
+                ? [operationSourceInstance, .. commonArmOperationArguments]
+                : commonArmOperationArguments;
 
             var operationDeclaration = Declare(
                 "operation",
                 armOperationType,
-                New.Instance(armOperationType, operationInstanceArguments),
+                New.Instance(armOperationType, armOperationArguments),
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
@@ -341,15 +515,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                         responseVariable.GetRawResponse()))).Terminate()
             };
 
-            List<MethodBodyStatement> statements = [nullCheckStatement];
+            // if the return type is Response with no content, no need to check null.
+            List<MethodBodyStatement> statements =
+                CheckIfReturnTypeIsResponseWithNoContent()
+                ? []
+                : [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
             if (_returnBodyResourceClient != null)
             {
                 var returnValueExpression = New.Instance(
-                    _returnBodyResourceClient.Type,
-                    This.As<ArmResource>().Client(),
-                    responseVariable.Value());
+                        _returnBodyResourceClient.Type,
+                        This.As<ArmResource>().Client(),
+                        responseVariable.Value());
                 var returnStatement = Return(
                     ResponseSnippets.FromValue(
                         returnValueExpression,
@@ -362,6 +540,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
 
             return statements;
+
+            bool CheckIfReturnTypeIsResponseWithNoContent()
+            {
+                var returnType = signature.ReturnType;
+                return returnType != null && (returnType.Equals(typeof(Response)) || returnType.Equals(typeof(Task<Response>)));
+            }
         }
     }
 }

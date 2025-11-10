@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class IsUnknownAdditionalPropertiesDerived : IJsonModel<IsUnknownAdditionalPropertiesDerived>
+    public partial class IsUnknownAdditionalPropertiesDerived : IsUnknownAdditionalProperties, IJsonModel<IsUnknownAdditionalPropertiesDerived>
     {
         internal IsUnknownAdditionalPropertiesDerived() => throw null;
 
@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="isUnknownAdditionalPropertiesDerived"> The <see cref="IsUnknownAdditionalPropertiesDerived"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IsUnknownAdditionalPropertiesDerived isUnknownAdditionalPropertiesDerived) => throw null;
 
-        public static explicit operator IsUnknownAdditionalPropertiesDerived(Response result) => throw null;
+        public static explicit operator IsUnknownAdditionalPropertiesDerived(Response response) => throw null;
     }
 }

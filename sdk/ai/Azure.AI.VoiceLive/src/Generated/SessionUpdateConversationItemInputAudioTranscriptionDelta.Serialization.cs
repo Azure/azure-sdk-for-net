@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the text value of an input audio transcription content part is updated. </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionDelta : IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>
+    public partial class SessionUpdateConversationItemInputAudioTranscriptionDelta : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/> for deserialization. </summary>
         internal SessionUpdateConversationItemInputAudioTranscriptionDelta()
@@ -183,7 +183,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(document.RootElement, options);
                     }

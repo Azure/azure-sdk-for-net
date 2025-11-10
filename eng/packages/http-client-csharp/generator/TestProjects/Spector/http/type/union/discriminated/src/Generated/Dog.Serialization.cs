@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 
 namespace _Type.Union.Discriminated
 {
@@ -32,5 +33,7 @@ namespace _Type.Union.Discriminated
         protected virtual Dog PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Dog>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Dog(Response response) => throw null;
     }
 }

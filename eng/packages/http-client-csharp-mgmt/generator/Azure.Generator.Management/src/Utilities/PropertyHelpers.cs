@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -83,10 +82,16 @@ namespace Azure.Generator.Management.Utilities
         public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
-            // For collection types, we do not do null check and initialization in getter, they have been initialized in constructor.
+            // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
-                return new List<MethodBodyStatement>() { Return(new MemberExpression(internalProperty, innerProperty.Name)) };
+                return new List<MethodBodyStatement> {
+                    new IfStatement(checkNullExpression)
+                    {
+                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                    },
+                    Return(new MemberExpression(internalProperty, innerProperty.Name))
+                };
             }
 
             if (includeGetterNullCheck == true)

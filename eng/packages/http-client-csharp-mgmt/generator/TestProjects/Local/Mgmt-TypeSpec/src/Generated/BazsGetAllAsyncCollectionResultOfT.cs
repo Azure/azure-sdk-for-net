@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using MgmtTypeSpec.Models;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class BazsGetAllAsyncCollectionResultOfT : AsyncPageable<BazData>
     {

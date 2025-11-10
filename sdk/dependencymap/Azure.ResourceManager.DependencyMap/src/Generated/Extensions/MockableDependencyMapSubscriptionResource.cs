@@ -6,97 +6,59 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DependencyMap;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DependencyMap.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDependencyMapSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _dependencyMapMapsClientDiagnostics;
-        private MapsRestOperations _dependencyMapMapsRestClient;
+        private ClientDiagnostics _mapsClientDiagnostics;
+        private Maps _mapsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDependencyMapSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDependencyMapSubscriptionResource for mocking. </summary>
         protected MockableDependencyMapSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDependencyMapSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDependencyMapSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDependencyMapSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DependencyMapMapsClientDiagnostics => _dependencyMapMapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapResource.ResourceType.Namespace, Diagnostics);
-        private MapsRestOperations DependencyMapMapsRestClient => _dependencyMapMapsRestClient ??= new MapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DependencyMapResource.ResourceType));
+        private ClientDiagnostics MapsClientDiagnostics => _mapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DependencyMap.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Maps MapsRestClient => _mapsRestClient ??= new Maps(MapsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
 
-        /// <summary>
-        /// List MapsResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DependencyMap/maps</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List MapsResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DependencyMapResource> GetDependencyMapsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DependencyMapMapsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DependencyMapMapsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DependencyMapResource(Client, DependencyMapData.DeserializeDependencyMapData(e)), DependencyMapMapsClientDiagnostics, Pipeline, "MockableDependencyMapSubscriptionResource.GetDependencyMaps", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionAsyncCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
         }
 
-        /// <summary>
-        /// List MapsResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DependencyMap/maps</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MapsResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyMapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List MapsResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DependencyMapResource> GetDependencyMaps(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DependencyMapMapsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DependencyMapMapsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DependencyMapResource(Client, DependencyMapData.DeserializeDependencyMapData(e)), DependencyMapMapsClientDiagnostics, Pipeline, "MockableDependencyMapSubscriptionResource.GetDependencyMaps", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionFinished event. </summary>
     [JsonConverter(typeof(AvsScriptExecutionFinishedEventDataConverter))]
-    public partial class AvsScriptExecutionFinishedEventData : IJsonModel<AvsScriptExecutionFinishedEventData>
+    public partial class AvsScriptExecutionFinishedEventData : AvsScriptExecutionEventData, IJsonModel<AvsScriptExecutionFinishedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFinishedEventData"/> for deserialization. </summary>
         internal AvsScriptExecutionFinishedEventData()
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAvsScriptExecutionFinishedEventData(document.RootElement, options);
                     }

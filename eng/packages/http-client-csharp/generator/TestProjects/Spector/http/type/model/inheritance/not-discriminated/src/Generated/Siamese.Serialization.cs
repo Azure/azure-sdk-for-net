@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    public partial class Siamese : IJsonModel<Siamese>
+    public partial class Siamese : Cat, IJsonModel<Siamese>
     {
         internal Siamese() => throw null;
 
@@ -38,6 +38,6 @@ namespace _Type.Model.Inheritance.NotDiscriminated
         /// <param name="siamese"> The <see cref="Siamese"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Siamese siamese) => throw null;
 
-        public static explicit operator Siamese(Response result) => throw null;
+        public static explicit operator Siamese(Response response) => throw null;
     }
 }

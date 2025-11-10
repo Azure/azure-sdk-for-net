@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a session is updated with a `session.update` event, unless
     /// there is an error.
     /// </summary>
-    public partial class SessionUpdateSessionUpdated : IJsonModel<SessionUpdateSessionUpdated>
+    public partial class SessionUpdateSessionUpdated : SessionUpdate, IJsonModel<SessionUpdateSessionUpdated>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionUpdated"/> for deserialization. </summary>
         internal SessionUpdateSessionUpdated()
@@ -128,7 +128,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateSessionUpdated(document.RootElement, options);
                     }

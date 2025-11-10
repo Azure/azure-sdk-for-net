@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -34,6 +33,10 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
+
+        // Cached Get method providers
+        private MethodProvider? _getAsyncMethodProvider;
+        private MethodProvider? _getSyncMethodProvider;
 
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
@@ -118,6 +121,11 @@ namespace Azure.Generator.Management.Providers
         public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
         public RequestPathPattern ContextualPath => _contextualPath;
 
+        // Cached Get method providers for reuse in other places
+        public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
+
+        public MethodProvider? GetSyncMethodProvider => _getSyncMethodProvider ??= BuildGetMethod(isAsync: false);
+
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
 
@@ -133,9 +141,14 @@ namespace Azure.Generator.Management.Providers
         protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
-            _getAll is null
+            ShouldSkipIEnumerableImplementation()
             ? []
             : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
+
+        private bool ShouldSkipIEnumerableImplementation()
+        {
+            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
+        }
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -187,7 +200,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [ .. fields, .. _pathParameterMap.Values];
+            return [.. fields, .. _pathParameterMap.Values];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -240,10 +253,15 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        // TODO -- this expression currently is incorrect. Maybe we need to leave an API in OutputLibrary for us to query the parent resource, because when construct the collection, we do not know it yet.
         private static CSharpType GetParentResourceType(ResourceMetadata resourceMetadata, ResourceClientProvider resource)
         {
-            // TODO -- implement this to be more accurate when we implement the parent of resources.
+            // First check if the resource has a parent resource
+            if (resourceMetadata.ParentResourceId is not null)
+            {
+                return resource.TypeOfParentResource;
+            }
+
+            // Fallback to scope-based resource type
             switch (resourceMetadata.ResourceScope)
             {
                 case ResourceScope.ResourceGroup:
@@ -285,7 +303,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider[] BuildEnumeratorMethods()
         {
-            if (_getAll is null)
+            if (ShouldSkipIEnumerableImplementation())
             {
                 return [];
             }
@@ -319,7 +337,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
-                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
+                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
                 result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
             }
 
@@ -329,7 +347,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(ResourceMethod getAll, bool isAsync)
         {
             var restClientInfo = _clientInfos[getAll.InputClient];
-            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync);
+            var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync, true);
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
@@ -337,22 +355,37 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
-        private List<MethodProvider> BuildGetMethods()
+        private MethodProvider? BuildGetMethod(bool isAsync)
         {
             if (_get is null)
+            {
+                return null;
+            }
+
+            var restClientInfo = _clientInfos[_get.InputClient];
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+        }
+
+        private List<MethodProvider> BuildGetMethods()
+        {
+            // Check if async method provider is null and build it if needed
+            if (_getAsyncMethodProvider is null)
+            {
+                _getAsyncMethodProvider = BuildGetMethod(true);
+            }
+
+            // Check if sync method provider is null and build it if needed
+            if (_getSyncMethodProvider is null)
+            {
+                _getSyncMethodProvider = BuildGetMethod(false);
+            }
+
+            if (_getAsyncMethodProvider is null || _getSyncMethodProvider is null)
             {
                 return [];
             }
 
-            var result = new List<MethodProvider>();
-            var restClientInfo = _clientInfos[_get.InputClient];
-            foreach (var isAsync in new List<bool> { true, false })
-            {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync));
-            }
-
-            return result;
+            return [_getAsyncMethodProvider, _getSyncMethodProvider];
         }
 
         private List<MethodProvider> BuildExistsMethods()
@@ -366,7 +399,6 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
                 var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
@@ -385,7 +417,6 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_get.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_get.InputMethod.Operation, isAsync);
                 var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }

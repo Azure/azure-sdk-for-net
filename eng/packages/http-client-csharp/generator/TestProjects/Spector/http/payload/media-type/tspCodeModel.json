@@ -173,6 +173,7 @@
           "crossLanguageDefinitionId": "Payload.MediaType.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.MediaType",
       "apiVersions": [],
@@ -642,6 +643,7 @@
               "crossLanguageDefinitionId": "Payload.MediaType.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.MediaType.StringBody",
           "apiVersions": [],

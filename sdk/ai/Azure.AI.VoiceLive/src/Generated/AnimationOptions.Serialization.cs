@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
                 writer.WriteStartArray();
                 foreach (AnimationOutputType item in Outputs)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     List<AnimationOutputType> array = new List<AnimationOutputType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAnimationOutputType());
+                        array.Add(new AnimationOutputType(item.GetString()));
                     }
                     outputs = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAnimationOptions(document.RootElement, options);
                     }

@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for turn detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadEnTurnDetection"/>, and <see cref="AzureSemanticVadMultilingualTurnDetection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetectionEn"/>, and <see cref="AzureSemanticVadTurnDetectionMultilingual"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTurnDetection))]
     public abstract partial class TurnDetection : IJsonModel<TurnDetection>
@@ -94,9 +94,9 @@ namespace Azure.AI.VoiceLive
                     case "azure_semantic_vad":
                         return AzureSemanticVadTurnDetection.DeserializeAzureSemanticVadTurnDetection(element, options);
                     case "azure_semantic_vad_en":
-                        return AzureSemanticVadEnTurnDetection.DeserializeAzureSemanticVadEnTurnDetection(element, options);
+                        return AzureSemanticVadTurnDetectionEn.DeserializeAzureSemanticVadTurnDetectionEn(element, options);
                     case "azure_semantic_vad_multilingual":
-                        return AzureSemanticVadMultilingualTurnDetection.DeserializeAzureSemanticVadMultilingualTurnDetection(element, options);
+                        return AzureSemanticVadTurnDetectionMultilingual.DeserializeAzureSemanticVadTurnDetectionMultilingual(element, options);
                 }
             }
             return UnknownTurnDetection.DeserializeUnknownTurnDetection(element, options);
@@ -130,7 +130,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeTurnDetection(document.RootElement, options);
                     }

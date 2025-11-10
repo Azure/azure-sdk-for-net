@@ -7,38 +7,46 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The MessageItem. </summary>
+    /// <summary> A message item within a conversation. </summary>
     public partial class MessageItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="MessageItem"/>. </summary>
-        /// <param name="role"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="role"/> is null. </exception>
-        public MessageItem(string role) : base(ItemType.Message)
+        /// <param name="role"> The role of the message origionator. </param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public MessageItem(ResponseMessageRole role, IEnumerable<MessageContentPart> content) : base(ItemType.Message)
         {
-            Argument.AssertNotNull(role, nameof(role));
+            Argument.AssertNotNull(content, nameof(content));
 
             Role = role;
+            Content = content.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="role"></param>
-        /// <param name="status"></param>
-        internal MessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
+        /// <param name="role"> The role of the message origionator. </param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
+        internal MessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             Role = role;
+            Content = content;
             Status = status;
         }
 
-        /// <summary> Gets or sets the Role. </summary>
-        internal string Role { get; set; }
+        /// <summary> The role of the message origionator. </summary>
+        internal ResponseMessageRole Role { get; set; }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> The content parts of the message. </summary>
+        public IList<MessageContentPart> Content { get; }
+
+        /// <summary> Processing status of the message item. </summary>
         public ItemParamStatus? Status { get; set; }
     }
 }

@@ -10,51 +10,77 @@ using System.ComponentModel;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Method used to compute string offset and length. </summary>
     internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
+        /// <summary>
+        /// User-perceived display character, or grapheme cluster, as defined by Unicode
+        /// 8.0.0.
+        /// </summary>
+        private const string TextElementsValue = "textElements";
+        /// <summary> Character unit represented by a single unicode code point.  Used by Python 3. </summary>
+        private const string UnicodeCodePointValue = "unicodeCodePoint";
+        /// <summary>
+        /// Character unit represented by a 16-bit Unicode code unit.  Used by JavaScript,
+        /// Java, and .NET.
+        /// </summary>
+        private const string Utf16CodeUnitValue = "utf16CodeUnit";
 
         /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TextElementsValue = "textElements";
-        private const string UnicodeCodePointValue = "unicodeCodePoint";
-        private const string Utf16CodeUnitValue = "utf16CodeUnit";
+            _value = value;
+        }
 
         /// <summary>
         /// User-perceived display character, or grapheme cluster, as defined by Unicode
         /// 8.0.0.
         /// </summary>
         public static StringIndexType TextElements { get; } = new StringIndexType(TextElementsValue);
+
         /// <summary> Character unit represented by a single unicode code point.  Used by Python 3. </summary>
         public static StringIndexType UnicodeCodePoint { get; } = new StringIndexType(UnicodeCodePointValue);
+
         /// <summary>
         /// Character unit represented by a 16-bit Unicode code unit.  Used by JavaScript,
         /// Java, and .NET.
         /// </summary>
         public static StringIndexType Utf16CodeUnit { get; } = new StringIndexType(Utf16CodeUnitValue);
+
         /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StringIndexType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StringIndexType left, StringIndexType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StringIndexType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StringIndexType(string value) => new StringIndexType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StringIndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StringIndexType?(string value) => value == null ? null : new StringIndexType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StringIndexType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StringIndexType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

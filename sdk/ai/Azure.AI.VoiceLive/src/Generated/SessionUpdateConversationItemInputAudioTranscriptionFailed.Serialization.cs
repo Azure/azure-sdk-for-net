@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// request for a user message failed. These events are separate from other
     /// `error` events so that the client can identify the related Item.
     /// </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionFailed : IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>
+    public partial class SessionUpdateConversationItemInputAudioTranscriptionFailed : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionFailed>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/> for deserialization. </summary>
         internal SessionUpdateConversationItemInputAudioTranscriptionFailed()
@@ -151,7 +151,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
                     }

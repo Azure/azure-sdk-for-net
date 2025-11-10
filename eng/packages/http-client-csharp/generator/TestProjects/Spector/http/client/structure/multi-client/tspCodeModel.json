@@ -250,6 +250,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA",
       "apiVersions": []
@@ -413,6 +414,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB",
       "apiVersions": []

@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Microsoft.ResourceNotifications.HealthResources.ResourceAnnotated event.
     /// </summary>
     [JsonConverter(typeof(ResourceNotificationsHealthResourcesAnnotatedEventDataConverter))]
-    public partial class ResourceNotificationsHealthResourcesAnnotatedEventData : IJsonModel<ResourceNotificationsHealthResourcesAnnotatedEventData>
+    public partial class ResourceNotificationsHealthResourcesAnnotatedEventData : ResourceNotificationsResourceUpdatedEventData, IJsonModel<ResourceNotificationsHealthResourcesAnnotatedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAnnotatedEventData"/> for deserialization. </summary>
         internal ResourceNotificationsHealthResourcesAnnotatedEventData()
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeResourceNotificationsHealthResourcesAnnotatedEventData(document.RootElement, options);
                     }

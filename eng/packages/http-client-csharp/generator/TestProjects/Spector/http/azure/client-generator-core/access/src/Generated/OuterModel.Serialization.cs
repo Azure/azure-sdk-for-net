@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    public partial class OuterModel : IJsonModel<OuterModel>
+    public partial class OuterModel : BaseModel, IJsonModel<OuterModel>
     {
         internal OuterModel() => throw null;
 
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         string IPersistableModel<OuterModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator OuterModel(Response result) => throw null;
+        public static explicit operator OuterModel(Response response) => throw null;
     }
 }

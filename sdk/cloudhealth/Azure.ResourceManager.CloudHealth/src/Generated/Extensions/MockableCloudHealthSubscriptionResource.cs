@@ -5,98 +5,61 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CloudHealth;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CloudHealth.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableCloudHealthSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _healthModelClientDiagnostics;
-        private HealthModelsRestOperations _healthModelRestClient;
+        private ClientDiagnostics _healthModelsClientDiagnostics;
+        private HealthModels _healthModelsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCloudHealthSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCloudHealthSubscriptionResource for mocking. </summary>
         protected MockableCloudHealthSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCloudHealthSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCloudHealthSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCloudHealthSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics HealthModelClientDiagnostics => _healthModelClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelResource.ResourceType.Namespace, Diagnostics);
-        private HealthModelsRestOperations HealthModelRestClient => _healthModelRestClient ??= new HealthModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthModelResource.ResourceType));
+        private ClientDiagnostics HealthModelsClientDiagnostics => _healthModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CloudHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
-        /// <summary>
-        /// List HealthModel resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CloudHealth/healthmodels</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List HealthModel resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthModelResource> GetHealthModelsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HealthModelRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthModelRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthModelResource(Client, HealthModelData.DeserializeHealthModelData(e)), HealthModelClientDiagnostics, Pipeline, "MockableCloudHealthSubscriptionResource.GetHealthModels", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionAsyncCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HealthModelResource(Client, data));
         }
 
-        /// <summary>
-        /// List HealthModel resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CloudHealth/healthmodels</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HealthModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List HealthModel resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthModelResource> GetHealthModels(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HealthModelRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthModelRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthModelResource(Client, HealthModelData.DeserializeHealthModelData(e)), HealthModelClientDiagnostics, Pipeline, "MockableCloudHealthSubscriptionResource.GetHealthModels", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HealthModelResource(Client, data));
         }
     }
 }

@@ -10,6 +10,9 @@ import "./endpoint.tsp";
 import "./selfhelp.tsp";
 import "./playwright.tsp";
 import "./databox.tsp";
+import "./hcivm.tsp";
+import "./quota.tsp";
+import "./networkaction.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -26,9 +29,6 @@ interface Operations extends Azure.ResourceManager.Operations {}
 
 /** The available API versions. */
 enum Versions {
-  /** Azure Cosmos DB for Mongo vCore clusters api version 2024-03-01-preview. */
-  @useDependency(Azure.ResourceManager.Versions.v1_0_Preview_1)
-  @useDependency(Azure.Core.Versions.v1_0_Preview_1)
   v2024_05_01: "2024-05-01",
 }
 
@@ -37,3 +37,7 @@ enum Versions {
 
 #suppress "deprecated"
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
+
+@@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
+@@clientName(Employees.listByParent, "GetEmployees", "csharp");

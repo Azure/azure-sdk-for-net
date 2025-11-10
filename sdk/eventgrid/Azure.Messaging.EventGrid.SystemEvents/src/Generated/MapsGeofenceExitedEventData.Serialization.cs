@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceExited event. </summary>
     [JsonConverter(typeof(MapsGeofenceExitedEventDataConverter))]
-    public partial class MapsGeofenceExitedEventData : IJsonModel<MapsGeofenceExitedEventData>
+    public partial class MapsGeofenceExitedEventData : MapsGeofenceEventProperties, IJsonModel<MapsGeofenceExitedEventData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -159,7 +159,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeMapsGeofenceExitedEventData(document.RootElement, options);
                     }

@@ -10,8 +10,9 @@ namespace Azure.AI.VoiceLive
 #pragma warning disable AZC0015, AZC0107 // Client methods should return approved types
     public partial class VoiceLiveClient
     {
-        private VoiceLiveClientOptions _options;
+        internal VoiceLiveClientOptions Options { get; set; }
 
+#pragma warning disable AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
@@ -26,8 +27,8 @@ namespace Azure.AI.VoiceLive
 
             _endpoint = endpoint;
             _keyCredential = credential;
-            _options = options;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+            Options = options;
+            ClientDiagnostics = new ClientDiagnostics(options.InternalOptions, true);
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
@@ -44,8 +45,9 @@ namespace Azure.AI.VoiceLive
 
             _endpoint = endpoint;
             _tokenCredential = credential;
-            _options = options;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+            Options = options;
+            ClientDiagnostics = new ClientDiagnostics(options.InternalOptions, true);
         }
+#pragma warning restore AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
     }
 }

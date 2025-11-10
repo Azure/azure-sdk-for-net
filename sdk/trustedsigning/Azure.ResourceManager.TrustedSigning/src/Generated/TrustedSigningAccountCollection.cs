@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
     /// A class representing a collection of <see cref="TrustedSigningAccountResource"/> and their operations.
-    /// Each <see cref="TrustedSigningAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="TrustedSigningAccountCollection"/> instance call the GetTrustedSigningAccounts method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="TrustedSigningAccountResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="TrustedSigningAccountCollection"/> instance call the GetTrustedSigningAccounts method from an instance of the parent resource.
     /// </summary>
     public partial class TrustedSigningAccountCollection : ArmCollection, IEnumerable<TrustedSigningAccountResource>, IAsyncEnumerable<TrustedSigningAccountResource>
     {
-        private readonly ClientDiagnostics _trustedSigningAccountCodeSigningAccountsClientDiagnostics;
-        private readonly CodeSigningAccountsRestOperations _trustedSigningAccountCodeSigningAccountsRestClient;
+        private readonly ClientDiagnostics _codeSigningAccountsClientDiagnostics;
+        private readonly CodeSigningAccounts _codeSigningAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TrustedSigningAccountCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TrustedSigningAccountCollection for mocking. </summary>
         protected TrustedSigningAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TrustedSigningAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrustedSigningAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _trustedSigningAccountCodeSigningAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrustedSigning", TrustedSigningAccountResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TrustedSigningAccountResource.ResourceType, out string trustedSigningAccountCodeSigningAccountsApiVersion);
-            _trustedSigningAccountCodeSigningAccountsRestClient = new CodeSigningAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, trustedSigningAccountCodeSigningAccountsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(TrustedSigningAccountResource.ResourceType, out string trustedSigningAccountApiVersion);
+            _codeSigningAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrustedSigning", TrustedSigningAccountResource.ResourceType.Namespace, Diagnostics);
+            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Endpoint, trustedSigningAccountApiVersion ?? "2025-10-13");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="data"> Parameters to create the trusted signing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<TrustedSigningAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, TrustedSigningAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _trustedSigningAccountCodeSigningAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new TrustedSigningArmOperation<TrustedSigningAccountResource>(new TrustedSigningAccountOperationSource(Client), _trustedSigningAccountCodeSigningAccountsClientDiagnostics, Pipeline, _trustedSigningAccountCodeSigningAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, TrustedSigningAccountData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                TrustedSigningArmOperation<TrustedSigningAccountResource> operation = new TrustedSigningArmOperation<TrustedSigningAccountResource>(
+                    new TrustedSigningAccountOperationSource(Client),
+                    _codeSigningAccountsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.TrustedSigning
         /// Create a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="data"> Parameters to create the trusted signing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<TrustedSigningAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, TrustedSigningAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _trustedSigningAccountCodeSigningAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new TrustedSigningArmOperation<TrustedSigningAccountResource>(new TrustedSigningAccountOperationSource(Client), _trustedSigningAccountCodeSigningAccountsClientDiagnostics, Pipeline, _trustedSigningAccountCodeSigningAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, TrustedSigningAccountData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                TrustedSigningArmOperation<TrustedSigningAccountResource> operation = new TrustedSigningArmOperation<TrustedSigningAccountResource>(
+                    new TrustedSigningAccountOperationSource(Client),
+                    _codeSigningAccountsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.TrustedSigning
         /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<TrustedSigningAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Get");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _trustedSigningAccountCodeSigningAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TrustedSigningAccountData> response = Response.FromValue(TrustedSigningAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.TrustedSigning
         /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<TrustedSigningAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Get");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _trustedSigningAccountCodeSigningAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TrustedSigningAccountData> response = Response.FromValue(TrustedSigningAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +269,78 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary>
-        /// Lists trusted signing accounts within a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists trusted signing accounts within a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrustedSigningAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _trustedSigningAccountCodeSigningAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trustedSigningAccountCodeSigningAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrustedSigningAccountResource(Client, TrustedSigningAccountData.DeserializeTrustedSigningAccountData(e)), _trustedSigningAccountCodeSigningAccountsClientDiagnostics, Pipeline, "TrustedSigningAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrustedSigningAccountResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists trusted signing accounts within a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists trusted signing accounts within a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrustedSigningAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _trustedSigningAccountCodeSigningAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _trustedSigningAccountCodeSigningAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrustedSigningAccountResource(Client, TrustedSigningAccountData.DeserializeTrustedSigningAccountData(e)), _trustedSigningAccountCodeSigningAccountsClientDiagnostics, Pipeline, "TrustedSigningAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrustedSigningAccountResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Exists");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _trustedSigningAccountCodeSigningAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TrustedSigningAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +351,53 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Exists");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _trustedSigningAccountCodeSigningAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TrustedSigningAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +408,57 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<TrustedSigningAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _trustedSigningAccountCodeSigningAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TrustedSigningAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TrustedSigningAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +469,57 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a trusted Signing Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CodeSigningAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrustedSigningAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<TrustedSigningAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var scope = _trustedSigningAccountCodeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _codeSigningAccountsClientDiagnostics.CreateScope("TrustedSigningAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _trustedSigningAccountCodeSigningAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TrustedSigningAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TrustedSigningAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TrustedSigningAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TrustedSigningAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrustedSigningAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +539,7 @@ namespace Azure.ResourceManager.TrustedSigning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<TrustedSigningAccountResource> IAsyncEnumerable<TrustedSigningAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

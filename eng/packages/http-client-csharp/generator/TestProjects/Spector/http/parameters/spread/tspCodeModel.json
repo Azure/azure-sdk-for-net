@@ -563,6 +563,7 @@
           "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Spread",
       "apiVersions": [],
@@ -1360,6 +1361,7 @@
               "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Spread.Model",
           "apiVersions": [],
@@ -2415,6 +2417,7 @@
               "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Spread.Alias",
           "apiVersions": [],

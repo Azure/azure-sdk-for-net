@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a new content part is added to an assistant message item during
     /// response generation.
     /// </summary>
-    public partial class SessionUpdateResponseContentPartAdded : IJsonModel<SessionUpdateResponseContentPartAdded>
+    public partial class SessionUpdateResponseContentPartAdded : SessionUpdate, IJsonModel<SessionUpdateResponseContentPartAdded>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseContentPartAdded"/> for deserialization. </summary>
         internal SessionUpdateResponseContentPartAdded()
@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseContentPartAdded(document.RootElement, options);
                     }

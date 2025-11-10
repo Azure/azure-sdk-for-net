@@ -54,13 +54,28 @@ namespace Azure.Generator.Management
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new FlattenPropertyVisitor());
-            AddVisitor(new SafeFlattenVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
+            if (IsWirePathEnabled())
+            {
+                AddVisitor(new WirePathVisitor());
+            }
+        }
+
+        private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+
+        private bool IsWirePathEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(EnableWirePathFeatureFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
         }
     }
 }

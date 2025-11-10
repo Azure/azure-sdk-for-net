@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceCreated event. </summary>
     [JsonConverter(typeof(IotHubDeviceCreatedEventDataConverter))]
-    public partial class IotHubDeviceCreatedEventData : IJsonModel<IotHubDeviceCreatedEventData>
+    public partial class IotHubDeviceCreatedEventData : DeviceLifeCycleEventProperties, IJsonModel<IotHubDeviceCreatedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceCreatedEventData"/> for deserialization. </summary>
         internal IotHubDeviceCreatedEventData()
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeIotHubDeviceCreatedEventData(document.RootElement, options);
                     }

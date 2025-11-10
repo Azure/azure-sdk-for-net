@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
@@ -18,8 +17,9 @@ namespace Azure.AI.VoiceLive
         /// then connects to the service using this socket.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <param name="headers">Added header to send.</param>
         /// <returns>A task that represents the asynchronous connection operation.</returns>
-        protected internal virtual async Task ConnectAsync(CancellationToken cancellationToken = default)
+        protected internal virtual async Task ConnectAsync(IDictionary<string, string> headers, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -29,8 +29,14 @@ namespace Azure.AI.VoiceLive
 
             try
             {
-                // Configure the WebSocket connection
-                //clientWebSocket.Options.AddSubProtocol("voicelive-v1");
+                foreach (var kvp in headers)
+                {
+                    var value = kvp.Value;
+                    if (value != null)
+                    {
+                        clientWebSocket.Options.SetRequestHeader(kvp.Key, value);
+                    }
+                }
 
                 if (_credential != null)
                 {
@@ -55,27 +61,21 @@ namespace Azure.AI.VoiceLive
                     // On Net4.x you can't set the UserAgent for a websocket connection
                 }
 
+                _contentLogger.LogConnectionOpening(_connectionId, $"{_endpoint}");
+
                 await clientWebSocket.ConnectAsync(_endpoint, cancellationToken).ConfigureAwait(false);
 
                 WebSocket = clientWebSocket;
+
+                // Log successful connection
+                _contentLogger.LogConnectionOpened(_connectionId);
             }
-            catch
+            catch (Exception ex)
             {
+                _contentLogger.LogError(_connectionId, ex);
                 clientWebSocket?.Dispose();
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Initializes an underlying <see cref="WebSocket"/> instance for communication with the VoiceLive service and
-        /// then connects to the service using this socket.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        protected internal virtual void Connect(CancellationToken cancellationToken = default)
-        {
-#pragma warning disable AZC0106
-            ConnectAsync(cancellationToken).EnsureCompleted();
-#pragma warning restore AZC0106
         }
 
         /// <summary>
@@ -89,27 +89,25 @@ namespace Azure.AI.VoiceLive
             {
                 try
                 {
+                    var closeCode = WebSocketCloseStatus.NormalClosure;
+                    var reason = "Client initiated close";
+
+                    // Log successful close
+                    _contentLogger.LogConnectionClosing(_connectionId, (int)closeCode, reason);
+
                     await WebSocket.CloseAsync(
-                        WebSocketCloseStatus.NormalClosure,
-                        "Client initiated close",
+                        closeCode,
+                        reason,
                         cancellationToken).ConfigureAwait(false);
+
+                    _contentLogger.LogConnectionClosed(_connectionId);
                 }
-                catch (WebSocketException)
+                catch (WebSocketException ex)
                 {
-                    // Ignore WebSocket exceptions during close
+                    // Log close error and ignore WebSocket exceptions during close
+                    _contentLogger.LogError(_connectionId, $"WebSocket close error: {ex.Message}");
                 }
             }
-        }
-
-        /// <summary>
-        /// Closes the WebSocket connection gracefully.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual void Close(CancellationToken cancellationToken = default)
-        {
-#pragma warning disable AZC0107
-            CloseAsync(cancellationToken).EnsureCompleted();
-#pragma warning restore AZC0107
         }
 
         /// <summary>

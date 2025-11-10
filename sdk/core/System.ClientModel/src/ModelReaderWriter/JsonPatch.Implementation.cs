@@ -39,7 +39,11 @@ public partial struct JsonPatch
         {
             if (TryGetParentMatch(jsonPath, true, out _, out encodedValue))
             {
-                value = new(encodedValue.Kind, encodedValue.Value.GetJson(jsonPath));
+                if (!encodedValue.Value.TryGetJson(jsonPath, out var jsonValue))
+                {
+                    return false;
+                }
+                value = new(encodedValue.Kind, jsonValue);
                 return true;
             }
             return false;
@@ -58,7 +62,11 @@ public partial struct JsonPatch
             !parentValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
         {
             GetSubPath(directParent, jsonPath, ref childPath);
-            value = new(parentValue.Kind, parentValue.Value.GetJson(childPath));
+            if (!parentValue.Value.TryGetJson(childPath, out var childJson))
+            {
+                return false;
+            }
+            value = new(parentValue.Kind, childJson);
             return true;
         }
 
@@ -77,7 +85,11 @@ public partial struct JsonPatch
             {
                 // no array in sub path
                 GetSubPath(parentPath, normalizedJsonPath, ref childPath);
-                value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
+                if (!encodedValue.Value.TryGetJson(childPath, out var childJson))
+                {
+                    return false;
+                }
+                value = new(encodedValue.Kind, childJson);
                 return true;
             }
 
@@ -93,7 +105,11 @@ public partial struct JsonPatch
                 if (TryGetArrayItemFromRoot(normalizedArrayPath, reader, out var indexRequested, out var length, out var arrayItem))
                 {
                     GetSubPath(normalizedArrayPath, jsonPath, ref childPath);
-                    value = new(ValueKind.Json, GetCombinedArray(jsonPath, arrayItem.GetJson(childPath), EncodedValue.Empty));
+                    if (!arrayItem.TryGetJson(childPath, out var childJson))
+                    {
+                        return false;
+                    }
+                    value = new(ValueKind.Json, GetCombinedArray(jsonPath, childJson, EncodedValue.Empty));
                     return true;
                 }
 
@@ -108,7 +124,11 @@ public partial struct JsonPatch
             }
 
             GetSubPath(parentPath, adjustedJsonPath.Slice(0, adjustedLength), ref childPath);
-            value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
+            if (!encodedValue.Value.TryGetJson(childPath, out var jsonValue))
+            {
+                return false;
+            }
+            value = new(encodedValue.Kind, jsonValue);
             return true;
         }
 
@@ -453,6 +473,11 @@ public partial struct JsonPatch
                     nextPath = localPath.GetFirstProperty();
                     parentPath = "$"u8;
                 }
+                if (nextPath.IsArrayIndex() && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+                {
+                    nextPath = parentPath;
+                    kind |= ValueKind.ArrayItemAppend;
+                }
             }
             else
             {
@@ -470,14 +495,13 @@ public partial struct JsonPatch
                 {
                     nextPath = pathReader.GetParsedPath();
                     parentPath = nextPath.GetParent();
+                    if (nextPath.IsArrayIndex() && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+                    {
+                        nextPath = parentPath;
+                        kind |= ValueKind.ArrayItemAppend;
+                    }
                 }
             }
-        }
-
-        if (nextPath.IsArrayIndex() && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
-        {
-            nextPath = parentPath;
-            kind |= ValueKind.ArrayItemAppend;
         }
 
         if (nextPath.SequenceEqual(localPath))

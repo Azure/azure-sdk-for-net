@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
     /// A class representing a collection of <see cref="DurableTaskHubResource"/> and their operations.
-    /// Each <see cref="DurableTaskHubResource"/> in the collection will belong to the same instance of <see cref="DurableTaskSchedulerResource"/>.
-    /// To get a <see cref="DurableTaskHubCollection"/> instance call the GetDurableTaskHubs method from an instance of <see cref="DurableTaskSchedulerResource"/>.
+    /// Each <see cref="DurableTaskHubResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DurableTaskHubCollection"/> instance call the GetDurableTaskHubs method from an instance of the parent resource.
     /// </summary>
     public partial class DurableTaskHubCollection : ArmCollection, IEnumerable<DurableTaskHubResource>, IAsyncEnumerable<DurableTaskHubResource>
     {
-        private readonly ClientDiagnostics _durableTaskHubTaskHubsClientDiagnostics;
-        private readonly TaskHubsRestOperations _durableTaskHubTaskHubsRestClient;
+        private readonly ClientDiagnostics _taskHubsClientDiagnostics;
+        private readonly TaskHubs _taskHubsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DurableTaskHubCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DurableTaskHubCollection for mocking. </summary>
         protected DurableTaskHubCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DurableTaskHubCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskHubCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _durableTaskHubTaskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskHubResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DurableTaskHubResource.ResourceType, out string durableTaskHubTaskHubsApiVersion);
-            _durableTaskHubTaskHubsRestClient = new TaskHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskHubTaskHubsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DurableTaskHubResource.ResourceType, out string durableTaskHubApiVersion);
+            _taskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskHubResource.ResourceType.Namespace, Diagnostics);
+            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Endpoint, durableTaskHubApiVersion ?? "2025-11-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DurableTaskSchedulerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or Update a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DurableTaskHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskHubName, DurableTaskHubData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _durableTaskHubTaskHubsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DurableTaskArmOperation<DurableTaskHubResource>(new DurableTaskHubOperationSource(Client), _durableTaskHubTaskHubsClientDiagnostics, Pipeline, _durableTaskHubTaskHubsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
+                    new DurableTaskHubOperationSource(Client),
+                    _taskHubsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.DurableTask
         /// Create or Update a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DurableTaskHubResource> CreateOrUpdate(WaitUntil waitUntil, string taskHubName, DurableTaskHubData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _durableTaskHubTaskHubsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, data, cancellationToken);
-                var operation = new DurableTaskArmOperation<DurableTaskHubResource>(new DurableTaskHubOperationSource(Client), _durableTaskHubTaskHubsClientDiagnostics, Pipeline, _durableTaskHubTaskHubsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
+                    new DurableTaskHubOperationSource(Client),
+                    _taskHubsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.DurableTask
         /// Get a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DurableTaskHubResource>> GetAsync(string taskHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Get");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Get");
             scope.Start();
             try
             {
-                var response = await _durableTaskHubTaskHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DurableTaskHubData> response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DurableTaskHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.DurableTask
         /// Get a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DurableTaskHubResource> Get(string taskHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Get");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Get");
             scope.Start();
             try
             {
-                var response = _durableTaskHubTaskHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DurableTaskHubData> response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DurableTaskHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,100 +268,78 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary>
-        /// List Task Hubs
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_ListByScheduler</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Task Hubs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DurableTaskHubResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DurableTaskHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DurableTaskHubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _durableTaskHubTaskHubsRestClient.CreateListBySchedulerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _durableTaskHubTaskHubsRestClient.CreateListBySchedulerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DurableTaskHubResource(Client, DurableTaskHubData.DeserializeDurableTaskHubData(e)), _durableTaskHubTaskHubsClientDiagnostics, Pipeline, "DurableTaskHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
         }
 
-        /// <summary>
-        /// List Task Hubs
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_ListByScheduler</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Task Hubs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DurableTaskHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DurableTaskHubResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _durableTaskHubTaskHubsRestClient.CreateListBySchedulerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _durableTaskHubTaskHubsRestClient.CreateListBySchedulerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DurableTaskHubResource(Client, DurableTaskHubData.DeserializeDurableTaskHubData(e)), _durableTaskHubTaskHubsClientDiagnostics, Pipeline, "DurableTaskHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string taskHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Exists");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _durableTaskHubTaskHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DurableTaskHubData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DurableTaskHubData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,39 +350,53 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string taskHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Exists");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.Exists");
             scope.Start();
             try
             {
-                var response = _durableTaskHubTaskHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DurableTaskHubData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DurableTaskHubData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,41 +407,57 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DurableTaskHubResource>> GetIfExistsAsync(string taskHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.GetIfExists");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _durableTaskHubTaskHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DurableTaskHubData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DurableTaskHubData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DurableTaskHubResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DurableTaskHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,41 +468,57 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a Task Hub
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskHubName"> The name of the TaskHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DurableTaskHubResource> GetIfExists(string taskHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
 
-            using var scope = _durableTaskHubTaskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.GetIfExists");
+            using DiagnosticScope scope = _taskHubsClientDiagnostics.CreateScope("DurableTaskHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _durableTaskHubTaskHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskHubName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DurableTaskHubData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DurableTaskHubData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DurableTaskHubResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DurableTaskHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +538,7 @@ namespace Azure.ResourceManager.DurableTask
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DurableTaskHubResource> IAsyncEnumerable<DurableTaskHubResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

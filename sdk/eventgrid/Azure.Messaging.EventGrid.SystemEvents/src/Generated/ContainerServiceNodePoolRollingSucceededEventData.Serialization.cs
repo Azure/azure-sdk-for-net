@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingSucceeded event. </summary>
     [JsonConverter(typeof(ContainerServiceNodePoolRollingSucceededEventDataConverter))]
-    public partial class ContainerServiceNodePoolRollingSucceededEventData : IJsonModel<ContainerServiceNodePoolRollingSucceededEventData>
+    public partial class ContainerServiceNodePoolRollingSucceededEventData : ContainerServiceNodePoolRollingEventData, IJsonModel<ContainerServiceNodePoolRollingSucceededEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingSucceededEventData"/> for deserialization. </summary>
         internal ContainerServiceNodePoolRollingSucceededEventData()
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement, options);
                     }

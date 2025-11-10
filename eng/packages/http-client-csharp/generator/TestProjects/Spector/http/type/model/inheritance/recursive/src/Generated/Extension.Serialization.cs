@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    public partial class Extension : IJsonModel<Extension>
+    public partial class Extension : Element, IJsonModel<Extension>
     {
         internal Extension() => throw null;
 
@@ -38,6 +38,6 @@ namespace _Type.Model.Inheritance.Recursive
         /// <param name="extension"> The <see cref="Extension"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Extension extension) => throw null;
 
-        public static explicit operator Extension(Response result) => throw null;
+        public static explicit operator Extension(Response response) => throw null;
     }
 }

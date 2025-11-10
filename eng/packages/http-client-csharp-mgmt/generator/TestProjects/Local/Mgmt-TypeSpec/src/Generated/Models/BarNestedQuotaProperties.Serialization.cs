@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarNestedQuotaProperties. </summary>
-    internal partial class BarNestedQuotaProperties : IJsonModel<BarNestedQuotaProperties>
+    internal partial class BarNestedQuotaProperties : BarMiddleNestedQuotaProperties, IJsonModel<BarNestedQuotaProperties>
     {
         /// <summary> Initializes a new instance of <see cref="BarNestedQuotaProperties"/> for deserialization. </summary>
         internal BarNestedQuotaProperties()
@@ -173,7 +173,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BarNestedQuotaProperties)} does not support writing '{options.Format}' format.");
             }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterFailed event. </summary>
     [JsonConverter(typeof(AvsClusterFailedEventDataConverter))]
-    public partial class AvsClusterFailedEventData : IJsonModel<AvsClusterFailedEventData>
+    public partial class AvsClusterFailedEventData : AvsClusterEventData, IJsonModel<AvsClusterFailedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterFailedEventData"/> for deserialization. </summary>
         internal AvsClusterFailedEventData()
@@ -196,7 +196,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAvsClusterFailedEventData(document.RootElement, options);
                     }

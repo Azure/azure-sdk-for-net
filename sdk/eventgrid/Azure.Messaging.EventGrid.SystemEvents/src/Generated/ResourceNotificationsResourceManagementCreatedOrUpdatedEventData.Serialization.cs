@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Microsoft.ResourceNotifications.Resources.CreatedOrUpdated event.
     /// </summary>
     [JsonConverter(typeof(ResourceNotificationsResourceManagementCreatedOrUpdatedEventDataConverter))]
-    public partial class ResourceNotificationsResourceManagementCreatedOrUpdatedEventData : IJsonModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>
+    public partial class ResourceNotificationsResourceManagementCreatedOrUpdatedEventData : ResourceNotificationsResourceUpdatedEventData, IJsonModel<ResourceNotificationsResourceManagementCreatedOrUpdatedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/> for deserialization. </summary>
         internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData()
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeResourceNotificationsResourceManagementCreatedOrUpdatedEventData(document.RootElement, options);
                     }

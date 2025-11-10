@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventSessionAvatarConnect : IJsonModel<ClientEventSessionAvatarConnect>
+    internal partial class ClientEventSessionAvatarConnect : ClientEvent, IJsonModel<ClientEventSessionAvatarConnect>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionAvatarConnect"/> for deserialization. </summary>
         internal ClientEventSessionAvatarConnect()
@@ -124,7 +124,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeClientEventSessionAvatarConnect(document.RootElement, options);
                     }

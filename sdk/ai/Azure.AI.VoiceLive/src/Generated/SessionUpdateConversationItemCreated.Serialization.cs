@@ -14,16 +14,16 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Returned when a conversation item is created. There are several scenarios that produce this event:
-    ///   - The server is generating a Response, which if successful will produce
-    ///     either one or two Items, which will be of type `message`
-    ///     (role `assistant`) or type `function_call`.
-    ///   - The input audio buffer has been committed, either by the client or the
-    ///     server (in `server_vad` mode). The server will take the content of the
-    ///     input audio buffer and add it to a new user message Item.
-    ///   - The client has sent a `conversation.item.create` event to add a new Item
-    ///     to the Conversation.
+    /// - The server is generating a Response, which if successful will produce
+    /// either one or two Items, which will be of type `message`
+    /// (role `assistant`) or type `function_call`.
+    /// - The input audio buffer has been committed, either by the client or the
+    /// server (in `server_vad` mode). The server will take the content of the
+    /// input audio buffer and add it to a new user message Item.
+    /// - The client has sent a `conversation.item.create` event to add a new Item
+    /// to the Conversation.
     /// </summary>
-    public partial class SessionUpdateConversationItemCreated : IJsonModel<SessionUpdateConversationItemCreated>
+    public partial class SessionUpdateConversationItemCreated : SessionUpdate, IJsonModel<SessionUpdateConversationItemCreated>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -85,7 +85,7 @@ namespace Azure.AI.VoiceLive
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string previousItemId = default;
-            ResponseItem item = default;
+            SessionResponseItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
+                    item = SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateConversationItemCreated(document.RootElement, options);
                     }

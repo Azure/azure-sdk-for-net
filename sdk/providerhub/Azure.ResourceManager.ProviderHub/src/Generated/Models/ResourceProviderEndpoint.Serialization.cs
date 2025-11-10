@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (Optional.IsDefined(EndpointType))
+            {
+                writer.WritePropertyName("endpointType"u8);
+                writer.WriteStringValue(EndpointType.Value.ToString());
+            }
+            if (Optional.IsDefined(SkuLink))
+            {
+                writer.WritePropertyName("skuLink"u8);
+                writer.WriteStringValue(SkuLink);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -126,8 +136,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Uri endpointUri = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> requiredFeatures = default;
-            FeaturesRule featuresRule = default;
+            ProviderFeaturesRule featuresRule = default;
             TimeSpan? timeout = default;
+            ProviderEndpointType? endpointType = default;
+            string skuLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +210,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeout"u8))
@@ -208,6 +220,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("endpointType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointType = new ProviderEndpointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("skuLink"u8))
+                {
+                    skuLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -224,6 +250,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 requiredFeatures ?? new ChangeTrackingList<string>(),
                 featuresRule,
                 timeout,
+                endpointType,
+                skuLink,
                 serializedAdditionalRawData);
         }
 

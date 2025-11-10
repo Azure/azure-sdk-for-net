@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.NetworkAnalytics</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider NetworkAnalytics.</Description>
     <PackageTags>azure;management;arm;resource manager;networkanalytics</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

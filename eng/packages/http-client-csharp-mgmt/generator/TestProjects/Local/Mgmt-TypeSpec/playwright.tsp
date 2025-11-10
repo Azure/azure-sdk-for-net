@@ -41,4 +41,6 @@ interface PlaywrightQuotas {
 
   @doc("List Playwright quota resources for a given subscription Id.")
   listBySubscription is ArmListBySubscription<PlaywrightQuota>;
+
+  createOrUpdate is ArmResourceCreateOrReplaceSync<PlaywrightQuota>;
 }

@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The RespondingAgentOptions. </summary>
-    public partial class RespondingAgentOptions : IJsonModel<RespondingAgentOptions>
+    internal partial class RespondingAgentOptions : IJsonModel<RespondingAgentOptions>
     {
         /// <summary> Initializes a new instance of <see cref="RespondingAgentOptions"/> for deserialization. </summary>
         internal RespondingAgentOptions()
@@ -168,7 +167,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeRespondingAgentOptions(document.RootElement, options);
                     }

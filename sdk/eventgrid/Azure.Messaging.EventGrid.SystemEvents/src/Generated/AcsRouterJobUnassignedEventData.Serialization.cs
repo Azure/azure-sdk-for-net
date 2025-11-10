@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobUnassigned event. </summary>
     [JsonConverter(typeof(AcsRouterJobUnassignedEventDataConverter))]
-    public partial class AcsRouterJobUnassignedEventData : IJsonModel<AcsRouterJobUnassignedEventData>
+    public partial class AcsRouterJobUnassignedEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobUnassignedEventData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsRouterJobUnassignedEventData(document.RootElement, options);
                     }

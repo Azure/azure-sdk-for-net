@@ -75,6 +75,7 @@ export async function updateClients(
         resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
         methods: [],
         parentResourceId: undefined, // this will be populated later
+        parentResourceModelId: undefined,
         resourceName: m.name
       } as ResourceMetadata
     ])
@@ -132,6 +133,7 @@ export async function updateClients(
       metadata.parentResourceId = resourceModelToMetadataMap.get(
         parentResourceModelId
       )?.resourceIdPattern;
+      metadata.parentResourceModelId = parentResourceModelId;
     }
 
     // figure out the resourceScope of all resource methods
@@ -146,6 +148,17 @@ export async function updateClients(
     const model = resourceModelMap.get(modelId);
     if (model) {
       metadata.resourceScope = getResourceScope(model, metadata.methods);
+    }
+  }
+
+  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
+  for (const [modelId, metadata] of resourceModelToMetadataMap) {
+    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
+    if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
+      resourceModelToMetadataMap.get(metadata.parentResourceModelId)?.methods.push(
+        ...metadata.methods
+      );
+      resourceModelToMetadataMap.delete(modelId);
     }
   }
 
@@ -299,7 +312,10 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 
-function getResourceScope(model: InputModelType, methods?: ResourceMethod[]): ResourceScope {
+function getResourceScope(
+  model: InputModelType,
+  methods?: ResourceMethod[]
+): ResourceScope {
   // First, check for explicit scope decorators
   const decorators = model.decorators;
   if (decorators?.some((d) => d.name == tenantResource)) {
@@ -312,7 +328,7 @@ function getResourceScope(model: InputModelType, methods?: ResourceMethod[]): Re
 
   // Fall back to Get method's scope only if no scope decorators are found
   if (methods) {
-    const getMethod = methods.find(m => m.kind === ResourceOperationKind.Get);
+    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Get);
     if (getMethod) {
       return getMethod.operationScope;
     }
@@ -353,6 +369,8 @@ function getOperationScope(path: string): ResourceScope {
     return ResourceScope.ResourceGroup;
   } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
     return ResourceScope.Subscription;
+  } else if (path.startsWith("/providers/Microsoft.Management/managementGroups/{managementGroupId}/")) {
+    return ResourceScope.ManagementGroup;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }

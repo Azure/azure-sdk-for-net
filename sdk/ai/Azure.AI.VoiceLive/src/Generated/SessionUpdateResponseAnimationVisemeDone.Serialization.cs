@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of viseme animation delivery for a response. </summary>
-    public partial class SessionUpdateResponseAnimationVisemeDone : IJsonModel<SessionUpdateResponseAnimationVisemeDone>
+    public partial class SessionUpdateResponseAnimationVisemeDone : SessionUpdate, IJsonModel<SessionUpdateResponseAnimationVisemeDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDone"/> for deserialization. </summary>
         internal SessionUpdateResponseAnimationVisemeDone()
@@ -156,7 +156,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseAnimationVisemeDone(document.RootElement, options);
                     }

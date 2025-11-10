@@ -64,7 +64,7 @@ namespace Azure.Health.Deidentification
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             if (continuationToken != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.Health.Deidentification
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             if (continuationToken != null)
             {

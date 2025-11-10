@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    internal partial class UnknownAnimal : IJsonModel<Animal>
+    internal partial class UnknownAnimal : Animal, IJsonModel<Animal>
     {
         internal UnknownAnimal() => throw null;
 

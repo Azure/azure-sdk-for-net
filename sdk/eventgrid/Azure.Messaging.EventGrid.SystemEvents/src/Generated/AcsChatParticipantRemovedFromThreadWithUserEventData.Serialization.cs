@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser event. </summary>
     [JsonConverter(typeof(AcsChatParticipantRemovedFromThreadWithUserEventDataConverter))]
-    public partial class AcsChatParticipantRemovedFromThreadWithUserEventData : IJsonModel<AcsChatParticipantRemovedFromThreadWithUserEventData>
+    public partial class AcsChatParticipantRemovedFromThreadWithUserEventData : AcsChatThreadEventBaseProperties, IJsonModel<AcsChatParticipantRemovedFromThreadWithUserEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/> for deserialization. </summary>
         internal AcsChatParticipantRemovedFromThreadWithUserEventData()
@@ -185,7 +185,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsChatParticipantRemovedFromThreadWithUserEventData(document.RootElement, options);
                     }

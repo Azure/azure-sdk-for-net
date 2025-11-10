@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEnEouDetection"/>, and <see cref="AzureSemanticMultilingualEouDetection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, and <see cref="AzureSemanticEouDetectionMultilingual"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEouDetection))]
     public abstract partial class EouDetection : IJsonModel<EouDetection>
@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(EouDetection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model.ToSerialString());
+            writer.WriteStringValue(Model.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -92,9 +92,9 @@ namespace Azure.AI.VoiceLive
                     case "semantic_detection_v1":
                         return AzureSemanticEouDetection.DeserializeAzureSemanticEouDetection(element, options);
                     case "semantic_detection_v1_en":
-                        return AzureSemanticEnEouDetection.DeserializeAzureSemanticEnEouDetection(element, options);
+                        return AzureSemanticEouDetectionEn.DeserializeAzureSemanticEouDetectionEn(element, options);
                     case "semantic_detection_v1_multilingual":
-                        return AzureSemanticMultilingualEouDetection.DeserializeAzureSemanticMultilingualEouDetection(element, options);
+                        return AzureSemanticEouDetectionMultilingual.DeserializeAzureSemanticEouDetectionMultilingual(element, options);
                 }
             }
             return UnknownEouDetection.DeserializeUnknownEouDetection(element, options);
@@ -128,7 +128,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeEouDetection(document.RootElement, options);
                     }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event.Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event. </summary>
     [JsonConverter(typeof(ResourceNotificationsContainerServiceEventResourcesScheduledEventDataConverter))]
-    public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : IJsonModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>
+    public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : ResourceNotificationsResourceUpdatedEventData, IJsonModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/> for deserialization. </summary>
         internal ResourceNotificationsContainerServiceEventResourcesScheduledEventData()
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeResourceNotificationsContainerServiceEventResourcesScheduledEventData(document.RootElement, options);
                     }

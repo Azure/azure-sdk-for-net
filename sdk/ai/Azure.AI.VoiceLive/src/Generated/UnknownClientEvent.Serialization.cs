@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownClientEvent : IJsonModel<ClientEvent>
+    internal partial class UnknownClientEvent : ClientEvent, IJsonModel<ClientEvent>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownClientEvent"/> for deserialization. </summary>
         internal UnknownClientEvent()
@@ -116,7 +116,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeClientEvent(document.RootElement, options);
                     }

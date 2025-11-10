@@ -303,7 +303,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerPatch(
                 identity,
                 sku,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 administratorLoginPassword,
                 version,
                 storage,
@@ -314,6 +313,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 replicationRole,
                 dataEncryption,
                 network,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StorageDiscovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageDiscoveryWorkspaceResource"/> and their operations.
-    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of the parent resource.
     /// </summary>
     public partial class StorageDiscoveryWorkspaceCollection : ArmCollection, IEnumerable<StorageDiscoveryWorkspaceResource>, IAsyncEnumerable<StorageDiscoveryWorkspaceResource>
     {
-        private readonly ClientDiagnostics _storageDiscoveryWorkspaceClientDiagnostics;
-        private readonly StorageDiscoveryWorkspacesRestOperations _storageDiscoveryWorkspaceRestClient;
+        private readonly ClientDiagnostics _storageDiscoveryWorkspacesClientDiagnostics;
+        private readonly StorageDiscoveryWorkspaces _storageDiscoveryWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StorageDiscoveryWorkspaceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StorageDiscoveryWorkspaceCollection for mocking. </summary>
         protected StorageDiscoveryWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageDiscoveryWorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageDiscoveryWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageDiscoveryWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageDiscovery", StorageDiscoveryWorkspaceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StorageDiscoveryWorkspaceResource.ResourceType, out string storageDiscoveryWorkspaceApiVersion);
-            _storageDiscoveryWorkspaceRestClient = new StorageDiscoveryWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageDiscoveryWorkspaceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _storageDiscoveryWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageDiscovery", StorageDiscoveryWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            _storageDiscoveryWorkspacesRestClient = new StorageDiscoveryWorkspaces(_storageDiscoveryWorkspacesClientDiagnostics, Pipeline, Endpoint, storageDiscoveryWorkspaceApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<StorageDiscoveryWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _storageDiscoveryWorkspaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _storageDiscoveryWorkspaceRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageDiscoveryArmOperation<StorageDiscoveryWorkspaceResource>(Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageDiscoveryArmOperation<StorageDiscoveryWorkspaceResource> operation = new StorageDiscoveryArmOperation<StorageDiscoveryWorkspaceResource>(Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// Create a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<StorageDiscoveryWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _storageDiscoveryWorkspaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, data, cancellationToken);
-                var uri = _storageDiscoveryWorkspaceRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new StorageDiscoveryArmOperation<StorageDiscoveryWorkspaceResource>(Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                StorageDiscoveryArmOperation<StorageDiscoveryWorkspaceResource> operation = new StorageDiscoveryArmOperation<StorageDiscoveryWorkspaceResource>(Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// Get a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<StorageDiscoveryWorkspaceResource>> GetAsync(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Get");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _storageDiscoveryWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// Get a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<StorageDiscoveryWorkspaceResource> Get(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Get");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _storageDiscoveryWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,100 +263,78 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// List StorageDiscoveryWorkspace resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List StorageDiscoveryWorkspace resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageDiscoveryWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageDiscoveryWorkspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageDiscoveryWorkspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageDiscoveryWorkspaceResource(Client, StorageDiscoveryWorkspaceData.DeserializeStorageDiscoveryWorkspaceData(e)), _storageDiscoveryWorkspaceClientDiagnostics, Pipeline, "StorageDiscoveryWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// List StorageDiscoveryWorkspace resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List StorageDiscoveryWorkspace resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageDiscoveryWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageDiscoveryWorkspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageDiscoveryWorkspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageDiscoveryWorkspaceResource(Client, StorageDiscoveryWorkspaceData.DeserializeStorageDiscoveryWorkspaceData(e)), _storageDiscoveryWorkspaceClientDiagnostics, Pipeline, "StorageDiscoveryWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Exists");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _storageDiscoveryWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StorageDiscoveryWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageDiscoveryWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,39 +345,53 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Exists");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _storageDiscoveryWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StorageDiscoveryWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageDiscoveryWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,41 +402,57 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<StorageDiscoveryWorkspaceResource>> GetIfExistsAsync(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _storageDiscoveryWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StorageDiscoveryWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageDiscoveryWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StorageDiscoveryWorkspaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,41 +463,57 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a StorageDiscoveryWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageDiscoveryWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageDiscoveryWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageDiscoveryWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<StorageDiscoveryWorkspaceResource> GetIfExists(string storageDiscoveryWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageDiscoveryWorkspaceName, nameof(storageDiscoveryWorkspaceName));
 
-            using var scope = _storageDiscoveryWorkspaceClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _storageDiscoveryWorkspacesClientDiagnostics.CreateScope("StorageDiscoveryWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _storageDiscoveryWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageDiscoveryWorkspaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StorageDiscoveryWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageDiscoveryWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StorageDiscoveryWorkspaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageDiscoveryWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +533,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StorageDiscoveryWorkspaceResource> IAsyncEnumerable<StorageDiscoveryWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

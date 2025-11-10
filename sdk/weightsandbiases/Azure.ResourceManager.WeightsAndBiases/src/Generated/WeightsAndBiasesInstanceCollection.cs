@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary>
     /// A class representing a collection of <see cref="WeightsAndBiasesInstanceResource"/> and their operations.
-    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of the parent resource.
     /// </summary>
     public partial class WeightsAndBiasesInstanceCollection : ArmCollection, IEnumerable<WeightsAndBiasesInstanceResource>, IAsyncEnumerable<WeightsAndBiasesInstanceResource>
     {
-        private readonly ClientDiagnostics _weightsAndBiasesInstanceInstancesClientDiagnostics;
-        private readonly InstancesRestOperations _weightsAndBiasesInstanceInstancesRestClient;
+        private readonly ClientDiagnostics _instancesClientDiagnostics;
+        private readonly Instances _instancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WeightsAndBiasesInstanceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WeightsAndBiasesInstanceCollection for mocking. </summary>
         protected WeightsAndBiasesInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WeightsAndBiasesInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WeightsAndBiasesInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _weightsAndBiasesInstanceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", WeightsAndBiasesInstanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WeightsAndBiasesInstanceResource.ResourceType, out string weightsAndBiasesInstanceInstancesApiVersion);
-            _weightsAndBiasesInstanceInstancesRestClient = new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, weightsAndBiasesInstanceInstancesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(WeightsAndBiasesInstanceResource.ResourceType, out string weightsAndBiasesInstanceApiVersion);
+            _instancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", WeightsAndBiasesInstanceResource.ResourceType.Namespace, Diagnostics);
+            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Endpoint, weightsAndBiasesInstanceApiVersion ?? "2024-09-18");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<WeightsAndBiasesInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instancename, WeightsAndBiasesInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _weightsAndBiasesInstanceInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, instancename, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(new WeightsAndBiasesInstanceOperationSource(Client), _weightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, _weightsAndBiasesInstanceInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancename, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
+                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    _instancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// Create a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<WeightsAndBiasesInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string instancename, WeightsAndBiasesInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _weightsAndBiasesInstanceInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, instancename, data, cancellationToken);
-                var operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(new WeightsAndBiasesInstanceOperationSource(Client), _weightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, _weightsAndBiasesInstanceInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instancename, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
+                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    _instancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WeightsAndBiasesInstanceResource>> GetAsync(string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Get");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancename, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WeightsAndBiasesInstanceData> response = Response.FromValue(WeightsAndBiasesInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WeightsAndBiasesInstanceResource> Get(string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Get");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancename, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WeightsAndBiasesInstanceData> response = Response.FromValue(WeightsAndBiasesInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +269,78 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// List InstanceResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InstanceResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WeightsAndBiasesInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _weightsAndBiasesInstanceInstancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _weightsAndBiasesInstanceInstancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WeightsAndBiasesInstanceResource(Client, WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(e)), _weightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, "WeightsAndBiasesInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
-        /// <summary>
-        /// List InstanceResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InstanceResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WeightsAndBiasesInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _weightsAndBiasesInstanceInstancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _weightsAndBiasesInstanceInstancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WeightsAndBiasesInstanceResource(Client, WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(e)), _weightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, "WeightsAndBiasesInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Exists");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancename, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WeightsAndBiasesInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WeightsAndBiasesInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WeightsAndBiasesInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +351,53 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Exists");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancename, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WeightsAndBiasesInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WeightsAndBiasesInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WeightsAndBiasesInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +408,57 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WeightsAndBiasesInstanceResource>> GetIfExistsAsync(string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instancename, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WeightsAndBiasesInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WeightsAndBiasesInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WeightsAndBiasesInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WeightsAndBiasesInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +469,57 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InstanceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WeightsAndBiasesInstanceResource> GetIfExists(string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instancename, nameof(instancename));
 
-            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _instancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instancename, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _instancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WeightsAndBiasesInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WeightsAndBiasesInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WeightsAndBiasesInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WeightsAndBiasesInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +539,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WeightsAndBiasesInstanceResource> IAsyncEnumerable<WeightsAndBiasesInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Test framework for clients built on System.ClientModel</Description>
     <Version>1.0.0-beta.1</Version>
@@ -9,8 +9,8 @@
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
     <IsTestProject>false</IsTestProject>
-    <IncludeAutorestDependency>false</IncludeAutorestDependency>
     <IsPackable>true</IsPackable>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImagePushed event. </summary>
     [JsonConverter(typeof(ContainerRegistryImagePushedEventDataConverter))]
-    public partial class ContainerRegistryImagePushedEventData : IJsonModel<ContainerRegistryImagePushedEventData>
+    public partial class ContainerRegistryImagePushedEventData : ContainerRegistryEventData, IJsonModel<ContainerRegistryImagePushedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImagePushedEventData"/> for deserialization. </summary>
         internal ContainerRegistryImagePushedEventData()
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeContainerRegistryImagePushedEventData(document.RootElement, options);
                     }

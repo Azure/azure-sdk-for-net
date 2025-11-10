@@ -17,14 +17,13 @@ namespace Azure.AI.VoiceLive
     /// detected in the audio buffer. This can happen any time audio is added to the
     /// buffer (unless speech is already detected). The client may want to use this
     /// event to interrupt audio playback or provide visual feedback to the user.
-    /// 
     /// The client should expect to receive a `input_audio_buffer.speech_stopped` event
     /// when speech stops. The `item_id` property is the ID of the user message item
     /// that will be created when speech stops and will also be included in the
     /// `input_audio_buffer.speech_stopped` event (unless the client manually commits
     /// the audio buffer during VAD activation).
     /// </summary>
-    public partial class SessionUpdateInputAudioBufferSpeechStarted : IJsonModel<SessionUpdateInputAudioBufferSpeechStarted>
+    public partial class SessionUpdateInputAudioBufferSpeechStarted : SessionUpdate, IJsonModel<SessionUpdateInputAudioBufferSpeechStarted>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStarted"/> for deserialization. </summary>
         internal SessionUpdateInputAudioBufferSpeechStarted()
@@ -144,7 +143,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateInputAudioBufferSpeechStarted(document.RootElement, options);
                     }

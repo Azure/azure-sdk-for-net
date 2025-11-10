@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The InputTextContentPart. </summary>
-    public partial class InputTextContentPart : UserContentPart
+    /// <summary> Input text content part. </summary>
+    public partial class InputTextContentPart : MessageContentPart
     {
         /// <summary> Initializes a new instance of <see cref="InputTextContentPart"/>. </summary>
         /// <param name="text"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public InputTextContentPart(string text) : base("input_text")
+        public InputTextContentPart(string text) : base(ContentPartType.InputText)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -24,10 +24,10 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="InputTextContentPart"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"></param>
-        internal InputTextContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal InputTextContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }
