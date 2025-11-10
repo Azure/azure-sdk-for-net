@@ -35,7 +35,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             testBase.SanitizersToRemove.Add("AZSDK3430"); // Removes "id" fields
             testBase.SanitizersToRemove.Add("AZSDK2003"); // Default hostname sanitizer that reduces URLs to "Sanitized.com"
             testBase.SanitizersToRemove.Add("AZSDK4001"); // Replaces entire host name in URL - we use custom hostname sanitizer
-            testBase.SanitizersToRemove.Add("AZSDK3447"); // Don't sanitize path segments - collection IDs are public
 
             // Credential sanitizers using JSONPath - these values should always be sanitized
             testBase.JsonPathSanitizers.Add("$..access_token");
@@ -243,9 +242,16 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             });
 
             // DO NOT sanitize collection names in URL paths - they are public identifiers
-            // This ensures that test collection names like "test-collection-lifecycle" are preserved
+            // This ensures that test collection names like "sample-lifecycle-collection" are preserved
             // in recordings for proper playback matching
             testBase.SanitizersToRemove.Add("AZSDK3447"); // Don't sanitize path segments
+
+            // KNOWN LIMITATION: Test08_01 and Test08_03 fail in playback mode because the test proxy
+            // applies AZSDK3447 sanitization during playback URL matching (before comparing to recordings),
+            // even though SanitizersToRemove successfully prevents it during recording.
+            // This is a C# test framework architectural difference vs Python's remove_batch_sanitizers()
+            // which affects both recording AND playback phases.
+            // These tests are marked with [Category("RecordingMismatch")] and should run in Live mode.
         }
     }
 }

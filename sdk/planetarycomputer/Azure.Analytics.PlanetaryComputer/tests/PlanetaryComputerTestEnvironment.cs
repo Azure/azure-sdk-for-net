@@ -28,6 +28,20 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public string ItemId => GetRecordedVariable("PLANETARYCOMPUTER_ITEM_ID");
 
         /// <summary>
+        /// Gets the collection ID for lifecycle operations (create/update/delete).
+        /// Defaults to "sample-lifecycle-collection" when not set via environment.
+        ///
+        /// Note: Uses GetRecordedOptionalVariable() to store value in recording Variables section.
+        /// This matches the pattern used by CollectionId ("naip-atl") which works successfully.
+        /// However, Test08 LRO tests still fail in playback due to test proxy sanitization:
+        /// - Recording phase: AZSDK3447 removal works, recordings contain unsanitized URLs
+        /// - Playback phase: AZSDK3447 still applied, sanitizes collection IDs to "Sanitized"
+        /// This is a C# test framework limitation vs Python (remove_batch_sanitizers affects both phases).
+        /// Run Test08_01/Test08_03 in Live mode or skip via [Category("RecordingMismatch")] filter.
+        /// </summary>
+        public string LifecycleCollectionId => GetRecordedOptionalVariable("PLANETARYCOMPUTER_LIFECYCLE_COLLECTION_ID", null) ?? "sample-lifecycle-collection";
+
+        /// <summary>
         /// Gets the Azure Blob Storage container URI for ingestion tests.
         /// Marked as secret to prevent real storage account details from being recorded.
         /// </summary>
