@@ -145,7 +145,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeTaggedPhiEntities(document.RootElement, options);
                     }

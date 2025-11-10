@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Alert configuration details. </summary>
     public partial class EntityAlertConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntityAlertConfiguration"/>. </summary>
         /// <param name="severity"> The severity of triggered alert. </param>
@@ -58,24 +30,21 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="severity"> The severity of triggered alert. </param>
         /// <param name="description"> The alert rule description. </param>
         /// <param name="actionGroupIds"> Optional list of action group resource IDs to be notified when the alert is triggered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityAlertConfiguration(EntityAlertSeverity severity, string description, IList<ResourceIdentifier> actionGroupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EntityAlertConfiguration(EntityAlertSeverity severity, string description, IList<ResourceIdentifier> actionGroupIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
             Description = description;
             ActionGroupIds = actionGroupIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EntityAlertConfiguration"/> for deserialization. </summary>
-        internal EntityAlertConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The severity of triggered alert. </summary>
         public EntityAlertSeverity Severity { get; set; }
+
         /// <summary> The alert rule description. </summary>
         public string Description { get; set; }
+
         /// <summary> Optional list of action group resource IDs to be notified when the alert is triggered. </summary>
         public IList<ResourceIdentifier> ActionGroupIds { get; }
     }

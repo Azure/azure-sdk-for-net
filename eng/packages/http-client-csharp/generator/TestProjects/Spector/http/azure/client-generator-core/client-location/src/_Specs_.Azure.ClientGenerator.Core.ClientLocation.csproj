@@ -3,7 +3,7 @@
     <Description>This is the _Specs_.Azure.ClientGenerator.Core.ClientLocation client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation _Specs_.Azure.ClientGenerator.Core.ClientLocation</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>_Specs_.Azure.ClientGenerator.Core.ClientLocation</PackageTags>
+    <PackageTags>Specs.Azure.ClientGenerator.Core.ClientLocation</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
