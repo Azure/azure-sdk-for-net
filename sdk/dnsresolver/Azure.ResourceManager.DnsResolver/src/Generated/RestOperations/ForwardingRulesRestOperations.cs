@@ -32,8 +32,216 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
+            _apiVersion = apiVersion ?? "2025-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendPath("/forwardingRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string rulesetName, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendPath("/forwardingRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ForwardingRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, rulesetName, top);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ForwardingRuleListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ForwardingRuleListResult.DeserializeForwardingRuleListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ForwardingRuleListResult> List(string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, rulesetName, top);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ForwardingRuleListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ForwardingRuleListResult.DeserializeForwardingRuleListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendPath("/forwardingRules/", false);
+            uri.AppendPath(forwardingRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendPath("/forwardingRules/", false);
+            uri.AppendPath(forwardingRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets properties of a forwarding rule in a DNS forwarding ruleset. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DnsForwardingRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DnsForwardingRuleData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DnsForwardingRuleData.DeserializeDnsForwardingRuleData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DnsForwardingRuleData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets properties of a forwarding rule in a DNS forwarding ruleset. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DnsForwardingRuleData> Get(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DnsForwardingRuleData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DnsForwardingRuleData.DeserializeDnsForwardingRuleData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DnsForwardingRuleData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch, string ifNoneMatch)
@@ -71,11 +279,11 @@ namespace Azure.ResourceManager.DnsResolver
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("if-match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
+                request.Headers.Add("if-none-match", ifNoneMatch);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -193,7 +401,7 @@ namespace Azure.ResourceManager.DnsResolver
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("if-match", ifMatch);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -307,7 +515,7 @@ namespace Azure.ResourceManager.DnsResolver
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("if-match", ifMatch);
             }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -365,214 +573,6 @@ namespace Azure.ResourceManager.DnsResolver
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(rulesetName, true);
-            uri.AppendPath("/forwardingRules/", false);
-            uri.AppendPath(forwardingRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(rulesetName, true);
-            uri.AppendPath("/forwardingRules/", false);
-            uri.AppendPath(forwardingRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets properties of a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
-        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DnsForwardingRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DnsForwardingRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DnsForwardingRuleData.DeserializeDnsForwardingRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DnsForwardingRuleData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets properties of a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
-        /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="rulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DnsForwardingRuleData> Get(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, rulesetName, forwardingRuleName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DnsForwardingRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DnsForwardingRuleData.DeserializeDnsForwardingRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DnsForwardingRuleData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(rulesetName, true);
-            uri.AppendPath("/forwardingRules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string rulesetName, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(rulesetName, true);
-            uri.AppendPath("/forwardingRules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ForwardingRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, rulesetName, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ForwardingRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ForwardingRuleListResult.DeserializeForwardingRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ForwardingRuleListResult> List(string subscriptionId, string resourceGroupName, string rulesetName, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, rulesetName, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ForwardingRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ForwardingRuleListResult.DeserializeForwardingRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -18,13 +18,8 @@ using Azure.ResourceManager.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class BazData : TrackedResourceData, IJsonModel<BazData>
+    public partial class BazData : ResourceData, IJsonModel<BazData>
     {
-        /// <summary> Initializes a new instance of <see cref="BazData"/> for deserialization. </summary>
-        internal BazData()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BazData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -48,6 +43,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
             }
         }
 
@@ -81,9 +97,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             BazProperties properties = default;
+            IDictionary<string, string> tags = default;
+            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -118,6 +134,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BazProperties.DeserializeBazProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -141,16 +166,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BazProperties.DeserializeBazProperties(prop.Value, options);
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,9 +180,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties);
+                location);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

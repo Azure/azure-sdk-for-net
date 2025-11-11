@@ -313,11 +313,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The RP-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.BazData"/> instance for mocking. </returns>
-        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BazProperties properties = default)
+        public static BazData BazData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BazProperties properties = default, IDictionary<string, string> tags = default, string location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -327,9 +327,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                properties,
                 tags,
-                location,
-                properties);
+                location);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -596,6 +596,29 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static NetworkSibling NetworkSibling(string subscriptionId = default, string resourceGroupName = default, string networkInterfaceId = default)
         {
             return new NetworkSibling(subscriptionId, resourceGroupName, networkInterfaceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="jooName"> Gets or sets the Name. </param>
+        /// <returns> A new <see cref="Tests.JooData"/> instance for mocking. </returns>
+        public static JooData JooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jooName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new JooData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                jooName is null ? default : new JooProperties(jooName, null));
         }
 
         /// <summary> The ZooRecommendation. </summary>
