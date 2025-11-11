@@ -182,7 +182,3 @@ tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp
-
-sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/tests/Porting
-sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/tests/python/
-sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/tests/typescript/
