@@ -1,14 +1,13 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2025-11-12)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2025-05' to 'package-preview-2025-10'
+- Adds new managedDomainList property in DnsSecurityRule to allow users to use managed domain lists such as AzureDnsThreatIntel
 
 ### Other Changes
+- Domain list is no longer required for a DNS Security rule if managed domain list is being used.
 
 ## 1.2.0 (2025-06-10)
 
