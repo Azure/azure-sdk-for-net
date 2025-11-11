@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The dryrun parameters for creation or update a linker. </summary>
-    public partial class ServiceLinkerCreateOrUpdateDryrunParametersContent : ServiceLinkerDryrunContent
+    public partial class ServiceLinkerCreateOrUpdateDryrunContent : ServiceLinkerDryrunContent
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>. </summary>
-        public ServiceLinkerCreateOrUpdateDryrunParametersContent()
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerCreateOrUpdateDryrunContent"/>. </summary>
+        public ServiceLinkerCreateOrUpdateDryrunContent()
         {
             ActionName = DryrunActionName.CreateOrUpdate;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerCreateOrUpdateDryrunContent"/>. </summary>
         /// <param name="actionName"> The name of action for you dryrun job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetService">
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
-        internal ServiceLinkerCreateOrUpdateDryrunParametersContent(DryrunActionName actionName, IDictionary<string, BinaryData> serializedAdditionalRawData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo) : base(actionName, serializedAdditionalRawData)
+        internal ServiceLinkerCreateOrUpdateDryrunContent(DryrunActionName actionName, IDictionary<string, BinaryData> serializedAdditionalRawData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo) : base(actionName, serializedAdditionalRawData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;

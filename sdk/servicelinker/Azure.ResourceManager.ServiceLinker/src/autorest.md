@@ -46,7 +46,7 @@ rename-mapping:
   ValidationResultStatus: LinkerValidationResultStatus
   AzureKeyVaultProperties.connectAsKubernetesCsiDriver: DoesConnectAsKubernetesCsiDriver
   DryrunParameters: ServiceLinkerDryrunContent
-  CreateOrUpdateDryrunParameters: ServiceLinkerCreateOrUpdateDryrunParametersContent
+  CreateOrUpdateDryrunParameters: ServiceLinkerCreateOrUpdateDryrunContent
   ConfigurationResult: SourceConfigurationResult
   LinkerPatch: LinkerResourcePatch
   ActionType: SourceApplicationConfigurationActionType

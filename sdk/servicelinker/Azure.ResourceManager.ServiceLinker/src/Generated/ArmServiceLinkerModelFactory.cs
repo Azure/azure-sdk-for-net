@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="parameters">
         /// The parameters of the dryrun
         /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
+        /// The available derived classes include <see cref="Models.ServiceLinkerCreateOrUpdateDryrunContent"/>.
         /// </param>
         /// <param name="prerequisiteResults">
         /// the result of the dryrun
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="parameters">
         /// The parameters of the dryrun
         /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
+        /// The available derived classes include <see cref="Models.ServiceLinkerCreateOrUpdateDryrunContent"/>.
         /// </param>
         /// <param name="prerequisiteResults">
         /// the result of the dryrun
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new BasicErrorDryrunPrerequisiteResult(DryrunPrerequisiteResultType.BasicError, serializedAdditionalRawData: null, code, message);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceLinkerCreateOrUpdateDryrunContent"/>. </summary>
         /// <param name="targetService">
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -338,10 +338,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
-        /// <returns> A new <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/> instance for mocking. </returns>
-        public static ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, LinkerPublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
+        /// <returns> A new <see cref="Models.ServiceLinkerCreateOrUpdateDryrunContent"/> instance for mocking. </returns>
+        public static ServiceLinkerCreateOrUpdateDryrunContent ServiceLinkerCreateOrUpdateDryrunContent(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, LinkerPublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
-            return new ServiceLinkerCreateOrUpdateDryrunParametersContent(
+            return new ServiceLinkerCreateOrUpdateDryrunContent(
                 DryrunActionName.CreateOrUpdate,
                 serializedAdditionalRawData: null,
                 targetService,

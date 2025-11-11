@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(SecretAuthInfo))]
     [ModelReaderWriterBuildable(typeof(SecretBaseInfo))]
     [ModelReaderWriterBuildable(typeof(SelfHostedServer))]
-    [ModelReaderWriterBuildable(typeof(ServiceLinkerCreateOrUpdateDryrunParametersContent))]
+    [ModelReaderWriterBuildable(typeof(ServiceLinkerCreateOrUpdateDryrunContent))]
     [ModelReaderWriterBuildable(typeof(ServiceLinkerDryrunContent))]
     [ModelReaderWriterBuildable(typeof(ServiceLinkerDryrunData))]
     [ModelReaderWriterBuildable(typeof(ServiceLinkerDryrunPatch))]

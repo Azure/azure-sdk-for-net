@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // invoke the operation
             ServiceLinkerDryrunPatch patch = new ServiceLinkerDryrunPatch
             {
-                Parameters = new ServiceLinkerCreateOrUpdateDryrunParametersContent
+                Parameters = new ServiceLinkerCreateOrUpdateDryrunContent
                 {
                     TargetService = new AzureResourceInfo
                     {

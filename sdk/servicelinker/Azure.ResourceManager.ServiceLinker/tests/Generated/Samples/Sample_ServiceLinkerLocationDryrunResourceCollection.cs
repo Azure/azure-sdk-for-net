@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             string dryrunName = "dryrunName";
             ServiceLinkerDryrunData data = new ServiceLinkerDryrunData
             {
-                Parameters = new ServiceLinkerCreateOrUpdateDryrunParametersContent
+                Parameters = new ServiceLinkerCreateOrUpdateDryrunContent
                 {
                     TargetService = new AzureResourceInfo
                     {

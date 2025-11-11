@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "createOrUpdate": return ServiceLinkerCreateOrUpdateDryrunParametersContent.DeserializeServiceLinkerCreateOrUpdateDryrunParametersContent(element, options);
+                    case "createOrUpdate": return ServiceLinkerCreateOrUpdateDryrunContent.DeserializeServiceLinkerCreateOrUpdateDryrunContent(element, options);
                 }
             }
             return UnknownDryrunParameters.DeserializeUnknownDryrunParameters(element, options);
