@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List CertificateObjectGlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List CertificateObjectGlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateObjectGlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackCertificateObjectResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<GlobalRulestackCertificateObjectData, GlobalRulestackCertificateObjectResource>(new CertificateObjectGlobalRulestackGetAllAsyncCollectionResultOfT(_certificateObjectGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackCertificateObjectResource(Client, data));
         }
 
-        /// <summary> List CertificateObjectGlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List CertificateObjectGlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateObjectGlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackCertificateObjectResource> GetAll(CancellationToken cancellationToken = default)

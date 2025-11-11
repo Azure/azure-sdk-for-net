@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List CertificateObjectLocalRulestackResource resources by LocalRulestacks. </summary>
+        /// <summary>
+        /// List CertificateObjectLocalRulestackResource resources by LocalRulestacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateObjectLocalRulestackResources_ListByLocalRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackCertificateObjectResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(_certificateObjectLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackCertificateObjectResource(Client, data));
         }
 
-        /// <summary> List CertificateObjectLocalRulestackResource resources by LocalRulestacks. </summary>
+        /// <summary>
+        /// List CertificateObjectLocalRulestackResource resources by LocalRulestacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateObjectLocalRulestackResources_ListByLocalRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackCertificateObjectResource> GetAll(CancellationToken cancellationToken = default)

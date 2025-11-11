@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List FqdnListGlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List FqdnListGlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListGlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackFqdnResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllAsyncCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackFqdnResource(Client, data));
         }
 
-        /// <summary> List FqdnListGlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List FqdnListGlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListGlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackFqdnResource> GetAll(CancellationToken cancellationToken = default)
