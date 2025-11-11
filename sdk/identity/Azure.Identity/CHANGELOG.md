@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Deprecated legacy `ManagedIdentityCredential` constructors. Use `ManagedIdentityCredential(ManagedIdentityId id, TokenCredentialOptions options = null)` or `ManagedIdentityCredential(ManagedIdentityCredentialOptions options)` instead for clearer intent when specifying system-assigned or user-assigned managed identity.
+
 ## 1.17.0 (2025-10-07)
 
 ### Bugs Fixed
