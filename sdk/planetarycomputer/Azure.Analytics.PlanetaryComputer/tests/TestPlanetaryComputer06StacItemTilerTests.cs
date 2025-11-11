@@ -519,6 +519,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Crop")]
+        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
         public async Task Test06_11_CropGeoJsonWithDimensions()
         {
             // Arrange
