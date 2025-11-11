@@ -10,6 +10,7 @@ trigger:
     include:
     - sdk/ai/ci.projects.yml
     - sdk/ai/Azure.AI.Projects
+    - sdk/ai/Azure.AI.Projects.OpenAI
 
 pr:
   branches:

@@ -341,6 +341,16 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EvaluatorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="evaluatorVersion"> The <see cref="EvaluatorVersion"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(EvaluatorVersion evaluatorVersion)
+        {
+            if (evaluatorVersion == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(evaluatorVersion, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluatorVersion"/> from. </param>
         public static explicit operator EvaluatorVersion(ClientResult result)
         {

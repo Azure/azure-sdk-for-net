@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
-namespace Azure.Core
+namespace Azure.Core.Foundations
 {
     /// <summary> Paged collection of ScheduleRun items. </summary>
-    public partial class PagedScheduleRun : IJsonModel<PagedScheduleRun>
+    internal partial class PagedScheduleRun : IJsonModel<PagedScheduleRun>
     {
         /// <summary> Initializes a new instance of <see cref="PagedScheduleRun"/> for deserialization. </summary>
         internal PagedScheduleRun()
@@ -93,6 +93,7 @@ namespace Azure.Core
             }
             IList<ScheduleRun> value = default;
             Uri nextLink = default;
+            string clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +121,7 @@ namespace Azure.Core
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedScheduleRun(value, nextLink, additionalBinaryDataProperties);
+            return new PagedScheduleRun(value, nextLink, clientRequestId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -108,18 +108,31 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRunsRequest(string scheduleId, RequestOptions options)
+        internal PipelineMessage CreateGetRunsRequest(string id, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/schedules/", false);
-            uri.AppendPath(scheduleId, true);
+            uri.AppendPath(id, true);
             uri.AppendPath("/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
+            return message;
+        }
+
+        internal PipelineMessage CreateNextGetRunsRequest(Uri nextPage, string id, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(nextPage);
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            request.Headers.Set("x-ms-client-request-id", request.ClientRequestId);
             return message;
         }
     }

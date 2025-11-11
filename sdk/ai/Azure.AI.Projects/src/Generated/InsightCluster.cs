@@ -17,13 +17,15 @@ namespace Azure.AI.Projects
         /// <param name="id"> The id of the analysis cluster. </param>
         /// <param name="label"> Label for the cluster. </param>
         /// <param name="suggestion"> Suggestion for the cluster. </param>
+        /// <param name="suggestionTitle"> The title of the suggestion for the cluster. </param>
         /// <param name="description"> Description of the analysis cluster. </param>
         /// <param name="weight"> The weight of the analysis cluster. This indicate number of samples in the cluster. </param>
-        internal InsightCluster(string id, string label, string suggestion, string description, int weight)
+        internal InsightCluster(string id, string label, string suggestion, string suggestionTitle, string description, int weight)
         {
             Id = id;
             Label = label;
             Suggestion = suggestion;
+            SuggestionTitle = suggestionTitle;
             Description = description;
             Weight = weight;
             SubClusters = new ChangeTrackingList<InsightCluster>();
@@ -34,16 +36,18 @@ namespace Azure.AI.Projects
         /// <param name="id"> The id of the analysis cluster. </param>
         /// <param name="label"> Label for the cluster. </param>
         /// <param name="suggestion"> Suggestion for the cluster. </param>
+        /// <param name="suggestionTitle"> The title of the suggestion for the cluster. </param>
         /// <param name="description"> Description of the analysis cluster. </param>
         /// <param name="weight"> The weight of the analysis cluster. This indicate number of samples in the cluster. </param>
         /// <param name="subClusters"> List of subclusters within this cluster. Empty if no subclusters exist. </param>
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightCluster(string id, string label, string suggestion, string description, int weight, IList<InsightCluster> subClusters, IList<InsightSample> samples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightCluster(string id, string label, string suggestion, string suggestionTitle, string description, int weight, IList<InsightCluster> subClusters, IList<InsightSample> samples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Label = label;
             Suggestion = suggestion;
+            SuggestionTitle = suggestionTitle;
             Description = description;
             Weight = weight;
             SubClusters = subClusters;
@@ -59,6 +63,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Suggestion for the cluster. </summary>
         public string Suggestion { get; }
+
+        /// <summary> The title of the suggestion for the cluster. </summary>
+        public string SuggestionTitle { get; }
 
         /// <summary> Description of the analysis cluster. </summary>
         public string Description { get; }

@@ -7,7 +7,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.AI.Projects
 {
@@ -394,18 +393,17 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
+        /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetRuns(string scheduleId, RequestOptions options)
+        public virtual CollectionResult GetRuns(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRunsRequest(scheduleId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            return new SchedulesGetRunsCollectionResult(this, id, options);
         }
 
         /// <summary>
@@ -416,46 +414,43 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
+        /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetRunsAsync(string scheduleId, RequestOptions options)
+        public virtual AsyncCollectionResult GetRunsAsync(string id, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRunsRequest(scheduleId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            return new SchedulesGetRunsAsyncCollectionResult(this, id, options);
         }
 
         /// <summary> List all schedule runs. </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
+        /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<PagedScheduleRun> GetRuns(string scheduleId, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<ScheduleRun> GetRuns(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = GetRuns(scheduleId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((PagedScheduleRun)result, result.GetRawResponse());
+            return new SchedulesGetRunsCollectionResultOfT(this, id, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all schedule runs. </summary>
-        /// <param name="scheduleId"> Identifier of the schedule. </param>
+        /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<PagedScheduleRun>> GetRunsAsync(string scheduleId, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<ScheduleRun> GetRunsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scheduleId, nameof(scheduleId));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetRunsAsync(scheduleId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((PagedScheduleRun)result, result.GetRawResponse());
+            return new SchedulesGetRunsAsyncCollectionResultOfT(this, id, cancellationToken.ToRequestOptions());
         }
     }
 }
