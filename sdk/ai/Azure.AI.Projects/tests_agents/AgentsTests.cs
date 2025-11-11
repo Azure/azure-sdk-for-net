@@ -521,29 +521,12 @@ public class AgentsTests : AgentsTestBase
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
         ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
 
-        MemoryUpdateResult updateResult = null;
-
-        if (useConversation)
-        {
-            ProjectConversationCreationOptions conversationOptions = new()
+        MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(
+            store.Name,
+            new MemoryUpdateOptions(scope)
             {
-                Items = { userItem, agentItem },
-            };
-            AgentConversation conv = await projectClient.OpenAI.GetProjectOpenAIConversationClient().CreateAgentConversationAsync(conversationOptions);
-            updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(memoryStoreName: store.Name, new(scope)
-            {
-                ConversationId = conv.Id
+                Items = { userItem, agentItem }
             });
-        }
-        else
-        {
-            updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(
-                store.Name,
-                new MemoryUpdateOptions(scope)
-                {
-                    Items = { userItem, agentItem }
-                });
-        }
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
             options: new MemorySearchOptions(scope)

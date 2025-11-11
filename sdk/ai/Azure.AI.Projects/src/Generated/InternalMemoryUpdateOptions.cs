@@ -23,9 +23,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="InternalMemoryUpdateOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="conversationId"> The conversation ID from which to extract memories. Only one of conversation_id or items should be provided. </param>
-        /// <param name="items"> Conversation items from which to extract memories. Only one of conversation_id or items should be provided. </param>
-        /// <param name="previousUpdateId"> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. Cannot be used together with conversation_id. </param>
+        /// <param name="items"> Conversation items from which to extract memories. </param>
+        /// <param name="previousUpdateId"> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </param>
         /// <param name="updateDelay">
         /// Timeout period before processing the memory update in seconds.
         /// If a new update request is received during this period, it will cancel the current request and reset the timeout.
@@ -33,10 +32,9 @@ namespace Azure.AI.Projects
         /// Defaults to 300 (5 minutes).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemoryUpdateOptions(string scope, string conversationId, IList<InternalItemParam> items, string previousUpdateId, int? updateDelay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemoryUpdateOptions(string scope, IList<InternalItemParam> items, string previousUpdateId, int? updateDelay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
-            ConversationId = conversationId;
             Items = items;
             PreviousUpdateId = previousUpdateId;
             UpdateDelay = updateDelay;
@@ -46,13 +44,10 @@ namespace Azure.AI.Projects
         /// <summary> The namespace that logically groups and isolates memories, such as a user ID. </summary>
         public string Scope { get; }
 
-        /// <summary> The conversation ID from which to extract memories. Only one of conversation_id or items should be provided. </summary>
-        public string ConversationId { get; }
-
-        /// <summary> Conversation items from which to extract memories. Only one of conversation_id or items should be provided. </summary>
+        /// <summary> Conversation items from which to extract memories. </summary>
         public IList<InternalItemParam> Items { get; }
 
-        /// <summary> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. Cannot be used together with conversation_id. </summary>
+        /// <summary> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </summary>
         public string PreviousUpdateId { get; }
 
         /// <summary>

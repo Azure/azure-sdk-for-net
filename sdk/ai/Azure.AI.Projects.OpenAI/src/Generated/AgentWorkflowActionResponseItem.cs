@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </summary>
-        internal string Kind { get; set; }
+        public string Kind { get; }
 
         /// <summary> Unique identifier for the action. </summary>
         public string ActionId { get; }

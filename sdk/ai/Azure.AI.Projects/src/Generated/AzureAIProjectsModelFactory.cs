@@ -1297,19 +1297,19 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Schedule run model. </summary>
-        /// <param name="id"> Identifier of the schedule run. </param>
+        /// <param name="runId"> Identifier of the schedule run. </param>
         /// <param name="scheduleId"> Identifier of the schedule. </param>
         /// <param name="success"> Trigger success status of the schedule run. </param>
         /// <param name="triggerTime"> Trigger time of the schedule run. </param>
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <returns> A new <see cref="Projects.ScheduleRun"/> instance for mocking. </returns>
-        public static ScheduleRun ScheduleRun(string id = default, string scheduleId = default, bool success = default, string triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
+        public static ScheduleRun ScheduleRun(string runId = default, string scheduleId = default, bool success = default, string triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
 
             return new ScheduleRun(
-                id,
+                runId,
                 scheduleId,
                 success,
                 triggerTime,
@@ -1318,52 +1318,12 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Paged collection of ScheduleRun items. </summary>
-        /// <param name="value"> The ScheduleRun items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Core.PagedScheduleRun"/> instance for mocking. </returns>
-        public static PagedScheduleRun PagedScheduleRun(IEnumerable<ScheduleRun> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ScheduleRun>();
-
-            return new PagedScheduleRun(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <returns> A new <see cref="Projects.MemorySearchResultOptions"/> instance for mocking. </returns>
         public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentsApiError. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
-        /// <param name="target"> The target of the error, if applicable. </param>
-        /// <param name="details"> Additional details about the error. </param>
-        /// <param name="innererror"> The inner error, if any. </param>
-        /// <returns> A new <see cref="Projects.AgentsApiError"/> instance for mocking. </returns>
-        public static AgentsApiError AgentsApiError(string code = default, string message = default, string target = default, IEnumerable<AgentsApiError> details = default, ApiInnerError innererror = default)
-        {
-            details ??= new ChangeTrackingList<AgentsApiError>();
-
-            return new AgentsApiError(
-                code,
-                message,
-                target,
-                details.ToList(),
-                innererror,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ApiInnerError. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="innererror"> The inner error, if any. </param>
-        /// <returns> A new <see cref="Projects.ApiInnerError"/> instance for mocking. </returns>
-        public static ApiInnerError ApiInnerError(string code = default, ApiInnerError innererror = default)
-        {
-            return new ApiInnerError(code, innererror, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentManifestOptions. </summary>
@@ -1564,24 +1524,6 @@ namespace Azure.AI.Projects
         public static MemoryStoreOperationUsageOutputTokensDetails MemoryStoreOperationUsageOutputTokensDetails(int reasoningTokens = default)
         {
             return new MemoryStoreOperationUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Provides the status of a memory store update operation. </summary>
-        /// <param name="updateId"> The unique ID of this update request. Use this value as previous_update_id in subsequent requests to perform incremental updates. </param>
-        /// <param name="status"> The status of the memory update operation. One of "queued", "in_progress", "completed", "failed", or "superseded". </param>
-        /// <param name="supersededBy"> The update_id the operation was superseded by when status is "superseded". </param>
-        /// <param name="details"> The result of memory store update operation when status is "completed". </param>
-        /// <param name="error"> Error object that describes the error when status is "failed". </param>
-        /// <returns> A new <see cref="Projects.MemoryUpdateResult"/> instance for mocking. </returns>
-        public static MemoryUpdateResult MemoryUpdateResult(string updateId = default, MemoryStoreUpdateStatus status = default, string supersededBy = default, MemoryUpdateResultDetails details = default, AgentsApiError error = default)
-        {
-            return new MemoryUpdateResult(
-                updateId,
-                status,
-                supersededBy,
-                details,
-                error,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory update result. </summary>

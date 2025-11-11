@@ -27,15 +27,15 @@ namespace Azure.AI.Projects
         /// <param name="status"> The status of the memory update operation. One of "queued", "in_progress", "completed", "failed", or "superseded". </param>
         /// <param name="supersededBy"> The update_id the operation was superseded by when status is "superseded". </param>
         /// <param name="details"> The result of memory store update operation when status is "completed". </param>
-        /// <param name="error"> Error object that describes the error when status is "failed". </param>
+        /// <param name="internalError"> Error object that describes the error when status is "failed". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryUpdateResult(string updateId, MemoryStoreUpdateStatus status, string supersededBy, MemoryUpdateResultDetails details, AgentsApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryUpdateResult(string updateId, MemoryStoreUpdateStatus status, string supersededBy, MemoryUpdateResultDetails details, FoundryOpenAIError internalError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateId = updateId;
             Status = status;
             SupersededBy = supersededBy;
             Details = details;
-            Error = error;
+            InternalError = internalError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,8 +47,5 @@ namespace Azure.AI.Projects
 
         /// <summary> The update_id the operation was superseded by when status is "superseded". </summary>
         public string SupersededBy { get; }
-
-        /// <summary> Error object that describes the error when status is "failed". </summary>
-        public AgentsApiError Error { get; }
     }
 }

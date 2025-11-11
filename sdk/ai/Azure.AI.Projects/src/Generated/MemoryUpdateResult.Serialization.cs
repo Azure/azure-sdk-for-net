@@ -50,10 +50,10 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("result"u8);
                 writer.WriteObjectValue(Details, options);
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(InternalError))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue(InternalError, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.Projects
             MemoryStoreUpdateStatus status = default;
             string supersededBy = default;
             MemoryUpdateResultDetails details = default;
-            AgentsApiError error = default;
+            FoundryOpenAIError internalError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    error = AgentsApiError.DeserializeAgentsApiError(prop.Value, options);
+                    internalError = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects
                 status,
                 supersededBy,
                 details,
-                error,
+                internalError,
                 additionalBinaryDataProperties);
         }
 

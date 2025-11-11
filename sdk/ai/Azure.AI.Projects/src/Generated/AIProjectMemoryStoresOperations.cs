@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            CreateMemoryStoreRequest spreadModel = new CreateMemoryStoreRequest(name, description, metadata, definition, default);
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata, definition, default);
             ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
@@ -111,7 +111,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            CreateMemoryStoreRequest spreadModel = new CreateMemoryStoreRequest(name, description, metadata, definition, default);
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata, definition, default);
             ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }

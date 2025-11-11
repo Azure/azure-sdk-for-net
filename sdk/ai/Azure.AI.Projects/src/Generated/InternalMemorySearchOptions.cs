@@ -23,15 +23,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="InternalMemorySearchOptions"/>. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="conversationId"> The conversation ID for which to search memories. Only one of conversation_id or items should be provided. </param>
-        /// <param name="items"> Items for which to search for relevant memories. Only one of conversation_id or items should be provided. </param>
-        /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. Cannot be used together with conversation_id. </param>
+        /// <param name="items"> Items for which to search for relevant memories. </param>
+        /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
         /// <param name="options"> Memory search options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemorySearchOptions(string scope, string conversationId, IList<InternalItemParam> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemorySearchOptions(string scope, IList<InternalItemParam> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
-            ConversationId = conversationId;
             Items = items;
             PreviousSearchId = previousSearchId;
             Options = options;
@@ -41,13 +39,10 @@ namespace Azure.AI.Projects
         /// <summary> The namespace that logically groups and isolates memories, such as a user ID. </summary>
         public string Scope { get; }
 
-        /// <summary> The conversation ID for which to search memories. Only one of conversation_id or items should be provided. </summary>
-        public string ConversationId { get; }
-
-        /// <summary> Items for which to search for relevant memories. Only one of conversation_id or items should be provided. </summary>
+        /// <summary> Items for which to search for relevant memories. </summary>
         public IList<InternalItemParam> Items { get; }
 
-        /// <summary> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. Cannot be used together with conversation_id. </summary>
+        /// <summary> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </summary>
         public string PreviousSearchId { get; }
 
         /// <summary> Memory search options. </summary>

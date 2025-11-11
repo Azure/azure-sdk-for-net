@@ -16,7 +16,6 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 
     public IList<ResponseItem> Items { get; private set; }
     public string Scope { get; }
-    public string ConversationId { get; set; }
     public string PreviousSearchId { get; set; }
     public MemorySearchResultOptions ResultOptions { get; set; }
 
@@ -28,14 +27,13 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 
     private InternalMemorySearchOptions GetInternalCopy()
     {
-        return new InternalMemorySearchOptions(Scope, ConversationId, ResponseItemHelpers.ConvertItemsTo<InternalItemParam, ResponseItem>(Items), PreviousSearchId, ResultOptions, additionalBinaryDataProperties: null);
+        return new InternalMemorySearchOptions(Scope, ResponseItemHelpers.ConvertItemsTo<InternalItemParam, ResponseItem>(Items), PreviousSearchId, ResultOptions, additionalBinaryDataProperties: null);
     }
 
     private static MemorySearchOptions CreateFromInternalOptions(InternalMemorySearchOptions internalOptions)
     {
         return new(internalOptions.Scope)
         {
-            ConversationId = internalOptions.ConversationId,
             PreviousSearchId = internalOptions.PreviousSearchId,
             Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem, InternalItemParam>(internalOptions.Items),
             ResultOptions = internalOptions.Options,

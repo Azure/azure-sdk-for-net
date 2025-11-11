@@ -78,31 +78,31 @@ namespace Azure.AI.Projects
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
         /// <summary> Initializes a new instance of AIProjectConnectionsOperations. </summary>
-        internal AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
+        internal virtual AIProjectConnectionsOperations GetAIProjectConnectionsOperationsClient()
         {
             return Volatile.Read(ref _cachedAIProjectConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectConnectionsOperations, new AIProjectConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectConnectionsOperations;
         }
 
         /// <summary> Initializes a new instance of AIProjectIndexesOperations. </summary>
-        internal AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
+        internal virtual AIProjectIndexesOperations GetAIProjectIndexesOperationsClient()
         {
             return Volatile.Read(ref _cachedAIProjectIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectIndexesOperations, new AIProjectIndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectIndexesOperations;
         }
 
         /// <summary> Initializes a new instance of AIProjectDeploymentsOperations. </summary>
-        internal AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
+        internal virtual AIProjectDeploymentsOperations GetAIProjectDeploymentsOperationsClient()
         {
             return Volatile.Read(ref _cachedAIProjectDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDeploymentsOperations, new AIProjectDeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectDeploymentsOperations;
         }
 
         /// <summary> Initializes a new instance of AIProjectDatasetsOperations. </summary>
-        internal AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
+        internal virtual AIProjectDatasetsOperations GetAIProjectDatasetsOperationsClient()
         {
             // Custom method to allow for passing of credential used when SAS is not provided.
             return Volatile.Read(ref _cachedAIProjectDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectDatasetsOperations, new AIProjectDatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedAIProjectDatasetsOperations;
         }
 
-        internal ProjectOpenAIClient GetCachedOpenAIClient()
+        internal virtual ProjectOpenAIClient GetCachedOpenAIClient()
         {
             return Volatile.Read(ref _cachedOpenAIClient) ?? Interlocked.CompareExchange(ref _cachedOpenAIClient, this.GetProjectOpenAIClient(), null) ?? _cachedOpenAIClient;
         }
@@ -166,12 +166,12 @@ namespace Azure.AI.Projects
         public virtual ProjectOpenAIClient OpenAI => GetCachedOpenAIClient();
         public virtual AIProjectAgentsOperations Agents => GetAIProjectAgentsOperationsClient();
         public virtual AIProjectMemoryStoresOperations MemoryStores => GetAIProjectMemoryStoresOperationsClient();
-        public RedTeams RedTeams => GetRedTeamsClient();
-        public EvaluationRules EvaluationRules => GetEvaluationRulesClient();
-        public EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
-        public Evaluators Evaluators => GetEvaluatorsClient();
-        public Insights Insights => GetInsightsClient();
-        public Schedules Schedules => GetSchedulesClient();
+        public virtual RedTeams RedTeams => GetRedTeamsClient();
+        public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
+        public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
+        public virtual Evaluators Evaluators => GetEvaluatorsClient();
+        public virtual Insights Insights => GetInsightsClient();
+        public virtual Schedules Schedules => GetSchedulesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

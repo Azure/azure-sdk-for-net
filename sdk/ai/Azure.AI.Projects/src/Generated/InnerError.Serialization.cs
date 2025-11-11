@@ -6,20 +6,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.Core.Foundations
 {
-    /// <summary> The AgentsApiError. </summary>
-    public partial class AgentsApiError : IJsonModel<AgentsApiError>
+    /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
+    internal partial class InnerError : IJsonModel<InnerError>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentsApiError"/> for deserialization. </summary>
-        internal AgentsApiError()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentsApiError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,27 +26,16 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsApiError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code);
-            writer.WritePropertyName("message"u8);
-            writer.WriteStringValue(Message);
-            if (Optional.IsDefined(Target))
+            if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("target"u8);
-                writer.WriteStringValue(Target);
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
             }
-            writer.WritePropertyName("details"u8);
-            writer.WriteStartArray();
-            foreach (AgentsApiError item in Details)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
@@ -75,34 +60,31 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsApiError IJsonModel<AgentsApiError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InnerError IJsonModel<InnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsApiError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InnerError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsApiError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsApiError(document.RootElement, options);
+            return DeserializeInnerError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentsApiError DeserializeAgentsApiError(JsonElement element, ModelReaderWriterOptions options)
+        internal static InnerError DeserializeInnerError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string code = default;
-            string message = default;
-            string target = default;
-            IList<AgentsApiError> details = default;
-            ApiInnerError innererror = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -111,33 +93,13 @@ namespace Azure.AI.Projects
                     code = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("message"u8))
-                {
-                    message = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("target"u8))
-                {
-                    target = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("details"u8))
-                {
-                    List<AgentsApiError> array = new List<AgentsApiError>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DeserializeAgentsApiError(item, options));
-                    }
-                    details = array;
-                    continue;
-                }
                 if (prop.NameEquals("innererror"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    innererror = ApiInnerError.DeserializeApiInnerError(prop.Value, options);
+                    innererror = DeserializeInnerError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,53 +107,47 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentsApiError(
-                code,
-                message,
-                target,
-                details,
-                innererror,
-                additionalBinaryDataProperties);
+            return new InnerError(code, innererror, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentsApiError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentsApiError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsApiError IPersistableModel<AgentsApiError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InnerError IPersistableModel<InnerError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsApiError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InnerError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentsApiError(document.RootElement, options);
+                        return DeserializeInnerError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentsApiError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentsApiError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

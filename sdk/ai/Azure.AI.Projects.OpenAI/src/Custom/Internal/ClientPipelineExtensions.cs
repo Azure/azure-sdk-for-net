@@ -68,7 +68,7 @@ internal static partial class ClientPipelineExtensions
     }
 
     private static string TryCreateErrorMessageFromResponse(PipelineResponse response)
-        => AgentsApiError.TryCreateFromResponse(response)?.ToExceptionMessage(response.Status)
+        => FoundryOpenAIError.TryCreateFromResponse(response)?.ToExceptionMessage(response.Status)
         ?? GetFallbackExceptionMessageFromResponse(response);
 
     private static string GetFallbackExceptionMessageFromResponse(PipelineResponse response)

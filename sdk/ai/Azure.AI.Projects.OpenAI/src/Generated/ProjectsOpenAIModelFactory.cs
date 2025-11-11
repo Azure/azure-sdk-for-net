@@ -425,10 +425,8 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
         /// <returns> A new <see cref="OpenAI.StructuredOutputDefinition"/> instance for mocking. </returns>
-        public static StructuredOutputDefinition StructuredOutputDefinition(string name = default, string description = default, IDictionary<string, BinaryData> schema = default, bool? strict = default)
+        public static StructuredOutputDefinition StructuredOutputDefinition(string name = default, string description = default, BinaryData schema = default, bool? strict = default)
         {
-            schema ??= new ChangeTrackingDictionary<string, BinaryData>();
-
             return new StructuredOutputDefinition(name, description, schema, strict, additionalBinaryDataProperties: null);
         }
 
@@ -538,30 +536,12 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
-        /// <param name="toolArgumentBindings"> When provided, the input value is bound to the specified tool arguments. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
         /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
         /// <returns> A new <see cref="OpenAI.StructuredInputDefinition"/> instance for mocking. </returns>
-        public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IEnumerable<StructuredInputToolArgumentBinding> toolArgumentBindings = default, BinaryData schema = default, bool? isRequired = default)
+        public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, BinaryData schema = default, bool? isRequired = default)
         {
-            toolArgumentBindings ??= new ChangeTrackingList<StructuredInputToolArgumentBinding>();
-
-            return new StructuredInputDefinition(
-                description,
-                defaultValue,
-                toolArgumentBindings.ToList(),
-                schema,
-                isRequired,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The StructuredInputToolArgumentBinding. </summary>
-        /// <param name="toolName"> The name of the tool to participate in the argument binding. If not provided, then all tools with matching arguments will participate in binding. </param>
-        /// <param name="argumentName"> The name of the argument within the tool. </param>
-        /// <returns> A new <see cref="OpenAI.StructuredInputToolArgumentBinding"/> instance for mocking. </returns>
-        public static StructuredInputToolArgumentBinding StructuredInputToolArgumentBinding(string toolName = default, string argumentName = default)
-        {
-            return new StructuredInputToolArgumentBinding(toolName, argumentName, additionalBinaryDataProperties: null);
+            return new StructuredInputDefinition(description, defaultValue, schema, isRequired, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentRecord. </summary>
@@ -704,51 +684,24 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> The AgentWorkflowActionResponseItem. </summary>
         /// <param name="id"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
+        /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
         /// <returns> A new <see cref="OpenAI.AgentWorkflowActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, AgentResponseItemSource createdBy = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
+        public static AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = default, AgentResponseItemSource createdBy = default, string kind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default)
         {
             return new AgentWorkflowActionResponseItem(
                 AgentResponseItemKind.WorkflowAction,
                 id,
                 createdBy,
                 additionalBinaryDataProperties: null,
-                default,
+                kind,
                 actionId,
                 parentActionId,
                 previousActionId,
                 status);
-        }
-
-        /// <summary> Details about an agent invocation as part of a workflow action. </summary>
-        /// <param name="id"></param>
-        /// <param name="createdBy"> The information about the creator of the item. </param>
-        /// <param name="actionId"> Unique identifier for the action. </param>
-        /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
-        /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
-        /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <param name="agent"> Agent id. </param>
-        /// <param name="conversationId"> ID of the conversation for the agent invocation. </param>
-        /// <param name="responseId"> The response id for the agent invocation. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAgentWorkflowActionInvocationResponseItem"/> instance for mocking. </returns>
-        public static AzureAgentWorkflowActionInvocationResponseItem AzureAgentWorkflowActionInvocationResponseItem(string id = default, AgentResponseItemSource createdBy = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowActionStatus? status = default, AgentInfo agent = default, string conversationId = default, string responseId = default)
-        {
-            return new AzureAgentWorkflowActionInvocationResponseItem(
-                AgentResponseItemKind.WorkflowAction,
-                id,
-                createdBy,
-                additionalBinaryDataProperties: null,
-                "InvokeAzureAgent",
-                actionId,
-                parentActionId,
-                previousActionId,
-                status,
-                agent,
-                conversationId,
-                responseId);
         }
 
         /// <summary> Request from the service for the user to perform OAuth consent. </summary>
@@ -816,35 +769,6 @@ namespace Azure.AI.Projects.OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new AgentConversation(id, "conversation", createdAt, metadata, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentsApiError. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> A human-readable description of the error. </param>
-        /// <param name="target"> The target of the error, if applicable. </param>
-        /// <param name="details"> Additional details about the error. </param>
-        /// <param name="innererror"> The inner error, if any. </param>
-        /// <returns> A new <see cref="OpenAI.AgentsApiError"/> instance for mocking. </returns>
-        public static AgentsApiError AgentsApiError(string code = default, string message = default, string target = default, IEnumerable<AgentsApiError> details = default, ApiInnerError innererror = default)
-        {
-            details ??= new ChangeTrackingList<AgentsApiError>();
-
-            return new AgentsApiError(
-                code,
-                message,
-                target,
-                details.ToList(),
-                innererror,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ApiInnerError. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="innererror"> The inner error, if any. </param>
-        /// <returns> A new <see cref="OpenAI.ApiInnerError"/> instance for mocking. </returns>
-        public static ApiInnerError ApiInnerError(string code = default, ApiInnerError innererror = default)
-        {
-            return new ApiInnerError(code, innererror, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update a conversation. </summary>

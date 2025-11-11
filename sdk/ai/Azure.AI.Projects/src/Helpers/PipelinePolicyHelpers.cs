@@ -133,7 +133,7 @@ internal static partial class PipelinePolicyHelpers
                             {
                                 if (JsonNode.Parse(response.Content) is JsonObject errorResponseJsonObject)
                                 {
-                                    if (AgentsApiError.TryCreateFromResponse(response) is AgentsApiError apiErrorInstance)
+                                    if (FoundryOpenAIError.TryCreateFromResponse(response) is FoundryOpenAIError apiErrorInstance)
                                     {
                                         response.ContentStream = new MemoryStream(apiErrorInstance.ToOpenAIError().ToArray());
                                     }

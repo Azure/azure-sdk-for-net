@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI;
 using OpenAI.Responses;
@@ -13,7 +11,6 @@ public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
 {
     public IList<ResponseItem> Items { get; private set; }
     public string Scope { get; }
-    public string ConversationId { get; set; }
     public string PreviousUpdateId { get; set; }
     public int? UpdateDelay { get; set; }
 
@@ -25,14 +22,13 @@ public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
 
     private InternalMemoryUpdateOptions GetInternalCopy()
     {
-        return new InternalMemoryUpdateOptions(Scope, ConversationId, ResponseItemHelpers.ConvertItemsTo<InternalItemParam,ResponseItem>(Items), PreviousUpdateId, UpdateDelay, additionalBinaryDataProperties: null);
+        return new InternalMemoryUpdateOptions(Scope, ResponseItemHelpers.ConvertItemsTo<InternalItemParam,ResponseItem>(Items), PreviousUpdateId, UpdateDelay, additionalBinaryDataProperties: null);
     }
 
     private static MemoryUpdateOptions CreateFromInternalOptions(InternalMemoryUpdateOptions internalOptions)
     {
         return new(internalOptions.Scope)
         {
-            ConversationId = internalOptions.ConversationId,
             PreviousUpdateId = internalOptions.PreviousUpdateId,
             UpdateDelay = internalOptions.UpdateDelay,
             Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem,InternalItemParam>(internalOptions.Items),

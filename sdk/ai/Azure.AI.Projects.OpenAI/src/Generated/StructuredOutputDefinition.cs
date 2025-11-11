@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
-        public StructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict)
+        public StructuredOutputDefinition(string name, string description, BinaryData schema, bool? strict)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(description, nameof(description));
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StructuredOutputDefinition(string name, string description, BinaryData schema, bool? strict, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary>
         /// The JSON schema for the structured output.
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Schema { get; }
+        public BinaryData Schema { get; set; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
         public bool? Strict { get; set; }

@@ -47,16 +47,6 @@ namespace Azure.AI.Projects
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(ToolArgumentBindings))
-            {
-                writer.WritePropertyName("tool_argument_bindings"u8);
-                writer.WriteStartArray();
-                foreach (ToolArgumentBinding item in ToolArgumentBindings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
@@ -118,7 +108,6 @@ namespace Azure.AI.Projects
             }
             string description = default;
             BinaryData defaultValue = default;
-            IList<ToolArgumentBinding> toolArgumentBindings = default;
             BinaryData schema = default;
             bool? @required = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -136,20 +125,6 @@ namespace Azure.AI.Projects
                         continue;
                     }
                     defaultValue = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("tool_argument_bindings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ToolArgumentBinding> array = new List<ToolArgumentBinding>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ToolArgumentBinding.DeserializeToolArgumentBinding(item, options));
-                    }
-                    toolArgumentBindings = array;
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -175,13 +150,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StructuredInputDefinition(
-                description,
-                defaultValue,
-                toolArgumentBindings ?? new ChangeTrackingList<ToolArgumentBinding>(),
-                schema,
-                @required,
-                additionalBinaryDataProperties);
+            return new StructuredInputDefinition(description, defaultValue, schema, @required, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

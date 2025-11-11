@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(RunId);
             }
             writer.WritePropertyName("scheduleId"u8);
             writer.WriteStringValue(ScheduleId);
@@ -116,7 +116,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string id = default;
+            string runId = default;
             string scheduleId = default;
             bool success = default;
             string triggerTime = default;
@@ -127,7 +127,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    runId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scheduleId"u8))
@@ -173,7 +173,7 @@ namespace Azure.AI.Projects
                 }
             }
             return new ScheduleRun(
-                id,
+                runId,
                 scheduleId,
                 success,
                 triggerTime,

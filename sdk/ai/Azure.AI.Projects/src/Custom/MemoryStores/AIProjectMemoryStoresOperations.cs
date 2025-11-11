@@ -1,22 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.AI.Projects;
 using OpenAI;
-using OpenAI.Responses;
 
 namespace Azure.AI.Projects;
 
-[CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
-[CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateMemories", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
+[CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
+[CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
 [CodeGenSuppress("GetMemoryStores", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemoryStoresAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenType("MemoryStores")]

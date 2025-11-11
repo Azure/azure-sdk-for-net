@@ -22,16 +22,16 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleRun"/>. </summary>
-        /// <param name="id"> Identifier of the schedule run. </param>
+        /// <param name="runId"> Identifier of the schedule run. </param>
         /// <param name="scheduleId"> Identifier of the schedule. </param>
         /// <param name="success"> Trigger success status of the schedule run. </param>
         /// <param name="triggerTime"> Trigger time of the schedule run. </param>
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleRun(string id, string scheduleId, bool success, string triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleRun(string runId, string scheduleId, bool success, string triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            RunId = runId;
             ScheduleId = scheduleId;
             Success = success;
             TriggerTime = triggerTime;
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Identifier of the schedule run. </summary>
-        public string Id { get; }
+        public string RunId { get; }
 
         /// <summary> Identifier of the schedule. </summary>
         public string ScheduleId { get; }

@@ -8,4 +8,9 @@ public partial class MemoryUpdateResult
 {
     [CodeGenMember("Result")]
     public MemoryUpdateResultDetails Details { get; }
+
+    [CodeGenMember("Error")]
+    internal FoundryOpenAIError InternalError { get; }
+
+    public string ErrorDetails => InternalError?.ToExceptionMessage(0);
 }

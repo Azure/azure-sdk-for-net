@@ -8,38 +8,66 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>
-    internal partial class StructuredInputDefinition
+    internal partial class FoundryOpenAIError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StructuredInputDefinition"/>. </summary>
-        public StructuredInputDefinition()
+        /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="param"></param>
+        /// <param name="type"></param>
+        internal FoundryOpenAIError(string code, string message, string @param, string @type)
         {
+            Code = code;
+            Message = message;
+            Param = @param;
+            Type = @type;
+            Details = new ChangeTrackingList<FoundryOpenAIError>();
+            AdditionalInfo = new ChangeTrackingDictionary<string, BinaryData>();
+            DebugInfo = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StructuredInputDefinition"/>. </summary>
-        /// <param name="description"> A human-readable description of the input. </param>
-        /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
-        /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="required"> Whether the input property is required when the agent is invoked. </param>
+        /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="param"></param>
+        /// <param name="type"></param>
+        /// <param name="details"></param>
+        /// <param name="additionalInfo"></param>
+        /// <param name="debugInfo"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredInputDefinition(string description, BinaryData defaultValue, BinaryData schema, bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FoundryOpenAIError(string code, string message, string @param, string @type, IList<FoundryOpenAIError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            DefaultValue = defaultValue;
-            Schema = schema;
-            Required = @required;
+            Code = code;
+            Message = message;
+            Param = @param;
+            Type = @type;
+            Details = details;
+            AdditionalInfo = additionalInfo;
+            DebugInfo = debugInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A human-readable description of the input. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public string Code { get; }
+
+        /// <summary> Gets the Message. </summary>
+        public string Message { get; }
+
+        /// <summary> Gets the Param. </summary>
+        public string Param { get; }
+
+        /// <summary> Gets the Type. </summary>
+        public string Type { get; }
+
+        /// <summary> Gets the Details. </summary>
+        public IList<FoundryOpenAIError> Details { get; }
 
         /// <summary>
-        /// The default value for the input if no run-time value is provided.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// Gets the AdditionalInfo.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -63,11 +91,11 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData DefaultValue { get; set; }
+        public IDictionary<string, BinaryData> AdditionalInfo { get; }
 
         /// <summary>
-        /// The JSON schema for the structured input (optional).
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// Gets the DebugInfo.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
@@ -91,9 +119,6 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Schema { get; set; }
-
-        /// <summary> Whether the input property is required when the agent is invoked. </summary>
-        public bool? Required { get; set; }
+        public IDictionary<string, BinaryData> DebugInfo { get; }
     }
 }

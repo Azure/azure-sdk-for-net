@@ -12,16 +12,16 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI;
 
 /// <summary> The ApiError. </summary>
-[CodeGenType("ApiError")]
-public partial class AgentsApiError
+[CodeGenType("Error")]
+internal partial class FoundryOpenAIError
 {
-    internal static AgentsApiError TryCreateFromResponse(PipelineResponse response)
+    internal static FoundryOpenAIError TryCreateFromResponse(PipelineResponse response)
     {
         try
         {
             using JsonDocument errorDocument = JsonDocument.Parse(response.Content);
-            AgentsApiError result = DeserializeAgentsApiError(errorDocument.RootElement, ModelSerializationExtensions.WireOptions);
-            if (string.IsNullOrEmpty(result.Code) && string.IsNullOrEmpty(result.Target) && result.Details?.Count > 0 != true)
+            FoundryOpenAIError result = DeserializeFoundryOpenAIError(errorDocument.RootElement, ModelSerializationExtensions.WireOptions);
+            if (string.IsNullOrEmpty(result.Code) && string.IsNullOrEmpty(result.Param) && result.Details?.Count > 0 != true)
             {
                 // Empty or uninteresting JSON documents should be treated like incomplete deserializations
                 return null;
@@ -46,23 +46,19 @@ public partial class AgentsApiError
     {
         StringBuilder messageBuilder = new();
         messageBuilder.Append("HTTP ").Append(httpStatus).Append(" (").Append(Code).AppendLine(")");
-        //if (!string.IsNullOrEmpty(Param))
-        //{
-        //    messageBuilder.Append("Parameter: ").AppendLine(Param);
-        //}
+        if (!string.IsNullOrEmpty(Param))
+        {
+            messageBuilder.Append("Parameter: ").AppendLine(Param);
+        }
         messageBuilder.AppendLine();
         messageBuilder.Append(Message);
-        if (!string.IsNullOrEmpty(Target))
-        {
-            messageBuilder.AppendLine().AppendLine().Append(Target);
-        }
         if (Details?.Count > 0 == true)
         {
             messageBuilder.AppendLine().AppendLine();
             messageBuilder.Append(GetExceptionMessageRecursive());
-            foreach (AgentsApiError error in Details)
+            foreach (FoundryOpenAIError error in Details)
             {
-                messageBuilder.AppendLine($"{error.Target ?? "<empty>"}:");
+                messageBuilder.AppendLine($"{error.Param ?? "<empty>"}:");
                 messageBuilder.AppendLine().Append($"  - {error.ToExceptionMessage(httpStatus)}");
             }
         }
@@ -72,16 +68,16 @@ public partial class AgentsApiError
     private string GetExceptionMessageRecursive()
     {
         StringBuilder messageBuilder = new();
-        foreach (AgentsApiError error in Details)
+        foreach (FoundryOpenAIError error in Details)
         {
-            messageBuilder.AppendLine($"{error.Target ?? "<empty>"}: {error.Message}");
+            messageBuilder.AppendLine($"{error.Param ?? "<empty>"}: {error.Message}");
             messageBuilder.AppendLine().Append($"  - {error.GetExceptionMessageRecursive()}");
         }
         return messageBuilder.ToString();
     }
 
     /// <summary>
-    /// Converts this <see cref="AgentsApiError"/> instance payload into a formatted, equivalent response payload that conforms to the
+    /// Converts this <see cref="FoundryOpenAIError"/> instance payload into a formatted, equivalent response payload that conforms to the
     /// expected schema in the OpenAI library. This will allow mechanisms like automatic exception message propagation to function as
     /// intended.
     /// </summary>
@@ -93,20 +89,20 @@ public partial class AgentsApiError
         if (Details?.Count > 0)
         {
             messageBuilder.Append(" (");
-            foreach (AgentsApiError error in Details)
+            foreach (FoundryOpenAIError error in Details)
             {
                 messageBuilder.Append(error.GetExceptionMessageRecursive());
                 messageBuilder.Append("; ");
             }
             messageBuilder.Remove(messageBuilder.Length - 2, 2);
             messageBuilder.Append(')');
-            parameterDetails = string.Join(";", Details.Select(x => x.Target));
+            parameterDetails = string.Join(";", Details.Select(x => x.Param));
         }
         BinaryData newErrorBytes = BinaryData.FromString($$"""
             {
               "error": {
                 "message": "{{messageBuilder}}",
-                "type": "{{nameof(AgentsApiError)}}",
+                "type": "{{nameof(FoundryOpenAIError)}}",
                 "param": "{{(parameterDetails ?? string.Empty)}}",
                 "code": "{{(Code ?? string.Empty)}}"
               }

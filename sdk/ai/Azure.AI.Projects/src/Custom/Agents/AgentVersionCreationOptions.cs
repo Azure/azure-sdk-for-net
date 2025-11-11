@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 
 namespace Azure.AI.Projects;

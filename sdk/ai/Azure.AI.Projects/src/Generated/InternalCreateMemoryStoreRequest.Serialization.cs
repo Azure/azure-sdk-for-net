@@ -10,16 +10,16 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class CreateMemoryStoreRequest : IJsonModel<CreateMemoryStoreRequest>
+    internal partial class InternalCreateMemoryStoreRequest : IJsonModel<InternalCreateMemoryStoreRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="CreateMemoryStoreRequest"/> for deserialization. </summary>
-        internal CreateMemoryStoreRequest()
+        /// <summary> Initializes a new instance of <see cref="InternalCreateMemoryStoreRequest"/> for deserialization. </summary>
+        internal InternalCreateMemoryStoreRequest()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreateMemoryStoreRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalCreateMemoryStoreRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateMemoryStoreRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalCreateMemoryStoreRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -79,24 +79,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateMemoryStoreRequest IJsonModel<CreateMemoryStoreRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        InternalCreateMemoryStoreRequest IJsonModel<InternalCreateMemoryStoreRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateMemoryStoreRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InternalCreateMemoryStoreRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateMemoryStoreRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalCreateMemoryStoreRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateMemoryStoreRequest(document.RootElement, options);
+            return DeserializeInternalCreateMemoryStoreRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CreateMemoryStoreRequest DeserializeCreateMemoryStoreRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static InternalCreateMemoryStoreRequest DeserializeInternalCreateMemoryStoreRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,57 +150,57 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, additionalBinaryDataProperties);
+            return new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreateMemoryStoreRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InternalCreateMemoryStoreRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateMemoryStoreRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalCreateMemoryStoreRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateMemoryStoreRequest IPersistableModel<CreateMemoryStoreRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        InternalCreateMemoryStoreRequest IPersistableModel<InternalCreateMemoryStoreRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateMemoryStoreRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InternalCreateMemoryStoreRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InternalCreateMemoryStoreRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreateMemoryStoreRequest(document.RootElement, options);
+                        return DeserializeInternalCreateMemoryStoreRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateMemoryStoreRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalCreateMemoryStoreRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreateMemoryStoreRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalCreateMemoryStoreRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="createMemoryStoreRequest"> The <see cref="CreateMemoryStoreRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(CreateMemoryStoreRequest createMemoryStoreRequest)
+        /// <param name="internalCreateMemoryStoreRequest"> The <see cref="InternalCreateMemoryStoreRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(InternalCreateMemoryStoreRequest internalCreateMemoryStoreRequest)
         {
-            if (createMemoryStoreRequest == null)
+            if (internalCreateMemoryStoreRequest == null)
             {
                 return null;
             }
-            return BinaryContent.Create(createMemoryStoreRequest, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(internalCreateMemoryStoreRequest, ModelSerializationExtensions.WireOptions);
         }
     }
 }

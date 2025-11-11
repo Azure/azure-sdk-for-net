@@ -38,11 +38,6 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope);
-            if (Optional.IsDefined(ConversationId))
-            {
-                writer.WritePropertyName("conversation_id"u8);
-                writer.WriteStringValue(ConversationId);
-            }
             if (Optional.IsCollectionDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
@@ -106,7 +101,6 @@ namespace Azure.AI.Projects
                 return null;
             }
             string scope = default;
-            string conversationId = default;
             IList<InternalItemParam> items = default;
             string previousUpdateId = default;
             int? updateDelay = default;
@@ -116,11 +110,6 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("scope"u8))
                 {
                     scope = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("conversation_id"u8))
-                {
-                    conversationId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("items"u8))
@@ -156,13 +145,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalMemoryUpdateOptions(
-                scope,
-                conversationId,
-                items ?? new ChangeTrackingList<InternalItemParam>(),
-                previousUpdateId,
-                updateDelay,
-                additionalBinaryDataProperties);
+            return new InternalMemoryUpdateOptions(scope, items ?? new ChangeTrackingList<InternalItemParam>(), previousUpdateId, updateDelay, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

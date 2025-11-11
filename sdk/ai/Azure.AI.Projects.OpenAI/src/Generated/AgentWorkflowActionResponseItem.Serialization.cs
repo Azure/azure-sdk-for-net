@@ -4,6 +4,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
@@ -78,15 +79,76 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            AgentResponseItemKind @type = default;
+            string id = default;
+            AgentResponseItemSource createdBy = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string kind = default;
+            string actionId = default;
+            string parentActionId = default;
+            string previousActionId = default;
+            AgentWorkflowActionStatus? status = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "InvokeAzureAgent":
-                        return AzureAgentWorkflowActionInvocationResponseItem.DeserializeAzureAgentWorkflowActionInvocationResponseItem(element, options);
+                    @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("created_by"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("action_id"u8))
+                {
+                    actionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parent_action_id"u8))
+                {
+                    parentActionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("previous_action_id"u8))
+                {
+                    previousActionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = new AgentWorkflowActionStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownWorkflowActionOutputItemResource.DeserializeUnknownWorkflowActionOutputItemResource(element, options);
+            return new AgentWorkflowActionResponseItem(
+                @type,
+                id,
+                createdBy,
+                additionalBinaryDataProperties,
+                kind,
+                actionId,
+                parentActionId,
+                previousActionId,
+                status);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
