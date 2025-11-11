@@ -37,10 +37,12 @@ namespace Azure.AI.Projects
         ///   by passing `includeCoordinates=true` as a query parameter).
         /// 
         ///   Example:
+        ///   ```
         ///   {
         ///     "cluster-1": { "x": 12, "y": 34, "size": 8 },
         ///     "sample-123": { "x": 18, "y": 22, "size": 4 }
         ///   }
+        ///   ```
         /// 
         ///   Coordinates are intended only for client-side visualization and do not
         ///   modify the canonical insights results.
@@ -70,10 +72,12 @@ namespace Azure.AI.Projects
         ///   by passing `includeCoordinates=true` as a query parameter).
         /// 
         ///   Example:
+        ///   ```
         ///   {
         ///     "cluster-1": { "x": 12, "y": 34, "size": 8 },
         ///     "sample-123": { "x": 18, "y": 22, "size": 4 }
         ///   }
+        ///   ```
         /// 
         ///   Coordinates are intended only for client-side visualization and do not
         ///   modify the canonical insights results.

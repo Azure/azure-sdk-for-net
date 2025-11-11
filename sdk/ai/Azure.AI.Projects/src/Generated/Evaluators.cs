@@ -334,16 +334,18 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateVersion(string name, RequestOptions options)
+        public virtual ClientResult CreateVersion(string name, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, options);
+            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -356,44 +358,50 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateVersionAsync(string name, RequestOptions options)
+        public virtual async Task<ClientResult> CreateVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, options);
+            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="evaluatorVersion"> Evaluator resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<EvaluatorVersion> CreateVersion(string name, CancellationToken cancellationToken = default)
+        public virtual ClientResult<EvaluatorVersion> CreateVersion(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
 
-            ClientResult result = CreateVersion(name, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateVersion(name, evaluatorVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
         /// <summary> Create a new EvaluatorVersion with auto incremented version id. </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="evaluatorVersion"> Evaluator resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<EvaluatorVersion>> CreateVersionAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<EvaluatorVersion>> CreateVersionAsync(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
 
-            ClientResult result = await CreateVersionAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateVersionAsync(name, evaluatorVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
@@ -407,17 +415,19 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateVersion(string name, string version, RequestOptions options = null)
+        public virtual ClientResult UpdateVersion(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateVersionRequest(name, version, options);
+            using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -431,17 +441,19 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the EvaluatorVersion to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateVersionAsync(string name, string version, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateVersionAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateVersionRequest(name, version, options);
+            using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
     }

@@ -41,6 +41,8 @@ namespace Azure.AI.Projects
             writer.WriteStringValue(Label);
             writer.WritePropertyName("suggestion"u8);
             writer.WriteStringValue(Suggestion);
+            writer.WritePropertyName("suggestionTitle"u8);
+            writer.WriteStringValue(SuggestionTitle);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("weight"u8);
@@ -110,6 +112,7 @@ namespace Azure.AI.Projects
             string id = default;
             string label = default;
             string suggestion = default;
+            string suggestionTitle = default;
             string description = default;
             int weight = default;
             IList<InsightCluster> subClusters = default;
@@ -130,6 +133,11 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("suggestion"u8))
                 {
                     suggestion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("suggestionTitle"u8))
+                {
+                    suggestionTitle = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -179,6 +187,7 @@ namespace Azure.AI.Projects
                 id,
                 label,
                 suggestion,
+                suggestionTitle,
                 description,
                 weight,
                 subClusters ?? new ChangeTrackingList<InsightCluster>(),

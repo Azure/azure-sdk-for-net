@@ -12,8 +12,11 @@ namespace Azure.AI.Projects
     {
         /// <summary> Initializes a new instance of <see cref="PromptBasedEvaluatorDefinition"/>. </summary>
         /// <param name="promptText"> The prompt text used for evaluation. </param>
-        internal PromptBasedEvaluatorDefinition(string promptText) : base(EvaluatorDefinitionType.Prompt)
+        /// <exception cref="ArgumentNullException"> <paramref name="promptText"/> is null. </exception>
+        public PromptBasedEvaluatorDefinition(string promptText) : base(EvaluatorDefinitionType.Prompt)
         {
+            Argument.AssertNotNull(promptText, nameof(promptText));
+
             PromptText = promptText;
         }
 
@@ -30,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The prompt text used for evaluation. </summary>
-        public string PromptText { get; }
+        public string PromptText { get; set; }
     }
 }

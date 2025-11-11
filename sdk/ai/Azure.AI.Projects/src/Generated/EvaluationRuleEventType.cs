@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     {
         private readonly string _value;
         /// <summary> Response completed. </summary>
-        private const string ResponseCompletedValue = "response.completed";
+        private const string ResponseCompletedValue = "responseCompleted";
         /// <summary> Manual trigger. </summary>
         private const string ManualValue = "manual";
 

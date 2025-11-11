@@ -28,15 +28,6 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
         return Path.Combine(testDirectory!, "sdk", "ai", "Azure.AI.Projects", "tests", "Samples", "FineTuning", "data");
     }
 
-    private Task<OpenAIFileClient> GetFileClientAsync(string endpoint)
-    {
-        var projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        AgentsClient agentClient = projectClient.GetAgentsClient();
-
-        OpenAIClient oaiClient = agentClient.GetOpenAIClient();
-        return Task.FromResult(oaiClient.GetOpenAIFileClient());
-    }
-
     [Test]
     [AsyncOnly]
     public async Task FileOperationsAsync()
@@ -45,7 +36,8 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
         var dataDirectory = GetDataDirectory();
         var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
 
-        OpenAIFileClient fileClient = await GetFileClientAsync(endpoint);
+        var projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        OpenAIFileClient fileClient = projectClient.OpenAI.Files;
 
         // Step 1: Upload a file
         Console.WriteLine("\n=== Step 1: Uploading File ===");

@@ -1,0 +1,7 @@
+directory: specification/ai/Azure.AI.Projects.OpenAI
+additionalDirectories:
+  - specification/ai/Azure.AI.Projects
+commit: 3615afb4322fd1471e0ccd5ff5c7f8b62a5ffed6
+repo: Azure/azure-rest-api-specs-pr
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+entrypointFile: client.csharp.tsp
