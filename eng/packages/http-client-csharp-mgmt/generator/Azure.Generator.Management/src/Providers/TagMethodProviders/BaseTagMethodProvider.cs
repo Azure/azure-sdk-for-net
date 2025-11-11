@@ -61,7 +61,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getRestClient = getRestClientInfo.RestClientProvider;
             _isPatch = isPatch;
             _isAsync = isAsync;
-            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
+            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation || updateMethodProvider.IsFakeLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
             _getRestClientField = getRestClientInfo.RestClientField;
 
