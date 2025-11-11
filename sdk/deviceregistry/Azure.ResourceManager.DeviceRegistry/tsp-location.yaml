@@ -1,6 +1,6 @@
 directory: specification/deviceregistry/DeviceRegistry.Management
-commit: b562b95b6429f78f6c8629d5751bfeef1be7cacd
+commit: 82f66d6089bbde7d54926a5437f6ca6dd2dc565e
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+additionalDirectories:
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
