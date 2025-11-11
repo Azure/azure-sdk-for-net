@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (QuotaRequestDetailsData item in Value)
+            foreach (QuotaRequestDetailData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            IList<QuotaRequestDetailsData> value = default;
+            IList<QuotaRequestDetailData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<QuotaRequestDetailsData> array = new List<QuotaRequestDetailsData>();
+                    List<QuotaRequestDetailData> array = new List<QuotaRequestDetailData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuotaRequestDetailsData.DeserializeQuotaRequestDetailsData(item, options));
+                        array.Add(QuotaRequestDetailData.DeserializeQuotaRequestDetailData(item, options));
                     }
                     value = array;
                     continue;

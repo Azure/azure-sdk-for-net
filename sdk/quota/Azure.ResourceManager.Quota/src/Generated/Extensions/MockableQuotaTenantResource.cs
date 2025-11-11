@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="QuotaRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaRequestDetailsResource> GetQuotaRequestDetailsAsync(string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaRequestDetailResource> GetQuotaRequestDetailsAsync(string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuotaRequestDetailsData, QuotaRequestDetailsResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
                 QuotaRequestStatusRestClient,
                 scope,
                 filter,
                 top,
                 skiptoken,
-                context), data => new QuotaRequestDetailsResource(Client, data));
+                context), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="QuotaRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaRequestDetailsResource> GetQuotaRequestDetails(string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaRequestDetailResource> GetQuotaRequestDetails(string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
@@ -182,13 +182,13 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuotaRequestDetailsData, QuotaRequestDetailsResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
+            return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
                 QuotaRequestStatusRestClient,
                 scope,
                 filter,
                 top,
                 skiptoken,
-                context), data => new QuotaRequestDetailsResource(Client, data));
+                context), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary> List the operations for the provider. </summary>

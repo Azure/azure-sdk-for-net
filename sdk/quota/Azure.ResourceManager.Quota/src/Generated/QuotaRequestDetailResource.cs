@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a QuotaRequestDetails along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QuotaRequestDetailsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// A class representing a QuotaRequestDetail along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QuotaRequestDetailResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetQuotaRequestDetails method.
     /// </summary>
-    public partial class QuotaRequestDetailsResource : ArmResource
+    public partial class QuotaRequestDetailResource : ArmResource
     {
         private readonly ClientDiagnostics _quotaRequestStatusClientDiagnostics;
         private readonly QuotaRequestStatus _quotaRequestStatusRestClient;
-        private readonly QuotaRequestDetailsData _data;
+        private readonly QuotaRequestDetailData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Quota/quotaRequests";
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailsResource for mocking. </summary>
-        protected QuotaRequestDetailsResource()
+        /// <summary> Initializes a new instance of QuotaRequestDetailResource for mocking. </summary>
+        protected QuotaRequestDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal QuotaRequestDetailsResource(ArmClient client, QuotaRequestDetailsData data) : this(client, data.Id)
+        internal QuotaRequestDetailResource(ArmClient client, QuotaRequestDetailData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal QuotaRequestDetailsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal QuotaRequestDetailResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string quotaRequestDetailsApiVersion);
+            TryGetApiVersion(ResourceType, out string quotaRequestDetailApiVersion);
             _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailsApiVersion ?? "2025-09-01");
+            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Quota
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual QuotaRequestDetailsData Data
+        public virtual QuotaRequestDetailData Data
         {
             get
             {
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="QuotaRequestDetailsResource"/>. </description>
+        /// <description> <see cref="QuotaRequestDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QuotaRequestDetailsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaRequestDetailResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsResource.Get");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailResource.Get");
             scope.Start();
             try
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QuotaRequestDetailsData> response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="QuotaRequestDetailsResource"/>. </description>
+        /// <description> <see cref="QuotaRequestDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QuotaRequestDetailsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<QuotaRequestDetailResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsResource.Get");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailResource.Get");
             scope.Start();
             try
             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<QuotaRequestDetailsData> response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,11 +18,11 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> List of quota requests with details. </summary>
-    public partial class QuotaRequestDetailsData : ResourceData, IJsonModel<QuotaRequestDetailsData>
+    public partial class QuotaRequestDetailData : ResourceData, IJsonModel<QuotaRequestDetailData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QuotaRequestDetailsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaRequestDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Quota
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaRequestDetailsData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Quota
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaRequestDetailsData IJsonModel<QuotaRequestDetailsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (QuotaRequestDetailsData)JsonModelCreateCore(ref reader, options);
+        QuotaRequestDetailData IJsonModel<QuotaRequestDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (QuotaRequestDetailData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaRequestDetailsData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuotaRequestDetailsData(document.RootElement, options);
+            return DeserializeQuotaRequestDetailData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QuotaRequestDetailsData DeserializeQuotaRequestDetailsData(JsonElement element, ModelReaderWriterOptions options)
+        internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuotaRequestDetailsData(
+            return new QuotaRequestDetailData(
                 id,
                 name,
                 resourceType,
@@ -135,51 +135,51 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuotaRequestDetailsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaRequestDetailsData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaRequestDetailsData IPersistableModel<QuotaRequestDetailsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (QuotaRequestDetailsData)PersistableModelCreateCore(data, options);
+        QuotaRequestDetailData IPersistableModel<QuotaRequestDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => (QuotaRequestDetailData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeQuotaRequestDetailsData(document.RootElement, options);
+                        return DeserializeQuotaRequestDetailData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaRequestDetailsData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuotaRequestDetailsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaRequestDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="QuotaRequestDetailsData"/> from. </param>
-        internal static QuotaRequestDetailsData FromResponse(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="QuotaRequestDetailData"/> from. </param>
+        internal static QuotaRequestDetailData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeQuotaRequestDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeQuotaRequestDetailData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

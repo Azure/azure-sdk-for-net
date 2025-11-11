@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsList"/>. </summary>
         /// <param name="value"> The QuotaRequestDetails items on this page. </param>
-        internal QuotaRequestDetailsList(IEnumerable<QuotaRequestDetailsData> value)
+        internal QuotaRequestDetailsList(IEnumerable<QuotaRequestDetailData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="value"> The QuotaRequestDetails items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaRequestDetailsList(IList<QuotaRequestDetailsData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaRequestDetailsList(IList<QuotaRequestDetailData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> The QuotaRequestDetails items on this page. </summary>
         [WirePath("value")]
-        public IList<QuotaRequestDetailsData> Value { get; }
+        public IList<QuotaRequestDetailData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

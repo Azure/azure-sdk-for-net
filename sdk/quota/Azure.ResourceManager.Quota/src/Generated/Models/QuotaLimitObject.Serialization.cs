@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quota.Models
             LimitType limitObjectType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int value = default;
-            QuotaLimitTypes? limitType = default;
+            QuotaLimitType? limitType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("limitObjectType"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limitType = new QuotaLimitTypes(prop.Value.GetString());
+                    limitType = new QuotaLimitType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

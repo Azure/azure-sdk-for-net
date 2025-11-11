@@ -539,10 +539,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="error"> Error details of the quota request. </param>
         /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
-        /// <returns> A new <see cref="Quota.QuotaRequestDetailsData"/> instance for mocking. </returns>
-        public static QuotaRequestDetailsData QuotaRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<QuotaSubRequestDetail> value = default)
+        /// <returns> A new <see cref="Quota.QuotaRequestDetailData"/> instance for mocking. </returns>
+        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<QuotaSubRequestDetail> value = default)
         {
-            return new QuotaRequestDetailsData(
+            return new QuotaRequestDetailData(
                 id,
                 name,
                 resourceType,

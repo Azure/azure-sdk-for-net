@@ -470,7 +470,7 @@
     {
       "$id": "38",
       "kind": "enum",
-      "name": "QuotaLimitTypes",
+      "name": "QuotaLimitType",
       "crossLanguageDefinitionId": "Microsoft.Quota.QuotaLimitTypes",
       "valueType": {
         "$id": "39",
@@ -7519,7 +7519,7 @@
     {
       "$id": "561",
       "kind": "model",
-      "name": "QuotaRequestDetails",
+      "name": "QuotaRequestDetail",
       "namespace": "Azure.ResourceManager.Quota",
       "crossLanguageDefinitionId": "Microsoft.Quota.QuotaRequestDetails",
       "usage": "Output,Json",
@@ -7556,7 +7556,7 @@
               }
             ],
             "resourceScope": "Tenant",
-            "resourceName": "QuotaRequestDetails"
+            "resourceName": "QuotaRequestDetail"
           }
         }
       ],

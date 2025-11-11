@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Quota.Models
     [PersistableModelProxy(typeof(UnknownLimitJsonObject))]
     public abstract partial class QuotaLimitJsonObject : IJsonModel<QuotaLimitJsonObject>
     {
-        /// <summary> Initializes a new instance of <see cref="QuotaLimitJsonObject"/> for deserialization. </summary>
-        internal QuotaLimitJsonObject()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuotaLimitJsonObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

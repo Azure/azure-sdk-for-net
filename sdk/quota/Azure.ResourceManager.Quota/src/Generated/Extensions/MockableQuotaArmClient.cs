@@ -212,21 +212,21 @@ namespace Azure.ResourceManager.Quota.Mocking
             return await GetCurrentQuotaLimitBases(scope).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="QuotaRequestDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="QuotaRequestDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailsResource"/> object. </returns>
-        public virtual QuotaRequestDetailsResource GetQuotaRequestDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
+        public virtual QuotaRequestDetailResource GetQuotaRequestDetailResource(ResourceIdentifier id)
         {
-            QuotaRequestDetailsResource.ValidateResourceId(id);
-            return new QuotaRequestDetailsResource(Client, id);
+            QuotaRequestDetailResource.ValidateResourceId(id);
+            return new QuotaRequestDetailResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="QuotaRequestDetailsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="QuotaRequestDetailCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="QuotaRequestDetailsResource"/> objects. </returns>
-        public virtual QuotaRequestDetailsCollection GetQuotaRequestDetails(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="QuotaRequestDetailResource"/> objects. </returns>
+        public virtual QuotaRequestDetailCollection GetQuotaRequestDetails(ResourceIdentifier scope)
         {
-            return new QuotaRequestDetailsCollection(Client, scope);
+            return new QuotaRequestDetailCollection(Client, scope);
         }
 
         /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaRequestDetailResource> GetQuotaRequestDetail(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 

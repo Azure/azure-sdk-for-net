@@ -17,28 +17,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a collection of <see cref="QuotaRequestDetailsResource"/> and their operations.
-    /// Each <see cref="QuotaRequestDetailsResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="QuotaRequestDetailsCollection"/> instance call the GetQuotaRequestDetails method from an instance of the parent resource.
+    /// A class representing a collection of <see cref="QuotaRequestDetailResource"/> and their operations.
+    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of the parent resource.
     /// </summary>
-    public partial class QuotaRequestDetailsCollection : ArmCollection
+    public partial class QuotaRequestDetailCollection : ArmCollection
     {
         private readonly ClientDiagnostics _quotaRequestStatusClientDiagnostics;
         private readonly QuotaRequestStatus _quotaRequestStatusRestClient;
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailsCollection for mocking. </summary>
-        protected QuotaRequestDetailsCollection()
+        /// <summary> Initializes a new instance of QuotaRequestDetailCollection for mocking. </summary>
+        protected QuotaRequestDetailCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal QuotaRequestDetailsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal QuotaRequestDetailCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(QuotaRequestDetailsResource.ResourceType, out string quotaRequestDetailsApiVersion);
-            _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaRequestDetailsResource.ResourceType.Namespace, Diagnostics);
-            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailsApiVersion ?? "2025-09-01");
+            TryGetApiVersion(QuotaRequestDetailResource.ResourceType, out string quotaRequestDetailApiVersion);
+            _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaRequestDetailResource.ResourceType.Namespace, Diagnostics);
+            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Quota
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != QuotaRequestDetailsResource.ResourceType)
+            if (id.ResourceType != QuotaRequestDetailResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QuotaRequestDetailsResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QuotaRequestDetailResource.ResourceType), id);
             }
         }
 
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<QuotaRequestDetailsResource>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaRequestDetailResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.Get");
             scope.Start();
             try
             {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QuotaRequestDetailsData> response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<QuotaRequestDetailsResource> Get(string id, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaRequestDetailResource> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Get");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.Get");
             scope.Start();
             try
             {
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Quota
                 };
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<QuotaRequestDetailsData> response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Exists");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.Exists");
             scope.Start();
             try
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<QuotaRequestDetailsData> response = default;
+                Response<QuotaRequestDetailData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((QuotaRequestDetailsData)null, result);
+                        response = Response.FromValue((QuotaRequestDetailData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.Exists");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.Exists");
             scope.Start();
             try
             {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<QuotaRequestDetailsData> response = default;
+                Response<QuotaRequestDetailData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((QuotaRequestDetailsData)null, result);
+                        response = Response.FromValue((QuotaRequestDetailData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<QuotaRequestDetailsResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<QuotaRequestDetailResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.GetIfExists");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -300,23 +300,23 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<QuotaRequestDetailsData> response = default;
+                Response<QuotaRequestDetailData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((QuotaRequestDetailsData)null, result);
+                        response = Response.FromValue((QuotaRequestDetailData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<QuotaRequestDetailsResource>(response.GetRawResponse());
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -346,11 +346,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<QuotaRequestDetailsResource> GetIfExists(string id, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<QuotaRequestDetailResource> GetIfExists(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailsCollection.GetIfExists");
+            using DiagnosticScope scope = _quotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -361,23 +361,23 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Id, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<QuotaRequestDetailsData> response = default;
+                Response<QuotaRequestDetailData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(QuotaRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((QuotaRequestDetailsData)null, result);
+                        response = Response.FromValue((QuotaRequestDetailData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<QuotaRequestDetailsResource>(response.GetRawResponse());
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new QuotaRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

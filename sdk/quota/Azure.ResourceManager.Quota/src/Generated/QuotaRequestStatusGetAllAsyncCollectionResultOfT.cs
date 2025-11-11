@@ -15,7 +15,7 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal partial class QuotaRequestStatusGetAllAsyncCollectionResultOfT : AsyncPageable<QuotaRequestDetailsData>
+    internal partial class QuotaRequestStatusGetAllAsyncCollectionResultOfT : AsyncPageable<QuotaRequestDetailData>
     {
         private readonly QuotaRequestStatus _client;
         private readonly string _scope;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of QuotaRequestStatusGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<QuotaRequestDetailsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<QuotaRequestDetailData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 QuotaRequestDetailsList result = QuotaRequestDetailsList.FromResponse(response);
-                yield return Page<QuotaRequestDetailsData>.FromValues((IReadOnlyList<QuotaRequestDetailsData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<QuotaRequestDetailData>.FromValues((IReadOnlyList<QuotaRequestDetailData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

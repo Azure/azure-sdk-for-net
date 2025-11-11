@@ -259,24 +259,24 @@ namespace Azure.ResourceManager.Quota
             return await GetMockableQuotaArmClient(client).GetCurrentQuotaLimitBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="QuotaRequestDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="QuotaRequestDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="QuotaRequestDetailsResource"/> object. </returns>
-        public static QuotaRequestDetailsResource GetQuotaRequestDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
+        public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetQuotaRequestDetailsResource(id);
+            return GetMockableQuotaArmClient(client).GetQuotaRequestDetailResource(id);
         }
 
-        /// <summary> Gets a collection of <see cref="QuotaRequestDetailsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="QuotaRequestDetailCollection"/> objects within the specified scope. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="QuotaRequestDetailsResource"/> objects. </returns>
-        public static QuotaRequestDetailsCollection GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="QuotaRequestDetailResource"/> objects. </returns>
+        public static QuotaRequestDetailCollection GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
+        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetQuotaRequestDetails(scope, id, cancellationToken);
+            return GetMockableQuotaArmClient(client).GetQuotaRequestDetail(scope, id, cancellationToken);
         }
 
         /// <summary> Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation. </summary>
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
+        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableQuotaArmClient(client).GetQuotaRequestDetailsAsync(scope, id, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaArmClient(client).GetQuotaRequestDetailAsync(scope, id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a list of current usage for all resources for the scope specified. </summary>
@@ -378,8 +378,8 @@ namespace Azure.ResourceManager.Quota
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuotaRequestDetailsResource> GetQuotaRequestDetailsAsync(this TenantResource tenantResource, string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QuotaRequestDetailResource> GetQuotaRequestDetailsAsync(this TenantResource tenantResource, string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -401,8 +401,8 @@ namespace Azure.ResourceManager.Quota
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuotaRequestDetailsResource> GetQuotaRequestDetails(this TenantResource tenantResource, string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuotaRequestDetailResource> GetQuotaRequestDetails(this TenantResource tenantResource, string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

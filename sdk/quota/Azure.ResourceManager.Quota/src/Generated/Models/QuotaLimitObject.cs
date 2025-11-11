@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The quota/limit value. </param>
         /// <param name="limitType"> The quota or usages limit types. </param>
-        internal QuotaLimitObject(LimitType limitObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int value, QuotaLimitTypes? limitType) : base(limitObjectType, additionalBinaryDataProperties)
+        internal QuotaLimitObject(LimitType limitObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int value, QuotaLimitType? limitType) : base(limitObjectType, additionalBinaryDataProperties)
         {
             Value = value;
             LimitType = limitType;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> The quota or usages limit types. </summary>
         [WirePath("limitType")]
-        public QuotaLimitTypes? LimitType { get; set; }
+        public QuotaLimitType? LimitType { get; set; }
     }
 }
