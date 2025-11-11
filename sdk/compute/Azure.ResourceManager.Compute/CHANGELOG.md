@@ -1,14 +1,18 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.13.0-beta.1 (2025-11-14)
 
 ### Features Added
 
+- Added `SnapshotAccessState` property to `DiskRestorePointInstanceView` class.
+- Added `InstantAccess` property to `RestorePointGroupData` class.
+- Added `InstantAccess` property to `RestorePointGroupPatch` class.
+- Added `InstantAccessDurationMinutes` property to `RestorePointData` class.
+- Added `EnableFips1403Encryption` property to `AdditionalCapabilities` class.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `VirtualMachineDataDisk` class to make the properties writable, and expanded the scope of usage from only VMSS to also include Virtual Machines and Flexible VMs.
 
 ## 1.12.0 (2025-09-26)
 
