@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Mcc cache node resource auto update properties. </summary>
     public partial class MccCacheNodeAutoUpdateInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeAutoUpdateInfo"/>. </summary>
         internal MccCacheNodeAutoUpdateInfo()
@@ -68,8 +39,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="timeToGoLiveDateTime"> Auto update time to go live date time. </param>
         /// <param name="ruleRequestedMinute"> Auto update rule requested minute. </param>
         /// <param name="ruleRequestedHour"> Auto update rule requested hour. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeAutoUpdateInfo(string imageUriBeforeUpdate, string imageUriTargeted, string imageUriTerminal, int? autoUpdateRingType, DateTimeOffset? movedToTerminalStateOn, int? ruleRequestedWeek, int? ruleRequestedDay, DateTimeOffset? createdOn, DateTimeOffset? updatedRegistryOn, string planChangeLogText, int? autoUpdateLastAppliedStatus, string autoUpdateLastAppliedStatusText, string autoUpdateLastAppliedStatusDetailedText, long? planId, string timeToGoLiveDateTime, string ruleRequestedMinute, string ruleRequestedHour, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MccCacheNodeAutoUpdateInfo(string imageUriBeforeUpdate, string imageUriTargeted, string imageUriTerminal, int? autoUpdateRingType, DateTimeOffset? movedToTerminalStateOn, int? ruleRequestedWeek, int? ruleRequestedDay, DateTimeOffset? createdOn, DateTimeOffset? updatedRegistryOn, string planChangeLogText, int? autoUpdateLastAppliedStatus, string autoUpdateLastAppliedStatusText, string autoUpdateLastAppliedStatusDetailedText, long? planId, string timeToGoLiveDateTime, string ruleRequestedMinute, string ruleRequestedHour, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageUriBeforeUpdate = imageUriBeforeUpdate;
             ImageUriTargeted = imageUriTargeted;
@@ -88,41 +59,57 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             TimeToGoLiveDateTime = timeToGoLiveDateTime;
             RuleRequestedMinute = ruleRequestedMinute;
             RuleRequestedHour = ruleRequestedHour;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Auto update image uri before update. </summary>
         public string ImageUriBeforeUpdate { get; }
+
         /// <summary> Auto update image uri targetted to update. </summary>
         public string ImageUriTargeted { get; }
+
         /// <summary> Auto update image uri at Terminal. </summary>
         public string ImageUriTerminal { get; }
+
         /// <summary> Auto update Ring Type. </summary>
         public int? AutoUpdateRingType { get; }
+
         /// <summary> Auto update image uri after update. </summary>
         public DateTimeOffset? MovedToTerminalStateOn { get; }
+
         /// <summary> Auto update image uri before update. </summary>
         public int? RuleRequestedWeek { get; }
+
         /// <summary> Auto update image uri after update. </summary>
         public int? RuleRequestedDay { get; }
+
         /// <summary> Auto update entity created datetime. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Auto update entity last updated datetime. </summary>
         public DateTimeOffset? UpdatedRegistryOn { get; }
+
         /// <summary> This text describing the purpose of the plan of auto update. </summary>
         public string PlanChangeLogText { get; }
+
         /// <summary> Auto update last applied status. </summary>
         public int? AutoUpdateLastAppliedStatus { get; }
+
         /// <summary> Auto update last applied status text. </summary>
         public string AutoUpdateLastAppliedStatusText { get; }
+
         /// <summary> Auto update last applied detailed status text. </summary>
         public string AutoUpdateLastAppliedStatusDetailedText { get; }
+
         /// <summary> Auto update planId. </summary>
         public long? PlanId { get; }
+
         /// <summary> Auto update time to go live date time. </summary>
         public string TimeToGoLiveDateTime { get; }
+
         /// <summary> Auto update rule requested minute. </summary>
         public string RuleRequestedMinute { get; }
+
         /// <summary> Auto update rule requested hour. </summary>
         public string RuleRequestedHour { get; }
     }

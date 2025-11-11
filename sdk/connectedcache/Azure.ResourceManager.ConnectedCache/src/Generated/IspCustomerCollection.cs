@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
     /// <summary>
     /// A class representing a collection of <see cref="IspCustomerResource"/> and their operations.
-    /// Each <see cref="IspCustomerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="IspCustomerCollection"/> instance call the GetIspCustomers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="IspCustomerResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="IspCustomerCollection"/> instance call the GetIspCustomers method from an instance of the parent resource.
     /// </summary>
     public partial class IspCustomerCollection : ArmCollection, IEnumerable<IspCustomerResource>, IAsyncEnumerable<IspCustomerResource>
     {
-        private readonly ClientDiagnostics _ispCustomerClientDiagnostics;
-        private readonly IspCustomersRestOperations _ispCustomerRestClient;
+        private readonly ClientDiagnostics _ispCustomersClientDiagnostics;
+        private readonly IspCustomers _ispCustomersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IspCustomerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IspCustomerCollection for mocking. </summary>
         protected IspCustomerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IspCustomerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IspCustomerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IspCustomerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ispCustomerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(IspCustomerResource.ResourceType, out string ispCustomerApiVersion);
-            _ispCustomerRestClient = new IspCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ispCustomerApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _ispCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
+            _ispCustomersRestClient = new IspCustomers(_ispCustomersClientDiagnostics, Pipeline, Endpoint, ispCustomerApiVersion ?? "2024-11-30-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// This api creates an ispCustomer with the specified create parameters
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<IspCustomerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customerResourceName, IspCustomerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ispCustomerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedCacheArmOperation<IspCustomerResource>(new IspCustomerOperationSource(Client), _ispCustomerClientDiagnostics, Pipeline, _ispCustomerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, IspCustomerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ConnectedCacheArmOperation<IspCustomerResource> operation = new ConnectedCacheArmOperation<IspCustomerResource>(
+                    new IspCustomerOperationSource(Client),
+                    _ispCustomersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api creates an ispCustomer with the specified create parameters
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<IspCustomerResource> CreateOrUpdate(WaitUntil waitUntil, string customerResourceName, IspCustomerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ispCustomerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data, cancellationToken);
-                var operation = new ConnectedCacheArmOperation<IspCustomerResource>(new IspCustomerOperationSource(Client), _ispCustomerClientDiagnostics, Pipeline, _ispCustomerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, IspCustomerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ConnectedCacheArmOperation<IspCustomerResource> operation = new ConnectedCacheArmOperation<IspCustomerResource>(
+                    new IspCustomerOperationSource(Client),
+                    _ispCustomersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<IspCustomerResource>> GetAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.Get");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<IspCustomerResource> Get(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.Get");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.Get");
             scope.Start();
             try
             {
-                var response = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +269,78 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// This api gets the information about all ispCustomer resources under the given subscription and resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This api gets the information about all ispCustomer resources under the given subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IspCustomerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ispCustomerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ispCustomerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerData.DeserializeIspCustomerData(e)), _ispCustomerClientDiagnostics, Pipeline, "IspCustomerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupAsyncCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IspCustomerResource(Client, data));
         }
 
-        /// <summary>
-        /// This api gets the information about all ispCustomer resources under the given subscription and resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This api gets the information about all ispCustomer resources under the given subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IspCustomerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ispCustomerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ispCustomerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerData.DeserializeIspCustomerData(e)), _ispCustomerClientDiagnostics, Pipeline, "IspCustomerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.Exists");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IspCustomerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IspCustomerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IspCustomerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +351,53 @@ namespace Azure.ResourceManager.ConnectedCache
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.Exists");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IspCustomerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IspCustomerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IspCustomerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +408,57 @@ namespace Azure.ResourceManager.ConnectedCache
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<IspCustomerResource>> GetIfExistsAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.GetIfExists");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IspCustomerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IspCustomerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IspCustomerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IspCustomerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +469,57 @@ namespace Azure.ResourceManager.ConnectedCache
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCustomers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<IspCustomerResource> GetIfExists(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerCollection.GetIfExists");
+            using DiagnosticScope scope = _ispCustomersClientDiagnostics.CreateScope("IspCustomerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IspCustomerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IspCustomerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IspCustomerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IspCustomerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +539,7 @@ namespace Azure.ResourceManager.ConnectedCache
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IspCustomerResource> IAsyncEnumerable<IspCustomerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -5,162 +5,91 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedCache;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedCache.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableConnectedCacheSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _ispCustomerClientDiagnostics;
-        private IspCustomersRestOperations _ispCustomerRestClient;
-        private ClientDiagnostics _enterpriseMccCustomerClientDiagnostics;
-        private EnterpriseMccCustomersRestOperations _enterpriseMccCustomerRestClient;
+        private ClientDiagnostics _ispCustomersClientDiagnostics;
+        private IspCustomers _ispCustomersRestClient;
+        private ClientDiagnostics _enterpriseMccCustomersClientDiagnostics;
+        private EnterpriseMccCustomers _enterpriseMccCustomersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConnectedCacheSubscriptionResource for mocking. </summary>
         protected MockableConnectedCacheSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConnectedCacheSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConnectedCacheSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics IspCustomerClientDiagnostics => _ispCustomerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
-        private IspCustomersRestOperations IspCustomerRestClient => _ispCustomerRestClient ??= new IspCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IspCustomerResource.ResourceType));
-        private ClientDiagnostics EnterpriseMccCustomerClientDiagnostics => _enterpriseMccCustomerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-        private EnterpriseMccCustomersRestOperations EnterpriseMccCustomerRestClient => _enterpriseMccCustomerRestClient ??= new EnterpriseMccCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnterpriseMccCustomerResource.ResourceType));
+        private ClientDiagnostics IspCustomersClientDiagnostics => _ispCustomersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private IspCustomers IspCustomersRestClient => _ispCustomersRestClient ??= new IspCustomers(IspCustomersClientDiagnostics, Pipeline, Endpoint, "2024-11-30-preview");
 
-        /// <summary>
-        /// This api gets information about all ispCustomer resources under the given subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedCache/ispCustomers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        private ClientDiagnostics EnterpriseMccCustomersClientDiagnostics => _enterpriseMccCustomersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EnterpriseMccCustomers EnterpriseMccCustomersRestClient => _enterpriseMccCustomersRestClient ??= new EnterpriseMccCustomers(EnterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, "2024-11-30-preview");
+
+        /// <summary> This api gets information about all ispCustomer resources under the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IspCustomerResource> GetIspCustomersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IspCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IspCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerData.DeserializeIspCustomerData(e)), IspCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetIspCustomers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetBySubscriptionAsyncCollectionResultOfT(IspCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new IspCustomerResource(Client, data));
         }
 
-        /// <summary>
-        /// This api gets information about all ispCustomer resources under the given subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedCache/ispCustomers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCustomerResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This api gets information about all ispCustomer resources under the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IspCustomerResource> GetIspCustomers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IspCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IspCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerData.DeserializeIspCustomerData(e)), IspCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetIspCustomers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetBySubscriptionCollectionResultOfT(IspCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new IspCustomerResource(Client, data));
         }
 
-        /// <summary>
-        /// This api gets information about all enterpriseMccCustomer resources under the given subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnterpriseMccCustomerResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This api gets information about all enterpriseMccCustomer resources under the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(e)), EnterpriseMccCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetBySubscriptionAsyncCollectionResultOfT(EnterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EnterpriseMccCustomerResource(Client, data));
         }
 
-        /// <summary>
-        /// This api gets information about all enterpriseMccCustomer resources under the given subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnterpriseMccCustomerResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This api gets information about all enterpriseMccCustomer resources under the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(e)), EnterpriseMccCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetBySubscriptionCollectionResultOfT(EnterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EnterpriseMccCustomerResource(Client, data));
         }
     }
 }
