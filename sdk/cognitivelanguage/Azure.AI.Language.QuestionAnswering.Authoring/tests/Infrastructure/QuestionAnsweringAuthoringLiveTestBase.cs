@@ -10,11 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
 {
-    public partial class QuestionAnsweringAuthoringLiveTestBase : QuestionAnsweringTestBase<QuestionAnsweringAuthoringClient>
+    public partial class QuestionAnsweringAuthoringLiveTestBase : QuestionAnsweringAuthoringTestBase<QuestionAnsweringAuthoringClient>
     {
         private ConcurrentQueue<string> _projects = new();
 
-        public QuestionAnsweringAuthoringLiveTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+        public QuestionAnsweringAuthoringLiveTestBase(bool isAsync, QuestionAnsweringAuthoringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, serviceVersion, mode)
         {
         }

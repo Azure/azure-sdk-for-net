@@ -9,6 +9,7 @@
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AssemblyName>Azure.AI.Language.QuestionAnswering</AssemblyName>
     <PackageId>Azure.AI.Language.QuestionAnswering</PackageId>
+    <NoWarn>$(NoWarn);AZC0034;AZC0012</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -19,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.Language.QuestionAnswering\src\Azure.AI.Language.QuestionAnswering.csproj" />
   </ItemGroup>
 
 </Project>

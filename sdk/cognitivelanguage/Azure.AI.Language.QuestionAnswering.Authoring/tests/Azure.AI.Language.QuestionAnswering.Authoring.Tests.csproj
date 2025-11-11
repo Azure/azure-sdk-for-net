@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Samples\" />
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

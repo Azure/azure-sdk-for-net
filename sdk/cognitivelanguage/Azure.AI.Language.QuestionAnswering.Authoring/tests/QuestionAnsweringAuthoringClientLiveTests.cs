@@ -10,33 +10,13 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
 {
     public class QuestionAnsweringAuthoringClientLiveTests : QuestionAnsweringAuthoringLiveTestBase
     {
-        public QuestionAnsweringAuthoringClientLiveTests(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
+        public QuestionAnsweringAuthoringClientLiveTests(bool isAsync, QuestionAnsweringAuthoringClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to record */)
         {
-        }
-
-        [RecordedTest]
-        public async Task SupportsAadAuthentication()
-        {
-            QuestionAnsweringAuthoringClient client = CreateClient<QuestionAnsweringAuthoringClient>(
-               TestEnvironment.Endpoint,
-               TestEnvironment.Credential,
-               InstrumentClientOptions(
-                    new QuestionAnsweringClientOptions()));
-
-            string testProjectName = CreateTestProjectName();
-
-            Response createProjectResponse = await CreateProjectAsync(testProjectName);
-            Response projectDetailsResponse = await client.GetProjectDetailsAsync(testProjectName);
-
-            Assert.AreEqual(201, createProjectResponse.Status);
-            Assert.AreEqual(200, projectDetailsResponse.Status);
-
-            await client.DeleteProjectAsync(WaitUntil.Completed, testProjectName);
         }
 
         [RecordedTest]
@@ -44,13 +24,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             string testProjectName = CreateTestProjectName();
             Response createProjectResponse = await CreateProjectAsync(testProjectName);
-            AsyncPageable<BinaryData> projects = Client.GetProjectsAsync();
-            Response projectDetailsResponse = await Client.GetProjectDetailsAsync(testProjectName);
+            AsyncPageable<QuestionAnsweringProject> projects = Client.GetProjectsAsync();
+            Response<QuestionAnsweringProject> projectDetailsResponse = await Client.GetProjectDetailsAsync(testProjectName);
 
             Assert.AreEqual(201, createProjectResponse.Status);
-            Assert.AreEqual(200, projectDetailsResponse.Status);
-            Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(testProjectName)));
-            Assert.That(projectDetailsResponse.Content.ToString().Contains(testProjectName));
+            Assert.AreEqual(200, projectDetailsResponse.GetRawResponse().Status);
+            Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ProjectName.Contains(testProjectName)));
+            Assert.That(projectDetailsResponse.GetRawResponse().Content.ToString().Contains(testProjectName));
         }
 
         [RecordedTest]

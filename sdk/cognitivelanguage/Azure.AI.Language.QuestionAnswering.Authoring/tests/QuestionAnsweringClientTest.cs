@@ -10,9 +10,9 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
 {
-    public class QuestionAnsweringClientTest: RecordedTestBase<QuestionAnsweringClientTestEnvironment>
+    public class QuestionAnsweringClientTest: RecordedTestBase<QuestionAnsweringAuthoringTestEnvironment>
     {
         public QuestionAnsweringClientTest(bool isAsync) : base(isAsync)
         {
