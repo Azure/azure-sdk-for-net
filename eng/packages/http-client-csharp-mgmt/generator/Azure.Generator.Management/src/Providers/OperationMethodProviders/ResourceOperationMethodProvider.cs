@@ -29,6 +29,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ResourceOperationMethodProvider
     {
         public bool IsLongRunningOperation { get; }
+        public bool IsFakeLongRunningOperation { get; }
 
         protected readonly TypeProvider _enclosingType;
         protected readonly RequestPathPattern _contextualPath;
@@ -45,7 +46,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
-        private readonly bool _isFakeLongRunningOperation;
         private readonly FormattableString? _description;
 
         /// <summary>
@@ -76,12 +76,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
+            bool isFakeLongRunningOperation = false;
             InitializeLroFlags(
                 _serviceMethod,
                 forceLro: forceLro,
                 ref isLongRunningOperation,
-                ref _isFakeLongRunningOperation);
+                ref isFakeLongRunningOperation);
             IsLongRunningOperation = isLongRunningOperation;
+            IsFakeLongRunningOperation = isFakeLongRunningOperation;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
@@ -200,7 +202,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual CSharpType BuildReturnType()
         {
-            return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
+            return _returnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
@@ -235,7 +237,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, _isFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -271,10 +273,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || _isFakeLongRunningOperation)
+            if (IsLongRunningOperation || IsFakeLongRunningOperation)
             {
                 tryStatements.AddRange(
-                    _isFakeLongRunningOperation ?
+                    IsFakeLongRunningOperation ?
                     BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
                     BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
             }
