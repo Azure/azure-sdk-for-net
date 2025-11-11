@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> List certificate profiles under a trusted signing account. </summary>
+        /// <summary>
+        /// List certificate profiles under a trusted signing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_ListByCodeSigningAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrustedSigningCertificateProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.TrustedSigning
             return new AsyncPageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
-        /// <summary> List certificate profiles under a trusted signing account. </summary>
+        /// <summary>
+        /// List certificate profiles under a trusted signing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_ListByCodeSigningAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrustedSigningCertificateProfileResource> GetAll(CancellationToken cancellationToken = default)

@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary> List DiscoveryRule resources by HealthModel. </summary>
+        /// <summary>
+        /// List DiscoveryRule resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoveryRules_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.CloudHealth
                 context), data => new HealthModelDiscoveryRuleResource(Client, data));
         }
 
-        /// <summary> List DiscoveryRule resources by HealthModel. </summary>
+        /// <summary>
+        /// List DiscoveryRule resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoveryRules_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>

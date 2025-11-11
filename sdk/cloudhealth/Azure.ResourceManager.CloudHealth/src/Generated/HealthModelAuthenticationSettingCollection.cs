@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary> List AuthenticationSetting resources by HealthModel. </summary>
+        /// <summary>
+        /// List AuthenticationSetting resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthenticationSettings_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelAuthenticationSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthModelAuthenticationSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -274,7 +290,23 @@ namespace Azure.ResourceManager.CloudHealth
             return new AsyncPageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelAsyncCollectionResultOfT(_authenticationSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthModelAuthenticationSettingResource(Client, data));
         }
 
-        /// <summary> List AuthenticationSetting resources by HealthModel. </summary>
+        /// <summary>
+        /// List AuthenticationSetting resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthenticationSettings_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelAuthenticationSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthModelAuthenticationSettingResource> GetAll(CancellationToken cancellationToken = default)
