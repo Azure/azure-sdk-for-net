@@ -1,24 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Approved override -->
     <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
 
     <PackageTags>Azure.AI.AgentServer.Core</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj"/>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.AI.Projects"/>
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore"/>
-    <PackageReference Include="ModelContextProtocol"/>
-    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
+    <PackageReference Include="Azure.AI.Projects" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" />
+    <PackageReference Include="ModelContextProtocol" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
 
-    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 </Project>
 
