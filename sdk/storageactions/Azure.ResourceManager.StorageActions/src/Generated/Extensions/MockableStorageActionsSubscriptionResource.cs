@@ -40,7 +40,23 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(StorageTasksClientDiagnostics, Pipeline, Endpoint, "2023-01-01");
 
-        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the storage tasks available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/storageTasks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskResource> GetStorageTasksAsync(CancellationToken cancellationToken = default)
@@ -52,7 +68,23 @@ namespace Azure.ResourceManager.StorageActions.Mocking
             return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetBySubscriptionAsyncCollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageTaskResource(Client, data));
         }
 
-        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the storage tasks available under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/storageTasks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskResource> GetStorageTasks(CancellationToken cancellationToken = default)

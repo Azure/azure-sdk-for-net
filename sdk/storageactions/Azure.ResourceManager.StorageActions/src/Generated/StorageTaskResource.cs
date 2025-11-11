@@ -414,7 +414,27 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
+        /// <summary>
+        /// Fetch the storage tasks run report summary for each assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -435,7 +455,27 @@ namespace Azure.ResourceManager.StorageActions
                 context);
         }
 
-        /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
+        /// <summary>
+        /// Fetch the storage tasks run report summary for each assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -456,7 +496,27 @@ namespace Azure.ResourceManager.StorageActions
                 context);
         }
 
-        /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
+        /// <summary>
+        /// Lists Resource IDs of the Storage Task Assignments associated with this Storage Task.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/storageTaskAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_StorageTaskAssignmentList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
@@ -475,7 +535,27 @@ namespace Azure.ResourceManager.StorageActions
                 context);
         }
 
-        /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
+        /// <summary>
+        /// Lists Resource IDs of the Storage Task Assignments associated with this Storage Task.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}/storageTaskAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_StorageTaskAssignmentList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageTaskResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>

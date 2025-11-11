@@ -37,7 +37,23 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
 
         private Maps MapsRestClient => _mapsRestClient ??= new Maps(MapsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
 
-        /// <summary> List MapsResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List MapsResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DependencyMap/maps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maps_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DependencyMapResource> GetDependencyMapsAsync(CancellationToken cancellationToken = default)
@@ -49,7 +65,23 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetBySubscriptionAsyncCollectionResultOfT(MapsRestClient, Id.SubscriptionId, context), data => new DependencyMapResource(Client, data));
         }
 
-        /// <summary> List MapsResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List MapsResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DependencyMap/maps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maps_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DependencyMapResource> GetDependencyMaps(CancellationToken cancellationToken = default)

@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_ListByInformaticaOrganizationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaServerlessRuntimeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InformaticaServerlessRuntimeResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
-        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_ListByInformaticaOrganizationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaServerlessRuntimeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InformaticaServerlessRuntimeResource> GetAll(CancellationToken cancellationToken = default)
