@@ -209,6 +209,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         [Test]
         [Category("STAC")]
         [Category("Search")]
+#if NET462
+        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
+#endif
         public async Task Test04_05_SearchItemsWithSpatialFilter()
         {
             // Arrange
