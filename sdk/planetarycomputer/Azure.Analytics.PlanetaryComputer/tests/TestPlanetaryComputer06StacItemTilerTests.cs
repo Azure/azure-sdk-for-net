@@ -455,6 +455,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Crop")]
+#if NET462
+        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
+#endif
         public async Task Test06_10_CropGeoJson()
         {
             // Arrange
@@ -519,7 +522,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Crop")]
+#if NET462
         [LiveOnly(Reason = "Difference between request and record entry due to float values")]
+#endif
         public async Task Test06_11_CropGeoJsonWithDimensions()
         {
             // Arrange
@@ -586,7 +591,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Statistics")]
+#if NET462
         [LiveOnly(Reason = "Difference between request and record entry due to float values")]
+#endif
         public async Task Test06_12_GetGeoJsonStatistics()
         {
             // Arrange

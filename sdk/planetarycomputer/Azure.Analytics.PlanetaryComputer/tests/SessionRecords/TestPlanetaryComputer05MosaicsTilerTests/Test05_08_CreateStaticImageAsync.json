@@ -6,10 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "Content-Length": "536",
+        "Content-Length": "522",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251103.1 (.NET Framework 4.8.9310.0; Microsoft Windows 10.0.26100 )",
+        "User-Agent": "azsdk-net-Analytics.PlanetaryComputer/1.0.0-alpha.20251111.1 (.NET 8.0.21; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -48,24 +47,24 @@
           "coordinates": [
             [
               [
-                -84.4537811,
-                33.6567307
+                -84.45378,
+                33.65673
               ],
               [
                 -84.398056,
-                33.6567307
+                33.65673
               ],
               [
                 -84.398056,
-                33.6194572
+                33.619457
               ],
               [
-                -84.4537811,
-                33.6194572
+                -84.45378,
+                33.619457
               ],
               [
-                -84.4537811,
-                33.6567307
+                -84.45378,
+                33.65673
               ]
             ]
           ]
@@ -96,13 +95,13 @@
         "X-Request-ID": "00000000000000000000000000000000"
       },
       "ResponseBody": {
-        "url": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/image/static/geocatalog-naip-atl-c1925eb8948e4ad596b0e0899dbf1e27.png?api-version=2025-04-30-preview"
+        "url": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com/data/collections/naip-atl/image/static/geocatalog-naip-atl-06424ac383904a9db8477bffc27da154.png?api-version=2025-04-30-preview"
       }
     }
   ],
   "Variables": {
     "PLANETARYCOMPUTER_COLLECTION_ID": "naip-atl",
     "PLANETARYCOMPUTER_ENDPOINT": "https://Sanitized.sanitized_label.sanitized_location.geocatalog.spatio.azure.com",
-    "RandomSeed": "499778964"
+    "RandomSeed": "661518787"
   }
 }

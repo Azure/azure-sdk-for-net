@@ -446,7 +446,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("StaticImage")]
+#if NET462
         [LiveOnly(Reason = "Difference between request and record entry due to float values")]
+#endif
         public async Task Test05_08_CreateStaticImage()
         {
             // Arrange
@@ -539,7 +541,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("StaticImage")]
+#if NET462
         [LiveOnly(Reason = "Difference between request and record entry due to float values")]
+#endif
         public async Task Test05_09_GetStaticImage()
         {
             // Arrange
