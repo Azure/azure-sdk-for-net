@@ -1,18 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Approved override -->
     <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
 
     <PackageTags>Azure.AI.AgentServer.AgentFramework</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Agents.AI"/>
+    <PackageReference Include="Microsoft.Agents.AI" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj"/>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
   </ItemGroup>
 </Project>
