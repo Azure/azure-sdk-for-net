@@ -47,7 +47,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         _agentConversationId = agentConversationId;
     }
 
-    /// <inheritdoc/>
     public override ClientResult<OpenAIResponse> CreateResponse(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -55,7 +54,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponse(userInputText, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override ClientResult<OpenAIResponse> CreateResponse(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -63,7 +61,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponse(inputItems, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override Task<ClientResult<OpenAIResponse>> CreateResponseAsync(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -71,7 +68,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponseAsync(inputItems, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override Task<ClientResult<OpenAIResponse>> CreateResponseAsync(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -79,7 +75,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponseAsync(userInputText, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -87,7 +82,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponseStreaming(inputItems, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -95,7 +89,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponseStreaming(userInputText, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -103,7 +96,6 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
         return base.CreateResponseStreamingAsync(inputItems, options, cancellationToken);
     }
 
-    /// <inheritdoc/>
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
