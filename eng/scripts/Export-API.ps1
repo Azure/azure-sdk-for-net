@@ -4,7 +4,8 @@ param (
     [string] $ServiceDirectory,
     [string] $SDKType = "all",
     [switch] $SpellCheckPublicApiSurface,
-    [string] $packagePath
+    [string] $PackagePath,
+    [string] $SdkRepoPath
 )
 
 if ($SpellCheckPublicApiSurface -and -not (Get-Command 'npx')) {
@@ -12,8 +13,8 @@ if ($SpellCheckPublicApiSurface -and -not (Get-Command 'npx')) {
     exit 1
 }
 
-$relativePackagePath = if ($packagePath) {
-    Resolve-Path -Relative -RelativeBasePath (Join-Path $PSScriptRoot ".." ".." "sdk") -Path $packagePath
+$relativePackagePath = if ($PackagePath) {
+    Resolve-Path -Relative -RelativeBasePath (Join-Path $SdkRepoPath "sdk") -Path $PackagePath
 } else {
     $ServiceDirectory
 }
