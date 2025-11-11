@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalConnectionStringProperties"> A dictionary of additional properties to be added in the end of connection string. </param>
         /// <param name="configurationStore"> An option to store configuration into different place. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkerConfigurationInfo(DeleteOrUpdateBehavior? deleteOrUpdateBehavior, ConfigurationActionType? action, IDictionary<string, string> customizedKeys, DaprProperties daprProperties, IDictionary<string, string> additionalConfigurations, IDictionary<string, string> additionalConnectionStringProperties, ConfigurationStore configurationStore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkerConfigurationInfo(LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, SourceApplicationConfigurationActionType? action, IDictionary<string, string> customizedKeys, DaprProperties daprProperties, IDictionary<string, string> additionalConfigurations, IDictionary<string, string> additionalConnectionStringProperties, ConfigurationStore configurationStore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
             Action = action;
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
         /// <summary> Optional, indicate whether to apply configurations on source application. If enable, generate configurations and applied to the source application. Default is enable. If optOut, no configuration change will be made on source. </summary>
-        public ConfigurationActionType? Action { get; set; }
+        public SourceApplicationConfigurationActionType? Action { get; set; }
         /// <summary> Optional. A dictionary of default key name and customized key name mapping. If not specified, default key name will be used for generate configurations. </summary>
         public IDictionary<string, string> CustomizedKeys { get; }
         /// <summary> Indicates some additional properties for dapr client type. </summary>

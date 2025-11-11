@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDryrunRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, DryrunPatch patch)
+        internal RequestUriBuilder CreateUpdateDryrunRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, ServiceLinkerDryrunPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDryrunRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, DryrunPatch patch)
+        internal HttpMessage CreateUpdateDryrunRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, ServiceLinkerDryrunPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dryrunName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDryrunAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, DryrunPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDryrunAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, ServiceLinkerDryrunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dryrunName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDryrun(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, DryrunPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateDryrun(string subscriptionId, string resourceGroupName, AzureLocation location, string dryrunName, ServiceLinkerDryrunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

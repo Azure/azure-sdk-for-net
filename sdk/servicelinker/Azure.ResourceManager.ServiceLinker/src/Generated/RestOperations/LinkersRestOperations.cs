@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDryrunRequestUri(string resourceUri, string dryrunName, DryrunPatch patch)
+        internal RequestUriBuilder CreateUpdateDryrunRequestUri(string resourceUri, string dryrunName, ServiceLinkerDryrunPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDryrunRequest(string resourceUri, string dryrunName, DryrunPatch patch)
+        internal HttpMessage CreateUpdateDryrunRequest(string resourceUri, string dryrunName, ServiceLinkerDryrunPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="dryrunName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDryrunAsync(string resourceUri, string dryrunName, DryrunPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDryrunAsync(string resourceUri, string dryrunName, ServiceLinkerDryrunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="dryrunName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDryrun(string resourceUri, string dryrunName, DryrunPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateDryrun(string resourceUri, string dryrunName, ServiceLinkerDryrunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceLinker
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ServiceLinkerDryrunParametersContent parameters = default;
+            ServiceLinkerDryrunContent parameters = default;
             IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults = default;
             IReadOnlyList<DryrunOperationPreview> operationPreviews = default;
             string provisioningState = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceLinker
                             {
                                 continue;
                             }
-                            parameters = ServiceLinkerDryrunParametersContent.DeserializeServiceLinkerDryrunParametersContent(property0.Value, options);
+                            parameters = ServiceLinkerDryrunContent.DeserializeServiceLinkerDryrunContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("prerequisiteResults"u8))

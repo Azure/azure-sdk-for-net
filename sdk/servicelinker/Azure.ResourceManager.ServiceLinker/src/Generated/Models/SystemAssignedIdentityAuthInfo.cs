@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="userName"> Username created in the database which is mapped to a user in AAD. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
         /// <param name="roles"> Optional, this value specifies the Azure role to be assigned. </param>
-        internal SystemAssignedIdentityAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
+        internal SystemAssignedIdentityAuthInfo(LinkerAuthType authType, ServiceLinkerAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
         {
             UserName = userName;
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Username created in the database which is mapped to a user in AAD. </summary>
         public string UserName { get; set; }
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
         /// <summary> Optional, this value specifies the Azure role to be assigned. </summary>
         public IList<string> Roles { get; }
     }

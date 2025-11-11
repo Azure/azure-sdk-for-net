@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The service properties when target service type is FabricPlatform. </summary>
-    public partial class FabricPlatform : TargetServiceBaseInfo
+    public partial class LinkerTargetFabricPlatform : TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of <see cref="FabricPlatform"/>. </summary>
-        public FabricPlatform()
+        /// <summary> Initializes a new instance of <see cref="LinkerTargetFabricPlatform"/>. </summary>
+        public LinkerTargetFabricPlatform()
         {
             TargetServiceType = TargetServiceType.FabricPlatform;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricPlatform"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerTargetFabricPlatform"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The endpoint of service. </param>
-        internal FabricPlatform(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string endpoint) : base(targetServiceType, serializedAdditionalRawData)
+        internal LinkerTargetFabricPlatform(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string endpoint) : base(targetServiceType, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             TargetServiceType = targetServiceType;

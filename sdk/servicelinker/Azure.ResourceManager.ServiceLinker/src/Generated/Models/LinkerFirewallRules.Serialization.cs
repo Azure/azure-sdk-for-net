@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 return null;
             }
             IList<string> ipRanges = default;
-            FirewallRulesAllowType? azureServices = default;
-            FirewallRulesAllowType? callerClientIP = default;
+            LinkerTargetServiceFirewallRulesAllowType? azureServices = default;
+            LinkerTargetServiceFirewallRulesAllowType? callerClientIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    azureServices = new FirewallRulesAllowType(property.Value.GetString());
+                    azureServices = new LinkerTargetServiceFirewallRulesAllowType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("callerClientIP"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    callerClientIP = new FirewallRulesAllowType(property.Value.GetString());
+                    callerClientIP = new LinkerTargetServiceFirewallRulesAllowType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

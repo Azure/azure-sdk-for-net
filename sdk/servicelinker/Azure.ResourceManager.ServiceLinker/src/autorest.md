@@ -45,20 +45,28 @@ rename-mapping:
   ValidationResultItem: LinkerValidationResultItemInfo
   ValidationResultStatus: LinkerValidationResultStatus
   AzureKeyVaultProperties.connectAsKubernetesCsiDriver: DoesConnectAsKubernetesCsiDriver
-  DryrunParameters: ServiceLinkerDryrunParametersContent
+  DryrunParameters: ServiceLinkerDryrunContent
   CreateOrUpdateDryrunParameters: ServiceLinkerCreateOrUpdateDryrunParametersContent
   ConfigurationResult: SourceConfigurationResult
   LinkerPatch: LinkerResourcePatch
-  ActionType: ConfigurationActionType
-  AllowType: FirewallRulesAllowType
-  AuthMode: ConfigurationAuthMode
+  ActionType: SourceApplicationConfigurationActionType
+  AllowType: LinkerTargetServiceFirewallRulesAllowType
+  AuthMode: ServiceLinkerAuthMode
   ConfigurationInfo: LinkerConfigurationInfo
   ConfigurationName: LinkerConfigurationName
+  ConfigurationNameItem: LinkerConfigurationNameItem
   ConfigurationName.required : IsRequired
   FirewallRules: LinkerFirewallRules
   DaprConfigurationResource: DaprConfigurationResourceItem
   DryrunResource: ServiceLinkerDryrun
   AccessKeyPermissions: TargetServiceAccessKeyPermission
+  DeleteOrUpdateBehavior: LinkerDeleteOrUpdateBehavior
+  DryrunPatch: ServiceLinkerDryrunPatch
+  FabricPlatform: LinkerTargetFabricPlatform
+  PublicNetworkSolution: LinkerPublicNetworkSolution
+  SecretSourceType: LinkerKeyVaultSecretSourceType
+  UserAccountAuthInfo: LinkerUserAccountAuthInfo
+  VnetSolution: LinkerVnetSolution
 
 format-by-name-rules:
   'tenantId': 'uuid'

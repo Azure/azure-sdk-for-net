@@ -11,16 +11,16 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is user account. </summary>
-    public partial class UserAccountAuthInfo : AuthBaseInfo
+    public partial class LinkerUserAccountAuthInfo : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of <see cref="UserAccountAuthInfo"/>. </summary>
-        public UserAccountAuthInfo()
+        /// <summary> Initializes a new instance of <see cref="LinkerUserAccountAuthInfo"/>. </summary>
+        public LinkerUserAccountAuthInfo()
         {
             Roles = new ChangeTrackingList<string>();
             AuthType = LinkerAuthType.UserAccount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserAccountAuthInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerUserAccountAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="principalId"> Principal Id for user account. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
         /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
-        internal UserAccountAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, Guid? principalId, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
+        internal LinkerUserAccountAuthInfo(LinkerAuthType authType, ServiceLinkerAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, Guid? principalId, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
         {
             UserName = userName;
             PrincipalId = principalId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Principal Id for user account. </summary>
         public Guid? PrincipalId { get; set; }
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
         /// <summary> Optional, this value specifies the Azure roles to be assigned. Automatically. </summary>
         public IList<string> Roles { get; }
     }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> a dryrun job to be updated. </summary>
-    public partial class DryrunPatch
+    public partial class ServiceLinkerDryrunPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DryrunPatch"/>. </summary>
-        public DryrunPatch()
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerDryrunPatch"/>. </summary>
+        public ServiceLinkerDryrunPatch()
         {
             PrerequisiteResults = new ChangeTrackingList<DryrunPrerequisiteResult>();
             OperationPreviews = new ChangeTrackingList<DryrunOperationPreview>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DryrunPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerDryrunPatch"/>. </summary>
         /// <param name="parameters">
         /// The parameters of the dryrun
-        /// Please note <see cref="ServiceLinkerDryrunParametersContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
         /// </param>
         /// <param name="prerequisiteResults">
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DryrunPatch(ServiceLinkerDryrunParametersContent parameters, IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults, IReadOnlyList<DryrunOperationPreview> operationPreviews, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceLinkerDryrunPatch(ServiceLinkerDryrunContent parameters, IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults, IReadOnlyList<DryrunOperationPreview> operationPreviews, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             PrerequisiteResults = prerequisiteResults;
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The parameters of the dryrun
-        /// Please note <see cref="ServiceLinkerDryrunParametersContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
         /// </summary>
-        public ServiceLinkerDryrunParametersContent Parameters { get; set; }
+        public ServiceLinkerDryrunContent Parameters { get; set; }
         /// <summary>
         /// the result of the dryrun
         /// Please note <see cref="DryrunPrerequisiteResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

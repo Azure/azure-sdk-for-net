@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="permissions"> Permissions of the accessKey. `Read` and `Write` are for Azure Cosmos DB and Azure App Configuration, `Listen`, `Send` and `Manage` are for Azure Event Hub and Azure Service Bus. </param>
-        internal AccessKeyInfoBase(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<TargetServiceAccessKeyPermission> permissions) : base(authType, authMode, serializedAdditionalRawData)
+        internal AccessKeyInfoBase(LinkerAuthType authType, ServiceLinkerAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<TargetServiceAccessKeyPermission> permissions) : base(authType, authMode, serializedAdditionalRawData)
         {
             Permissions = permissions;
             AuthType = authType;

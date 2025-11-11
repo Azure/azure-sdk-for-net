@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationNameResult"/>. </summary>
         /// <param name="value"> The ConfigurationNameItem items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ConfigurationNameResult(IEnumerable<ConfigurationNameItem> value)
+        internal ConfigurationNameResult(IEnumerable<LinkerConfigurationNameItem> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="value"> The ConfigurationNameItem items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationNameResult(IReadOnlyList<ConfigurationNameItem> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationNameResult(IReadOnlyList<LinkerConfigurationNameItem> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> The ConfigurationNameItem items on this page. </summary>
-        public IReadOnlyList<ConfigurationNameItem> Value { get; }
+        public IReadOnlyList<LinkerConfigurationNameItem> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

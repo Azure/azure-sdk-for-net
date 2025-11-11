@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> Unknown version of DryrunParameters. </summary>
-    internal partial class UnknownDryrunParameters : ServiceLinkerDryrunParametersContent
+    internal partial class UnknownDryrunParameters : ServiceLinkerDryrunContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDryrunParameters"/>. </summary>
         /// <param name="actionName"> The name of action for you dryrun job. </param>

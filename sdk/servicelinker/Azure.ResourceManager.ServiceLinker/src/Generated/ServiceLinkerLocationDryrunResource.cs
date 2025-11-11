@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="patch"> dryrun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceLinkerLocationDryrunResource>> UpdateAsync(WaitUntil waitUntil, DryrunPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceLinkerLocationDryrunResource>> UpdateAsync(WaitUntil waitUntil, ServiceLinkerDryrunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="patch"> dryrun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ServiceLinkerLocationDryrunResource> Update(WaitUntil waitUntil, DryrunPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceLinkerLocationDryrunResource> Update(WaitUntil waitUntil, ServiceLinkerDryrunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 

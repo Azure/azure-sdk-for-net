@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="subscriptionId"> Subscription id for userAssignedIdentity. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
         /// <param name="roles"> Optional, this value specifies the Azure role to be assigned. </param>
-        internal UserAssignedIdentityAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, string clientId, string subscriptionId, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
+        internal UserAssignedIdentityAuthInfo(LinkerAuthType authType, ServiceLinkerAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, string clientId, string subscriptionId, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
         {
             UserName = userName;
             ClientId = clientId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Subscription id for userAssignedIdentity. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
         /// <summary> Optional, this value specifies the Azure role to be assigned. </summary>
         public IList<string> Roles { get; }
     }

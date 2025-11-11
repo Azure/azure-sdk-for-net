@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="azureServices"> Allow Azure services to access the target service if true. </param>
         /// <param name="callerClientIP"> Allow caller client IP to access the target service if true. the property is used when connecting local application to target service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkerFirewallRules(IList<string> ipRanges, FirewallRulesAllowType? azureServices, FirewallRulesAllowType? callerClientIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkerFirewallRules(IList<string> ipRanges, LinkerTargetServiceFirewallRulesAllowType? azureServices, LinkerTargetServiceFirewallRulesAllowType? callerClientIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPRanges = ipRanges;
             AzureServices = azureServices;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> This value specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. </summary>
         public IList<string> IPRanges { get; }
         /// <summary> Allow Azure services to access the target service if true. </summary>
-        public FirewallRulesAllowType? AzureServices { get; set; }
+        public LinkerTargetServiceFirewallRulesAllowType? AzureServices { get; set; }
         /// <summary> Allow caller client IP to access the target service if true. the property is used when connecting local application to target service. </summary>
-        public FirewallRulesAllowType? CallerClientIP { get; set; }
+        public LinkerTargetServiceFirewallRulesAllowType? CallerClientIP { get; set; }
     }
 }

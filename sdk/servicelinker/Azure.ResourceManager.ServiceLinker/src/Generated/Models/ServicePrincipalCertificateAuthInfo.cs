@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
         /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
-        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string certificate, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
+        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, ServiceLinkerAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string certificate, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, serializedAdditionalRawData)
         {
             ClientId = clientId;
             PrincipalId = principalId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> ServicePrincipal certificate for servicePrincipal auth. </summary>
         public string Certificate { get; set; }
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
         /// <summary> Optional, this value specifies the Azure roles to be assigned. Automatically. </summary>
         public IList<string> Roles { get; }
     }

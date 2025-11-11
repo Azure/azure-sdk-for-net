@@ -689,8 +689,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="skipToken"> OData skipToken option for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ConfigurationNameItem"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationNameItem> GetServiceLinkerConfigurationNamesAsync(this TenantResource tenantResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LinkerConfigurationNameItem"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LinkerConfigurationNameItem> GetServiceLinkerConfigurationNamesAsync(this TenantResource tenantResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -723,8 +723,8 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="skipToken"> OData skipToken option for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigurationNameItem"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationNameItem> GetServiceLinkerConfigurationNames(this TenantResource tenantResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LinkerConfigurationNameItem"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LinkerConfigurationNameItem> GetServiceLinkerConfigurationNames(this TenantResource tenantResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The ConfigurationNameItem. </summary>
-    public partial class ConfigurationNameItem
+    /// <summary> The LinkerConfigurationNameItem. </summary>
+    public partial class LinkerConfigurationNameItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationNameItem"/>. </summary>
-        internal ConfigurationNameItem()
+        /// <summary> Initializes a new instance of <see cref="LinkerConfigurationNameItem"/>. </summary>
+        internal LinkerConfigurationNameItem()
         {
             Names = new ChangeTrackingList<LinkerConfigurationName>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationNameItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerConfigurationNameItem"/>. </summary>
         /// <param name="targetService"> The target service provider name and resource name. </param>
         /// <param name="clientType"> The client type for configuration names. </param>
         /// <param name="authType"> The auth type. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="daprProperties"> Deprecated, please use #/definitions/DaprConfigurationList instead. </param>
         /// <param name="names"> The configuration names to be set in compute service environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationNameItem(string targetService, LinkerClientType? clientType, LinkerAuthType? authType, SecretSourceType? secretType, DaprProperties daprProperties, IReadOnlyList<LinkerConfigurationName> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkerConfigurationNameItem(string targetService, LinkerClientType? clientType, LinkerAuthType? authType, LinkerKeyVaultSecretSourceType? secretType, DaprProperties daprProperties, IReadOnlyList<LinkerConfigurationName> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetService = targetService;
             ClientType = clientType;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The auth type. </summary>
         public LinkerAuthType? AuthType { get; }
         /// <summary> Indicates where the secrets in configuration from. Used when secrets are from Keyvault. </summary>
-        public SecretSourceType? SecretType { get; }
+        public LinkerKeyVaultSecretSourceType? SecretType { get; }
         /// <summary> Deprecated, please use #/definitions/DaprConfigurationList instead. </summary>
         public DaprProperties DaprProperties { get; }
         /// <summary> The configuration names to be set in compute service environment. </summary>

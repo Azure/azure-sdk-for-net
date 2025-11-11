@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="solutionType"> Type of VNet solution. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VnetSolution(VnetSolutionType? solutionType, DeleteOrUpdateBehavior? deleteOrUpdateBehavior, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VnetSolution(VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionType = solutionType;
             DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Type of VNet solution. </summary>
         public VnetSolutionType? SolutionType { get; set; }
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
     }
 }

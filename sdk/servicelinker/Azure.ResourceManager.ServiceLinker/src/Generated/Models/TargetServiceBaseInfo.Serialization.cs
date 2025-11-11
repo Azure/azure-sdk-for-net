@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "AzureResource": return AzureResourceInfo.DeserializeAzureResourceInfo(element, options);
                     case "ConfluentBootstrapServer": return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element, options);
                     case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element, options);
-                    case "FabricPlatform": return FabricPlatform.DeserializeFabricPlatform(element, options);
+                    case "FabricPlatform": return LinkerTargetFabricPlatform.DeserializeLinkerTargetFabricPlatform(element, options);
                     case "SelfHostedServer": return SelfHostedServer.DeserializeSelfHostedServer(element, options);
                 }
             }

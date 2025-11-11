@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class PublicNetworkSolution : IUtf8JsonSerializable, IJsonModel<PublicNetworkSolution>
+    public partial class LinkerPublicNetworkSolution : IUtf8JsonSerializable, IJsonModel<LinkerPublicNetworkSolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicNetworkSolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerPublicNetworkSolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PublicNetworkSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerPublicNetworkSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicNetworkSolution)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DeleteOrUpdateBehavior))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        PublicNetworkSolution IJsonModel<PublicNetworkSolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkerPublicNetworkSolution IJsonModel<LinkerPublicNetworkSolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicNetworkSolution)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePublicNetworkSolution(document.RootElement, options);
+            return DeserializeLinkerPublicNetworkSolution(document.RootElement, options);
         }
 
-        internal static PublicNetworkSolution DeserializePublicNetworkSolution(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LinkerPublicNetworkSolution DeserializeLinkerPublicNetworkSolution(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
-            ConfigurationActionType? action = default;
+            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            SourceApplicationConfigurationActionType? action = default;
             LinkerFirewallRules firewallRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    deleteOrUpdateBehavior = new DeleteOrUpdateBehavior(property.Value.GetString());
+                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("action"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    action = new ConfigurationActionType(property.Value.GetString());
+                    action = new SourceApplicationConfigurationActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("firewallRules"u8))
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PublicNetworkSolution(deleteOrUpdateBehavior, action, firewallRules, serializedAdditionalRawData);
+            return new LinkerPublicNetworkSolution(deleteOrUpdateBehavior, action, firewallRules, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PublicNetworkSolution>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LinkerPublicNetworkSolution>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PublicNetworkSolution)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PublicNetworkSolution IPersistableModel<PublicNetworkSolution>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LinkerPublicNetworkSolution IPersistableModel<LinkerPublicNetworkSolution>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePublicNetworkSolution(document.RootElement, options);
+                        return DeserializeLinkerPublicNetworkSolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicNetworkSolution)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PublicNetworkSolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerPublicNetworkSolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

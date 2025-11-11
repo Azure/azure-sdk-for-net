@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            IReadOnlyList<ConfigurationNameItem> value = default;
+            IReadOnlyList<LinkerConfigurationNameItem> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ConfigurationNameItem> array = new List<ConfigurationNameItem>();
+                    List<LinkerConfigurationNameItem> array = new List<LinkerConfigurationNameItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationNameItem.DeserializeConfigurationNameItem(item, options));
+                        array.Add(LinkerConfigurationNameItem.DeserializeLinkerConfigurationNameItem(item, options));
                     }
                     value = array;
                     continue;

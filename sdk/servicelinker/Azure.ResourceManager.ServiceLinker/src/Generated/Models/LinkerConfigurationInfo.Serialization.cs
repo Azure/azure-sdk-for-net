@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
-            ConfigurationActionType? action = default;
+            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            SourceApplicationConfigurationActionType? action = default;
             IDictionary<string, string> customizedKeys = default;
             DaprProperties daprProperties = default;
             IDictionary<string, string> additionalConfigurations = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    deleteOrUpdateBehavior = new DeleteOrUpdateBehavior(property.Value.GetString());
+                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("action"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    action = new ConfigurationActionType(property.Value.GetString());
+                    action = new SourceApplicationConfigurationActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customizedKeys"u8))

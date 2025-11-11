@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
-            DryrunPatch patch = new DryrunPatch
+            ServiceLinkerDryrunPatch patch = new ServiceLinkerDryrunPatch
             {
                 Parameters = new ServiceLinkerCreateOrUpdateDryrunParametersContent
                 {

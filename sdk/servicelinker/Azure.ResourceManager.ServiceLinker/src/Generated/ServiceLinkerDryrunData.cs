@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="systemData"> The systemData. </param>
         /// <param name="parameters">
         /// The parameters of the dryrun
-        /// Please note <see cref="ServiceLinkerDryrunParametersContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
         /// </param>
         /// <param name="prerequisiteResults">
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceLinkerDryrunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceLinkerDryrunParametersContent parameters, IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults, IReadOnlyList<DryrunOperationPreview> operationPreviews, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceLinkerDryrunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceLinkerDryrunContent parameters, IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults, IReadOnlyList<DryrunOperationPreview> operationPreviews, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Parameters = parameters;
             PrerequisiteResults = prerequisiteResults;
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// The parameters of the dryrun
-        /// Please note <see cref="ServiceLinkerDryrunParametersContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
         /// </summary>
-        public ServiceLinkerDryrunParametersContent Parameters { get; set; }
+        public ServiceLinkerDryrunContent Parameters { get; set; }
         /// <summary>
         /// the result of the dryrun
         /// Please note <see cref="DryrunPrerequisiteResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

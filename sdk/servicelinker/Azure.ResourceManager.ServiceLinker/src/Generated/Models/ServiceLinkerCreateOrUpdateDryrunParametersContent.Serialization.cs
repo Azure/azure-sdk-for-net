@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             VnetSolution vnetSolution = default;
             LinkerSecretStore secretStore = default;
             string scope = default;
-            PublicNetworkSolution publicNetworkSolution = default;
+            LinkerPublicNetworkSolution publicNetworkSolution = default;
             LinkerConfigurationInfo configurationInfo = default;
             DryrunActionName actionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         publicNetworkSolution = null;
                         continue;
                     }
-                    publicNetworkSolution = PublicNetworkSolution.DeserializePublicNetworkSolution(property.Value, options);
+                    publicNetworkSolution = LinkerPublicNetworkSolution.DeserializeLinkerPublicNetworkSolution(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationInfo"u8))

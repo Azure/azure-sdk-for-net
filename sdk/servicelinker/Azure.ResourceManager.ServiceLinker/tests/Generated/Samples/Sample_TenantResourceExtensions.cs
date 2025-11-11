@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            await foreach (ConfigurationNameItem item in tenantResource.GetServiceLinkerConfigurationNamesAsync())
+            await foreach (LinkerConfigurationNameItem item in tenantResource.GetServiceLinkerConfigurationNamesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

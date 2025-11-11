@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="parameters">
         /// The parameters of the dryrun
-        /// Please note <see cref="ServiceLinkerDryrunParametersContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
         /// </param>
         /// <param name="prerequisiteResults">
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ServiceLinker.ServiceLinkerDryrunData"/> instance for mocking. </returns>
-        public static ServiceLinkerDryrunData ServiceLinkerDryrunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceLinkerDryrunParametersContent parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
+        public static ServiceLinkerDryrunData ServiceLinkerDryrunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceLinkerDryrunContent parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
         {
             prerequisiteResults ??= new List<DryrunPrerequisiteResult>();
             operationPreviews ??= new List<DryrunOperationPreview>();
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DryrunPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceLinkerDryrunPatch"/>. </summary>
         /// <param name="parameters">
         /// The parameters of the dryrun
-        /// Please note <see cref="ServiceLinkerDryrunParametersContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ServiceLinkerDryrunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/>.
         /// </param>
         /// <param name="prerequisiteResults">
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </param>
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.DryrunPatch"/> instance for mocking. </returns>
-        public static DryrunPatch DryrunPatch(ServiceLinkerDryrunParametersContent parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
+        /// <returns> A new <see cref="Models.ServiceLinkerDryrunPatch"/> instance for mocking. </returns>
+        public static ServiceLinkerDryrunPatch ServiceLinkerDryrunPatch(ServiceLinkerDryrunContent parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
         {
             prerequisiteResults ??= new List<DryrunPrerequisiteResult>();
             operationPreviews ??= new List<DryrunOperationPreview>();
 
-            return new DryrunPatch(parameters, prerequisiteResults?.ToList(), operationPreviews?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ServiceLinkerDryrunPatch(parameters, prerequisiteResults?.ToList(), operationPreviews?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceLinker.LinkerResourceData"/>. </summary>
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetService">
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="LinkerTargetFabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="LinkerUserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, LinkerPublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
             return new LinkerResourceData(
                 id,
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetService">
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="LinkerTargetFabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="LinkerUserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, LinkerPublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
             return new LinkerResourcePatch(
                 targetService,
@@ -279,19 +279,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationNameItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkerConfigurationNameItem"/>. </summary>
         /// <param name="targetService"> The target service provider name and resource name. </param>
         /// <param name="clientType"> The client type for configuration names. </param>
         /// <param name="authType"> The auth type. </param>
         /// <param name="secretType"> Indicates where the secrets in configuration from. Used when secrets are from Keyvault. </param>
         /// <param name="daprProperties"> Deprecated, please use #/definitions/DaprConfigurationList instead. </param>
         /// <param name="names"> The configuration names to be set in compute service environment. </param>
-        /// <returns> A new <see cref="Models.ConfigurationNameItem"/> instance for mocking. </returns>
-        public static ConfigurationNameItem ConfigurationNameItem(string targetService = null, LinkerClientType? clientType = null, LinkerAuthType? authType = null, SecretSourceType? secretType = null, DaprProperties daprProperties = null, IEnumerable<LinkerConfigurationName> names = null)
+        /// <returns> A new <see cref="Models.LinkerConfigurationNameItem"/> instance for mocking. </returns>
+        public static LinkerConfigurationNameItem LinkerConfigurationNameItem(string targetService = null, LinkerClientType? clientType = null, LinkerAuthType? authType = null, LinkerKeyVaultSecretSourceType? secretType = null, DaprProperties daprProperties = null, IEnumerable<LinkerConfigurationName> names = null)
         {
             names ??= new List<LinkerConfigurationName>();
 
-            return new ConfigurationNameItem(
+            return new LinkerConfigurationNameItem(
                 targetService,
                 clientType,
                 authType,
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetService">
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="LinkerTargetFabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="LinkerUserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
         /// <returns> A new <see cref="Models.ServiceLinkerCreateOrUpdateDryrunParametersContent"/> instance for mocking. </returns>
-        public static ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, PublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
+        public static ServiceLinkerCreateOrUpdateDryrunParametersContent ServiceLinkerCreateOrUpdateDryrunParametersContent(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolution vnetSolution = null, LinkerSecretStore secretStore = null, string scope = null, LinkerPublicNetworkSolution publicNetworkSolution = null, LinkerConfigurationInfo configurationInfo = null)
         {
             return new ServiceLinkerCreateOrUpdateDryrunParametersContent(
                 DryrunActionName.CreateOrUpdate,

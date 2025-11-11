@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             string clientId = default;
             Guid principalId = default;
             string secret = default;
-            DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
             IList<string> roles = default;
             LinkerAuthType authType = default;
-            ConfigurationAuthMode? authMode = default;
+            ServiceLinkerAuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    deleteOrUpdateBehavior = new DeleteOrUpdateBehavior(property.Value.GetString());
+                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roles"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    authMode = new ConfigurationAuthMode(property.Value.GetString());
+                    authMode = new ServiceLinkerAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

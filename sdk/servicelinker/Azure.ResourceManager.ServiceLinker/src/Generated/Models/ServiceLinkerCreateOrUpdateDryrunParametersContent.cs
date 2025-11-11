@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The dryrun parameters for creation or update a linker. </summary>
-    public partial class ServiceLinkerCreateOrUpdateDryrunParametersContent : ServiceLinkerDryrunParametersContent
+    public partial class ServiceLinkerCreateOrUpdateDryrunParametersContent : ServiceLinkerDryrunContent
     {
         /// <summary> Initializes a new instance of <see cref="ServiceLinkerCreateOrUpdateDryrunParametersContent"/>. </summary>
         public ServiceLinkerCreateOrUpdateDryrunParametersContent()
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetService">
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="LinkerTargetFabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="LinkerUserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <param name="publicNetworkSolution"> The network solution. </param>
         /// <param name="configurationInfo"> The connection information consumed by applications, including secrets, connection strings. </param>
-        internal ServiceLinkerCreateOrUpdateDryrunParametersContent(DryrunActionName actionName, IDictionary<string, BinaryData> serializedAdditionalRawData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, PublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo) : base(actionName, serializedAdditionalRawData)
+        internal ServiceLinkerCreateOrUpdateDryrunParametersContent(DryrunActionName actionName, IDictionary<string, BinaryData> serializedAdditionalRawData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo) : base(actionName, serializedAdditionalRawData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary>
         /// The target service properties
         /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="FabricPlatform"/> and <see cref="SelfHostedServer"/>.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="ConfluentSchemaRegistryInfo"/>, <see cref="LinkerTargetFabricPlatform"/> and <see cref="SelfHostedServer"/>.
         /// </summary>
         public TargetServiceBaseInfo TargetService { get; set; }
         /// <summary>
         /// The authentication type.
         /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// The available derived classes include <see cref="AccessKeyInfoBase"/>, <see cref="EasyAuthMicrosoftEntraIdAuthInfo"/>, <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="LinkerUserAccountAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </summary>
         public AuthBaseInfo AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> connection scope in source service. </summary>
         public string Scope { get; set; }
         /// <summary> The network solution. </summary>
-        public PublicNetworkSolution PublicNetworkSolution { get; set; }
+        public LinkerPublicNetworkSolution PublicNetworkSolution { get; set; }
         /// <summary> The connection information consumed by applications, including secrets, connection strings. </summary>
         public LinkerConfigurationInfo ConfigurationInfo { get; set; }
     }

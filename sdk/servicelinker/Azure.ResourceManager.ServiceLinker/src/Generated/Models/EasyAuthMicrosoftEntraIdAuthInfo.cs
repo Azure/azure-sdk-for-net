@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> Application clientId for EasyAuth Microsoft Entra ID. </param>
         /// <param name="secret"> Application Secret for EasyAuth Microsoft Entra ID. </param>
         /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
-        internal EasyAuthMicrosoftEntraIdAuthInfo(LinkerAuthType authType, ConfigurationAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, string secret, DeleteOrUpdateBehavior? deleteOrUpdateBehavior) : base(authType, authMode, serializedAdditionalRawData)
+        internal EasyAuthMicrosoftEntraIdAuthInfo(LinkerAuthType authType, ServiceLinkerAuthMode? authMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, string secret, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior) : base(authType, authMode, serializedAdditionalRawData)
         {
             ClientId = clientId;
             Secret = secret;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Application Secret for EasyAuth Microsoft Entra ID. </summary>
         public string Secret { get; set; }
         /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public DeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
+        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
     }
 }

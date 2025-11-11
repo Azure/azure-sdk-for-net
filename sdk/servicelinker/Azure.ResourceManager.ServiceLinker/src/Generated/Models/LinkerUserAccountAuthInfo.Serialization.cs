@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class UserAccountAuthInfo : IUtf8JsonSerializable, IJsonModel<UserAccountAuthInfo>
+    public partial class LinkerUserAccountAuthInfo : IUtf8JsonSerializable, IJsonModel<LinkerUserAccountAuthInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAccountAuthInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerUserAccountAuthInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UserAccountAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerUserAccountAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerUserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAccountAuthInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerUserAccountAuthInfo)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        UserAccountAuthInfo IJsonModel<UserAccountAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkerUserAccountAuthInfo IJsonModel<LinkerUserAccountAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerUserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAccountAuthInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerUserAccountAuthInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserAccountAuthInfo(document.RootElement, options);
+            return DeserializeLinkerUserAccountAuthInfo(document.RootElement, options);
         }
 
-        internal static UserAccountAuthInfo DeserializeUserAccountAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LinkerUserAccountAuthInfo DeserializeLinkerUserAccountAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             string userName = default;
             Guid? principalId = default;
-            DeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
             IList<string> roles = default;
             LinkerAuthType authType = default;
-            ConfigurationAuthMode? authMode = default;
+            ServiceLinkerAuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    deleteOrUpdateBehavior = new DeleteOrUpdateBehavior(property.Value.GetString());
+                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roles"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    authMode = new ConfigurationAuthMode(property.Value.GetString());
+                    authMode = new ServiceLinkerAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserAccountAuthInfo(
+            return new LinkerUserAccountAuthInfo(
                 authType,
                 authMode,
                 serializedAdditionalRawData,
@@ -171,35 +171,35 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 roles ?? new ChangeTrackingList<string>());
         }
 
-        BinaryData IPersistableModel<UserAccountAuthInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LinkerUserAccountAuthInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerUserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserAccountAuthInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerUserAccountAuthInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UserAccountAuthInfo IPersistableModel<UserAccountAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LinkerUserAccountAuthInfo IPersistableModel<LinkerUserAccountAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerUserAccountAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUserAccountAuthInfo(document.RootElement, options);
+                        return DeserializeLinkerUserAccountAuthInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAccountAuthInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerUserAccountAuthInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UserAccountAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerUserAccountAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

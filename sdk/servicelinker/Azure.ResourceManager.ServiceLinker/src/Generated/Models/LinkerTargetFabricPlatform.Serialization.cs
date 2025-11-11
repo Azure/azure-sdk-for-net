@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class FabricPlatform : IUtf8JsonSerializable, IJsonModel<FabricPlatform>
+    public partial class LinkerTargetFabricPlatform : IUtf8JsonSerializable, IJsonModel<LinkerTargetFabricPlatform>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricPlatform>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerTargetFabricPlatform>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FabricPlatform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerTargetFabricPlatform>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerTargetFabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricPlatform)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerTargetFabricPlatform)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        FabricPlatform IJsonModel<FabricPlatform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkerTargetFabricPlatform IJsonModel<LinkerTargetFabricPlatform>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerTargetFabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricPlatform)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerTargetFabricPlatform)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricPlatform(document.RootElement, options);
+            return DeserializeLinkerTargetFabricPlatform(document.RootElement, options);
         }
 
-        internal static FabricPlatform DeserializeFabricPlatform(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LinkerTargetFabricPlatform DeserializeLinkerTargetFabricPlatform(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,38 +84,38 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FabricPlatform(type, serializedAdditionalRawData, endpoint);
+            return new LinkerTargetFabricPlatform(type, serializedAdditionalRawData, endpoint);
         }
 
-        BinaryData IPersistableModel<FabricPlatform>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LinkerTargetFabricPlatform>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerTargetFabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricPlatform)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerTargetFabricPlatform)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FabricPlatform IPersistableModel<FabricPlatform>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LinkerTargetFabricPlatform IPersistableModel<LinkerTargetFabricPlatform>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkerTargetFabricPlatform>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFabricPlatform(document.RootElement, options);
+                        return DeserializeLinkerTargetFabricPlatform(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricPlatform)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerTargetFabricPlatform)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FabricPlatform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerTargetFabricPlatform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

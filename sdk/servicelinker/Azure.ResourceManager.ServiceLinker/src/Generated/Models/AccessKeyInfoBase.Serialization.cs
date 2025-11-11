@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             IList<TargetServiceAccessKeyPermission> permissions = default;
             LinkerAuthType authType = default;
-            ConfigurationAuthMode? authMode = default;
+            ServiceLinkerAuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    authMode = new ConfigurationAuthMode(property.Value.GetString());
+                    authMode = new ServiceLinkerAuthMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
