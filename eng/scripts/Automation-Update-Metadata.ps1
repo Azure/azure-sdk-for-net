@@ -9,52 +9,31 @@ param(
     [string]$packagePath   # Absolute path to the root folder of the local SDK project.
 )
 
-# Step 1: Resolve both paths to absolute paths
-try {
-    $resolvedPackage = Resolve-Path -Path $packagePath -ErrorAction Stop
-    $fullPackagePath = $resolvedPackage.ProviderPath
-} catch {
-    # If it's not resolvable (e.g., path doesn't exist), fall back to raw input
-    $fullPackagePath = $packagePath
-}
+# Step 1: Find the csproj file in the src directory
+$srcPath = Join-Path $packagePath "src"
+$csprojFile = Get-ChildItem -Path $srcPath -Filter "*.csproj" | Select-Object -First 1
 
-try {
-    $resolvedRepo = Resolve-Path -Path $sdkRepoPath -ErrorAction Stop
-    $fullRepoPath = $resolvedRepo.ProviderPath
-} catch {
-    $fullRepoPath = $sdkRepoPath
-}
+Write-Host "Found csproj file: $($csprojFile.Name)"
 
-# Step 2: Remove repo root from package path to get relative path
-$fullRepoPath = $fullRepoPath.TrimEnd('\', '/')
-if (-not $fullPackagePath.StartsWith($fullRepoPath, [System.StringComparison]::OrdinalIgnoreCase)) {
-    Write-Error "Package path '$fullPackagePath' does not start with repo path '$fullRepoPath'"
-    exit 1
-}
+# Step 2: Get ServiceDirectory from csproj file using dotnet msbuild
+$csprojPath = $csprojFile.FullName
+$serviceName = (dotnet msbuild /t:GetPackageInfo /getProperty:ServiceDirectory "$csprojPath" 2>&1 | Select-Object -Last 1).Trim()
 
-$relativePath = $fullPackagePath.Substring($fullRepoPath.Length).TrimStart('\', '/')
+Write-Host "Service name: $serviceName"
 
-# Step 3: Split relative path and find 'sdk' segment
-$parts = $relativePath -split '[\\/]+'
+# Step 3: Extract namespace name from package path
+$parts = $packagePath -split '[\\/]+'
+$namespaceName = $parts[-1]  # Last segment is the namespace name
 
-$sdkIndex = $parts.IndexOf('sdk')
-if ($sdkIndex -lt 0 -or $sdkIndex -ge ($parts.Count - 1)) {
-    Write-Error "The relative path does not contain a valid 'sdk' segment: $relativePath"
-    exit 1
-}
+Write-Host "Namespace name: $namespaceName"
 
-# Extract everything after 'sdk'
-$slugParts = $parts[($sdkIndex + 1)..($parts.Count - 1)]
-$packagePath = ($slugParts -join '/')
-
-Write-Host "Extracted package path: $packagePath"
-
-# Call Export-API.ps1 script with the package path
+# Step 4: Call Export-API.ps1 with serviceName/namespaceName
 $exportApiScript = Join-Path $sdkRepoPath "eng" "scripts" "Export-API.ps1"
-Write-Host "Calling Export-API.ps1 with package path: $packagePath"
+$apiPath = Join-Path $serviceName $namespaceName
+Write-Host "Calling Export-API.ps1 $apiPath"
 
 try {
-    & $exportApiScript $packagePath
+    & $exportApiScript $apiPath
     Write-Host "Export-API.ps1 completed successfully"
 } catch {
     Write-Error "Failed to execute Export-API.ps1: $($_.Exception.Message)"
