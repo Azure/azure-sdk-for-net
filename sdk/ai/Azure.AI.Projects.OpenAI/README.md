@@ -1,9 +1,6 @@
-# Azure AI Agents client library for .NET
+# Microsoft AI Foundry OpenAI Companion for .NET
 
-Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers.
-
-**Note:** While this package can be used independently, we recommend using the Azure AI Projects client library (Azure.AI.Projects.OpenAI) for an enhanced experience. The Projects library provides simplified access to advanced functionality, such as creating and managing Agents, enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance, and enabling OpenTelemetry tracing.
-
+Enrich 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects.OpenAI/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started

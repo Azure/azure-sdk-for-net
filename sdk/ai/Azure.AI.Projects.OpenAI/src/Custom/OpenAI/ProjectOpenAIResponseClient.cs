@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -16,6 +17,27 @@ public partial class ProjectOpenAIResponseClient : OpenAIResponseClient
     private readonly string _agentName;
     private readonly string _agentVersion;
     private readonly string _agentConversationId;
+
+    public ProjectOpenAIResponseClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
+        : this(
+              pipeline: ProjectOpenAIClient.CreatePipeline(ProjectOpenAIClient.CreateAuthenticationPolicy(tokenProvider, options), options),
+              options: ProjectOpenAIClient.CreateMergedOptions(projectEndpoint, options),
+              agentName: null,
+              agentVersion: null,
+              model: null,
+              agentConversationId: null)
+    {
+    }
+
+    public ProjectOpenAIResponseClient(AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options)
+        : this(
+              pipeline: ProjectOpenAIClient.CreatePipeline(ProjectOpenAIClient.CreateAuthenticationPolicy(tokenProvider, options), options),
+              options,
+              agentName: null,
+              agentVersion: null,
+              model: null,
+              agentConversationId: null)
+    { }
 
     internal ProjectOpenAIResponseClient(ClientPipeline pipeline, OpenAIClientOptions options, string agentName, string agentVersion, string model, string agentConversationId)
         : base(pipeline, model, options)

@@ -22,13 +22,11 @@ namespace Azure.AI.Projects.OpenAI.Tests;
 /// </summary>
 public class ResponsesParityTests : ProjectsOpenAITestBase
 {
-    public ResponsesParityTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+    public ResponsesParityTests(bool isAsync) : base(isAsync)
     {
-        // TestDiagnostics = false;
     }
 
     [RecordedTest]
-    [Ignore("Pending CI failure investigation (local recording seems fine)")]
     public async Task FileSearchToolWorks()
     {
         ProjectOpenAIClient client = GetTestClient();
@@ -195,15 +193,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     public async Task GetResponseWorks()
     {
         ProjectOpenAIClient client = GetTestClient();
+        OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync([ResponseItem.CreateUserMessageItem("Hello, model!")]);
+        OpenAIResponse response = await responseClient.CreateResponseAsync([ResponseItem.CreateUserMessageItem("Hello, model!")]);
         Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
 
-        await Task.Delay(TimeSpan.FromSeconds(5));
-
         OpenAIResponse retrievedResponse = await client.Responses.GetResponseAsync(response.Id);
-        Assert.That(retrievedResponse.Id, Is.EqualTo(response.Id));
         Assert.That(retrievedResponse.Status, Is.EqualTo(ResponseStatus.Completed));
+        Assert.That(retrievedResponse.Id, Is.EqualTo(response.Id));
     }
 
     [RecordedTest]
@@ -215,6 +212,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             [ResponseItem.CreateUserMessageItem("Hello again, model")],
             new ResponseCreationOptions()
             {
+                Model = TestEnvironment.MODELDEPLOYMENTNAME,
                 BackgroundModeEnabled = true,
             });
         Assert.That(response?.Id, Does.StartWith("resp_"));
@@ -258,12 +256,16 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    [Ignore("Bug 4755148")]
     public async Task ResponseDeletionWorks()
     {
         ProjectOpenAIClient client = GetTestClient();
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync("Hello, model!");
+        OpenAIResponse response = await client.Responses.CreateResponseAsync(
+            "Hello, model!",
+            new ResponseCreationOptions()
+            {
+                Model = TestEnvironment.MODELDEPLOYMENTNAME
+            });
         Assert.That(response?.Id, Does.StartWith("resp_"));
 
         Assert.DoesNotThrowAsync(async () => await client.Responses.GetResponseAsync(response.Id));
@@ -291,9 +293,9 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         ResponseCreationOptions responseCreationOptions = new()
         {
             Model = TestEnvironment.MODELDEPLOYMENTNAME,
+            AgentConversationId = conversation,
             Tools = { functionTool },
         };
-        responseCreationOptions.SetConversationReference(conversation);
 
         OpenAIResponse response = await client.Responses.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("What's my favorite food?")],
@@ -313,5 +315,52 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(response.OutputItems.Count, Is.GreaterThanOrEqualTo(1));
         MessageResponseItem messageResponseItem = response.OutputItems.Last() as MessageResponseItem;
         Assert.That(response.GetOutputText().ToLower(), Does.Contain("pizza"));
+    }
+
+    public enum TestResponseClientInitializationType
+    {
+        FromProjectsClient,
+        DirectWithProjectEndpoint,
+        DirectWithOptions,
+    }
+
+    [RecordedTest]
+    [TestCase(TestResponseClientInitializationType.FromProjectsClient)]
+    [TestCase(TestResponseClientInitializationType.DirectWithProjectEndpoint)]
+    [TestCase(TestResponseClientInitializationType.DirectWithOptions)]
+    public async Task DirectlyInitializedResponsesClientsWork(TestResponseClientInitializationType clientInitializationType)
+    {
+        OpenAIResponseClient responseClient = null;
+        if (clientInitializationType == TestResponseClientInitializationType.FromProjectsClient)
+        {
+            AIProjectClient projectClient = GetTestProjectClient();
+            responseClient = projectClient.OpenAI.Responses;
+        }
+        else if (clientInitializationType == TestResponseClientInitializationType.DirectWithProjectEndpoint)
+        {
+            ProjectOpenAIClientOptions options = TestOpenAIClientOptions;
+            options.ApiVersion = "2025-11-15-preview";
+            responseClient = new ProjectOpenAIResponseClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), TestEnvironment.Credential, options);
+        }
+        else if (clientInitializationType == TestResponseClientInitializationType.DirectWithOptions)
+        {
+            ProjectOpenAIClientOptions options = TestOpenAIClientOptions;
+            options.Endpoint = new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai");
+            options.ApiVersion = "2025-11-15-preview";
+            responseClient = new ProjectOpenAIResponseClient(TestEnvironment.Credential, options);
+        }
+        else
+        {
+            Assert.Fail($"Unexpected initialization type for test: {clientInitializationType}");
+        }
+
+        OpenAIResponse response = await responseClient.CreateResponseAsync(
+            "Hello, model!",
+            new ResponseCreationOptions()
+            {
+                Model = TestEnvironment.MODELDEPLOYMENTNAME,
+            });
+        Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
+        Assert.That(response?.OutputItems, Has.Count.GreaterThan(0));
     }
 }

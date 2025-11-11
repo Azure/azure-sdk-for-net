@@ -18,4 +18,22 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
             _apiVersion = value;
         }
     }
+
+    internal ProjectOpenAIClientOptions GetClone()
+    {
+        return new ProjectOpenAIClientOptions()
+        {
+            ApiVersion = ApiVersion,
+            ClientLoggingOptions = ClientLoggingOptions,
+            EnableDistributedTracing = EnableDistributedTracing,
+            Endpoint = Endpoint,
+            MessageLoggingPolicy = MessageLoggingPolicy,
+            NetworkTimeout = NetworkTimeout,
+            OrganizationId = OrganizationId,
+            ProjectId = ProjectId,
+            RetryPolicy = RetryPolicy,
+            Transport = Transport,
+            UserAgentApplicationId = UserAgentApplicationId,
+        };
+    }
 }

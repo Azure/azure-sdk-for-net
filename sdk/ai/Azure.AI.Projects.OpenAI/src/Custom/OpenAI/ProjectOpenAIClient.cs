@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
@@ -14,10 +15,10 @@ namespace Azure.AI.Projects.OpenAI;
 
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    public ProjectOpenAIConversationClient Conversations => GetProjectOpenAIConversationClient();
-    public ProjectOpenAIResponseClient Responses => GetProjectOpenAIResponseClient();
-    public ProjectOpenAIFileClient Files => GetProjectOpenAIFileClient();
-    public ProjectOpenAIVectorStoreClient VectorStores => GetProjectOpenAIVectorStoreClient();
+    public virtual ProjectOpenAIConversationClient Conversations => GetProjectOpenAIConversationClient();
+    public virtual ProjectOpenAIResponseClient Responses => GetProjectOpenAIResponseClient();
+    public virtual ProjectOpenAIFileClient Files => GetProjectOpenAIFileClient();
+    public virtual ProjectOpenAIVectorStoreClient VectorStores => GetProjectOpenAIVectorStoreClient();
 
     private ProjectOpenAIConversationClient _cachedConversationClient;
     private ProjectOpenAIResponseClient _cachedResponseClient;
@@ -25,6 +26,19 @@ public partial class ProjectOpenAIClient : OpenAIClient
     private ProjectOpenAIVectorStoreClient _cachedVectorStoreClient;
 
     private readonly ProjectOpenAIClientOptions _options;
+
+    private static string s_defaultAuthorizationScope = "https://ai.azure.com/.default";
+
+    public ProjectOpenAIClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
+        : base(
+            pipeline: CreatePipeline(CreateAuthenticationPolicy(tokenProvider, options), options),
+            options: CreateMergedOptions(projectEndpoint, options))
+    {
+        Argument.AssertNotNull(projectEndpoint, nameof(projectEndpoint));
+        Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
+
+        _options = options;
+    }
 
     public ProjectOpenAIClient(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
         : base(
@@ -59,8 +73,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override OpenAIResponseClient GetOpenAIResponseClient(string _)
-        => throw new InvalidOperationException();
+    public override OpenAIResponseClient GetOpenAIResponseClient(string model)
+        => GetProjectOpenAIResponseClientForModel(model);
 
     public virtual ProjectOpenAIFileClient GetProjectOpenAIFileClient()
     {
@@ -98,7 +112,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         return new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model, agentConversationId: null);
     }
 
-    private static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
+    internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
     {
         options ??= new ProjectOpenAIClientOptions();
 
@@ -112,5 +126,29 @@ public partial class ProjectOpenAIClient : OpenAIClient
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
         return ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { authenticationPolicy }, Array.Empty<PipelinePolicy>());
+    }
+
+    internal static AuthenticationPolicy CreateAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
+    {
+        // Future: allow custom scope/audience via options in this path
+
+        return new BearerTokenPolicy(tokenProvider, s_defaultAuthorizationScope);
+    }
+
+    internal static ProjectOpenAIClientOptions CreateMergedOptions(Uri projectEndpoint, ProjectOpenAIClientOptions options = null)
+    {
+        options = options?.GetClone() ?? new();
+
+        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai";
+
+        if (options.Endpoint is not null && options.Endpoint.AbsoluteUri != rawTargetOpenAIEndpoint)
+        {
+            throw new InvalidOperationException(
+                $"Cannot supply both a constructor '{nameof(projectEndpoint)}' and {nameof(options)}.{nameof(options.Endpoint)}.");
+        }
+
+        options.Endpoint ??= new(rawTargetOpenAIEndpoint);
+
+        return options;
     }
 }

@@ -23,14 +23,27 @@ public static partial class ResponseCreationOptionsExtensions
         public string Model
         {
             get => options.Model;
-            set => options.Patch.Set("$.model"u8, value);
+            set
+            {
+                if (value is not null)
+                {
+                    options.Patch.Set("$.model"u8, value);
+                }
+                else if (options.Patch.Contains("$.model"u8))
+                {
+                    options.Patch.Remove("$.model"u8);
+                }
+            }
         }
 
         public AgentReference Agent
         {
             get
             {
-                if (options.Patch.TryGetJson("$.agent"u8, out ReadOnlyMemory<byte> agentBytes))
+                if (options.Patch.Contains("$.agent"u8)
+                    && !options.Patch.IsRemoved("$.agent"u8)
+                    && options.Patch.TryGetJson("$.agent"u8, out ReadOnlyMemory<byte> agentBytes)
+                    && !agentBytes.IsEmpty)
                 {
                     AgentReference retrievedReference = ModelReaderWriter.Read<AgentReference>(BinaryData.FromBytes(agentBytes), ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default);
                     return retrievedReference;
@@ -39,7 +52,14 @@ public static partial class ResponseCreationOptionsExtensions
             }
             set
             {
-                options.Patch.Set("$.agent"u8, ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default));
+                if (value is not null)
+                {
+                    options.Patch.Set("$.agent"u8, ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default));
+                }
+                else if (options.Patch.Contains("$.agent"u8))
+                {
+                    options.Patch.Remove("$.agent"u8);
+                }
             }
         }
 
@@ -47,15 +67,25 @@ public static partial class ResponseCreationOptionsExtensions
         {
             get
             {
-                return options.Patch.TryGetValue("$.conversation.id"u8, out string conversationIdFromJsonObject) && !string.IsNullOrEmpty(conversationIdFromJsonObject)
-                    ? conversationIdFromJsonObject
-                    : options.Patch.TryGetValue("$.conversation"u8, out string conversationIdFromRoot) && !string.IsNullOrEmpty(conversationIdFromRoot)
-                        ? conversationIdFromRoot
-                        : null;
+                if (options.Patch.Contains("$.conversation"u8)
+                    && !options.Patch.IsRemoved("$.conversation"u8)
+                    && options.Patch.TryGetJson("$.conversation.id"u8, out ReadOnlyMemory<byte> jsonPathValue)
+                    && !jsonPathValue.IsEmpty)
+                {
+                    return BinaryData.FromBytes(jsonPathValue).ToString();
+                }
+                return null;
             }
             set
             {
-                options.Patch.Set("$.conversation"u8, value);
+                if (value is not null)
+                {
+                    options.Patch.Set("$.conversation.id"u8, value);
+                }
+                else if (options.Patch.Contains("$.conversation"u8))
+                {
+                    options.Patch.Remove("$.conversation"u8);
+                }
             }
         }
     }
