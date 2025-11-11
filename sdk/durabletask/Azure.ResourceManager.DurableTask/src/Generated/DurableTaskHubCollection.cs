@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> List Task Hubs. </summary>
+        /// <summary>
+        /// List Task Hubs
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_ListByScheduler. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DurableTaskHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DurableTaskHubResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.DurableTask
             return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
         }
 
-        /// <summary> List Task Hubs. </summary>
+        /// <summary>
+        /// List Task Hubs
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TaskHubs_ListByScheduler. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DurableTaskHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DurableTaskHubResource> GetAll(CancellationToken cancellationToken = default)
