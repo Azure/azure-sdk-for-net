@@ -17,7 +17,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
-  
+
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
   dotnet msbuild `
@@ -567,11 +567,11 @@ function EnsureCustomSource($package) {
 }
 
 function Get-dotnet-EmitterName() {
-  return "@azure-tools/typespec-csharp"
+  return "@azure-typespec/http-client-csharp"
 }
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
-  return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
+  return "--option @azure-typespec/http-client-csharp.emitter-output-dir=$projectDirectory/src"
 }
 
 function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
