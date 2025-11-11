@@ -49,8 +49,7 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
     {
         yield return new NestedEventsGroup<Contracts.Generated.Responses.Response>()
         {
-            CreateAggregate = () => CompletedResponse!,
-            Events = GenerateEventsAsync()
+            CreateAggregate = () => CompletedResponse!, Events = GenerateEventsAsync()
         };
     }
 #pragma warning restore CS1998
@@ -61,7 +60,8 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
         yield return new ResponseInProgressEvent(Seq.Next(), ToResponse(status: ResponseStatus.InProgress));
 
         IList<Func<IEnumerable<ItemResource>>> outputFactories = [];
-        await foreach (var group in OutputGenerator.Generate().WithCancellation(CancellationToken).ConfigureAwait(false))
+        await foreach (var group in OutputGenerator.Generate().WithCancellation(CancellationToken)
+                           .ConfigureAwait(false))
         {
             outputFactories.Add(group.CreateAggregate);
             await foreach (var e in group.Events.WithCancellation(CancellationToken).ConfigureAwait(false))
@@ -97,11 +97,11 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
 
         _latestUsage = new ResponseUsage(
             inputTokens: usage.InputTokens + _latestUsage.InputTokens,
-            inputTokensDetails: new ResponseUsageInputTokensDetails(
-                cachedTokens: usage.InputTokensDetails.CachedTokens + _latestUsage.InputTokensDetails.CachedTokens),
+            inputTokensDetails: new ResponseUsageInputTokensDetails(cachedTokens:
+                usage.InputTokensDetails?.CachedTokens ?? 0 + _latestUsage.InputTokensDetails?.CachedTokens ?? 0),
             outputTokens: usage.OutputTokens + _latestUsage.OutputTokens,
-            outputTokensDetails: new ResponseUsageOutputTokensDetails(
-                reasoningTokens: usage.OutputTokensDetails.ReasoningTokens + _latestUsage.OutputTokensDetails.ReasoningTokens),
+            outputTokensDetails: new ResponseUsageOutputTokensDetails(reasoningTokens:
+                usage.OutputTokensDetails?.ReasoningTokens ?? 0 + _latestUsage.OutputTokensDetails?.ReasoningTokens ?? 0),
             totalTokens: usage.TotalTokens + _latestUsage.TotalTokens);
     }
 }

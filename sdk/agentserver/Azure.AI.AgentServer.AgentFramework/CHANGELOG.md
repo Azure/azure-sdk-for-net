@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.3 (2025-11-10)
+
+### Features Added
+- Fixed AgentId serialization
+- Fixed NPE when usage data is missing
+
 ## 1.0.0-beta.2 (2025-11-10)
 
 ### Features Added

@@ -78,7 +78,7 @@ public static class ResponsesExtensions
         return agent == null
             ? null
             : new AgentId(
-                type: new AgentIdType(agent.Type.ToString()),
+                type: AgentIdType.AgentId,
                 name: agent.Name,
                 version: agent.Version,
                 serializedAdditionalRawData: null);
