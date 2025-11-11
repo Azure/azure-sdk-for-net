@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2025-11-11)
 
 ### Bugs Fixed
-
-### Other Changes
+- Id generation issue
 
 ## 1.0.0-beta.3 (2025-11-10)
 

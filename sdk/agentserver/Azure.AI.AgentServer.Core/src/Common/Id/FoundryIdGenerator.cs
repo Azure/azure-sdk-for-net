@@ -152,8 +152,8 @@ public partial class FoundryIdGenerator : IIdGenerator
             throw new ArgumentException($"Id '{id}' does not contain a valid id.", nameof(id));
         }
 
-        // get last partitionKeyLength characters from the last part as the partition key
-        var partitionId = parts[1][^partitionKeyLength..];
+        // get first partitionKeyLength characters from the last part as the partition key
+        var partitionId = parts[1][..partitionKeyLength];
         return partitionId;
     }
 }
