@@ -6,6 +6,7 @@ namespace Azure.ResourceManager
         public ArmClient(Azure.Core.TokenCredential credential) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options) { }
+        public ArmClient(System.ClientModel.Primitives.ClientConnection clientConnection, System.Action<Azure.ResourceManager.ArmClientOptions> configureOptions = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> clientFactory) where T : class { throw null; }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifestResource GetDataPolicyManifestResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -136,11 +137,6 @@ namespace Azure.ResourceManager
     {
         public BicepModelReaderWriterOptions() : base (default(string)) { }
         public System.Collections.Generic.IDictionary<object, System.Collections.Generic.IDictionary<string, string>> PropertyOverrides { get { throw null; } }
-    }
-    public static partial class ClientConnectionExtensions
-    {
-        public static Azure.ResourceManager.ArmClient CreateArmClient(this System.ClientModel.Primitives.ClientConnection connection) { throw null; }
-        public static Azure.ResourceManager.ArmClient CreateArmClient(this System.ClientModel.Primitives.ClientConnection connection, System.Action<Azure.ResourceManager.ArmClientOptions> configure) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ManagementGroups
