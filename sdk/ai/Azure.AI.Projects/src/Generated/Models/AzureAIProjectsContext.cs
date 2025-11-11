@@ -270,6 +270,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
     [ModelReaderWriterBuildable(typeof(TaxonomyCategory))]
     [ModelReaderWriterBuildable(typeof(TaxonomySubCategory))]
+    [ModelReaderWriterBuildable(typeof(ToolArgumentBinding))]
     [ModelReaderWriterBuildable(typeof(ToolDescription))]
     [ModelReaderWriterBuildable(typeof(ToolProjectConnection))]
     [ModelReaderWriterBuildable(typeof(Trigger))]
