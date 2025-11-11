@@ -26,7 +26,7 @@
       "command": "dotnet build {packagePath}"
     },
     "updateMetadataScript": {
-      "path": "pwsh ./eng/scripts/Automation-Update-Metadata.ps1"
+      "path": "./eng/scripts/Automation-Update-Metadata.ps1"
     }
   }
 }
