@@ -9,9 +9,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    // Add these two methods back due to the breaking change of models: `VnetSolution` & `SecretStore` have more properties in version 2024-07-01-preview.
     public static partial class ArmServiceLinkerModelFactory
     {
+        // Add this method back due to the breaking change of models: `VnetSolution` & `SecretStore` have more properties in version 2024-07-01-preview.
         /// <summary> Initializes a new instance of <see cref="Models.LinkerResourcePatch"/>. </summary>
         /// <param name="targetService">
         /// The target service properties
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType = null, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
         {
             return LinkerResourcePatch(
                 targetService,
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 scope);
         }
 
+        // Add this method back due to the breaking change of models: `VnetSolution` & `SecretStore` have more properties in version 2024-07-01-preview.
         /// <summary> Initializes a new instance of <see cref="ServiceLinker.LinkerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="scope"> connection scope in source service. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolutionType? solutionType = null, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolutionType? solutionType, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
         {
             return LinkerResourceData(
                 id,

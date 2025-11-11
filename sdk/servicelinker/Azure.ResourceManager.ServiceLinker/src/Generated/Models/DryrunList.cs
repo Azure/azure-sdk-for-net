@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of <see cref="DryrunList"/>. </summary>
         internal DryrunList()
         {
-            Value = new ChangeTrackingList<DryrunResourceData>();
+            Value = new ChangeTrackingList<ServiceLinkerDryrunData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DryrunList"/>. </summary>
         /// <param name="value"> The DryrunResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DryrunList(IReadOnlyList<DryrunResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DryrunList(IReadOnlyList<ServiceLinkerDryrunData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> The DryrunResource items on this page. </summary>
-        public IReadOnlyList<DryrunResourceData> Value { get; }
+        public IReadOnlyList<ServiceLinkerDryrunData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

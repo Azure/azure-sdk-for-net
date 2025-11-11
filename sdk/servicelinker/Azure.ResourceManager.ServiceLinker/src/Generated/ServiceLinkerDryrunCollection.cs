@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceLinkerDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceLinkerDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, ServiceLinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceLinkerDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceLinkerDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, ServiceLinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerDryrunLinkersRestClient.CreateListDryrunRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerDryrunLinkersRestClient.CreateListDryrunNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerDryrunResource(Client, DryrunResourceData.DeserializeDryrunResourceData(e)), _serviceLinkerDryrunLinkersClientDiagnostics, Pipeline, "ServiceLinkerDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerDryrunLinkersClientDiagnostics, Pipeline, "ServiceLinkerDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerDryrunLinkersRestClient.CreateListDryrunRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerDryrunLinkersRestClient.CreateListDryrunNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerDryrunResource(Client, DryrunResourceData.DeserializeDryrunResourceData(e)), _serviceLinkerDryrunLinkersClientDiagnostics, Pipeline, "ServiceLinkerDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerDryrunLinkersClientDiagnostics, Pipeline, "ServiceLinkerDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

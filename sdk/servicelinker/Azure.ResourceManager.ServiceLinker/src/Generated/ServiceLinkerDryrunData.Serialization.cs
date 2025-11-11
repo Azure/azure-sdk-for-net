@@ -16,11 +16,11 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class DryrunResourceData : IUtf8JsonSerializable, IJsonModel<DryrunResourceData>
+    public partial class ServiceLinkerDryrunData : IUtf8JsonSerializable, IJsonModel<ServiceLinkerDryrunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DryrunResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceLinkerDryrunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DryrunResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceLinkerDryrunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DryrunResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLinkerDryrunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DryrunResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceLinkerDryrunData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.ServiceLinker
             writer.WriteEndObject();
         }
 
-        DryrunResourceData IJsonModel<DryrunResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceLinkerDryrunData IJsonModel<ServiceLinkerDryrunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DryrunResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLinkerDryrunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DryrunResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceLinkerDryrunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDryrunResourceData(document.RootElement, options);
+            return DeserializeServiceLinkerDryrunData(document.RootElement, options);
         }
 
-        internal static DryrunResourceData DeserializeDryrunResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceLinkerDryrunData DeserializeServiceLinkerDryrunData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DryrunResourceData(
+            return new ServiceLinkerDryrunData(
                 id,
                 name,
                 type,
@@ -201,35 +201,35 @@ namespace Azure.ResourceManager.ServiceLinker
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DryrunResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceLinkerDryrunData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DryrunResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLinkerDryrunData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DryrunResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceLinkerDryrunData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DryrunResourceData IPersistableModel<DryrunResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceLinkerDryrunData IPersistableModel<ServiceLinkerDryrunData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DryrunResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLinkerDryrunData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDryrunResourceData(document.RootElement, options);
+                        return DeserializeServiceLinkerDryrunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DryrunResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceLinkerDryrunData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DryrunResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceLinkerDryrunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

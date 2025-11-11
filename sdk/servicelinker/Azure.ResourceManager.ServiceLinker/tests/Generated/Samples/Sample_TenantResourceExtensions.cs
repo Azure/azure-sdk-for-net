@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetConfigurationNames_GetConfigurationNames()
+        public async Task GetServiceLinkerConfigurationNames_GetConfigurationNames()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/ConfigurationNamesList.json
             // this example is just showing the usage of "ConfigurationNames_List" operation, for the dependent resources, they will have to be created separately.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            await foreach (ConfigurationNameItem item in tenantResource.GetConfigurationNamesAsync())
+            await foreach (ConfigurationNameItem item in tenantResource.GetServiceLinkerConfigurationNamesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

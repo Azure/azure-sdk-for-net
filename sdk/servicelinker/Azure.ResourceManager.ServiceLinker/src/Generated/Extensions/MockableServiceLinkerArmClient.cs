@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An async collection of <see cref="DaprConfigurationResourceItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DaprConfigurationResourceItem> GetDaprConfigurationsLinkersAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DaprConfigurationResourceItem> GetServiceLinkerDaprConfigurationsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetServiceLinkerDaprConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,13 +249,13 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="DaprConfigurationResourceItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DaprConfigurationResourceItem> GetDaprConfigurationsLinkers(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Pageable<DaprConfigurationResourceItem> GetServiceLinkerDaprConfigurations(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceLinkerDryrunLinkersRestClient.CreateListDaprConfigurationsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetDaprConfigurationsLinkers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DaprConfigurationResourceItem.DeserializeDaprConfigurationResourceItem(e), ServiceLinkerDryrunLinkersClientDiagnostics, Pipeline, "MockableServiceLinkerArmClient.GetServiceLinkerDaprConfigurations", "value", "nextLink", cancellationToken);
         }
         /// <summary>
         /// Gets an object representing a <see cref="ServiceLinkerDryrunResource"/> along with the instance operations that can be performed on it but with no data.
@@ -270,15 +270,15 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocationDryrunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationDryrunResource.CreateResourceIdentifier" /> to create a <see cref="LocationDryrunResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ServiceLinkerLocationDryrunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceLinkerLocationDryrunResource.CreateResourceIdentifier" /> to create a <see cref="ServiceLinkerLocationDryrunResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationDryrunResource"/> object. </returns>
-        public virtual LocationDryrunResource GetLocationDryrunResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceLinkerLocationDryrunResource"/> object. </returns>
+        public virtual ServiceLinkerLocationDryrunResource GetServiceLinkerLocationDryrunResource(ResourceIdentifier id)
         {
-            LocationDryrunResource.ValidateResourceId(id);
-            return new LocationDryrunResource(Client, id);
+            ServiceLinkerLocationDryrunResource.ValidateResourceId(id);
+            return new ServiceLinkerLocationDryrunResource(Client, id);
         }
 
         /// <summary>

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceLinker
 
         private readonly ClientDiagnostics _serviceLinkerDryrunLinkersClientDiagnostics;
         private readonly LinkersRestOperations _serviceLinkerDryrunLinkersRestClient;
-        private readonly DryrunResourceData _data;
+        private readonly ServiceLinkerDryrunData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/dryruns";
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary> Initializes a new instance of the <see cref="ServiceLinkerDryrunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceLinkerDryrunResource(ArmClient client, DryrunResourceData data) : this(client, data.Id)
+        internal ServiceLinkerDryrunResource(ArmClient client, ServiceLinkerDryrunData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DryrunResourceData Data
+        public virtual ServiceLinkerDryrunData Data
         {
             get
             {

@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceLinker.Samples
 {
-    public partial class Sample_LocationDryrunResource
+    public partial class Sample_ServiceLinkerLocationDryrunResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LocationDryrunResource created on azure
-            // for more information of creating LocationDryrunResource, please refer to the document of LocationDryrunResource
+            // this example assumes you already have this ServiceLinkerLocationDryrunResource created on azure
+            // for more information of creating ServiceLinkerLocationDryrunResource, please refer to the document of ServiceLinkerLocationDryrunResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             AzureLocation location = new AzureLocation("westus");
             string dryrunName = "dryrunName";
-            ResourceIdentifier locationDryrunResourceId = LocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
-            LocationDryrunResource locationDryrun = client.GetLocationDryrunResource(locationDryrunResourceId);
+            ResourceIdentifier serviceLinkerLocationDryrunResourceId = ServiceLinkerLocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
+            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
-            LocationDryrunResource result = await locationDryrun.GetAsync();
+            ServiceLinkerLocationDryrunResource result = await serviceLinkerLocationDryrunResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LocationDryrunResource created on azure
-            // for more information of creating LocationDryrunResource, please refer to the document of LocationDryrunResource
+            // this example assumes you already have this ServiceLinkerLocationDryrunResource created on azure
+            // for more information of creating ServiceLinkerLocationDryrunResource, please refer to the document of ServiceLinkerLocationDryrunResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             AzureLocation location = new AzureLocation("westus");
             string dryrunName = "dryrunName";
-            ResourceIdentifier locationDryrunResourceId = LocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
-            LocationDryrunResource locationDryrun = client.GetLocationDryrunResource(locationDryrunResourceId);
+            ResourceIdentifier serviceLinkerLocationDryrunResourceId = ServiceLinkerLocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
+            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
-            await locationDryrun.DeleteAsync(WaitUntil.Completed);
+            await serviceLinkerLocationDryrunResource.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this LocationDryrunResource created on azure
-            // for more information of creating LocationDryrunResource, please refer to the document of LocationDryrunResource
+            // this example assumes you already have this ServiceLinkerLocationDryrunResource created on azure
+            // for more information of creating ServiceLinkerLocationDryrunResource, please refer to the document of ServiceLinkerLocationDryrunResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             AzureLocation location = new AzureLocation("westus");
             string dryrunName = "dryrunName";
-            ResourceIdentifier locationDryrunResourceId = LocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
-            LocationDryrunResource locationDryrun = client.GetLocationDryrunResource(locationDryrunResourceId);
+            ResourceIdentifier serviceLinkerLocationDryrunResourceId = ServiceLinkerLocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
+            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
             DryrunPatch patch = new DryrunPatch
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
                     },
                 },
             };
-            ArmOperation<LocationDryrunResource> lro = await locationDryrun.UpdateAsync(WaitUntil.Completed, patch);
-            LocationDryrunResource result = lro.Value;
+            ArmOperation<ServiceLinkerLocationDryrunResource> lro = await serviceLinkerLocationDryrunResource.UpdateAsync(WaitUntil.Completed, patch);
+            ServiceLinkerLocationDryrunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

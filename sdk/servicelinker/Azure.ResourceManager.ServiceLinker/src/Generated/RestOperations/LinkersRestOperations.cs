@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DryrunResourceData>> GetDryrunAsync(string resourceUri, string dryrunName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceLinkerDryrunData>> GetDryrunAsync(string resourceUri, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 case 200:
                     {
-                        DryrunResourceData value = default;
+                        ServiceLinkerDryrunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DryrunResourceData.DeserializeDryrunResourceData(document.RootElement);
+                        value = ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DryrunResourceData)null, message.Response);
+                    return Response.FromValue((ServiceLinkerDryrunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DryrunResourceData> GetDryrun(string resourceUri, string dryrunName, CancellationToken cancellationToken = default)
+        public Response<ServiceLinkerDryrunData> GetDryrun(string resourceUri, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
@@ -264,19 +264,19 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 case 200:
                     {
-                        DryrunResourceData value = default;
+                        ServiceLinkerDryrunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DryrunResourceData.DeserializeDryrunResourceData(document.RootElement);
+                        value = ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DryrunResourceData)null, message.Response);
+                    return Response.FromValue((ServiceLinkerDryrunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateDryrunRequestUri(string resourceUri, string dryrunName, DryrunResourceData data)
+        internal RequestUriBuilder CreateCreateDryrunRequestUri(string resourceUri, string dryrunName, ServiceLinkerDryrunData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return uri;
         }
 
-        internal HttpMessage CreateCreateDryrunRequest(string resourceUri, string dryrunName, DryrunResourceData data)
+        internal HttpMessage CreateCreateDryrunRequest(string resourceUri, string dryrunName, ServiceLinkerDryrunData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateDryrunAsync(string resourceUri, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateDryrunAsync(string resourceUri, string dryrunName, ServiceLinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateDryrun(string resourceUri, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateDryrun(string resourceUri, string dryrunName, ServiceLinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));

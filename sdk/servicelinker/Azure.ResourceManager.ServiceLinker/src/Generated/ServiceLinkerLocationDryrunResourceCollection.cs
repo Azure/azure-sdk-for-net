@@ -19,31 +19,31 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LocationDryrunResource"/> and their operations.
-    /// Each <see cref="LocationDryrunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="LocationDryrunCollection"/> instance call the GetLocationDryruns method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ServiceLinkerLocationDryrunResource"/> and their operations.
+    /// Each <see cref="ServiceLinkerLocationDryrunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ServiceLinkerLocationDryrunResourceCollection"/> instance call the GetServiceLinkerLocationDryrunResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class LocationDryrunCollection : ArmCollection, IEnumerable<LocationDryrunResource>, IAsyncEnumerable<LocationDryrunResource>
+    public partial class ServiceLinkerLocationDryrunResourceCollection : ArmCollection, IEnumerable<ServiceLinkerLocationDryrunResource>, IAsyncEnumerable<ServiceLinkerLocationDryrunResource>
     {
-        private readonly ClientDiagnostics _locationDryrunConnectorClientDiagnostics;
-        private readonly ConnectorRestOperations _locationDryrunConnectorRestClient;
+        private readonly ClientDiagnostics _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics;
+        private readonly ConnectorRestOperations _serviceLinkerLocationDryrunResourceConnectorRestClient;
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="LocationDryrunCollection"/> class for mocking. </summary>
-        protected LocationDryrunCollection()
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationDryrunResourceCollection"/> class for mocking. </summary>
+        protected ServiceLinkerLocationDryrunResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LocationDryrunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationDryrunResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> The name of Azure region. </param>
-        internal LocationDryrunCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal ServiceLinkerLocationDryrunResourceCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
-            _locationDryrunConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", LocationDryrunResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(LocationDryrunResource.ResourceType, out string locationDryrunConnectorApiVersion);
-            _locationDryrunConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, locationDryrunConnectorApiVersion);
+            _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ServiceLinkerLocationDryrunResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceLinkerLocationDryrunResource.ResourceType, out string serviceLinkerLocationDryrunResourceConnectorApiVersion);
+            _serviceLinkerLocationDryrunResourceConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerLocationDryrunResourceConnectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LocationDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceLinkerLocationDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, ServiceLinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.CreateOrUpdate");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _locationDryrunConnectorRestClient.CreateDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LocationDryrunResource>(new LocationDryrunOperationSource(Client), _locationDryrunConnectorClientDiagnostics, Pipeline, _locationDryrunConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunResourceOperationSource(Client), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LocationDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, DryrunResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceLinkerLocationDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, ServiceLinkerDryrunData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.CreateOrUpdate");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _locationDryrunConnectorRestClient.CreateDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LocationDryrunResource>(new LocationDryrunOperationSource(Client), _locationDryrunConnectorClientDiagnostics, Pipeline, _locationDryrunConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunResourceOperationSource(Client), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        public virtual async Task<Response<LocationDryrunResource>> GetAsync(string dryrunName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceLinkerLocationDryrunResource>> GetAsync(string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.Get");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _locationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocationDryrunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        public virtual Response<LocationDryrunResource> Get(string dryrunName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceLinkerLocationDryrunResource> Get(string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.Get");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _locationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken);
+                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocationDryrunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,17 +260,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocationDryrunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocationDryrunResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceLinkerLocationDryrunResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceLinkerLocationDryrunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _locationDryrunConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _locationDryrunConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocationDryrunResource(Client, DryrunResourceData.DeserializeDryrunResourceData(e)), _locationDryrunConnectorClientDiagnostics, Pipeline, "LocationDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerLocationDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, "ServiceLinkerLocationDryrunResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocationDryrunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocationDryrunResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceLinkerLocationDryrunResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceLinkerLocationDryrunResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _locationDryrunConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _locationDryrunConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocationDryrunResource(Client, DryrunResourceData.DeserializeDryrunResourceData(e)), _locationDryrunConnectorClientDiagnostics, Pipeline, "LocationDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerLocationDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, "ServiceLinkerLocationDryrunResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.Exists");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _locationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.Exists");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _locationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
+                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,18 +414,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        public virtual async Task<NullableResponse<LocationDryrunResource>> GetIfExistsAsync(string dryrunName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceLinkerLocationDryrunResource>> GetIfExistsAsync(string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.GetIfExists");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _locationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<LocationDryrunResource>(response.GetRawResponse());
-                return Response.FromValue(new LocationDryrunResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ServiceLinkerLocationDryrunResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,18 +459,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        public virtual NullableResponse<LocationDryrunResource> GetIfExists(string dryrunName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceLinkerLocationDryrunResource> GetIfExists(string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _locationDryrunConnectorClientDiagnostics.CreateScope("LocationDryrunCollection.GetIfExists");
+            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _locationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
+                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<LocationDryrunResource>(response.GetRawResponse());
-                return Response.FromValue(new LocationDryrunResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ServiceLinkerLocationDryrunResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        IEnumerator<LocationDryrunResource> IEnumerable<LocationDryrunResource>.GetEnumerator()
+        IEnumerator<ServiceLinkerLocationDryrunResource> IEnumerable<ServiceLinkerLocationDryrunResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ServiceLinker
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<LocationDryrunResource> IAsyncEnumerable<LocationDryrunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceLinkerLocationDryrunResource> IAsyncEnumerable<ServiceLinkerLocationDryrunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

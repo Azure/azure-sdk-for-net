@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal class ServiceLinkerDryrunOperationSource : IOperationSource<ServiceLinkerDryrunResource>
+    internal class ServiceLinkerLocationDryrunResourceOperationSource : IOperationSource<ServiceLinkerLocationDryrunResource>
     {
         private readonly ArmClient _client;
 
-        internal ServiceLinkerDryrunOperationSource(ArmClient client)
+        internal ServiceLinkerLocationDryrunResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        ServiceLinkerDryrunResource IOperationSource<ServiceLinkerDryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceLinkerLocationDryrunResource IOperationSource<ServiceLinkerLocationDryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<ServiceLinkerDryrunData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
-            return new ServiceLinkerDryrunResource(_client, data);
+            return new ServiceLinkerLocationDryrunResource(_client, data);
         }
 
-        async ValueTask<ServiceLinkerDryrunResource> IOperationSource<ServiceLinkerDryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceLinkerLocationDryrunResource> IOperationSource<ServiceLinkerLocationDryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<ServiceLinkerDryrunData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
-            return await Task.FromResult(new ServiceLinkerDryrunResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new ServiceLinkerLocationDryrunResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

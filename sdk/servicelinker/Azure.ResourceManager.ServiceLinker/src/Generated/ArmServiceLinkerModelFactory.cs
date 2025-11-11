@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceLinker.DryrunResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLinker.ServiceLinkerDryrunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// </param>
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="ServiceLinker.DryrunResourceData"/> instance for mocking. </returns>
-        public static DryrunResourceData DryrunResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceLinkerDryrunParametersContent parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
+        /// <returns> A new <see cref="ServiceLinker.ServiceLinkerDryrunData"/> instance for mocking. </returns>
+        public static ServiceLinkerDryrunData ServiceLinkerDryrunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceLinkerDryrunParametersContent parameters = null, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = null, IEnumerable<DryrunOperationPreview> operationPreviews = null, string provisioningState = null)
         {
             prerequisiteResults ??= new List<DryrunPrerequisiteResult>();
             operationPreviews ??= new List<DryrunOperationPreview>();
 
-            return new DryrunResourceData(
+            return new ServiceLinkerDryrunData(
                 id,
                 name,
                 resourceType,

@@ -20,6 +20,9 @@ modelerfour:
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 
+# mgmt-debug:
+#  show-serialized-names: true
+
 rename-mapping:
   TargetServiceBase: TargetServiceBaseInfo
   TargetServiceBase.type: TargetServiceType
@@ -54,6 +57,8 @@ rename-mapping:
   ConfigurationName.required : IsRequired
   FirewallRules: LinkerFirewallRules
   DaprConfigurationResource: DaprConfigurationResourceItem
+  DryrunResource: ServiceLinkerDryrun
+  AccessKeyPermissions: TargetServiceAccessKeyPermission
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -97,5 +102,10 @@ generate-arm-resource-extensions:
 request-path-to-resource-name:
   /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}: LinkerResource
   /{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}: ServiceLinkerDryrun
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}: ServiceLinkerLocationDryrunResource
+
+override-operation-name:
+  ConfigurationNames_List: GetServiceLinkerConfigurationNames
+  Linkers_ListDaprConfigurations: GetServiceLinkerDaprConfigurations
 
 ```

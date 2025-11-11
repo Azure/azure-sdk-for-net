@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
             // invoke the operation
             string dryrunName = "dryrunName";
-            DryrunResourceData data = new DryrunResourceData
+            ServiceLinkerDryrunData data = new ServiceLinkerDryrunData
             {
                 Parameters = new ServiceLinkerCreateOrUpdateDryrunParametersContent
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DryrunResourceData resourceData = result.Data;
+            ServiceLinkerDryrunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DryrunResourceData resourceData = result.Data;
+            ServiceLinkerDryrunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DryrunResourceData resourceData = item.Data;
+                ServiceLinkerDryrunData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DryrunResourceData resourceData = result.Data;
+                ServiceLinkerDryrunData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

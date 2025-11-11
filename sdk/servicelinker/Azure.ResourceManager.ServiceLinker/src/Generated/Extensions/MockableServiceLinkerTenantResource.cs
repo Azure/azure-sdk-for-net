@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <param name="skipToken"> OData skipToken option for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigurationNameItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationNameItem> GetConfigurationNamesAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConfigurationNameItem> GetServiceLinkerConfigurationNamesAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationNamesRestClient.CreateListRequest(filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationNamesRestClient.CreateListNextPageRequest(nextLink, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfigurationNameItem.DeserializeConfigurationNameItem(e), ConfigurationNamesClientDiagnostics, Pipeline, "MockableServiceLinkerTenantResource.GetConfigurationNames", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfigurationNameItem.DeserializeConfigurationNameItem(e), ConfigurationNamesClientDiagnostics, Pipeline, "MockableServiceLinkerTenantResource.GetServiceLinkerConfigurationNames", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <param name="skipToken"> OData skipToken option for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigurationNameItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationNameItem> GetConfigurationNames(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigurationNameItem> GetServiceLinkerConfigurationNames(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationNamesRestClient.CreateListRequest(filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationNamesRestClient.CreateListNextPageRequest(nextLink, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfigurationNameItem.DeserializeConfigurationNameItem(e), ConfigurationNamesClientDiagnostics, Pipeline, "MockableServiceLinkerTenantResource.GetConfigurationNames", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfigurationNameItem.DeserializeConfigurationNameItem(e), ConfigurationNamesClientDiagnostics, Pipeline, "MockableServiceLinkerTenantResource.GetServiceLinkerConfigurationNames", "value", "nextLink", cancellationToken);
         }
     }
 }

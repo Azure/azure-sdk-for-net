@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceLinker.Samples
 {
-    public partial class Sample_LocationDryrunCollection
+    public partial class Sample_ServiceLinkerLocationDryrunResourceCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this LocationDryrunResource
+            // get the collection of this ServiceLinkerLocationDryrunResource
             AzureLocation location = new AzureLocation("westus");
-            LocationDryrunCollection collection = resourceGroupResource.GetLocationDryruns(location);
+            ServiceLinkerLocationDryrunResourceCollection collection = resourceGroupResource.GetServiceLinkerLocationDryrunResources(location);
 
             // invoke the operation
             string dryrunName = "dryrunName";
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
                     },
                 },
             };
-            ArmOperation<LocationDryrunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dryrunName, data);
-            LocationDryrunResource result = lro.Value;
+            ArmOperation<ServiceLinkerLocationDryrunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dryrunName, data);
+            ServiceLinkerLocationDryrunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this LocationDryrunResource
+            // get the collection of this ServiceLinkerLocationDryrunResource
             AzureLocation location = new AzureLocation("westus");
-            LocationDryrunCollection collection = resourceGroupResource.GetLocationDryruns(location);
+            ServiceLinkerLocationDryrunResourceCollection collection = resourceGroupResource.GetServiceLinkerLocationDryrunResources(location);
 
             // invoke the operation
             string dryrunName = "dryrunName";
-            LocationDryrunResource result = await collection.GetAsync(dryrunName);
+            ServiceLinkerLocationDryrunResource result = await collection.GetAsync(dryrunName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this LocationDryrunResource
+            // get the collection of this ServiceLinkerLocationDryrunResource
             AzureLocation location = new AzureLocation("westus");
-            LocationDryrunCollection collection = resourceGroupResource.GetLocationDryruns(location);
+            ServiceLinkerLocationDryrunResourceCollection collection = resourceGroupResource.GetServiceLinkerLocationDryrunResources(location);
 
             // invoke the operation and iterate over the result
-            await foreach (LocationDryrunResource item in collection.GetAllAsync())
+            await foreach (ServiceLinkerLocationDryrunResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this LocationDryrunResource
+            // get the collection of this ServiceLinkerLocationDryrunResource
             AzureLocation location = new AzureLocation("westus");
-            LocationDryrunCollection collection = resourceGroupResource.GetLocationDryruns(location);
+            ServiceLinkerLocationDryrunResourceCollection collection = resourceGroupResource.GetServiceLinkerLocationDryrunResources(location);
 
             // invoke the operation
             string dryrunName = "dryrunName";
@@ -189,14 +189,14 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this LocationDryrunResource
+            // get the collection of this ServiceLinkerLocationDryrunResource
             AzureLocation location = new AzureLocation("westus");
-            LocationDryrunCollection collection = resourceGroupResource.GetLocationDryruns(location);
+            ServiceLinkerLocationDryrunResourceCollection collection = resourceGroupResource.GetServiceLinkerLocationDryrunResources(location);
 
             // invoke the operation
             string dryrunName = "dryrunName";
-            NullableResponse<LocationDryrunResource> response = await collection.GetIfExistsAsync(dryrunName);
-            LocationDryrunResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ServiceLinkerLocationDryrunResource> response = await collection.GetIfExistsAsync(dryrunName);
+            ServiceLinkerLocationDryrunResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

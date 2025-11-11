@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of LocationDryrunResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ServiceLinkerLocationDryrunResources in the ResourceGroupResource. </summary>
         /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LocationDryrunResources and their operations over a LocationDryrunResource. </returns>
-        public virtual LocationDryrunCollection GetLocationDryruns(AzureLocation location)
+        /// <returns> An object representing collection of ServiceLinkerLocationDryrunResources and their operations over a ServiceLinkerLocationDryrunResource. </returns>
+        public virtual ServiceLinkerLocationDryrunResourceCollection GetServiceLinkerLocationDryrunResources(AzureLocation location)
         {
-            return new LocationDryrunCollection(Client, Id, location);
+            return new ServiceLinkerLocationDryrunResourceCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LocationDryrunResource>> GetLocationDryrunAsync(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceLinkerLocationDryrunResource>> GetServiceLinkerLocationDryrunResourceAsync(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
         {
-            return await GetLocationDryruns(location).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceLinkerLocationDryrunResources(location).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationDryrunResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationDryrunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocationDryrunResource> GetLocationDryrun(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceLinkerLocationDryrunResource> GetServiceLinkerLocationDryrunResource(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
         {
-            return GetLocationDryruns(location).Get(dryrunName, cancellationToken);
+            return GetServiceLinkerLocationDryrunResources(location).Get(dryrunName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LocationConnectorResources in the ResourceGroupResource. </summary>

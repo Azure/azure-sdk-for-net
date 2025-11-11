@@ -14,10 +14,10 @@ using Azure.ResourceManager.ServiceLinker.Models;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A class representing the DryrunResource data model.
+    /// A class representing the ServiceLinkerDryrun data model.
     /// a dryrun job resource
     /// </summary>
-    public partial class DryrunResourceData : ResourceData
+    public partial class ServiceLinkerDryrunData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DryrunResourceData"/>. </summary>
-        public DryrunResourceData()
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerDryrunData"/>. </summary>
+        public ServiceLinkerDryrunData()
         {
             PrerequisiteResults = new ChangeTrackingList<DryrunPrerequisiteResult>();
             OperationPreviews = new ChangeTrackingList<DryrunOperationPreview>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DryrunResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerDryrunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="operationPreviews"> the preview of the operations for creation. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DryrunResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceLinkerDryrunParametersContent parameters, IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults, IReadOnlyList<DryrunOperationPreview> operationPreviews, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceLinkerDryrunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceLinkerDryrunParametersContent parameters, IReadOnlyList<DryrunPrerequisiteResult> prerequisiteResults, IReadOnlyList<DryrunOperationPreview> operationPreviews, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Parameters = parameters;
             PrerequisiteResults = prerequisiteResults;

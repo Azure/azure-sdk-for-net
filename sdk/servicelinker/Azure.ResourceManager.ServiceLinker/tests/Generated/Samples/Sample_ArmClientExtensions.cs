@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDaprConfigurationsLinkers_GetDaprConfigurations()
+        public async Task GetServiceLinkerDaprConfigurations_GetDaprConfigurations()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2024-07-01-preview/examples/GetDaprConfigurations.json
             // this example is just showing the usage of "Linkers_ListDaprConfigurations" operation, for the dependent resources, they will have to be created separately.
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
 
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
-            await foreach (DaprConfigurationResourceItem item in client.GetDaprConfigurationsLinkersAsync(scope))
+            await foreach (DaprConfigurationResourceItem item in client.GetServiceLinkerDaprConfigurationsAsync(scope))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

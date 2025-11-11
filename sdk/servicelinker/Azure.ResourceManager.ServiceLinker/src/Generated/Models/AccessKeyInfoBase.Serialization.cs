@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            IList<AccessKeyPermission> permissions = default;
+            IList<TargetServiceAccessKeyPermission> permissions = default;
             LinkerAuthType authType = default;
             ConfigurationAuthMode? authMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    List<AccessKeyPermission> array = new List<AccessKeyPermission>();
+                    List<TargetServiceAccessKeyPermission> array = new List<TargetServiceAccessKeyPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AccessKeyPermission(item.GetString()));
+                        array.Add(new TargetServiceAccessKeyPermission(item.GetString()));
                     }
                     permissions = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessKeyInfoBase(authType, authMode, serializedAdditionalRawData, permissions ?? new ChangeTrackingList<AccessKeyPermission>());
+            return new AccessKeyInfoBase(authType, authMode, serializedAdditionalRawData, permissions ?? new ChangeTrackingList<TargetServiceAccessKeyPermission>());
         }
 
         BinaryData IPersistableModel<AccessKeyInfoBase>.Write(ModelReaderWriterOptions options)
