@@ -30,6 +30,6 @@ namespace OpenAI
         }
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
     }
 }

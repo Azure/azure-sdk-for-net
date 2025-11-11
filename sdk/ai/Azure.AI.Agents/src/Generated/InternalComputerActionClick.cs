@@ -34,12 +34,12 @@ namespace OpenAI
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
-        public ComputerActionClickButton Button { get; }
+        public ComputerActionClickButton Button { get; set; }
 
         /// <summary> The x-coordinate where the click occurred. </summary>
-        public int X { get; }
+        public int X { get; set; }
 
         /// <summary> The y-coordinate where the click occurred. </summary>
-        public int Y { get; }
+        public int Y { get; set; }
     }
 }

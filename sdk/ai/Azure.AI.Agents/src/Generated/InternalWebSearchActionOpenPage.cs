@@ -30,6 +30,6 @@ namespace OpenAI
         }
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
     }
 }

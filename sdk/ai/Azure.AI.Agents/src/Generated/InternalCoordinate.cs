@@ -33,9 +33,9 @@ namespace OpenAI
         }
 
         /// <summary> The x-coordinate. </summary>
-        public int X { get; }
+        public int X { get; set; }
 
         /// <summary> The y-coordinate. </summary>
-        public int Y { get; }
+        public int Y { get; set; }
     }
 }

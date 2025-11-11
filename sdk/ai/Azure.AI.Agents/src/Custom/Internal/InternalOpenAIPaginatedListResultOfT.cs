@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,15 +26,6 @@ internal partial class InternalOpenAIPaginatedListResultOfT<TData> : ReadOnlyCol
         FirstId = firstId;
         LastId = lastId;
         HasMore = hasMore;
-    }
-
-    internal static InternalOpenAIPaginatedListResultOfT<TData> DeserializeInternalOpenAIPaginatedListResultOfT(
-        ClientResult protocolResult,
-        Func<JsonElement, ModelReaderWriterOptions, TData> dataItemDeserializer,
-        ModelReaderWriterOptions options)
-    {
-        using JsonDocument document = JsonDocument.Parse(protocolResult.GetRawResponse().ContentStream);
-        return DeserializeInternalOpenAIPaginatedListResultOfT(document.RootElement, dataItemDeserializer, options);
     }
 
     internal static InternalOpenAIPaginatedListResultOfT<TData> DeserializeInternalOpenAIPaginatedListResultOfT(

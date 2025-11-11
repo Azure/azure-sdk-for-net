@@ -43,7 +43,7 @@ namespace OpenAI
         }
 
         /// <summary> The name of the tool. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The description of the tool. </summary>
         public string Description { get; set; }
@@ -74,7 +74,7 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData InputSchema { get; }
+        public BinaryData InputSchema { get; set; }
 
         /// <summary>
         /// Additional annotations about the tool.

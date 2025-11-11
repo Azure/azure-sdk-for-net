@@ -14,7 +14,7 @@
     <!-- OPENAI001 - Ignore experimental warnings-->
     <NoWarn>$(NoWarn);OPENAI001;SCME0001;</NoWarn>
 
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.Agents.csproj" />

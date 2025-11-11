@@ -35,9 +35,9 @@ namespace OpenAI
         }
 
         /// <summary> The URL of the page searched for the pattern. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
 
         /// <summary> The pattern or text to search for within the page. </summary>
-        public string Pattern { get; }
+        public string Pattern { get; set; }
     }
 }

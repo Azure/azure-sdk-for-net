@@ -30,6 +30,6 @@ namespace OpenAI
         }
 
         /// <summary> The refusal explanationfrom the model. </summary>
-        public string Refusal { get; }
+        public string Refusal { get; set; }
     }
 }

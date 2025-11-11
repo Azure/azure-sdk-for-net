@@ -39,7 +39,7 @@ namespace OpenAI
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
 
         /// <summary> The annotations of the text output. </summary>
         public IList<InternalAnnotation> Annotations { get; }

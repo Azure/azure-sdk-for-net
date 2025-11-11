@@ -5,18 +5,20 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Files;
 using OpenAI.Responses;
 
 namespace Azure.AI.Agents.Tests;
+#pragma warning disable OPENAICUA001
 
 public class AgentsTests : AgentsTestBase
 {
@@ -114,11 +116,10 @@ public class AgentsTests : AgentsTestBase
     public async Task TestConversationCRUD()
     {
         AgentClient client = GetTestClient();
-        ProjectOpenAIClient openAI = client.GetOpenAIClient(TestOpenAIClientOptions);
 
-        AgentConversation firstConversation = await openAI.Conversations.CreateAgentConversationAsync();
-        AgentConversation secondConversation = await openAI.Conversations.CreateAgentConversationAsync(
-            new ProjectConversationCreationOptions()
+        AgentConversation firstConversation = await client.GetConversationClient().CreateConversationAsync();
+        AgentConversation secondConversation = await client.GetConversationClient().CreateConversationAsync(
+            new AgentConversationCreationOptions()
             {
                 Items =
                 {
@@ -145,33 +146,33 @@ public class AgentsTests : AgentsTestBase
         Assert.That(secondConversationFooMetadataValue, Is.EqualTo("yes"));
 
         List<ResponseItem> responseItems = [];
-        await foreach (ResponseItem item in client.OpenAI.Conversations.GetAgentConversationItemsAsync(firstConversation.Id))
+        await foreach (ResponseItem item in client.GetConversationClient().GetConversationItemsAsync(firstConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Is.Empty);
-        await foreach (ResponseItem item in client.OpenAI.Conversations.GetAgentConversationItemsAsync(secondConversation.Id))
+        await foreach (ResponseItem item in client.GetConversationClient().GetConversationItemsAsync(secondConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        ReadOnlyCollection<ResponseItem> createdItems = await client.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        ReadOnlyCollection<ResponseItem> createdItems = await client.GetConversationClient().CreateConversationItemsAsync(
                 firstConversation.Id,
                 [ResponseItem.CreateUserMessageItem("Hi there, world!")]);
         Assert.That(createdItems, Has.Count.EqualTo(1));
         responseItems.Clear();
-        await foreach (ResponseItem item in client.OpenAI.Conversations.GetAgentConversationItemsAsync(firstConversation.Id))
+        await foreach (ResponseItem item in client.GetConversationClient().GetConversationItemsAsync(firstConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        AgentConversation updatedConversation = await client.OpenAI.Conversations.UpdateAgentConversationAsync(
+        AgentConversation updatedConversation = await client.GetConversationClient().UpdateConversationAsync(
             firstConversation.Id,
-            new ProjectConversationUpdateOptions()
+            new AgentConversationUpdateOptions()
             {
                 Metadata =
                 {
@@ -180,7 +181,7 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(updatedConversation.Metadata, Has.Count.EqualTo(1));
 
-        AgentConversation retrievedConversation = await client.OpenAI.Conversations.GetAgentConversationAsync(firstConversation.Id);
+        AgentConversation retrievedConversation = await client.GetConversationClient().GetConversationAsync(firstConversation.Id);
         Assert.That(retrievedConversation?.Id, Is.EqualTo(firstConversation.Id));
         Assert.That(retrievedConversation.Metadata, Has.Count.EqualTo(1));
     }
@@ -189,10 +190,9 @@ public class AgentsTests : AgentsTestBase
     public async Task TestConversationItemsOrderingWithMultipleMessages()
     {
         AgentClient client = GetTestClient();
-        ProjectOpenAIClient openAI = client.GetOpenAIClient(TestOpenAIClientOptions);
 
         // Create a conversation
-        AgentConversation conversation = await client.OpenAI.Conversations.CreateAgentConversationAsync();
+        AgentConversation conversation = await client.GetConversationClient().CreateConversationAsync();
         Assert.That(conversation?.Id, Does.StartWith("conv_"));
 
         // Create 40 messages for the conversation
@@ -203,7 +203,7 @@ public class AgentsTests : AgentsTestBase
         }
 
         // Trying to add all 40 at once should fail
-        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await client.OpenAI.Conversations.CreateAgentConversationItemsAsync(conversation.Id, messagesToAdd));
+        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await client.GetConversationClient().CreateConversationItemsAsync(conversation.Id, messagesToAdd));
         Assert.That(exceptionFromOperation.GetRawResponse().Content.ToString(), Does.Contain("20 items"));
 
         List<ResponseItem> firstHalfMessages = [];
@@ -217,16 +217,16 @@ public class AgentsTests : AgentsTestBase
             secondHalfMessages.Add(messagesToAdd[i]);
         }
 
-        ReadOnlyCollection<ResponseItem> createdItems = await client.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        ReadOnlyCollection<ResponseItem> createdItems = await client.GetConversationClient().CreateConversationItemsAsync(
             conversation.Id,
             firstHalfMessages);
         Assert.That(createdItems, Has.Count.EqualTo(20));
-        createdItems = await client.OpenAI.Conversations.CreateAgentConversationItemsAsync(conversation.Id, secondHalfMessages);
+        createdItems = await client.GetConversationClient().CreateConversationItemsAsync(conversation.Id, secondHalfMessages);
         Assert.That(createdItems, Has.Count.EqualTo(20));
 
         // Test ascending order traversal
         List<AgentResponseItem> ascendingItems = [];
-        await foreach (AgentResponseItem item in client.OpenAI.Conversations.GetAgentConversationItemsAsync(
+        await foreach (AgentResponseItem item in client.GetConversationClient().GetConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: AgentListOrder.Ascending))
@@ -237,7 +237,7 @@ public class AgentsTests : AgentsTestBase
 
         // Test descending order traversal
         List<AgentResponseItem> descendingItems = [];
-        await foreach (AgentResponseItem item in client.OpenAI.Conversations.GetAgentConversationItemsAsync(
+        await foreach (AgentResponseItem item in client.GetConversationClient().GetConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: AgentListOrder.Descending))
@@ -257,7 +257,7 @@ public class AgentsTests : AgentsTestBase
 
         // Verify that we can collect all items consistently
         List<AgentResponseItem> allItems = [];
-        await foreach (AgentResponseItem item in client.OpenAI.Conversations.GetAgentConversationItemsAsync(conversation.Id))
+        await foreach (AgentResponseItem item in client.GetConversationClient().GetConversationItemsAsync(conversation.Id))
         {
             allItems.Add(item);
         }
@@ -268,7 +268,8 @@ public class AgentsTests : AgentsTestBase
     public async Task SimplePromptAgentWithConversation()
     {
         AgentClient agentClient = GetTestClient();
-        OpenAIResponseClient responseClient = agentClient.OpenAI.Responses;
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
@@ -278,8 +279,8 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await agentClient.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(agentDefinition));
-        AgentConversation conversation = await agentClient.OpenAI.Conversations.CreateAgentConversationAsync(
-            new ProjectConversationCreationOptions()
+        AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync(
+            new AgentConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
@@ -299,7 +300,8 @@ public class AgentsTests : AgentsTestBase
     public async Task SimplePromptAgentWithoutConversation()
     {
         AgentClient agentClient = GetTestClient();
-        OpenAIResponseClient responseClient = agentClient.OpenAI.Responses;
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
@@ -342,7 +344,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentClient agentClient = GetTestClient();
         OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
-        OpenAIResponseClient responseClient = agentClient.OpenAI.Responses;
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentVersion agent = await agentClient.CreateAgentVersionAsync(
             "TestPromptAgentFromDotnetTests2343",
@@ -390,8 +392,8 @@ public class AgentsTests : AgentsTestBase
     public async Task SimpleWorkflowAgent()
     {
         AgentClient agentClient = GetTestClient();
-        ProjectOpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
-        OpenAIResponseClient responseClient = openAIClient.Responses;
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 
@@ -408,7 +410,7 @@ public class AgentsTests : AgentsTestBase
         agentName = newAgentVersion.Name;
         agentVersion = newAgentVersion.Version;
 
-        AgentConversation newConversation = await agentClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        AgentConversation newConversation = await agentClient.GetConversationClient().CreateConversationAsync();
 
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(agentName, agentVersion);
@@ -434,8 +436,8 @@ public class AgentsTests : AgentsTestBase
     public async Task SimpleWorkflowAgentStreaming()
     {
         AgentClient agentClient = GetTestClient();
-        ProjectOpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
-        OpenAIResponseClient responseClient = openAIClient.Responses;
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         AgentDefinition workflowAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
 
@@ -452,7 +454,7 @@ public class AgentsTests : AgentsTestBase
         agentName = newAgentVersion.Name;
         agentVersion = newAgentVersion.Version;
 
-        AgentConversation newConversation = await agentClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        AgentConversation newConversation = await agentClient.GetConversationClient().CreateConversationAsync();
 
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(agentName, agentVersion);
@@ -553,11 +555,11 @@ public class AgentsTests : AgentsTestBase
 
         if (useConversation)
         {
-            ProjectConversationCreationOptions conversationOptions = new()
+            AgentConversationCreationOptions conversationOptions = new()
             {
                 Items = { userItem, agentItem },
             };
-            AgentConversation conv = await CreateConversation(client, conversationOptions);
+            AgentConversation conv = await CreateConversation(client, opts: conversationOptions);
             updateResult = await memoryClient.UpdateMemoriesAsync(store.Id, scope, conv.Id);
         }
         else
@@ -578,10 +580,12 @@ public class AgentsTests : AgentsTestBase
     public async Task TestTool(ToolType toolType)
     {
         AgentClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, client.OpenAI)));
-        OpenAIResponseClient responseClient = client.OpenAI.Responses;
+            options: new(await GetAgentToolDefinition(toolType, openAIClient)));
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.MODELDEPLOYMENTNAME);
         AgentReference agentReference = new(name: agentVersion.Name)
         {
             Version = agentVersion.Version,
@@ -602,6 +606,85 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [TestCase(ToolType.FileSearch)]
+    public async Task TestToolStreaming(ToolType toolType)
+    {
+        AgentClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(await GetAgentToolDefinition(toolType, openAIClient)));
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentReference agentReference = new(name: agentVersion.Name)
+        {
+            Version = agentVersion.Version,
+        };
+        ResponseCreationOptions responseOptions = new();
+        responseOptions.SetAgentReference(agentReference);
+        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
+        bool isStarted = false;
+        bool isFinished = false;
+        bool annotationMet = false;
+        bool isStatusGood = false;
+        //Type expectedUpdateType = null;
+        bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
+        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
+        {
+            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+            {
+                isStarted = true;
+            }
+            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
+            {
+                isFinished = true;
+                Assert.That(textDoneUpdate.Text, Is.Not.Null.And.Not.Empty);
+                if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
+                {
+                    Assert.That(textDoneUpdate.Text, Does.Contain(expectedResponse), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
+                }
+            }
+            else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
+            {
+                if (ExpectedAnnotations.TryGetValue(toolType, out Type annotationType))
+                {
+                    if (itemDoneUpdate.Item is MessageResponseItem messageItem)
+                    {
+                        foreach (ResponseContentPart part in messageItem.Content)
+                        {
+                            foreach (ResponseMessageAnnotation annotation in part.OutputTextAnnotations)
+                            {
+                                annotationMet |= annotation.GetType() == annotationType;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    annotationMet = true;
+                }
+            }
+            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
+            {
+                Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+            }
+            else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
+            {
+                Assert.That(streamResponseCompletedUpdate.Response.Status, Is.EqualTo(ResponseStatus.Completed));
+                isStatusGood = true;
+            }
+            if (expectedUpdateType is not null)
+            {
+                updateFound |= streamResponse.GetType() == expectedUpdateType;
+            }
+        }
+        Assert.That(annotationMet, Is.True);
+        Assert.That(isStarted, Is.True, "The stream did not started.");
+        Assert.That(isFinished, Is.True, "The stream did not finished.");
+        Assert.That(isStatusGood, Is.True, "No StreamingResponseCompletedUpdate were met.");
+    }
+
+    [RecordedTest]
     public async Task TestFunctions()
     {
         AgentClient client = GetTestClient();
@@ -610,9 +693,14 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.FunctionCall, openAIClient))
         );
-        OpenAIResponseClient responseClient = client.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentReference agentReference = new(name: agentVersion.Name)
+        {
+            Version = agentVersion.Version,
+        };
         ResponseCreationOptions responseOptions = new();
-        responseOptions.SetAgentReference(agentVersion);
+        responseOptions.SetAgentReference(agentReference);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[ToolType.FunctionCall]);
         List<ResponseItem> inputItems = [request];
         bool funcionCalled;
@@ -647,6 +735,121 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
     }
 
+    private static ComputerCallOutputResponseItem ProcessComputerUseCallTest<T>(ComputerCallResponseItem item, IReadOnlyDictionary<string, T> screenshots)
+    {
+        T currentScreenshot = item.Action.Kind switch
+        {
+            ComputerCallActionKind.Type => screenshots["search_typed"],
+            ComputerCallActionKind.KeyPress => (item.Action.KeyPressKeyCodes.Contains("Return") || item.Action.KeyPressKeyCodes.Contains("ENTER")) ? screenshots["search_results"] : screenshots["browser_search"],
+            ComputerCallActionKind.Click => screenshots["search_results"],
+            _ => screenshots["browser_search"]
+        };
+        if (currentScreenshot is string currentScreenshotStr)
+        {
+            if (currentScreenshotStr.StartsWith("data:image"))
+            {
+                return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageUri: new Uri(currentScreenshotStr)));
+            }
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: currentScreenshotStr));
+        }
+        if (currentScreenshot is BinaryData currentScreenshotBin)
+        {
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: currentScreenshotBin, screenshotImageBytesMediaType: "image/png"));
+        }
+        throw new InvalidDataException("screenshots must be a Dictionary<string, string>, Dictionary<string, BinaryData>");
+    }
+
+    private static async Task<string> UploadScreenshots(OpenAIClient openAIClient)
+    {
+        OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
+        Dictionary<string, string> screenshots = new() {
+            { "browser_search", (await fileClient.UploadFileAsync(GetTestFile("cua_browser_search.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "search_typed", (await fileClient.UploadFileAsync(GetTestFile("cua_search_typed.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "search_results", (await fileClient.UploadFileAsync(GetTestFile("cua_search_results.png"), FileUploadPurpose.Assistants)).Value.Id },
+        };
+        return JsonSerializer.Serialize(screenshots);
+    }
+
+    private static BinaryData UrlGetBase64Image(string name)
+    {
+        string imagePath = GetTestFile(name);
+        return new BinaryData(File.ReadAllBytes(imagePath));
+    }
+
+    private static Dictionary<string, BinaryData> GetImagesBin()
+    {
+        return new() {
+            { "browser_search", UrlGetBase64Image("cua_browser_search.png")},
+            { "search_typed", UrlGetBase64Image("cua_search_typed.png")},
+            { "search_results", UrlGetBase64Image("cua_search_results.png")},
+        };
+    }
+
+    [RecordedTest]
+    // [TestCase(true)] File upload mecahnism is blocked by the Bug 4806071 (ADO)
+    [TestCase(false)]
+    public async Task TestComputerUse(bool useFileUpload)
+    {
+        AgentClient client = GetTestClient();
+        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
+        // If the files are not in the foundry (used only for file upload),uncomment the code below and
+        // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
+        // comment out these lines and run the test again.
+        // string serializedScreenshots = await UploadScreenshots(openAIClient);
+        // Console.WriteLine(serializedScreenshots);
+        // End of file upload code.
+        Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
+        Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
+        AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, openAIClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
+        );
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
+            TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME);
+        AgentReference agentReference = new(name: agentVersion.Name)
+        {
+            Version = agentVersion.Version,
+        };
+
+        ResponseCreationOptions responseOptions = new();
+        responseOptions.TruncationMode = ResponseTruncationMode.Auto;
+        responseOptions.SetAgentReference(agentReference);
+        ResponseItem request = ResponseItem.CreateUserMessageItem(
+            [
+                ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
+                useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageBytes: screenshotsBin["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+            ]
+        );
+        List<ResponseItem> inputItems = [request];
+        bool computerUseCalled;
+        bool computerUseWasCalled = false;
+        int limitIteration = 10;
+        OpenAIResponse response;
+        do
+        {
+            response = await responseClient.CreateResponseAsync(
+                inputItems: inputItems,
+                options: responseOptions);
+            response = await WaitForRun(responseClient, response);
+            inputItems.Clear();
+            responseOptions.PreviousResponseId = response.Id;
+            computerUseCalled = false;
+            foreach (ResponseItem responseItem in response.OutputItems)
+            {
+                inputItems.Add(responseItem);
+                if (responseItem is ComputerCallResponseItem computerCall)
+                {
+                    inputItems.Add(useFileUpload ? ProcessComputerUseCallTest(computerCall, screenshots) : ProcessComputerUseCallTest(computerCall, screenshotsBin));
+                    computerUseCalled = true;
+                    computerUseWasCalled = true;
+                }
+            }
+            limitIteration--;
+        } while (computerUseCalled && limitIteration > 0);
+        Assert.That(computerUseWasCalled, "The computer use tool was not called.");
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+    }
+
     [RecordedTest]
     [Ignore("Needs recording update for 2025-11-15-preview")]
     public async Task TestAzureContainerApp()
@@ -661,7 +864,7 @@ public class AgentsTests : AgentsTestBase
         OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(
             TestEnvironment.MODELDEPLOYMENTNAME);
-        ProjectConversationCreationOptions conversationOptions = new();
+        AgentConversationCreationOptions conversationOptions = new();
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
@@ -687,7 +890,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentClient agentClient = GetTestClient();
         OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
-        OpenAIResponseClient responseClient = agentClient.OpenAI.Responses;
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         ResponseCreationOptions responseOptions = new()
         {
@@ -714,10 +917,6 @@ public class AgentsTests : AgentsTestBase
                 options: new(agentDefinition));
 
             responseOptions.SetAgentReference(agentVersion);
-        }
-        else
-        {
-            responseOptions.Model = TestEnvironment.MODELDEPLOYMENTNAME;
         }
 
         List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem("Hello, model!")];
@@ -748,7 +947,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentClient agentClient = GetTestClient();
         OpenAIClient openAIClient = agentClient.GetOpenAIClient(TestOpenAIClientOptions);
-        OpenAIResponseClient responseClient = agentClient.OpenAI.Responses;
+        OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(TestEnvironment.MODELDEPLOYMENTNAME);
 
         CancellationTokenSource cts = new(TimeSpan.FromSeconds(60));
 
@@ -786,7 +985,7 @@ public class AgentsTests : AgentsTestBase
         // Using a conversation: here, a new conversation is created for this interaction.
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
-            AgentConversation conversation = await agentClient.OpenAI.Conversations.CreateAgentConversationAsync(options: null, cts.Token);
+            AgentConversation conversation = await agentClient.GetConversationClient().CreateConversationAsync(options: null, cts.Token);
             responseCreationOptions.SetConversationReference(conversation);
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using OpenAI;
@@ -178,5 +179,13 @@ namespace Azure.AI.Agents
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgentResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentResponseItem"/> from. </param>
+        public static explicit operator AgentResponseItem(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAgentResponseItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

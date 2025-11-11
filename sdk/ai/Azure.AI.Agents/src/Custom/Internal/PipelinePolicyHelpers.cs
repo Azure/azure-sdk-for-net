@@ -80,7 +80,7 @@ internal static partial class PipelinePolicyHelpers
         /// This is a workaround for an issue in the OpenAI library: https://github.com/openai/openai-dotnet/issues/779
         /// </remarks>
         /// <param name="options"></param>
-        public static void AddResponseItemInputTransformPolicy(ClientPipelineOptions options)
+        public static void AddResponseItemInputTransformPolicy(OpenAIClientOptions options)
         {
             options.AddPolicy(new GenericActionPipelinePolicy(
                 requestAction: request =>
@@ -120,7 +120,7 @@ internal static partial class PipelinePolicyHelpers
         /// This is a temporary workaround for internal issue 4771165.
         /// </remarks>
         /// <param name="options"></param>
-        public static void AddErrorTransformPolicy(ClientPipelineOptions options)
+        public static void AddErrorTransformPolicy(OpenAIClientOptions options)
         {
             options.AddPolicy(
                 new GenericActionPipelinePolicy(
@@ -166,7 +166,7 @@ internal static partial class PipelinePolicyHelpers
                     PipelinePosition.PerTry);
         }
 
-        public static void AddAzureFinetuningParityPolicy(ClientPipelineOptions options)
+        public static void AddAzureFinetuningParityPolicy(OpenAIClientOptions options)
         {
             options.AddPolicy(
                 new GenericActionPipelinePolicy(

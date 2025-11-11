@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 
 namespace Azure.AI.Agents
@@ -584,7 +583,7 @@ namespace Azure.AI.Agents
         /// <param name="toolArgumentBindings"> When provided, the input value is bound to the specified tool arguments. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
         /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
-        /// <returns> A new <see cref="Projects.OpenAI.StructuredInputDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.StructuredInputDefinition"/> instance for mocking. </returns>
         public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IEnumerable<ToolArgumentBinding> toolArgumentBindings = default, BinaryData schema = default, bool? isRequired = default)
         {
             toolArgumentBindings ??= new ChangeTrackingList<ToolArgumentBinding>();
@@ -676,71 +675,6 @@ namespace Azure.AI.Agents
             return new AgentManifestOptions(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Base definition for memory store configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.MemoryStoreDefaultDefinition"/>.
-        /// </summary>
-        /// <param name="kind"> The kind of the memory store. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreDefinition"/> instance for mocking. </returns>
-        public static MemoryStoreDefinition MemoryStoreDefinition(string kind = default)
-        {
-            return new UnknownMemoryStoreDefinition(new MemoryStoreKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Default memory store implementation. </summary>
-        /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
-        /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
-        /// <param name="options"> Default memory store options. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreDefaultDefinition"/> instance for mocking. </returns>
-        public static MemoryStoreDefaultDefinition MemoryStoreDefaultDefinition(string chatModel = default, string embeddingModel = default, MemoryStoreDefaultOptions options = default)
-        {
-            return new MemoryStoreDefaultDefinition(MemoryStoreKind.Default, additionalBinaryDataProperties: null, chatModel, embeddingModel, options);
-        }
-
-        /// <summary> Default memory store configurations. </summary>
-        /// <param name="userProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
-        /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
-        /// <param name="chatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool userProfileEnabled = default, string userProfileDetails = default, bool chatSummaryEnabled = default)
-        {
-            return new MemoryStoreDefaultOptions(userProfileEnabled, userProfileDetails, chatSummaryEnabled, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory store that can store and retrieve user memories. </summary>
-        /// <param name="id"> The unique identifier of the memory store. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the memory store was created. </param>
-        /// <param name="updatedAt"> The Unix timestamp (seconds) when the memory store was last updated. </param>
-        /// <param name="name"> The name of the memory store. </param>
-        /// <param name="description"> A human-readable description of the memory store. </param>
-        /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
-        /// <param name="definition"> The definition of the memory store. </param>
-        /// <returns> A new <see cref="Agents.MemoryStore"/> instance for mocking. </returns>
-        public static MemoryStore MemoryStore(string id = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string name = default, string description = default, IDictionary<string, string> metadata = default, MemoryStoreDefinition definition = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MemoryStore(
-                "agent.version",
-                id,
-                createdAt,
-                updatedAt,
-                name,
-                description,
-                metadata,
-                definition,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The DeleteMemoryStoreResponse. </summary>
-        /// <param name="name"> The name of the memory store. </param>
-        /// <param name="deleted"> Whether the memory store was successfully deleted. </param>
-        /// <returns> A new <see cref="Agents.DeleteMemoryStoreResponse"/> instance for mocking. </returns>
-        public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool deleted = default)
-        {
-            return new DeleteMemoryStoreResponse("memory_store.deleted", name, deleted, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A retrieved memory item from memory search. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <returns> A new <see cref="Agents.MemorySearchItem"/> instance for mocking. </returns>
@@ -804,103 +738,40 @@ namespace Azure.AI.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Memory search response. </summary>
-        /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
-        /// <param name="memories"> Related memory items found during the search operation. </param>
-        /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreSearchResponse"/> instance for mocking. </returns>
-        public static MemoryStoreSearchResponse MemoryStoreSearchResponse(string searchId = default, IEnumerable<MemorySearchItem> memories = default, MemoryStoreOperationUsage usage = default)
-        {
-            memories ??= new ChangeTrackingList<MemorySearchItem>();
-
-            return new MemoryStoreSearchResponse(searchId, memories.ToList(), usage, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Usage statistics of a memory store operation. </summary>
-        /// <param name="embeddingTokens"> The number of embedding tokens. </param>
-        /// <param name="inputTokens"> The number of input tokens. </param>
-        /// <param name="inputTokensDetails"> A detailed breakdown of the input tokens. </param>
-        /// <param name="outputTokens"> The number of output tokens. </param>
-        /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
-        /// <param name="totalTokens"> The total number of tokens used. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsage"/> instance for mocking. </returns>
-        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, int inputTokens = default, MemoryStoreOperationUsageInputTokensDetails inputTokensDetails = default, int outputTokens = default, MemoryStoreOperationUsageOutputTokensDetails outputTokensDetails = default, int totalTokens = default)
-        {
-            return new MemoryStoreOperationUsage(
-                embeddingTokens,
-                inputTokens,
-                inputTokensDetails,
-                outputTokens,
-                outputTokensDetails,
-                totalTokens,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
-        /// <param name="cachedTokens">
-        /// The number of tokens that were retrieved from the cache.
-        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
+        /// <summary> The AgentConversation. </summary>
+        /// <param name="id"> The unique ID of the conversation. </param>
+        /// <param name="createdAt"></param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// 
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
         /// </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static MemoryStoreOperationUsageInputTokensDetails MemoryStoreOperationUsageInputTokensDetails(int cachedTokens = default)
+        /// <returns> A new <see cref="Agents.AgentConversation"/> instance for mocking. </returns>
+        public static AgentConversation AgentConversation(string id = default, DateTimeOffset createdAt = default, IDictionary<string, string> metadata = default)
         {
-            return new MemoryStoreOperationUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgentConversation(id, "conversation", createdAt, metadata, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MemoryStoreOperationUsageOutputTokensDetails. </summary>
-        /// <param name="reasoningTokens"> The number of reasoning tokens. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsageOutputTokensDetails"/> instance for mocking. </returns>
-        public static MemoryStoreOperationUsageOutputTokensDetails MemoryStoreOperationUsageOutputTokensDetails(int reasoningTokens = default)
+        /// <summary> The AgentConversationUpdateOptions. </summary>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// 
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <returns> A new <see cref="Agents.AgentConversationUpdateOptions"/> instance for mocking. </returns>
+        public static AgentConversationUpdateOptions AgentConversationUpdateOptions(IDictionary<string, string> metadata = default)
         {
-            return new MemoryStoreOperationUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
-        }
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
-        /// <summary> Provides the status of a memory store update operation. </summary>
-        /// <param name="updateId"> The unique ID of this update request. Use this value as previous_update_id in subsequent requests to perform incremental updates. </param>
-        /// <param name="status"> The status of the memory update operation. One of "queued", "in_progress", "completed", "failed", or "superseded". </param>
-        /// <param name="supersededBy"> The update_id the operation was superseded by when status is "superseded". </param>
-        /// <param name="details"> The result of memory store update operation when status is "completed". </param>
-        /// <param name="error"> Error object that describes the error when status is "failed". </param>
-        /// <returns> A new <see cref="Agents.MemoryUpdateResult"/> instance for mocking. </returns>
-        public static MemoryUpdateResult MemoryUpdateResult(string updateId = default, MemoryStoreUpdateStatus status = default, string supersededBy = default, MemoryUpdateResultDetails details = default, AgentsApiError error = default)
-        {
-            return new MemoryUpdateResult(
-                updateId,
-                status,
-                supersededBy,
-                details,
-                error,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Memory update result. </summary>
-        /// <param name="memoryOperations"> A list of individual memory operations that were performed during the update. </param>
-        /// <param name="usage"> Usage statistics associated with the memory update operation. </param>
-        /// <returns> A new <see cref="Agents.MemoryUpdateResultDetails"/> instance for mocking. </returns>
-        public static MemoryUpdateResultDetails MemoryUpdateResultDetails(IEnumerable<MemoryOperation> memoryOperations = default, MemoryStoreOperationUsage usage = default)
-        {
-            memoryOperations ??= new ChangeTrackingList<MemoryOperation>();
-
-            return new MemoryUpdateResultDetails(memoryOperations.ToList(), usage, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>
-        /// <param name="kind"> The type of memory operation being performed. </param>
-        /// <param name="memoryItem"> The memory item to create, update, or delete. </param>
-        /// <returns> A new <see cref="Agents.MemoryOperation"/> instance for mocking. </returns>
-        public static MemoryOperation MemoryOperation(MemoryOperationKind kind = default, MemoryItem memoryItem = default)
-        {
-            return new MemoryOperation(kind, memoryItem, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response for deleting memories from a scope. </summary>
-        /// <param name="name"> The name of the memory store. </param>
-        /// <param name="scope"> The scope from which memories were deleted. </param>
-        /// <param name="deleted"> Whether the deletion operation was successful. </param>
-        /// <returns> A new <see cref="Agents.MemoryStoreDeleteScopeResponse"/> instance for mocking. </returns>
-        public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool deleted = default)
-        {
-            return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, deleted, additionalBinaryDataProperties: null);
+            return new AgentConversationUpdateOptions(metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1033,6 +904,170 @@ namespace Azure.AI.Agents
                 results.ToList());
         }
 
+        /// <summary>
+        /// Base definition for memory store configurations.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.MemoryStoreDefaultDefinition"/>.
+        /// </summary>
+        /// <param name="kind"> The kind of the memory store. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreDefinition"/> instance for mocking. </returns>
+        public static MemoryStoreDefinition MemoryStoreDefinition(string kind = default)
+        {
+            return new UnknownMemoryStoreDefinition(new MemoryStoreKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Default memory store implementation. </summary>
+        /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
+        /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
+        /// <param name="options"> Default memory store options. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreDefaultDefinition"/> instance for mocking. </returns>
+        public static MemoryStoreDefaultDefinition MemoryStoreDefaultDefinition(string chatModel = default, string embeddingModel = default, MemoryStoreDefaultOptions options = default)
+        {
+            return new MemoryStoreDefaultDefinition(MemoryStoreKind.Default, additionalBinaryDataProperties: null, chatModel, embeddingModel, options);
+        }
+
+        /// <summary> Default memory store configurations. </summary>
+        /// <param name="userProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
+        /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
+        /// <param name="chatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool userProfileEnabled = default, string userProfileDetails = default, bool chatSummaryEnabled = default)
+        {
+            return new MemoryStoreDefaultOptions(userProfileEnabled, userProfileDetails, chatSummaryEnabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory store that can store and retrieve user memories. </summary>
+        /// <param name="id"> The unique identifier of the memory store. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the memory store was created. </param>
+        /// <param name="updatedAt"> The Unix timestamp (seconds) when the memory store was last updated. </param>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="description"> A human-readable description of the memory store. </param>
+        /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
+        /// <param name="definition"> The definition of the memory store. </param>
+        /// <returns> A new <see cref="Agents.MemoryStore"/> instance for mocking. </returns>
+        public static MemoryStore MemoryStore(string id = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string name = default, string description = default, IDictionary<string, string> metadata = default, MemoryStoreDefinition definition = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MemoryStore(
+                "agent.version",
+                id,
+                createdAt,
+                updatedAt,
+                name,
+                description,
+                metadata,
+                definition,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The DeleteMemoryStoreResponse. </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="deleted"> Whether the memory store was successfully deleted. </param>
+        /// <returns> A new <see cref="Agents.DeleteMemoryStoreResponse"/> instance for mocking. </returns>
+        public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool deleted = default)
+        {
+            return new DeleteMemoryStoreResponse("memory_store.deleted", name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory search response. </summary>
+        /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
+        /// <param name="memories"> Related memory items found during the search operation. </param>
+        /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreSearchResponse"/> instance for mocking. </returns>
+        public static MemoryStoreSearchResponse MemoryStoreSearchResponse(string searchId = default, IEnumerable<MemorySearchItem> memories = default, MemoryStoreOperationUsage usage = default)
+        {
+            memories ??= new ChangeTrackingList<MemorySearchItem>();
+
+            return new MemoryStoreSearchResponse(searchId, memories.ToList(), usage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Usage statistics of a memory store operation. </summary>
+        /// <param name="embeddingTokens"> The number of embedding tokens. </param>
+        /// <param name="inputTokens"> The number of input tokens. </param>
+        /// <param name="inputTokensDetails"> A detailed breakdown of the input tokens. </param>
+        /// <param name="outputTokens"> The number of output tokens. </param>
+        /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
+        /// <param name="totalTokens"> The total number of tokens used. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsage"/> instance for mocking. </returns>
+        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, int inputTokens = default, MemoryStoreOperationUsageInputTokensDetails inputTokensDetails = default, int outputTokens = default, MemoryStoreOperationUsageOutputTokensDetails outputTokensDetails = default, int totalTokens = default)
+        {
+            return new MemoryStoreOperationUsage(
+                embeddingTokens,
+                inputTokens,
+                inputTokensDetails,
+                outputTokens,
+                outputTokensDetails,
+                totalTokens,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
+        /// <param name="cachedTokens">
+        /// The number of tokens that were retrieved from the cache.
+        /// [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
+        /// </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsageInputTokensDetails"/> instance for mocking. </returns>
+        public static MemoryStoreOperationUsageInputTokensDetails MemoryStoreOperationUsageInputTokensDetails(int cachedTokens = default)
+        {
+            return new MemoryStoreOperationUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MemoryStoreOperationUsageOutputTokensDetails. </summary>
+        /// <param name="reasoningTokens"> The number of reasoning tokens. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreOperationUsageOutputTokensDetails"/> instance for mocking. </returns>
+        public static MemoryStoreOperationUsageOutputTokensDetails MemoryStoreOperationUsageOutputTokensDetails(int reasoningTokens = default)
+        {
+            return new MemoryStoreOperationUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Provides the status of a memory store update operation. </summary>
+        /// <param name="updateId"> The unique ID of this update request. Use this value as previous_update_id in subsequent requests to perform incremental updates. </param>
+        /// <param name="status"> The status of the memory update operation. One of "queued", "in_progress", "completed", "failed", or "superseded". </param>
+        /// <param name="supersededBy"> The update_id the operation was superseded by when status is "superseded". </param>
+        /// <param name="details"> The result of memory store update operation when status is "completed". </param>
+        /// <param name="error"> Error object that describes the error when status is "failed". </param>
+        /// <returns> A new <see cref="Agents.MemoryUpdateResult"/> instance for mocking. </returns>
+        public static MemoryUpdateResult MemoryUpdateResult(string updateId = default, MemoryStoreUpdateStatus status = default, string supersededBy = default, MemoryUpdateResultDetails details = default, AgentsApiError error = default)
+        {
+            return new MemoryUpdateResult(
+                updateId,
+                status,
+                supersededBy,
+                details,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory update result. </summary>
+        /// <param name="memoryOperations"> A list of individual memory operations that were performed during the update. </param>
+        /// <param name="usage"> Usage statistics associated with the memory update operation. </param>
+        /// <returns> A new <see cref="Agents.MemoryUpdateResultDetails"/> instance for mocking. </returns>
+        public static MemoryUpdateResultDetails MemoryUpdateResultDetails(IEnumerable<MemoryOperation> memoryOperations = default, MemoryStoreOperationUsage usage = default)
+        {
+            memoryOperations ??= new ChangeTrackingList<MemoryOperation>();
+
+            return new MemoryUpdateResultDetails(memoryOperations.ToList(), usage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>
+        /// <param name="kind"> The type of memory operation being performed. </param>
+        /// <param name="memoryItem"> The memory item to create, update, or delete. </param>
+        /// <returns> A new <see cref="Agents.MemoryOperation"/> instance for mocking. </returns>
+        public static MemoryOperation MemoryOperation(MemoryOperationKind kind = default, MemoryItem memoryItem = default)
+        {
+            return new MemoryOperation(kind, memoryItem, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response for deleting memories from a scope. </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="scope"> The scope from which memories were deleted. </param>
+        /// <param name="deleted"> Whether the deletion operation was successful. </param>
+        /// <returns> A new <see cref="Agents.MemoryStoreDeleteScopeResponse"/> instance for mocking. </returns>
+        public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool deleted = default)
+        {
+            return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, deleted, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The AgentReference. </summary>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
@@ -1040,61 +1075,6 @@ namespace Azure.AI.Agents
         public static AgentReference AgentReference(string name = default, string version = default)
         {
             return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ConversationList. </summary>
-        /// <param name="data"> A list of items used to generate this response. </param>
-        /// <param name="firstId"> ID of the first item in the returned page. </param>
-        /// <param name="lastId"> ID of the last item in the returned page. </param>
-        /// <param name="hasMore"> Whether more items are available after this page. </param>
-        /// <returns> A new <see cref="Agents.ConversationList"/> instance for mocking. </returns>
-        public static ConversationList ConversationList(IEnumerable<AgentConversation> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<AgentConversation>();
-
-            return new ConversationList(
-                data.ToList(),
-                "list",
-                firstId,
-                lastId,
-                hasMore,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="createdAt"></param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <returns> A new <see cref="Agents.AgentConversation"/> instance for mocking. </returns>
-        public static AgentConversation AgentConversation(string id = default, DateTimeOffset createdAt = default, IDictionary<string, string> metadata = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AgentConversation(id, "conversation", createdAt, metadata, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Update a conversation. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// 
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <returns> A new <see cref="Projects.OpenAI.ProjectConversationUpdateOptions"/> instance for mocking. </returns>
-        public static ProjectConversationUpdateOptions ProjectConversationUpdateOptions(IDictionary<string, string> metadata = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProjectConversationUpdateOptions(metadata, additionalBinaryDataProperties: null);
         }
     }
 }

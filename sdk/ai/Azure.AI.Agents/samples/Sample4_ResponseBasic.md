@@ -16,7 +16,6 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-
 OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
 ```
 

@@ -10,7 +10,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);OPENAI001;CS1591;AZC0007;AZC0012;AZC0015;AZC0030;AZC0031;AZC0034;SA1649;SA1402;</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

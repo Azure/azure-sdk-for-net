@@ -7,8 +7,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
-using Azure.Core;
 using OpenAI;
 
 namespace Azure.AI.Agents;
@@ -31,17 +29,16 @@ namespace Azure.AI.Agents;
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("_cachedInternalAgentResponses")]
-[CodeGenType("AgentsClient")]
+[CodeGenType("AgentClient")]
 public partial class AgentClient
 {
-    private ProjectOpenAIClient _cachedOpenAIClient;
+    private OpenAIClient _cachedOpenAIClient;
+    private ConversationClient _cachedConversations;
     private MemoryStoreClient _cachedMemoryStores;
     private readonly TelemetryDetails _telemetryDetails;
     private readonly AuthenticationTokenProvider _tokenProvider;
 
-    public ProjectOpenAIClient OpenAI => GetOpenAIClient();
-
-    /// <summary> Initializes a new instance of AgentsClient. </summary>
+    /// <summary> Initializes a new instance of AgentClient. </summary>
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
@@ -49,7 +46,7 @@ public partial class AgentClient
     {
     }
 
-    /// <summary> Initializes a new instance of AgentsClient. </summary>
+    /// <summary> Initializes a new instance of AgentClient. </summary>
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
     /// <param name="options"> The options for configuring the client. </param>
@@ -69,9 +66,6 @@ public partial class AgentClient
         PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", _apiVersion);
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
-        PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
-        PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
-        PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
         // TODO: Use of generated _flows results in authentication failure; hard-coded here for single scope
         Pipeline = ClientPipeline.Create(
@@ -365,9 +359,9 @@ public partial class AgentClient
         return result;
     }
 
-  public virtual ProjectOpenAIClient GetOpenAIClient(OpenAIClientOptions options = null)
+    public virtual OpenAIClient GetOpenAIClient(OpenAIClientOptions options = null)
     {
-        ProjectOpenAIClient CreateClient()
+        OpenAIClient CreateClient()
         {
             string rawProjectEndpoint = _endpoint.AbsoluteUri;
             if (rawProjectEndpoint.Length > 0 && rawProjectEndpoint[rawProjectEndpoint.Length - 1] == '/')
@@ -380,15 +374,27 @@ public partial class AgentClient
             options.UserAgentApplicationId = _telemetryDetails.UserAgent.AssemblyName; // _telemetryDetails.UserAgent.ToString(includePlatformInformation: false);
             options.Endpoint = azureOpenAIEndpoint;
 
+            PipelinePolicyHelpers.AddQueryParameterPolicy(clientOptions, "api-version", _apiVersion);
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(clientOptions, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
+            PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(clientOptions);
+            PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(clientOptions);
+            PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(clientOptions);
+
             if (_tokenProvider is not null)
             {
-                return ProjectOpenAIClient.Create(Pipeline, clientOptions);
+                return new OpenAIClient(new BearerTokenPolicy(_tokenProvider, "https://ai.azure.com/.default"), clientOptions);
             }
             throw new NotImplementedException();
         }
         return Volatile.Read(ref _cachedOpenAIClient)
             ?? Interlocked.CompareExchange(ref _cachedOpenAIClient, CreateClient(), null)
                 ?? _cachedOpenAIClient;
+    }
+
+    /// <summary> Initializes a new instance of Conversations. </summary>
+    public virtual ConversationClient GetConversationClient()
+    {
+        return Volatile.Read(ref _cachedConversations) ?? Interlocked.CompareExchange(ref _cachedConversations, new ConversationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConversations;
     }
 
     /// <summary> Initializes a new instance of MemoryStores. </summary>

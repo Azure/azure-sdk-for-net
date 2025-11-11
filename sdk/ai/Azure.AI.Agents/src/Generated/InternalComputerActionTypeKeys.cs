@@ -30,6 +30,6 @@ namespace OpenAI
         }
 
         /// <summary> The text to type. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

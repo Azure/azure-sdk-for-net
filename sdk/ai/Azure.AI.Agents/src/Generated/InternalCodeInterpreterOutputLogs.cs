@@ -30,6 +30,6 @@ namespace OpenAI
         }
 
         /// <summary> The logs output from the code interpreter. </summary>
-        public string Logs { get; }
+        public string Logs { get; set; }
     }
 }

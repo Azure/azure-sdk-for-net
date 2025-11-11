@@ -30,9 +30,9 @@ namespace OpenAI
         }
 
         /// <summary> The x-coordinate where the double click occurred. </summary>
-        public int X { get; }
+        public int X { get; set; }
 
         /// <summary> The y-coordinate where the double click occurred. </summary>
-        public int Y { get; }
+        public int Y { get; set; }
     }
 }

@@ -3,8 +3,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Agents;
@@ -68,16 +66,5 @@ internal static partial class ClientPipelineExtensions
     }
 
     private static string TryCreateErrorMessageFromResponse(PipelineResponse response)
-        => AgentsApiError.TryCreateFromResponse(response)?.ToExceptionMessage(response.Status)
-        ?? GetFallbackExceptionMessageFromResponse(response);
-
-    private static string GetFallbackExceptionMessageFromResponse(PipelineResponse response)
-    {
-        return new StringBuilder("An error was encountered while processing the request.")
-            .AppendLine()
-            .AppendLine($"HTTP {response.Status}: {((HttpStatusCode)response.Status)}")
-            .AppendLine()
-            .AppendLine(response.Content.ToString())
-            .ToString();
-    }
+        => AgentsApiError.TryCreateFromResponse(response)?.ToExceptionMessage(response.Status);
 }

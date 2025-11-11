@@ -3,7 +3,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 
 namespace Azure.AI.Agents
@@ -14,6 +13,9 @@ namespace Azure.AI.Agents
     /// </summary>
     [ModelReaderWriterBuildable(typeof(A2ATool))]
     [ModelReaderWriterBuildable(typeof(AgentConversation))]
+    [ModelReaderWriterBuildable(typeof(AgentConversationCreationOptions))]
+    [ModelReaderWriterBuildable(typeof(AgentConversationDeletionResult))]
+    [ModelReaderWriterBuildable(typeof(AgentConversationUpdateOptions))]
     [ModelReaderWriterBuildable(typeof(AgentCreationOptions))]
     [ModelReaderWriterBuildable(typeof(AgentDefinition))]
     [ModelReaderWriterBuildable(typeof(AgentDeletionResult))]
@@ -53,7 +55,7 @@ namespace Azure.AI.Agents
     [ModelReaderWriterBuildable(typeof(ChatSummaryMemoryItem))]
     [ModelReaderWriterBuildable(typeof(ContainerAppAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ConversationList))]
+    [ModelReaderWriterBuildable(typeof(CreateConversationItemsRequest))]
     [ModelReaderWriterBuildable(typeof(CreateMemoryStoreRequest))]
     [ModelReaderWriterBuildable(typeof(DeleteMemoryStoreResponse))]
     [ModelReaderWriterBuildable(typeof(DeleteScopeRequest))]
@@ -211,8 +213,6 @@ namespace Azure.AI.Agents
     [ModelReaderWriterBuildable(typeof(OpenApiManagedSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionAuthDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionSecurityScheme))]
-    [ModelReaderWriterBuildable(typeof(ProjectConversationCreationOptions))]
-    [ModelReaderWriterBuildable(typeof(ProjectConversationUpdateOptions))]
     [ModelReaderWriterBuildable(typeof(Prompt))]
     [ModelReaderWriterBuildable(typeof(PromptAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]

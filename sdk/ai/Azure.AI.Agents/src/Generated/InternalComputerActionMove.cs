@@ -30,9 +30,9 @@ namespace OpenAI
         }
 
         /// <summary> The x-coordinate to move to. </summary>
-        public int X { get; }
+        public int X { get; set; }
 
         /// <summary> The y-coordinate to move to. </summary>
-        public int Y { get; }
+        public int Y { get; set; }
     }
 }
