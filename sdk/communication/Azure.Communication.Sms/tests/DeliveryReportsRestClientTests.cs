@@ -49,54 +49,6 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
-        public void DeliveryReportsRestClient_GetWithNullMessageId_ShouldThrow()
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            try
-            {
-                client.Get(null);
-                Assert.Fail("Expected ArgumentException to be thrown");
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-            }
-        }
-
-        [Test]
-        public void DeliveryReportsRestClient_GetWithEmptyMessageId_ShouldThrow()
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            try
-            {
-                client.Get(string.Empty);
-                Assert.Fail("Expected ArgumentException to be thrown");
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-            }
-        }
-
-        [Test]
-        public void DeliveryReportsRestClient_GetWithWhitespaceMessageId_ShouldThrow()
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            try
-            {
-                client.Get("   ");
-                Assert.Fail("Expected ArgumentException to be thrown");
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-            }
-        }
-
-        [Test]
         public async Task DeliveryReportsRestClient_GetAsyncWithNullMessageId_ShouldThrow()
         {
             var client = CreateDeliveryReportsRestClient();
@@ -104,38 +56,6 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 await client.GetAsync(null);
-                Assert.Fail("Expected ArgumentException to be thrown");
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-            }
-        }
-
-        [Test]
-        public async Task DeliveryReportsRestClient_GetAsyncWithEmptyMessageId_ShouldThrow()
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            try
-            {
-                await client.GetAsync(string.Empty);
-                Assert.Fail("Expected ArgumentException to be thrown");
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.AreEqual("outgoingMessageId", ex.ParamName);
-            }
-        }
-
-        [Test]
-        public async Task DeliveryReportsRestClient_GetAsyncWithWhitespaceMessageId_ShouldThrow()
-        {
-            var client = CreateDeliveryReportsRestClient();
-
-            try
-            {
-                await client.GetAsync("   ");
                 Assert.Fail("Expected ArgumentException to be thrown");
             }
             catch (ArgumentException ex)

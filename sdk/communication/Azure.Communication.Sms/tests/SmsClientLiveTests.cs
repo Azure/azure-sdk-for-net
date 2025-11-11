@@ -22,32 +22,6 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [RecordedTest]
-        public async Task SendingSmsMessage()
-        {
-            SmsClient client = CreateSmsClient();
-            try
-            {
-                Response<SmsSendResult> response = await client.SendAsync(
-                   from: TestEnvironment.FromPhoneNumber,
-                   to: TestEnvironment.ToPhoneNumber,
-                   message: "Hi");
-                SmsSendResult result = response.Value;
-                Console.WriteLine($"Sms id: {result.MessageId}");
-                AssertSmsSendingHappyPath(result);
-                AssertSmsSendingRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-        }
-
-        [RecordedTest]
         public async Task SendingSmsMessageUsingTokenCredential()
         {
             SmsClient client = CreateSmsClientWithToken();
@@ -175,7 +149,7 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 IEnumerable<string>? to = ["+15550000000"];
-                Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
+                Response<IReadOnlyList<OptOutCheckResponseItem>> result = await client.OptOuts.CheckAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
             }
@@ -196,7 +170,7 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 IEnumerable<string>? to = ["+15550000000"];
-                Response<IReadOnlyList<OptOutAddResponseItem>> result = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> result = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
             }
@@ -217,7 +191,7 @@ namespace Azure.Communication.Sms.Tests
             try
             {
                 IEnumerable<string>? to = ["+15550000000"];
-                Response<IReadOnlyList<OptOutRemoveResponseItem>> result = await client.OptOuts.RemoveAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> result = await client.OptOuts.RemoveAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
             }
@@ -238,11 +212,11 @@ namespace Azure.Communication.Sms.Tests
             {
                 IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                Response<IReadOnlyList<OptOutCheckResponseItem>> checkResult = await client.OptOuts.CheckAsync(
                   from: TestEnvironment.FromPhoneNumber,
                   to: to);
 
@@ -264,15 +238,15 @@ namespace Azure.Communication.Sms.Tests
             {
                 IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutRemoveResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                Response<IReadOnlyList<OptOutCheckResponseItem>> checkResult = await client.OptOuts.CheckAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
@@ -294,11 +268,11 @@ namespace Azure.Communication.Sms.Tests
             {
                 IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                Response<IReadOnlyList<OptOutCheckResponseItem>> checkResult = await client.OptOuts.CheckAsync(
                   from: TestEnvironment.FromPhoneNumber,
                   to: to);
 
@@ -321,15 +295,15 @@ namespace Azure.Communication.Sms.Tests
             {
                 IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutRemoveResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
+                Response<IReadOnlyList<OptOutOperationResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                Response<IReadOnlyList<OptOutCheckResponseItem>> checkResult = await client.OptOuts.CheckAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 

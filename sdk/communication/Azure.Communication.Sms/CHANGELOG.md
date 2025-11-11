@@ -14,6 +14,19 @@
   - Follows Azure SDK design guidelines for flexible parameter collections
   - Migration from beta: Change `new MessagingConnectOptions("your-api-key", "PartnerName")` to `new MessagingConnectOptions("PartnerName", new Dictionary<string, object> { { "ApiKey", "your-api-key" } })`
 
+### Other Changes (changed from 1.1.0-beta.2)
+
+- **Redesigned Opt-Out Management API response types for improved consistency and developer experience**:
+  - `OptOutResponseItem` has been renamed to `OptOutCheckResponseItem` to match the Check operation
+  - `OptOutAddResponseItem` and `OptOutRemoveResponseItem` have been unified into a single `OptOutOperationResponseItem` type since they were functionally identical
+  - Updated method signatures:
+    - `OptOuts.CheckAsync()` and `OptOuts.Check()` now return `IReadOnlyList<OptOutCheckResponseItem>`
+    - `OptOuts.AddAsync()`, `OptOuts.Add()`, `OptOuts.RemoveAsync()`, and `OptOuts.Remove()` now return `IReadOnlyList<OptOutOperationResponseItem>`
+  - **Migration guide**:
+    - Replace `OptOutResponseItem` with `OptOutCheckResponseItem` for Check operations
+    - Replace both `OptOutAddResponseItem` and `OptOutRemoveResponseItem` with `OptOutOperationResponseItem` for Add and Remove operations
+  - This change eliminates duplicate types and provides consistent naming across all opt-out operations
+
 ## 1.1.0-beta.3 (2025-06-12)
 
 ### Features Added
