@@ -113,6 +113,31 @@ namespace Azure.Generator.Management.Utilities
         };
 
         /// <summary>
+        /// Constructs an operation ID from an InputServiceMethod.
+        /// Uses CrossLanguageDefinitionId for accurate operation IDs.
+        /// For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")
+        /// For non-resource operations, the format is: Namespace.Client.OperationName
+        /// </summary>
+        /// <param name="serviceMethod">The input service method to construct the operation ID from.</param>
+        /// <returns>The constructed operation ID string.</returns>
+        public static string GetOperationId(InputServiceMethod serviceMethod)
+        {
+            string operationId = serviceMethod.Operation.Name;
+            if (!string.IsNullOrEmpty(serviceMethod.CrossLanguageDefinitionId))
+            {
+                var parts = serviceMethod.CrossLanguageDefinitionId.Split('.');
+                if (parts.Length >= 2)
+                {
+                    // Take the last two parts: ResourceClient and OperationName
+                    var resourceOrClientName = parts[^2];  // Second to last
+                    var methodName = parts[^1];            // Last
+                    operationId = $"{resourceOrClientName}_{methodName.FirstCharToUpperCase()}";
+                }
+            }
+            return operationId;
+        }
+
+        /// <summary>
         /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
         /// </summary>
         public static void BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
@@ -133,21 +158,7 @@ namespace Azure.Generator.Management.Utilities
                 new XmlDocStatement("description", [$"{operation.Path}"])));
 
             // Operation Id item
-            // Use CrossLanguageDefinitionId for accurate operation IDs
-            // For resource operations, the format is: Namespace.ResourceClient.OperationName (e.g., "MgmtTypeSpec.Bars.get")
-            // For non-resource operations, the format is: Namespace.Client.OperationName
-            string operationId = operation.Name;
-            if (!string.IsNullOrEmpty(serviceMethod.CrossLanguageDefinitionId))
-            {
-                var parts = serviceMethod.CrossLanguageDefinitionId.Split('.');
-                if (parts.Length >= 2)
-                {
-                    // Take the last two parts: ResourceClient and OperationName
-                    var resourceOrClientName = parts[^2];  // Second to last
-                    var methodName = parts[^1];            // Last
-                    operationId = $"{resourceOrClientName}_{methodName.FirstCharToUpperCase()}";
-                }
-            }
+            string operationId = GetOperationId(serviceMethod);
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Operation Id"]),
                 new XmlDocStatement("description", [$"{operationId}"])));
