@@ -4,7 +4,9 @@
 global using System.ClientModel;
 global using System.ClientModel.Primitives;
 global using System.ComponentModel;
-
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using Azure.AI.Projects.OpenAI;
 
 #pragma warning disable AZC0007

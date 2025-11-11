@@ -3,7 +3,10 @@
 
 # nullable enable
 
+using System;
+using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
 

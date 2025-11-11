@@ -8,6 +8,8 @@ using Azure.AI.Projects.OpenAI;
 using OpenAI.Responses;
 using OpenAI;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System;
 
 namespace Azure.AI.Projects;
 
