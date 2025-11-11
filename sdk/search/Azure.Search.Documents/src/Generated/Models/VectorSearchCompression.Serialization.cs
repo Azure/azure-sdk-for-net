@@ -39,30 +39,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(CompressionName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(RerankWithOriginalVectors))
-            {
-                if (RerankWithOriginalVectors != null)
-                {
-                    writer.WritePropertyName("rerankWithOriginalVectors"u8);
-                    writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
-                }
-                else
-                {
-                    writer.WriteNull("rerankWithOriginalVectors");
-                }
-            }
-            if (Optional.IsDefined(DefaultOversampling))
-            {
-                if (DefaultOversampling != null)
-                {
-                    writer.WritePropertyName("defaultOversampling"u8);
-                    writer.WriteNumberValue(DefaultOversampling.Value);
-                }
-                else
-                {
-                    writer.WriteNull("defaultOversampling");
-                }
-            }
             if (Optional.IsDefined(RescoringOptions))
             {
                 if (RescoringOptions != null)
@@ -85,6 +61,30 @@ namespace Azure.Search.Documents.Indexes.Models
                 else
                 {
                     writer.WriteNull("truncationDimension");
+                }
+            }
+            if (Optional.IsDefined(RerankWithOriginalVectors))
+            {
+                if (RerankWithOriginalVectors != null)
+                {
+                    writer.WritePropertyName("rerankWithOriginalVectors"u8);
+                    writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rerankWithOriginalVectors");
+                }
+            }
+            if (Optional.IsDefined(DefaultOversampling))
+            {
+                if (DefaultOversampling != null)
+                {
+                    writer.WritePropertyName("defaultOversampling"u8);
+                    writer.WriteNumberValue(DefaultOversampling.Value);
+                }
+                else
+                {
+                    writer.WriteNull("defaultOversampling");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
