@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The definition of a linked resource. </summary>
-    public partial class LinkedResource
+    public partial class LinkedResourceContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Datadog.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LinkedResource"/>. </summary>
-        internal LinkedResource()
+        /// <summary> Initializes a new instance of <see cref="LinkedResourceContent"/>. </summary>
+        internal LinkedResourceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the linked resource. </param>
         /// <param name="location"> The location of the linked resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedResource(string id, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkedResourceContent(string id, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;

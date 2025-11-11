@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LinkedResource item in datadogMonitorResource.GetLinkedResourcesAsync())
+            await foreach (LinkedResourceContent item in datadogMonitorResource.GetLinkedResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

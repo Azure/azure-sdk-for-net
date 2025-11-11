@@ -780,12 +780,12 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LinkedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LinkedResource> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LinkedResourceContent"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LinkedResourceContent> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LinkedResource.DeserializeLinkedResource(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LinkedResourceContent.DeserializeLinkedResourceContent(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -810,12 +810,12 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LinkedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LinkedResource> GetLinkedResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LinkedResourceContent"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LinkedResourceContent> GetLinkedResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LinkedResource.DeserializeLinkedResource(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LinkedResourceContent.DeserializeLinkedResourceContent(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

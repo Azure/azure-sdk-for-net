@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogInstallMethod(tool, toolVersion, installerVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LinkedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkedResourceContent"/>. </summary>
         /// <param name="id"> The ARM id of the linked resource. </param>
         /// <param name="location"> The location of the linked resource. </param>
-        /// <returns> A new <see cref="Models.LinkedResource"/> instance for mocking. </returns>
-        public static LinkedResource LinkedResource(string id = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="Models.LinkedResourceContent"/> instance for mocking. </returns>
+        public static LinkedResourceContent LinkedResourceContent(string id = null, AzureLocation? location = null)
         {
-            return new LinkedResource(id, location, serializedAdditionalRawData: null);
+            return new LinkedResourceContent(id, location, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>

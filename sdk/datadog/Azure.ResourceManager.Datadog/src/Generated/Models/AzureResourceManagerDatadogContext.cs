@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceData))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(FilteringTag))]
-    [ModelReaderWriterBuildable(typeof(LinkedResource))]
+    [ModelReaderWriterBuildable(typeof(LinkedResourceContent))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(LogRules))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]

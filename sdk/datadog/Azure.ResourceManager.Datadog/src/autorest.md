@@ -54,6 +54,6 @@ rename-mapping:
   MonitoredResource: MonitoredResourceContent
   BillingInfoResponse: DatadogBillingInfoResponseResult
   CreateResourceSupportedResponse: DatadogCreateResourceSupportedResponseResult
-
+  LinkedResource: LinkedResourceContent
 
 ```
