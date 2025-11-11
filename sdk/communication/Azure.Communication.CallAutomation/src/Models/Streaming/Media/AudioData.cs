@@ -56,6 +56,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Mark this audio data which signals the player when it reaches the mark position
         /// </summary>
-        public MarkAudio Mark { get; set; }
+        public MarkAudio Mark { get; }
     }
 }

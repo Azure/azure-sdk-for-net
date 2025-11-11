@@ -39,11 +39,10 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                         + "\"data\": \"AQIDBAU=\","
                         + "\"timestamp\": \"2022-08-23T11:48:05Z\","
                         + "\"participantRawID\": \"participantId\","
-                        + "\"mark\": {\"id\": \"mark123\"},"
-                           + "\"silent\": false"
+                        + "\"mark\": {\"Id\": \"mark123\"},"
+                        + "\"silent\": false"
                         + "}"
                         + "}";
-            ;
 
             AudioData streamingAudio = (AudioData)StreamingData.Parse(audioJson);
             ValidateAudioData(streamingAudio);
