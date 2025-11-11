@@ -585,6 +585,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Statistics")]
+        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
         public async Task Test06_12_GetGeoJsonStatistics()
         {
             // Arrange
