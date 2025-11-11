@@ -26,7 +26,7 @@
       "command": "dotnet build {packagePath}"
     },
     "updateMetadataScript": {
-      "path": "./eng/scripts/Automation-Update-Metadata.ps1"
+      "path": "./eng/scripts/Export-API.ps1"
     }
   }
 }
