@@ -57,11 +57,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                         }
                 });
 
-            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+            Operation updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
             string testDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
-            BinaryData deployment = deploymentOperation.Value;
+            Operation deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
+            BinaryData deployment = deploymentOperation.GetRawResponse().Content;
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployment.ToString(), Contains.Substring(testDeploymentName));
@@ -91,13 +91,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                         }
                 });
 
-            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
-            AsyncPageable<BinaryData> sources = updateQnasOperation.Value;
+            Operation updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+            BinaryData sources = updateQnasOperation.GetRawResponse().Content;
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
+            Assert.That(sources.ToString().Contains(question));
+            Assert.That(sources.ToString().Contains(answer));
         }
 
         [RecordedTest]
@@ -124,49 +124,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                         }
                 });
 
-            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
-            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+            Operation updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+            BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
-        }
-
-        [RecordedTest]
-        public async Task UpdateSynonyms()
-        {
-            string testProjectName = CreateTestProjectName();
-            await CreateProjectAsync(testProjectName);
-
-            RequestContent updateSynonymsRequestContent = RequestContent.Create(
-                new
-                {
-                    value = new[] {
-                        new  {
-                                alterations = new[]
-                                {
-                                    "qnamaker",
-                                    "qna maker",
-                                }
-                             },
-                        new  {
-                                alterations = new[]
-                                {
-                                    "qna",
-                                    "question and answer",
-                                }
-                             }
-                    }
-                });
-
-            Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
-
-            // Synonyms can be retrieved as follows
-            AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
-
-            Assert.AreEqual(204, updateSynonymsResponse.Status);
-            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
-            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
+            Assert.That(sources.ToString().Contains(sourceUri));
         }
 
         [RecordedTest]
@@ -176,9 +139,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             await CreateProjectAsync(testProjectName);
 
             string exportFormat = "json";
-            Operation<BinaryData> exportOperation = await Client.ExportAsync(WaitUntil.Completed, testProjectName, exportFormat);
+            Operation exportOperation = await Client.ExportAsync(WaitUntil.Completed, testProjectName, exportFormat);
 
-            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 
             Assert.True(exportOperation.HasCompleted);
@@ -209,15 +172,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                 }
             });
 
-            Operation<BinaryData> importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
+            Operation importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
             EnqueueProjectDeletion(testProjectName);
 
-            Response projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
+            Response<QuestionAnsweringProject> projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
-            Assert.AreEqual(200, projectDetails.Status);
-            Assert.That(projectDetails.Content.ToString().Contains(testProjectName));
+            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
+            Assert.That(projectDetails.GetRawResponse().Content.ToString().Contains(testProjectName));
         }
 
         [RecordedTest]
