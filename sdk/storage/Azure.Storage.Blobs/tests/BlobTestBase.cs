@@ -639,6 +639,7 @@ namespace Azure.Storage.Test.Shared
             Assert.AreEqual(key.SignedService, sas.KeyService);
             Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
             Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            Assert.AreEqual(key.SignedDelegatedUserTenantId, sas.KeyDelegatedUserTenantId);
             //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
     }

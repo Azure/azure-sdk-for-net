@@ -132,9 +132,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -161,9 +161,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
@@ -188,6 +188,161 @@ namespace Azure.Storage.Queues.Test
 
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task QueueClient_UserDelegationSAS_DelegatedTenantId()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder(QueueSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                QueueName = test.Queue.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            QueueSasQueryParameters sasQueryParameters = queueSasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName, out string stringToSign);
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(test.Queue.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            QueueClient identityQueueClient = InstrumentClient(new QueueClient(uriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act
+            Response<QueueProperties> response = await identityQueueClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task QueueClient_UserDelegationSAS_DelegatedTenantId_Failed()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder(QueueSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                QueueName = test.Queue.Name,
+                // We are deliberately not passing in DelegatedUserObjectId to cause an auth failure
+            };
+
+            QueueSasQueryParameters sasQueryParameters = queueSasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName, out string stringToSign);
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(test.Queue.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            QueueClient identityQueueClient = InstrumentClient(new QueueClient(uriBuilder.ToUri(), TestEnvironment.Credential, GetOptions()));
+
+            // Act & Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identityQueueClient.GetPropertiesAsync(),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task QueueClient_UserDelegationSAS_DelegatedTenantId_Roundtrip()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            // We need to get the tenant ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
+
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                DelegatedUserTenantId = tenantId?.ToString()
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await service.GetUserDelegationKeyAsync(
+                options: options);
+
+            Assert.IsNotNull(userDelegationKey.Value);
+            Assert.AreEqual(options.DelegatedUserTenantId, userDelegationKey.Value.SignedDelegatedUserTenantId);
+
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder(QueueSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                QueueName = test.Queue.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            QueueSasQueryParameters sasQueryParameters = queueSasBuilder.ToSasQueryParameters(userDelegationKey.Value, service.AccountName, out string stringToSign);
+
+            QueueUriBuilder originalUriBuilder = new QueueUriBuilder(test.Queue.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            QueueUriBuilder roundtripUriBuilder = new QueueUriBuilder(originalUriBuilder.ToUri());
+
+            Assert.AreEqual(originalUriBuilder.ToUri(), roundtripUriBuilder.ToUri());
+            Assert.AreEqual(originalUriBuilder.Sas.ToString(), roundtripUriBuilder.Sas.ToString());
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SendMessageAsync_UserDelegationSAS_DelegatedObjectId()
         {
@@ -195,9 +350,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
@@ -244,9 +399,9 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
+            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
