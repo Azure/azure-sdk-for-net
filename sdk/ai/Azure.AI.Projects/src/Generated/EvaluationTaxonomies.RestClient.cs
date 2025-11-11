@@ -12,12 +12,12 @@ namespace Azure.AI.Projects
     public partial class EvaluationTaxonomies
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
-        private static PipelineMessageClassifier _pipelineMessageClassifier201;
+        private static PipelineMessageClassifier _pipelineMessageClassifier200201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/evaluation_taxonomies/", false);
+            uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/evaluation_taxonomies", false);
+            uri.AppendPath("/evaluationtaxonomies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (inputName != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/evaluation_taxonomies/", false);
+            uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
@@ -88,10 +88,10 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/evaluation_taxonomies/", false);
+            uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier201);
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200201);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
@@ -104,7 +104,7 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/evaluation_taxonomies/", false);
+            uri.AppendPath("/evaluationtaxonomies/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200);

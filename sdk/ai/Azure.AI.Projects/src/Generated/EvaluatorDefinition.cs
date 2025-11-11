@@ -69,7 +69,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData InitParameters { get; }
+        public BinaryData InitParameters { get; set; }
 
         /// <summary>
         /// The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required.
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData DataSchema { get; }
+        public BinaryData DataSchema { get; set; }
 
         /// <summary> List of output metrics produced by this evaluator. </summary>
         public IDictionary<string, EvaluatorMetric> Metrics { get; }

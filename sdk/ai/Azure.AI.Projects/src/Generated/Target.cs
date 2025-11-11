@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base class for targets with discriminator support.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIModelTarget"/>, <see cref="AzureAIAgentTarget"/>, and <see cref="AzureAIAssistantTarget"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIAgentTarget"/>, <see cref="AzureAIModelTarget"/>, and <see cref="AzureAIAssistantTarget"/>.
     /// </summary>
     public abstract partial class Target
     {

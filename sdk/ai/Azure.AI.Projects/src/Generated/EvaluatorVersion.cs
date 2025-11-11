@@ -18,8 +18,12 @@ namespace Azure.AI.Projects
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
         /// <param name="definition"> Definition of the evaluator. </param>
-        internal EvaluatorVersion(EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition)
+        /// <exception cref="ArgumentNullException"> <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
+        public EvaluatorVersion(EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition)
         {
+            Argument.AssertNotNull(categories, nameof(categories));
+            Argument.AssertNotNull(definition, nameof(definition));
+
             Metadata = new ChangeTrackingDictionary<string, string>();
             EvaluatorType = evaluatorType;
             Categories = categories.ToList();
@@ -61,19 +65,19 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Display Name for evaluator. It helps to find the evaluator easily in AI Foundry. It does not need to be unique. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Metadata about the evaluator. </summary>
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> The type of the evaluator. </summary>
-        public EvaluatorType EvaluatorType { get; }
+        public EvaluatorType EvaluatorType { get; set; }
 
         /// <summary> The categories of the evaluator. </summary>
         public IList<EvaluatorCategory> Categories { get; }
 
         /// <summary> Definition of the evaluator. </summary>
-        public EvaluatorDefinition Definition { get; }
+        public EvaluatorDefinition Definition { get; set; }
 
         /// <summary> Creator of the evaluator. </summary>
         public string CreatedBy { get; }
@@ -94,7 +98,7 @@ namespace Azure.AI.Projects
         public string Version { get; }
 
         /// <summary> The asset description text. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
         public IDictionary<string, string> Tags { get; }

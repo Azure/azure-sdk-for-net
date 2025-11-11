@@ -1,0 +1,5 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/ai/Azure.AI.Projects.OpenAI"
+}

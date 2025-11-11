@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.Projects
 {
     /// <summary>
