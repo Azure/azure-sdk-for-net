@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -577,10 +579,19 @@ public class AgentsTests : AgentsTestBase
     [RecordedTest]
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.FileSearch)]
+    [TestCase(ToolType.ImageGeneration)]
     public async Task TestTool(ToolType toolType)
     {
         AgentClient client = GetTestClient();
-        OpenAIClient openAIClient = client.GetOpenAIClient(TestOpenAIClientOptions);
+        OpenAIClientOptions options = TestOpenAIClientOptions;
+        if (toolType == ToolType.ImageGeneration)
+        {
+            HeaderTestPolicy imageHeader = new(new Dictionary<string, string> {
+                { "x-ms-oai-image-generation-deployment", TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME}
+            });
+            options.AddPolicy(imageHeader, PipelinePosition.PerCall);
+        }
+        OpenAIClient openAIClient = client.GetOpenAIClient(options);
         AgentVersion agentVersion = await client.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, openAIClient)));
@@ -598,10 +609,26 @@ public class AgentsTests : AgentsTestBase
             responseOptions);
         response = await WaitForRun(responseClient, response);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
-        if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
+        if (toolType == ToolType.ImageGeneration)
         {
-            Assert.That(response.GetOutputText(), Does.Contain(expectedResponse), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
+            // If Tool type is Image generation, we need to check image output.
+            bool hasImageOutput = false;
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                if (item is ImageGenerationCallResponseItem imageItem)
+                {
+                    hasImageOutput |= imageItem.ImageResultBytes.Length > 0;
+                }
+            }
+            Assert.That(hasImageOutput);
+        }
+        else
+        {
+            Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+            if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
+            {
+                Assert.That(response.GetOutputText(), Does.Contain(expectedResponse), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
+            }
         }
     }
 
