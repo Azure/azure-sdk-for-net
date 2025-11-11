@@ -450,8 +450,9 @@ namespace Azure.ResourceManager.Datadog.Models
         public DatadogOrganizationProperties() { }
         public string ApiKey { get { throw null; } set { } }
         public string ApplicationKey { get { throw null; } set { } }
-        /* cspell:disable-next-line */
+        /* cspell:disable */
         public bool? Cspm { get { throw null; } set { } }
+        /* cspell:enable */
         public string EnterpriseAppId { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public string LinkingAuthCode { get { throw null; } set { } }
@@ -666,8 +667,9 @@ namespace Azure.ResourceManager.Datadog.Models
     public partial class MonitorUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MonitorUpdateProperties>
     {
         public MonitorUpdateProperties() { }
-        /* cspell:disable-next-line */
+        /* cspell:disable */
         public bool? Cspm { get { throw null; } set { } }
+        /* cspell:enable */
         public Azure.ResourceManager.Datadog.Models.MonitoringStatus? MonitoringStatus { get { throw null; } set { } }
         public bool? ResourceCollection { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
