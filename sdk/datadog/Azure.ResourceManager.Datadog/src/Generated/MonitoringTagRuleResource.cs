@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-03-01</description>
+        /// <description>2025-06-11</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

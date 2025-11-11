@@ -65,24 +65,12 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The set of properties that can be update in a PATCH request to a monitor resource. </summary>
-        internal MonitorUpdateProperties Properties { get; set; }
-        /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
-        public MonitoringStatus? MonitorUpdateMonitoringStatus
-        {
-            get => Properties is null ? default : Properties.MonitoringStatus;
-            set
-            {
-                if (Properties is null)
-                    Properties = new MonitorUpdateProperties();
-                Properties.MonitoringStatus = value;
-            }
-        }
-
+        public MonitorUpdateProperties Properties { get; set; }
         /// <summary> The new tags of the monitor resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the sku. </summary>
         internal ResourceSku Sku { get; set; }
-        /// <summary> Name of the SKU. </summary>
+        /// <summary> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;

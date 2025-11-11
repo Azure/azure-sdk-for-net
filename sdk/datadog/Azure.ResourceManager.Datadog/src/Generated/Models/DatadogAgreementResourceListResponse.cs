@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Datadog.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/>. </summary>
-        internal DatadogAgreementResourceListResponse()
+        /// <param name="value"> The DatadogAgreementResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DatadogAgreementResourceListResponse(IEnumerable<DatadogAgreementResourceProperties> value)
         {
-            Value = new ChangeTrackingList<DatadogAgreementResourceProperties>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/>. </summary>
-        /// <param name="value"> Results of a list operation. </param>
-        /// <param name="nextLink"> Link to the next set of results, if any. </param>
+        /// <param name="value"> The DatadogAgreementResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResourceProperties> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResourceProperties> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Results of a list operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/> for deserialization. </summary>
+        internal DatadogAgreementResourceListResponse()
+        {
+        }
+
+        /// <summary> The DatadogAgreementResource items on this page. </summary>
         public IReadOnlyList<DatadogAgreementResourceProperties> Value { get; }
-        /// <summary> Link to the next set of results, if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

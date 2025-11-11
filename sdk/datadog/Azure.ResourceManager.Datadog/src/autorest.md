@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Datadog
 namespace: Azure.ResourceManager.Datadog
-require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b6700c67693eef5f79ea9/specification/datadog/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/278d4cb813510d2963592eb2aee9c64325a80007/specification/datadog/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -52,5 +52,8 @@ acronym-mapping:
 rename-mapping:
   DatadogAgreementResource: DatadogAgreementResourceProperties
   MonitoredResource: MonitoredResourceContent
+  BillingInfoResponse: DatadogBillingInfoResponseResult
+  CreateResourceSupportedResponse: DatadogCreateResourceSupportedResponseResult
+
 
 ```

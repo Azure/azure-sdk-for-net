@@ -54,12 +54,18 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="provisioningState"></param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="agentRules"> Set of rules for managing agents for the Monitor resource. </param>
+        /// <param name="automuting"> Configuration to enable/disable auto-muting flag. </param>
+        /// <param name="customMetrics"> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules, MetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules, MetricRules metricRules, AgentRules agentRules, bool? automuting, bool? customMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             LogRules = logRules;
             MetricRules = metricRules;
+            AgentRules = agentRules;
+            Automuting = automuting;
+            CustomMetrics = customMetrics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,5 +85,12 @@ namespace Azure.ResourceManager.Datadog.Models
                 return MetricRules.FilteringTags;
             }
         }
+
+        /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
+        public AgentRules AgentRules { get; set; }
+        /// <summary> Configuration to enable/disable auto-muting flag. </summary>
+        public bool? Automuting { get; set; }
+        /// <summary> Configuration to enable/disable custom metrics. If enabled, custom metrics from app insights will be sent. </summary>
+        public bool? CustomMetrics { get; set; }
     }
 }

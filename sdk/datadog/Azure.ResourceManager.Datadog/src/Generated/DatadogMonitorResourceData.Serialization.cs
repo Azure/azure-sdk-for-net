@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Datadog
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Datadog
             {
                 return null;
             }
-            ResourceSku sku = default;
             MonitorProperties properties = default;
+            ResourceSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -88,15 +88,6 @@ namespace Azure.ResourceManager.Datadog
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,6 +95,15 @@ namespace Azure.ResourceManager.Datadog
                         continue;
                     }
                     properties = MonitorProperties.DeserializeMonitorProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Datadog
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
                 properties,
+                sku,
                 identity,
                 serializedAdditionalRawData);
         }

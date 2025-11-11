@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_MonitorsCreate()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/Monitors_Create.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/Monitors_Create.json
             // this example is just showing the usage of "Monitors_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,7 +41,34 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             // invoke the operation
             string monitorName = "myMonitor";
-            DatadogMonitorResourceData data = new DatadogMonitorResourceData(default);
+            DatadogMonitorResourceData data = new DatadogMonitorResourceData(new AzureLocation("West US"))
+            {
+                Properties = new MonitorProperties
+                {
+                    MonitoringStatus = MonitoringStatus.Enabled,
+                    DatadogOrganizationProperties = new DatadogOrganizationProperties
+                    {
+                        Name = "myOrg",
+                        Id = "myOrg123",
+                        LinkingAuthCode = "someAuthCode",
+                        LinkingClientId = "00000000-0000-0000-0000-000000000000",
+                        EnterpriseAppId = "00000000-0000-0000-0000-000000000000",
+                        Cspm = false,
+                        ResourceCollection = false,
+                    },
+                    UserInfo = new UserInfo
+                    {
+                        Name = "Alice",
+                        EmailAddress = "alice@microsoft.com",
+                        PhoneNumber = "123-456-7890",
+                    },
+                },
+                SkuName = "free_Monthly",
+                Tags =
+{
+["Environment"] = "Dev"
+},
+            };
             ArmOperation<DatadogMonitorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, data);
             DatadogMonitorResource result = lro.Value;
 
@@ -55,7 +83,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/Monitors_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/Monitors_Get.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +116,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_MonitorsListByResourceGroup()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/Monitors_ListByResourceGroup.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/Monitors_ListByResourceGroup.json
             // this example is just showing the usage of "Monitors_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +151,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_MonitorsGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/Monitors_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/Monitors_Get.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +180,7 @@ namespace Azure.ResourceManager.Datadog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MonitorsGet()
         {
-            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2021-03-01/examples/Monitors_Get.json
+            // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/Monitors_Get.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Datadog.Models
                 throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -73,6 +73,16 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
+            }
+            if (Optional.IsDefined(Cspm))
+            {
+                writer.WritePropertyName("cspm"u8);
+                writer.WriteBooleanValue(Cspm.Value);
+            }
+            if (Optional.IsDefined(ResourceCollection))
+            {
+                writer.WritePropertyName("resourceCollection"u8);
+                writer.WriteBooleanValue(ResourceCollection.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,6 +129,8 @@ namespace Azure.ResourceManager.Datadog.Models
             string apiKey = default;
             string applicationKey = default;
             string enterpriseAppId = default;
+            bool? cspm = default;
+            bool? resourceCollection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,6 +179,24 @@ namespace Azure.ResourceManager.Datadog.Models
                     enterpriseAppId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("cspm"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cspm = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("resourceCollection"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceCollection = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -182,6 +212,8 @@ namespace Azure.ResourceManager.Datadog.Models
                 apiKey,
                 applicationKey,
                 enterpriseAppId,
+                cspm,
+                resourceCollection,
                 serializedAdditionalRawData);
         }
 
