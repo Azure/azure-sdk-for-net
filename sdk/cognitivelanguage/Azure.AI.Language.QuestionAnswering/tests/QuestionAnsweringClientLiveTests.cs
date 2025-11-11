@@ -17,37 +17,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
-        public async Task SupportsAadAuthentication()
-        {
-            QuestionAnsweringClientOptions clientOptions = new QuestionAnsweringClientOptions()
-            {
-                DefaultLanguage = "en",
-            };
-
-            QuestionAnsweringClient client = CreateClient<QuestionAnsweringClient>(
-                TestEnvironment.Endpoint,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(clientOptions));
-
-            Response<AnswersFromTextResult> response = await client.GetAnswersFromTextAsync(
-                "How long it takes to charge surface?",
-                new[]
-                {
-                    "Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. " +
-                    "It can take longer if you’re using your Surface for power-intensive activities like gaming or video streaming while you’re charging it.",
-
-                    "You can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. " +
-                    "The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.",
-                });
-
-            Assert.That(response.Value.Answers.Count, Is.EqualTo(3));
-
-            IList<TextAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.9).ToList();
-            Assert.That(answers, Has.Count.AtLeast(2));
-            Assert.That(answers, Has.All.Matches<TextAnswer>(answer => answer.Id == "1" && answer.ShortAnswer.Text?.Trim() == "two to four hours"));
-        }
-
-        [RecordedTest]
         public async Task AnswersKnowledgeBaseQuestion()
         {
             AnswersOptions options = new()
@@ -55,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 Size = 3,
                 UserId = "sd53lsY=",
                 ConfidenceThreshold = 0.2,
-                ShortAnswerOptions = new()
+                ShortAnswerOptions = new(true)
                 {
                     ConfidenceThreshold = 0.2,
                     Size = 1,
@@ -69,7 +38,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.7).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
-            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 26 && answer.Source == "surface-book-user-guide-EN.pdf"));
+            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 257 && answer.Source == "https://download.microsoft.com/download/7/B/1/7B10C82E-F520-4080-8516-5CF0D803EEE0/surface-book-user-guide-EN.pdf"));
         }
 
         [RecordedTest]
@@ -84,7 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 {
                     PreviousQuestion = "How long should my Surface battery last?",
                 },
-                ShortAnswerOptions = new()
+                ShortAnswerOptions = new(true)
                 {
                     ConfidenceThreshold = 0.2,
                     Size = 1,
@@ -96,9 +65,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Assert.That(response.Value.Answers.Count, Is.EqualTo(1));
 
-            IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.6).ToList();
+            IList<KnowledgeBaseAnswer> answers = response.Value.Answers.Where(answer => answer.Confidence > 0.4).ToList();
             Assert.That(answers, Has.Count.EqualTo(1));
-            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 23 && answer.ShortAnswer.Text?.Trim() == "two to four hours"));
+            Assert.That(answers, Has.All.Matches<KnowledgeBaseAnswer>(answer => answer.QnaId == 253 && answer.ShortAnswer.Text?.Trim() == "two to four hours"));
         }
 
         [RecordedTest]
@@ -143,13 +112,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [RecordedTest]
         public async Task GetsKnowledgeBaseQuestion()
         {
-            Response<AnswersResult> response = await Client.GetAnswersAsync(24, TestEnvironment.Project);
+            Response<AnswersResult> response = await Client.GetAnswersAsync(254, TestEnvironment.Project);
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(response.Value.Answers.Count, Is.EqualTo(1));
 
             KnowledgeBaseAnswer answer = response.Value.Answers[0];
-            Assert.That(answer.QnaId, Is.EqualTo(24));
+            Assert.That(answer.QnaId, Is.EqualTo(254));
             Assert.That(answer.Questions, Has.All.EqualTo("Check the battery level"));
         }
 

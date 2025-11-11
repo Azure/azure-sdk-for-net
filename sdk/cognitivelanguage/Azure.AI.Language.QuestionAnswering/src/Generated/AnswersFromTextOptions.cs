@@ -97,11 +97,5 @@ namespace Azure.AI.Language.QuestionAnswering
         /// English as default.
         /// </summary>
         public string Language { get; set; }
-        /// <summary>
-        /// Specifies the method used to interpret string offsets.  Defaults to Text
-        /// Elements (Graphemes) according to Unicode v8.0.0. For additional information
-        /// see https://aka.ms/text-analytics-offsets.
-        /// </summary>
-        public StringIndexType? StringIndexType { get; set; }
     }
 }

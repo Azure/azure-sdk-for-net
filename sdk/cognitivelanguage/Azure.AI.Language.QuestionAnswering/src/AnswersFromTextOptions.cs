@@ -79,5 +79,12 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns>A shallow clone of the <see cref="AnswersFromTextOptions"/>.</returns>
         internal AnswersFromTextOptions Clone(string language) =>
             new(Question, TextDocuments) { Language = Language ?? language };
+
+        /// <summary>
+        /// Specifies the method used to interpret string offsets.  Defaults to Text
+        /// Elements (Graphemes) according to Unicode v8.0.0. For additional information
+        /// see https://aka.ms/text-analytics-offsets.
+        /// </summary>
+        public StringIndexType? StringIndexType { get; set; } = QuestionAnsweringClientOptions.DefaultStringIndexType;
     }
 }
