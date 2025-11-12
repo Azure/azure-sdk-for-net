@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Dynatrace.Samples
 {
-    public partial class Sample_MonitoredSubscriptionPropertyResource
+    public partial class MonitoredSubscriptionCollectionTests
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
