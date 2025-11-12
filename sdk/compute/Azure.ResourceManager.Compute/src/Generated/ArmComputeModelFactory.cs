@@ -876,6 +876,7 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
+
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInstanceView"/>. </summary>
         /// <param name="platformUpdateDomain"> Specifies the update domain of the virtual machine. </param>
         /// <param name="platformFaultDomain"> Specifies the fault domain of the virtual machine. </param>
@@ -1177,8 +1178,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
         /// <returns> A new <see cref="Compute.RestorePointGroupData"/> instance for mocking. </returns>
-        public static RestorePointGroupData RestorePointGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null)
+        public static RestorePointGroupData RestorePointGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null, bool? instantAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             restorePoints ??= new List<RestorePointData>();
@@ -1194,6 +1196,7 @@ namespace Azure.ResourceManager.Compute.Models
                 provisioningState,
                 restorePointGroupId,
                 restorePoints?.ToList(),
+                instantAccess,
                 serializedAdditionalRawData: null);
         }
 
@@ -1218,8 +1221,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
         /// <param name="sourceRestorePointId"> Resource Id of the source restore point from which a copy needs to be created. </param>
         /// <param name="instanceView"> The restore point instance view. </param>
+        /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <returns> A new <see cref="Compute.RestorePointData"/> instance for mocking. </returns>
-        public static RestorePointData RestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<WritableSubResource> excludeDisks = null, RestorePointSourceMetadata sourceMetadata = null, string provisioningState = null, ConsistencyModeType? consistencyMode = null, DateTimeOffset? timeCreated = null, ResourceIdentifier sourceRestorePointId = null, RestorePointInstanceView instanceView = null)
+        public static RestorePointData RestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<WritableSubResource> excludeDisks = null, RestorePointSourceMetadata sourceMetadata = null, string provisioningState = null, ConsistencyModeType? consistencyMode = null, DateTimeOffset? timeCreated = null, ResourceIdentifier sourceRestorePointId = null, RestorePointInstanceView instanceView = null, int? instantAccessDurationMinutes = null)
         {
             excludeDisks ??= new List<WritableSubResource>();
 
@@ -1235,6 +1239,7 @@ namespace Azure.ResourceManager.Compute.Models
                 timeCreated,
                 sourceRestorePointId != null ? ResourceManagerModelFactory.WritableSubResource(sourceRestorePointId) : null,
                 instanceView,
+                instantAccessDurationMinutes,
                 serializedAdditionalRawData: null);
         }
 
@@ -1348,11 +1353,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskRestorePointInstanceView"/>. </summary>
         /// <param name="id"> Disk restore point Id. </param>
+        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="replicationStatus"> The disk restore point replication status information. </param>
         /// <returns> A new <see cref="Models.DiskRestorePointInstanceView"/> instance for mocking. </returns>
-        public static DiskRestorePointInstanceView DiskRestorePointInstanceView(string id = null, DiskRestorePointReplicationStatus replicationStatus = null)
+        public static DiskRestorePointInstanceView DiskRestorePointInstanceView(string id = null, SnapshotAccessState? snapshotAccessState = null, DiskRestorePointReplicationStatus replicationStatus = null)
         {
-            return new DiskRestorePointInstanceView(id, replicationStatus, serializedAdditionalRawData: null);
+            return new DiskRestorePointInstanceView(id, snapshotAccessState, replicationStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskRestorePointReplicationStatus"/>. </summary>
@@ -1647,8 +1653,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
         /// <returns> A new <see cref="Models.RestorePointGroupPatch"/> instance for mocking. </returns>
-        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags = null, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null)
+        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags = null, RestorePointGroupSource source = null, string provisioningState = null, string restorePointGroupId = null, IEnumerable<RestorePointData> restorePoints = null, bool? instantAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             restorePoints ??= new List<RestorePointData>();
@@ -1659,7 +1666,8 @@ namespace Azure.ResourceManager.Compute.Models
                 source,
                 provisioningState,
                 restorePointGroupId,
-                restorePoints?.ToList());
+                restorePoints?.ToList(),
+                instantAccess);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SshPublicKeyGenerateKeyPairResult"/>. </summary>
@@ -4565,6 +4573,66 @@ namespace Azure.ResourceManager.Compute.Models
             return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.RestorePointGroupData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
+        /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.RestorePointGroupData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorePointGroupData RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IEnumerable<RestorePointData> restorePoints)
+        {
+            return RestorePointGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, source: source, provisioningState: provisioningState, restorePointGroupId: restorePointGroupId, restorePoints: restorePoints, instantAccess: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.RestorePointData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="excludeDisks"> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </param>
+        /// <param name="sourceMetadata"> Gets the details of the VM captured at the time of the restore point creation. </param>
+        /// <param name="provisioningState"> Gets the provisioning state of the restore point. </param>
+        /// <param name="consistencyMode"> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </param>
+        /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
+        /// <param name="sourceRestorePointId"> Resource Id of the source restore point from which a copy needs to be created. </param>
+        /// <param name="instanceView"> The restore point instance view. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.RestorePointData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorePointData RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, ResourceIdentifier sourceRestorePointId, RestorePointInstanceView instanceView)
+        {
+            return RestorePointData(id: id, name: name, resourceType: resourceType, systemData: systemData, excludeDisks: excludeDisks, sourceMetadata: sourceMetadata, provisioningState: provisioningState, consistencyMode: consistencyMode, timeCreated: timeCreated, sourceRestorePointId: sourceRestorePointId, instanceView: instanceView, instantAccessDurationMinutes: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.DiskRestorePointInstanceView" />. </summary>
+        /// <param name="id"> Disk restore point Id. </param>
+        /// <param name="replicationStatus"> The disk restore point replication status information. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.DiskRestorePointInstanceView" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskRestorePointInstanceView DiskRestorePointInstanceView(string id, DiskRestorePointReplicationStatus replicationStatus)
+        {
+            return DiskRestorePointInstanceView(id: id, snapshotAccessState: default, replicationStatus: replicationStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.RestorePointGroupPatch" />. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
+        /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.RestorePointGroupPatch" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorePointGroupPatch RestorePointGroupPatch(IDictionary<string, string> tags, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IEnumerable<RestorePointData> restorePoints)
+        {
+            return RestorePointGroupPatch(tags: tags, source: source, provisioningState: provisioningState, restorePointGroupId: restorePointGroupId, restorePoints: restorePoints, instantAccess: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.CapacityReservationGroupData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5200,7 +5268,6 @@ namespace Azure.ResourceManager.Compute.Models
         {
             return DiskRestorePointData(id: id, name: name, resourceType: resourceType, systemData: systemData, timeCreated: timeCreated, sourceResourceId: sourceResourceId, osType: osType, hyperVGeneration: hyperVGeneration, purchasePlan: purchasePlan, supportedCapabilities: supportedCapabilities, familyId: familyId, sourceUniqueId: sourceUniqueId, encryption: encryption, supportsHibernation: supportsHibernation, networkAccessPolicy: networkAccessPolicy, publicNetworkAccess: publicNetworkAccess, diskAccessId: diskAccessId, completionPercent: completionPercent, replicationState: replicationState, sourceResourceLocation: sourceResourceLocation, securityProfile: securityProfile, logicalSectorSize: default);
         }
-
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.VirtualMachineDataDisk" />. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="name"> The disk name. </param>
@@ -5222,6 +5289,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             return VirtualMachineDataDisk(lun: lun, name: name, vhdUri: vhdUri, imageUri: imageUri, caching: caching, writeAcceleratorEnabled: writeAcceleratorEnabled, createOption: createOption, diskSizeGB: diskSizeGB, managedDisk: managedDisk, sourceResourceId: default, toBeDetached: toBeDetached, diskIopsReadWrite: diskIopsReadWrite, diskMBpsReadWrite: diskMBpsReadWrite, detachOption: detachOption, deleteOption: deleteOption);
         }
+
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.DataDisksToAttach" />. </summary>
         /// <param name="diskId"> ID of the managed data disk. </param>
