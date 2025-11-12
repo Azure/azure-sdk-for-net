@@ -1045,7 +1045,14 @@
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
+# ServiceLabel: %Network - CDN %Mgmt
+# ServiceOwners:                                                   @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# PRLabel: %Network - EdgeActions
 /sdk/edgeactions/Azure.ResourceManager.*/                          @tundwed @anamikanupur
+
+# ServiceLabel: %Network - EdgeActions %Mgmt
+# ServiceOwners:                                                   @tundwed @anamikanupur
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
