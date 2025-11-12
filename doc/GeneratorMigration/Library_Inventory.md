@@ -2,31 +2,32 @@
 
 ## Summary
 
-- Total libraries: 418
+- Total libraries: 421
 - Management Plane (Swagger): 162
 - Management Plane (TSP-Old): 43
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 20
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
-- Data Plane (Swagger): 110
-- Data Plane (TSP-Old): 18
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 12
+- Data Plane (Swagger): 111
+- Data Plane (TSP-Old): 17
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 13
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
 - Data Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 1
-- No generator: 50
+- No generator: 52
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 12
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 13
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | ai | Azure.AI.VoiceLive | sdk/ai/Azure.AI.VoiceLive |
 | appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | documentintelligence | Azure.AI.DocumentIntelligence | sdk/documentintelligence/Azure.AI.DocumentIntelligence |
+| easm | Azure.Analytics.Defender.Easm | sdk/easm/Azure.Analytics.Defender.Easm |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
@@ -59,7 +60,7 @@ TypeSpec with Unknown TypeSpec Generator: eng/emitter-package.json generator is 
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 18
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 17
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -75,7 +76,6 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | confidentialledger | Azure.Security.CodeTransparency | sdk/confidentialledger/Azure.Security.CodeTransparency |
 | contentsafety | Azure.AI.ContentSafety | sdk/contentsafety/Azure.AI.ContentSafety |
 | devcenter | Azure.Developer.DevCenter | sdk/devcenter/Azure.Developer.DevCenter |
-| easm | Azure.Analytics.Defender.Easm | sdk/easm/Azure.Analytics.Defender.Easm |
 | loadtestservice | Azure.Developer.LoadTesting | sdk/loadtestservice/Azure.Developer.LoadTesting |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation |
 | purview | Azure.Analytics.Purview.DataMap | sdk/purview/Azure.Analytics.Purview.DataMap |
@@ -85,10 +85,11 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Data Plane Libraries using Swagger
 
-Total: 110
+Total: 111
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
+| agentserver | Azure.AI.AgentServer.Contracts | sdk/agentserver/Azure.AI.AgentServer.Contracts |
 | agrifood | Azure.Verticals.AgriFood.Farming | sdk/agrifood/Azure.Verticals.AgriFood.Farming |
 | attestation | Azure.Security.Attestation | sdk/attestation/Azure.Security.Attestation |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering | sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering |
@@ -452,10 +453,12 @@ Total: 162
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 50
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 52
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
+| agentserver | Azure.AI.AgentServer.AgentFramework | sdk/agentserver/Azure.AI.AgentServer.AgentFramework |
+| agentserver | Azure.AI.AgentServer.Core | sdk/agentserver/Azure.AI.AgentServer.Core |
 | ai | Azure.AI.Inference | sdk/ai/Azure.AI.Inference |
 | cloudmachine | Azure.Projects | sdk/cloudmachine/Azure.Projects |
 | cloudmachine | Azure.Projects.AI | sdk/cloudmachine/Azure.Projects.AI |

@@ -1974,15 +1974,6 @@ namespace Azure.Analytics.Defender.Easm
             return new ErrorResponse(error, errorCode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="innererror"> Inner error. </param>
-        /// <returns> A new <see cref="Easm.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = default, InnerError innererror = default)
-        {
-            return new InnerError(code, innererror, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A request body used to update an asset. </summary>
         /// <param name="state"> The state to update the asset to. </param>
         /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
@@ -2398,7 +2389,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="details"> This is an array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> This is an object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Easm.ErrorDetail"/> instance for mocking. </returns>
-        public static ErrorDetail ErrorDetail(string code = default, string message = default, string target = default, IEnumerable<ErrorDetail> details = default, InnerError innererror = default)
+        public static ErrorDetail ErrorDetail(string code = default, string message = default, string target = default, IEnumerable<ErrorDetail> details = default, InnerError1 innererror = default)
         {
             details ??= new ChangeTrackingList<ErrorDetail>();
 
@@ -2414,10 +2405,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> This is an object containing more specific information than the current object about the error. </summary>
         /// <param name="code"> This is a more specific error code than was provided by the containing error. </param>
         /// <param name="value"> This is an additional field representing the value that caused the error to help with debugging. </param>
-        /// <returns> A new <see cref="Easm.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = default, BinaryData value = default)
+        /// <returns> A new <see cref="Easm.InnerError1"/> instance for mocking. </returns>
+        public static InnerError1 InnerError1(string code = default, BinaryData value = default)
         {
-            return new InnerError(code, value, additionalBinaryDataProperties: null);
+            return new InnerError1(code, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The DiscoveryGroup. </summary>

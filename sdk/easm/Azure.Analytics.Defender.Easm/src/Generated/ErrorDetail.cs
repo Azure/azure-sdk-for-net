@@ -33,7 +33,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="details"> This is an array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> This is an object containing more specific information than the current object about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetail(string code, string message, string target, IList<ErrorDetail> details, InnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorDetail(string code, string message, string target, IList<ErrorDetail> details, InnerError1 innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -56,6 +56,6 @@ namespace Azure.Analytics.Defender.Easm
         public IList<ErrorDetail> Details { get; }
 
         /// <summary> This is an object containing more specific information than the current object about the error. </summary>
-        public InnerError Innererror { get; }
+        public InnerError1 Innererror { get; }
     }
 }

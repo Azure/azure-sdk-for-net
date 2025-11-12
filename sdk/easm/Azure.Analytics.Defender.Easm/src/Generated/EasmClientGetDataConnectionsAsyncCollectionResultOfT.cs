@@ -14,19 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetDataConnectionAsyncCollectionResultOfT : AsyncPageable<DataConnection>
+    internal partial class EasmClientGetDataConnectionsAsyncCollectionResultOfT : AsyncPageable<DataConnection>
     {
         private readonly EasmClient _client;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of EasmClientGetDataConnectionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EasmClientGetDataConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetDataConnectionAsyncCollectionResultOfT(EasmClient client, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EasmClientGetDataConnectionsAsyncCollectionResultOfT(EasmClient client, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _skip = skip;
@@ -34,10 +34,10 @@ namespace Azure.Analytics.Defender.Easm
             _context = context;
         }
 
-        /// <summary> Gets the pages of EasmClientGetDataConnectionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EasmClientGetDataConnectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EasmClientGetDataConnectionAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of EasmClientGetDataConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DataConnection>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -63,8 +63,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDataConnectionRequest(nextLink, _skip, _maxpagesize, _context) : _client.CreateGetDataConnectionRequest(_skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDataConnectionsRequest(nextLink, _skip, _maxpagesize, _context) : _client.CreateGetDataConnectionsRequest(_skip, _maxpagesize, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetDataConnections");
             scope.Start();
             try
             {

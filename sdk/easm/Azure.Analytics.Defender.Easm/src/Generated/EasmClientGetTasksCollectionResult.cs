@@ -14,30 +14,36 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetDataConnectionCollectionResult : Pageable<BinaryData>
+    internal partial class EasmClientGetTasksCollectionResult : Pageable<BinaryData>
     {
         private readonly EasmClient _client;
+        private readonly string _filter;
+        private readonly string _orderby;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of EasmClientGetDataConnectionCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EasmClientGetTasksCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
+        /// <param name="filter"> Filter the result list using the given expression. </param>
+        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetDataConnectionCollectionResult(EasmClient client, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EasmClientGetTasksCollectionResult(EasmClient client, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _filter = filter;
+            _orderby = @orderby;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
         }
 
-        /// <summary> Gets the pages of EasmClientGetDataConnectionCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EasmClientGetTasksCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EasmClientGetDataConnectionCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of EasmClientGetTasksCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -48,7 +54,7 @@ namespace Azure.Analytics.Defender.Easm
                 {
                     yield break;
                 }
-                PagedDataConnection result = (PagedDataConnection)response;
+                PagedTask result = (PagedTask)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
@@ -68,8 +74,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDataConnectionRequest(nextLink, _skip, _maxpagesize, _context) : _client.CreateGetDataConnectionRequest(_skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTasksRequest(nextLink, _filter, _orderby, _skip, _maxpagesize, _context) : _client.CreateGetTasksRequest(_filter, _orderby, _skip, _maxpagesize, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetTasks");
             scope.Start();
             try
             {

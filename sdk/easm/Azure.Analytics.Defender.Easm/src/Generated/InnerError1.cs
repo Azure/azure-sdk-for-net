@@ -12,21 +12,21 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> This is an object containing more specific information than the current object about the error. </summary>
-    public partial class InnerError
+    public partial class InnerError1
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
-        internal InnerError()
+        /// <summary> Initializes a new instance of <see cref="InnerError1"/>. </summary>
+        internal InnerError1()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError1"/>. </summary>
         /// <param name="code"> This is a more specific error code than was provided by the containing error. </param>
         /// <param name="value"> This is an additional field representing the value that caused the error to help with debugging. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InnerError(string code, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InnerError1(string code, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Value = value;

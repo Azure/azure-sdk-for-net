@@ -30,28 +30,26 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of EasmClient. </summary>
-        /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/workspaces/{workspaceName}. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public EasmClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new EasmClientOptions())
+        public EasmClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EasmClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of EasmClient. </summary>
-        /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/workspaces/{workspaceName}. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public EasmClient(string endpoint, TokenCredential credential, EasmClientOptions options)
+        public EasmClient(Uri endpoint, TokenCredential credential, EasmClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new EasmClientOptions();
 
-            _endpoint = new Uri($"{endpoint}");
+            _endpoint = endpoint;
             _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
@@ -83,13 +81,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAssetResource(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        public virtual Pageable<BinaryData> GetAssetResources(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
             scope.Start();
             try
             {
-                return new EasmClientGetAssetResourceCollectionResult(
+                return new EasmClientGetAssetResourcesCollectionResult(
                     this,
                     filter,
                     @orderby,
@@ -127,13 +125,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAssetResourceAsync(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAssetResourcesAsync(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
             scope.Start();
             try
             {
-                return new EasmClientGetAssetResourceAsyncCollectionResult(
+                return new EasmClientGetAssetResourcesAsyncCollectionResult(
                     this,
                     filter,
                     @orderby,
@@ -163,9 +161,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<AssetResource> GetAssetResource(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AssetResource> GetAssetResources(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetAssetResourceCollectionResultOfT(
+            return new EasmClientGetAssetResourcesCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -189,9 +187,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<AssetResource> GetAssetResourceAsync(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AssetResource> GetAssetResourcesAsync(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, string mark = default, AssetResponseType? responseType = default, IEnumerable<string> responseIncludes = default, bool? recentOnly = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetAssetResourceAsyncCollectionResultOfT(
+            return new EasmClientGetAssetResourcesAsyncCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -793,13 +791,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDataConnection(int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetDataConnections(int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnections");
             scope.Start();
             try
             {
-                return new EasmClientGetDataConnectionCollectionResult(this, skip, maxpagesize, context);
+                return new EasmClientGetDataConnectionsCollectionResult(this, skip, maxpagesize, context);
             }
             catch (Exception e)
             {
@@ -821,13 +819,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDataConnectionAsync(int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDataConnectionsAsync(int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnections");
             scope.Start();
             try
             {
-                return new EasmClientGetDataConnectionAsyncCollectionResult(this, skip, maxpagesize, context);
+                return new EasmClientGetDataConnectionsAsyncCollectionResult(this, skip, maxpagesize, context);
             }
             catch (Exception e)
             {
@@ -841,9 +839,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DataConnection> GetDataConnection(int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataConnection> GetDataConnections(int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDataConnectionCollectionResultOfT(this, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new EasmClientGetDataConnectionsCollectionResultOfT(this, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Retrieve a list of data connections. </summary>
@@ -851,9 +849,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DataConnection> GetDataConnectionAsync(int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataConnection> GetDataConnectionsAsync(int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetDataConnectionAsyncCollectionResultOfT(this, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new EasmClientGetDataConnectionsAsyncCollectionResultOfT(this, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2588,13 +2586,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSavedFilter(string filter, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetSavedFilters(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilters");
             scope.Start();
             try
             {
-                return new EasmClientGetSavedFilterCollectionResult(this, filter, skip, maxpagesize, context);
+                return new EasmClientGetSavedFiltersCollectionResult(this, filter, skip, maxpagesize, context);
             }
             catch (Exception e)
             {
@@ -2617,13 +2615,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSavedFilterAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilters");
             scope.Start();
             try
             {
-                return new EasmClientGetSavedFilterAsyncCollectionResult(this, filter, skip, maxpagesize, context);
+                return new EasmClientGetSavedFiltersAsyncCollectionResult(this, filter, skip, maxpagesize, context);
             }
             catch (Exception e)
             {
@@ -2638,9 +2636,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SavedFilter> GetSavedFilter(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SavedFilter> GetSavedFilters(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetSavedFilterCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new EasmClientGetSavedFiltersCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Retrieve a list of saved filters for the provided search parameters. </summary>
@@ -2649,9 +2647,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SavedFilter> GetSavedFilterAsync(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SavedFilter> GetSavedFiltersAsync(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetSavedFilterAsyncCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new EasmClientGetSavedFiltersAsyncCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2951,13 +2949,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTask(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetTasks(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTasks");
             scope.Start();
             try
             {
-                return new EasmClientGetTaskCollectionResult(
+                return new EasmClientGetTasksCollectionResult(
                     this,
                     filter,
                     @orderby,
@@ -2987,13 +2985,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTaskAsync(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTasksAsync(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTask");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTasks");
             scope.Start();
             try
             {
-                return new EasmClientGetTaskAsyncCollectionResult(
+                return new EasmClientGetTasksAsyncCollectionResult(
                     this,
                     filter,
                     @orderby,
@@ -3015,9 +3013,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TaskResource> GetTask(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<TaskResource> GetTasks(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetTaskCollectionResultOfT(
+            return new EasmClientGetTasksCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -3033,9 +3031,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TaskResource> GetTaskAsync(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TaskResource> GetTasksAsync(string filter = default, string @orderby = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetTaskAsyncCollectionResultOfT(
+            return new EasmClientGetTasksAsyncCollectionResultOfT(
                 this,
                 filter,
                 @orderby,
@@ -3586,13 +3584,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetPolicy(string filter, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetPolicies(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicy");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicies");
             scope.Start();
             try
             {
-                return new EasmClientGetPolicyCollectionResult(this, filter, skip, maxpagesize, context);
+                return new EasmClientGetPoliciesCollectionResult(this, filter, skip, maxpagesize, context);
             }
             catch (Exception e)
             {
@@ -3615,13 +3613,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetPolicyAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicy");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicies");
             scope.Start();
             try
             {
-                return new EasmClientGetPolicyAsyncCollectionResult(this, filter, skip, maxpagesize, context);
+                return new EasmClientGetPoliciesAsyncCollectionResult(this, filter, skip, maxpagesize, context);
             }
             catch (Exception e)
             {
@@ -3636,9 +3634,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<EasmPolicy> GetPolicy(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<EasmPolicy> GetPolicies(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetPolicyCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new EasmClientGetPoliciesCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Retrieve a list of policies for the provided search parameters. </summary>
@@ -3647,9 +3645,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<EasmPolicy> GetPolicyAsync(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EasmPolicy> GetPoliciesAsync(string filter = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new EasmClientGetPolicyAsyncCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
+            return new EasmClientGetPoliciesAsyncCollectionResultOfT(this, filter, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary>

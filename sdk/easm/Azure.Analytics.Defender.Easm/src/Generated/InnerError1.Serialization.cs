@@ -13,14 +13,14 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> This is an object containing more specific information than the current object about the error. </summary>
-    public partial class InnerError : IJsonModel<InnerError>
+    public partial class InnerError1 : IJsonModel<InnerError1>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InnerError1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -28,10 +28,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError1)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Code))
             {
@@ -69,24 +69,24 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InnerError IJsonModel<InnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
+        InnerError1 IJsonModel<InnerError1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InnerError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual InnerError1 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError1)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return InnerError.DeserializeInnerError(document.RootElement, options);
+            return DeserializeInnerError1(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InnerError DeserializeInnerError(JsonElement element, ModelReaderWriterOptions options)
+        internal static InnerError1 DeserializeInnerError1(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,47 +116,47 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InnerError(code, value, additionalBinaryDataProperties);
+            return new InnerError1(code, value, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<InnerError1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError1>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError1)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InnerError IPersistableModel<InnerError>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
+        InnerError1 IPersistableModel<InnerError1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InnerError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual InnerError1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InnerError1>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return InnerError.DeserializeInnerError(document.RootElement, options);
+                        return DeserializeInnerError1(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError1)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InnerError1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

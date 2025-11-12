@@ -17,13 +17,12 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="EasmClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/workspaces/{workspaceName}. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<EasmClient, EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, string endpoint)
+        public static IAzureClientBuilder<EasmClient, EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             return builder.RegisterClientFactory<EasmClient, EasmClientOptions>((options, credential) => new EasmClient(endpoint, credential, options));
         }

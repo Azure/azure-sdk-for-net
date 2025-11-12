@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetSavedFilterCollectionResultOfT : Pageable<SavedFilter>
+    internal partial class EasmClientGetPoliciesCollectionResultOfT : Pageable<EasmPolicy>
     {
         private readonly EasmClient _client;
         private readonly string _filter;
@@ -21,13 +21,13 @@ namespace Azure.Analytics.Defender.Easm
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of EasmClientGetSavedFilterCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EasmClientGetPoliciesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetSavedFilterCollectionResultOfT(EasmClient client, string filter, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EasmClientGetPoliciesCollectionResultOfT(EasmClient client, string filter, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
@@ -36,11 +36,11 @@ namespace Azure.Analytics.Defender.Easm
             _context = context;
         }
 
-        /// <summary> Gets the pages of EasmClientGetSavedFilterCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EasmClientGetPoliciesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EasmClientGetSavedFilterCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SavedFilter>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EasmClientGetPoliciesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<EasmPolicy>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,8 +50,8 @@ namespace Azure.Analytics.Defender.Easm
                 {
                     yield break;
                 }
-                PagedSavedFilter result = (PagedSavedFilter)response;
-                yield return Page<SavedFilter>.FromValues((IReadOnlyList<SavedFilter>)result.Value, nextPage?.AbsoluteUri, response);
+                PagedPolicy result = (PagedPolicy)response;
+                yield return Page<EasmPolicy>.FromValues((IReadOnlyList<EasmPolicy>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,8 +65,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSavedFilterRequest(nextLink, _filter, _skip, _maxpagesize, _context) : _client.CreateGetSavedFilterRequest(_filter, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetSavedFilter");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPoliciesRequest(nextLink, _filter, _skip, _maxpagesize, _context) : _client.CreateGetPoliciesRequest(_filter, _skip, _maxpagesize, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetPolicies");
             scope.Start();
             try
             {

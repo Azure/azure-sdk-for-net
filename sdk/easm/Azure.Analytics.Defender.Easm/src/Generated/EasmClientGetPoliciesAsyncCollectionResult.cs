@@ -15,48 +15,33 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetAssetResourceAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class EasmClientGetPoliciesAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly EasmClient _client;
         private readonly string _filter;
-        private readonly string _orderby;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
-        private readonly string _mark;
-        private readonly string _responseType;
-        private readonly IEnumerable<string> _responseIncludes;
-        private readonly bool? _recentOnly;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of EasmClientGetAssetResourceAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EasmClientGetPoliciesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
-        /// <param name="responseType"> Specify the response type. The possible values are: ID, STANDARD, FULL, REDUCED. </param>
-        /// <param name="responseIncludes"> The properties to include in the response. </param>
-        /// <param name="recentOnly"> If it's recent only. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetAssetResourceAsyncCollectionResult(EasmClient client, string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EasmClientGetPoliciesAsyncCollectionResult(EasmClient client, string filter, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
-            _orderby = @orderby;
             _skip = skip;
             _maxpagesize = maxpagesize;
-            _mark = mark;
-            _responseType = responseType;
-            _responseIncludes = responseIncludes;
-            _recentOnly = recentOnly;
             _context = context;
         }
 
-        /// <summary> Gets the pages of EasmClientGetAssetResourceAsyncCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EasmClientGetPoliciesAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EasmClientGetAssetResourceAsyncCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of EasmClientGetPoliciesAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -67,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
                 {
                     yield break;
                 }
-                PagedAssetResource result = (PagedAssetResource)response;
+                PagedPolicy result = (PagedPolicy)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
@@ -87,8 +72,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAssetResourceRequest(nextLink, _filter, _orderby, _skip, _maxpagesize, _mark, _responseType, _responseIncludes, _recentOnly, _context) : _client.CreateGetAssetResourceRequest(_filter, _orderby, _skip, _maxpagesize, _mark, _responseType, _responseIncludes, _recentOnly, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetAssetResource");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPoliciesRequest(nextLink, _filter, _skip, _maxpagesize, _context) : _client.CreateGetPoliciesRequest(_filter, _skip, _maxpagesize, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetPolicies");
             scope.Start();
             try
             {

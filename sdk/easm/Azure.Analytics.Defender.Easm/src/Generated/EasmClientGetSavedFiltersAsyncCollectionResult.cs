@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
@@ -14,37 +15,34 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class EasmClientGetTaskAsyncCollectionResultOfT : AsyncPageable<TaskResource>
+    internal partial class EasmClientGetSavedFiltersAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly EasmClient _client;
         private readonly string _filter;
-        private readonly string _orderby;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of EasmClientGetTaskAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EasmClientGetSavedFiltersAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EasmClient client used to send requests. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="orderby"> A list of expressions that specify the order of the returned resources. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EasmClientGetTaskAsyncCollectionResultOfT(EasmClient client, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EasmClientGetSavedFiltersAsyncCollectionResult(EasmClient client, string filter, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
-            _orderby = @orderby;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
         }
 
-        /// <summary> Gets the pages of EasmClientGetTaskAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EasmClientGetSavedFiltersAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EasmClientGetTaskAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TaskResource>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EasmClientGetSavedFiltersAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +52,13 @@ namespace Azure.Analytics.Defender.Easm
                 {
                     yield break;
                 }
-                PagedTask result = (PagedTask)response;
-                yield return Page<TaskResource>.FromValues((IReadOnlyList<TaskResource>)result.Value, nextPage?.AbsoluteUri, response);
+                PagedSavedFilter result = (PagedSavedFilter)response;
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in result.Value)
+                {
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions));
+                }
+                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -69,8 +72,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTaskRequest(nextLink, _filter, _orderby, _skip, _maxpagesize, _context) : _client.CreateGetTaskRequest(_filter, _orderby, _skip, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetTask");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSavedFiltersRequest(nextLink, _filter, _skip, _maxpagesize, _context) : _client.CreateGetSavedFiltersRequest(_filter, _skip, _maxpagesize, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetSavedFilters");
             scope.Start();
             try
             {

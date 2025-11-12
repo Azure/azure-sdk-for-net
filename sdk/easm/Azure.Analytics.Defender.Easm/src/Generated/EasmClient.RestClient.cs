@@ -22,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetAssetResourceRequest(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        internal HttpMessage CreateGetAssetResourcesRequest(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetAssetResourceRequest(Uri nextPage, string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        internal HttpMessage CreateNextGetAssetResourcesRequest(Uri nextPage, string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -220,7 +220,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetDataConnectionRequest(int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDataConnectionsRequest(int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataConnectionRequest(Uri nextPage, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDataConnectionsRequest(Uri nextPage, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -618,7 +618,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetSavedFilterRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSavedFiltersRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -644,7 +644,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetSavedFilterRequest(Uri nextPage, string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetSavedFiltersRequest(Uri nextPage, string filter, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -702,7 +702,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetTaskRequest(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTasksRequest(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -732,7 +732,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetTaskRequest(Uri nextPage, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
@@ -848,7 +848,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetPolicyRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetPoliciesRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -874,7 +874,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetPolicyRequest(Uri nextPage, string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetPoliciesRequest(Uri nextPage, string filter, int? skip, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
