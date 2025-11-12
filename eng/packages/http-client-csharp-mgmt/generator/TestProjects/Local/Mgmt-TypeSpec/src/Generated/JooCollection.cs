@@ -19,8 +19,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="JooResource"/> and their operations.
-    /// Each <see cref="JooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="JooCollection"/> instance call the GetJoos method from an instance of the parent resource.
+    /// Each <see cref="JooResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="JooCollection"/> instance call the GetJoos method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class JooCollection : ArmCollection
     {

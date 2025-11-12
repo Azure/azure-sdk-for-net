@@ -20,8 +20,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarResource"/> and their operations.
-    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of the parent resource.
+    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of <see cref="FooResource"/>.
+    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of <see cref="FooResource"/>.
     /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {

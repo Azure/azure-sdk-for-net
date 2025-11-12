@@ -21,8 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="FooResource"/> and their operations.
-    /// Each <see cref="FooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="FooCollection"/> instance call the GetFoos method from an instance of the parent resource.
+    /// Each <see cref="FooResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="FooCollection"/> instance call the GetFoos method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
