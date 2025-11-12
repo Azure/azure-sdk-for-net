@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightQuotaResource"/> and their operations.
-    /// Each <see cref="PlaywrightQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlaywrightQuotaCollection"/> instance call the GetPlaywrightQuotas method from an instance of the parent resource.
+    /// Each <see cref="PlaywrightQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="PlaywrightQuotaCollection"/> instance call the GetPlaywrightQuotas method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class PlaywrightQuotaCollection : ArmCollection, IEnumerable<PlaywrightQuotaResource>, IAsyncEnumerable<PlaywrightQuotaResource>
     {
