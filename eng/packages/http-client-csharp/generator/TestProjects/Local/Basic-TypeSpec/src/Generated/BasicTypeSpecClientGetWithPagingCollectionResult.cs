@@ -39,7 +39,7 @@ namespace BasicTypeSpec
             List<BinaryData> items = new List<BinaryData>();
             foreach (var item in result.Items)
             {
-                items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions));
+                items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
             }
             yield return Page<BinaryData>.FromValues(items, null, response);
         }
