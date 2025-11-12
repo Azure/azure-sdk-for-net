@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary>
     /// A class representing a collection of <see cref="WeightsAndBiasesInstanceResource"/> and their operations.
-    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of the parent resource.
+    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class WeightsAndBiasesInstanceCollection : ArmCollection, IEnumerable<WeightsAndBiasesInstanceResource>, IAsyncEnumerable<WeightsAndBiasesInstanceResource>
     {

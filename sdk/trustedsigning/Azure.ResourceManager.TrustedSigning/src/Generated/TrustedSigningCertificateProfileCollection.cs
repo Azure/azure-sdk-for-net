@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
     /// A class representing a collection of <see cref="TrustedSigningCertificateProfileResource"/> and their operations.
-    /// Each <see cref="TrustedSigningCertificateProfileResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="TrustedSigningCertificateProfileCollection"/> instance call the GetTrustedSigningCertificateProfiles method from an instance of the parent resource.
+    /// Each <see cref="TrustedSigningCertificateProfileResource"/> in the collection will belong to the same instance of <see cref="TrustedSigningAccountResource"/>.
+    /// To get a <see cref="TrustedSigningCertificateProfileCollection"/> instance call the GetTrustedSigningCertificateProfiles method from an instance of <see cref="TrustedSigningAccountResource"/>.
     /// </summary>
     public partial class TrustedSigningCertificateProfileCollection : ArmCollection, IEnumerable<TrustedSigningCertificateProfileResource>, IAsyncEnumerable<TrustedSigningCertificateProfileResource>
     {
