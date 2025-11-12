@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -24,13 +26,10 @@ public class BicepDictionary<T> :
     private IDictionary<string, BicepValue<T>> _values;
     private protected override object? GetLiteralValue() => _values;
 
-    // We're empty if unset or no literal values
-    public override bool IsEmpty => base.IsEmpty || (_kind == BicepValueKind.Literal && _values.Count == 0);
-
     /// <summary>
     /// Creates a new BicepDictionary.
     /// </summary>
-    public BicepDictionary() : this(self: null, values: null) { }
+    public BicepDictionary() : this(self: null, values: new Dictionary<string, BicepValue<T>>()) { }
 
     /// <summary>
     /// Creates a new BicepDictionary with literal values.
@@ -44,9 +43,18 @@ public class BicepDictionary<T> :
     internal BicepDictionary(BicepValueReference? self, IDictionary<string, BicepValue<T>>? values = null)
         : base(self)
     {
-        _kind = BicepValueKind.Literal;
-        // Shallow clone their values
-        _values = values != null ? new Dictionary<string, BicepValue<T>>(values) : [];
+        if (values == null)
+        {
+            // we consider this as an "uninitialized list"
+            _kind = BicepValueKind.Unset;
+            _values = new Dictionary<string, BicepValue<T>>();
+        }
+        else
+        {
+            // in this case, the list is initialized as a literal list
+            _kind = BicepValueKind.Literal;
+            _values = new Dictionary<string, BicepValue<T>>(values); // Shallow clone their values
+        }
     }
 
     // Move literal elements when assigning values to a dictionary
@@ -58,7 +66,15 @@ public class BicepDictionary<T> :
         {
             _values = typed._values;
         }
+
+        // Everything else is handled by the base Assign
         base.Assign(source);
+
+        // handle self in all the items
+        foreach (var kv in _values)
+        {
+            SetSelfForItem(kv.Value, kv.Key);
+        }
     }
 
     /// <summary>
@@ -68,6 +84,22 @@ public class BicepDictionary<T> :
     public static implicit operator BicepDictionary<T>(ProvisioningVariable reference) =>
         new(new BicepValueReference(reference, "{}"), BicepSyntax.Var(reference.BicepIdentifier)) { _isSecure = reference is ProvisioningParameter p && p.IsSecure };
 
+    private BicepValueReference? GetItemSelf(string key) =>
+        _self is not null
+            ? new BicepDictionaryValueReference(_self.Construct, _self.PropertyName, _self.BicepPath?.ToArray(), key)
+            : null;
+
+    private void SetSelfForItem(BicepValue<T> item, string key)
+    {
+        var itemSelf = GetItemSelf(key);
+        item.SetSelf(itemSelf);
+    }
+
+    private void RemoveSelfForItem(BicepValue<T> item)
+    {
+        item.SetSelf(null);
+    }
+
     /// <summary>
     /// Gets or sets a value in a BicepDictionary.
     /// </summary>
@@ -75,16 +107,84 @@ public class BicepDictionary<T> :
     /// <returns>The value.</returns>
     public BicepValue<T> this[string key]
     {
-        get => _values[key];
-        set => _values[key] = value;
+        get
+        {
+            if (_values.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            // The key does not exist; we put a value factory as the literal value of this Bicep value.
+            // If the value factory is evaluated before the key is added, it will throw a KeyNotFoundException.
+            // This is valid for generating a reference expression, but will fail if the value is accessed before being added.
+            return new BicepValue<T>(GetItemSelf(key), () => _values[key].Value);
+        }
+        set
+        {
+            if (_kind == BicepValueKind.Expression || _isOutput)
+            {
+                throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}, the dictionary is an expression or output only");
+            }
+            if (_kind == BicepValueKind.Unset)
+            {
+                _kind = BicepValueKind.Literal;
+            }
+            _values[key] = value;
+            // update the _self pointing the new item
+            SetSelfForItem(value, key);
+        }
     }
 
-    public void Add(string key, BicepValue<T> value) => _values.Add(key, value);
-    public void Add(KeyValuePair<string, BicepValue<T>> item) => _values.Add(item.Key, item.Value);
+    public void Add(string key, BicepValue<T> value)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Add to {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        _values.Add(key, value);
+        // update the _self pointing the new item
+        SetSelfForItem(value, key);
+    }
 
-    // TODO: Decide whether it's important to "unlink" resources on removal
-    public bool Remove(string key) => _values.Remove(key);
-    public void Clear() => _values.Clear();
+    public void Add(KeyValuePair<string, BicepValue<T>> item) => Add(item.Key, item.Value);
+
+    public bool Remove(string key)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        if (_values.TryGetValue(key, out var removedItem))
+        {
+            // maintain the self reference for the removed item if the item exists
+            RemoveSelfForItem(removedItem);
+        }
+        return _values.Remove(key);
+    }
+
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Clear {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        foreach (var kv in _values)
+        {
+            RemoveSelfForItem(kv.Value);
+        }
+        _values.Clear();
+    }
 
     public ICollection<string> Keys => _values.Keys;
     public ICollection<BicepValue<T>> Values => _values.Values;
@@ -129,4 +229,14 @@ public class BicepDictionary<T> :
     bool ICollection<KeyValuePair<string, IBicepValue>>.Remove(KeyValuePair<string, IBicepValue> item) => Remove(item.Key);
     IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
         _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
+
+    private protected override BicepExpression CompileLiteralValue()
+    {
+        Dictionary<string, BicepExpression> compiledValues = [];
+        foreach (var kv in _values)
+        {
+            compiledValues[kv.Key] = kv.Value.Compile();
+        }
+        return BicepSyntax.Object(compiledValues);
+    }
 }

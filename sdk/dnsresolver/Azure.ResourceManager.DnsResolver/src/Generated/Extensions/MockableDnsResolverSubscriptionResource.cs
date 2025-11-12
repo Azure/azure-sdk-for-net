@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDnsResolverSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _dnsResolverClientDiagnostics;
-        private DnsResolversRestOperations _dnsResolverRestClient;
         private ClientDiagnostics _dnsForwardingRulesetClientDiagnostics;
         private DnsForwardingRulesetsRestOperations _dnsForwardingRulesetRestClient;
-        private ClientDiagnostics _dnsResolverPolicyClientDiagnostics;
-        private DnsResolverPoliciesRestOperations _dnsResolverPolicyRestClient;
         private ClientDiagnostics _dnsResolverDomainListClientDiagnostics;
         private DnsResolverDomainListsRestOperations _dnsResolverDomainListRestClient;
+        private ClientDiagnostics _dnsResolverPolicyClientDiagnostics;
+        private DnsResolverPoliciesRestOperations _dnsResolverPolicyRestClient;
+        private ClientDiagnostics _dnsResolverClientDiagnostics;
+        private DnsResolversRestOperations _dnsResolverRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDnsResolverSubscriptionResource"/> class for mocking. </summary>
         protected MockableDnsResolverSubscriptionResource()
@@ -36,81 +36,19 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         {
         }
 
-        private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
-        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverResource.ResourceType));
         private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
         private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsForwardingRulesetResource.ResourceType));
-        private ClientDiagnostics DnsResolverPolicyClientDiagnostics => _dnsResolverPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
-        private DnsResolverPoliciesRestOperations DnsResolverPolicyRestClient => _dnsResolverPolicyRestClient ??= new DnsResolverPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverPolicyResource.ResourceType));
         private ClientDiagnostics DnsResolverDomainListClientDiagnostics => _dnsResolverDomainListClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverDomainListResource.ResourceType.Namespace, Diagnostics);
         private DnsResolverDomainListsRestOperations DnsResolverDomainListRestClient => _dnsResolverDomainListRestClient ??= new DnsResolverDomainListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverDomainListResource.ResourceType));
+        private ClientDiagnostics DnsResolverPolicyClientDiagnostics => _dnsResolverPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
+        private DnsResolverPoliciesRestOperations DnsResolverPolicyRestClient => _dnsResolverPolicyRestClient ??= new DnsResolverPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverPolicyResource.ResourceType));
+        private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
+        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Lists DNS resolvers in all resource groups of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolvers_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsResolverResource> GetDnsResolversAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS resolvers in all resource groups of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolvers_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsResolverResource> GetDnsResolvers(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -126,7 +64,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,68 +114,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         }
 
         /// <summary>
-        /// Lists DNS resolver policies in all resource groups of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolverPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsResolverPolicyResource> GetDnsResolverPoliciesAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverPolicyRestClient.CreateListRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverPolicyResource(Client, DnsResolverPolicyData.DeserializeDnsResolverPolicyData(e)), DnsResolverPolicyClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS resolver policies in all resource groups of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolverPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsResolverPolicyResource> GetDnsResolverPolicies(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverPolicyRestClient.CreateListRequest(Id.SubscriptionId, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverPolicyResource(Client, DnsResolverPolicyData.DeserializeDnsResolverPolicyData(e)), DnsResolverPolicyClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Lists DNS resolver domain lists in all resource groups of a subscription.
         /// <list type="bullet">
         /// <item>
@@ -250,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +157,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,6 +173,130 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverDomainListRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverDomainListRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverDomainListResource(Client, DnsResolverDomainListData.DeserializeDnsResolverDomainListData(e)), DnsResolverDomainListClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolverDomainLists", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolver policies in all resource groups of a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolverPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsResolverPolicyResource> GetDnsResolverPoliciesAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverPolicyRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverPolicyResource(Client, DnsResolverPolicyData.DeserializeDnsResolverPolicyData(e)), DnsResolverPolicyClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolver policies in all resource groups of a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolverPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsResolverPolicyResource> GetDnsResolverPolicies(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverPolicyRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverPolicyResource(Client, DnsResolverPolicyData.DeserializeDnsResolverPolicyData(e)), DnsResolverPolicyClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolverPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsResolverResource> GetDnsResolversAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsResolverResource> GetDnsResolvers(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "MockableDnsResolverSubscriptionResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
     }
 }

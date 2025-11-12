@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelSignalDefinitionResource"/> and their operations.
-    /// Each <see cref="HealthModelSignalDefinitionResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
-    /// To get a <see cref="HealthModelSignalDefinitionCollection"/> instance call the GetHealthModelSignalDefinitions method from an instance of <see cref="HealthModelResource"/>.
+    /// Each <see cref="HealthModelSignalDefinitionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="HealthModelSignalDefinitionCollection"/> instance call the GetHealthModelSignalDefinitions method from an instance of the parent resource.
     /// </summary>
     public partial class HealthModelSignalDefinitionCollection : ArmCollection, IEnumerable<HealthModelSignalDefinitionResource>, IAsyncEnumerable<HealthModelSignalDefinitionResource>
     {
-        private readonly ClientDiagnostics _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics;
-        private readonly SignalDefinitionsRestOperations _healthModelSignalDefinitionSignalDefinitionsRestClient;
+        private readonly ClientDiagnostics _signalDefinitionsClientDiagnostics;
+        private readonly SignalDefinitions _signalDefinitionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelSignalDefinitionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthModelSignalDefinitionCollection for mocking. </summary>
         protected HealthModelSignalDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelSignalDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthModelSignalDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthModelSignalDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelSignalDefinitionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HealthModelSignalDefinitionResource.ResourceType, out string healthModelSignalDefinitionSignalDefinitionsApiVersion);
-            _healthModelSignalDefinitionSignalDefinitionsRestClient = new SignalDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelSignalDefinitionSignalDefinitionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HealthModelSignalDefinitionResource.ResourceType, out string healthModelSignalDefinitionApiVersion);
+            _signalDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelSignalDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _signalDefinitionsRestClient = new SignalDefinitions(_signalDefinitionsClientDiagnostics, Pipeline, Endpoint, healthModelSignalDefinitionApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HealthModelSignalDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string signalDefinitionName, HealthModelSignalDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelSignalDefinitionResource>(Response.FromValue(new HealthModelSignalDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, HealthModelSignalDefinitionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelSignalDefinitionData> response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelSignalDefinitionResource> operation = new CloudHealthArmOperation<HealthModelSignalDefinitionResource>(Response.FromValue(new HealthModelSignalDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// Create a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HealthModelSignalDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string signalDefinitionName, HealthModelSignalDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, data, cancellationToken);
-                var uri = _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelSignalDefinitionResource>(Response.FromValue(new HealthModelSignalDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, HealthModelSignalDefinitionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelSignalDefinitionData> response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelSignalDefinitionResource> operation = new CloudHealthArmOperation<HealthModelSignalDefinitionResource>(Response.FromValue(new HealthModelSignalDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HealthModelSignalDefinitionResource>> GetAsync(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Get");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _healthModelSignalDefinitionSignalDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelSignalDefinitionData> response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelSignalDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HealthModelSignalDefinitionResource> Get(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Get");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _healthModelSignalDefinitionSignalDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelSignalDefinitionData> response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelSignalDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,98 +266,120 @@ namespace Azure.ResourceManager.CloudHealth
         /// List SignalDefinition resources by HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_ListByHealthModel</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_ListByHealthModel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthModelSignalDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthModelSignalDefinitionResource> GetAllAsync(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthModelSignalDefinitionResource(Client, HealthModelSignalDefinitionData.DeserializeHealthModelSignalDefinitionData(e)), _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics, Pipeline, "HealthModelSignalDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List SignalDefinition resources by HealthModel
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_ListByHealthModel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelSignalDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthModelSignalDefinitionResource> GetAll(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HealthModelSignalDefinitionResource> GetAllAsync(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelSignalDefinitionSignalDefinitionsRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthModelSignalDefinitionResource(Client, HealthModelSignalDefinitionData.DeserializeHealthModelSignalDefinitionData(e)), _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics, Pipeline, "HealthModelSignalDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HealthModelSignalDefinitionData, HealthModelSignalDefinitionResource>(new SignalDefinitionsGetByHealthModelAsyncCollectionResultOfT(
+                _signalDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                timestamp,
+                context), data => new HealthModelSignalDefinitionResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// List SignalDefinition resources by HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_ListByHealthModel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HealthModelSignalDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthModelSignalDefinitionResource> GetAll(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HealthModelSignalDefinitionData, HealthModelSignalDefinitionResource>(new SignalDefinitionsGetByHealthModelCollectionResultOfT(
+                _signalDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                timestamp,
+                context), data => new HealthModelSignalDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a SignalDefinition
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Exists");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _healthModelSignalDefinitionSignalDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelSignalDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelSignalDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,39 +390,53 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Exists");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _healthModelSignalDefinitionSignalDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelSignalDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelSignalDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,41 +447,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HealthModelSignalDefinitionResource>> GetIfExistsAsync(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _healthModelSignalDefinitionSignalDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelSignalDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelSignalDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelSignalDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelSignalDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,41 +508,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a SignalDefinition
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions/{signalDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalDefinition_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="signalDefinitionName"> Name of the signal definition. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HealthModelSignalDefinitionResource> GetIfExists(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(signalDefinitionName, nameof(signalDefinitionName));
 
-            using var scope = _healthModelSignalDefinitionSignalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _signalDefinitionsClientDiagnostics.CreateScope("HealthModelSignalDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _healthModelSignalDefinitionSignalDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signalDefinitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelSignalDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelSignalDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelSignalDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelSignalDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +578,7 @@ namespace Azure.ResourceManager.CloudHealth
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HealthModelSignalDefinitionResource> IAsyncEnumerable<HealthModelSignalDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
