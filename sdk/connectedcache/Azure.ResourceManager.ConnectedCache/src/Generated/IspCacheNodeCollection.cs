@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ConnectedCache
 {
     /// <summary>
     /// A class representing a collection of <see cref="IspCacheNodeResource"/> and their operations.
-    /// Each <see cref="IspCacheNodeResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="IspCacheNodeCollection"/> instance call the GetIspCacheNodes method from an instance of the parent resource.
+    /// Each <see cref="IspCacheNodeResource"/> in the collection will belong to the same instance of <see cref="IspCustomerResource"/>.
+    /// To get a <see cref="IspCacheNodeCollection"/> instance call the GetIspCacheNodes method from an instance of <see cref="IspCustomerResource"/>.
     /// </summary>
     public partial class IspCacheNodeCollection : ArmCollection, IEnumerable<IspCacheNodeResource>, IAsyncEnumerable<IspCacheNodeResource>
     {
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary> This api retrieves information about all ispCacheNode resources under the given subscription and resource group. </summary>
+        /// <summary>
+        /// This api retrieves information about all ispCacheNode resources under the given subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_ListByIspCustomerResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IspCacheNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IspCacheNodeResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.ConnectedCache
             return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceAsyncCollectionResultOfT(_ispCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IspCacheNodeResource(Client, data));
         }
 
-        /// <summary> This api retrieves information about all ispCacheNode resources under the given subscription and resource group. </summary>
+        /// <summary>
+        /// This api retrieves information about all ispCacheNode resources under the given subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_ListByIspCustomerResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IspCacheNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IspCacheNodeResource> GetAll(CancellationToken cancellationToken = default)

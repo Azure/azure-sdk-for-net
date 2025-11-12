@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ConnectedCache
 {
     /// <summary>
     /// A class representing a collection of <see cref="EnterpriseMccCacheNodeResource"/> and their operations.
-    /// Each <see cref="EnterpriseMccCacheNodeResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="EnterpriseMccCacheNodeCollection"/> instance call the GetEnterpriseMccCacheNodes method from an instance of the parent resource.
+    /// Each <see cref="EnterpriseMccCacheNodeResource"/> in the collection will belong to the same instance of <see cref="EnterpriseMccCustomerResource"/>.
+    /// To get a <see cref="EnterpriseMccCacheNodeCollection"/> instance call the GetEnterpriseMccCacheNodes method from an instance of <see cref="EnterpriseMccCustomerResource"/>.
     /// </summary>
     public partial class EnterpriseMccCacheNodeCollection : ArmCollection, IEnumerable<EnterpriseMccCacheNodeResource>, IAsyncEnumerable<EnterpriseMccCacheNodeResource>
     {
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary> This api retrieves information about all ispCacheNode resources under the given subscription and resource group. </summary>
+        /// <summary>
+        /// This api retrieves information about all ispCacheNode resources under the given subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}/enterpriseMccCacheNodes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnterpriseMccCacheNodesOperations_ListByEnterpriseMccCustomerResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EnterpriseMccCacheNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EnterpriseMccCacheNodeResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.ConnectedCache
             return new AsyncPageableWrapper<EnterpriseMccCacheNodeData, EnterpriseMccCacheNodeResource>(new EnterpriseMccCacheNodesOperationsGetByEnterpriseMccCustomerResourceAsyncCollectionResultOfT(_enterpriseMccCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EnterpriseMccCacheNodeResource(Client, data));
         }
 
-        /// <summary> This api retrieves information about all ispCacheNode resources under the given subscription and resource group. </summary>
+        /// <summary>
+        /// This api retrieves information about all ispCacheNode resources under the given subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}/enterpriseMccCacheNodes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnterpriseMccCacheNodesOperations_ListByEnterpriseMccCustomerResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EnterpriseMccCacheNodeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EnterpriseMccCacheNodeResource> GetAll(CancellationToken cancellationToken = default)
