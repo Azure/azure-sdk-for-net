@@ -8,10 +8,11 @@ using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Linq;
+using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
-    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
+    public partial class QuestionAnsweringAuthoringClientSamples
     {
         [RecordedTest]
         [SyncOnly]
@@ -41,10 +42,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 #endif
 
             // Projects can be retrieved as follows
-            Pageable<BinaryData> projects = client.GetProjects();
+            Pageable<QuestionAnsweringProject> projects = client.GetProjects();
 
             Console.WriteLine("Projects: ");
-            foreach (BinaryData project in projects)
+            foreach (QuestionAnsweringProject project in projects)
             {
                 Console.WriteLine(project);
             }
@@ -76,20 +77,16 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
+            Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
-            Pageable<BinaryData> sources = updateSourcesOperation.Value;
+            BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-            Console.WriteLine("Sources: ");
-            foreach (BinaryData source in sources)
-            {
-                Console.WriteLine(source);
-            }
+            Console.WriteLine($"Sources: {sources}");
 #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
-            Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
+            Assert.That(sources.ToString().Contains(sourceUri));
 
 #region Snippet:QuestionAnsweringAuthoringClient_DeployProject
             // Set deployment name and start operation
@@ -98,12 +95,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             newDeploymentName = "production";
 #endif
 
-            Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
+            Operation deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 
             // Deployments can be retrieved as follows
-            Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
+            Pageable<ProjectDeployment> deployments = client.GetDeployments(newProjectName);
             Console.WriteLine("Deployments: ");
-            foreach (BinaryData deployment in deployments)
+            foreach (ProjectDeployment deployment in deployments)
             {
                 Console.WriteLine(deployment);
             }
@@ -144,10 +141,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 #endif
 
             // Projects can be retrieved as follows
-            AsyncPageable<BinaryData> projects = client.GetProjectsAsync();
+            AsyncPageable<QuestionAnsweringProject> projects = client.GetProjectsAsync();
 
             Console.WriteLine("Projects: ");
-            await foreach (BinaryData project in projects)
+            await foreach (QuestionAnsweringProject project in projects)
             {
                 Console.WriteLine(project);
             }
@@ -179,20 +176,16 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
+            Operation updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
-            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+            BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-            Console.WriteLine("Sources: ");
-            await foreach (BinaryData source in sources)
-            {
-                Console.WriteLine(source);
-            }
+            Console.WriteLine($"Sources: {sources}");
 #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
+            Assert.That(sources.ToString().Contains(sourceUri));
 
 #region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
             // Set deployment name and start operation
@@ -201,12 +194,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             newDeploymentName = "production";
 #endif
 
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
+            Operation deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
 
             // Deployments can be retrieved as follows
-            AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
+            AsyncPageable<ProjectDeployment> deployments = client.GetDeploymentsAsync(newProjectName);
             Console.WriteLine("Deployments: ");
-            await foreach (BinaryData deployment in deployments)
+            await foreach (ProjectDeployment deployment in deployments)
             {
                 Console.WriteLine(deployment);
             }

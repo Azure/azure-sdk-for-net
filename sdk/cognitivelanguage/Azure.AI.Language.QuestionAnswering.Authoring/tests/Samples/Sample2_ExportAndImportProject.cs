@@ -8,10 +8,11 @@ using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Text.Json;
+using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
-    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
+    public partial class QuestionAnsweringAuthoringClientSamples
     {
         [RecordedTest]
         [SyncOnly]
@@ -22,10 +23,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             CreateProject(exportedProjectName);
 
             #region Snippet:QuestionAnsweringAuthoringClient_ExportProject
-            Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
+            Operation exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
-            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
             #endregion
 
@@ -53,7 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+            Operation importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 #if !SNIPPET
             EnqueueProjectDeletion(importedProjectName);
 #endif
@@ -64,12 +65,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
             #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails
-            Response projectDetails = client.GetProjectDetails(importedProjectName);
+            Response<QuestionAnsweringProject> projectDetails = client.GetProjectDetails(importedProjectName);
 
-            Console.WriteLine(projectDetails.Content);
+            Console.WriteLine(projectDetails.GetRawResponse().Content);
             #endregion
 
-            Assert.AreEqual(200, projectDetails.Status);
+            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
         }
 
         [RecordedTest]
@@ -81,10 +82,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             await CreateProjectAsync(exportedProjectName);
 
             #region Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync
-            Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
+            Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
-            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
             #endregion
 
@@ -112,7 +113,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+            Operation importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 #if !SNIPPET
             EnqueueProjectDeletion(importedProjectName);
 #endif
@@ -123,12 +124,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
             #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync
-            Response projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
+            Response<QuestionAnsweringProject> projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
 
-            Console.WriteLine(projectDetails.Content);
+            Console.WriteLine(projectDetails.GetRawResponse().Content);
             #endregion
 
-            Assert.AreEqual(200, projectDetails.Status);
+            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
         }
     }
 }

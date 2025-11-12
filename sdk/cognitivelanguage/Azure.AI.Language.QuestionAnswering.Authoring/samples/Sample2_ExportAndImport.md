@@ -20,10 +20,10 @@ Once you have created a client, you can call synchronous or asynchronous methods
 To export a Question Answering project, you will need to set your project name and choose an export format before calling c as shown below:
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_ExportProject
-Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
+Operation exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
 // retrieve export operation response, and extract url of exported file
-JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 ```
 
@@ -49,7 +49,7 @@ RequestContent importRequestContent = RequestContent.Create(new
     }
 });
 
-Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+Operation importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
 
@@ -58,9 +58,9 @@ Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}"
 To get information regarding a specific project, the `GetProjectDetails()` method can be used as follows:
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails
-Response projectDetails = client.GetProjectDetails(importedProjectName);
+Response<QuestionAnsweringProject> projectDetails = client.GetProjectDetails(importedProjectName);
 
-Console.WriteLine(projectDetails.Content);
+Console.WriteLine(projectDetails.GetRawResponse().Content);
 ```
 
 ## Asynchronous
@@ -68,10 +68,10 @@ Console.WriteLine(projectDetails.Content);
 ### Exporting a Project
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync
-Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
+Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
 // retrieve export operation response, and extract url of exported file
-JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
+JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
 string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 ```
 
@@ -95,14 +95,14 @@ RequestContent importRequestContent = RequestContent.Create(new
     }
 });
 
-Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+Operation importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
 ```
 
 ### Getting Project Details
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync
-Response projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
+Response<QuestionAnsweringProject> projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
 
-Console.WriteLine(projectDetails.Content);
+Console.WriteLine(projectDetails.GetRawResponse().Content);
 ```

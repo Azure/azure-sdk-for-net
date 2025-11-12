@@ -1,5 +1,34 @@
 # Release History
 
+## 2.0.0 (YYYY-MM-DD)
+
+### Breaking Changes
+- Package split: Inference (runtime Q&A) implementation moved into a new NuGet package `Azure.AI.Language.QuestionAnswering.inference` (namespace unchanged: `Azure.AI.Language.QuestionAnswering`). The existing package `Azure.AI.Language.QuestionAnswering` now focuses on authoring (`Azure.AI.Language.QuestionAnswering.Authoring`) while still exposing inference via type forwarding.
+- All inference public types remain available when referencing the main package through type forwarding, preserving binary compatibility for existing applications.
+- If you reference only the inference package, authoring APIs are not available (by design).
+
+### Migration Guidance
+- Inference only: add the NuGet package `Azure.AI.Language.QuestionAnswering`.inference.
+- Authoring (and optionally inference): add the NuGet package `Azure.AI.Language.QuestionAnswering` (it transitively brings inference).
+- No namespace changes required
+- Optional: you can remove `Azure.AI.Language.QuestionAnswering` package if your project no longer needs authoring and only uses inference APIs.
+
+Example (PowerShell):
+```powershell
+# Inference only
+dotnet add package Azure.AI.Language.QuestionAnswering.inference
+
+# Authoring (inference included transitively)
+dotnet add package Azure.AI.Language.QuestionAnswering
+```
+
+### Forwarded Inference Types
+`QuestionAnsweringClient`, `QuestionAnsweringClientOptions`, `QuestionAnsweringAudience`, `QuestionAnsweringProject`, `QuestionAnsweringModelFactory`, `AnswersOptions`, `AnswersFromTextOptions`, `AnswersFromTextResult`, `AnswersResult`, `ShortAnswerOptions`, `AnswerSpan`, `KnowledgeBaseAnswer`, `KnowledgeBaseAnswerContext`, `KnowledgeBaseAnswerDialog`, `KnowledgeBaseAnswerPrompt`, `TextAnswer`, `TextDocument`, `StringIndexType`, `LogicalOperationKind`, `RankerKind`, `Scorer`, `MatchingPolicy`, `MatchingPolicyFieldsType`, `MetadataFilter`, `MetadataRecord`, `PrebuiltQueryMatchingPolicy`, `QueryFilters`, `QueryPreferences`, `QuestionAnsweringClientExtensions`.
+
+### Notes
+- Binary compatibility preserved; runtime behavior unchanged.
+- Future inference-only enhancements may ship first or exclusively in the `Azure.AI.Language.QuestionAnswering.inference` package.
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added

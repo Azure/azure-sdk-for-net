@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
-    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
+    public  class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
     {
         public QuestionAnsweringAuthoringClientSamples(bool isAsync, QuestionAnsweringAuthoringClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)

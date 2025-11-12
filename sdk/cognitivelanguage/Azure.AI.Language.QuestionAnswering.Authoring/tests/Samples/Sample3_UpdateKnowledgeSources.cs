@@ -8,10 +8,12 @@ using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Linq;
+using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+using Castle.Components.DictionaryAdapter.Xml;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
-    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
+    public partial class QuestionAnsweringAuthoringClientSamples
     {
         [RecordedTest]
         [SyncOnly]
@@ -44,22 +46,17 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+            Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
             // Updated Knowledge Sources can be retrieved as follows
-            Pageable<BinaryData> sources = updateSourcesOperation.Value;
+            BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-            Console.WriteLine("Sources: ");
-            foreach (BinaryData source in sources)
-            {
-                Console.WriteLine(source);
-            }
-#endregion
-
+            Console.WriteLine($"Sources: {sources}");
+            #endregion
             Assert.True(updateSourcesOperation.HasCompleted);
-            Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
+            Assert.That(sources.ToString().Contains(sourceUri));
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
 
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
@@ -82,24 +79,19 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<Pageable<BinaryData>> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+            Operation updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
             // QnAs can be retrieved as follows
-            Pageable<BinaryData> qnas = updateQnasOperation.Value;
+            BinaryData qnas = updateQnasOperation.GetRawResponse().Content;
 
-            Console.WriteLine("Qnas: ");
-            foreach (var qna in qnas)
-            {
-                Console.WriteLine(qna);
-            }
-#endregion
-
+            Console.WriteLine($"Qnas: {qnas}");
+            #endregion
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
-            Assert.That(qnas.Any(qna => qna.ToString().Contains(question)));
-            Assert.That(qnas.Any(qna => qna.ToString().Contains(answer)));
+            Assert.That(qnas.ToString().Contains(question));
+            Assert.That(qnas.ToString().Contains(answer));
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -124,20 +116,20 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Response updateSynonymsResponse = Client.UpdateSynonyms(testProjectName, updateSynonymsRequestContent);
 
             // Synonyms can be retrieved as follows
-            Pageable<BinaryData> synonyms = Client.GetSynonyms(testProjectName);
+            Pageable<WordAlterations> synonyms = Client.GetSynonyms(testProjectName);
 
             Console.WriteLine("Synonyms: ");
-            foreach (BinaryData synonym in synonyms)
+            foreach (WordAlterations synonym in synonyms)
             {
                 Console.WriteLine(synonym);
             }
-#endregion
+            #endregion
 
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That(synonyms.Any(synonym => synonym.ToString().Contains("qna maker")));
 
-#region Snippet:QuestionAnsweringAuthoringClient_AddFeedback
+            #region Snippet:QuestionAnsweringAuthoringClient_AddFeedback
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -153,7 +145,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRequestContent);
-#endregion
+            #endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
         }
@@ -164,7 +156,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         {
             QuestionAnsweringAuthoringClient client = Client;
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
             string testProjectName = "{ProjectName}";
@@ -189,22 +181,18 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+            Operation updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
             // Updated Knowledge Sources can be retrieved as follows
-            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+            BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-            Console.WriteLine("Sources: ");
-            await foreach (BinaryData source in sources)
-            {
-                Console.WriteLine(source);
-            }
-#endregion
+            Console.WriteLine($"Sources: {sources}");
+            #endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
-            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
+            Assert.That(sources.ToString().Contains(sourceUri));
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
 #if !SNIPPET
@@ -226,24 +214,20 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+            Operation updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
             // QnAs can be retrieved as follows
-            AsyncPageable<BinaryData> qnas = updateQnasOperation.Value;
+            BinaryData qnas = updateQnasOperation.GetRawResponse().Content;
 
-            Console.WriteLine("Qnas: ");
-            await foreach (var qna in qnas)
-            {
-                Console.WriteLine(qna);
-            }
-#endregion
+            Console.WriteLine($"Qnas: {qnas}");
+            #endregion
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
-            Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
-            Assert.That((await qnas.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
+            Assert.That(qnas.ToString().Contains(question));
+            Assert.That(qnas.ToString().Contains(answer));
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -268,20 +252,20 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
 
             // Synonyms can be retrieved as follows
-            AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
+            AsyncPageable<WordAlterations> synonyms = Client.GetSynonymsAsync(testProjectName);
 
             Console.WriteLine("Synonyms: ");
-            await foreach (BinaryData synonym in synonyms)
+            await foreach (WordAlterations synonym in synonyms)
             {
                 Console.WriteLine(synonym);
             }
-#endregion
+            #endregion
 
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna maker")));
 
-#region Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -297,7 +281,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
-#endregion
+            #endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
         }

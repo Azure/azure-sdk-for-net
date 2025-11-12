@@ -6,10 +6,12 @@ using System;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 #endregion
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {
-    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringTestBase<QuestionAnsweringAuthoringClient>
+    public partial class QuestionAnsweringAuthoringClientSamples
     {
         public void CreateQuestionAnsweringAuthoringClient()
         {
@@ -18,6 +20,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            #endregion
+        }
+        public void CreateQuestionAnsweringAuthoringClient_withDefaultCredential()
+        {
+            #region Snippet:QuestionAnsweringAuthoringClient_CreateWithDefaultCredential
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+            TokenCredential credential = new DefaultAzureCredential();
+
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential, new QuestionAnsweringAuthoringClientOptions());
             #endregion
         }
     }

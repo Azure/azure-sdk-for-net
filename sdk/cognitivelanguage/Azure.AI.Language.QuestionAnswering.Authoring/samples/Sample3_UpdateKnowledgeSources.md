@@ -39,16 +39,12 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
 // Updated Knowledge Sources can be retrieved as follows
-Pageable<BinaryData> sources = updateSourcesOperation.Value;
+BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-Console.WriteLine("Sources: ");
-foreach (BinaryData source in sources)
-{
-    Console.WriteLine(source);
-}
+Console.WriteLine($"Sources: {sources}");
 ```
 
 ### Adding a qna pair
@@ -73,16 +69,12 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<Pageable<BinaryData>> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+Operation updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
 // QnAs can be retrieved as follows
-Pageable<BinaryData> qnas = updateQnasOperation.Value;
+BinaryData qnas = updateQnasOperation.GetRawResponse().Content;
 
-Console.WriteLine("Qnas: ");
-foreach (var qna in qnas)
-{
-    Console.WriteLine(qna);
-}
+Console.WriteLine($"Qnas: {qnas}");
 ```
 
 ### Updating synonyms
@@ -112,10 +104,10 @@ RequestContent updateSynonymsRequestContent = RequestContent.Create(
 Response updateSynonymsResponse = Client.UpdateSynonyms(testProjectName, updateSynonymsRequestContent);
 
 // Synonyms can be retrieved as follows
-Pageable<BinaryData> synonyms = Client.GetSynonyms(testProjectName);
+Pageable<WordAlterations> synonyms = Client.GetSynonyms(testProjectName);
 
 Console.WriteLine("Synonyms: ");
-foreach (BinaryData synonym in synonyms)
+foreach (WordAlterations synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }
@@ -167,16 +159,12 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+Operation updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
 // Updated Knowledge Sources can be retrieved as follows
-AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
 
-Console.WriteLine("Sources: ");
-await foreach (BinaryData source in sources)
-{
-    Console.WriteLine(source);
-}
+Console.WriteLine($"Sources: {sources}");
 ```
 
 ### Adding a qna pair
@@ -199,16 +187,12 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+Operation updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
 // QnAs can be retrieved as follows
-AsyncPageable<BinaryData> qnas = updateQnasOperation.Value;
+BinaryData qnas = updateQnasOperation.GetRawResponse().Content;
 
-Console.WriteLine("Qnas: ");
-await foreach (var qna in qnas)
-{
-    Console.WriteLine(qna);
-}
+Console.WriteLine($"Qnas: {qnas}");
 ```
 
 ### Updating synonyms
@@ -238,10 +222,10 @@ RequestContent updateSynonymsRequestContent = RequestContent.Create(
 Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
 
 // Synonyms can be retrieved as follows
-AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
+AsyncPageable<WordAlterations> synonyms = Client.GetSynonymsAsync(testProjectName);
 
 Console.WriteLine("Synonyms: ");
-await foreach (BinaryData synonym in synonyms)
+await foreach (WordAlterations synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }

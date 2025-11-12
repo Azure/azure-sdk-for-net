@@ -1,5 +1,9 @@
 # Migrate from Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker to Azure.AI.Language.QuestionAnswering
 
+> [!NOTE]
+> Scope: This guide covers migration of **runtime (inference) querying** from `QnAMakerRuntimeClient` to `QuestionAnsweringClient`.  
+> It does not cover authoring operations (creating/updating/deploying projects). For those, use the Authoring package `Azure.AI.Language.QuestionAnswering` (namespace `Azure.AI.Language.QuestionAnswering.Authoring`) and see its README.
+
 This guide is intended to assist in the migration to the new Question Answering client library [`Azure.AI.Language.QuestionAnswering`](https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering) from the old one [`Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`](https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker). It will focus on side-by-side comparisons for similar operations between the two packages.
 
 Familiarity with the `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker` library is assumed. For those new to the Question Answering client library for .NET, please refer to the [`Azure.AI.Language.QuestionAnswering` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) and [`Azure.AI.Language.QuestionAnswering` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples) for the `Azure.AI.Language.QuestionAnswering` library rather than this guide.
@@ -102,3 +106,13 @@ var options = new Azure.AI.Language.QuestionAnswering.AnswersOptions
 Azure.Response<Azure.AI.Language.QuestionAnswering.AnswersResult> responseFollowUp =
     await client.GetAnswersAsync("{Question}", project, options);
 ```
+
+## Choosing a package (runtime(inference) vs authoring)
+
+| Scenario | Package | Notes |
+|----------|---------|-------|
+| Query deployed project only | `Azure.AI.Language.QuestionAnswering.Inference` | Smaller surface; used in examples below. |
+| Manage + deploy projects | `Azure.AI.Language.QuestionAnswering` | Includes authoring APIs; forwards inference types. |
+| Both in same app | `Azure.AI.Language.QuestionAnswering` | No extra reference needed unless pinning different preview versions. |
+
+> Service API version referenced by current previews: `2025-05-15-preview`.
