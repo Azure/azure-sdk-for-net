@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List Schema resources by SchemaRegistry. </summary>
+        /// <summary>
+        /// List Schema resources by SchemaRegistry
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schemas_ListBySchemaRegistry. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistrySchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistrySchemaResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -274,7 +290,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             return new AsyncPageableWrapper<DeviceRegistrySchemaData, DeviceRegistrySchemaResource>(new SchemasGetBySchemaRegistryAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistrySchemaResource(Client, data));
         }
 
-        /// <summary> List Schema resources by SchemaRegistry. </summary>
+        /// <summary>
+        /// List Schema resources by SchemaRegistry
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schemas_ListBySchemaRegistry. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistrySchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistrySchemaResource> GetAll(CancellationToken cancellationToken = default)

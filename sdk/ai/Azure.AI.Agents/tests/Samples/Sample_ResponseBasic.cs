@@ -27,13 +27,12 @@ public class Sample_ResponseBasic : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateResponse_Async
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
-
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseBasic_Async
@@ -58,11 +57,10 @@ public class Sample_ResponseBasic : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateResponse_Sync
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-
         OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
         #endregion
 

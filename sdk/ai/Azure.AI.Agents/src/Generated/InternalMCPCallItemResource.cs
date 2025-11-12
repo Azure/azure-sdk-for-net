@@ -32,7 +32,7 @@ namespace OpenAI
         /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
         /// <param name="output"> The output from the tool call. </param>
         /// <param name="error"> The error from the tool call, if any. </param>
-        internal InternalMCPCallItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, string error) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalMCPCallItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string name, string arguments, string output, string error) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Name = name;

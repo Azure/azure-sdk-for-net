@@ -89,6 +89,7 @@ public partial class AgentsApiError
     public BinaryData ToOpenAIError()
     {
         StringBuilder messageBuilder = new(Message);
+        string parameterDetails = null;
         if (Details?.Count > 0)
         {
             messageBuilder.Append(" (");
@@ -99,14 +100,15 @@ public partial class AgentsApiError
             }
             messageBuilder.Remove(messageBuilder.Length - 2, 2);
             messageBuilder.Append(')');
+            parameterDetails = string.Join(";", Details.Select(x => x.Target));
         }
         BinaryData newErrorBytes = BinaryData.FromString($$"""
             {
               "error": {
                 "message": "{{messageBuilder}}",
                 "type": "{{nameof(AgentsApiError)}}",
-                "param": "{{string.Join(";", Details.Select(x => x.Target))}}",
-                "code": "{{Code}}"
+                "param": "{{(parameterDetails ?? string.Empty)}}",
+                "code": "{{(Code ?? string.Empty)}}"
               }
             }
             """);

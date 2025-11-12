@@ -23,7 +23,7 @@ public abstract partial class AgentTool
     public static BingCustomSearchAgentTool CreateBingCustomSearchTool(BingCustomSearchToolParameters parameters) => new BingCustomSearchAgentTool(parameters);
     public static BrowserAutomationAgentTool CreateBrowserAutomationTool(BrowserAutomationToolParameters parameters) => new BrowserAutomationAgentTool(parameters);
     public static CaptureStructuredOutputsTool CreateStructuredOutputsTool(StructuredOutputDefinition outputs) => new CaptureStructuredOutputsTool(outputs);
-    public static ResponseTool CreateA2ATool(Uri baseUrl, string agentCardPath = null) => new A2ATool(baseUrl)
+    public static ResponseTool CreateA2ATool(Uri baseUri, string agentCardPath = null) => new A2ATool(baseUri)
     {
         AgentCardPath = agentCardPath,
     };

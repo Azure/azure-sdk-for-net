@@ -9,11 +9,14 @@ namespace Azure.AI.Agents;
 [CodeGenType("AgentId")] public partial class AgentInfo { }
 [CodeGenType("AgentObject")] public partial class AgentRecord { }
 [CodeGenType("AgentProtocol")] public readonly partial struct AgentCommunicationMethod { }
-[CodeGenType("AgentVersionObject")] public partial class AgentVersion { }
 [CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }
-[CodeGenType("DeleteAgentResponse")] public partial class AgentDeletionResult { }
-[CodeGenType("DeletedConversationResource")] public partial class AgentConversationDeletionResult { }
+[CodeGenType("CreatedBy")] public partial class AgentResponseItemSource { }
 [CodeGenType("ItemType")] public readonly partial struct AgentResponseItemKind { }
-[CodeGenType("ListAgentsRequestOrder")] public readonly partial struct AgentsListOrder { }
+[CodeGenType("MemoryStoreOperationUsageInputTokensDetails")] public partial class MemoryStoreOperationUsageInputTokensDetails { }
+[CodeGenType("MemoryStoreOperationUsageOutputTokensDetails")] public partial class MemoryStoreOperationUsageOutputTokensDetails { }
 [CodeGenType("MemoryStoreUpdateResult")] public partial class MemoryUpdateResultDetails { }
 [CodeGenType("WorkflowActionOutputItemResourceStatus")] public readonly partial struct AgentWorkflowActionStatus { }
+
+// Made internal
+[CodeGenType("DeleteAgentResponse")] internal partial class AgentDeletionResult { }
+[CodeGenType("DeletedConversationResource")] internal partial class AgentConversationDeletionResult { }

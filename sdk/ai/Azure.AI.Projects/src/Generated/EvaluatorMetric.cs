@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorMetric"/>. </summary>
-        internal EvaluatorMetric()
+        public EvaluatorMetric()
         {
         }
 
@@ -36,18 +36,18 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Type of the metric. </summary>
-        public EvaluatorMetricType? Type { get; }
+        public EvaluatorMetricType? Type { get; set; }
 
         /// <summary> It indicates whether a higher value is better or a lower value is better for this metric. </summary>
-        public EvaluatorMetricDirection? DesirableDirection { get; }
+        public EvaluatorMetricDirection? DesirableDirection { get; set; }
 
         /// <summary> Minimum value for the metric. </summary>
-        public float? MinValue { get; }
+        public float? MinValue { get; set; }
 
         /// <summary> Maximum value for the metric. If not specified, it is assumed to be unbounded. </summary>
-        public float? MaxValue { get; }
+        public float? MaxValue { get; set; }
 
         /// <summary> Indicates if this metric is primary when there are multiple metrics. </summary>
-        public bool? IsPrimary { get; }
+        public bool? IsPrimary { get; set; }
     }
 }

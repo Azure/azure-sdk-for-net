@@ -33,7 +33,7 @@ namespace OpenAI
         /// `incomplete`. Populated when items are returned via API.
         /// </param>
         /// <param name="role"> The role associated with the message. </param>
-        internal InternalResponsesMessageItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesMessageItemResourceStatus status, ResponsesMessageRole role) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalResponsesMessageItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesMessageItemResourceStatus status, ResponsesMessageRole role) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Status = status;
             Role = role;

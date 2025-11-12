@@ -7,7 +7,7 @@ In this example we will create the local file, upload it to Azure and will use i
 ```C# Snippet:Sample_CreateAgentClient_FileSearch
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 OpenAIClient openAIClient = client.GetOpenAIClient();
 ```
 
@@ -70,8 +70,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    definition: agentDefinition,
-    options: null);
+    options: new(agentDefinition));
 ```
 
 Asynchronous sample:
@@ -83,8 +82,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    definition: agentDefinition,
-    options: null);
+    options: new(agentDefinition));
 ```
 
 3. In this example we will ask a question to the file contents.
@@ -95,7 +93,7 @@ OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(model
 ResponseCreationOptions responseOptions = new();
 responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
 OpenAIResponse response = responseClient.CreateResponse(
     [request],
     responseOptions);
@@ -107,7 +105,7 @@ OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(model
 ResponseCreationOptions responseOptions = new();
 responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
 OpenAIResponse response = await responseClient.CreateResponseAsync(
     [request],
     responseOptions);

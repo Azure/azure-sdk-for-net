@@ -73,8 +73,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
             Assert.AreEqual("{\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
-            var ex = Assert.Throws<InvalidOperationException>(() => jp.GetString("$[0].property1"u8));
-            Assert.AreEqual("$[0].property1 was not found in the JSON structure.", ex!.Message);
+            var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetString("$[0].property1"u8));
+            Assert.AreEqual("No value found at JSON path '$[0].property1'.", ex!.Message);
             Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
 
             Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.ToString("J"));
@@ -476,6 +476,88 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"a\":[\"one\",\"two\",\"three\"]}"u8.ToArray());
             jp.Set("$.a[1]"u8, "newTwo");
             Assert.AreEqual("{\"a\":[\"one\",\"newTwo\",\"three\"]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SetStringWithEscapedCharacters()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.text"u8, "Line1\nLine2\tTabbed\"Quote\"");
+
+            // GetString should return single escape
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
+            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
+            Assert.IsTrue(value!.Contains("\n"));
+            Assert.IsFalse(value.Contains("\\n"));
+
+            // GetJson should return the exact byte array we passed in
+            CollectionAssert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+
+            // EncodedValue should have the exact byte array we passed in
+            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), encodedValue.Value.ToArray());
+
+            // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
+            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\u0022Quote\\u0022\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SetJsonWithEscapedCharacters()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.text"u8, "\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8);
+
+            // GetString should return single escape
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
+            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
+            Assert.IsTrue(value!.Contains("\n"));
+            Assert.IsFalse(value.Contains("\\n"));
+
+            // GetJson should return the exact byte array we passed in
+            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+
+            // EncodedValue should have the exact byte array we passed in
+            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
+            Assert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), encodedValue.Value.ToArray());
+
+            // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
+            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SeedWithEscapedCharacters()
+        {
+            // Start with a seeded json patch with escaped characters
+            JsonPatch jp = new("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"u8.ToArray());
+
+            // GetString should return single escape
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
+            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
+            Assert.IsTrue(value!.Contains("\n"));
+            Assert.IsFalse(value.Contains("\\n"));
+
+            // GetJson should return the exact byte array we passed in
+            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+
+            // EncodedValue should have the exact byte array we passed in
+            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
+            Assert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), encodedValue.Value.ToArray());
+
+            // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
+            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void NonExistentPathShouldNotThrow()
+        {
+            JsonPatch patch = new("{\"choices\":[{\"delta\":{\"content\":\"hello\"}}]}"u8.ToArray());
+
+            Assert.DoesNotThrow(() => patch.TryGetValue("$.reasoning"u8, out string? value));
         }
     }
 }

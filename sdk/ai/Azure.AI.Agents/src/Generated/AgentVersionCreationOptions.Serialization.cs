@@ -13,6 +13,11 @@ namespace Azure.AI.Agents
     /// <summary> The AgentVersionCreationOptions. </summary>
     public partial class AgentVersionCreationOptions : IJsonModel<AgentVersionCreationOptions>
     {
+        /// <summary> Initializes a new instance of <see cref="AgentVersionCreationOptions"/> for deserialization. </summary>
+        internal AgentVersionCreationOptions()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentVersionCreationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -54,6 +59,21 @@ namespace Azure.AI.Agents
             }
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,6 +137,10 @@ namespace Azure.AI.Agents
                 {
                     definition = AgentDefinition.DeserializeAgentDefinition(prop.Value, options);
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AgentVersionCreationOptions(metadata ?? new ChangeTrackingDictionary<string, string>(), description, definition, additionalBinaryDataProperties);

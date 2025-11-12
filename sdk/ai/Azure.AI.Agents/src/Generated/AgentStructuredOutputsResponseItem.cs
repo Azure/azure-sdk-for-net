@@ -25,7 +25,7 @@ namespace Azure.AI.Agents
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The structured output captured during the response. </param>
-        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Output = output;
         }

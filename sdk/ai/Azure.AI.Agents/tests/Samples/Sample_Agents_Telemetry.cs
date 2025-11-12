@@ -15,13 +15,13 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.AI.Agents.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public partial class Sample_Agents_Telemetry : AgentsTestBase
 {
     [Test]
     [AsyncOnly]
     public async Task TracingToConsoleExample()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -30,14 +30,14 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
+                        .AddSource("Azure.AI.Agents.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -45,10 +45,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = await client.CreateAgentVersionAsync(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
 
@@ -56,6 +56,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
     [SyncOnly]
     public void TracingToConsoleExampleSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -71,7 +72,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         #endregion
         #region Snippet:AgentTelemetrySetupTracingToConsole
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
+                        .AddSource("Azure.AI.Agents.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
@@ -79,7 +80,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -87,10 +88,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = client.CreateAgentVersion(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name} , version:  {agentVersion1.Version})");
         }
     }
 
@@ -98,6 +99,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
     [AsyncOnly]
     public async Task TracingToAzureMonitorExample()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -106,13 +108,13 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource("Azure.AI.Agents.Persistent.*")
+            .AddSource("Azure.AI.Agents.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
             .AddAzureMonitorTraceExporter().Build();
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -120,10 +122,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = await client.CreateAgentVersionAsync(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}  , version:   {agentVersion1.Version})");
         }
     }
 
@@ -131,6 +133,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
     [SyncOnly]
     public void TracingToAzureMonitorExampleSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -140,14 +143,14 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
 #endif
         #region Snippet:AgentTelemetrySetupTracingToAzureMonitor
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource("Azure.AI.Agents.Persistent.*")
+            .AddSource("Azure.AI.Agents.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
             .AddAzureMonitorTraceExporter().Build();
         #endregion
 
         using (tracerProvider)
         {
-            AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+            AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -155,10 +158,10 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
             };
             AgentVersion agentVersion1 = client.CreateAgentVersion(
                 agentName: "myAgent1",
-                definition: agentDefinition, options: null);
+                options: new(agentDefinition));
 
-            DeleteAgentVersionResponse response = client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-            Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+            client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            Console.WriteLine($"Agent deleted (name: {agentVersion1.Name} , version:  {agentVersion1.Version})");
         }
     }
 

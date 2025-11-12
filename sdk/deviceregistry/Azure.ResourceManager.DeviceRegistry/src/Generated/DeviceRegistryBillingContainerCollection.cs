@@ -153,7 +153,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List BillingContainer resources by subscription ID. </summary>
+        /// <summary>
+        /// List BillingContainer resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingContainers_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryBillingContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryBillingContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -165,7 +181,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             return new AsyncPageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionAsyncCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryBillingContainerResource(Client, data));
         }
 
-        /// <summary> List BillingContainer resources by subscription ID. </summary>
+        /// <summary>
+        /// List BillingContainer resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingContainers_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryBillingContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryBillingContainerResource> GetAll(CancellationToken cancellationToken = default)

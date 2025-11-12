@@ -16,6 +16,10 @@ namespace Azure.AI.Agents;
 [CodeGenType("A2ATool")]
 public partial class A2ATool
 {
+    /// <summary> Base URL of the agent. </summary>
+    [CodeGenMember("BaseUrl")]
+    public Uri BaseUri { get; set; }
+
     /// <summary> Initializes a new instance of <see cref="A2ATool"/>. </summary>
     internal A2ATool() : base(ToolType.A2aPreview)
     {
@@ -24,9 +28,9 @@ public partial class A2ATool
     /// <summary>
     /// Initializes a new instance of <see cref="A2ATool"/>.
     /// </summary>
-    /// <param name="baseUrl"></param>
-    public A2ATool(Uri baseUrl) : this()
+    /// <param name="baseUri"></param>
+    public A2ATool(Uri baseUri) : this()
     {
-        BaseUrl = baseUrl;
+        BaseUri = baseUri;
     }
 }

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Agents
 {
     /// <summary> The MemoryStoreOperationUsageInputTokensDetails. </summary>
     public partial class MemoryStoreOperationUsageInputTokensDetails

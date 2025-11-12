@@ -9,13 +9,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.Agents.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_agents_CRUD : AgentsTestBase
 {
     [Test]
     [AsyncOnly]
     public async Task AgentCRUDAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClientCRUD
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -24,7 +24,7 @@ public class Sample_agents_CRUD : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateAgentVersionCRUD_Async
@@ -34,15 +34,11 @@ public class Sample_agents_CRUD : AgentsTestBase
         };
         AgentVersion agentVersion1 = await client.CreateAgentVersionAsync(
             agentName: "myAgent1",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
             agentName: "myAgent2",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
 
@@ -59,10 +55,10 @@ public class Sample_agents_CRUD : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_DeleteAgentCRUD_Async
-        DeleteAgentVersionResponse response = await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-        Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
-        response = await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
-        Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+        await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+        Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+        await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+        Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
     }
 
@@ -70,6 +66,7 @@ public class Sample_agents_CRUD : AgentsTestBase
     [SyncOnly]
     public void AgentCRUD()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -77,7 +74,7 @@ public class Sample_agents_CRUD : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgentVersionCRUD_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -86,15 +83,11 @@ public class Sample_agents_CRUD : AgentsTestBase
         };
         AgentVersion agentVersion1 = client.CreateAgentVersion(
             agentName: "myAgent1",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         AgentVersion agentVersion2 = client.CreateAgentVersion(
             agentName: "myAgent2",
-            definition: agentDefinition,
-            options: null
-        );
+            options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
 
@@ -111,10 +104,32 @@ public class Sample_agents_CRUD : AgentsTestBase
         #endregion
 
         #region Snippet:Sample_DeleteAgentCRUD_Sync
-        DeleteAgentVersionResponse response = client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
-        Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
-        response = client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
-        Console.WriteLine($"Agent deleted (name: {response.Name}, version: {response.Version}, deleted: {response.Deleted})");
+        client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+        Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+        client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+        Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void SelectAPIVersion()
+    {
+        IgnoreSampleMayBe();
+        #region Snippet:SelectAPIVersion
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+#endif
+        AgentClientOptions options = new(version: AgentClientOptions.ServiceVersion.V2025_11_01);
+        AgentClient client = new(
+            endpoint: new Uri(projectEndpoint),
+            tokenProvider: new DefaultAzureCredential(),
+            options: options
+        );
         #endregion
     }
 

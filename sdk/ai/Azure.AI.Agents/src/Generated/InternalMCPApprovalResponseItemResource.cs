@@ -28,7 +28,7 @@ namespace OpenAI
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"> Optional reason for the decision. </param>
-        internal InternalMCPApprovalResponseItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalMCPApprovalResponseItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string approvalRequestId, bool approve, string reason) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             ApprovalRequestId = approvalRequestId;
             Approve = approve;

@@ -7,9 +7,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents
 {
-    /// <summary> The AgentCreationOptions. </summary>
-    public partial class AgentCreationOptions
+    internal partial class AgentCreationOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AgentCreationOptions"/>. </summary>
         /// <param name="name">
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
@@ -53,6 +55,14 @@ namespace Azure.AI.Agents
         }
 
         /// <summary>
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// - Must start and end with alphanumeric characters, 
+        /// - Can contain hyphens in the middle
+        /// - Must not exceed 63 characters.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
@@ -61,5 +71,8 @@ namespace Azure.AI.Agents
         /// with a maximum length of 512 characters.
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
+
+        /// <summary> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </summary>
+        public AgentDefinition Definition { get; }
     }
 }

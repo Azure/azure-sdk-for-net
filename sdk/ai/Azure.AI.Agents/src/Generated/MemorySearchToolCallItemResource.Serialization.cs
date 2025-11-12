@@ -77,7 +77,7 @@ namespace Azure.AI.Agents
             }
             AgentResponseItemKind @type = default;
             string id = default;
-            CreatedBy createdBy = default;
+            AgentResponseItemSource createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MemorySearchToolCallItemResourceStatus status = default;
             IList<MemorySearchItem> results = default;
@@ -99,7 +99,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    createdBy = CreatedBy.DeserializeCreatedBy(prop.Value, options);
+                    createdBy = AgentResponseItemSource.DeserializeAgentResponseItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

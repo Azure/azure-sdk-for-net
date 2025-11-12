@@ -32,7 +32,7 @@ namespace Azure.AI.Agents
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        internal AgentWorkflowActionResponseItem(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowActionStatus? status) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal AgentWorkflowActionResponseItem(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowActionStatus? status) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             Kind = kind;
             ActionId = actionId;

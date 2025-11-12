@@ -30,7 +30,7 @@ namespace Azure.AI.Agents
         /// <param name="id"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentResponseItem(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentResponseItem(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
@@ -45,6 +45,6 @@ namespace Azure.AI.Agents
         public virtual string Id { get; }
 
         /// <summary> The information about the creator of the item. </summary>
-        public CreatedBy CreatedBy { get; }
+        public AgentResponseItemSource CreatedBy { get; }
     }
 }

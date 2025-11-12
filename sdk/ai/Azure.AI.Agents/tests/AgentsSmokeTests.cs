@@ -24,8 +24,8 @@ public class AgentsSmokeTests : AgentsTestBase
     public void CanGetClients()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentsClient agentsClient = projectClient.GetAgentsClient();
-        OpenAIClient openAIClient = agentsClient.GetOpenAIClient();
+        AgentClient agentClient = projectClient.GetAgentClient();
+        OpenAIClient openAIClient = agentClient.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient("test-model");
     }
 
@@ -165,7 +165,7 @@ public class AgentsSmokeTests : AgentsTestBase
         Assert.That(mockResponse.Tools, Has.Count.EqualTo(2));
 
         A2ATool a2aToolFromResponse = mockResponse.Tools[1].AsAgentTool() as A2ATool;
-        Assert.That(a2aToolFromResponse?.BaseUrl.AbsoluteUri, Does.Contain("microsoft.com"));
+        Assert.That(a2aToolFromResponse?.BaseUri.AbsoluteUri, Does.Contain("microsoft.com"));
     }
 
     [Test]

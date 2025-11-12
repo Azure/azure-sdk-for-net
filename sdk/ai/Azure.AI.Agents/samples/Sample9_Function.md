@@ -6,7 +6,7 @@ In this example we are demonstrating how to use the local functions with the Age
 ```C# Snippet:Sample_CreateAgentClient_Function
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 OpenAIClient openAIClient = client.GetOpenAIClient();
 ```
 
@@ -142,7 +142,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    definition: agentDefinition, options: null);
+    options: new(agentDefinition));
 ```
 
 Asynchronous sample:
@@ -156,7 +156,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    definition: agentDefinition, options: null);
+    options: new(agentDefinition));
 ```
 
 5. To supply functions outputs, we will need to wait for response multiple times. We will define methods `CreateAndWaitForResponse` and `CreateAndWaitForResponseAsync` for brevity.

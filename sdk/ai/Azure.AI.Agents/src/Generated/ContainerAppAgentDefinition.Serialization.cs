@@ -75,7 +75,7 @@ namespace Azure.AI.Agents
                 return null;
             }
             AgentKind kind = default;
-            RaiConfig raiConfig = default;
+            ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<ProtocolVersionRecord> containerProtocolVersions = default;
             string containerAppResourceId = default;
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents
                     {
                         continue;
                     }
-                    raiConfig = RaiConfig.DeserializeRaiConfig(prop.Value, options);
+                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("container_protocol_versions"u8))
@@ -123,7 +123,7 @@ namespace Azure.AI.Agents
             }
             return new ContainerAppAgentDefinition(
                 kind,
-                raiConfig,
+                contentFilterConfiguration,
                 additionalBinaryDataProperties,
                 containerProtocolVersions,
                 containerAppResourceId,

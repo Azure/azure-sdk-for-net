@@ -8,9 +8,9 @@ namespace Azure.AI.Projects;
 /// <summary> The ProjectsClient. </summary>
 [CodeGenType("ProjectsClient")]
 [CodeGenSuppress("GetConversationsClient")]
-[CodeGenSuppress("GetAgentsClient")]
+[CodeGenSuppress("GetAgentClient")]
 [CodeGenSuppress("GetMemoryStoresClient")]
-[CodeGenSuppress("_cachedAgentsClient")]
+[CodeGenSuppress("_cachedAgentClient")]
 [CodeGenSuppress("_cachedConversations")]
 [CodeGenSuppress("_cachedMemoryStores")]
 internal partial class InternalProjectsClient

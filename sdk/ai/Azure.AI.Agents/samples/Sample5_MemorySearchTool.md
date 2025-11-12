@@ -8,7 +8,7 @@ In this example we will demonstrate how to use `MemorySearchTool`. We will creat
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create the versioned agent object.
@@ -21,9 +21,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 ```
 
 Asynchronous sample:
@@ -34,9 +32,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 ```
 
 4. Create a conversation and get the `OpenAIResponse` object.
@@ -115,7 +111,7 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-MemoryStoreObject memoryStore = memoryClient.CreateMemoryStore(
+MemoryStore memoryStore = memoryClient.CreateMemoryStore(
     name: "jokeMemory",
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
@@ -130,7 +126,7 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-MemoryStoreObject memoryStore = await memoryClient.CreateMemoryStoreAsync(
+MemoryStore memoryStore = await memoryClient.CreateMemoryStoreAsync(
     name: "jokeMemory",
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
@@ -191,9 +187,7 @@ agentDefinition = new(model: modelDeploymentName)
 agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = client.CreateAgentVersion(
     agentName: "myAgent2",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 ```
 
 Asynchronous sample:
@@ -205,9 +199,7 @@ agentDefinition = new(model: modelDeploymentName)
 agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
     agentName: "myAgent2",
-    definition: agentDefinition,
-    options: null
-);
+    options: new(agentDefinition));
 ```
 
 9. Create a new conversation and get the response about memorized answers.

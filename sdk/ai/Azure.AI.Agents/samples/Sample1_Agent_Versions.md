@@ -7,7 +7,7 @@ In this example we will demonstrate creation and basic use of an agent step by s
 ```C# Snippet:Sample_CreateAgentClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create the versioned agent object.
@@ -20,7 +20,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = client.CreateAgentVersion(
     agentName: "myAgent",
-    definition: agentDefinition, options: null);
+    options: new(agentDefinition));
 ```
 
 Asynchronous sample:
@@ -31,7 +31,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await client.CreateAgentVersionAsync(
     agentName: "myAgent",
-    definition: agentDefinition, options: null);
+    options: new(agentDefinition));
 ```
 
 3. List all agents named "myAgent".

@@ -29,7 +29,7 @@ namespace OpenAI
         /// generated with `reasoning.encrypted_content` in the `include` parameter.
         /// </param>
         /// <param name="summary"> Reasoning text contents. </param>
-        internal InternalReasoningItemResource(AgentResponseItemKind @type, string id, CreatedBy createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<InternalReasoningItemSummaryPart> summary) : base(@type, id, createdBy, additionalBinaryDataProperties)
+        internal InternalReasoningItemResource(AgentResponseItemKind @type, string id, AgentResponseItemSource createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encryptedContent, IList<InternalReasoningItemSummaryPart> summary) : base(@type, id, createdBy, additionalBinaryDataProperties)
         {
             EncryptedContent = encryptedContent;
             Summary = summary;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -16,29 +17,22 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthenticationSettingProperties"/>. </summary>
         /// <param name="managedIdentityName"> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedIdentityName"/> is null. </exception>
-        public ManagedIdentityAuthenticationSettingProperties(string managedIdentityName)
+        public ManagedIdentityAuthenticationSettingProperties(string managedIdentityName) : base(HealthModelAuthenticationKind.ManagedIdentity)
         {
             Argument.AssertNotNull(managedIdentityName, nameof(managedIdentityName));
 
             ManagedIdentityName = managedIdentityName;
-            AuthenticationKind = HealthModelAuthenticationKind.ManagedIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthenticationSettingProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedIdentityName"> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </param>
-        internal ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string managedIdentityName) : base(provisioningState, displayName, authenticationKind, serializedAdditionalRawData)
+        internal ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedIdentityName) : base(provisioningState, displayName, authenticationKind, additionalBinaryDataProperties)
         {
             ManagedIdentityName = managedIdentityName;
-            AuthenticationKind = authenticationKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthenticationSettingProperties"/> for deserialization. </summary>
-        internal ManagedIdentityAuthenticationSettingProperties()
-        {
         }
 
         /// <summary> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </summary>
