@@ -36,6 +36,6 @@ namespace _Type.Property.Optional
         /// <param name="collectionsByteProperty"> The <see cref="CollectionsByteProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(CollectionsByteProperty collectionsByteProperty) => throw null;
 
-        public static explicit operator CollectionsByteProperty(Response result) => throw null;
+        public static explicit operator CollectionsByteProperty(Response response) => throw null;
     }
 }

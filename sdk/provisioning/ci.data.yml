@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppConfiguration
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
@@ -39,6 +40,7 @@ pr:
   paths:
     include:
     - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppConfiguration
     - sdk/provisioning/Azure.Provisioning.CognitiveServices

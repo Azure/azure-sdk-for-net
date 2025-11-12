@@ -850,6 +850,7 @@
           "crossLanguageDefinitionId": "Encode.Duration.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Duration",
       "apiVersions": [],
@@ -1875,6 +1876,7 @@
               "crossLanguageDefinitionId": "Encode.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Duration.Query",
           "apiVersions": [],
@@ -3481,6 +3483,7 @@
               "crossLanguageDefinitionId": "Encode.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Duration.Property",
           "apiVersions": [],
@@ -4511,6 +4514,7 @@
               "crossLanguageDefinitionId": "Encode.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Duration.Header",
           "apiVersions": [],

@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Core.Basic
+namespace Specs.Azure.Core.Basic
 {
     public partial class UserList : IJsonModel<UserList>
     {
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Core.Basic
 
         string IPersistableModel<UserList>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator UserList(Response result) => throw null;
+        public static explicit operator UserList(Response response) => throw null;
     }
 }

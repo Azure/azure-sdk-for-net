@@ -149,7 +149,7 @@ namespace BasicTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeListWithContinuationTokenResponse(document.RootElement, options);
                     }
@@ -161,11 +161,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListWithContinuationTokenResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ListWithContinuationTokenResponse"/> from. </param>
-        public static explicit operator ListWithContinuationTokenResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListWithContinuationTokenResponse"/> from. </param>
+        public static explicit operator ListWithContinuationTokenResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeListWithContinuationTokenResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

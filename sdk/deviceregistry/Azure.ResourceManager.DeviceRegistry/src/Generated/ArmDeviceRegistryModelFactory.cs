@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="statusErrors"> Array object to transfer and persist errors that originate from the Edge. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IReadOnlyList<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IEnumerable<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
             return new DeviceRegistryAssetEndpointProfileProperties(
                 uuid,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 authentication,
                 additionalConfiguration,
                 discoveredAssetEndpointProfileRef,
-                statusErrors is null ? default : new AssetEndpointProfileStatus(statusErrors, new Dictionary<string, BinaryData>()),
+                statusErrors is null ? default : new AssetEndpointProfileStatus((statusErrors ?? new ChangeTrackingList<AssetEndpointProfileStatusError>()).ToList(), null),
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="billingContainerProvisioningState"> Provisioning state of the resource. </param>
-        /// <param name="eTag"> Resource ETag. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/> instance for mocking. </returns>
-        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? eTag = default)
+        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? etag = default)
         {
             return new DeviceRegistryBillingContainerData(
                 id,
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, new Dictionary<string, BinaryData>()),
-                eTag);
+                billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, null),
+                etag);
         }
 
         /// <summary> Namespace definition. </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
         public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
-            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), provisioningState, additionalBinaryDataProperties: null);
+            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints, null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Managed service identity (either system assigned, or none). </summary>
@@ -371,13 +371,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DeviceRegistryNamespacePatch(identity, tags, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
-        /// <returns> A new <see cref="Models.NamespaceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceUpdateProperties NamespaceUpdateProperties(IDictionary<string, MessagingEndpoint> messagingEndpoints = default)
-        {
-            return new NamespaceUpdateProperties(messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
@@ -809,7 +802,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Device definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -903,7 +895,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DeviceStatus"/> instance for mocking. </returns>
         public static DeviceStatus DeviceStatus(DeviceRegistryStatusConfig config = default, IReadOnlyDictionary<string, DeviceStatusEndpoint> endpointsInbound = default)
         {
-            return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the device status properties. </summary>
@@ -1298,7 +1290,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             inbound ??= new ChangeTrackingDictionary<string, DiscoveredInboundEndpoints>();
 
-            return new DiscoveredMessagingEndpoints(inbound, outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DiscoveredMessagingEndpoints(inbound, outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> An endpoint to connect to the device. </summary>

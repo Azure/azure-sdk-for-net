@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Enabled resource metrics export by default.
+  ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
+
 * Added `EnableTraceBasedLogSampler` property to `AzureMonitorExporterOptions`
   to enable filtering logs based on trace sampling decisions, reducing log
   volume while maintaining trace-log correlation.

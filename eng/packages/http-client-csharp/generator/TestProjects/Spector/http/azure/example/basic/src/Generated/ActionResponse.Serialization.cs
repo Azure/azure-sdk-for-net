@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     public partial class ActionResponse : IJsonModel<ActionResponse>
     {
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.Example.Basic
 
         string IPersistableModel<ActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator ActionResponse(Response result) => throw null;
+        public static explicit operator ActionResponse(Response response) => throw null;
     }
 }
