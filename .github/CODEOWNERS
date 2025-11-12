@@ -445,6 +445,12 @@
 # ServiceLabel: %DataBox Edge
 # ServiceOwners:                                                   @a-t-mason @ganzee @manuaery
 
+# PRLabel: %Datadog
+/sdk/datadog/Azure.ResourceManager.*/                              @jbhanuchand
+
+# ServiceLabel: %Datadog %Mgmt
+# ServiceOwners:                                                   @jbhanuchand
+
 # PRLabel: %Defender EASM
 /sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
 
@@ -1062,12 +1068,6 @@
 
 # ServiceLabel: %New Relic %Mgmt
 # ServiceOwners:                                                   @vipray-ms
-
-# PRLabel: %Datadog
-/sdk/datadog/Azure.ResourceManager.*/				               @jbhanuchand
-
-# ServiceLabel: %Datadog %Mgmt
-# ServiceOwners:                                                   @jbhanuchand
 
 # PRLabel: %Nginx
 /sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh
