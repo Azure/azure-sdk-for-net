@@ -256,7 +256,11 @@ namespace Azure.Generator.Management.Providers
                 bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
-            bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
+            // Do not call ValidateResourceId for Extension resources
+            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
+            {
+                bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
+            }
 
             return new ConstructorProvider(signature, bodyStatements, this);
         }

@@ -38,7 +38,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceApiVersion);
             _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EndpointResource.ResourceType.Namespace, Diagnostics);
             _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
-            EndpointResourceCollection.ValidateResourceId(id);
         }
 
         /// <summary>
