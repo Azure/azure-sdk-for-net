@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Dynatrace
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AppServiceListResponse))]
-    [ModelReaderWriterBuildable(typeof(ConnectedResourcesCountResponse))]
     [ModelReaderWriterBuildable(typeof(DynatraceAccountInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceBillingPlanInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceEnvironmentInfo))]
@@ -46,11 +45,9 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentResult))]
     [ModelReaderWriterBuildable(typeof(LogStatusContent))]
     [ModelReaderWriterBuildable(typeof(ManageAgentInstallationContent))]
-    [ModelReaderWriterBuildable(typeof(ResourceManager.Models.ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(Models.ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSResourceDetailsContent))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSResourceDetailsResponse))]
-    [ModelReaderWriterBuildable(typeof(MarketplaceSubscriptionIdContent))]
     [ModelReaderWriterBuildable(typeof(MetricsStatusResponse))]
     [ModelReaderWriterBuildable(typeof(MetricStatusContent))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]

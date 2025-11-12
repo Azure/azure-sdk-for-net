@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceMonitorData"/> instance for mocking. </returns>
-        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceManager.Models.ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
+        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -165,14 +165,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 metricRules,
                 provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourcesCountResponse"/>. </summary>
-        /// <param name="connectedResourcesCount"> Count of the connected resources. </param>
-        /// <returns> A new <see cref="Models.ConnectedResourcesCountResponse"/> instance for mocking. </returns>
-        public static ConnectedResourcesCountResponse ConnectedResourcesCountResponse(long? connectedResourcesCount = null)
-        {
-            return new ConnectedResourcesCountResponse(connectedResourcesCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSResourceDetailsResponse"/>. </summary>
