@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="manageAgentInstallationList"> The list of resources. </param>
         /// <param name="action"> Install/Uninstall action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="manageAgentInstallationList"/> is null. </exception>
-        public ManageAgentInstallationContent(IEnumerable<WritableSubResource> manageAgentInstallationList, Action action)
+        public ManageAgentInstallationContent(IEnumerable<WritableSubResource> manageAgentInstallationList, DynatraceAgentAction action)
         {
             Argument.AssertNotNull(manageAgentInstallationList, nameof(manageAgentInstallationList));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="manageAgentInstallationList"> The list of resources. </param>
         /// <param name="action"> Install/Uninstall action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManageAgentInstallationContent(IList<WritableSubResource> manageAgentInstallationList, Action action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManageAgentInstallationContent(IList<WritableSubResource> manageAgentInstallationList, DynatraceAgentAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManageAgentInstallationList = manageAgentInstallationList;
             Action = action;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> The list of resources. </summary>
         public IList<WritableSubResource> ManageAgentInstallationList { get; }
         /// <summary> Install/Uninstall action. </summary>
-        public Action Action { get; }
+        public DynatraceAgentAction Action { get; }
     }
 }

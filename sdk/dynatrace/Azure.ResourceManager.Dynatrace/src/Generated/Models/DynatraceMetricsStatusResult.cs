@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
-    public partial class SubscriptionList
+    /// <summary> Response of get metrics status operation. </summary>
+    public partial class DynatraceMetricsStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
-        public SubscriptionList()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMetricsStatusResult"/>. </summary>
+        internal DynatraceMetricsStatusResult()
         {
-            MonitoredSubscriptionList = new ChangeTrackingList<MonitoredSubscription>();
+            AzureResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
-        /// <param name="operation"> The operation for the patch on the resource. </param>
-        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMetricsStatusResult"/>. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionList(SubscriptionListOperation? operation, IList<MonitoredSubscription> monitoredSubscriptionList, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMetricsStatusResult(IReadOnlyList<string> azureResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Operation = operation;
-            MonitoredSubscriptionList = monitoredSubscriptionList;
-            ProvisioningState = provisioningState;
+            AzureResourceIds = azureResourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The operation for the patch on the resource. </summary>
-        public SubscriptionListOperation? Operation { get; set; }
-        /// <summary> List of subscriptions and the state of the monitoring. </summary>
-        public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
-        /// <summary> Provisioning State of the resource. </summary>
-        public DynatraceProvisioningState? ProvisioningState { get; }
+        /// <summary> Azure resource IDs. </summary>
+        public IReadOnlyList<string> AzureResourceIds { get; }
     }
 }

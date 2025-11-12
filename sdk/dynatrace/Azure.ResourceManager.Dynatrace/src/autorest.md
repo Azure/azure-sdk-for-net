@@ -92,6 +92,19 @@ rename-mapping:
   SendActivityLogsStatus: ActivityLogsSendingStatus
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
+  MetricsStatusResponse: DynatraceMetricsStatusResult
+  LogStatusRequest: DynatraceMetricStatusContent
+  MarketplaceSaaSResourceDetailsResponse: MarketplaceSaaSResourceDetailsResult
+  MarketplaceSaaSResourceDetailsResponse.marketplaceSaaSResourceId : -|arm-id
+  ConnectedResourcesCountResponse: ConnectedResourcesCountResult
+  Action: DynatraceAgentAction
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSubscriptionIdRequest.marketplaceSubscriptionId: -|uuid
+  MonitoredSubscription: DynatraceMonitoredSubscription
+  MonitoredSubscription.subscriptionId: -|uuid
+  Status: DynatraceMonitoringState
+  SubscriptionList: DynatraceMonitoredSubscriptionList
+  SubscriptionListOperation: DynatraceMonitoredSubscriptionListOperation
 
 directive:
   - remove-operation: CreationSupported_List

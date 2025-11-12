@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListMonitoredResourcesRequestUri(string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content)
+        internal RequestUriBuilder CreateListMonitoredResourcesRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dynatrace
             return uri;
         }
 
-        internal HttpMessage CreateListMonitoredResourcesRequest(string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content)
+        internal HttpMessage CreateListMonitoredResourcesRequest(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResourceListResponse> ListMonitoredResources(string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content = null, CancellationToken cancellationToken = default)
+        public Response<MonitoredResourceListResponse> ListMonitoredResources(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MarketplaceSaaSResourceDetailsResponse>> GetMarketplaceSaaSResourceDetailsAsync(string subscriptionId, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<MarketplaceSaaSResourceDetailsResult>> GetMarketplaceSaaSResourceDetailsAsync(string subscriptionId, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -910,9 +910,9 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case 200:
                     {
-                        MarketplaceSaaSResourceDetailsResponse value = default;
+                        MarketplaceSaaSResourceDetailsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MarketplaceSaaSResourceDetailsResponse.DeserializeMarketplaceSaaSResourceDetailsResponse(document.RootElement);
+                        value = MarketplaceSaaSResourceDetailsResult.DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MarketplaceSaaSResourceDetailsResponse> GetMarketplaceSaaSResourceDetails(string subscriptionId, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public Response<MarketplaceSaaSResourceDetailsResult> GetMarketplaceSaaSResourceDetails(string subscriptionId, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -937,9 +937,9 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case 200:
                     {
-                        MarketplaceSaaSResourceDetailsResponse value = default;
+                        MarketplaceSaaSResourceDetailsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MarketplaceSaaSResourceDetailsResponse.DeserializeMarketplaceSaaSResourceDetailsResponse(document.RootElement);
+                        value = MarketplaceSaaSResourceDetailsResult.DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricsStatusResponse>> GetMetricStatusAsync(string subscriptionId, string resourceGroupName, string monitorName, MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DynatraceMetricsStatusResult>> GetMetricStatusAsync(string subscriptionId, string resourceGroupName, string monitorName, MetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1104,9 +1104,9 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case 200:
                     {
-                        MetricsStatusResponse value = default;
+                        DynatraceMetricsStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MetricsStatusResponse.DeserializeMetricsStatusResponse(document.RootElement);
+                        value = DynatraceMetricsStatusResult.DeserializeDynatraceMetricsStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricsStatusResponse> GetMetricStatus(string subscriptionId, string resourceGroupName, string monitorName, MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        public Response<DynatraceMetricsStatusResult> GetMetricStatus(string subscriptionId, string resourceGroupName, string monitorName, MetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1134,9 +1134,9 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case 200:
                     {
-                        MetricsStatusResponse value = default;
+                        DynatraceMetricsStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MetricsStatusResponse.DeserializeMetricsStatusResponse(document.RootElement);
+                        value = DynatraceMetricsStatusResult.DeserializeDynatraceMetricsStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
-        internal RequestUriBuilder CreateListMonitoredResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content)
+        internal RequestUriBuilder CreateListMonitoredResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Dynatrace
             return uri;
         }
 
-        internal HttpMessage CreateListMonitoredResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content)
+        internal HttpMessage CreateListMonitoredResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1598,7 +1598,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResourceListResponse> ListMonitoredResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LogStatusContent content = null, CancellationToken cancellationToken = default)
+        public Response<MonitoredResourceListResponse> ListMonitoredResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, DynatraceMetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

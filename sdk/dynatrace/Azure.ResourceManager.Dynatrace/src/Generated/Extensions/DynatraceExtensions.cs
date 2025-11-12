@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> Tenant Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<MarketplaceSaaSResourceDetailsResponse>> GetMarketplaceSaaSResourceDetailsMonitorAsync(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MarketplaceSaaSResourceDetailsResult>> GetMarketplaceSaaSResourceDetailsMonitorAsync(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> Tenant Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<MarketplaceSaaSResourceDetailsResponse> GetMarketplaceSaaSResourceDetailsMonitor(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public static Response<MarketplaceSaaSResourceDetailsResult> GetMarketplaceSaaSResourceDetailsMonitor(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

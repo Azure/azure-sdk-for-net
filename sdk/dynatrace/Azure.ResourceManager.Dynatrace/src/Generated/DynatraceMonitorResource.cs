@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> The details of the log status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(LogStatusContent content = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(DynatraceMetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> The details of the log status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(LogStatusContent content = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(DynatraceMetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the metric status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MetricsStatusResponse>> GetMetricStatusAsync(MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DynatraceMetricsStatusResult>> GetMetricStatusAsync(MetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMetricStatus");
             scope.Start();
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the metric status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MetricsStatusResponse> GetMetricStatus(MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<DynatraceMetricsStatusResult> GetMetricStatus(MetricStatusContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMetricStatus");
             scope.Start();

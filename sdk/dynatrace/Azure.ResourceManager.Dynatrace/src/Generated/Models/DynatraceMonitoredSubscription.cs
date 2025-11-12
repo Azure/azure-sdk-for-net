@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> The list of subscriptions and it's monitoring status by current Dynatrace monitor. </summary>
-    public partial class MonitoredSubscription
+    public partial class DynatraceMonitoredSubscription
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscription"/>. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public MonitoredSubscription(string subscriptionId)
+        public DynatraceMonitoredSubscription(Guid subscriptionId)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-
             SubscriptionId = subscriptionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscription"/>. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
         /// <param name="status"> The state of monitoring. </param>
         /// <param name="error"> The reason of not monitoring the subscription. </param>
         /// <param name="tagRules"> Properties for the Tag rules resource of a Monitor account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscription(string subscriptionId, Status? status, string error, MonitoringTagRulesProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMonitoredSubscription(Guid subscriptionId, DynatraceMonitoringState? status, string error, MonitoringTagRulesProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             Status = status;
@@ -70,15 +67,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/> for deserialization. </summary>
-        internal MonitoredSubscription()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscription"/> for deserialization. </summary>
+        internal DynatraceMonitoredSubscription()
         {
         }
 
         /// <summary> The subscriptionId to be monitored. </summary>
-        public string SubscriptionId { get; set; }
+        public Guid SubscriptionId { get; set; }
         /// <summary> The state of monitoring. </summary>
-        public Status? Status { get; set; }
+        public DynatraceMonitoringState? Status { get; set; }
         /// <summary> The reason of not monitoring the subscription. </summary>
         public string Error { get; set; }
         /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>

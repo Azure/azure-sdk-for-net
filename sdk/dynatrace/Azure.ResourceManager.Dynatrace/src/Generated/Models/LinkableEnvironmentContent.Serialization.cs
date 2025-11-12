@@ -34,12 +34,26 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("tenantId"u8);
-            writer.WriteStringValue(TenantId);
+            if (TenantId != null)
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            else
+            {
+                writer.WriteNull("tenantId");
+            }
             writer.WritePropertyName("userPrincipal"u8);
             writer.WriteStringValue(UserPrincipal);
-            writer.WritePropertyName("region"u8);
-            writer.WriteStringValue(Region);
+            if (Region != null)
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region.Value);
+            }
+            else
+            {
+                writer.WriteNull("region");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,15 +91,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Guid tenantId = default;
+            Guid? tenantId = default;
             string userPrincipal = default;
-            AzureLocation region = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tenantId = null;
+                        continue;
+                    }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
@@ -96,6 +115,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (property.NameEquals("region"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        region = null;
+                        continue;
+                    }
                     region = new AzureLocation(property.Value.GetString());
                     continue;
                 }

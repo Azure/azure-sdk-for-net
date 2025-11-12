@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class MonitoredSubscription : IUtf8JsonSerializable, IJsonModel<MonitoredSubscription>
+    public partial class DynatraceMonitoredSubscription : IUtf8JsonSerializable, IJsonModel<DynatraceMonitoredSubscription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoredSubscription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitoredSubscription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MonitoredSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DynatraceMonitoredSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredSubscription)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitoredSubscription)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("subscriptionId"u8);
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        MonitoredSubscription IJsonModel<MonitoredSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DynatraceMonitoredSubscription IJsonModel<DynatraceMonitoredSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredSubscription)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitoredSubscription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitoredSubscription(document.RootElement, options);
+            return DeserializeDynatraceMonitoredSubscription(document.RootElement, options);
         }
 
-        internal static MonitoredSubscription DeserializeMonitoredSubscription(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DynatraceMonitoredSubscription DeserializeDynatraceMonitoredSubscription(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            string subscriptionId = default;
-            Status? status = default;
+            Guid subscriptionId = default;
+            DynatraceMonitoringState? status = default;
             string error = default;
             MonitoringTagRulesProperties tagRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new DynatraceMonitoringState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -130,38 +130,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitoredSubscription(subscriptionId, status, error, tagRules, serializedAdditionalRawData);
+            return new DynatraceMonitoredSubscription(subscriptionId, status, error, tagRules, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MonitoredSubscription>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DynatraceMonitoredSubscription>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredSubscription)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredSubscription)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MonitoredSubscription IPersistableModel<MonitoredSubscription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DynatraceMonitoredSubscription IPersistableModel<DynatraceMonitoredSubscription>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredSubscription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMonitoredSubscription(document.RootElement, options);
+                        return DeserializeDynatraceMonitoredSubscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredSubscription)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredSubscription)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MonitoredSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DynatraceMonitoredSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
