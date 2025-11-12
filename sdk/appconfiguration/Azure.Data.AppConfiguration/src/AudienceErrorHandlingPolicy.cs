@@ -53,7 +53,7 @@ namespace Azure.Data.AppConfiguration
         private void HandleAuthenticationAudienceError(AuthenticationFailedException ex)
         {
             // Message string matching is used because AAD error codes are embedded in the exception message.
-            if (!ex.Message.Contains(AadAudienceErrorCode, StringComparison.OrdinalIgnoreCase))
+            if (!ex.Message.Contains(AadAudienceErrorCode))
             {
                 return;
             }
