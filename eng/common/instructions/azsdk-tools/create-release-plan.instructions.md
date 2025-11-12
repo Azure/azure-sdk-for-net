@@ -13,7 +13,16 @@ Follow these steps in order to create or manage a release plan for an API specif
 - If no pull request is available, prompt the user to provide the API spec pull request link
 - Validate that the provided pull request link is accessible and valid
 
-## Step 2: Gather Release Plan Information
+## Step 2: Check for Existing Release Plan
+- Ask the user if they already have an existing release plan
+- If they confirm:
+    - Query the existing release plan using either:
+        - The release plan number, or
+        - The API spec pull request link
+    - Display the existing release plan details (Release Plan ID, status, associated languages, SDK PRs).
+- If no existing release plan is found, continue to Step 3 to gather required details for creating a new one. 
+
+## Step 3: Gather Release Plan Information
 Collect the following required information from the user. Do not create a release plan with temporary values. Confirm the values with the user before proceeding to create the release plan.
 If any details are missing, prompt the user accordingly:
 
@@ -25,7 +34,7 @@ If any details are missing, prompt the user accordingly:
     - "beta" for preview API versions
     - "stable" for GA API versions
 
-## Step 3: Create Release Plan
+## Step 4: Create Release Plan
 - If the user doesn't know the required details, direct them to create a release plan using the release planner
 - Provide this resource: [Release Plan Creation Guide](https://eng.ms/docs/products/azure-developer-experience/plan/release-plan-create)
 - Once all information is gathered, use `azsdk_create_release_plan` to create the release plan
@@ -33,18 +42,18 @@ If any details are missing, prompt the user accordingly:
 - Display the newly created release plan details to the user for confirmation
 - Refer to #file:sdk-details-in-release-plan.instructions.md to identify languages configured in the TypeSpec project and add them to the release plan
 
-## Step 4: Update SDK Details in Release Plan
+## Step 5: Update SDK Details in Release Plan
 - Refer to #file:sdk-details-in-release-plan.instructions.md to add languages and package names to the release plan
 - If the TypeSpec project is for a management plane, refer to #file:verify-namespace-approval.instructions.md if this is first release of SDK.
 
-## Step 5: Link SDK Pull Requests (if applicable)
+## Step 6: Link SDK Pull Requests (if applicable)
 - Ask the user if they have already created SDK pull requests locally for any programming language
 - If SDK pull requests exist:
     - Collect the pull request links from the user
     - Use `azsdk_link_sdk_pull_request_to_release_plan` to link each SDK pull request to the release plan
     - Confirm successful linking for each SDK pull request
 
-## Step 6: Summary
+## Step 7: Summary
 - Display a summary of the completed actions:
     - Release plan status (created or existing)
     - Linked SDK pull requests (if any)
