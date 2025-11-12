@@ -9,6 +9,7 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ManagementGroups;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -135,8 +136,11 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName() => $"{ResourceName}Collection";
 
-        // TODO: Add support for getting parent resource from a resource collection
-        protected override FormattableString BuildDescription() => $"A class representing a collection of {_resource.Type:C} and their operations.\nEach {_resource.Type:C} in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).\nTo get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of the parent resource.";
+        protected override FormattableString BuildDescription()
+        {
+            var parentResourceType = GetParentResourceType(_resourceMetadata, _resource);
+            return $"A class representing a collection of {_resource.Type:C} and their operations.\nEach {_resource.Type:C} in the collection will belong to the same instance of {parentResourceType:C}.\nTo get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of {parentResourceType:C}.";
+        }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -274,6 +278,10 @@ namespace Azure.Generator.Management.Providers
                     return typeof(SubscriptionResource);
                 case ResourceScope.Tenant:
                     return typeof(TenantResource);
+                case ResourceScope.Extension:
+                    return typeof(ArmResource);
+                case ResourceScope.ManagementGroup:
+                    return typeof(ManagementGroupResource);
                 default:
                     // TODO -- this is incorrect, but we put it here as a placeholder.
                     return resource.Type;
@@ -281,15 +289,24 @@ namespace Azure.Generator.Management.Providers
         }
 
         protected override MethodProvider[] BuildMethods()
-            => [
-                ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()),
-                .. BuildCreateOrUpdateMethods(),
-                .. BuildGetMethods(),
-                .. BuildGetAllMethods(),
-                .. BuildExistsMethods(),
-                .. BuildGetIfExistsMethods(),
-                .. BuildEnumeratorMethods()
-                ];
+        {
+            var methods = new List<MethodProvider>();
+
+            // Do not build ValidateResourceIdMethod for Extension resources
+            if (_resourceMetadata.ResourceScope != ResourceScope.Extension)
+            {
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()));
+            }
+
+            methods.AddRange(BuildCreateOrUpdateMethods());
+            methods.AddRange(BuildGetMethods());
+            methods.AddRange(BuildGetAllMethods());
+            methods.AddRange(BuildExistsMethods());
+            methods.AddRange(BuildGetIfExistsMethods());
+            methods.AddRange(BuildEnumeratorMethods());
+
+            return [.. methods];
+        }
 
         private MethodProvider[] BuildGetAllMethods()
         {
