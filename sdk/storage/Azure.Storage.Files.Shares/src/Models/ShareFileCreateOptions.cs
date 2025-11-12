@@ -39,32 +39,32 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public FilePosixProperties PosixProperties { get; set; }
 
-        /// <summary>
-        /// Optional, only applicable to SMB files.
-        /// How attributes and permissions should be set on the file.
-        /// New: automatically adds the ARCHIVE file attribute flag to the file and uses
-        /// Windows create file permissions semantics (ex: inherit from parent).
-        /// Restore: does not modify file attribute flag and uses Windows update file permissions semantics.
-        /// If Restore is specified, the file permission must also be provided or PropertySemantics will default to New.
-        /// </summary>
-        public FilePropertySemantics? PropertySemantics { get; set; }
+        ///// <summary>
+        ///// Optional, only applicable to SMB files.
+        ///// How attributes and permissions should be set on the file.
+        ///// New: automatically adds the ARCHIVE file attribute flag to the file and uses
+        ///// Windows create file permissions semantics (ex: inherit from parent).
+        ///// Restore: does not modify file attribute flag and uses Windows update file permissions semantics.
+        ///// If Restore is specified, the file permission must also be provided or PropertySemantics will default to New.
+        ///// </summary>
+        //public FilePropertySemantics? PropertySemantics { get; set; }
 
-        /// <summary>
-        /// Optional, valid for version 2026-02-06 and later.
-        /// The content to upload to the file when it is created.  Must be less than or equal to 4 MiB in size.
-        /// </summary>
-        public Stream Content { get; set; }
+        ///// <summary>
+        ///// Optional, valid for version 2026-02-06 and later.
+        ///// The content to upload to the file when it is created.  Must be less than or equal to 4 MiB in size.
+        ///// </summary>
+        //public Stream Content { get; set; }
 
-        /// <summary>
-        /// Optional, only valid if Content is specified. <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </summary>
-        public IProgress<long> ProgressHandler { get; set; }
+        ///// <summary>
+        ///// Optional, only valid if Content is specified. <see cref="IProgress{Long}"/> to provide
+        ///// progress updates about data transfers.
+        ///// </summary>
+        //public IProgress<long> ProgressHandler { get; set; }
 
-        /// <summary>
-        /// Optional, only valid if Content is specified. Override settings for this client'
-        /// <see cref="ShareClientOptions.TransferValidation"/> settings hashing on uploads.
-        /// </summary>
-        public UploadTransferValidationOptions TransferValidation { get; set; }
+        ///// <summary>
+        ///// Optional, only valid if Content is specified. Override settings for this client'
+        ///// <see cref="ShareClientOptions.TransferValidation"/> settings hashing on uploads.
+        ///// </summary>
+        //public UploadTransferValidationOptions TransferValidation { get; set; }
     }
 }

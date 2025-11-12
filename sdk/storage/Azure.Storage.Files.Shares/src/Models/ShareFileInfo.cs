@@ -42,12 +42,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public FilePosixProperties PosixProperties { get; internal set; }
 
-        /// <summary>
-        /// Content Hash of the file.  This value will only be populated if the file was created with data.
-        /// </summary>
-#pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash { get; internal set; }
-#pragma warning restore CA1819 // Properties should not return arrays
+//        /// <summary>
+//        /// Content Hash of the file.  This value will only be populated if the file was created with data.
+//        /// </summary>
+//#pragma warning disable CA1819 // Properties should not return arrays
+//        public byte[] ContentHash { get; internal set; }
+//#pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
         /// Constructor.
@@ -60,54 +60,54 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public static partial class FilesModelFactory
     {
-        /// <summary>
-        /// Creates a new StorageFileInfo instance for mocking.
-        /// </summary>
-        public static ShareFileInfo StorageFileInfo(
-            ETag eTag = default,
-            DateTimeOffset lastModified = default,
-            bool isServerEncrypted = default,
-            string filePermissionKey = default,
-            string fileAttributes = default,
-            DateTimeOffset fileCreationTime = default,
-            DateTimeOffset fileLastWriteTime = default,
-            DateTimeOffset fileChangeTime = default,
-            string fileId = default,
-            string fileParentId = default,
-            NfsFileMode nfsFileMode = default,
-            string owner = default,
-            string group = default,
-            NfsFileType nfsFileType = default,
-            byte[] contentHash = default)
-            => new ShareFileInfo
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                IsServerEncrypted = isServerEncrypted,
-                SmbProperties = new FileSmbProperties
-                {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
-                    FilePermissionKey = filePermissionKey,
-                    FileCreatedOn = fileCreationTime,
-                    FileLastWrittenOn = fileLastWriteTime,
-                    FileChangedOn = fileChangeTime,
-                    FileId = fileId,
-                    ParentId = fileParentId
-                },
-                PosixProperties = new FilePosixProperties
-                {
-                    FileMode = nfsFileMode,
-                    Owner = owner,
-                    Group = group,
-                    FileType = nfsFileType,
-                },
-                ContentHash = contentHash
-            };
+        ///// <summary>
+        ///// Creates a new StorageFileInfo instance for mocking.
+        ///// </summary>
+        //public static ShareFileInfo StorageFileInfo(
+        //    ETag eTag = default,
+        //    DateTimeOffset lastModified = default,
+        //    bool isServerEncrypted = default,
+        //    string filePermissionKey = default,
+        //    string fileAttributes = default,
+        //    DateTimeOffset fileCreationTime = default,
+        //    DateTimeOffset fileLastWriteTime = default,
+        //    DateTimeOffset fileChangeTime = default,
+        //    string fileId = default,
+        //    string fileParentId = default,
+        //    NfsFileMode nfsFileMode = default,
+        //    string owner = default,
+        //    string group = default,
+        //    NfsFileType nfsFileType = default,
+        //    byte[] contentHash = default)
+        //    => new ShareFileInfo
+        //    {
+        //        ETag = eTag,
+        //        LastModified = lastModified,
+        //        IsServerEncrypted = isServerEncrypted,
+        //        SmbProperties = new FileSmbProperties
+        //        {
+        //            FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
+        //            FilePermissionKey = filePermissionKey,
+        //            FileCreatedOn = fileCreationTime,
+        //            FileLastWrittenOn = fileLastWriteTime,
+        //            FileChangedOn = fileChangeTime,
+        //            FileId = fileId,
+        //            ParentId = fileParentId
+        //        },
+        //        PosixProperties = new FilePosixProperties
+        //        {
+        //            FileMode = nfsFileMode,
+        //            Owner = owner,
+        //            Group = group,
+        //            FileType = nfsFileType,
+        //        },
+        //        ContentHash = contentHash
+        //    };
 
         /// <summary>
         /// Creates a new StorageFileInfo instance for mocking.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileInfo StorageFileInfo(
             ETag eTag,
             DateTimeOffset lastModified,

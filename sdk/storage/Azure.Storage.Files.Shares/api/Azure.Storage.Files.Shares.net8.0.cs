@@ -578,9 +578,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileDownloadDetails StorageFileDownloadProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentType, string contentRange, Azure.ETag eTag, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, string acceptRanges, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, byte[] fileContentHash, bool isServiceEncrypted) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted, string filePermissionKey, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string fileId, string fileParentId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, bool isServerEncrypted, string filePermissionKey, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string fileId, string fileParentId, Azure.Storage.Files.Shares.Models.NfsFileMode nfsFileMode, string owner, string group, Azure.Storage.Files.Shares.Models.NfsFileType nfsFileType) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareFileInfo StorageFileInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), bool isServerEncrypted = false, string filePermissionKey = null, string fileAttributes = null, System.DateTimeOffset fileCreationTime = default(System.DateTimeOffset), System.DateTimeOffset fileLastWriteTime = default(System.DateTimeOffset), System.DateTimeOffset fileChangeTime = default(System.DateTimeOffset), string fileId = null, string fileParentId = null, Azure.Storage.Files.Shares.Models.NfsFileMode nfsFileMode = null, string owner = null, string group = null, Azure.Storage.Files.Shares.Models.NfsFileType nfsFileType = default(Azure.Storage.Files.Shares.Models.NfsFileType), byte[] contentHash = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.ShareFileItem StorageFileItem(bool isDirectory, string name, long? fileSize) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), System.Collections.Generic.IDictionary<string, string> metadata = null, long contentLength = (long)0, string contentType = null, Azure.ETag eTag = default(Azure.ETag), byte[] contentHash = null, System.Collections.Generic.IEnumerable<string> contentEncoding = null, string cacheControl = null, string contentDisposition = null, System.Collections.Generic.IEnumerable<string> contentLanguage = null, System.DateTimeOffset copyCompletedOn = default(System.DateTimeOffset), string copyStatusDescription = null, string copyId = null, string copyProgress = null, string copySource = null, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus = Azure.Storage.Files.Shares.Models.CopyStatus.Pending, bool isServerEncrypted = false, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, Azure.Storage.Files.Shares.Models.FilePosixProperties posixProperties = null) { throw null; }
@@ -750,7 +748,6 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.ShareFilePermission FilePermission { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FilePosixProperties PosixProperties { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.FilePropertySemantics? PropertySemantics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
     }
     public partial class ShareDirectoryGetFilesAndDirectoriesOptions
@@ -903,15 +900,11 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileCreateOptions
     {
         public ShareFileCreateOptions() { }
-        public System.IO.Stream Content { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFilePermission FilePermission { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders HttpHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FilePosixProperties PosixProperties { get { throw null; } set { } }
-        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.FilePropertySemantics? PropertySemantics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class ShareFileCreateSymbolicLinkOptions
     {
@@ -1021,7 +1014,6 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareFileInfo
     {
         internal ShareFileInfo() { }
-        public byte[] ContentHash { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
