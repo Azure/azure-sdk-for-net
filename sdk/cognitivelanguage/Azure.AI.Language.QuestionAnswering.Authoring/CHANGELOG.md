@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0 (YYYY-MM-DD)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Breaking Changes
 - Package split: Inference (runtime Q&A) implementation moved into a new NuGet package `Azure.AI.Language.QuestionAnswering.inference` (namespace unchanged: `Azure.AI.Language.QuestionAnswering`). The existing package `Azure.AI.Language.QuestionAnswering` now focuses on authoring (`Azure.AI.Language.QuestionAnswering.Authoring`) while still exposing inference via type forwarding.
