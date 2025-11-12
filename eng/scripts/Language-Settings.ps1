@@ -17,7 +17,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
-  
+
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
   dotnet msbuild `
@@ -77,8 +77,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         }
       }
 
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
-      # if artifact has baselined warnings, run AOT checks; 
+      # CheckAOTCompat logic: if set in CI.yml, respect that value;
+      # if artifact has baselined warnings, run AOT checks;
       # otherwise use AotCompatOptOut from project settings
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
@@ -157,22 +157,12 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   Write-Host "Calculating dependencies for $($pkgProp.Name)"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
-  $buildOutputPath = Join-Path $RepoRoot "_dependencylistoutput.txt"
 
-  try {
-    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+  $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-    " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+    " /p:OutputProjectFilePath=`"$outputFilePath`""
 
-    Invoke-LoggedCommand $command | Out-Null
-  }
-  catch {
-      Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
-      Write-Host "Dumping erroring build output."
-      Write-Host (Get-Content -Raw $buildOutputPath)
-
-      return @()
-  }
+  Invoke-LoggedMsbuildCommand $command
 
   if (Test-Path $outputFilePath) {
     $dependentProjects = Get-Content $outputFilePath

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelSignalDefinitionResource"/> and their operations.
-    /// Each <see cref="HealthModelSignalDefinitionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthModelSignalDefinitionCollection"/> instance call the GetHealthModelSignalDefinitions method from an instance of the parent resource.
+    /// Each <see cref="HealthModelSignalDefinitionResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
+    /// To get a <see cref="HealthModelSignalDefinitionCollection"/> instance call the GetHealthModelSignalDefinitions method from an instance of <see cref="HealthModelResource"/>.
     /// </summary>
     public partial class HealthModelSignalDefinitionCollection : ArmCollection, IEnumerable<HealthModelSignalDefinitionResource>, IAsyncEnumerable<HealthModelSignalDefinitionResource>
     {
@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary> List SignalDefinition resources by HealthModel. </summary>
+        /// <summary>
+        /// List SignalDefinition resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelSignalDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.CloudHealth
                 context), data => new HealthModelSignalDefinitionResource(Client, data));
         }
 
-        /// <summary> List SignalDefinition resources by HealthModel. </summary>
+        /// <summary>
+        /// List SignalDefinition resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/signaldefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignalDefinitions_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelSignalDefinitionResource"/> that may take multiple service requests to iterate over. </returns>

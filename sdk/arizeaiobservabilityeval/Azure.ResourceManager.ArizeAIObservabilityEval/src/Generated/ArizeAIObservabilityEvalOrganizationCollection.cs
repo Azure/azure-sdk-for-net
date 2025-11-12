@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> and their operations.
-    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of the parent resource.
+    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ArizeAIObservabilityEvalOrganizationCollection : ArmCollection, IEnumerable<ArizeAIObservabilityEvalOrganizationResource>, IAsyncEnumerable<ArizeAIObservabilityEvalOrganizationResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArizeAIObservabilityEvalOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArizeAIObservabilityEvalOrganizationResource> GetAll(CancellationToken cancellationToken = default)
