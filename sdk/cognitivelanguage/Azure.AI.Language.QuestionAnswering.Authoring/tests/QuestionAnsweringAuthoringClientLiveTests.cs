@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
     public class QuestionAnsweringAuthoringClientLiveTests : QuestionAnsweringAuthoringLiveTestBase
     {
         public QuestionAnsweringAuthoringClientLiveTests(bool isAsync, QuestionAnsweringAuthoringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to record */)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
 

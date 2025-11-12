@@ -28,9 +28,6 @@ You can use an API key or Azure Active Directory (AAD) credentials.
 
 #### Namespaces
 
-```C# Snippet:QuestionAnsweringClient_Namespaces
-```
-
 Add the authoring namespace:
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
@@ -39,14 +36,6 @@ Add the authoring namespace:
 #### Create a QuestionAnsweringAuthoringClient (API key)
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_Create
-```
-
-#### Create a client using Azure Active Directory
-
-```C# Snippet:QuestionAnswering_Identity_Namespace
-```
-
-```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
 ```
 
 > Regional endpoints require a custom domain to use AAD. See the official authentication docs for details.
