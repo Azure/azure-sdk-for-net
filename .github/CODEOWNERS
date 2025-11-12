@@ -1063,6 +1063,12 @@
 # ServiceLabel: %New Relic %Mgmt
 # ServiceOwners:                                                   @vipray-ms
 
+# PRLabel: %Datadog
+/sdk/datadog/Azure.ResourceManager.*/				               @jbhanuchand
+
+# ServiceLabel: %Datadog %Mgmt
+# ServiceOwners:                                                   @jbhanuchand
+
 # PRLabel: %Nginx
 /sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh
 
