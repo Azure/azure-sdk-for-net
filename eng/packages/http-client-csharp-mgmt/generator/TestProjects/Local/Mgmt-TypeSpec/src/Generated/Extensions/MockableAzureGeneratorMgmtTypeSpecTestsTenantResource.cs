@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
@@ -22,6 +23,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
+        private ClientDiagnostics _networkProviderActionsClientDiagnostics;
+        private NetworkProviderActions _networkProviderActionsRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsTenantResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsTenantResource()
@@ -38,6 +41,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary>
         /// Starts a failed runtime resource
@@ -101,6 +108,90 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 HttpMessage message = PrivateLinksRestClient.CreateStartFailedServerlessRuntimeRequest(context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query network sibling set - a provider-level async action.
+        /// This is a non-resource LRO operation that returns NetworkSiblingSet.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> QueryNetworkSiblingSetAsync(WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = NetworkProviderActionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.QueryNetworkSiblingSet");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
+                    new NetworkSiblingSetOperationSource(),
+                    NetworkProviderActionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query network sibling set - a provider-level async action.
+        /// This is a non-resource LRO operation that returns NetworkSiblingSet.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkSiblingSet> QueryNetworkSiblingSet(WaitUntil waitUntil, QueryNetworkSiblingSetRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = NetworkProviderActionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.QueryNetworkSiblingSet");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
+                    new NetworkSiblingSetOperationSource(),
+                    NetworkProviderActionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

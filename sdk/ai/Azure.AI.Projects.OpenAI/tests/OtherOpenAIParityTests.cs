@@ -31,7 +31,7 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
     {
         OpenAIClient openAIClient = clientMode switch
         {
-            OpenAIClientMode.UseExternalOpenAI => new OpenAIClient(new ApiKeyCredential(TestEnvironment.ParseEnvironmentFile()["OPEN-API-KEY"]), TestOpenAIClientOptions),
+            OpenAIClientMode.UseExternalOpenAI => new OpenAIClient(new ApiKeyCredential(TestEnvironment.ParseEnvironmentFile()["OPEN-API-KEY"]), CreateTestProjectOpenAIClientOptions()),
             OpenAIClientMode.UseFDPOpenAI => GetTestClient(),
             _ => throw new NotImplementedException()
         };

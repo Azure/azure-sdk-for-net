@@ -12,17 +12,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
 
 public class AgentsTests : AgentsTestBase
 {
-    public AgentsTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+    public AgentsTests(bool isAsync) : base(isAsync)
     {
         // TestDiagnostics = false;
     }
@@ -328,7 +325,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(exception?.Message, Does.Contain("exist"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task StructuredInputsWork()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -378,7 +375,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetOutputText(), Does.Contain("Le Flufferkins"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task SimpleWorkflowAgent()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -412,7 +409,7 @@ public class AgentsTests : AgentsTestBase
         Console.WriteLine(ModelReaderWriter.Write(response).ToString());
     }
 
-    [Test]
+    [RecordedTest]
     public async Task SimpleWorkflowAgentStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();

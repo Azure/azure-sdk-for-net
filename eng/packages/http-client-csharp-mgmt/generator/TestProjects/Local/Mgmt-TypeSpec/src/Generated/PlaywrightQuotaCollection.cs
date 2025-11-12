@@ -256,7 +256,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <summary>
+        /// List Playwright quota resources for a given subscription Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightQuotas_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -268,7 +284,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
         }
 
-        /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <summary>
+        /// List Playwright quota resources for a given subscription Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightQuotas_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightQuotaResource> GetAll(CancellationToken cancellationToken = default)

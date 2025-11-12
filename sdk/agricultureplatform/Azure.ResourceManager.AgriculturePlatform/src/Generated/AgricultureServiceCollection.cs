@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary> List AgriServiceResource resources by resource group. </summary>
+        /// <summary>
+        /// List AgriServiceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgriService_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgricultureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgricultureServiceResource(Client, data));
         }
 
-        /// <summary> List AgriServiceResource resources by resource group. </summary>
+        /// <summary>
+        /// List AgriServiceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AgriService_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgricultureServiceResource> GetAll(CancellationToken cancellationToken = default)

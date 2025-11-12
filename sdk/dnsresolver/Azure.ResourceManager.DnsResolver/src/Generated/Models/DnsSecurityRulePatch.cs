@@ -51,20 +51,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             DnsResolverDomainLists = new ChangeTrackingList<WritableSubResource>();
+            ManagedDomainLists = new ChangeTrackingList<ManagedDomainList>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRulePatch"/>. </summary>
         /// <param name="tags"> Tags for DNS security rule. </param>
         /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
         /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
+        /// <param name="managedDomainLists"> Managed domain lists that the DNS security rule applies to. </param>
         /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
         /// <param name="priority"> The priority of the DNS security rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRulePatch(IDictionary<string, string> tags, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsSecurityRulePatch(IDictionary<string, string> tags, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, IList<ManagedDomainList> managedDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Action = action;
             DnsResolverDomainLists = dnsResolverDomainLists;
+            ManagedDomainLists = managedDomainLists;
             DnsSecurityRuleState = dnsSecurityRuleState;
             Priority = priority;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -88,6 +91,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
         public IList<WritableSubResource> DnsResolverDomainLists { get; }
+        /// <summary> Managed domain lists that the DNS security rule applies to. </summary>
+        public IList<ManagedDomainList> ManagedDomainLists { get; }
         /// <summary> The state of DNS security rule. </summary>
         public DnsSecurityRuleState? DnsSecurityRuleState { get; set; }
         /// <summary> The priority of the DNS security rule. </summary>

@@ -37,7 +37,6 @@
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="OpenAI" />
     <ProjectReference Include="../../Azure.AI.Projects.OpenAI/src/Azure.AI.Projects.OpenAI.csproj" />
   </ItemGroup>
 

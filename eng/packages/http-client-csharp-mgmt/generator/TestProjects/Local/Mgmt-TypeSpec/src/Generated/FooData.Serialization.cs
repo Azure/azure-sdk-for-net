@@ -45,11 +45,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 throw new FormatException($"The model {nameof(FooData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
@@ -153,10 +150,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = FooProperties.DeserializeFooProperties(prop.Value, options);
                     continue;
                 }

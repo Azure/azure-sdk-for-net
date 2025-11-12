@@ -24,6 +24,9 @@
     "packageFolderFromFileSearch": false,
     "buildScript": {
       "command": "dotnet build {packagePath}"
+    },
+    "updateMetadataScript": {
+      "path": "./eng/scripts/Export-API.ps1"
     }
   }
 }

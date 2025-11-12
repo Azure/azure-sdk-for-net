@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Telemetry
             AgentVersionCreationOptions updateOptions = ModelReaderWriter.Read<AgentVersionCreationOptions>(
                 binaryData,
                 ModelSerializationExtensions.WireOptions,
-                AzureAIProjectsOpenAIContext.Default
+                AzureAIProjectsContext.Default
             );
 
             string operationName = OperationNameValueCreateAgent + " " + agentName;

@@ -330,7 +330,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     [TestCase(TestResponseClientInitializationType.DirectWithOptions)]
     public async Task DirectlyInitializedResponsesClientsWork(TestResponseClientInitializationType clientInitializationType)
     {
-        OpenAIResponseClient responseClient = null;
+        ProjectOpenAIResponseClient responseClient = null;
         if (clientInitializationType == TestResponseClientInitializationType.FromProjectsClient)
         {
             AIProjectClient projectClient = GetTestProjectClient();
@@ -338,16 +338,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         }
         else if (clientInitializationType == TestResponseClientInitializationType.DirectWithProjectEndpoint)
         {
-            ProjectOpenAIClientOptions options = TestOpenAIClientOptions;
-            options.ApiVersion = "2025-11-15-preview";
-            responseClient = new ProjectOpenAIResponseClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), TestEnvironment.Credential, options);
+            responseClient = GetTestResponseClient(new Uri(TestEnvironment.PROJECT_ENDPOINT));
         }
         else if (clientInitializationType == TestResponseClientInitializationType.DirectWithOptions)
         {
-            ProjectOpenAIClientOptions options = TestOpenAIClientOptions;
-            options.Endpoint = new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai");
-            options.ApiVersion = "2025-11-15-preview";
-            responseClient = new ProjectOpenAIResponseClient(TestEnvironment.Credential, options);
+            ProjectOpenAIClientOptions options = CreateTestProjectOpenAIClientOptions(
+                endpoint: new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai"),
+                apiVersion: "2025-11-15-preview");
+            responseClient = GetTestResponseClient(constructorEndpoint: null, options);
         }
         else
         {
