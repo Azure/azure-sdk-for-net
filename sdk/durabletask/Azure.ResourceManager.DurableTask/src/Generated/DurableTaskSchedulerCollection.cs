@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
     /// A class representing a collection of <see cref="DurableTaskSchedulerResource"/> and their operations.
-    /// Each <see cref="DurableTaskSchedulerResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DurableTaskSchedulerCollection"/> instance call the GetDurableTaskSchedulers method from an instance of the parent resource.
+    /// Each <see cref="DurableTaskSchedulerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DurableTaskSchedulerCollection"/> instance call the GetDurableTaskSchedulers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DurableTaskSchedulerCollection : ArmCollection, IEnumerable<DurableTaskSchedulerResource>, IAsyncEnumerable<DurableTaskSchedulerResource>
     {

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> and their operations.
-    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of the parent resource.
+    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ArizeAIObservabilityEvalOrganizationCollection : ArmCollection, IEnumerable<ArizeAIObservabilityEvalOrganizationResource>, IAsyncEnumerable<ArizeAIObservabilityEvalOrganizationResource>
     {

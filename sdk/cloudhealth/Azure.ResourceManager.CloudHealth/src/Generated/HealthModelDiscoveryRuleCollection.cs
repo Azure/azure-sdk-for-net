@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelDiscoveryRuleResource"/> and their operations.
-    /// Each <see cref="HealthModelDiscoveryRuleResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthModelDiscoveryRuleCollection"/> instance call the GetHealthModelDiscoveryRules method from an instance of the parent resource.
+    /// Each <see cref="HealthModelDiscoveryRuleResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
+    /// To get a <see cref="HealthModelDiscoveryRuleCollection"/> instance call the GetHealthModelDiscoveryRules method from an instance of <see cref="HealthModelResource"/>.
     /// </summary>
     public partial class HealthModelDiscoveryRuleCollection : ArmCollection, IEnumerable<HealthModelDiscoveryRuleResource>, IAsyncEnumerable<HealthModelDiscoveryRuleResource>
     {

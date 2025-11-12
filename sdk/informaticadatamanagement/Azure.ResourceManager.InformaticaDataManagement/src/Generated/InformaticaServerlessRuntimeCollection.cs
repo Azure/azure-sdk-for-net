@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="InformaticaServerlessRuntimeResource"/> and their operations.
-    /// Each <see cref="InformaticaServerlessRuntimeResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="InformaticaServerlessRuntimeCollection"/> instance call the GetInformaticaServerlessRuntimes method from an instance of the parent resource.
+    /// Each <see cref="InformaticaServerlessRuntimeResource"/> in the collection will belong to the same instance of <see cref="InformaticaOrganizationResource"/>.
+    /// To get a <see cref="InformaticaServerlessRuntimeCollection"/> instance call the GetInformaticaServerlessRuntimes method from an instance of <see cref="InformaticaOrganizationResource"/>.
     /// </summary>
     public partial class InformaticaServerlessRuntimeCollection : ArmCollection, IEnumerable<InformaticaServerlessRuntimeResource>, IAsyncEnumerable<InformaticaServerlessRuntimeResource>
     {
