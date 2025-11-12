@@ -200,7 +200,7 @@ namespace Azure.Data.AppConfiguration
         {
             return HttpPipelineBuilder.Build(options,
                 new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new QueryParamPolicy() },
-                new HttpPipelinePolicy[] { authenticationPolicy, syncTokenPolicy },
+                new HttpPipelinePolicy[] { new AudienceErrorHandlingPolicy(options.Audience != null), authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
 
