@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Maintenance
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateData))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceApplyUpdateResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentData))]
     [ModelReaderWriterBuildable(typeof(MaintenanceConfigurationAssignmentFilter))]
