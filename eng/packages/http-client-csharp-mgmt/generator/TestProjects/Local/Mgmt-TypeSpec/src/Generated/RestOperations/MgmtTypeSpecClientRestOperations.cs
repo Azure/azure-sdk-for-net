@@ -45,7 +45,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(_subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/previewActions", false);
