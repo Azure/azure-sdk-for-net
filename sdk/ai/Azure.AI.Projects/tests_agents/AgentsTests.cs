@@ -352,27 +352,35 @@ public class AgentsTests : AgentsTestBase
                 }
             });
 
+        ResponseItem item = ResponseItem.CreateUserMessageItem("What's my name?");
+
         ResponseCreationOptions responseOptions = new()
         {
             Agent = agent,
         };
 
-        ResponseItem item = ResponseItem.CreateUserMessageItem("What's my name?");
-
         OpenAIResponse response = await responseClient.CreateResponseAsync([item], responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
 
-        responseOptions.AddStructuredInput("user_name", "Mr. Jingles");
+        responseOptions = new()
+        {
+            Agent = agent,
+            StructuredInputs =
+            {
+                ["user_name"] = BinaryData.FromString(@"""Mr. Jingles"""),
+            },
+        };
+
         response = await responseClient.CreateResponseAsync([item], responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Mr. Jingles"));
 
-        responseOptions.SetStructuredInputs(BinaryData.FromString("""
-            {
-              "user_name": "Le Flufferkins"
-            }
-            """));
+        responseOptions.StructuredInputs["user_name"] = BinaryData.FromString(@"""Le Flufferkins""");
         response = await responseClient.CreateResponseAsync([item], responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Le Flufferkins"));
+
+        responseOptions.StructuredInputs.Remove("user_name");
+        response = await responseClient.CreateResponseAsync([item], responseOptions);
+        Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
     }
 
     [RecordedTest]

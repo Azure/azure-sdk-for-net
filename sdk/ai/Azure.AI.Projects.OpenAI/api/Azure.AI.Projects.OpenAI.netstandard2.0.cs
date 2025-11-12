@@ -665,6 +665,31 @@ namespace Azure.AI.Projects.OpenAI
             internal <>E__0() { }
         }
     }
+    public partial class ExtraDataDictionary : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.Generic.IDictionary<string, System.BinaryData>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.IEnumerable
+    {
+        internal ExtraDataDictionary() { }
+        public int Count { get { throw null; } }
+        public bool IsReadOnly { get { throw null; } }
+        public System.BinaryData this[System.ReadOnlySpan<byte> key] { get { throw null; } set { } }
+        public System.BinaryData this[string key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
+        public System.Collections.Generic.ICollection<System.BinaryData> Values { get { throw null; } }
+        public void Add(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { }
+        public void Add(string key, System.BinaryData value) { }
+        public void Add(string key, bool value) { }
+        public void Add(string key, int value) { }
+        public void Add(string key, string value) { }
+        public void Clear() { }
+        public bool Contains(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { throw null; }
+        public bool ContainsKey(string key) { throw null; }
+        public void CopyTo(System.Collections.Generic.KeyValuePair<string, System.BinaryData>[] array, int arrayIndex) { }
+        public bool Remove(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { throw null; }
+        public bool Remove(string key) { throw null; }
+        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, System.BinaryData>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String,System.BinaryData>>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(System.ReadOnlySpan<byte> key, out System.BinaryData value) { throw null; }
+        public bool TryGetValue(string key, out System.BinaryData value) { throw null; }
+    }
     public partial class FabricDataAgentToolOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.FabricDataAgentToolOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.FabricDataAgentToolOptions>
     {
         public FabricDataAgentToolOptions() { }
@@ -1178,11 +1203,10 @@ namespace Azure.AI.Projects.OpenAI
     }
     public static partial class ResponseCreationOptionsExtensions
     {
-        public static void AddStructuredInput(this OpenAI.Responses.ResponseCreationOptions options, string key, string value) { }
         public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
         public static string get_Model(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
-        public static void SetStructuredInputs(this OpenAI.Responses.ResponseCreationOptions options, System.BinaryData structuredInputsBytes) { }
+        public static Azure.AI.Projects.OpenAI.ExtraDataDictionary get_StructuredInputs(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
         public static void set_Agent(OpenAI.Responses.ResponseCreationOptions options, Azure.AI.Projects.OpenAI.AgentReference value) { }
         public static void set_AgentConversationId(OpenAI.Responses.ResponseCreationOptions options, string value) { }
         public static void set_Model(OpenAI.Responses.ResponseCreationOptions options, string value) { }
@@ -1192,6 +1216,7 @@ namespace Azure.AI.Projects.OpenAI
             public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } set { } }
             public string AgentConversationId { get { throw null; } set { } }
             public string Model { get { throw null; } set { } }
+            public Azure.AI.Projects.OpenAI.ExtraDataDictionary StructuredInputs { get { throw null; } }
         }
     }
     public static partial class ResponseItemExtensions

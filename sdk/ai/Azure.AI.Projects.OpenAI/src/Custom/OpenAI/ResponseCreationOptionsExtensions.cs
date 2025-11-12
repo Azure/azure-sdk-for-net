@@ -5,6 +5,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json.Nodes;
@@ -88,29 +90,7 @@ public static partial class ResponseCreationOptionsExtensions
                 }
             }
         }
-    }
 
-    public static void AddStructuredInput(this ResponseCreationOptions options, string key, string value)
-    {
-        JsonObject doc;
-        if (options.Patch.Contains("$.structured_inputs"u8) && options.Patch.TryGetJson("$.structured_inputs"u8, out ReadOnlyMemory<byte> jsonBytes))
-        {
-            using var stream = new MemoryStream();
-            stream.Write(jsonBytes.ToArray(), 0, jsonBytes.Length);
-            string json = Encoding.UTF8.GetString(stream.ToArray());
-            doc = JsonObject.Parse(json).AsObject();
-        }
-        else
-        {
-            doc = new();
-        }
-        doc.Remove(key);
-        doc.Add(key, JsonValue.Create(value));
-        options.Patch.Set("$.structured_inputs"u8, BinaryData.FromString(doc.ToJsonString()));
-    }
-
-    public static void SetStructuredInputs(this ResponseCreationOptions options, BinaryData structuredInputsBytes)
-    {
-        options.Patch.Set("$.structured_inputs"u8, structuredInputsBytes);
+        public ExtraDataDictionary StructuredInputs => new ExtraDataDictionary(options, "$.structured_inputs"u8);
     }
 }
