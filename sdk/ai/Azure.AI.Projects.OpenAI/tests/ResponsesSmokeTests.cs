@@ -3,6 +3,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Linq;
+using System.Text;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -99,38 +100,38 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
             StructuredInputs =
             {
                 ["foo"] = BinaryData.FromString(@"""bar"""),
-                ["baz"] = BinaryData.FromString(@"""quz"""),
+                ["baz.key"] = BinaryData.FromString(@"""quz"""),
             }
         };
         Assert.That(ModelReaderWriter.Write(options).ToString(), Does.Contain("structured_inputs"));
         Assert.That(options.StructuredInputs.ContainsKey("foo"), Is.True);
         Assert.That(options.StructuredInputs.ContainsKey("bar"), Is.False);
-        Assert.That(options.StructuredInputs.ContainsKey("baz"), Is.True);
+        Assert.That(options.StructuredInputs.ContainsKey("baz.key"), Is.True);
         Assert.That(options.StructuredInputs.ContainsKey("quz"), Is.False);
         Assert.That(options.StructuredInputs.Keys, Has.Count.EqualTo(2));
         Assert.That(options.StructuredInputs.Values, Has.Count.EqualTo(2));
         Assert.That(options.StructuredInputs.Keys.First(), Is.EqualTo("foo"));
-        Assert.That(options.StructuredInputs.Keys.Last(), Is.EqualTo("baz"));
+        Assert.That(options.StructuredInputs.Keys.Last(), Is.EqualTo("baz.key"));
         Assert.That(options.StructuredInputs.Values.First().ToString(), Is.EqualTo(@"""bar"""));
         Assert.That(options.StructuredInputs.Values.Last().ToString(), Is.EqualTo(@"""quz"""));
         Assert.That(options.StructuredInputs.TryGetValue("foo", out fooBytes), Is.True);
         Assert.That(fooBytes?.ToString(), Is.EqualTo("bar"));
         Assert.That(options.StructuredInputs.TryGetValue("bar", out BinaryData _), Is.False);
-        Assert.That(options.StructuredInputs.TryGetValue("baz", out BinaryData bazBytes), Is.True);
+        Assert.That(options.StructuredInputs.TryGetValue("baz.key", out BinaryData bazBytes), Is.True);
         Assert.That(bazBytes?.ToString(), Is.EqualTo("quz"));
 
         options.StructuredInputs.Remove("foo");
         Assert.That(options.StructuredInputs.ContainsKey("foo"), Is.False);
         Assert.That(options.StructuredInputs.ContainsKey("bar"), Is.False);
-        Assert.That(options.StructuredInputs.ContainsKey("baz"), Is.True);
+        Assert.That(options.StructuredInputs.ContainsKey("baz.key"), Is.True);
         Assert.That(options.StructuredInputs.ContainsKey("quz"), Is.False);
         Assert.That(options.StructuredInputs.Keys, Has.Count.EqualTo(1));
         Assert.That(options.StructuredInputs.Values, Has.Count.EqualTo(1));
-        Assert.That(options.StructuredInputs.Keys.First(), Is.EqualTo("baz"));
+        Assert.That(options.StructuredInputs.Keys.First(), Is.EqualTo("baz.key"));
         Assert.That(options.StructuredInputs.Values.First().ToString(), Is.EqualTo(@"""quz"""));
         Assert.That(options.StructuredInputs.TryGetValue("foo", out BinaryData _), Is.False);
         Assert.That(options.StructuredInputs.TryGetValue("bar", out BinaryData _), Is.False);
-        Assert.That(options.StructuredInputs.TryGetValue("baz", out bazBytes), Is.True);
+        Assert.That(options.StructuredInputs.TryGetValue("baz.key", out bazBytes), Is.True);
         Assert.That(bazBytes?.ToString(), Is.EqualTo("quz"));
 
         options.StructuredInputs.Add("stringValueKey", "stringValueValue");
@@ -139,7 +140,6 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
         Assert.That(int.TryParse(options.StructuredInputs["intValueKey"].ToString(), out int retrievedIntValue), Is.True);
         Assert.That(retrievedIntValue, Is.EqualTo(42));
         options.StructuredInputs.Add("boolValueKey", true);
-        Console.WriteLine(ModelReaderWriter.Write(options).ToString());
         Assert.That(bool.TryParse(options.StructuredInputs["boolValueKey"].ToString(), out bool retrievedBoolValue), Is.True);
         Assert.That(retrievedBoolValue, Is.True);
     }

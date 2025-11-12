@@ -149,10 +149,17 @@ public partial class ExtraDataDictionary : IDictionary<string, BinaryData>
         {
             return _rootPathBytes.Span;
         }
-        byte[] concatenatedBytes = new byte[_rootPathBytes.Length + subPathSpan.Length + 1];
-        _rootPathBytes.Span.CopyTo(concatenatedBytes);
-        concatenatedBytes[_rootPathBytes.Length] = (byte)'.';
-        subPathSpan.CopyTo(concatenatedBytes.AsSpan(_rootPathBytes.Length + 1, subPathSpan.Length));
-        return new(concatenatedBytes);
+
+        ReadOnlySpan<byte> indexerStartSpan = "['"u8;
+        ReadOnlySpan<byte> indexerEndSpan = "']"u8;
+
+        Span<byte> concatenatedSpan = new byte[_rootPathBytes.Length + indexerStartSpan.Length + subPathSpan.Length + indexerEndSpan.Length].AsSpan();
+
+        _rootPathBytes.Span.CopyTo(concatenatedSpan);
+        indexerStartSpan.CopyTo(concatenatedSpan.Slice(_rootPathBytes.Length));
+        subPathSpan.CopyTo(concatenatedSpan.Slice(_rootPathBytes.Length + indexerStartSpan.Length));
+        indexerEndSpan.CopyTo(concatenatedSpan.Slice(_rootPathBytes.Length + indexerStartSpan.Length + subPathSpan.Length));
+
+        return concatenatedSpan;
     }
 }
