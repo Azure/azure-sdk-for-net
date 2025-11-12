@@ -19,6 +19,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
+[LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
     #region Enumertions
@@ -94,26 +95,35 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         {ToolType.FunctionCall, "emerald"},
     };
     #endregion
-    protected ProjectOpenAIClientOptions TestOpenAIClientOptions
-    {
-        get
-        {
-            ProjectOpenAIClientOptions options = new();
-            options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
 
-            if (Mode != RecordedTestMode.Live && Recording != null)
+    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
+
+    protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
+        => GetConfiguredOptions(
+            new ProjectOpenAIClientOptions()
             {
-                // Set up proxy transport for recording/playback
-                options.Transport = new AgentsProxyTransport(Recording);
+                Endpoint = endpoint,
+                ApiVersion = apiVersion,
+            },
+            instrument);
 
-                // Configure retry policy for faster playback
+    private T GetConfiguredOptions<T>(T options, bool instrument)
+        where T : ClientPipelineOptions
+    {
+        options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
+                    // TODO: ...why!?
+                    message.Request.Headers.Set("Authorization", "Sanitized");
                 }
-            }
-            return options;
-        }
+            }),
+            PipelinePosition.PerCall);
+
+        return instrument ? InstrumentClientOptions(options) : options;
     }
 
     private readonly List<string> _conversationIDs = [];
@@ -127,46 +137,40 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected AIProjectClient GetTestProjectClient()
     {
-        return new(new Uri(TestEnvironment.PROJECT_ENDPOINT), new DefaultAzureCredential());
+        AIProjectClientOptions options = CreateTestProjectClientOptions();
+        AIProjectClient baseClient = new(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), options);
+        return CreateProxyFromClient(baseClient);
     }
 
     protected ProjectOpenAIClient GetTestClient()
     {
-        ProjectOpenAIClientOptions clientOptions = new()
-        {
-            Endpoint = new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai"),
-            ApiVersion = "2025-11-15-preview",
-        };
-        clientOptions.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        ProjectOpenAIClientOptions clientOptions = CreateTestProjectOpenAIClientOptions(endpoint: new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai"), apiVersion: "2025-11-15-preview");
+        return CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
+    }
 
-        if (Mode != RecordedTestMode.Live && Recording != null)
-        {
-            // Set up proxy transport for recording/playback
-            clientOptions.Transport = new AgentsProxyTransport(Recording);
+    protected ProjectOpenAIResponseClient GetTestResponseClient(Uri constructorEndpoint = null, ProjectOpenAIClientOptions options = null)
+    {
+        options ??= CreateTestProjectOpenAIClientOptions(endpoint: null, apiVersion: "2025-11-15-preview");
+        ProjectOpenAIResponseClient baseClient = constructorEndpoint is null
+            ? new ProjectOpenAIResponseClient(GetTestAuthenticationProvider(), options)
+            : new ProjectOpenAIResponseClient(constructorEndpoint, GetTestAuthenticationProvider(), options);
+        return CreateProxyFromClient(baseClient);
+    }
 
-            // Configure retry policy for faster playback
-            if (Mode == RecordedTestMode.Playback)
-            {
-                clientOptions.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-            }
-        }
-        AuthenticationTokenProvider provider = TestEnvironment.Credential;
+    private AuthenticationTokenProvider GetTestAuthenticationProvider()
+    {
         // For local testing if you are using non default account
         // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
         // also provide the PATH variable.
         // This path should allow launching az command.
-        var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
-        if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0 && Mode != RecordedTestMode.Playback)
+        if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
         {
-            provider = new AzureCliCredential();
+            return new AzureCliCredential();
         }
-
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
-        return CreateProxyFromClient(
-            new ProjectOpenAIClient(
-                new BearerTokenPolicy(provider, "https://ai.azure.com/.default"),
-                InstrumentClientOptions(clientOptions)));
+        return TestEnvironment.Credential;
     }
+
+    private AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
 
     protected async Task<OpenAIResponse> WaitForRun(OpenAIResponseClient responses, OpenAIResponse response, int waitTime=500)
     {

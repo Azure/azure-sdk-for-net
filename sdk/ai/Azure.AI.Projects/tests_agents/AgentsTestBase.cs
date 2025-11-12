@@ -15,7 +15,6 @@ using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
@@ -98,27 +97,6 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FunctionCall, "emerald"},
     };
     #endregion
-    protected OpenAIClientOptions TestOpenAIClientOptions
-    {
-        get
-        {
-            OpenAIClientOptions options = new();
-            options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
-
-            if (Mode != RecordedTestMode.Live && Recording != null)
-            {
-                // Set up proxy transport for recording/playback
-                options.Transport = new AgentsProxyTransport(Recording);
-
-                // Configure retry policy for faster playback
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-                }
-            }
-            return options;
-        }
-    }
 
     protected const string AGENT_NAME = "cs_e2e_tests_client";
     protected const string AGENT_NAME2 = "cs_e2e_tests_client2";
@@ -141,40 +119,56 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
-        // TestDiagnostics = false;
     }
 
-    protected AIProjectClient GetTestProjectClient()
-    {
-        AIProjectClientOptions projectClientOptions = new();
-        projectClientOptions.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
 
-        if (Mode != RecordedTestMode.Live && Recording != null)
+    protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
+    => GetConfiguredOptions(
+        new ProjectOpenAIClientOptions()
         {
-            // Set up proxy transport for recording/playback
-            projectClientOptions.Transport = new AgentsProxyTransport(Recording);
+            Endpoint = endpoint,
+            ApiVersion = apiVersion,
+        },
+        instrument);
 
-            // Configure retry policy for faster playback
-            if (Mode == RecordedTestMode.Playback)
+    private T GetConfiguredOptions<T>(T options, bool instrument)
+        where T : ClientPipelineOptions
+    {
+        options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
             {
-                projectClientOptions.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
-            }
-        }
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    // TODO: ...why!?
+                    message.Request.Headers.Set("Authorization", "Sanitized");
+                }
+            }),
+            PipelinePosition.PerCall);
 
-        AuthenticationTokenProvider provider = TestEnvironment.Credential;
+        return instrument ? InstrumentClientOptions(options) : options;
+    }
 
+    private AuthenticationTokenProvider GetTestTokenProvider()
+    {
         // For local testing if you are using non default account
         // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
         // also provide the PATH variable.
         // This path should allow launching az command.
-        var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
-        if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0 && Mode != RecordedTestMode.Playback)
+        if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
         {
-            provider = new AzureCliCredential();
+            return new AzureCliCredential();
         }
+        return TestEnvironment.Credential;
+    }
 
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
-        return CreateProxyFromClient(new AIProjectClient(connectionString, provider, InstrumentClientOptions(projectClientOptions)));
+    protected AIProjectClient GetTestProjectClient()
+    {
+        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions();
+        AuthenticationTokenProvider provider = TestEnvironment.Credential;
+        return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
     }
 
     protected async Task<OpenAIResponse> WaitForRun(OpenAIResponseClient responses, OpenAIResponse response, int waitTime=500)

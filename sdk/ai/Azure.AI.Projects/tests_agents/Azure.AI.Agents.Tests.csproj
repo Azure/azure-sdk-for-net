@@ -28,7 +28,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" />
     <PackageReference Include="System.Linq.Async" />
-		<PackageReference Include="Microsoft.ClientModel.TestFramework" VersionOverride="1.0.0-alpha.20251023.1"/>
+		<PackageReference Include="Microsoft.ClientModel.TestFramework" VersionOverride="1.0.0-alpha.20251110.1" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
 	</ItemGroup>
 
