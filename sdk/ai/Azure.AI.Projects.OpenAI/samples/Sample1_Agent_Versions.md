@@ -1,4 +1,4 @@
-# Sample for basic use of a versioned agent in Azure.AI.Projects.OpenAI.
+# Sample for basic use of a versioned agent in Azure.AI.Agents.
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 

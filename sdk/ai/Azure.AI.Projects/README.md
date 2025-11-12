@@ -364,11 +364,16 @@ The code below shows some Files operations, which allow you to manage files thro
 ```C# Snippet:AI_Projects_FileOperationsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.Agents.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
-OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+OpenAIFileClient fileClient = projectClient.OpenAI.Files;
 
-string fileId = "file-abc123"; // Replace with an actual file ID from your project
+// Upload file
+var dataDirectory = GetDataDirectory();
+var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
+OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
+        testFilePath,
+        FileUploadPurpose.FineTune);
+
+string fileId = uploadedFile.Id;
 
 // Retrieve file metadata
 OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);

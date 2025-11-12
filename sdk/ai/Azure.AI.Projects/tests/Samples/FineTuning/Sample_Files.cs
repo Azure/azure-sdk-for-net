@@ -7,11 +7,10 @@
 using System;
 using System.ClientModel;
 using System.IO;
+using System.IO.Pipes;
 using System.Threading.Tasks;
-using Azure.AI.Agents;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Files;
 
 namespace Azure.AI.Projects.Tests;
@@ -30,12 +29,54 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
 
     [Test]
     [AsyncOnly]
+    public async Task FileCRUDExample()
+    {
+        #region Snippet:AI_Projects_FileOperationsAsync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+#endif
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        OpenAIFileClient fileClient = projectClient.OpenAI.Files;
+
+        // Upload file
+        var dataDirectory = GetDataDirectory();
+        var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
+        OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
+                testFilePath,
+                FileUploadPurpose.FineTune);
+
+        string fileId = uploadedFile.Id;
+
+        // Retrieve file metadata
+        OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
+        Console.WriteLine($"File ID: {retrievedFile.Id}, Filename: {retrievedFile.Filename}");
+
+        // Download file content
+        BinaryData fileContent = await fileClient.DownloadFileAsync(fileId);
+        Console.WriteLine($"Content size: {fileContent.ToMemory().Length} bytes");
+
+        // List all files
+        ClientResult<OpenAIFileCollection> filesResult = await fileClient.GetFilesAsync();
+        foreach (OpenAIFile file in filesResult.Value)
+        {
+            Console.WriteLine($"File: {file.Filename} (ID: {file.Id})");
+        }
+
+        // Delete file
+        ClientResult<FileDeletionResult> deleteResult = await fileClient.DeleteFileAsync(fileId);
+        Console.WriteLine($"File deleted: {deleteResult.Value.Deleted}");
+        #endregion
+    }
+
+    [Test]
+    [AsyncOnly]
     public async Task FileOperationsAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
         var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
-
         var projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         OpenAIFileClient fileClient = projectClient.OpenAI.Files;
 

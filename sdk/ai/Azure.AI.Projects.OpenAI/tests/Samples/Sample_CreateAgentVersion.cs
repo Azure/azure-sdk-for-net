@@ -9,13 +9,12 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using Azure.AI.Projects.OpenAI;
-using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class Sample_CreateAgentVersion : AgentsTestBase
+public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
@@ -122,7 +121,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation.Id);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("myAgent", conversation.Id);
 
         OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
 

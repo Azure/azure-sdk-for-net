@@ -1,6 +1,6 @@
-# Sample of using Azure Container App with Agent in Azure.AI.Projects.OpenAI.
+# Sample of using Azure Container App with Agent in Azure.AI.Agents.
 
-In this example we will demonstrate how to use [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) in Azure.AI.Projects.OpenAI
+In this example we will demonstrate how to use [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) in Azure.AI.Agents
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 

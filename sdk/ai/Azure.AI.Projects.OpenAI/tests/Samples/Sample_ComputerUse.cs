@@ -14,10 +14,10 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 #pragma warning disable OPENAICUA001
-public class Sample_ComputerUse : AgentsTestBase
+public class Sample_ComputerUse : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_ReadImageFile_ComputerUse
     private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth = "")

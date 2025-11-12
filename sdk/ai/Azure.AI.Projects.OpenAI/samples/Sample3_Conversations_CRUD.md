@@ -1,4 +1,4 @@
-# Sample for Create, Read, Update and Delete (CRUD) conversations in Azure.AI.Projects.OpenAI.
+# Sample for Create, Read, Update and Delete (CRUD) conversations in Azure.AI.Agents.
 
 In this example we will demonstrate creation and basic use of an `ConversationResource` objects step by step.
 

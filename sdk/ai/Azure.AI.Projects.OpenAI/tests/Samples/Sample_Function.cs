@@ -13,9 +13,9 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-public class Sample_Function : AgentsTestBase
+public class Sample_Function : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_Functions_Function
     /// Example of a function that defines no parameters

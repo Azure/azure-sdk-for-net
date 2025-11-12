@@ -1,4 +1,4 @@
-# Sample on getting the responses without involving Agent in Azure.AI.Projects.OpenAI.
+# Sample on getting the responses without involving Agent in Azure.AI.Agents.
 
 In this example we will demonstrate how to get a response without an Agent.
 
@@ -16,7 +16,6 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-
 OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
 ```
 

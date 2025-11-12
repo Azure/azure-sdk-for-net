@@ -1,4 +1,4 @@
-# Sample of using `MemorySearchTool` with Agent in Azure.AI.Projects.OpenAI.
+# Sample of using `MemorySearchTool` with Agent in Azure.AI.Agents.
 
 In this example we will demonstrate how to use `MemorySearchTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another agent, capable to read it.
 

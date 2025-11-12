@@ -119,7 +119,15 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     private readonly List<string> _conversationIDs = [];
     private ProjectOpenAIConversationClient _conversations = null;
 
-    public ProjectsOpenAITestBase(bool isAsync) : base(isAsync) { }
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
+    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
 
     public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {

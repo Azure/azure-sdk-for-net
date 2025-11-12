@@ -12,9 +12,9 @@ using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-public class Sample_CodeInterpreter : AgentsTestBase
+public class Sample_CodeInterpreter : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]

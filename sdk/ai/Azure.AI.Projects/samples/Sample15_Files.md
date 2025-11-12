@@ -14,17 +14,14 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 ```C# Snippet:AI_Projects_FileOperationsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
-OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+OpenAIFileClient fileClient = projectClient.OpenAI.Files;
 
-// Upload a file
-using FileStream fileStream = File.OpenRead("path/to/your/file.jsonl");
+// Upload file
+var dataDirectory = GetDataDirectory();
+var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-    fileStream,
-    "training_data.jsonl",
-    FileUploadPurpose.FineTune);
-Console.WriteLine($"File uploaded: {uploadedFile.Id}");
+        testFilePath,
+        FileUploadPurpose.FineTune);
 
 string fileId = uploadedFile.Id;
 
