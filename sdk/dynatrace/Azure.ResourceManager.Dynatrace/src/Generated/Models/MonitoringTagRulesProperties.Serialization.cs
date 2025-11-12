@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceTagRulePatch : IUtf8JsonSerializable, IJsonModel<DynatraceTagRulePatch>
+    public partial class MonitoringTagRulesProperties : IUtf8JsonSerializable, IJsonModel<MonitoringTagRulesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceTagRulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRulesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DynatraceTagRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitoringTagRulesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(LogRules))
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +66,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        DynatraceTagRulePatch IJsonModel<DynatraceTagRulePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitoringTagRulesProperties IJsonModel<MonitoringTagRulesProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDynatraceTagRulePatch(document.RootElement, options);
+            return DeserializeMonitoringTagRulesProperties(document.RootElement, options);
         }
 
-        internal static DynatraceTagRulePatch DeserializeDynatraceTagRulePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitoringTagRulesProperties DeserializeMonitoringTagRulesProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
             DynatraceMonitorResourceLogRules logRules = default;
             DynatraceMonitorResourceMetricRules metricRules = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,44 +111,53 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new DynatraceProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DynatraceTagRulePatch(logRules, metricRules, serializedAdditionalRawData);
+            return new MonitoringTagRulesProperties(logRules, metricRules, provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DynatraceTagRulePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitoringTagRulesProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DynatraceTagRulePatch IPersistableModel<DynatraceTagRulePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitoringTagRulesProperties IPersistableModel<MonitoringTagRulesProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringTagRulesProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDynatraceTagRulePatch(document.RootElement, options);
+                        return DeserializeMonitoringTagRulesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringTagRulesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DynatraceTagRulePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitoringTagRulesProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

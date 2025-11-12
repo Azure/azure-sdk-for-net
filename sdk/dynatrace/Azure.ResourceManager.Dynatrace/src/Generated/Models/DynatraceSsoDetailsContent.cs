@@ -46,8 +46,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/>. </summary>
-        public DynatraceSsoDetailsContent()
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userPrincipal"/> is null. </exception>
+        public DynatraceSsoDetailsContent(string userPrincipal)
         {
+            Argument.AssertNotNull(userPrincipal, nameof(userPrincipal));
+
+            UserPrincipal = userPrincipal;
         }
 
         /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/>. </summary>
@@ -59,7 +64,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/> for deserialization. </summary>
+        internal DynatraceSsoDetailsContent()
+        {
+        }
+
         /// <summary> user principal id of the user. </summary>
-        public string UserPrincipal { get; set; }
+        public string UserPrincipal { get; }
     }
 }

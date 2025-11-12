@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -45,30 +47,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MonitoringStatus))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("monitoringStatus"u8);
-                writer.WriteStringValue(MonitoringStatus.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(DynatraceEnvironmentProperties))
-            {
-                writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
-                writer.WriteObjectValue(DynatraceEnvironmentProperties, options);
-            }
-            if (Optional.IsDefined(UserInfo))
-            {
-                writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
-            }
-            if (Optional.IsDefined(PlanData))
-            {
-                writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ResourceManager.Models.ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,11 +95,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            DynatraceMonitoringStatus? monitoringStatus = default;
-            DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
-            DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default;
-            DynatraceMonitorUserInfo userInfo = default;
-            DynatraceBillingPlanInfo planData = default;
+            MonitorUpdateProperties properties = default;
+            ResourceManager.Models.ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,49 +115,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("monitoringStatus"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitoringStatus = new DynatraceMonitoringStatus(property.Value.GetString());
+                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = new DynatraceMonitorMarketplaceSubscriptionStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dynatraceEnvironmentProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dynatraceEnvironmentProperties = DynatraceEnvironmentProperties.DeserializeDynatraceEnvironmentProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("userInfo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userInfo = DynatraceMonitorUserInfo.DeserializeDynatraceMonitorUserInfo(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("planData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value, options);
+                    identity = ModelReaderWriter.Read<ResourceManager.Models.ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerDynatraceContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,14 +139,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DynatraceMonitorPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                monitoringStatus,
-                marketplaceSubscriptionStatus,
-                dynatraceEnvironmentProperties,
-                userInfo,
-                planData,
-                serializedAdditionalRawData);
+            return new DynatraceMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorPatch>.Write(ModelReaderWriterOptions options)

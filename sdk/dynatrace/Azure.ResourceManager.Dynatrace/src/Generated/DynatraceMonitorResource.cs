@@ -91,6 +91,13 @@ namespace Azure.ResourceManager.Dynatrace
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets an object representing a MonitoredSubscriptionPropertyResource along with the instance operations that can be performed on it in the DynatraceMonitor. </summary>
+        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
+        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionProperty()
+        {
+            return new MonitoredSubscriptionPropertyResource(Client, Id.AppendChildResource("monitoredSubscriptions", "default"));
+        }
+
         /// <summary> Gets a collection of DynatraceTagRuleResources in the DynatraceMonitor. </summary>
         /// <returns> An object representing collection of DynatraceTagRuleResources and their operations over a DynatraceTagRuleResource. </returns>
         public virtual DynatraceTagRuleCollection GetDynatraceTagRules()
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +149,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +218,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,7 +249,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +289,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +329,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +371,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,7 +413,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -448,7 +455,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -478,82 +485,6 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Gets the user account credentials for a Monitor
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getAccountCredentials</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_GetAccountCredentials</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DynatraceMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAccountCredentials");
-            scope.Start();
-            try
-            {
-                var response = await _dynatraceMonitorMonitorsRestClient.GetAccountCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the user account credentials for a Monitor
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getAccountCredentials</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_GetAccountCredentials</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DynatraceMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DynatraceAccountCredentialsInfo> GetAccountCredentials(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAccountCredentials");
-            scope.Start();
-            try
-            {
-                var response = _dynatraceMonitorMonitorsRestClient.GetAccountCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// List the resources currently being monitored by the Dynatrace monitor resource.
         /// <list type="bullet">
         /// <item>
@@ -566,7 +497,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -574,12 +505,13 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The details of the log status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DynatraceMonitoredResourceDetails> GetMonitoredResourcesAsync(LogStatusContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails(e), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
@@ -596,7 +528,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -604,12 +536,13 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> The details of the log status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DynatraceMonitoredResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<DynatraceMonitoredResourceDetails> GetMonitoredResources(LogStatusContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails(e), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
@@ -626,7 +559,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -664,7 +597,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -690,7 +623,91 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// List the compute resources currently being monitored by the Dynatrace resource.
+        /// Performs Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/manageAgentInstallation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ManageAgentInstallation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> List of resources and action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> ManageAgentInstallationAsync(ManageAgentInstallationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.ManageAgentInstallation");
+            scope.Start();
+            try
+            {
+                var response = await _dynatraceMonitorMonitorsRestClient.ManageAgentInstallationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/manageAgentInstallation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ManageAgentInstallation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> List of resources and action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response ManageAgentInstallation(ManageAgentInstallationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.ManageAgentInstallation");
+            scope.Start();
+            try
+            {
+                var response = _dynatraceMonitorMonitorsRestClient.ManageAgentInstallation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the VM/VMSS resources currently being monitored by the Dynatrace resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -702,7 +719,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -720,7 +737,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// List the compute resources currently being monitored by the Dynatrace resource.
+        /// List the VM/VMSS resources currently being monitored by the Dynatrace resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -732,7 +749,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -750,6 +767,84 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
+        /// Get metric status
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getMetricStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_GetMetricStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The details of the metric status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MetricsStatusResponse>> GetMetricStatusAsync(MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMetricStatus");
+            scope.Start();
+            try
+            {
+                var response = await _dynatraceMonitorMonitorsRestClient.GetMetricStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get metric status
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getMetricStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_GetMetricStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The details of the metric status request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MetricsStatusResponse> GetMetricStatus(MetricStatusContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetMetricStatus");
+            scope.Start();
+            try
+            {
+                var response = _dynatraceMonitorMonitorsRestClient.GetMetricStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets list of App Services with Dynatrace PaaS OneAgent enabled
         /// <list type="bullet">
         /// <item>
@@ -762,7 +857,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -792,7 +887,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -810,6 +905,98 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
+        /// Upgrades the billing Plan for Dynatrace monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/upgradePlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_UpgradePlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The details of the upgrade plan request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> UpgradePlanAsync(WaitUntil waitUntil, UpgradePlanContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.UpgradePlan");
+            scope.Start();
+            try
+            {
+                var response = await _dynatraceMonitorMonitorsRestClient.UpgradePlanAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation(_dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateUpgradePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades the billing Plan for Dynatrace monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/upgradePlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_UpgradePlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The details of the upgrade plan request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation UpgradePlan(WaitUntil waitUntil, UpgradePlanContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.UpgradePlan");
+            scope.Start();
+            try
+            {
+                var response = _dynatraceMonitorMonitorsRestClient.UpgradePlan(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new DynatraceArmOperation(_dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateUpgradePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the SSO configuration details from the partner.
         /// <list type="bullet">
         /// <item>
@@ -822,7 +1009,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -861,7 +1048,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -900,7 +1087,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -934,7 +1121,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -968,7 +1155,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1030,7 +1217,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1092,7 +1279,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1149,7 +1336,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1206,7 +1393,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1266,7 +1453,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

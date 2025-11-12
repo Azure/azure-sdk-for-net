@@ -54,7 +54,6 @@ rename-mapping:
   ProvisioningState: DynatraceProvisioningState
   SingleSignOnStates: DynatraceSingleSignOnState
   MonitorResource: DynatraceMonitor
-  AccountInfoSecure: DynatraceAccountCredentialsInfo
   AppServiceInfo: DynatraceOneAgentEnabledAppServiceInfo
   AppServiceInfo.resourceId: -|arm-id
   VMInfo: DynatraceMonitorVmInfo
@@ -94,4 +93,9 @@ rename-mapping:
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
 
+directive:
+  - remove-operation: CreationSupported_List
+  - remove-operation: CreationSupported_Get
+  - remove-operation: Monitors_GetAllConnectedResourcesCount
+  - remove-operation: MonitoredSubscriptions_Update
 ```

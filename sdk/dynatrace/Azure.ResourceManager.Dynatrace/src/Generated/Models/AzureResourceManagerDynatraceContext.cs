@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AppServiceListResponse))]
-    [ModelReaderWriterBuildable(typeof(DynatraceAccountCredentialsInfo))]
+    [ModelReaderWriterBuildable(typeof(ConnectedResourcesCountResponse))]
     [ModelReaderWriterBuildable(typeof(DynatraceAccountInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceBillingPlanInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceEnvironmentInfo))]
@@ -38,20 +39,36 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(DynatraceSsoDetailsContent))]
     [ModelReaderWriterBuildable(typeof(DynatraceSsoDetailsResult))]
     [ModelReaderWriterBuildable(typeof(DynatraceTagRuleData))]
-    [ModelReaderWriterBuildable(typeof(DynatraceTagRulePatch))]
     [ModelReaderWriterBuildable(typeof(DynatraceTagRuleResource))]
     [ModelReaderWriterBuildable(typeof(DynatraceVmExtensionPayload))]
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentContent))]
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentListResponse))]
     [ModelReaderWriterBuildable(typeof(LinkableEnvironmentResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(LogStatusContent))]
+    [ModelReaderWriterBuildable(typeof(ManageAgentInstallationContent))]
+    [ModelReaderWriterBuildable(typeof(ResourceManager.Models.ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(Models.ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSResourceDetailsContent))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSResourceDetailsResponse))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSubscriptionIdContent))]
+    [ModelReaderWriterBuildable(typeof(MetricsStatusResponse))]
+    [ModelReaderWriterBuildable(typeof(MetricStatusContent))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscription))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyData))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyResource))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRulesProperties))]
     [ModelReaderWriterBuildable(typeof(MonitorResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(UpgradePlanContent))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmHostsListResponse))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerDynatraceContext : ModelReaderWriterContext
     {
     }

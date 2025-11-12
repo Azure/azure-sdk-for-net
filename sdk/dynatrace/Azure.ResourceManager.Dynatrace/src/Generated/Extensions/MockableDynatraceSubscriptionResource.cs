@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Dynatrace.Models;
 
 namespace Azure.ResourceManager.Dynatrace.Mocking
 {
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,7 +85,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -97,6 +100,174 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceMonitorResource(Client, DynatraceMonitorData.DeserializeDynatraceMonitorData(e)), DynatraceMonitorMonitorsClientDiagnostics, Pipeline, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the total number of connected resources for the given marketplace subscription Id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getAllConnectedResourcesCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_GetAllConnectedResourcesCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Marketplace Subscription Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ConnectedResourcesCountResponse>> GetAllConnectedResourcesCountMonitorAsync(MarketplaceSubscriptionIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetAllConnectedResourcesCountMonitor");
+            scope.Start();
+            try
+            {
+                var response = await DynatraceMonitorMonitorsRestClient.GetAllConnectedResourcesCountAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the total number of connected resources for the given marketplace subscription Id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getAllConnectedResourcesCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_GetAllConnectedResourcesCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Marketplace Subscription Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ConnectedResourcesCountResponse> GetAllConnectedResourcesCountMonitor(MarketplaceSubscriptionIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetAllConnectedResourcesCountMonitor");
+            scope.Start();
+            try
+            {
+                var response = DynatraceMonitorMonitorsRestClient.GetAllConnectedResourcesCount(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Marketplace SaaS resource details
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getMarketplaceSaaSResourceDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_GetMarketplaceSaaSResourceDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Tenant Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<MarketplaceSaaSResourceDetailsResponse>> GetMarketplaceSaaSResourceDetailsMonitorAsync(MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsMonitor");
+            scope.Start();
+            try
+            {
+                var response = await DynatraceMonitorMonitorsRestClient.GetMarketplaceSaaSResourceDetailsAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get Marketplace SaaS resource details
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/getMarketplaceSaaSResourceDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_GetMarketplaceSaaSResourceDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Tenant Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<MarketplaceSaaSResourceDetailsResponse> GetMarketplaceSaaSResourceDetailsMonitor(MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsMonitor");
+            scope.Start();
+            try
+            {
+                var response = DynatraceMonitorMonitorsRestClient.GetMarketplaceSaaSResourceDetails(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

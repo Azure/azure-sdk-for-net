@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> The updatable properties of the TagRule. </summary>
-    public partial class DynatraceTagRulePatch
+    /// <summary> The billing plan properties for the upgrade plan call. </summary>
+    public partial class UpgradePlanContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
-        public DynatraceTagRulePatch()
+        /// <summary> Initializes a new instance of <see cref="UpgradePlanContent"/>. </summary>
+        public UpgradePlanContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <summary> Initializes a new instance of <see cref="UpgradePlanContent"/>. </summary>
+        /// <param name="planData"> The new Billing plan information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceTagRulePatch(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpgradePlanContent(DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LogRules = logRules;
-            MetricRules = metricRules;
+            PlanData = planData;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
-        public DynatraceMonitorResourceLogRules LogRules { get; set; }
-        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
-        internal DynatraceMonitorResourceMetricRules MetricRules { get; set; }
-        /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
-        public IList<DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags
-        {
-            get
-            {
-                if (MetricRules is null)
-                    MetricRules = new DynatraceMonitorResourceMetricRules();
-                return MetricRules.FilteringTags;
-            }
-        }
+        /// <summary> The new Billing plan information. </summary>
+        public DynatraceBillingPlanInfo PlanData { get; set; }
     }
 }

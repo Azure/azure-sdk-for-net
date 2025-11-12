@@ -47,8 +47,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>
-        public LinkableEnvironmentContent()
+        /// <param name="tenantId"> Tenant Id of the user in which they want to link the environment. </param>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <param name="region"> Azure region in which we want to link the environment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userPrincipal"/> is null. </exception>
+        public LinkableEnvironmentContent(Guid tenantId, string userPrincipal, AzureLocation region)
         {
+            Argument.AssertNotNull(userPrincipal, nameof(userPrincipal));
+
+            TenantId = tenantId;
+            UserPrincipal = userPrincipal;
+            Region = region;
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>
@@ -56,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="userPrincipal"> user principal id of the user. </param>
         /// <param name="region"> Azure region in which we want to link the environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkableEnvironmentContent(Guid? tenantId, string userPrincipal, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkableEnvironmentContent(Guid tenantId, string userPrincipal, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             UserPrincipal = userPrincipal;
@@ -64,11 +73,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/> for deserialization. </summary>
+        internal LinkableEnvironmentContent()
+        {
+        }
+
         /// <summary> Tenant Id of the user in which they want to link the environment. </summary>
-        public Guid? TenantId { get; set; }
+        public Guid TenantId { get; }
         /// <summary> user principal id of the user. </summary>
-        public string UserPrincipal { get; set; }
+        public string UserPrincipal { get; }
         /// <summary> Azure region in which we want to link the environment. </summary>
-        public AzureLocation? Region { get; set; }
+        public AzureLocation Region { get; }
     }
 }

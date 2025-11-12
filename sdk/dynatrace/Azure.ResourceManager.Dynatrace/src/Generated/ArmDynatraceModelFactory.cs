@@ -16,16 +16,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDynatraceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DynatraceAccountCredentialsInfo"/>. </summary>
-        /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
-        /// <param name="apiKey"> API Key of the user account. </param>
-        /// <param name="regionId"> Region in which the account is created. </param>
-        /// <returns> A new <see cref="Models.DynatraceAccountCredentialsInfo"/> instance for mocking. </returns>
-        public static DynatraceAccountCredentialsInfo DynatraceAccountCredentialsInfo(string accountId = null, string apiKey = null, string regionId = null)
-        {
-            return new DynatraceAccountCredentialsInfo(accountId, apiKey, regionId, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceMonitoredResourceDetails"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetricsStatus"> Flag indicating if resource is sending metrics to Dynatrace. </param>
@@ -42,6 +32,46 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 sendingLogsStatus,
                 reasonForLogsStatus,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Dynatrace.MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </param>
+        /// <returns> A new <see cref="Dynatrace.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
+        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionList properties = null)
+        {
+            return new MonitoredSubscriptionPropertyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionList"/>. </summary>
+        /// <param name="operation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <returns> A new <see cref="Models.SubscriptionList"/> instance for mocking. </returns>
+        public static SubscriptionList SubscriptionList(SubscriptionListOperation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, DynatraceProvisioningState? provisioningState = null)
+        {
+            monitoredSubscriptionList ??= new List<MonitoredSubscription>();
+
+            return new SubscriptionList(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
+        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(DynatraceMonitorResourceLogRules logRules = null, DynatraceMonitorResourceMetricRules metricRules = null, DynatraceProvisioningState? provisioningState = null)
+        {
+            return new MonitoringTagRulesProperties(logRules, metricRules, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceVmExtensionPayload"/>. </summary>
@@ -63,6 +93,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="monitoringStatus"> Status of the monitor. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="marketplaceSaasAutoRenew"> Marketplace resource autorenew flag. </param>
         /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
         /// <param name="userInfo"> User info. </param>
         /// <param name="planData"> Billing plan information. </param>
@@ -70,7 +101,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceMonitorData"/> instance for mocking. </returns>
-        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
+        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceManager.Models.ManagedServiceIdentity identity = null, DynatraceMonitoringStatus? monitoringStatus = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = null, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = null, DynatraceMonitorUserInfo userInfo = null, DynatraceBillingPlanInfo planData = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, DynatraceProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -84,6 +115,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 identity,
                 monitoringStatus,
                 marketplaceSubscriptionStatus,
+                marketplaceSaasAutoRenew,
                 dynatraceEnvironmentProperties,
                 userInfo,
                 planData,
@@ -119,22 +151,39 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRulesFilteringTags"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceTagRuleData"/> instance for mocking. </returns>
-        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitorResourceLogRules logRules = null, IEnumerable<DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags = null, DynatraceProvisioningState? provisioningState = null)
+        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitorResourceLogRules logRules = null, DynatraceMonitorResourceMetricRules metricRules = null, DynatraceProvisioningState? provisioningState = null)
         {
-            metricRulesFilteringTags ??= new List<DynatraceMonitorResourceFilteringTag>();
-
             return new DynatraceTagRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 logRules,
-                metricRulesFilteringTags != null ? new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList(), serializedAdditionalRawData: null) : null,
+                metricRules,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourcesCountResponse"/>. </summary>
+        /// <param name="connectedResourcesCount"> Count of the connected resources. </param>
+        /// <returns> A new <see cref="Models.ConnectedResourcesCountResponse"/> instance for mocking. </returns>
+        public static ConnectedResourcesCountResponse ConnectedResourcesCountResponse(long? connectedResourcesCount = null)
+        {
+            return new ConnectedResourcesCountResponse(connectedResourcesCount, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSResourceDetailsResponse"/>. </summary>
+        /// <param name="marketplaceSaaSResourceId"> Id of the Marketplace SaaS Resource. </param>
+        /// <param name="planId"> Id of the plan. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="marketplaceSaaSResourceName"> Name of the Marketplace SaaS Resource. </param>
+        /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsResponse"/> instance for mocking. </returns>
+        public static MarketplaceSaaSResourceDetailsResponse MarketplaceSaaSResourceDetailsResponse(string marketplaceSaaSResourceId = null, string planId = null, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSaaSResourceName = null)
+        {
+            return new MarketplaceSaaSResourceDetailsResponse(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceSingleSignOnData"/>. </summary>
@@ -189,6 +238,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 hostGroup,
                 hostName,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsStatusResponse"/>. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <returns> A new <see cref="Models.MetricsStatusResponse"/> instance for mocking. </returns>
+        public static MetricsStatusResponse MetricsStatusResponse(IEnumerable<string> azureResourceIds = null)
+        {
+            azureResourceIds ??= new List<string>();
+
+            return new MetricsStatusResponse(azureResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DynatraceOneAgentEnabledAppServiceInfo"/>. </summary>

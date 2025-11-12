@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Dynatrace.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Update a TagRule
+        /// Create a TagRule
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -262,11 +261,11 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_Update</description>
+        /// <description>TagRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,19 +273,23 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DynatraceTagRuleResource>> UpdateAsync(DynatraceTagRulePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DynatraceTagRuleResource>> UpdateAsync(WaitUntil waitUntil, DynatraceTagRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _dynatraceTagRuleTagRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value), response.GetRawResponse());
+                var response = await _dynatraceTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -296,7 +299,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Update a TagRule
+        /// Create a TagRule
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -304,11 +307,11 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TagRules_Update</description>
+        /// <description>TagRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,19 +319,23 @@ namespace Azure.ResourceManager.Dynatrace
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DynatraceTagRuleResource> Update(DynatraceTagRulePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DynatraceTagRuleResource> Update(WaitUntil waitUntil, DynatraceTagRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _dynatraceTagRuleTagRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value), response.GetRawResponse());
+                var response = _dynatraceTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
