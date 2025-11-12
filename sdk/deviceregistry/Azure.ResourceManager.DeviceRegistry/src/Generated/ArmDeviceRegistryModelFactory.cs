@@ -395,6 +395,93 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryErrorDetails(code, message, info, correlationId, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="credentialProvisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="DeviceRegistry.CredentialData"/> instance for mocking. </returns>
+        public static CredentialData CredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryProvisioningState? credentialProvisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CredentialData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                credentialProvisioningState is null ? default : new CredentialProperties(credentialProvisioningState, null));
+        }
+
+        /// <summary> The type used for update operations of the Credential. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CredentialPatch"/> instance for mocking. </returns>
+        public static CredentialPatch CredentialPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CredentialPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Credential Policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.PolicyData"/> instance for mocking. </returns>
+        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PolicyProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> Details of the Credential Policy. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="certificate"> The certificate configuration. </param>
+        /// <returns> A new <see cref="Models.PolicyProperties"/> instance for mocking. </returns>
+        public static PolicyProperties PolicyProperties(DeviceRegistryProvisioningState? provisioningState = default, CertificateConfiguration certificate = default)
+        {
+            return new PolicyProperties(provisioningState, certificate, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The configuration to set up an ICA. </summary>
+        /// <param name="keyType"> Crypto type: ECC. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. Generated based on on validity period. </param>
+        /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. Generated based on validity period. </param>
+        /// <returns> A new <see cref="Models.CertificateAuthorityConfiguration"/> instance for mocking. </returns>
+        public static CertificateAuthorityConfiguration CertificateAuthorityConfiguration(SupportedKeyType keyType = default, string subject = default, DateTimeOffset? validityNotBefore = default, DateTimeOffset? validityNotAfter = default)
+        {
+            return new CertificateAuthorityConfiguration(keyType, subject, validityNotBefore, validityNotAfter, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="policyUpdateCertificate"> The certificate configuration. </param>
+        /// <returns> A new <see cref="Models.PolicyPatch"/> instance for mocking. </returns>
+        public static PolicyPatch PolicyPatch(IDictionary<string, string> tags = default, CertificateConfiguration policyUpdateCertificate = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PolicyPatch(tags, policyUpdateCertificate is null ? default : new PolicyUpdateProperties(policyUpdateCertificate, null), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Asset definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -829,7 +916,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 extendedLocation);
         }
 
-        /// <summary> Defines the device properties. </summary>
         /// <param name="uuid"> A unique identifier for the device. </param>
         /// <param name="enabled"> Indicates if the resource is enabled or not. </param>
         /// <param name="externalDeviceId"> The Device ID provided by the customer. </param>
@@ -844,8 +930,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
         /// <param name="lastTransitionOn"> A timestamp (in UTC) that is updated each time the resource is modified. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="resourceId"> Resource Id of the Policy. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDeviceProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = default, bool? enabled = default, string externalDeviceId = default, string discoveredDeviceRef = default, string manufacturer = default, string model = default, string operatingSystem = default, string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, DeviceStatus status = default, long? version = default, DateTimeOffset? lastTransitionOn = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = default, bool? enabled = default, string externalDeviceId = default, string discoveredDeviceRef = default, string manufacturer = default, string model = default, string operatingSystem = default, string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, DeviceStatus status = default, long? version = default, DateTimeOffset? lastTransitionOn = default, DeviceRegistryProvisioningState? provisioningState = default, ResourceIdentifier resourceId = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -864,6 +951,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 version,
                 lastTransitionOn,
                 provisioningState,
+                resourceId is null ? default : new DeviceCredentialPolicy(resourceId, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -917,17 +1005,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceDevicePatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The updatable properties of the NamespaceDevice. </summary>
         /// <param name="operatingSystemVersion"> Device operating system version. </param>
         /// <param name="endpoints"> Property bag containing the device's unassigned and assigned endpoints. </param>
         /// <param name="attributes"> A set of key-value pairs that contain custom attributes set by the customer. </param>
+        /// <param name="resourceId"> Resource Id of the Policy. </param>
         /// <param name="enabled"> Indicates if the resource and identity are enabled or not. A disabled device cannot authenticate with Microsoft Entra ID. </param>
         /// <returns> A new <see cref="Models.NamespaceDeviceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceDeviceUpdateProperties NamespaceDeviceUpdateProperties(string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, bool? enabled = default)
+        public static NamespaceDeviceUpdateProperties NamespaceDeviceUpdateProperties(string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, ResourceIdentifier resourceId = default, bool? enabled = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new NamespaceDeviceUpdateProperties(operatingSystemVersion, endpoints, attributes, enabled, additionalBinaryDataProperties: null);
+            return new NamespaceDeviceUpdateProperties(
+                operatingSystemVersion,
+                endpoints,
+                attributes,
+                resourceId is null ? default : new DeviceCredentialPolicy(resourceId, null),
+                enabled,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Discovered asset definition. </summary>
