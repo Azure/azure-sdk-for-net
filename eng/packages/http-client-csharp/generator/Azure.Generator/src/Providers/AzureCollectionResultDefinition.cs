@@ -153,7 +153,12 @@ namespace Azure.Generator.Providers
                     New.Instance(new CSharpType(typeof(List<>), typeof(BinaryData))), out itemsVariable),
                 new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<object>>(), out var itemVariable)
                 {
-                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write), new ValueExpression[] { itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions") })).Terminate()
+                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
+                        [
+                            itemVariable,
+                            Static<ModelSerializationExtensionsDefinition>().Property(ModelSerializationExtensionsDefinition.WireOptionsFieldName),
+                            Static<ModelReaderWriterContextDefinition>().Property("Default")
+                        ])).Terminate()
                 }
             ];
         }
