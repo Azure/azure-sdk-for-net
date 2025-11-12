@@ -4,6 +4,11 @@
 
 ### Features Added
 
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorExporterOptions`
+  to enable filtering logs based on trace sampling decisions, reducing log
+  volume while maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
 ### Breaking Changes
 
 ### Bugs Fixed

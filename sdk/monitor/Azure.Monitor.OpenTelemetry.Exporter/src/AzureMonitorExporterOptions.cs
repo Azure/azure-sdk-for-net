@@ -107,8 +107,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool EnableLiveMetrics { get; set; } = true;
 
         /// <summary>
-        /// Enables or disables the trace-based logs sampler.
+        /// Enables or disables filtering logs based on trace sampling decisions.
         /// </summary>
+        /// <remarks>
+        /// When enabled, only logs associated with sampled traces are exported.
+        /// Logs without trace context are always exported.
+        /// This reduces log volume while maintaining trace-log correlation.
+        /// </remarks>
         public bool EnableTraceBasedLogsSampler { get; set; } = true;
 
         /// <summary>
