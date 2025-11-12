@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelEntityResource"/> and their operations.
-    /// Each <see cref="HealthModelEntityResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthModelEntityCollection"/> instance call the GetHealthModelEntities method from an instance of the parent resource.
+    /// Each <see cref="HealthModelEntityResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
+    /// To get a <see cref="HealthModelEntityCollection"/> instance call the GetHealthModelEntities method from an instance of <see cref="HealthModelResource"/>.
     /// </summary>
     public partial class HealthModelEntityCollection : ArmCollection, IEnumerable<HealthModelEntityResource>, IAsyncEnumerable<HealthModelEntityResource>
     {
