@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A snapshot of assets captured daily for the provided metric.  Asset details only contain primary properties.  Detailed asset data can be retrieved from the asset endpoints. </summary>
     public partial class ReportAssetSnapshotResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotResult"/>. </summary>
         internal ReportAssetSnapshotResult()
@@ -57,8 +28,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="updatedAt"> The last time this asset data was updated on this metric. </param>
         /// <param name="description"> A description of what the metric represents. </param>
         /// <param name="assets"> The page of assets that match the provided metric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSnapshotResult(string displayName, string metric, string labelName, DateTimeOffset? updatedAt, string description, AssetPageResult assets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReportAssetSnapshotResult(string displayName, string metric, string labelName, DateTimeOffset? updatedAt, string description, AssetPageResult assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metric = metric;
@@ -66,19 +37,24 @@ namespace Azure.Analytics.Defender.Easm
             UpdatedAt = updatedAt;
             Description = description;
             Assets = assets;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the metric. </summary>
         public string DisplayName { get; }
+
         /// <summary> The unique metric name. </summary>
         public string Metric { get; }
+
         /// <summary> The customer label that was filtered on, if one was provided. </summary>
         public string LabelName { get; }
+
         /// <summary> The last time this asset data was updated on this metric. </summary>
         public DateTimeOffset? UpdatedAt { get; }
+
         /// <summary> A description of what the metric represents. </summary>
         public string Description { get; }
+
         /// <summary> The page of assets that match the provided metric. </summary>
         public AssetPageResult Assets { get; }
     }

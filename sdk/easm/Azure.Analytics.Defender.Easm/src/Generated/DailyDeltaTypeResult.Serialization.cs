@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DailyDeltaTypeResult : IUtf8JsonSerializable, IJsonModel<DailyDeltaTypeResult>
+    /// <summary> Delta response for each day. </summary>
+    public partial class DailyDeltaTypeResult : DeltaTypeResult, IJsonModel<DailyDeltaTypeResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DailyDeltaTypeResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DailyDeltaTypeResult"/> for deserialization. </summary>
+        internal DailyDeltaTypeResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DailyDeltaTypeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,90 +33,95 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DailyDeltaTypeResult)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
         }
 
-        DailyDeltaTypeResult IJsonModel<DailyDeltaTypeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DailyDeltaTypeResult IJsonModel<DailyDeltaTypeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DailyDeltaTypeResult)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DeltaTypeResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DailyDeltaTypeResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDailyDeltaTypeResult(document.RootElement, options);
         }
 
-        internal static DailyDeltaTypeResult DeserializeDailyDeltaTypeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DailyDeltaTypeResult DeserializeDailyDeltaTypeResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long count = default;
             GlobalAssetType kind = default;
             long removed = default;
             long added = default;
             long difference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long count = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    count = property.Value.GetInt64();
+                    kind = new GlobalAssetType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("removed"u8))
                 {
-                    kind = new GlobalAssetType(property.Value.GetString());
+                    removed = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("removed"u8))
+                if (prop.NameEquals("added"u8))
                 {
-                    removed = property.Value.GetInt64();
+                    added = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("added"u8))
+                if (prop.NameEquals("difference"u8))
                 {
-                    added = property.Value.GetInt64();
+                    difference = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("difference"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    difference = property.Value.GetInt64();
+                    count = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DailyDeltaTypeResult(
                 kind,
                 removed,
                 added,
                 difference,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 count);
         }
 
-        BinaryData IPersistableModel<DailyDeltaTypeResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DailyDeltaTypeResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -121,15 +131,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DailyDeltaTypeResult IPersistableModel<DailyDeltaTypeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DailyDeltaTypeResult IPersistableModel<DailyDeltaTypeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (DailyDeltaTypeResult)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DeltaTypeResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DailyDeltaTypeResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDailyDeltaTypeResult(document.RootElement, options);
                     }
                 default:
@@ -137,22 +152,7 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DailyDeltaTypeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new DailyDeltaTypeResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDailyDeltaTypeResult(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -14,14 +14,6 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct AuditTrailItemKind : IEquatable<AuditTrailItemKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AuditTrailItemKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AuditTrailItemKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AsValue = "as";
         private const string ContactValue = "contact";
         private const string DomainValue = "domain";
@@ -31,39 +23,70 @@ namespace Azure.Analytics.Defender.Easm
         private const string PageValue = "page";
         private const string SslCertValue = "sslCert";
 
-        /// <summary> as. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuditTrailItemKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AuditTrailItemKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the As. </summary>
         public static AuditTrailItemKind As { get; } = new AuditTrailItemKind(AsValue);
-        /// <summary> contact. </summary>
+
+        /// <summary> Gets the Contact. </summary>
         public static AuditTrailItemKind Contact { get; } = new AuditTrailItemKind(ContactValue);
-        /// <summary> domain. </summary>
+
+        /// <summary> Gets the Domain. </summary>
         public static AuditTrailItemKind Domain { get; } = new AuditTrailItemKind(DomainValue);
-        /// <summary> host. </summary>
+
+        /// <summary> Gets the Host. </summary>
         public static AuditTrailItemKind Host { get; } = new AuditTrailItemKind(HostValue);
-        /// <summary> ipAddress. </summary>
+
+        /// <summary> Gets the IpAddress. </summary>
         public static AuditTrailItemKind IpAddress { get; } = new AuditTrailItemKind(IpAddressValue);
-        /// <summary> ipBlock. </summary>
+
+        /// <summary> Gets the IpBlock. </summary>
         public static AuditTrailItemKind IpBlock { get; } = new AuditTrailItemKind(IpBlockValue);
-        /// <summary> page. </summary>
+
+        /// <summary> Gets the Page. </summary>
         public static AuditTrailItemKind Page { get; } = new AuditTrailItemKind(PageValue);
-        /// <summary> sslCert. </summary>
+
+        /// <summary> Gets the SslCert. </summary>
         public static AuditTrailItemKind SslCert { get; } = new AuditTrailItemKind(SslCertValue);
+
         /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuditTrailItemKind left, AuditTrailItemKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuditTrailItemKind left, AuditTrailItemKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuditTrailItemKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuditTrailItemKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuditTrailItemKind(string value) => new AuditTrailItemKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuditTrailItemKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuditTrailItemKind?(string value) => value == null ? null : new AuditTrailItemKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuditTrailItemKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuditTrailItemKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

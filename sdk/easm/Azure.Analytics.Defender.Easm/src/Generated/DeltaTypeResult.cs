@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The type of Delta response for each asset kind. </summary>
     public partial class DeltaTypeResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeltaTypeResult"/>. </summary>
         /// <param name="kind"> The kind of asset. </param>
@@ -63,27 +34,25 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
         /// <param name="difference"> The amount of assets changed for one asset kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Removed = removed;
             Added = added;
             Difference = difference;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeltaTypeResult"/> for deserialization. </summary>
-        internal DeltaTypeResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of asset. </summary>
         public GlobalAssetType Kind { get; }
+
         /// <summary> The amount of assets removed for one asset kind. </summary>
         public long Removed { get; }
+
         /// <summary> The amount of assets added for one asset kind. </summary>
         public long Added { get; }
+
         /// <summary> The amount of assets changed for one asset kind. </summary>
         public long Difference { get; }
     }

@@ -29,16 +29,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="removed"> The amount of assets removed for one asset kind. </param>
         /// <param name="added"> The amount of assets added for one asset kind. </param>
         /// <param name="difference"> The amount of assets changed for one asset kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The current number of assets for one asset kind. </param>
-        internal DailyDeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, BinaryData> serializedAdditionalRawData, long count) : base(kind, removed, added, difference, serializedAdditionalRawData)
+        internal DailyDeltaTypeResult(GlobalAssetType kind, long removed, long added, long difference, IDictionary<string, BinaryData> additionalBinaryDataProperties, long count) : base(kind, removed, added, difference, additionalBinaryDataProperties)
         {
             Count = count;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DailyDeltaTypeResult"/> for deserialization. </summary>
-        internal DailyDeltaTypeResult()
-        {
         }
 
         /// <summary> The current number of assets for one asset kind. </summary>

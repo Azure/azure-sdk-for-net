@@ -14,44 +14,67 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct ObservationPriority : IEquatable<ObservationPriority>
     {
         private readonly string _value;
+        /// <summary> high. </summary>
+        private const string HighValue = "high";
+        /// <summary> medium. </summary>
+        private const string MediumValue = "medium";
+        /// <summary> low. </summary>
+        private const string LowValue = "low";
+        /// <summary> none. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="ObservationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ObservationPriority(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HighValue = "high";
-        private const string MediumValue = "medium";
-        private const string LowValue = "low";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> high. </summary>
         public static ObservationPriority High { get; } = new ObservationPriority(HighValue);
+
         /// <summary> medium. </summary>
         public static ObservationPriority Medium { get; } = new ObservationPriority(MediumValue);
+
         /// <summary> low. </summary>
         public static ObservationPriority Low { get; } = new ObservationPriority(LowValue);
+
         /// <summary> none. </summary>
         public static ObservationPriority None { get; } = new ObservationPriority(NoneValue);
+
         /// <summary> Determines if two <see cref="ObservationPriority"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ObservationPriority left, ObservationPriority right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ObservationPriority"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ObservationPriority left, ObservationPriority right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ObservationPriority"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ObservationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ObservationPriority(string value) => new ObservationPriority(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ObservationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ObservationPriority?(string value) => value == null ? null : new ObservationPriority(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ObservationPriority other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ObservationPriority other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

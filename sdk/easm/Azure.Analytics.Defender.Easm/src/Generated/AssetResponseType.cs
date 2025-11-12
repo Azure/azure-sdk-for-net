@@ -14,44 +14,67 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct AssetResponseType : IEquatable<AssetResponseType>
     {
         private readonly string _value;
+        /// <summary> Return only the asset id. </summary>
+        private const string IdValue = "id";
+        /// <summary> Return the standard set of asset fields. </summary>
+        private const string StandardValue = "standard";
+        /// <summary> Return the full set of asset fields. </summary>
+        private const string FullValue = "full";
+        /// <summary> Return a reduced set of fields. </summary>
+        private const string ReducedValue = "reduced";
 
         /// <summary> Initializes a new instance of <see cref="AssetResponseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AssetResponseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IdValue = "id";
-        private const string StandardValue = "standard";
-        private const string FullValue = "full";
-        private const string ReducedValue = "reduced";
+            _value = value;
+        }
 
         /// <summary> Return only the asset id. </summary>
         public static AssetResponseType Id { get; } = new AssetResponseType(IdValue);
+
         /// <summary> Return the standard set of asset fields. </summary>
         public static AssetResponseType Standard { get; } = new AssetResponseType(StandardValue);
+
         /// <summary> Return the full set of asset fields. </summary>
         public static AssetResponseType Full { get; } = new AssetResponseType(FullValue);
+
         /// <summary> Return a reduced set of fields. </summary>
         public static AssetResponseType Reduced { get; } = new AssetResponseType(ReducedValue);
+
         /// <summary> Determines if two <see cref="AssetResponseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AssetResponseType left, AssetResponseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AssetResponseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AssetResponseType left, AssetResponseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AssetResponseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AssetResponseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AssetResponseType(string value) => new AssetResponseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AssetResponseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AssetResponseType?(string value) => value == null ? null : new AssetResponseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssetResponseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AssetResponseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

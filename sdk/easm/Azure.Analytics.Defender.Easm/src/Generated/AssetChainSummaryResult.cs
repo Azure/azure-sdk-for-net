@@ -14,47 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> Response for the asset chain summary. </summary>
     public partial class AssetChainSummaryResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AssetChainSummaryResult"/>. </summary>
         /// <param name="affectedAssetsSummary"> A list of asset chain summaries per asset kind. </param>
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="affectedAssetsSummary"/> or <paramref name="affectedGroupsSummary"/> is null. </exception>
         internal AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary)
         {
-            Argument.AssertNotNull(affectedAssetsSummary, nameof(affectedAssetsSummary));
-            Argument.AssertNotNull(affectedGroupsSummary, nameof(affectedGroupsSummary));
-
             AffectedAssetsSummary = affectedAssetsSummary.ToList();
             AffectedGroupsSummary = affectedGroupsSummary.ToList();
             Errors = new ChangeTrackingList<ErrorResponse>();
@@ -64,25 +31,22 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedAssetsSummary"> A list of asset chain summaries per asset kind. </param>
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetChainSummaryResult(IReadOnlyList<AssetChainKindSummaryResult> affectedAssetsSummary, IReadOnlyList<DiscoveryGroupSummaryResult> affectedGroupsSummary, IReadOnlyList<ErrorResponse> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AssetChainSummaryResult(IList<AssetChainKindSummaryResult> affectedAssetsSummary, IList<DiscoveryGroupSummaryResult> affectedGroupsSummary, IList<ErrorResponse> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AffectedAssetsSummary = affectedAssetsSummary;
             AffectedGroupsSummary = affectedGroupsSummary;
             Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AssetChainSummaryResult"/> for deserialization. </summary>
-        internal AssetChainSummaryResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of asset chain summaries per asset kind. </summary>
-        public IReadOnlyList<AssetChainKindSummaryResult> AffectedAssetsSummary { get; }
+        public IList<AssetChainKindSummaryResult> AffectedAssetsSummary { get; }
+
         /// <summary> A list of disco group summaries. </summary>
-        public IReadOnlyList<DiscoveryGroupSummaryResult> AffectedGroupsSummary { get; }
+        public IList<DiscoveryGroupSummaryResult> AffectedGroupsSummary { get; }
+
         /// <summary> The list of exceptions. </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
+        public IList<ErrorResponse> Errors { get; }
     }
 }

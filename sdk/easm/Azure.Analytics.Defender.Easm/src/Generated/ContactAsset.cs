@@ -22,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="ContactAsset"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="email"></param>
         /// <param name="names"></param>
         /// <param name="organizations"></param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
-        internal ContactAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, string email, IReadOnlyList<ObservedString> names, IReadOnlyList<ObservedString> organizations, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count) : base(serializedAdditionalRawData)
+        internal ContactAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string email, IList<ObservedString> names, IList<ObservedString> organizations, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count) : base(additionalBinaryDataProperties)
         {
             Email = email;
             Names = names;
@@ -41,19 +41,25 @@ namespace Azure.Analytics.Defender.Easm
             Count = count;
         }
 
-        /// <summary> Gets the email. </summary>
+        /// <summary> Gets the Email. </summary>
         public string Email { get; }
-        /// <summary> Gets the names. </summary>
-        public IReadOnlyList<ObservedString> Names { get; }
-        /// <summary> Gets the organizations. </summary>
-        public IReadOnlyList<ObservedString> Organizations { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the Names. </summary>
+        public IList<ObservedString> Names { get; }
+
+        /// <summary> Gets the Organizations. </summary>
+        public IList<ObservedString> Organizations { get; }
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
     }
 }
