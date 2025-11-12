@@ -446,7 +446,7 @@
 # ServiceOwners:                                                   @a-t-mason @ganzee @manuaery
 
 # PRLabel: %Datadog
-/sdk/datadog/Azure.ResourceManager.*/                              @jbhanuchand
+/sdk/datadog/Azure.ResourceManager.*/                              @jbhanuchand @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %Datadog %Mgmt
 # ServiceOwners:                                                   @jbhanuchand
