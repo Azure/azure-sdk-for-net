@@ -37,7 +37,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20251022.3"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20251108.1"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.30",
@@ -52,7 +52,7 @@
     "@types/prettier": "^2.6.3",
     "@typespec/compiler": "1.5.0",
     "@typespec/http": "1.5.0",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20251022.4",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20251107.3",
     "@typespec/http-specs": "0.1.0-alpha.27",
     "@typespec/openapi": "1.5.0",
     "@typespec/rest": "0.75.0",
