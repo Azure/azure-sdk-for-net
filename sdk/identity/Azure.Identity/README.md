@@ -137,7 +137,7 @@ If you're currently using `ManagedIdentityCredential` for workload identity in A
 
 ```csharp
 // Before (no identity binding support):
-// var credential = new ManagedIdentityCredential();
+// var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
 
 // After (with identity binding support):
 var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
