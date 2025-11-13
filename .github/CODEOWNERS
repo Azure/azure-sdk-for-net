@@ -1045,7 +1045,7 @@
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
-# PRLabel: %Network - EdgeActions
+# PRLabel: %Network - Edge Actions
 /sdk/edgeactions/Azure.ResourceManager.*/                          @tundwed @anamikanupur
 
 # ServiceLabel: %Network - Edge Actions %Mgmt
