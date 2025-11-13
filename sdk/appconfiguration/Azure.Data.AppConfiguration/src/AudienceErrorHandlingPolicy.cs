@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Pipeline policy that inspects the exception for the Entra ID token audience error code (AADSTS500011) and rethrows a new exception with clearer guidance.
+    /// Pipeline policy that provides more helpful errors when Entra ID audience misconfiguration is detected.
     /// </summary>
     internal class AudienceErrorHandlingPolicy : HttpPipelinePolicy
     {
@@ -31,7 +31,12 @@ namespace Azure.Data.AppConfiguration
             }
             catch (Exception ex)
             {
-                HandleAuthenticationAudienceError(ex);
+                if (ex.Message.Contains(AadAudienceErrorCode))
+                {
+                    string errorMessage = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
+                    throw new RequestFailedException(errorMessage, ex);
+                }
+
                 throw;
             }
         }
@@ -44,22 +49,14 @@ namespace Azure.Data.AppConfiguration
             }
             catch (Exception ex)
             {
-                HandleAuthenticationAudienceError(ex);
+                if (ex.Message.Contains(AadAudienceErrorCode))
+                {
+                    string errorMessage = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
+                    throw new RequestFailedException(errorMessage, ex);
+                }
+
                 throw;
             }
-        }
-
-        private void HandleAuthenticationAudienceError(Exception ex)
-        {
-            // Only AuthenticationFailedException should be thrown for the audience error, but we don't want to introduce the dependecy on Azure.Idendity.
-            // So we catch all exceptions here and inspect whether the AAD error codes are embedded in the exception message.
-            if (!ex.Message.Contains(AadAudienceErrorCode))
-            {
-                return;
-            }
-
-            string message = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
-            throw new RequestFailedException(message, ex);
         }
     }
 }
