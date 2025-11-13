@@ -369,7 +369,6 @@
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
-    <PackageReference Update="Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker" Version="2.0.1" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.38.2" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.41.3" />
     <PackageReference Update="Microsoft.Azure.EventHubs" Version="4.3.2" />
