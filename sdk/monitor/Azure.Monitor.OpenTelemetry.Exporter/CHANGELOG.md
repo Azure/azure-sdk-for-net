@@ -13,7 +13,7 @@
   ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
 
 * Update OpenTelemetry dependencies
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
   - OpenTelemetry 1.14.0
 
 ### Breaking Changes
