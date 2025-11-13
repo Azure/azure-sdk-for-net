@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A class representing a collection of <see cref="LocalRulestackResource"/> and their operations.
-    /// Each <see cref="LocalRulestackResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="LocalRulestackCollection"/> instance call the GetLocalRulestacks method from an instance of the parent resource.
+    /// Each <see cref="LocalRulestackResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LocalRulestackCollection"/> instance call the GetLocalRulestacks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class LocalRulestackCollection : ArmCollection, IEnumerable<LocalRulestackResource>, IAsyncEnumerable<LocalRulestackResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List LocalRulestackResource resources by resource group. </summary>
+        /// <summary>
+        /// List LocalRulestackResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupAsyncCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new LocalRulestackResource(Client, data));
         }
 
-        /// <summary> List LocalRulestackResource resources by resource group. </summary>
+        /// <summary>
+        /// List LocalRulestackResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackResource> GetAll(CancellationToken cancellationToken = default)

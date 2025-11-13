@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A class representing a collection of <see cref="LocalRulestackRuleResource"/> and their operations.
-    /// Each <see cref="LocalRulestackRuleResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="LocalRulestackRuleCollection"/> instance call the GetLocalRulestackRules method from an instance of the parent resource.
+    /// Each <see cref="LocalRulestackRuleResource"/> in the collection will belong to the same instance of <see cref="LocalRulestackResource"/>.
+    /// To get a <see cref="LocalRulestackRuleCollection"/> instance call the GetLocalRulestackRules method from an instance of <see cref="LocalRulestackResource"/>.
     /// </summary>
     public partial class LocalRulestackRuleCollection : ArmCollection, IEnumerable<LocalRulestackRuleResource>, IAsyncEnumerable<LocalRulestackRuleResource>
     {
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List LocalRulesResource resources by LocalRulestacks. </summary>
+        /// <summary>
+        /// List LocalRulesResource resources by LocalRulestacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_ListByLocalRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<LocalRulestackRuleData, LocalRulestackRuleResource>(new LocalRulesGetByLocalRulestacksAsyncCollectionResultOfT(_localRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackRuleResource(Client, data));
         }
 
-        /// <summary> List LocalRulesResource resources by LocalRulestacks. </summary>
+        /// <summary>
+        /// List LocalRulesResource resources by LocalRulestacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulesResources_ListByLocalRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackRuleResource> GetAll(CancellationToken cancellationToken = default)

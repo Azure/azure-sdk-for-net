@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A class representing a collection of <see cref="PaloAltoNetworksFirewallResource"/> and their operations.
-    /// Each <see cref="PaloAltoNetworksFirewallResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PaloAltoNetworksFirewallCollection"/> instance call the GetPaloAltoNetworksFirewalls method from an instance of the parent resource.
+    /// Each <see cref="PaloAltoNetworksFirewallResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PaloAltoNetworksFirewallCollection"/> instance call the GetPaloAltoNetworksFirewalls method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PaloAltoNetworksFirewallCollection : ArmCollection, IEnumerable<PaloAltoNetworksFirewallResource>, IAsyncEnumerable<PaloAltoNetworksFirewallResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List FirewallResource resources by resource group. </summary>
+        /// <summary>
+        /// List FirewallResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PaloAltoNetworksFirewallResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetByResourceGroupAsyncCollectionResultOfT(_firewallsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
-        /// <summary> List FirewallResource resources by resource group. </summary>
+        /// <summary>
+        /// List FirewallResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PaloAltoNetworksFirewallResource> GetAll(CancellationToken cancellationToken = default)

@@ -785,7 +785,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List of AppIds for LocalRulestack ApiVersion. </summary>
+        /// <summary>
+        /// List of AppIds for LocalRulestack ApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listAppIds. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListAppIds. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="appIdVersion"></param>
         /// <param name="appPrefix"></param>
         /// <param name="skip"></param>
@@ -810,7 +830,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 context);
         }
 
-        /// <summary> List of AppIds for LocalRulestack ApiVersion. </summary>
+        /// <summary>
+        /// List of AppIds for LocalRulestack ApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listAppIds. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListAppIds. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="appIdVersion"></param>
         /// <param name="appPrefix"></param>
         /// <param name="skip"></param>
@@ -835,7 +875,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 context);
         }
 
-        /// <summary> List of countries for Rulestack. </summary>
+        /// <summary>
+        /// List of countries for Rulestack
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listCountries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListCountries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skip"></param>
         /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -856,7 +916,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 context);
         }
 
-        /// <summary> List of countries for Rulestack. </summary>
+        /// <summary>
+        /// List of countries for Rulestack
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listCountries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListCountries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skip"></param>
         /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -877,7 +957,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 context);
         }
 
-        /// <summary> List predefined URL categories for rulestack. </summary>
+        /// <summary>
+        /// List predefined URL categories for rulestack
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listPredefinedUrlCategories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListPredefinedUrlCategories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skip"></param>
         /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -898,7 +998,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 context);
         }
 
-        /// <summary> List predefined URL categories for rulestack. </summary>
+        /// <summary>
+        /// List predefined URL categories for rulestack
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/listPredefinedUrlCategories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListPredefinedUrlCategories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LocalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="skip"></param>
         /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

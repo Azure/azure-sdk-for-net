@@ -52,7 +52,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 
         private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
 
-        /// <summary> List FirewallResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List FirewallResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/firewalls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(CancellationToken cancellationToken = default)
@@ -64,7 +80,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return new AsyncPageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetBySubscriptionAsyncCollectionResultOfT(FirewallsRestClient, Id.SubscriptionId, context), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
-        /// <summary> List FirewallResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List FirewallResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/firewalls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(CancellationToken cancellationToken = default)
@@ -76,7 +108,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return new PageableWrapper<PaloAltoNetworksFirewallData, PaloAltoNetworksFirewallResource>(new FirewallsGetBySubscriptionCollectionResultOfT(FirewallsRestClient, Id.SubscriptionId, context), data => new PaloAltoNetworksFirewallResource(Client, data));
         }
 
-        /// <summary> List LocalRulestackResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List LocalRulestackResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(CancellationToken cancellationToken = default)
@@ -88,7 +136,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
             return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetBySubscriptionAsyncCollectionResultOfT(LocalRulestacksRestClient, Id.SubscriptionId, context), data => new LocalRulestackResource(Client, data));
         }
 
-        /// <summary> List LocalRulestackResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List LocalRulestackResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocalRulestackResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackResource> GetLocalRulestacks(CancellationToken cancellationToken = default)

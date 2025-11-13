@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A class representing a collection of <see cref="GlobalRulestackPrefixResource"/> and their operations.
-    /// Each <see cref="GlobalRulestackPrefixResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GlobalRulestackPrefixCollection"/> instance call the GetGlobalRulestackPrefixes method from an instance of the parent resource.
+    /// Each <see cref="GlobalRulestackPrefixResource"/> in the collection will belong to the same instance of <see cref="GlobalRulestackResource"/>.
+    /// To get a <see cref="GlobalRulestackPrefixCollection"/> instance call the GetGlobalRulestackPrefixes method from an instance of <see cref="GlobalRulestackResource"/>.
     /// </summary>
     public partial class GlobalRulestackPrefixCollection : ArmCollection, IEnumerable<GlobalRulestackPrefixResource>, IAsyncEnumerable<GlobalRulestackPrefixResource>
     {
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List PrefixListGlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List PrefixListGlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrefixListGlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<GlobalRulestackPrefixData, GlobalRulestackPrefixResource>(new PrefixListGlobalRulestackGetAllAsyncCollectionResultOfT(_prefixListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackPrefixResource(Client, data));
         }
 
-        /// <summary> List PrefixListGlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List PrefixListGlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrefixListGlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackPrefixResource> GetAll(CancellationToken cancellationToken = default)

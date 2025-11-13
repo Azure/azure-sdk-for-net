@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A class representing a collection of <see cref="GlobalRulestackResource"/> and their operations.
-    /// Each <see cref="GlobalRulestackResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GlobalRulestackCollection"/> instance call the GetGlobalRulestacks method from an instance of the parent resource.
+    /// Each <see cref="GlobalRulestackResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="GlobalRulestackCollection"/> instance call the GetGlobalRulestacks method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class GlobalRulestackCollection : ArmCollection, IEnumerable<GlobalRulestackResource>, IAsyncEnumerable<GlobalRulestackResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        /// <summary> List GlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List GlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new AsyncPageableWrapper<GlobalRulestackData, GlobalRulestackResource>(new GlobalRulestackGetAllAsyncCollectionResultOfT(_globalRulestackRestClient, context), data => new GlobalRulestackResource(Client, data));
         }
 
-        /// <summary> List GlobalRulestackResource resources by Tenant. </summary>
+        /// <summary>
+        /// List GlobalRulestackResource resources by Tenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GlobalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackResource> GetAll(CancellationToken cancellationToken = default)
