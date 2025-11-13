@@ -8,8 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/ai/ci.projects.yml
-    - sdk/ai/Azure.AI.Projects
+    - sdk/ai/ci.projects.openai.yml
     - sdk/ai/Azure.AI.Projects.OpenAI
 
 pr:
@@ -21,8 +20,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/ai/ci.projects.yml
-    - sdk/ai/Azure.AI.Projects
+    - sdk/ai/ci.projects.openai.yml
     - sdk/ai/Azure.AI.Projects.OpenAI
 
 extends:
@@ -31,5 +29,5 @@ extends:
     ServiceDirectory: ai
     ArtifactName: packages
     Artifacts:
-    - name: Azure.AI.Projects
-      safeName: AzureAIProjects
+    - name: Azure.AI.Projects.OpenAI
+      safeName: AzureAIProjectsOpenAI

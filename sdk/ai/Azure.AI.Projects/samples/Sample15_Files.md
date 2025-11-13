@@ -13,8 +13,8 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 
 ```C# Snippet:AI_Projects_FileOperationsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-OpenAIFileClient fileClient = projectClient.OpenAI.Files;
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIFileClient fileClient = projectClient.OpenAI.Files;
 
 // Upload file
 var dataDirectory = GetDataDirectory();

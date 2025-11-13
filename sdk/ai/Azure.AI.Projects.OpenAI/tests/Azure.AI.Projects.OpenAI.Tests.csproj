@@ -17,7 +17,6 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.AI.Projects.OpenAI.csproj" />
     <ProjectReference Include="..\..\Azure.AI.Projects\src\Azure.AI.Projects.csproj" />
   </ItemGroup>
   <ItemGroup>
