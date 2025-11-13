@@ -11,19 +11,16 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableMaintenanceSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _maintenanceApplyUpdateApplyUpdatesClientDiagnostics;
+        private ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
         private ClientDiagnostics _maintenanceConfigurationClientDiagnostics;
         private MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
-        private ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
-        private ConfigurationAssignmentsWithinSubscriptionRestOperations _configurationAssignmentsWithinSubscriptionRestClient;
-        private ClientDiagnostics _configurationAssignmentsForSubscriptionsClientDiagnostics;
-        private ConfigurationAssignmentsForSubscriptionsRestOperations _configurationAssignmentsForSubscriptionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableMaintenanceSubscriptionResource"/> class for mocking. </summary>
         protected MockableMaintenanceSubscriptionResource()
@@ -37,12 +34,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
         }
 
+        private ClientDiagnostics MaintenanceApplyUpdateApplyUpdatesClientDiagnostics => _maintenanceApplyUpdateApplyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
+        private ApplyUpdatesRestOperations MaintenanceApplyUpdateApplyUpdatesRestClient => _maintenanceApplyUpdateApplyUpdatesRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceApplyUpdateResource.ResourceType));
         private ClientDiagnostics MaintenanceConfigurationClientDiagnostics => _maintenanceConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
         private MaintenanceConfigurationsRestOperations MaintenanceConfigurationRestClient => _maintenanceConfigurationRestClient ??= new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceConfigurationResource.ResourceType));
-        private ClientDiagnostics ConfigurationAssignmentsWithinSubscriptionClientDiagnostics => _configurationAssignmentsWithinSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ConfigurationAssignmentsWithinSubscriptionRestOperations ConfigurationAssignmentsWithinSubscriptionRestClient => _configurationAssignmentsWithinSubscriptionRestClient ??= new ConfigurationAssignmentsWithinSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ConfigurationAssignmentsForSubscriptionsClientDiagnostics => _configurationAssignmentsForSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ConfigurationAssignmentsForSubscriptionsRestOperations ConfigurationAssignmentsForSubscriptionsRestClient => _configurationAssignmentsForSubscriptionsRestClient ??= new ConfigurationAssignmentsForSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -70,7 +65,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -101,7 +96,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -124,6 +119,64 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// <item>
@@ -132,7 +185,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,7 +214,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,376 +228,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), MaintenanceConfigurationClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// [UNSUPPORTED] Get configuration assignment within a subscription. This API is not implemented yet.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// [UNSUPPORTED] Get configuration assignment within a subscription. This API is not implemented yet.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get configuration assignment for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForSubscriptionsRestClient.GetAsync(Id.SubscriptionId, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get configuration assignment for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentBySubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForSubscriptionsRestClient.Get(Id.SubscriptionId, configurationAssignmentName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.CreateOrUpdateConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, configurationAssignmentName, data, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.UpdateConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForSubscriptionsRestClient.UpdateAsync(Id.SubscriptionId, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.UpdateConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForSubscriptionsRestClient.Update(Id.SubscriptionId, configurationAssignmentName, data, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unregister configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.DeleteConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unregister configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MockableMaintenanceSubscriptionResource.DeleteConfigurationAssignmentBySubscription");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForSubscriptionsRestClient.Delete(Id.SubscriptionId, configurationAssignmentName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

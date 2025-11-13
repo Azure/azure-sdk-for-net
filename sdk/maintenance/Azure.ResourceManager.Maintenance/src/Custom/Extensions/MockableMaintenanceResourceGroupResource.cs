@@ -6,9 +6,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -16,12 +14,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     [CodeGenSuppress("ConfigurationAssignmentsRestClient")]
     public partial class MockableMaintenanceResourceGroupResource : ArmResource
     {
-        private ApplyUpdateForResourceGroupRestOperations _applyUpdateForResourceGroupRestClient;
-        private ClientDiagnostics _applyUpdateForResourceGroupClientDiagnostics;
-
         private ConfigurationAssignmentsRestOperations ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull("Microsoft.Maintenance/configurationAssignments"));
-        private ApplyUpdateForResourceGroupRestOperations ApplyUpdateForResourceGroupRestClient => _applyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         /// <summary>
         /// Track maintenance updates to resource with parent
@@ -241,60 +234,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options = new ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
 
             return DeleteConfigurationAssignmentByParent(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription and resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/applyUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdateForResourceGroup_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MaintenanceApplyUpdateApplyUpdatesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), MaintenanceApplyUpdateApplyUpdatesClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
     }
 }

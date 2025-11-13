@@ -1,10 +1,12 @@
 # Release History
 
-## 1.2.0 (2025-11-12)
+## 1.1.3 (2025-11-13)
 
-### Features Added
+This is a patch release for 1.1.2.
 
-- Upgraded api-version tag from 'package-preview-2023-10' to 'package-2023-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b40ebb26621eef12eb91a11a08793f507cdd367f/specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/readme.md.
+### Bugs Fixed
+
+- fix string format serialization of DateTimeOffset.
 
 ## 1.2.0-beta.9 (2025-03-11)
 

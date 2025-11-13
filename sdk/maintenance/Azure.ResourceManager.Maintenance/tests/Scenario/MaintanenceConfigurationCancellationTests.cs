@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             await _resourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
-        // commented out for GA release - to be enabled later for preview
+        // TODO: This test is commented out for patch release.
         //[RecordedTest]
         //public async Task MaintenanceConfigurationCancelTest()
         //{

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
-require: https://github.com/Azure/azure-rest-api-specs/blob/b40ebb26621eef12eb91a11a08793f507cdd367f/specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/readme.md
-tag: package-2023-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/maintenance/resource-manager/readme.md
+tag: package-2021-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
