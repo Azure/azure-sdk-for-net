@@ -87,6 +87,22 @@ namespace Azure.Identity.Tests
             return (response, capturedRequest);
         }
 
+        private async Task<(KubernetesProxyHttpHandler Handler, HttpMessageHandler InitialInnerHandler)> CreateHandlerAndMakeRequests(
+            KubernetesProxyConfig config,
+            int requestCount = 2)
+        {
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
+            var initialInnerHandler = handler.InnerHandler;
+
+            for (int i = 0; i < requestCount; i++)
+            {
+                await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            }
+
+            return (handler, initialInnerHandler);
+        }
+
         [Test]
         public void Constructor_ThrowsOnNullConfig()
         {
@@ -188,25 +204,28 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task SendAsync_DoesNotReloadWhenNoCaFileOrEmptyFile()
+        public async Task SendAsync_DoesNotReloadWhenNoCaFile()
         {
-            var requestCount = 0;
-            var mockTransport = CreateMockTransport(requestValidator: _ => requestCount++);
+            var mockTransport = CreateMockTransport();
+            var config = CreateTestConfig(transport: mockTransport);
 
-            // Test 1: No CA file
-            var httpClient1 = CreateTestHttpClient(CreateTestConfig(transport: mockTransport));
-            await httpClient1.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient1.GetAsync("https://login.microsoftonline.com/token");
-            Assert.AreEqual(2, requestCount, "Should not reload when no CA file");
+            var (handler, initialInnerHandler) = await CreateHandlerAndMakeRequests(config);
 
-            // Test 2: Empty CA file
-            requestCount = 0;
+            Assert.AreSame(initialInnerHandler, handler.InnerHandler, "Handler should NOT be reloaded when no CA file is configured");
+        }
+
+        [Test]
+        public async Task SendAsync_DoesNotReloadWhenCaFileIsEmpty()
+        {
             var caFilePath = _tempFiles.GetTempFilePath();
             File.WriteAllText(caFilePath, "");
-            var httpClient2 = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
-            await httpClient2.GetAsync("https://login.microsoftonline.com/token");
-            await httpClient2.GetAsync("https://login.microsoftonline.com/token");
-            Assert.AreEqual(2, requestCount, "Should not reload when CA file is empty");
+
+            var mockTransport = CreateMockTransport();
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+
+            var (handler, initialInnerHandler) = await CreateHandlerAndMakeRequests(config);
+
+            Assert.AreSame(initialInnerHandler, handler.InnerHandler, "Handler should NOT be reloaded when CA file is empty");
         }
 
         [Test]
