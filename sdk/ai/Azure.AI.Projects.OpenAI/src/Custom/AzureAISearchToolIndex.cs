@@ -8,6 +8,6 @@
 namespace Azure.AI.Projects.OpenAI;
 
 [CodeGenType("AISearchIndexResource")]
-public partial class AzureAISearchIndex
+public partial class AzureAISearchToolIndex
 {
 }

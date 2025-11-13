@@ -8,17 +8,17 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> A AI Search Index resource. </summary>
-    public partial class AzureAISearchIndex
+    public partial class AzureAISearchToolIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
-        public AzureAISearchIndex()
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolIndex"/>. </summary>
+        public AzureAISearchToolIndex()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolIndex"/>. </summary>
         /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
         /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchIndex(string projectConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureAISearchToolIndex(string projectConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             IndexName = indexName;

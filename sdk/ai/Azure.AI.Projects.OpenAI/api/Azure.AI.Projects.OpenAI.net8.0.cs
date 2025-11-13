@@ -327,25 +327,6 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchAgentTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchAgentTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureAISearchIndex : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>
-    {
-        public AzureAISearchIndex() { }
-        public string Filter { get { throw null; } set { } }
-        public string IndexAssetId { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
-        public string ProjectConnectionId { get { throw null; } set { } }
-        public Azure.AI.Projects.OpenAI.AzureAISearchQueryType? QueryType { get { throw null; } set { } }
-        public int? TopK { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.OpenAI.AzureAISearchIndex JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.OpenAI.AzureAISearchIndex PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.OpenAI.AzureAISearchIndex System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAI.AzureAISearchIndex System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureAISearchQueryType : System.IEquatable<Azure.AI.Projects.OpenAI.AzureAISearchQueryType>
     {
@@ -368,10 +349,29 @@ namespace Azure.AI.Projects.OpenAI
         public static bool operator !=(Azure.AI.Projects.OpenAI.AzureAISearchQueryType left, Azure.AI.Projects.OpenAI.AzureAISearchQueryType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureAISearchToolIndex : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>
+    {
+        public AzureAISearchToolIndex() { }
+        public string Filter { get { throw null; } set { } }
+        public string IndexAssetId { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public string ProjectConnectionId { get { throw null; } set { } }
+        public Azure.AI.Projects.OpenAI.AzureAISearchQueryType? QueryType { get { throw null; } set { } }
+        public int? TopK { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.OpenAI.AzureAISearchToolIndex JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.OpenAI.AzureAISearchToolIndex PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.OpenAI.AzureAISearchToolIndex System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.OpenAI.AzureAISearchToolIndex System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AzureAISearchToolOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.AzureAISearchToolOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.AzureAISearchToolOptions>
     {
-        public AzureAISearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.AzureAISearchIndex> indexes) { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.OpenAI.AzureAISearchIndex> Indexes { get { throw null; } }
+        public AzureAISearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex> indexes) { }
+        public System.Collections.Generic.IList<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex> Indexes { get { throw null; } }
         protected virtual Azure.AI.Projects.OpenAI.AzureAISearchToolOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.OpenAI.AzureAISearchToolOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1213,8 +1213,8 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.AgentVersion AgentVersion(System.Collections.Generic.IDictionary<string, string> metadata = null, string id = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.Projects.OpenAI.AgentDefinition definition = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.AgentWorkflowActionResponseItem AgentWorkflowActionResponseItem(string id = null, Azure.AI.Projects.OpenAI.AgentResponseItemSource createdBy = null, string kind = null, string actionId = null, string parentActionId = null, string previousActionId = null, Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus? status = default(Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus?)) { throw null; }
         public static Azure.AI.Projects.OpenAI.AzureAISearchAgentTool AzureAISearchAgentTool(Azure.AI.Projects.OpenAI.AzureAISearchToolOptions options = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.AzureAISearchIndex AzureAISearchIndex(string projectConnectionId = null, string indexName = null, Azure.AI.Projects.OpenAI.AzureAISearchQueryType? queryType = default(Azure.AI.Projects.OpenAI.AzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
-        public static Azure.AI.Projects.OpenAI.AzureAISearchToolOptions AzureAISearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.AzureAISearchIndex> indexes = null) { throw null; }
+        public static Azure.AI.Projects.OpenAI.AzureAISearchToolIndex AzureAISearchToolIndex(string projectConnectionId = null, string indexName = null, Azure.AI.Projects.OpenAI.AzureAISearchQueryType? queryType = default(Azure.AI.Projects.OpenAI.AzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
+        public static Azure.AI.Projects.OpenAI.AzureAISearchToolOptions AzureAISearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.OpenAI.AzureAISearchToolIndex> indexes = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.AzureFunctionAgentTool AzureFunctionAgentTool(Azure.AI.Projects.OpenAI.AzureFunctionDefinition azureFunction = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.AzureFunctionBinding AzureFunctionBinding(Azure.AI.Projects.OpenAI.AzureFunctionStorageQueue storageQueue = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.AzureFunctionDefinition AzureFunctionDefinition(Azure.AI.Projects.OpenAI.AzureFunctionDefinitionFunction function = null, Azure.AI.Projects.OpenAI.AzureFunctionBinding inputBinding = null, Azure.AI.Projects.OpenAI.AzureFunctionBinding outputBinding = null) { throw null; }

@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.OpenAI
     [ModelReaderWriterBuildable(typeof(AgentVersion))]
     [ModelReaderWriterBuildable(typeof(AgentWorkflowActionResponseItem))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchAgentTool))]
-    [ModelReaderWriterBuildable(typeof(AzureAISearchIndex))]
+    [ModelReaderWriterBuildable(typeof(AzureAISearchToolIndex))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolOptions))]
     [ModelReaderWriterBuildable(typeof(AzureFunctionAgentTool))]
     [ModelReaderWriterBuildable(typeof(AzureFunctionBinding))]

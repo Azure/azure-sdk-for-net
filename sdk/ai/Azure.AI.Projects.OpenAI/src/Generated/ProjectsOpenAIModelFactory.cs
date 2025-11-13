@@ -190,9 +190,9 @@ namespace Azure.AI.Projects.OpenAI
         /// resource attached to the agent.
         /// </param>
         /// <returns> A new <see cref="OpenAI.AzureAISearchToolOptions"/> instance for mocking. </returns>
-        public static AzureAISearchToolOptions AzureAISearchToolOptions(IEnumerable<AzureAISearchIndex> indexes = default)
+        public static AzureAISearchToolOptions AzureAISearchToolOptions(IEnumerable<AzureAISearchToolIndex> indexes = default)
         {
-            indexes ??= new ChangeTrackingList<AzureAISearchIndex>();
+            indexes ??= new ChangeTrackingList<AzureAISearchToolIndex>();
 
             return new AzureAISearchToolOptions(indexes.ToList(), additionalBinaryDataProperties: null);
         }
@@ -204,10 +204,10 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchIndex"/> instance for mocking. </returns>
-        public static AzureAISearchIndex AzureAISearchIndex(string projectConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolIndex"/> instance for mocking. </returns>
+        public static AzureAISearchToolIndex AzureAISearchToolIndex(string projectConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
         {
-            return new AzureAISearchIndex(
+            return new AzureAISearchToolIndex(
                 projectConnectionId,
                 indexName,
                 queryType,

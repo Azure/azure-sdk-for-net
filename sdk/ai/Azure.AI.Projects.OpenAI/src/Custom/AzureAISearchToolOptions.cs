@@ -17,5 +17,5 @@ public partial class AzureAISearchToolOptions
     /// resource attached to the agent.
     /// </summary>
     [CodeGenMember("IndexList")]
-    public IList<AzureAISearchIndex> Indexes { get; }
+    public IList<AzureAISearchToolIndex> Indexes { get; }
 }
