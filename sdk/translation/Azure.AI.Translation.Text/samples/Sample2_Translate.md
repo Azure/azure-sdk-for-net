@@ -289,7 +289,7 @@ catch (RequestFailedException exception)
 
 ## Translation using LLM
 
-You can get translations from Large Language Model (LLM) models in addition to default neural Machine Translation (NMT). [Azure resources for Azure AI translation](https://learn.microsoft.com/en-us/azure/ai-services/translator/how-to/create-translator-resource?tabs=foundry)
+You can get translations from Large Language Model (LLM) models in addition to default neural Machine Translation (NMT). [Azure resources for Azure AI translation](https://learn.microsoft.com/azure/ai-services/translator/how-to/create-translator-resource?tabs=foundry)
 
 ```C# Snippet:GetTextTranslationLlm
 try

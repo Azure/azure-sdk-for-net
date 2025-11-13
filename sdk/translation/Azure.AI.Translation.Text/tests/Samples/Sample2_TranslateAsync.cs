@@ -338,11 +338,11 @@ namespace Azure.AI.Translation.Text.Samples
         }
 
         [Test]
-        public async Task GetTextTranslationFallback()
+        public async Task GetTextTranslationFallbackAsync()
         {
             TextTranslationClient client = CreateClient();
 
-            #region Snippet:GetTextTranslationFallback
+            #region Snippet:GetTextTranslationFallbackAsync
             try
             {
                 string category = "<<Category ID>>";
