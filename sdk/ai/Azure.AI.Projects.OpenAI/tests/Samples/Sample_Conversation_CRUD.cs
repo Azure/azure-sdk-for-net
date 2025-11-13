@@ -8,10 +8,10 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class Sample_conversation_CRUD : AgentsTestBase
+public class Sample_conversation_CRUD : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]

@@ -1,14 +1,14 @@
 # Sample of using `MemorySearchTool` with Agent in Azure.AI.Projects.OpenAI.
 
-In this example we will demonstrate how to use `MemorySearchTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another agent, capable to read it.
+In this example we will demonstrate how to use `MemorySearchTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another Agent, capable to read it.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_MemoryTool
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
 ```
 
 2. Use the client to create the versioned agent object.
@@ -19,7 +19,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -30,7 +30,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -39,11 +39,10 @@ AgentVersion agentVersion = await client.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Sync
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
 OpenAIResponse response = responseClient.CreateResponse(
@@ -53,11 +52,10 @@ OpenAIResponse response = responseClient.CreateResponse(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Async
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
 OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -106,50 +104,51 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:CreateMemoryStore_MemoryTool_Sync
-MemoryStoreClient memoryClient = client.GetMemoryStoreClient();
 MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-MemoryStore memoryStore = memoryClient.CreateMemoryStore(
+MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
     name: "jokeMemory",
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
 );
-memoryClient.UpdateMemories(memoryStore.Id, scope, updateItems);
+MemoryUpdateOptions updateOptions = new(scope);
+foreach (ResponseItem updateItem in updateItems)
+{
+    updateOptions.Items.Add(updateItem);
+}
+projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: updateOptions);
 ```
 
 Asynchronous sample:
 ```C# Snippet:CreateMemoryStore_MemoryTool_Async
-MemoryStoreClient memoryClient = client.GetMemoryStoreClient();
 MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-MemoryStore memoryStore = await memoryClient.CreateMemoryStoreAsync(
+MemoryStore memoryStore = await projectClient.MemoryStores.CreateMemoryStoreAsync(
     name: "jokeMemory",
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
 );
-memoryClient.UpdateMemories(memoryStore.Id, scope, updateItems);
+projectClient.MemoryStores.UpdateMemories(memoryStore.Name, new MemoryUpdateOptions(scope));
 ```
 
 7. Check that the memory store contain the relevant memories.
 
 Synchronous sample:
 ```C# Snippet:Sample_CheckMemorySearch_Sync
-MemorySearchOptions opts = new()
+MemorySearchOptions searchOptions = new(scope)
 {
-    MaxMemories = 1,
     Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
 };
-MemoryStoreSearchResponse resp = memoryClient.SearchMemories(
-    memoryStoreId: memoryStore.Id,
-    scope: scope,
-    options: opts
+MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
+    memoryStoreName: memoryStore.Id,
+    options: searchOptions
 );
 Console.WriteLine("==The output from memory search tool.==");
-foreach (MemorySearchItem item in resp.Memories)
+foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
 {
     Console.WriteLine(item.MemoryItem.Content);
 }
@@ -158,25 +157,23 @@ Console.WriteLine("==End of memory search tool output.==");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CheckMemorySearch_Async
-MemorySearchOptions opts = new()
+MemorySearchOptions opts = new(scope)
 {
-    MaxMemories = 1,
     Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
 };
-MemoryStoreSearchResponse resp = await memoryClient.SearchMemoriesAsync(
-    memoryStoreId: memoryStore.Id,
-    scope: scope,
-    options: opts
+MemoryStoreSearchResponse resp = await projectClient.MemoryStores.SearchMemoriesAsync(
+    memoryStoreName: memoryStore.Name,
+    options: new(scope)
 );
 Console.WriteLine("==The output from memory tool.==");
-foreach (MemorySearchItem item in resp.Memories)
+foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
 {
     Console.WriteLine(item.MemoryItem.Content);
 }
 Console.WriteLine("==End of memory tool output.==");
 ```
 
-8. Create another agent capable to use `MemorySearchTool`.
+8. Create another Agent capable to use `MemorySearchTool`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync
@@ -185,7 +182,7 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorised conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
-AgentVersion agentVersion2 = client.CreateAgentVersion(
+AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 ```
@@ -197,7 +194,7 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorised conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
-AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 ```
@@ -207,7 +204,7 @@ AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
 Synchronous sample:
 ```C# Snippet:Sample_AnotherConversation_MemoryTool_Sync
 responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
+responseOptions.Agent = agentVersion2;
 
 response = responseClient.CreateResponse(
     [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
@@ -224,7 +221,7 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_AnotherConversation_MemoryTool_Async
 responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
+responseOptions.Agent = agentVersion2;
 
 response = await responseClient.CreateResponseAsync(
     [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
@@ -238,18 +235,18 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```
 
-10. Clean up resources by deleting conversations and agent.
+10. Clean up resources by deleting conversations and Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryTool_Sync
-memoryClient.DeleteMemoryStore(name: memoryStore.Name);
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryTool_Async
-await memoryClient.DeleteMemoryStoreAsync(name: memoryStore.Name);
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
 ```

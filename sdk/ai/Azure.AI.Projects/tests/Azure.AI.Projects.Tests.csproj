@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Samples\Agents\" />
     <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>

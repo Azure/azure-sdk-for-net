@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -21,6 +22,7 @@ using OpenAI.Responses;
 using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.Tests;
+#pragma warning disable OPENAICUA001
 
 public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 {
@@ -51,6 +53,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.None, "Hello, tell me a joke."},
         {ToolType.FunctionCall, "What is the nickname for Seattle, WA?" },
+        {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
+        {ToolType.ImageGeneration, "Generate an image of Microsoft logo."},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.OpenAPI, "What's the weather in Seattle?"},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
@@ -76,7 +80,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.None, "You are a prompt agent."},
         {ToolType.BingGrounding, "You are helpful agent."},
+        {ToolType.ImageGeneration, "Generate images based on user prompts"},
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
+        {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
+                               "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see." },
         {ToolType.OpenAPI, "You are helpful agent."},
         {ToolType.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
         {ToolType.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
@@ -96,11 +103,21 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FileSearch, "673457"},
         {ToolType.FunctionCall, "emerald"},
     };
+
+    public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
+    {
+        {ToolType.FileSearch, typeof(StreamingResponseFileSearchCallCompletedUpdate) }
+    };
+
+    public Dictionary<ToolType, Type> ExpectedAnnotations = new()
+    {
+        {ToolType.FileSearch, typeof(FileCitationMessageAnnotation) }
+    };
     #endregion
 
-    protected const string AGENT_NAME = "cs_e2e_tests_client";
-    protected const string AGENT_NAME2 = "cs_e2e_tests_client2";
-    protected const string VECTOR_STORE = "cs_e2e_tests_vector_store";
+    protected const string AGENT_NAME = "cs-e2e-tests-client";
+    protected const string AGENT_NAME2 = "cs-e2e-tests-client2";
+    protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
     private readonly List<string> _memoryStoreIDs = [];
@@ -121,8 +138,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
     }
 
-    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
-        => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
+    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument, headers);
 
     protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
     => GetConfiguredOptions(
@@ -133,10 +150,14 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         },
         instrument);
 
-    private T GetConfiguredOptions<T>(T options, bool instrument)
+    private T GetConfiguredOptions<T>(T options, bool instrument, Dictionary<string, string> headers = null)
         where T : ClientPipelineOptions
     {
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        if (headers is not null && headers.Count > 0)
+        {
+            options.AddPolicy(new HeaderTestPolicy(headers), PipelinePosition.PerCall);
+        }
         options.AddPolicy(
             new TestPipelinePolicy(message =>
             {
@@ -164,9 +185,9 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return TestEnvironment.Credential;
     }
 
-    protected AIProjectClient GetTestProjectClient()
+    protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers=default)
     {
-        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions();
+        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
         AuthenticationTokenProvider provider = TestEnvironment.Credential;
         return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
     }
@@ -217,6 +238,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
     }
 
+    protected static string GetTestFile(string fileName, [CallerFilePath] string pth = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        return Path.Combine(new string[] { dirName, "TestData", fileName });
+    }
+
     #region ToolHelper
     private async Task<VectorStore> GetVectorStore(OpenAIClient openAIClient)
     {
@@ -242,7 +269,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     /// </summary>
     /// <param name="toolType"></param>
     /// <returns></returns>
-    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, OpenAIClient oaiClient)
+    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, OpenAIClient oaiClient, string model = default)
     {
         ResponseTool tool = toolType switch
         {
@@ -285,9 +312,15 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 ),
                 strictModeEnabled: false
             ),
+            ToolType.ComputerUse => ResponseTool.CreateComputerTool(environment: new ComputerToolEnvironment("windows"), displayWidth: 1026, displayHeight: 769),
+            ToolType.ImageGeneration => ResponseTool.CreateImageGenerationTool(
+                model: TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME,
+                quality: ImageGenerationToolQuality.Low,
+                size: ImageGenerationToolSize.W1024xH1024
+            ),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
-        return new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
         {
             Instructions = ToolInstructions[toolType],
             Tools = { tool },

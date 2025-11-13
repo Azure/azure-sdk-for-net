@@ -22,80 +22,6 @@ namespace Azure.AI.Projects.OpenAI.Tests;
 [LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
-    #region Enumertions
-    public enum ToolType
-    {
-        None,
-        CodeInterpreter,
-        FileSearch,
-        FunctionCall,
-        ComputerUse,
-        ImageGeneration,
-        WebSearch,
-        AzureAISearch,
-        AzureFunction,
-        BingGrounding,
-        MCP,
-        OpenAPI,
-        A2A,
-        BrowserAutomation,
-        MicrosoftFabric,
-        Sharepoint,
-        ConnectedAgent,
-        DeepResearch,
-    }
-
-    public Dictionary<ToolType, string> ToolPrompts = new()
-    {
-        {ToolType.None, "Hello, tell me a joke."},
-        {ToolType.FunctionCall, "What is the nickname for Seattle, WA?" },
-        {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
-        {ToolType.OpenAPI, "What's the weather in Seattle?"},
-        {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
-            "including what is currently known about orcas' cognitive capabilities, " +
-            "communication systems and problem-solving reflected in recent publications in top their scientific " +
-            "journals like Science, Nature and PNAS."},
-        {ToolType.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"},
-        {ToolType.ConnectedAgent, "What is the Microsoft stock price?"},
-        {ToolType.FileSearch,  "Can you give me the documented codes for 'banana' and 'orange'?"},
-        {ToolType.AzureFunction, "What is the most prevalent element in the universe? What would foo say?"},
-        {ToolType.BrowserAutomation, "Your goal is to report the percent of Microsoft year-to-date stock price change. " +
-                    "To do that, go to the website finance.yahoo.com. " +
-                    "At the top of the page, you will find a search bar." +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price." +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price." +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
-        {ToolType.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
-        {ToolType.Sharepoint, "Hello, summarize the key points of the first document in the list."},
-        {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
-    };
-
-    public Dictionary<ToolType, string> ToolInstructions = new()
-    {
-        {ToolType.None, "You are a prompt agent."},
-        {ToolType.BingGrounding, "You are helpful agent."},
-        {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
-        {ToolType.OpenAPI, "You are helpful agent."},
-        {ToolType.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
-        {ToolType.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
-        {ToolType.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
-        {ToolType.FileSearch,  "You are helpful agent."},
-        {ToolType.BrowserAutomation, "You are an Agent helping with browser automation tasks. " +
-                            "You can answer questions, provide information, and assist with various tasks " +
-                            "related to web browsing using the Browser Automation tool available to you." },
-        {ToolType.MicrosoftFabric, "You are helpful agent."},
-        {ToolType.Sharepoint, "You are helpful agent."},
-        {ToolType.CodeInterpreter, "You are helpful agent."},
-    };
-
-    public Dictionary<ToolType, string> ExpectedOutput = new()
-    {
-        {ToolType.CodeInterpreter, "673457"},
-        {ToolType.FileSearch, "673457"},
-        {ToolType.FunctionCall, "emerald"},
-    };
-    #endregion
-
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
         => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
 
@@ -129,7 +55,15 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     private readonly List<string> _conversationIDs = [];
     private ProjectOpenAIConversationClient _conversations = null;
 
-    public ProjectsOpenAITestBase(bool isAsync) : base(isAsync) { }
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
+    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
 
     public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {

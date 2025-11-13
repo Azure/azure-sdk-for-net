@@ -2,20 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Projects;
 using Microsoft.ClientModel.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Files;
-using OpenAI.Responses;
 using OpenAI.VectorStores;
-using Azure.AI.Projects.OpenAI;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class ClientCreationAndAuthenticationSamples : AgentsTestBase
+public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
 {
     [RecordedTest]
     public void CreateAgentClientDirectlyFromProjectEndpoint()
@@ -50,6 +46,20 @@ public class ClientCreationAndAuthenticationSamples : AgentsTestBase
         ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("AGENT_NAME");
         OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
         VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+        #endregion
+    }
+
+    [Test]
+    public void SelectClientVersion()
+    {
+        #region Snippet:SelectAPIVersion
+        ProjectOpenAIClientOptions option = new()
+        {
+            ApiVersion = "2025-11-15-preview"
+        };
+        ProjectOpenAIClient projectClient = new(
+            projectEndpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
+            tokenProvider: new AzureCliCredential());
         #endregion
     }
 
