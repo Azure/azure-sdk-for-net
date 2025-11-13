@@ -1,5 +1,8 @@
 # Release History
 
+### 2.0.0 (2025-11-27)
+- Upgraded api-version tag to 'package-2024-04-24'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/7eb817d513e6b2364a823d1f56db45d25fdca7b7/specification/dynatrace/resource-manager/readme.md.
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
