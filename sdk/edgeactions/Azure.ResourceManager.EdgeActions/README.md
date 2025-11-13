@@ -1,6 +1,6 @@
 # Microsoft Azure EdgeActions management client library for .NET
 
-Azure EdgeActions enables you to deploy and manage serverless edge functions that run on Azure CDN infrastructure. Execute custom code at the edge to modify requests and responses, implement custom routing logic, and perform other edge computing tasks with low latency.
+Azure EdgeActions enables you to deploy and manage serverless edge functions that run on Azure Front Door infrastructure. Execute custom code at the edge to modify requests and responses, implement custom routing logic, and perform other edge computing tasks with low latency.
 
 This library supports managing Microsoft Azure EdgeActions resources.
 
@@ -12,7 +12,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
@@ -34,7 +34,7 @@ To create an authenticated client and start interacting with Microsoft Azure res
 
 Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-**EdgeAction**: A serverless function that executes at the edge on Azure CDN infrastructure.
+**EdgeAction**: A serverless function that executes at the edge on Azure Front Door infrastructure.
 
 **EdgeActionVersion**: A specific version of an edge action, allowing you to manage multiple versions and deploy updates incrementally.
 
@@ -44,14 +44,15 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 
 Documentation is available to help you learn how to use this package:
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+* [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+* [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
+* [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+
+* [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ### Create an EdgeAction
 
@@ -73,8 +74,8 @@ EdgeActionData data = new EdgeActionData(new AzureLocation("WestUS"))
 };
 
 ArmOperation<EdgeActionResource> operation = await edgeActions.CreateOrUpdateAsync(
-    WaitUntil.Completed, 
-    "myEdgeAction", 
+    WaitUntil.Completed,
+    "myEdgeAction",
     data
 );
 EdgeActionResource edgeAction = operation.Value;
@@ -91,8 +92,8 @@ await foreach (EdgeActionResource edgeAction in resourceGroup.GetEdgeActions())
 
 ## Troubleshooting
 
--   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
--   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+* File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+* Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
