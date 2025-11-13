@@ -19,16 +19,16 @@ using OpenAI.FineTuning;
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Synchronous recorded tests for OpenAI file operations using test-proxy.
+/// Asynchronous recorded tests for OpenAI file operations using test-proxy.
 /// </summary>
-public class FilesTests : FineTuningTestsBase
+public class FilesTestsAsync : FineTuningTestsBase
 {
-    public FilesTests(bool isAsync) : base(isAsync)
+    public FilesTestsAsync(bool isAsync) : base(isAsync)
     {
     }
 
     [RecordedTest]
-    public void FileOperations_FullLifecycle()
+    public async Task FileOperations_FullLifecycle()
     {
         Console.WriteLine($"Test Mode: {Mode}");
         Console.WriteLine($"Recording is null: {Recording == null}");
@@ -43,7 +43,7 @@ public class FilesTests : FineTuningTestsBase
         Console.WriteLine("=== Step 1: Uploading File ===");
         Console.WriteLine($"Uploading file: sft_training_set.jsonl");
 
-        OpenAIFile uploadedFile = fileClient.UploadFile(
+        OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
             BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
             "sft_training_set.jsonl",
             FileUploadPurpose.FineTune);
@@ -65,7 +65,7 @@ public class FilesTests : FineTuningTestsBase
             // Step 2: Retrieve file metadata by ID
             Console.WriteLine("=== Step 2: Retrieving File Metadata ===");
             Console.WriteLine($"Retrieving metadata for file ID: {fileId}");
-            OpenAIFile retrievedFile = fileClient.GetFile(fileId);
+            OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
 
             Assert.IsNotNull(retrievedFile);
             Assert.AreEqual(fileId, retrievedFile.Id);
@@ -78,7 +78,7 @@ public class FilesTests : FineTuningTestsBase
             // Step 3: Retrieve file content
             Console.WriteLine("=== Step 3: Retrieving File Content ===");
             Console.WriteLine($"Downloading content for file ID: {fileId}");
-            BinaryData fileContent = fileClient.DownloadFile(fileId);
+            BinaryData fileContent = await fileClient.DownloadFileAsync(fileId);
 
             Assert.IsNotNull(fileContent);
             Assert.That(fileContent.ToMemory().Length, Is.GreaterThan(0));
@@ -101,7 +101,7 @@ public class FilesTests : FineTuningTestsBase
             Console.WriteLine("Retrieving list of all files...");
             int fileCount = 0;
             bool foundUploadedFile = false;
-            ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
+            ClientResult<OpenAIFileCollection> filesResult = await fileClient.GetFilesAsync();
 
             Assert.IsNotNull(filesResult);
             Assert.IsNotNull(filesResult.Value);
@@ -139,7 +139,7 @@ public class FilesTests : FineTuningTestsBase
             Console.WriteLine($"Deleting file with ID: {fileId}");
             try
             {
-                ClientResult<FileDeletionResult> deleteResult = fileClient.DeleteFile(fileId);
+                ClientResult<FileDeletionResult> deleteResult = await fileClient.DeleteFileAsync(fileId);
                 Assert.IsNotNull(deleteResult);
                 Assert.IsNotNull(deleteResult.Value);
                 Assert.IsTrue(deleteResult.Value.Deleted);

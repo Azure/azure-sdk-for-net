@@ -5,8 +5,11 @@
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only
 
 using System;
+using System.ClientModel.Primitives;
 using System.IO;
-using Azure.AI.Agents;
+using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Tests.Utils;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -34,14 +37,14 @@ public abstract class FineTuningTestsBase : ProjectsClientTestBase
     }
 
     /// <summary>
-    /// Gets OpenAIFileClient and FineTuningClient for live testing.
+    /// Gets OpenAIFileClient and FineTuningClient with recording support and HTTP logging enabled.
     /// </summary>
     /// <returns>A tuple containing OpenAIFileClient and FineTuningClient.</returns>
     protected (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetClients()
     {
-        AIProjectClient projectClient = GetLiveClient();
-        AgentsClient agentClient = projectClient.GetAgentsClient();
-        OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+        AIProjectClient projectClient = GetTestClient();
+
+        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 
         return (oaiClient.GetOpenAIFileClient(), oaiClient.GetFineTuningClient());
     }
