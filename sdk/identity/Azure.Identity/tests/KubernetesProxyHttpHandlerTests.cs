@@ -228,11 +228,26 @@ namespace Azure.Identity.Tests
                 }
             });
 
-            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
+
+            // Get initial handler instance and certificate thumbprint
+            var initialInnerHandler = handler.InnerHandler;
+            var initialCallback = (initialInnerHandler as HttpClientHandler)?.ServerCertificateCustomValidationCallback;
+            Assert.IsNotNull(initialCallback, "Initial handler should have certificate validation callback");
+
+            var cert1Thumbprint = PemReader.LoadCertificate(cert1.AsSpan(), allowCertificateOnly: true).Thumbprint;
+            var cert2Thumbprint = PemReader.LoadCertificate(cert2.AsSpan(), allowCertificateOnly: true).Thumbprint;
+            Assert.AreNotEqual(cert1Thumbprint, cert2Thumbprint, "Test certificates should have different thumbprints");
 
             // Act - Make requests before and after CA change
             var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
             var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Give the handler time to detect the file change and reload
+            await Task.Delay(50);
+
             var response3 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert
@@ -240,6 +255,15 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
             Assert.AreEqual(HttpStatusCode.OK, response3.StatusCode);
             Assert.AreEqual(3, requestCount);
+
+            // Verify handler was reloaded - the inner handler instance should be different
+            var finalInnerHandler = handler.InnerHandler;
+            Assert.AreNotSame(initialInnerHandler, finalInnerHandler,
+                "Handler should be recreated after CA file change");
+
+            // Verify the new handler has certificate validation configured
+            var finalCallback = (finalInnerHandler as HttpClientHandler)?.ServerCertificateCustomValidationCallback;
+            Assert.IsNotNull(finalCallback, "Reloaded handler should have certificate validation callback");
         }
 
         [Test]
@@ -247,7 +271,9 @@ namespace Azure.Identity.Tests
         {
             // Arrange
             var caFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(caFilePath, GetTestCertificatePem());
+            var cert1 = GetTestCertificatePem();
+            var cert2 = GetDifferentTestCertificatePem();
+            File.WriteAllText(caFilePath, cert1);
 
             var requestCounter = 0;
             var mockTransport = new MockTransport(req =>
@@ -256,7 +282,7 @@ namespace Azure.Identity.Tests
                 // Trigger reload on second request
                 if (currentRequest == 2)
                 {
-                    File.WriteAllText(caFilePath, GetDifferentTestCertificatePem());
+                    File.WriteAllText(caFilePath, cert2);
                     Thread.Sleep(10);
                 }
 
@@ -266,7 +292,11 @@ namespace Azure.Identity.Tests
                 return response;
             });
 
-            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
+
+            var initialInnerHandler = handler.InnerHandler;
 
             // Act - Start multiple concurrent requests
             var tasks = new Task<HttpResponseMessage>[5];
@@ -283,6 +313,11 @@ namespace Azure.Identity.Tests
                 var content = await response.Content.ReadAsStringAsync();
                 Assert.IsTrue(content.Contains("request"), "Response should contain request counter");
             }
+
+            // Verify handler was reloaded during concurrent requests
+            var finalInnerHandler = handler.InnerHandler;
+            Assert.AreNotSame(initialInnerHandler, finalInnerHandler,
+                "Handler should be recreated after CA file change, even during concurrent requests");
         }
 
         [Test]
@@ -459,7 +494,7 @@ namespace Azure.Identity.Tests
                 var testCert = PemReader.LoadCertificate(validCaPem.AsSpan(), allowCertificateOnly: true);
                 var callback = innerHandlerWithCa.ServerCertificateCustomValidationCallback;
 
-                // Test normal case
+                // Test normal case - no SSL errors
                 using (var chain = new X509Chain())
                 {
                     Assert.DoesNotThrow(() => callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.None));
@@ -473,6 +508,20 @@ namespace Azure.Identity.Tests
                 {
                     var result = callback(null, null, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors);
                     Assert.IsFalse(result, "Should return false for null certificate");
+                }
+
+                // Test that non-chain SSL errors are rejected immediately (before chain validation)
+                // These errors cannot be fixed by custom CA validation
+                using (var chain = new X509Chain())
+                {
+                    var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch);
+                    Assert.IsFalse(result, "Should reject RemoteCertificateNameMismatch");
+                }
+
+                using (var chain = new X509Chain())
+                {
+                    var result = callback(null, testCert, chain, System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable);
+                    Assert.IsFalse(result, "Should reject RemoteCertificateNotAvailable");
                 }
             }
         }

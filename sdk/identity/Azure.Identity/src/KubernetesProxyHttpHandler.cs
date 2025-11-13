@@ -240,6 +240,14 @@ namespace Azure.Identity
                         return false;
                     }
 
+                    // Check for SSL policy errors that we cannot handle with custom validation
+                    if (errors != System.Net.Security.SslPolicyErrors.None &&
+                        errors != System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors)
+                    {
+                        return false;
+                    }
+
+                    // Configure chain to trust our custom CA
                     chain.ChainPolicy.ExtraStore.Add(caCertificate);
                     chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
                     chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
@@ -257,11 +265,6 @@ namespace Azure.Identity
                         {
                             return false;
                         }
-                    }
-
-                    if (errors != System.Net.Security.SslPolicyErrors.None)
-                    {
-                        return false;
                     }
 
                     return true;
