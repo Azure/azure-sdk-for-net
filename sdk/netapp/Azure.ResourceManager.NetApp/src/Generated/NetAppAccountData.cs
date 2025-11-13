@@ -13,104 +13,135 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the NetAppAccount data model.
-    /// NetApp account resource
-    /// </summary>
+    /// <summary> NetApp account resource. </summary>
     public partial class NetAppAccountData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public NetAppAccountData(AzureLocation location) : base(location)
         {
-            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
-        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> NetApp Account properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, string eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            ActiveDirectories = activeDirectories;
-            Encryption = encryption;
-            DisableShowmount = disableShowmount;
-            NfsV4IdDomain = nfsV4IdDomain;
-            MultiAdStatus = multiAdStatus;
-            LdapConfiguration = ldapConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/> for deserialization. </summary>
-        internal NetAppAccountData()
-        {
-        }
+        /// <summary> NetApp Account properties. </summary>
+        internal AccountProperties Properties { get; set; }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The identity used for the resource. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
+        public string ETag { get; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Active Directories. </summary>
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
+        public IList<ActiveDirectory> ActiveDirectories
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                return Properties.ActiveDirectories;
+            }
+        }
+
         /// <summary> Encryption settings. </summary>
-        public NetAppAccountEncryption Encryption { get; set; }
+        public AccountEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
-        public bool? DisableShowmount { get; }
+        public bool? DisableShowmount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableShowmount;
+            }
+        }
+
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IdDomain { get; set; }
+        public string NfsV4IDDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NfsV4IDDomain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.NfsV4IDDomain = value;
+            }
+        }
+
         /// <summary> MultiAD Status for the account. </summary>
-        public MultiAdStatus? MultiAdStatus { get; }
+        public MultiAdStatus? MultiAdStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MultiAdStatus;
+            }
+        }
+
         /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfiguration LdapConfiguration { get; set; }
+        public LdapConfiguration LdapConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LdapConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.LdapConfiguration = value;
+            }
+        }
     }
 }

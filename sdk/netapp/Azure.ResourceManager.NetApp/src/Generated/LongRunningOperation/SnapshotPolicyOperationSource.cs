@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class SnapshotPolicyOperationSource : IOperationSource<SnapshotPolicyResource>
+    /// <summary></summary>
+    internal partial class SnapshotPolicyOperationSource : IOperationSource<SnapshotPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SnapshotPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SnapshotPolicyResource IOperationSource<SnapshotPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SnapshotPolicyData data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SnapshotPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SnapshotPolicyResource> IOperationSource<SnapshotPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new SnapshotPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SnapshotPolicyData data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SnapshotPolicyResource(_client, data);
         }
     }
 }

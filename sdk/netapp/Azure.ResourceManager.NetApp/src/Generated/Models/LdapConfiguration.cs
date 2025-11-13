@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> LDAP configuration. </summary>
     public partial class LdapConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
         public LdapConfiguration()
@@ -54,28 +26,32 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="ldapOverTls"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="ldapOverTLS"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfiguration(string domain, IList<string> ldapServers, bool? ldapOverTls, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LdapConfiguration(string domain, IList<string> ldapServers, bool? ldapOverTLS, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
-            LdapOverTls = ldapOverTls;
+            LdapOverTLS = ldapOverTLS;
             ServerCACertificate = serverCACertificate;
             CertificateCNHost = certificateCNHost;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the LDAP configuration domain. </summary>
         public string Domain { get; set; }
+
         /// <summary> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </summary>
         public IList<string> LdapServers { get; }
+
         /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
-        public bool? LdapOverTls { get; set; }
+        public bool? LdapOverTLS { get; set; }
+
         /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </summary>
         public string ServerCACertificate { get; set; }
+
         /// <summary> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </summary>
         public string CertificateCNHost { get; set; }
     }

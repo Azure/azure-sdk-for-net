@@ -7,85 +7,125 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Capacity pool patch resource. </summary>
-    public partial class CapacityPoolPatch : TrackedResourceData
+    public partial class CapacityPoolPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public CapacityPoolPatch(AzureLocation location) : base(location)
+        public CapacityPoolPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
-        /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
-        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, float? customThroughputMibps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Capacity pool properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CapacityPoolPatch(string location, string id, string name, string @type, IDictionary<string, string> tags, PoolPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Size = size;
-            QosType = qosType;
-            IsCoolAccessEnabled = isCoolAccessEnabled;
-            CustomThroughputMibps = customThroughputMibps;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Location = location;
+            Id = id;
+            Name = name;
+            Type = @type;
+            Tags = tags;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/> for deserialization. </summary>
-        internal CapacityPoolPatch()
-        {
-        }
+        /// <summary> Resource location. </summary>
+        public string Location { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Resource name. </summary>
+        public string Name { get; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Capacity pool properties. </summary>
+        internal PoolPatchProperties Properties { get; set; }
 
         /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
-        public long? Size { get; set; }
+        public long? Size
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Size;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolPatchProperties();
+                }
+                Properties.Size = value.Value;
+            }
+        }
+
         /// <summary> The qos type of the pool. </summary>
-        public CapacityPoolQosType? QosType { get; set; }
+        public QosType? QosType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QosType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolPatchProperties();
+                }
+                Properties.QosType = value.Value;
+            }
+        }
+
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? IsCoolAccessEnabled { get; set; }
+        public bool? CoolAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CoolAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolPatchProperties();
+                }
+                Properties.CoolAccess = value.Value;
+            }
+        }
+
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        public float? CustomThroughputMibps { get; set; }
+        public int? CustomThroughputMibpsInt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomThroughputMibpsInt;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolPatchProperties();
+                }
+                Properties.CustomThroughputMibpsInt = value.Value;
+            }
+        }
     }
 }

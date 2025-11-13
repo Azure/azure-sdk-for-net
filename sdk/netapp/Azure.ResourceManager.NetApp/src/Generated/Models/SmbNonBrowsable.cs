@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct SmbNonBrowsable : IEquatable<SmbNonBrowsable>
     {
         private readonly string _value;
+        /// <summary> smbNonBrowsable share setting is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> smbNonBrowsable share setting is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="SmbNonBrowsable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SmbNonBrowsable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> smbNonBrowsable share setting is disabled. </summary>
         public static SmbNonBrowsable Disabled { get; } = new SmbNonBrowsable(DisabledValue);
+
         /// <summary> smbNonBrowsable share setting is enabled. </summary>
         public static SmbNonBrowsable Enabled { get; } = new SmbNonBrowsable(EnabledValue);
+
         /// <summary> Determines if two <see cref="SmbNonBrowsable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SmbNonBrowsable left, SmbNonBrowsable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SmbNonBrowsable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SmbNonBrowsable left, SmbNonBrowsable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SmbNonBrowsable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SmbNonBrowsable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SmbNonBrowsable(string value) => new SmbNonBrowsable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SmbNonBrowsable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SmbNonBrowsable?(string value) => value == null ? null : new SmbNonBrowsable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SmbNonBrowsable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SmbNonBrowsable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

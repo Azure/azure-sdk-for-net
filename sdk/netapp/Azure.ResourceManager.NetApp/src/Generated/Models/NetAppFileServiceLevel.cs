@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppFileServiceLevel : IEquatable<NetAppFileServiceLevel>
     {
         private readonly string _value;
+        /// <summary> Standard service level. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium service level. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> Ultra service level. </summary>
+        private const string UltraValue = "Ultra";
+        /// <summary> Zone redundant storage service level. This will be deprecated soon. </summary>
+        private const string StandardZRSValue = "StandardZRS";
+        /// <summary> Flexible service level. </summary>
+        private const string FlexibleValue = "Flexible";
 
         /// <summary> Initializes a new instance of <see cref="NetAppFileServiceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppFileServiceLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string UltraValue = "Ultra";
-        private const string StandardZrsValue = "StandardZRS";
-        private const string FlexibleValue = "Flexible";
+            _value = value;
+        }
 
         /// <summary> Standard service level. </summary>
         public static NetAppFileServiceLevel Standard { get; } = new NetAppFileServiceLevel(StandardValue);
+
         /// <summary> Premium service level. </summary>
         public static NetAppFileServiceLevel Premium { get; } = new NetAppFileServiceLevel(PremiumValue);
+
         /// <summary> Ultra service level. </summary>
         public static NetAppFileServiceLevel Ultra { get; } = new NetAppFileServiceLevel(UltraValue);
+
         /// <summary> Zone redundant storage service level. This will be deprecated soon. </summary>
-        public static NetAppFileServiceLevel StandardZrs { get; } = new NetAppFileServiceLevel(StandardZrsValue);
+        public static NetAppFileServiceLevel StandardZRS { get; } = new NetAppFileServiceLevel(StandardZRSValue);
+
         /// <summary> Flexible service level. </summary>
         public static NetAppFileServiceLevel Flexible { get; } = new NetAppFileServiceLevel(FlexibleValue);
+
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppFileServiceLevel left, NetAppFileServiceLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppFileServiceLevel left, NetAppFileServiceLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppFileServiceLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppFileServiceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppFileServiceLevel(string value) => new NetAppFileServiceLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppFileServiceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppFileServiceLevel?(string value) => value == null ? null : new NetAppFileServiceLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppFileServiceLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppFileServiceLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
