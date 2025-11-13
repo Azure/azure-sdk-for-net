@@ -1,16 +1,15 @@
-# Sample using Agents with functions in Azure.AI.Agents.
+# Sample using Agents with functions in Azure.AI.Projects.OpenAI.
 
 In this example we are demonstrating how to use the local functions with the Agents. The functions can be used to provide the Agent with specific information in response to a user question.
 
-1. First, we need to create agent client and read in the environment variables that will be used in the next steps.
+1. First, we need to create project client and read in the environment variables that will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_Function
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-OpenAIClient openAIClient = client.GetOpenAIClient();
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2 Define three toy functions: `GetUserFavoriteCity` that always returns "Seattle, WA" and `GetCityNickname`, which will handle only "Seattle, WA" and will throw exception in response to other city names. The last function `GetWeatherAtLocation` returns weather in Seattle, WA.
+2 Define three toy functions: `GetUserFavoriteCity` that always returns "Seattle, WA" and `GetCityNickname`, which will handle only "Seattle, WA" and will throw exception in response to other city names. The last function `GetWeatherAtLocation` returns the weather in Seattle, WA.
 ```C# Snippet:Sample_Functions_Function
 /// Example of a function that defines no parameters
 /// returns user favorite city.
@@ -129,7 +128,7 @@ private static FunctionCallOutputResponseItem GetResolvedToolOutput(FunctionCall
 }
 ```
 
-4. Create agent with the `FunctionTool` we have created in step 3.
+4. Create Agent with the `FunctionTool` we have created in step 3.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_Function_Sync
@@ -140,7 +139,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             + "nicknames for cities whenever possible.",
     Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -154,7 +153,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             + "nicknames for cities whenever possible.",
     Tools = { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -199,9 +198,9 @@ public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIRes
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Function_Sync
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
 List<ResponseItem> inputItems = [request];
@@ -230,9 +229,9 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Function_Async
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
 List<ResponseItem> inputItems = [request];
@@ -263,10 +262,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Function_Sync
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_Function_Async
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

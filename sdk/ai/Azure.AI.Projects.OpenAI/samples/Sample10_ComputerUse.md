@@ -1,13 +1,12 @@
-# Sample for use of an agent with Computer Use tool in Azure.AI.Agents.
+# Sample for use of an Agent with Computer Use tool in Azure.AI.Projects.OpenAI.
 
 To enable your Agent to Computer Use tool, you need to use `ComputerTool` while creating `PromptAgentDefinition`.
-1. First, we need to create an Agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ComputerUse
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-OpenAIClient openAIClient = client.GetOpenAIClient();
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. To use the tool, we need to read image files using `ReadImageFile` method.
@@ -47,7 +46,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -67,7 +66,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -178,9 +177,8 @@ public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIRes
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Sync
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
 responseOptions.TruncationMode = ResponseTruncationMode.Auto;
 string currentScreenshot = "browser_search";
 ResponseItem request = ResponseItem.CreateUserMessageItem(
@@ -219,9 +217,8 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
 responseOptions.TruncationMode = ResponseTruncationMode.Auto;
 ResponseItem request = ResponseItem.CreateUserMessageItem(
     [
@@ -259,14 +256,14 @@ do
 Console.WriteLine(response.GetOutputText());
 ```
 
-7. Clean up resources by deleting Agent and uploaded files.
+7. Clean up resources by deleting Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ComputerUse_Sync
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ComputerUse_Async
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

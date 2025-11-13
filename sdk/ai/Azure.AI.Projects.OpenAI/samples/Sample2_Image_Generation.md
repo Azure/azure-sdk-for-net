@@ -1,14 +1,20 @@
-# Sample for image generation in Azure.AI.Agents.
+# Sample for image generation in Azure.AI.Projects.OpenAI.
 
 In this example we will demonstrate how to generate an image based on prompt.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_ImageGeneration
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var imageGenerationModelName = System.Environment.GetEnvironmentVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AIProjectClientOptions projectOptions = new();
+projectOptions.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
+AIProjectClient projectClient = new(
+    endpoint: new Uri(projectEndpoint),
+    tokenProvider: new DefaultAzureCredential(),
+    options: projectOptions
+);
 ```
 
 2. Use the client to create the versioned agent object. To generate images, we need to provide agent with the `ImageGenerationTool` when we are creating this tool. The `ImageGenerationTool` parameters include the image generation model, image quality and resolution. Supported image generation models are `gpt-image-1` and `gpt-image-1-mini`.
@@ -26,7 +32,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         )
     }
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -44,7 +50,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         )
     }
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -75,32 +81,20 @@ internal class HeaderPolicy(string image_deployment) : PipelinePolicy
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponse_ImageGeneration_Sync
-OpenAIClientOptions options = new();
-options.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
-OpenAIClient openAIClient = client.GetOpenAIClient(options: options);
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+ProjectOpenAIClientOptions options = new();
+ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
+ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
 
-ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
-
-OpenAIResponse response = responseClient.CreateResponse(
-    "Generate parody of Newton with apple.",
-    responseOptions);
+OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponse_ImageGeneration_Async
-OpenAIClientOptions options = new();
-options.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
-OpenAIClient openAIClient = client.GetOpenAIClient(options: options);
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+ProjectOpenAIClientOptions options = new();
+ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
+ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
 
-ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
-
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    "Generate parody of Newton with apple.",
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
 ```
 
 5. Waiting for response.
@@ -139,10 +133,10 @@ foreach (ResponseItem item in response.OutputItems)
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ImageGeneration_Sync
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ImageGeneration_Async
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

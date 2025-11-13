@@ -1,28 +1,26 @@
-# Sample on getting the responses without involving Agent in Azure.AI.Agents.
+# Sample on getting the responses without involving Agent in Azure.AI.Projects.OpenAI.
 
 In this example we will demonstrate how to get a response without an Agent.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ResponseBasic
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+ProjectOpenAIClient client = GetTestClient();
 ```
 
-2. Use the client to create a `Responses`, which will be used to create `AgentResponse` object.
+2. Use the client to create a `Responses`, which will be used to create `OpenAIResponse` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
+OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
@@ -33,7 +31,7 @@ Synchronous sample:
 while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responsesClient.GetResponse(responseId: response.Id);
+    response = responseClient.GetResponse(responseId: response.Id);
 }
 
 Console.WriteLine(response.GetOutputText());

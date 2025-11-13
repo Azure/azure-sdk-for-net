@@ -1,17 +1,16 @@
-# Sample of using Agent with code interpreter and file attachment in Azure.AI.Agents.
+# Sample of using Agent with code interpreter and file attachment in Azure.AI.Projects.OpenAI.
 
 In this example we will demonstrate how to use Code interpreter to solve the equation.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_CodeInterpreter
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-OpenAIClient openAIClient = client.GetOpenAIClient();
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Create agent, capable to use Code Interpreter to answer questions.
+2. Create Agent, capable to use Code Interpreter to answer questions.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeInterpreter_Sync
@@ -28,7 +27,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -46,7 +45,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -55,9 +54,9 @@ AgentVersion agentVersion = await client.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Sync
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
 OpenAIResponse response = responseClient.CreateResponse(
@@ -67,9 +66,9 @@ OpenAIResponse response = responseClient.CreateResponse(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Async
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
 OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -103,14 +102,14 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```
 
-6. Clean up resources by deleting conversations and the agent.
+6. Clean up resources by deleting conversations and the Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_Sync
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_Async
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

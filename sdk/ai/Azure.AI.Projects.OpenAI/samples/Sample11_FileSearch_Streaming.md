@@ -1,14 +1,13 @@
-# Sample file search with agent in Azure.AI.Agents in streaming scenarios.
+# Sample file search with Agent in Azure.AI.Projects.OpenAI in streaming scenarios.
 
 In this example we will create the local file, upload it to Azure and will use it in the newly created `VectorStore` for file search.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_FileSearch_Streaming
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-OpenAIClient openAIClient = client.GetOpenAIClient();
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. We will create a toy example file and upload it using OpenAI mechanism.
@@ -19,8 +18,7 @@ string filePath = "sample_file_for_upload.txt";
 File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
-OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+OpenAIFile uploadedFile = projectClient.OpenAI.Files.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
 File.Delete(filePath);
 ```
 
@@ -30,8 +28,7 @@ string filePath = "sample_file_for_upload.txt";
 File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
-OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+OpenAIFile uploadedFile = await projectClient.OpenAI.Files.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
 File.Delete(filePath);
 ```
 
@@ -39,24 +36,22 @@ File.Delete(filePath);
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Sync
-VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
 VectorStoreCreationOptions options = new()
 {
     Name = "MySampleStore",
     FileIds = { uploadedFile.Id }
 };
-VectorStore vectorStore = vctStoreClient.CreateVectorStore(options);
+VectorStore vectorStore = projectClient.OpenAI.VectorStores.CreateVectorStore(options);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Async
-VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
 VectorStoreCreationOptions options = new()
 {
     Name = "MySampleStore",
     FileIds = { uploadedFile.Id }
 };
-VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
+VectorStore vectorStore = await projectClient.OpenAI.VectorStores.CreateVectorStoreAsync(options);
 ```
 
 2. Now we can create an agent capable of using File search. 
@@ -68,7 +63,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -81,7 +76,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -91,24 +86,24 @@ AgentVersion agentVersion = await client.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-ConversationClient conversationClient = client.GetConversationClient();
-AgentConversation conversation = conversationClient.CreateConversation();
-responseOptions.SetConversationReference(conversation.Id);
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
+ResponseCreationOptions responseOptions = new()
+{
+    Agent = agentVersion,
+    AgentConversationId = conversation.Id,
+};
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-ConversationClient conversationClient = client.GetConversationClient();
-AgentConversation conversation = await conversationClient.CreateConversationAsync();
-responseOptions.SetConversationReference(conversation.Id);
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+ResponseCreationOptions responseOptions = new()
+{
+    Agent = agentVersion,
+    AgentConversationId = conversation.Id,
+};
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
 ```
@@ -159,7 +154,7 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 
 Synchronous sample:
 ```C# Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
-foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming([request], responseOptions))
+foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming([request], responseOptions))
 {
     ParseResponse(streamResponse);
 }
@@ -167,7 +162,7 @@ foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponse
 
 Asynchronous sample:
 ```C# Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
+await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync([request], responseOptions))
 {
     ParseResponse(streamResponse);
 }
@@ -179,7 +174,7 @@ Synchronous sample:
 ```C# Snippet:Sample_FollowUp_FileSearch_Streaming_Sync
 Console.WriteLine("Demonstrating follow-up query with streaming...");
 request = ResponseItem.CreateUserMessageItem("What was my previous question about?");
-foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming([request], responseOptions))
+foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming([request], responseOptions))
 {
     ParseResponse(streamResponse);
 }
@@ -189,7 +184,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_FollowUp_FileSearch_Streaming_Async
 Console.WriteLine("Demonstrating follow-up query with streaming...");
 request = ResponseItem.CreateUserMessageItem("What was my previous question about?");
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
+await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync([request], responseOptions))
 {
     ParseResponse(streamResponse);
 }
@@ -199,14 +194,14 @@ await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateRe
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_FileSearch_Streaming_Sync
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
-fileClient.DeleteFile(uploadedFile.Id);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.OpenAI.VectorStores.DeleteVectorStore(vectorStoreId: vectorStore.Id);
+projectClient.OpenAI.Files.DeleteFile(uploadedFile.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_FileSearch_Streaming_Async
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
-await fileClient.DeleteFileAsync(uploadedFile.Id);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.OpenAI.VectorStores.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
+await projectClient.OpenAI.Files.DeleteFileAsync(uploadedFile.Id);
 ```

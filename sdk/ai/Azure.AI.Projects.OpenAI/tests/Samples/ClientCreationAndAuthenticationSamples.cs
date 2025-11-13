@@ -49,5 +49,19 @@ public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
         #endregion
     }
 
+    [Test]
+    public void SelectClientVersion()
+    {
+        #region Snippet:SelectAPIVersion
+        ProjectOpenAIClientOptions option = new()
+        {
+            ApiVersion = "2025-11-15-preview"
+        };
+        ProjectOpenAIClient projectClient = new(
+            projectEndpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
+            tokenProvider: new AzureCliCredential());
+        #endregion
+    }
+
     public ClientCreationAndAuthenticationSamples(bool isAsync) : base(isAsync) { }
 }

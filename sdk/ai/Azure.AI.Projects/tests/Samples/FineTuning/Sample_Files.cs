@@ -7,10 +7,10 @@
 using System;
 using System.ClientModel;
 using System.IO;
-using System.IO.Pipes;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects.OpenAI;
 using OpenAI.Files;
 
 namespace Azure.AI.Projects.Tests;
@@ -37,8 +37,8 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
 #endif
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        OpenAIFileClient fileClient = projectClient.OpenAI.Files;
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        ProjectOpenAIFileClient fileClient = projectClient.OpenAI.Files;
 
         // Upload file
         var dataDirectory = GetDataDirectory();

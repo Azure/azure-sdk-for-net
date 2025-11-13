@@ -1,21 +1,21 @@
-# Sample on getting the responses without involving Agent in Azure.AI.Agents in streaming scenarios.
+# Sample on getting the responses in Azure.AI.Projects.OpenAI in streaming scenarios.
 
-In this example we will demonstrate how to get a response without an Agent in streaming scenarios.
+In this example we will demonstrate how to get a responsein streaming scenarios.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ResponseStreaming
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+
+ProjectOpenAIClient client = new(projectEndpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Use the client to create a `Responses`, which will be used to create `AgentResponse` object.
+2. Use the client to create a `ProjectOpenAIResponseClient`, which will be used to create stream.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponseStreaming
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+ProjectOpenAIResponseClient responsesClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
 ```
 
 3. Stream the results; raise the error if the request was not successful.
@@ -45,7 +45,7 @@ foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateRespons
 
 Asynchronous sample:
 ```C# Snippet:Sample_WriteOutput_ResponseStreaming_Async
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
+await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {

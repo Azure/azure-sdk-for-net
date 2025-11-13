@@ -52,7 +52,13 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var imageGenerationModelName = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClientOptions projectOptions = new();
+        projectOptions.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(
+            endpoint: new Uri(projectEndpoint),
+            tokenProvider: new DefaultAzureCredential(),
+            options: projectOptions
+        );
         #endregion
 
         #region Snippet:Sample_CreateAgent_ImageGeneration_Async
@@ -74,7 +80,6 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
 
         #region Snippet:Sample_GetResponse_ImageGeneration_Async
         ProjectOpenAIClientOptions options = new();
-        options.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
         ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
 
@@ -115,7 +120,13 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var imageGenerationModelName = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClientOptions projectOptions = new();
+        projectOptions.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(
+            endpoint: new Uri(projectEndpoint),
+            tokenProvider: new DefaultAzureCredential(),
+            options: projectOptions
+        );
 
         #region Snippet:Sample_CreateAgent_ImageGeneration_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -136,8 +147,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
 
         #region Snippet:Sample_GetResponse_ImageGeneration_Sync
         ProjectOpenAIClientOptions options = new();
-        options.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
-        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
+        ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
         ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
 
         OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");

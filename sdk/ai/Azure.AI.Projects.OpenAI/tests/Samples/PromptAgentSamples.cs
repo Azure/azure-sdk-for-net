@@ -109,7 +109,6 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
-        #region Snippet:CreateAgent_Basic_Sync
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
@@ -118,7 +117,6 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition)
         );
-        #endregion
         var agentReference = new AgentReference(name: agentVersion.Name);
         ResponseCreationOptions responseCreationOptions = new();
         ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(agentReference);
@@ -155,7 +153,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ConversationClient
         ResponseCreationOptions responseCreationOptions = new();
         // Optionally, use a conversation to automatically maintain state between calls.
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateConversationAsync();
+        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
         ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation);
         #endregion
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
@@ -207,17 +205,16 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
             Metadata = { ["foo"] = "bar" },
         };
-        AgentConversation conversation = await openAIClient.GetConversationClient().CreateConversationAsync(conversationOptions);
+        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
 
         //
         // Add items to an existing conversation to supplement the interaction state
         //
         string EXISTING_CONVERSATION_ID = conversation.Id;
 
-        _ = await openAIClient.GetConversationClient().CreateConversationItemsAsync(
+        _ = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
             EXISTING_CONVERSATION_ID,
-            [ResponseItem.CreateSystemMessageItem("Story theme to use: department of licensing.")]);
-
+            [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
         //
         // Use the agent and conversation in a response
         //
