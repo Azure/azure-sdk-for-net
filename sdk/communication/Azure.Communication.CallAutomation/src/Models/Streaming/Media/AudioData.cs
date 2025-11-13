@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="data"></param>
         /// <param name="markId"></param>
-        public AudioData(byte[] data, string markId)
+        internal AudioData(byte[] data, string markId)
         {
             Data = data;
             Mark = new MarkAudio()
