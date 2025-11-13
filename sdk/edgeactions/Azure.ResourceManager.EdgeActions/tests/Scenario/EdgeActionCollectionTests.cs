@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.EdgeActions.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Test recordings not yet available. Will be recorded in future PR.")]
         public async Task Exists()
         {
             // This is a basic smoke test to verify the SDK can be instantiated
