@@ -349,16 +349,22 @@ namespace Azure.Identity.Tests
             File.WriteAllText(caFilePath, GetTestCertificatePem());
 
             var mockTransport = CreateMockTransport();
-            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
 
             // Act - Make first request successfully, then delete file and make another request
             var response1 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var initialInnerHandler = handler.InnerHandler;
+
             File.Delete(caFilePath);
             var response2 = await httpClient.GetAsync("https://login.microsoftonline.com/token");
 
             // Assert - Both requests should succeed (second uses cached handler when file is missing)
             Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
             Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
+            Assert.AreSame(initialInnerHandler, handler.InnerHandler,
+                "Handler should NOT be reloaded when CA file read fails (uses cached handler)");
         }
 
         [Test]
