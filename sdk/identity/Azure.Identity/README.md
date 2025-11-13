@@ -115,7 +115,7 @@ As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token
 
 ### Usage
 
-```csharp
+```C# Snippet:WorkloadIdentityCredentialWithIdentityBinding
 var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
 {
     IsAzureKubernetesTokenProxyEnabled = true  // Enable identity binding mode
@@ -135,7 +135,7 @@ The credential validates the configuration at construction time and throws `Inva
 
 If you're currently using `ManagedIdentityCredential` for workload identity in AKS and need to use identity binding mode, migrate to `WorkloadIdentityCredential`:
 
-```csharp
+```C# Snippet:MigrationToWorkloadIdentityCredential
 // Before (no identity binding support):
 // var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
 
