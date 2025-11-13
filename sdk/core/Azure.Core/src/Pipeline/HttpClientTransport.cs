@@ -111,7 +111,6 @@ namespace Azure.Core.Pipeline
             }
 
             var oldClient = Interlocked.Exchange(ref _client!, newClient);
-            oldClient!.Dispose();
         }
 
         /// <inheritdoc />
