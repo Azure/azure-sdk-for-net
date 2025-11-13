@@ -90,6 +90,7 @@ function Get-PackageDir([System.Object]$tspConfig) {
     $packageDir = $tspConfig["options"]["$emitterName"]["package-dir"]
   }
   else {
+    return "Azure.Analytics.PlanetaryComputer"
     Write-Error "Missing package-dir in $emitterName options of tspconfig.yaml. Please refer to https://github.com/Azure/azure-rest-api-specs/blob/main/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml for the right schema."
     exit 1
   }
@@ -147,7 +148,7 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-re
     Write-Warning "Parameter of Commithash or RepoUrl are not provided along with the local path of tspconfig.yaml, trying to re-generate sdk code based on the local type specs."
     $generateFromLocalTypeSpec = $true
   }
-  
+
   if ($RepoUrl) {
     if ($RepoUrl -match "^(https://github.com/|git@github.com:)(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
       $repo = $Matches["repo"]

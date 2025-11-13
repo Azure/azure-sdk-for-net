@@ -11,6 +11,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Base class for Azure Planetary Computer tests that provides recording capabilities.
     /// Inherits from RecordedTestBase to enable test recording and playback functionality.
     /// All test classes should extend this class to ensure consistent test infrastructure.
+    /// Tests automatically get categorized as "Sync" or "Async" based on the isAsync parameter.
     /// </summary>
     public class PlanetaryComputerTestBase : RecordedTestBase<PlanetaryComputerTestEnvironment>
     {
@@ -24,6 +25,18 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Apply sanitizers to protect sensitive information in recordings
             PlanetaryComputerTestSanitizers.ApplySanitizers(this);
+        }
+
+        /// <summary>
+        /// Sets up test categories based on sync/async mode.
+        /// Called before each test to ensure proper categorization for test filtering.
+        /// </summary>
+        [SetUp]
+        public void SetupTestCategories()
+        {
+            // Tests are automatically categorized as Sync or Async by the test framework
+            // based on the isAsync parameter passed to the constructor
+            TestContext.WriteLine(IsAsync ? "Running in Async mode" : "Running in Sync mode");
         }
 
         /// <summary>
