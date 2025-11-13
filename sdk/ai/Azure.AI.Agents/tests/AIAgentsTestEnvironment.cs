@@ -38,5 +38,6 @@ namespace Azure.AI.Agents.Tests
         public string INGRESS_SUBDOMAIN_SUFFIX => GetRecordedVariable("INGRESS_SUBDOMAIN_SUFFIX");
         public string OPENAI_FILE_ID => GetRecordedVariable("OPENAI_FILE_ID");
         public string COMPUTER_SCREENSHOTS => GetRecordedVariable("COMPUTER_SCREENSHOTS");
+        public string IMAGE_GENERATION_DEPLOYMENT_NAME => GetRecordedVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
     }
 }

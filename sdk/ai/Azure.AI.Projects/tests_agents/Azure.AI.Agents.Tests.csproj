@@ -18,7 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.Projects.csproj" />
-    <ProjectReference Include="..\..\Azure.AI.Projects\src\Azure.AI.Projects.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

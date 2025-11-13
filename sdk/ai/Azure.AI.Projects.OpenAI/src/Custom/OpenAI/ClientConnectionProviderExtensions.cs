@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI;
 
@@ -21,6 +20,8 @@ public static partial class ClientConnectionProviderExtensions
                 {
                     Endpoint = new Uri(pipelineConnection.Locator),
                 };
+                // If the option without endpoint were provided, make sure, we still set it.
+                options.Endpoint = new Uri(pipelineConnection.Locator);
                 return new ProjectOpenAIClient(smuggledPipeline, options);
             }
             return null;

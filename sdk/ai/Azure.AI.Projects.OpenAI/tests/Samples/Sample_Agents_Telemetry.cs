@@ -13,11 +13,12 @@ using OpenTelemetry;
 using Azure.Identity;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.OpenAI.Tests;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public partial class Sample_Agents_Telemetry : AgentsTestBase
+public partial class Sample_Agents_Telemetry : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
