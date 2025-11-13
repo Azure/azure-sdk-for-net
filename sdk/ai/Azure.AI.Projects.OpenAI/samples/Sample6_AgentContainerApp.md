@@ -88,7 +88,7 @@ private static async Task<OpenAIResponse> WaitResponseAsync(OpenAIResponseClient
 
 Synchronous sample:
 ```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(containerAgentVersion, conversation);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
 OpenAIResponse response = responseClient.CreateResponse([]);
 response = WaitResponse(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());

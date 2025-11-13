@@ -285,7 +285,7 @@ public class AgentsTests : AgentsTestBase
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion, conversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
 
@@ -306,7 +306,7 @@ public class AgentsTests : AgentsTestBase
             agentName: "TestPromptAgentFromDotnet",
             options: new(agentDefinition));
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
         Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -405,7 +405,7 @@ public class AgentsTests : AgentsTestBase
 
         AgentConversation newConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion, newConversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, agent!");
 
@@ -439,7 +439,7 @@ public class AgentsTests : AgentsTestBase
 
         AgentConversation newConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion, newConversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
         AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
 
@@ -561,7 +561,7 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
-        ProjectOpenAIResponseClient responseClient = oaiClient.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
         response = await WaitForRun(responseClient, response);
@@ -597,8 +597,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(
-            agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         bool isStarted = false;
         bool isFinished = false;
@@ -669,7 +668,7 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient.OpenAI))
         );
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new()
         {
             Agent = agentVersion,
@@ -776,7 +775,7 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient.OpenAI, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
             agentVersion.Name);
         ResponseCreationOptions responseOptions = new();
         responseOptions.TruncationMode = ResponseTruncationMode.Auto;
@@ -827,8 +826,8 @@ public class AgentsTests : AgentsTestBase
                 containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
                 containerAppResourceId: TestEnvironment.CONTAINER_APP_RESOURCE_ID,
                 ingressSubdomainSuffix: TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX)));
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
-        ProjectOpenAIConversationClient conversationClient = projectClient.OpenAI.GetProjectOpenAIConversationClient();
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
+        ProjectConversationsClient conversationClient = projectClient.OpenAI.GetProjectConversationsClient();
         ProjectConversationCreationOptions conversationOptions = new();
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
@@ -940,7 +939,7 @@ public class AgentsTests : AgentsTestBase
             },
             cts.Token);
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion);
 
         ResponseCreationOptions responseCreationOptions = new();
 

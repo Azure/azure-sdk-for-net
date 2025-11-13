@@ -4,6 +4,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Linq;
 using System.Text;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.OpenAI.Tests;
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]
+[SyncOnly]
 public class ResponsesSmokeTests : ProjectsOpenAITestBase
 {
     public ResponsesSmokeTests(bool isAsync) : base(isAsync)
@@ -37,6 +39,18 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
 
         ResponseItem revertedResponseItem = agentResponseItem;
         Assert.That(revertedResponseItem, Is.Not.Null);
+    }
+
+    [Test]
+    public void TestAgentToolSerialization()
+    {
+        AgentTool localShellTool = new LocalShellAgentTool();
+        BinaryData serializedLocalShellTool = ModelReaderWriter.Write(localShellTool);
+        Assert.That(serializedLocalShellTool.ToString(), Does.Contain(@"""type"":""local_shell"""));
+        Assert.That((ResponseTool)localShellTool, Is.InstanceOf<ResponseTool>());
+        ResponseTool deserializedLocalShellTool = ModelReaderWriter.Read<ResponseTool>(serializedLocalShellTool);
+        Assert.That(deserializedLocalShellTool, Is.InstanceOf<ResponseTool>());
+        Assert.That(deserializedLocalShellTool.AsAgentTool(), Is.InstanceOf<AgentTool>());
     }
 
     [Test]

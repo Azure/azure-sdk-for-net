@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// Content item used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="LocalShellToolCallAgentResponseItem"/>, <see cref="LocalShellToolCallOutputAgentResponseItem"/>, and <see cref="MemorySearchToolCallResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItemResource))]
     public abstract partial class AgentResponseItem : IJsonModel<AgentResponseItem>
@@ -123,9 +123,9 @@ namespace Azure.AI.Projects.OpenAI
                     case "code_interpreter_call":
                         return InternalCodeInterpreterToolCallItemResource.DeserializeInternalCodeInterpreterToolCallItemResource(element, options);
                     case "local_shell_call":
-                        return InternalLocalShellToolCallItemResource.DeserializeInternalLocalShellToolCallItemResource(element, options);
+                        return LocalShellToolCallAgentResponseItem.DeserializeLocalShellToolCallAgentResponseItem(element, options);
                     case "local_shell_call_output":
-                        return InternalLocalShellToolCallOutputItemResource.DeserializeInternalLocalShellToolCallOutputItemResource(element, options);
+                        return LocalShellToolCallOutputAgentResponseItem.DeserializeLocalShellToolCallOutputAgentResponseItem(element, options);
                     case "mcp_list_tools":
                         return InternalMCPListToolsItemResource.DeserializeInternalMCPListToolsItemResource(element, options);
                     case "mcp_approval_request":

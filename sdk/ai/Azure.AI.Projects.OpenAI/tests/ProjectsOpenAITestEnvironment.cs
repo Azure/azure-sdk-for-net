@@ -12,15 +12,47 @@ namespace Azure.AI.Projects.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
-        public string PROJECT_ENDPOINT => GetRecordedVariable("PROJECT_ENDPOINT");
-        public string AGENT_NAME => GetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME");
-        public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
-        public string COMPUTER_USE_DEPLOYMENT_NAME => GetRecordedVariable("COMPUTER_USE_DEPLOYMENT_NAME");
+        public string PROJECT_ENDPOINT => WrappedGetRecordedVariable("PROJECT_ENDPOINT", isSecret: false);
+        public string AGENT_NAME => WrappedGetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME", isSecret: false);
+        public string MODELDEPLOYMENTNAME => WrappedGetRecordedVariable("MODEL_DEPLOYMENT_NAME", isSecret: false);
+        public string EMBEDDINGMODELDEPLOYMENTNAME => WrappedGetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME", isSecret: false);
+        public string INGRESS_SUBDOMAIN_SUFFIX => WrappedGetRecordedVariable("INGRESS_SUBDOMAIN_SUFFIX", isSecret: false);
+        public string OPENAI_FILE_ID => WrappedGetRecordedVariable("OPENAI_FILE_ID", isSecret: false    );
+        public string COMPUTER_SCREENSHOTS => WrappedGetRecordedVariable("COMPUTER_SCREENSHOTS", isSecret: false);
+        public string IMAGE_GENERATION_DEPLOYMENT_NAME => WrappedGetRecordedVariable("IMAGE_GENERATION_DEPLOYMENT_NAME", isSecret: false);
+        public string COMPUTER_USE_DEPLOYMENT_NAME => WrappedGetRecordedVariable("COMPUTER_USE_DEPLOYMENT_NAME", isSecret: false);
+        public string CONTAINER_APP_RESOURCE_ID => WrappedGetRecordedVariable("CONTAINER_APP_RESOURCE_ID", isSecret: false);
+        public string KNOWN_CONVERSATION_ID => WrappedGetRecordedVariable("KNOWN_CONVERSATION_ID", isSecret: false);
+        public string PARITY_OPENAI_API_KEY => WrappedGetRecordedVariable("OPENAI_API_KEY");
 
-        public override Dictionary<string, string> ParseEnvironmentFile() => new()
+        public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
-            { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
-        };
+            try
+            {
+                return GetRecordedVariable(
+                    key,
+                    options =>
+                    {
+                        if (isSecret)
+                        {
+                            options.IsSecret();
+                        }
+                    });
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    throw new TestRecordingMismatchException($"Failed to retrieve recorded variable '{key}' during playback.", invalidOperationException);
+                }
+                throw;
+            }
+        }
+
+        public override Dictionary<string, string> ParseEnvironmentFile()
+        {
+            return new();
+        }
 
         public override Task WaitForEnvironmentAsync()
         {
@@ -32,9 +64,5 @@ namespace Azure.AI.Projects.OpenAI.Tests
             RecordedTestMode.Live or RecordedTestMode.Record => new DefaultAzureCredential(),
             _ => base.Credential
         };
-        public string EMBEDDINGMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
-        public string CONTAINER_APP_RESOURCE_ID => GetRecordedVariable("CONTAINER_APP_RESOURCE_ID");
-        public string INGRESS_SUBDOMAIN_SUFFIX => GetRecordedVariable("INGRESS_SUBDOMAIN_SUFFIX");
-        public string IMAGE_GENERATION_DEPLOYMENT_NAME => GetRecordedVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
     }
 }

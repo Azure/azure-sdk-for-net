@@ -78,7 +78,7 @@ ProjectOpenAIClient agentClient = projectClient.OpenAI;
 For operations based on OpenAI APIs like `/responses`, `/files`, and `/vector_stores`, you can retrieve `OpenAIResponseClient`, `OpenAIFileClient` and `VectorStoreClient` through the appropriate helper methods:
 
 ```C# Snippet:GetOpenAIClientsFromProjects
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("AGENT_NAME");
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("AGENT_NAME");
 OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
 ```
@@ -106,14 +106,14 @@ The Azure.AI.Projects.OpenAI framework organized in a way that for each call, re
 
 Synchronous call:
 ```C# Snippet:Sample_CreateResponse_Sync
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous call:
 
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
@@ -156,7 +156,7 @@ The code above will result in creation of `AgentVersion` object, which is the da
 OpenAI API allows you to get the response without creating an agent by using the response API. In this scenario we first create the response object.
 
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
@@ -208,11 +208,11 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 );
 ```
 
-To associate the Response with the Agent the agent reference needs to be created. It is done by calling `GetProjectOpenAIResponseClientForAgent` method.
+To associate the Response with the Agent the agent reference needs to be created. It is done by calling `GetProjectResponsesClientForAgent` method.
 
 ```C# Snippet:CreateResponseBasic_Async
 var agentReference = new AgentReference(name: agentVersion.Name);
-ProjectOpenAIResponseClient responseClient = openaiClient.GetProjectOpenAIResponseClientForAgent(agentReference);
+ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
 ResponseCreationOptions responseCreationOptions = new();
 OpenAIResponse response = await responseClient.CreateResponseAsync(
     [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
@@ -239,13 +239,13 @@ await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
 #### Coversations
 
 Conversations may be used to store the history of interaction with the agent. To add the responses to a conversation,
-set the conversation parameter while calling `GetProjectOpenAIResponseClientForAgent`.
+set the conversation parameter while calling `GetProjectResponsesClientForAgent`.
 
 ```C# Snippet:ConversationClient
 ResponseCreationOptions responseCreationOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
 AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
 ```
 
 Conversations may be deleted to clean up the resources.
@@ -275,7 +275,7 @@ _ = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
 //
 // Use the agent and conversation in a response
 //
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
 ResponseCreationOptions responseCreationOptions = new()
 {
     AgentConversationId = EXISTING_CONVERSATION_ID,
@@ -399,7 +399,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Users can create a message to the Agent, which contains text and screenshots.
 
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseCreationOptions responseOptions = new();
 responseOptions.TruncationMode = ResponseTruncationMode.Auto;
 ResponseItem request = ResponseItem.CreateUserMessageItem(

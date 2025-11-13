@@ -83,7 +83,7 @@ Synchronous sample:
 ```C# Snippet:Sample_GetResponse_ImageGeneration_Sync
 ProjectOpenAIClientOptions options = new();
 ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
-ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
+ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
 OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");
 ```
@@ -92,7 +92,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_GetResponse_ImageGeneration_Async
 ProjectOpenAIClientOptions options = new();
 ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
-ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
+ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
 OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
 ```

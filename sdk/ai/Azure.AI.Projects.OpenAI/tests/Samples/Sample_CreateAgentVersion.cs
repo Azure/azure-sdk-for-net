@@ -119,18 +119,16 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_GetResponse_Sync
 
-        OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("myAgent", conversation.Id);
-
-        OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
+        OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responsesClient.GetResponse(responseId: response.Id);
+            response = responseClient.GetResponse(responseId: response.Id);
         }
 
         Console.WriteLine(response.GetOutputText());

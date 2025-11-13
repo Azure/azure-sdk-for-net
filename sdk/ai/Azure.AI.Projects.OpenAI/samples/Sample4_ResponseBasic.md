@@ -7,20 +7,20 @@ In this example we will demonstrate how to get a response without an Agent.
 ```C# Snippet:Sample_CreateAgentClient_ResponseBasic
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-ProjectOpenAIClient client = GetTestClient();
+ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 ```
 
 2. Use the client to create a `Responses`, which will be used to create `OpenAIResponse` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 

@@ -38,7 +38,7 @@ internal class Sample_Files : SamplesBase<AIProjectsTestEnvironment>
         var endpoint = TestEnvironment.PROJECTENDPOINT;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIFileClient fileClient = projectClient.OpenAI.Files;
+        ProjectFilesClient fileClient = projectClient.OpenAI.Files;
 
         // Upload file
         var dataDirectory = GetDataDirectory();

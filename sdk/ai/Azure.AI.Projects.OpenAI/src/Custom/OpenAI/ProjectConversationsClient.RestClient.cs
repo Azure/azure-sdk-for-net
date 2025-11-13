@@ -8,7 +8,7 @@ using OpenAI.Conversations;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public partial class ProjectOpenAIConversationClient : ConversationClient
+public partial class ProjectConversationsClient : ConversationClient
 {
     /*
      * Protocol message implementations are reproduced from the official OpenAI library

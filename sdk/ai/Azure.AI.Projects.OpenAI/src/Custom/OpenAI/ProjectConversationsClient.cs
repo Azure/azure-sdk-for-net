@@ -16,7 +16,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public partial class ProjectOpenAIConversationClient : ConversationClient
+public partial class ProjectConversationsClient : ConversationClient
 {
     /*
      * These convenience methods (returning strongly-typed response items) are temporary, pending strongly-typed convenience method support in the official OpenAI ConversationClient.
@@ -24,7 +24,7 @@ public partial class ProjectOpenAIConversationClient : ConversationClient
 
     private readonly Uri _endpoint;
 
-    public ProjectOpenAIConversationClient(ClientPipeline pipeline, OpenAIClientOptions options)
+    public ProjectConversationsClient(ClientPipeline pipeline, OpenAIClientOptions options)
         : base(pipeline, options)
     {
         _endpoint = options.Endpoint;
@@ -248,6 +248,6 @@ public partial class ProjectOpenAIConversationClient : ConversationClient
         return protocolResult.ToAgentClientResult<AgentConversation>();
     }
 
-    protected ProjectOpenAIConversationClient()
+    protected ProjectConversationsClient()
     { }
 }

@@ -5,20 +5,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
-    internal partial class InternalLocalShellExecAction
+    /// <summary> Execute a shell command on the server. </summary>
+    public partial class LocalShellAgentToolExecutionAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellExecAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalShellAgentToolExecutionAction"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <param name="env"> Environment variables to set for the command. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="env"/> is null. </exception>
-        public InternalLocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
+        public LocalShellAgentToolExecutionAction(IEnumerable<string> command, IDictionary<string, string> env)
         {
             Argument.AssertNotNull(command, nameof(command));
             Argument.AssertNotNull(env, nameof(env));
@@ -27,7 +27,7 @@ namespace OpenAI
             Env = env;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellExecAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalShellAgentToolExecutionAction"/>. </summary>
         /// <param name="type"> The type of the local shell action. Always `exec`. </param>
         /// <param name="command"> The command to run. </param>
         /// <param name="timeoutMs"> Optional timeout in milliseconds for the command. </param>
@@ -35,7 +35,7 @@ namespace OpenAI
         /// <param name="env"> Environment variables to set for the command. </param>
         /// <param name="user"> Optional user to run the command as. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalLocalShellExecAction(string @type, IList<string> command, int? timeoutMs, string workingDirectory, IDictionary<string, string> env, string user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalShellAgentToolExecutionAction(string @type, IList<string> command, int? timeoutMs, string workingDirectory, IDictionary<string, string> env, string user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Command = command;

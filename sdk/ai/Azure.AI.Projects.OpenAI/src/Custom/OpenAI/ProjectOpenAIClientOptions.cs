@@ -19,21 +19,8 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
         }
     }
 
-    internal ProjectOpenAIClientOptions GetClone()
+    public ProjectOpenAIClientOptions() : base()
     {
-        return new ProjectOpenAIClientOptions()
-        {
-            ApiVersion = ApiVersion,
-            ClientLoggingOptions = ClientLoggingOptions,
-            EnableDistributedTracing = EnableDistributedTracing,
-            Endpoint = Endpoint,
-            MessageLoggingPolicy = MessageLoggingPolicy,
-            NetworkTimeout = NetworkTimeout,
-            OrganizationId = OrganizationId,
-            ProjectId = ProjectId,
-            RetryPolicy = RetryPolicy,
-            Transport = Transport,
-            UserAgentApplicationId = UserAgentApplicationId,
-        };
+        _apiVersion = "2025-11-15-preview";
     }
 }

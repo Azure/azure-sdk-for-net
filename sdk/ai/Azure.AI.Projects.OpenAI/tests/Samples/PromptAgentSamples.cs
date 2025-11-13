@@ -74,7 +74,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #endregion
         #region Snippet:CreateResponseBasic_Async
         var agentReference = new AgentReference(name: agentVersion.Name);
-        ProjectOpenAIResponseClient responseClient = openaiClient.GetProjectOpenAIResponseClientForAgent(agentReference);
+        ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
         ResponseCreationOptions responseCreationOptions = new();
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
@@ -119,7 +119,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         );
         var agentReference = new AgentReference(name: agentVersion.Name);
         ResponseCreationOptions responseCreationOptions = new();
-        ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(agentReference);
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(agentReference);
         OpenAIResponse response = responseClient.CreateResponse(
             [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
             responseCreationOptions);
@@ -154,7 +154,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         ResponseCreationOptions responseCreationOptions = new();
         // Optionally, use a conversation to automatically maintain state between calls.
         AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
         #endregion
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
         OpenAIResponse response = await responseClient.CreateResponseAsync("Tell me a one-line story.");
@@ -218,7 +218,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         //
         // Use the agent and conversation in a response
         //
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
         ResponseCreationOptions responseCreationOptions = new()
         {
             AgentConversationId = EXISTING_CONVERSATION_ID,

@@ -15,7 +15,7 @@ ProjectOpenAIClient client = new(projectEndpoint: new Uri(projectEndpoint), toke
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponseStreaming
-ProjectOpenAIResponseClient responsesClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+ProjectResponsesClient responsesClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
 ```
 
 3. Stream the results; raise the error if the request was not successful.

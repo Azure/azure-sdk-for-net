@@ -71,13 +71,20 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary>
         /// The AgentTool.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.BingGroundingAgentTool"/>, <see cref="OpenAI.MicrosoftFabricAgentTool"/>, <see cref="OpenAI.SharepointAgentTool"/>, <see cref="OpenAI.AzureAISearchAgentTool"/>, <see cref="OpenAI.OpenAPIAgentTool"/>, <see cref="OpenAI.BingCustomSearchAgentTool"/>, <see cref="OpenAI.BrowserAutomationAgentTool"/>, <see cref="OpenAI.AzureFunctionAgentTool"/>, <see cref="OpenAI.CaptureStructuredOutputsTool"/>, <see cref="OpenAI.A2ATool"/>, and <see cref="OpenAI.MemorySearchTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.LocalShellAgentTool"/>, <see cref="OpenAI.BingGroundingAgentTool"/>, <see cref="OpenAI.MicrosoftFabricAgentTool"/>, <see cref="OpenAI.SharepointAgentTool"/>, <see cref="OpenAI.AzureAISearchAgentTool"/>, <see cref="OpenAI.OpenAPIAgentTool"/>, <see cref="OpenAI.BingCustomSearchAgentTool"/>, <see cref="OpenAI.BrowserAutomationAgentTool"/>, <see cref="OpenAI.AzureFunctionAgentTool"/>, <see cref="OpenAI.CaptureStructuredOutputsTool"/>, <see cref="OpenAI.A2ATool"/>, and <see cref="OpenAI.MemorySearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.AgentTool"/> instance for mocking. </returns>
         public static AgentTool AgentTool(string @type = default)
         {
             return new UnknownTool(new ToolType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool that allows the model to execute shell commands in a local environment. </summary>
+        /// <returns> A new <see cref="OpenAI.LocalShellAgentTool"/> instance for mocking. </returns>
+        public static LocalShellAgentTool LocalShellAgentTool()
+        {
+            return new LocalShellAgentTool(ToolType.LocalShell, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
@@ -594,6 +601,28 @@ namespace Azure.AI.Projects.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Execute a shell command on the server. </summary>
+        /// <param name="command"> The command to run. </param>
+        /// <param name="timeoutMs"> Optional timeout in milliseconds for the command. </param>
+        /// <param name="workingDirectory"> Optional working directory to run the command in. </param>
+        /// <param name="env"> Environment variables to set for the command. </param>
+        /// <param name="user"> Optional user to run the command as. </param>
+        /// <returns> A new <see cref="OpenAI.LocalShellAgentToolExecutionAction"/> instance for mocking. </returns>
+        public static LocalShellAgentToolExecutionAction LocalShellAgentToolExecutionAction(IEnumerable<string> command = default, int? timeoutMs = default, string workingDirectory = default, IDictionary<string, string> env = default, string user = default)
+        {
+            command ??= new ChangeTrackingList<string>();
+            env ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LocalShellAgentToolExecutionAction(
+                "exec",
+                command.ToList(),
+                timeoutMs,
+                workingDirectory,
+                env,
+                user,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A retrieved memory item from memory search. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <returns> A new <see cref="OpenAI.MemorySearchItem"/> instance for mocking. </returns>
@@ -642,7 +671,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <summary>
         /// Content item used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, <see cref="OpenAI.LocalShellToolCallAgentResponseItem"/>, <see cref="OpenAI.LocalShellToolCallOutputAgentResponseItem"/>, and <see cref="OpenAI.MemorySearchToolCallResponseItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -719,6 +748,48 @@ namespace Azure.AI.Projects.OpenAI
                 id,
                 consentLink,
                 serverLabel);
+        }
+
+        /// <summary>
+        /// A tool call to run a command on the local shell.
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="createdBy"> The information about the creator of the item. </param>
+        /// <param name="status"></param>
+        /// <param name="callId"> The unique ID of the local shell tool call generated by the model. </param>
+        /// <param name="action"></param>
+        /// <returns> A new <see cref="OpenAI.LocalShellToolCallAgentResponseItem"/> instance for mocking. </returns>
+        public static LocalShellToolCallAgentResponseItem LocalShellToolCallAgentResponseItem(string id = default, AgentResponseItemSource createdBy = default, LocalShellAgentToolCallStatus status = default, string callId = default, LocalShellAgentToolExecutionAction action = default)
+        {
+            return new LocalShellToolCallAgentResponseItem(
+                AgentResponseItemKind.LocalShellCall,
+                id,
+                createdBy,
+                additionalBinaryDataProperties: null,
+                status,
+                callId,
+                action);
+        }
+
+        /// <summary>
+        /// The output of a local shell tool call.
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="createdBy"> The information about the creator of the item. </param>
+        /// <param name="status"></param>
+        /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
+        /// <returns> A new <see cref="OpenAI.LocalShellToolCallOutputAgentResponseItem"/> instance for mocking. </returns>
+        public static LocalShellToolCallOutputAgentResponseItem LocalShellToolCallOutputAgentResponseItem(string id = default, AgentResponseItemSource createdBy = default, LocalShellAgentToolCallStatus status = default, string output = default)
+        {
+            return new LocalShellToolCallOutputAgentResponseItem(
+                AgentResponseItemKind.LocalShellCallOutput,
+                id,
+                createdBy,
+                additionalBinaryDataProperties: null,
+                status,
+                output);
         }
 
         /// <summary> The MemorySearchToolCallResponseItem. </summary>
