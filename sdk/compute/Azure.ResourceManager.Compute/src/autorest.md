@@ -16,6 +16,9 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
+  skipped-operations:
+    - CommunityGalleries_Get
+    - SharedGalleries_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -101,14 +104,6 @@ override-operation-name:
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
   VirtualMachineScaleSetVMs_Start: PowerOn
 
-request-path-to-resource-data:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}: CommunityGallery
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
-
 prepend-rp-prefix:
 - ApiError
 - ApiErrorBase
@@ -149,6 +144,9 @@ rename-mapping:
   CreationData.performancePlus: IsPerformancePlusEnabled
   CreationData.sourceResourceId: -|arm-id
   CreationData.storageAccountId: -|arm-id
+  CommunityGallery: CommunityGalleryData
+  CommunityGalleryImage: CommunityGalleryImageData
+  CommunityGalleryImageVersion: CommunityGalleryImageVersionData
   DataDisk: VirtualMachineDataDisk
   DedicatedHostGroup.properties.hosts: DedicatedHosts
   Disk: ManagedDisk
@@ -249,6 +247,9 @@ rename-mapping:
   SecurityPostureReference: ComputeSecurityPostureReference
   SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
   SecurityPostureReference.id: -|arm-id
+  SharedGallery: SharedGalleryData
+  SharedGalleryImage: SharedGalleryImageData
+  SharedGalleryImageVersion: SharedGalleryImageVersionData
   SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
   SharingProfile.permissions: permission
   SkuProfile : ComputeSkuProfile

@@ -9,10 +9,12 @@
 - Added `InstantAccess` property to `RestorePointGroupPatch` class.
 - Added `InstantAccessDurationMinutes` property to `RestorePointData` class.
 - Added `EnableFips1403Encryption` property to `AdditionalCapabilities` class.
+- Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `VirtualMachineDataDisk` class to make the properties writable, and expanded the scope of usage from only VMSS to also include Virtual Machines and Flexible VMs.
 
 ### Breaking Changes
 
-Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `VirtualMachineDataDisk` class to make the properties writable, and expanded the scope of usage from only VMSS to also include Virtual Machines and Flexible VMs.
+- `CommunityGallery`, `CommunityGalleryImage`, `CommunityGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
+- `SharedGallery`, `SharedGalleryImage`, `SharedGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
 
 ## 1.12.0 (2025-09-26)
 
@@ -51,7 +53,7 @@ Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `Virtu
 
 ### Breaking Changes
 
-- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility.
 
 ## 1.10.0 (2025-06-30)
 
