@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     internal class AudienceErrorHandlingPolicy : HttpPipelinePolicy
     {
-        private bool _isAudienceConfigured;
+        private readonly bool _isAudienceConfigured;
         private const string AadAudienceErrorCode = "AADSTS500011";
         private const string NoAudienceErrorMessage = "Unable to authenticate to Azure App Configuration. No authentication token audience was provided. Please set ConfigurationClientOptions.Audience to the appropriate audience for the target cloud. For details on how to configure the authentication token audience visit https://aka.ms/appconfig/client-token-audience.";
         private const string WrongAudienceErrorMessage = "Unable to authenticate to Azure App Configuration. An incorrect token audience was provided. Please set ConfigurationClientOptions.Audience to the appropriate audience for the target cloud. For details on how to configure the authentication token audience visit https://aka.ms/appconfig/client-token-audience.";
