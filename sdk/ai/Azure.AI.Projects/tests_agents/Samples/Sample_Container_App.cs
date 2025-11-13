@@ -104,7 +104,7 @@ public class Sample_Container_App : AgentsTestBase
         AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation(options: conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(containerAgentVersion, conversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
         OpenAIResponse response = responseClient.CreateResponse([]);
         response = WaitResponse(projectClient.OpenAI.Responses, response);
         Console.WriteLine(response.GetOutputText());

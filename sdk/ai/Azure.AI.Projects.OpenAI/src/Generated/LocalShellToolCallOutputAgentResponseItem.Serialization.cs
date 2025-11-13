@@ -6,20 +6,23 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
-    internal partial class InternalLocalShellToolCallOutputItemResource : AgentResponseItem, IJsonModel<InternalLocalShellToolCallOutputItemResource>
+    /// <summary>
+    /// The output of a local shell tool call.
+    /// 
+    /// </summary>
+    public partial class LocalShellToolCallOutputAgentResponseItem : AgentResponseItem, IJsonModel<LocalShellToolCallOutputAgentResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalLocalShellToolCallOutputItemResource"/> for deserialization. </summary>
-        internal InternalLocalShellToolCallOutputItemResource()
+        /// <summary> Initializes a new instance of <see cref="LocalShellToolCallOutputAgentResponseItem"/> for deserialization. </summary>
+        internal LocalShellToolCallOutputAgentResponseItem()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InternalLocalShellToolCallOutputItemResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LocalShellToolCallOutputAgentResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +33,10 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalLocalShellToolCallOutputItemResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LocalShellToolCallOutputAgentResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalLocalShellToolCallOutputItemResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalShellToolCallOutputAgentResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("status"u8);
@@ -44,24 +47,24 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalLocalShellToolCallOutputItemResource IJsonModel<InternalLocalShellToolCallOutputItemResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalLocalShellToolCallOutputItemResource)JsonModelCreateCore(ref reader, options);
+        LocalShellToolCallOutputAgentResponseItem IJsonModel<LocalShellToolCallOutputAgentResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LocalShellToolCallOutputAgentResponseItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalLocalShellToolCallOutputItemResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LocalShellToolCallOutputAgentResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalLocalShellToolCallOutputItemResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalShellToolCallOutputAgentResponseItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalLocalShellToolCallOutputItemResource(document.RootElement, options);
+            return DeserializeLocalShellToolCallOutputAgentResponseItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InternalLocalShellToolCallOutputItemResource DeserializeInternalLocalShellToolCallOutputItemResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static LocalShellToolCallOutputAgentResponseItem DeserializeLocalShellToolCallOutputAgentResponseItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +74,7 @@ namespace OpenAI
             string id = default;
             AgentResponseItemSource createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LocalShellToolCallOutputItemResourceStatus status = default;
+            LocalShellAgentToolCallStatus status = default;
             string output = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,7 +99,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new LocalShellToolCallOutputItemResourceStatus(prop.Value.GetString());
+                    status = new LocalShellAgentToolCallStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
@@ -109,7 +112,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalLocalShellToolCallOutputItemResource(
+            return new LocalShellToolCallOutputAgentResponseItem(
                 @type,
                 id,
                 createdBy,
@@ -119,43 +122,43 @@ namespace OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InternalLocalShellToolCallOutputItemResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LocalShellToolCallOutputAgentResponseItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalLocalShellToolCallOutputItemResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LocalShellToolCallOutputAgentResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InternalLocalShellToolCallOutputItemResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalShellToolCallOutputAgentResponseItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InternalLocalShellToolCallOutputItemResource IPersistableModel<InternalLocalShellToolCallOutputItemResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalLocalShellToolCallOutputItemResource)PersistableModelCreateCore(data, options);
+        LocalShellToolCallOutputAgentResponseItem IPersistableModel<LocalShellToolCallOutputAgentResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (LocalShellToolCallOutputAgentResponseItem)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalLocalShellToolCallOutputItemResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LocalShellToolCallOutputAgentResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInternalLocalShellToolCallOutputItemResource(document.RootElement, options);
+                        return DeserializeLocalShellToolCallOutputAgentResponseItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalLocalShellToolCallOutputItemResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalShellToolCallOutputAgentResponseItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InternalLocalShellToolCallOutputItemResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LocalShellToolCallOutputAgentResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

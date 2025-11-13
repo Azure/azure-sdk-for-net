@@ -22,3 +22,7 @@ namespace Azure.AI.Projects.OpenAI;
 
 [CodeGenType("MemorySearchToolCallItemResourceStatus")] public readonly partial struct MemorySearchToolCallStatus { }
 [CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenAPIFunctionEntry { }
+
+[CodeGenType("LocalShellTool")] public partial class LocalShellAgentTool { }
+[CodeGenType("LocalShellToolCallItemResourceStatus")] public readonly partial struct LocalShellAgentToolCallStatus { }
+[CodeGenType("LocalShellExecAction")] public partial class LocalShellAgentToolExecutionAction { }

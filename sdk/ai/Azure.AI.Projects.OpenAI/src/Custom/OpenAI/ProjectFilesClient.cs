@@ -7,13 +7,13 @@ using OpenAI.Files;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public partial class ProjectOpenAIFileClient : OpenAIFileClient
+public partial class ProjectFilesClient : OpenAIFileClient
 {
-    internal ProjectOpenAIFileClient(ClientPipeline pipeline, OpenAIClientOptions options)
+    internal ProjectFilesClient(ClientPipeline pipeline, OpenAIClientOptions options)
         : base(pipeline, options)
     {
     }
 
-    protected ProjectOpenAIFileClient()
+    protected ProjectFilesClient()
     { }
 }

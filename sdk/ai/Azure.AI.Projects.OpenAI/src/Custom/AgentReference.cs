@@ -20,7 +20,7 @@ public partial class AgentReference
         _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
     }
 
-    public static implicit operator AgentReference(string agentName) => new(agentName);
-    public static implicit operator AgentReference(AgentVersion agentVersion) => new(agentVersion.Name, agentVersion.Version);
-    public static implicit operator AgentReference(AgentRecord agentRecord) => new(agentRecord.Name);
+public static implicit operator AgentReference(string agentName) => new(agentName);
+public static implicit operator AgentReference(AgentVersion agentVersion) => new(agentVersion.Name, agentVersion.Version);
+public static implicit operator AgentReference(AgentRecord agentRecord) => new(agentRecord.Name);
 }

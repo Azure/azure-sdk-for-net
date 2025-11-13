@@ -131,7 +131,7 @@ public class Sample_ComputerUse : AgentsTestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Async
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new();
         responseOptions.TruncationMode = ResponseTruncationMode.Auto;
         ResponseItem request = ResponseItem.CreateUserMessageItem(
@@ -243,7 +243,7 @@ public class Sample_ComputerUse : AgentsTestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Sync
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new();
         responseOptions.TruncationMode = ResponseTruncationMode.Auto;
         string currentScreenshot = "browser_search";

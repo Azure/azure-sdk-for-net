@@ -67,7 +67,7 @@ public class PromptAgentSamples : AgentsTestBase
         // Optionally, use a conversation to automatically maintain state between calls.
         AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
         OpenAIResponse response = await responseClient.CreateResponseAsync("Tell me a one-line story.");
 
         Console.WriteLine(response.GetOutputText());
@@ -128,7 +128,7 @@ public class PromptAgentSamples : AgentsTestBase
         // Use the agent and conversation in a response
         //
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
 
         ResponseCreationOptions responseCreationOptions = new()
         {

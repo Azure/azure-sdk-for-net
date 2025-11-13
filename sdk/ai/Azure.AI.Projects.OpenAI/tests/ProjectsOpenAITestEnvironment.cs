@@ -12,14 +12,35 @@ namespace Azure.AI.Projects.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
-        public string PROJECT_ENDPOINT => GetRecordedVariable("PROJECT_ENDPOINT");
-        public string AGENT_NAME => GetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME");
-        public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
+        public string PROJECT_ENDPOINT => WrappedGetRecordedVariable("PROJECT_ENDPOINT", isSecret: false);
+        public string AGENT_NAME => WrappedGetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME", isSecret: false);
+        public string MODELDEPLOYMENTNAME => WrappedGetRecordedVariable("MODEL_DEPLOYMENT_NAME", isSecret: false);
+        public string KNOWN_CONVERSATION_ID => WrappedGetRecordedVariable("KNOWN_CONVERSATION_ID", isSecret: false);
+        public string PARITY_OPENAI_API_KEY => WrappedGetRecordedVariable("OPENAI_API_KEY");
 
-        public override Dictionary<string, string> ParseEnvironmentFile() => new()
+        public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
-            { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
-        };
+            try
+            {
+                return GetRecordedVariable(
+                    key,
+                    options =>
+                    {
+                        if (isSecret)
+                        {
+                            options.IsSecret();
+                        }
+                    });
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    throw new TestRecordingMismatchException($"Failed to retrieve recorded variable '{key}' during playback.", invalidOperationException);
+                }
+                throw;
+            }
+        }
 
         public override Task WaitForEnvironmentAsync()
         {
@@ -31,5 +52,10 @@ namespace Azure.AI.Projects.OpenAI.Tests
             RecordedTestMode.Live or RecordedTestMode.Record => new DefaultAzureCredential(),
             _ => base.Credential
         };
+
+        public override Dictionary<string, string> ParseEnvironmentFile()
+        {
+            return new();
+        }
     }
 }

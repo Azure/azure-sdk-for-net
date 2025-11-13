@@ -28,6 +28,8 @@ public abstract partial class AgentTool
         AgentCardPath = agentCardPath,
     };
 
+    public static LocalShellAgentTool CreateLocalShellTool() => new LocalShellAgentTool();
+
     public static implicit operator ResponseTool(AgentTool agentTool)
     {
         return ModelReaderWriter.Read<ResponseTool>(

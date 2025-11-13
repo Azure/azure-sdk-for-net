@@ -14,7 +14,9 @@ using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
@@ -43,6 +45,12 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         Sharepoint,
         ConnectedAgent,
         DeepResearch,
+    }
+
+    public enum OpenAIClientMode
+    {
+        UseExternalOpenAI,
+        UseFDPOpenAI
     }
 
     public Dictionary<ToolType, string> ToolPrompts = new()
@@ -96,17 +104,31 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     };
     #endregion
 
+    private readonly List<string> _conversationIDs = [];
+    private ProjectConversationsClient _conversations = null;
+
+    public ProjectsOpenAITestBase(bool isAsync) : base(isAsync) { }
+
+    public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
+    {
+    }
+
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
         => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
 
-    protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
-        => GetConfiguredOptions(
-            new ProjectOpenAIClientOptions()
-            {
-                Endpoint = endpoint,
-                ApiVersion = apiVersion,
-            },
-            instrument);
+    protected T CreateTestOpenAIClientOptions<T>(Uri endpoint = null, bool instrument = true)
+        where T : OpenAIClientOptions
+    {
+        T options = typeof(T).Name switch
+        {
+            nameof(OpenAIClientOptions) => (T)new OpenAIClientOptions(),
+            nameof(ProjectOpenAIClientOptions) => (T)(object)new ProjectOpenAIClientOptions(),
+            nameof(ProjectResponsesClientOptions) => (T)(object)new ProjectResponsesClientOptions(),
+            _ => throw new NotImplementedException()
+        };
+        options.Endpoint = endpoint;
+        return GetConfiguredOptions(options, instrument);
+    }
 
     private T GetConfiguredOptions<T>(T options, bool instrument)
         where T : ClientPipelineOptions
@@ -126,15 +148,6 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return instrument ? InstrumentClientOptions(options) : options;
     }
 
-    private readonly List<string> _conversationIDs = [];
-    private ProjectOpenAIConversationClient _conversations = null;
-
-    public ProjectsOpenAITestBase(bool isAsync) : base(isAsync) { }
-
-    public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
-    {
-    }
-
     protected AIProjectClient GetTestProjectClient()
     {
         AIProjectClientOptions options = CreateTestProjectClientOptions();
@@ -142,19 +155,44 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return CreateProxyFromClient(baseClient);
     }
 
-    protected ProjectOpenAIClient GetTestClient()
+    protected ProjectOpenAIClient GetTestProjectOpenAIClient(bool endpointInConstructor = true, bool endpointInOptions = false)
     {
-        ProjectOpenAIClientOptions clientOptions = CreateTestProjectOpenAIClientOptions(endpoint: new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai"), apiVersion: "2025-11-15-preview");
-        return CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
+        ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+
+        return CreateProxyFromClient(endpointInConstructor
+            ? new ProjectOpenAIClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), clientOptions)
+            : new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
     }
 
-    protected ProjectOpenAIResponseClient GetTestResponseClient(Uri constructorEndpoint = null, ProjectOpenAIClientOptions options = null)
+    protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
-        options ??= CreateTestProjectOpenAIClientOptions(endpoint: null, apiVersion: "2025-11-15-preview");
-        ProjectOpenAIResponseClient baseClient = constructorEndpoint is null
-            ? new ProjectOpenAIResponseClient(GetTestAuthenticationProvider(), options)
-            : new ProjectOpenAIResponseClient(constructorEndpoint, GetTestAuthenticationProvider(), options);
-        return CreateProxyFromClient(baseClient);
+        ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+
+        AgentReference defaultAgent = null;
+        if (defaultAgentName is not null)
+        {
+            defaultAgent = new(defaultAgentName);
+        }
+        else if (defaultModelName is not null)
+        {
+            defaultAgent = new($"model:{defaultModelName}");
+        }
+
+        return CreateProxyFromClient(endpointInConstructor
+                ? new ProjectResponsesClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), defaultAgent, defaultConversationId, clientOptions)
+                : new ProjectResponsesClient(GetTestAuthenticationProvider(), clientOptions));
+    }
+
+    protected OpenAIClient GetTestBaseOpenAIClient(Uri overrideEndpoint = null)
+    {
+        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+
+        return CreateProxyFromClient(
+            new OpenAIClient(
+                new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
+                options));
     }
 
     private AuthenticationTokenProvider GetTestAuthenticationProvider()
@@ -233,7 +271,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        ProjectOpenAIClient openAIClient = GetTestClient();
+        ProjectOpenAIClient openAIClient = GetTestProjectOpenAIClient();
         // Remove conversations.
         if (_conversations is not null)
         {

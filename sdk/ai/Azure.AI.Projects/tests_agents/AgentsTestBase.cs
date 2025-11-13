@@ -104,7 +104,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
     private readonly List<string> _memoryStoreIDs = [];
-    private ProjectOpenAIConversationClient _conversations = null;
+    private ProjectConversationsClient _conversations = null;
     private AIProjectMemoryStoresOperations _stores = null;
 
     private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch

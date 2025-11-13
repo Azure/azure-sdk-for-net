@@ -40,6 +40,18 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
     }
 
     [Test]
+    public void TestAgentToolSerialization()
+    {
+        AgentTool localShellTool = new LocalShellAgentTool();
+        BinaryData serializedLocalShellTool = ModelReaderWriter.Write(localShellTool);
+        Assert.That(serializedLocalShellTool.ToString(), Does.Contain(@"""type"":""local_shell"""));
+        Assert.That((ResponseTool)localShellTool, Is.InstanceOf<ResponseTool>());
+        ResponseTool deserializedLocalShellTool = ModelReaderWriter.Read<ResponseTool>(serializedLocalShellTool);
+        Assert.That(deserializedLocalShellTool, Is.InstanceOf<ResponseTool>());
+        Assert.That(deserializedLocalShellTool.AsAgentTool(), Is.InstanceOf<AgentTool>());
+    }
+
+    [Test]
     public void TestResponseCreationOptionsExtensions()
     {
         ResponseCreationOptions options = new();

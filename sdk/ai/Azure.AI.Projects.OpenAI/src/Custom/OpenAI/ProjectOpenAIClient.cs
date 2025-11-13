@@ -15,15 +15,15 @@ namespace Azure.AI.Projects.OpenAI;
 
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    public virtual ProjectOpenAIConversationClient Conversations => GetProjectOpenAIConversationClient();
-    public virtual ProjectOpenAIResponseClient Responses => GetProjectOpenAIResponseClient();
-    public virtual ProjectOpenAIFileClient Files => GetProjectOpenAIFileClient();
-    public virtual ProjectOpenAIVectorStoreClient VectorStores => GetProjectOpenAIVectorStoreClient();
+    public virtual ProjectConversationsClient Conversations => GetProjectConversationsClient();
+    public virtual ProjectResponsesClient Responses => GetProjectResponsesClient();
+    public virtual ProjectFilesClient Files => GetProjectFilesClient();
+    public virtual ProjectVectorStoresClient VectorStores => GetProjectVectorStoresClient();
 
-    private ProjectOpenAIConversationClient _cachedConversationClient;
-    private ProjectOpenAIResponseClient _cachedResponseClient;
-    private ProjectOpenAIFileClient _cachedFileClient;
-    private ProjectOpenAIVectorStoreClient _cachedVectorStoreClient;
+    private ProjectConversationsClient _cachedConversationClient;
+    private ProjectResponsesClient _cachedResponseClient;
+    private ProjectFilesClient _cachedFileClient;
+    private ProjectVectorStoresClient _cachedVectorStoreClient;
 
     private readonly ProjectOpenAIClientOptions _options;
 
@@ -31,13 +31,15 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     public ProjectOpenAIClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
         : base(
-            pipeline: CreatePipeline(CreateAuthenticationPolicy(tokenProvider, options), options),
-            options: CreateMergedOptions(projectEndpoint, options))
+            pipeline: CreatePipeline(
+                CreateAuthenticationPolicy(tokenProvider, options),
+                GetMergedOptions(projectEndpoint, options)),
+            options: GetMergedOptions(projectEndpoint, options))
     {
         Argument.AssertNotNull(projectEndpoint, nameof(projectEndpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
 
-        _options = options;
+        _options = GetMergedOptions(projectEndpoint, options);
     }
 
     public ProjectOpenAIClient(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
@@ -63,53 +65,61 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ConversationClient GetConversationClient()
-        => GetProjectOpenAIConversationClient();
+        => GetProjectConversationsClient();
 
-    public virtual ProjectOpenAIConversationClient GetProjectOpenAIConversationClient()
+    public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
         return Volatile.Read(ref _cachedConversationClient)
-            ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ProjectOpenAIConversationClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ProjectConversationsClient(Pipeline, _options), null)
             ?? _cachedConversationClient;
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override OpenAIResponseClient GetOpenAIResponseClient(string model)
-        => GetProjectOpenAIResponseClientForModel(model);
-
-    public virtual ProjectOpenAIFileClient GetProjectOpenAIFileClient()
+    public virtual ProjectFilesClient GetProjectFilesClient()
     {
         return Volatile.Read(ref _cachedFileClient)
-            ?? Interlocked.CompareExchange(ref _cachedFileClient, new ProjectOpenAIFileClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedFileClient, new ProjectFilesClient(Pipeline, _options), null)
             ?? _cachedFileClient;
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override OpenAIFileClient GetOpenAIFileClient() => GetProjectOpenAIFileClient();
+    public override OpenAIFileClient GetOpenAIFileClient() => GetProjectFilesClient();
 
-    public virtual ProjectOpenAIVectorStoreClient GetProjectOpenAIVectorStoreClient()
+    public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
         return Volatile.Read(ref _cachedVectorStoreClient)
-            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectOpenAIVectorStoreClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectVectorStoresClient(Pipeline, _options), null)
             ?? _cachedVectorStoreClient;
     }
 
-    public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClient()
+    public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
-            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model: null, agentConversationId: null), null)
+            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(Pipeline, _options, defaultAgent: null, defaultConversationId: null), null)
             ?? _cachedResponseClient;
     }
 
-    public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForAgent(AgentReference agent, string agentConversationId = null)
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override OpenAIResponseClient GetOpenAIResponseClient(string defaultModel)
+        => GetProjectResponsesClientForModel(defaultModel);
+
+    public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)
     {
-        Argument.AssertNotNull(agent, nameof(agent));
-        return new ProjectOpenAIResponseClient(Pipeline, _options, agent.Name, agent.Version, model: null, agentConversationId);
+        Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
+        return new ProjectResponsesClient(
+            Pipeline,
+            _options,
+            defaultAgent,
+            defaultConversationId);
     }
 
-    public virtual ProjectOpenAIResponseClient GetProjectOpenAIResponseClientForModel(string model)
+    public virtual ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null)
     {
-        Argument.AssertNotNullOrEmpty(model, nameof(model));
-        return new ProjectOpenAIResponseClient(Pipeline, _options, agentName: null, agentVersion: null, model, agentConversationId: null);
+        Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));
+        return new ProjectResponsesClient(
+            Pipeline,
+            _options,
+            new AgentReference($"model:{defaultModel}"),
+            defaultConversationId);
     }
 
     internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
@@ -135,20 +145,19 @@ public partial class ProjectOpenAIClient : OpenAIClient
         return new BearerTokenPolicy(tokenProvider, s_defaultAuthorizationScope);
     }
 
-    internal static ProjectOpenAIClientOptions CreateMergedOptions(Uri projectEndpoint, ProjectOpenAIClientOptions options = null)
+    internal static ProjectOpenAIClientOptions GetMergedOptions(Uri projectEndpoint, ProjectOpenAIClientOptions options = null)
     {
-        options = options?.GetClone() ?? new();
-
+        if (projectEndpoint is null)
+        {
+            return options;
+        }
         string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai";
-
-        if (options.Endpoint is not null && options.Endpoint.AbsoluteUri != rawTargetOpenAIEndpoint)
+        if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
         {
             throw new InvalidOperationException(
                 $"Cannot supply both a constructor '{nameof(projectEndpoint)}' and {nameof(options)}.{nameof(options.Endpoint)}.");
         }
-
-        options.Endpoint ??= new(rawTargetOpenAIEndpoint);
-
+        options?.Endpoint ??= new Uri(rawTargetOpenAIEndpoint);
         return options;
     }
 }

@@ -27,10 +27,10 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        ProjectOpenAIClient client = GetTestClient();
+        ProjectOpenAIClient client = GetTestProjectOpenAIClient();
         #endregion
         #region Snippet:Sample_CreateResponse_Async
-        OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+        OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
         OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 
         #endregion
@@ -57,9 +57,9 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        ProjectOpenAIClient client = GetTestClient();
+        ProjectOpenAIClient client = GetTestProjectOpenAIClient();
         #region Snippet:Sample_CreateResponse_Sync
-        OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+        OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
         OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
         #endregion
 

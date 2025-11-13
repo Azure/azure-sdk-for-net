@@ -7,13 +7,13 @@ using OpenAI.VectorStores;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public partial class ProjectOpenAIVectorStoreClient : VectorStoreClient
+public partial class ProjectVectorStoresClient : VectorStoreClient
 {
-    internal ProjectOpenAIVectorStoreClient(ClientPipeline pipeline, OpenAIClientOptions options)
+    internal ProjectVectorStoresClient(ClientPipeline pipeline, OpenAIClientOptions options)
         : base(pipeline, options)
     {
     }
 
-    protected ProjectOpenAIVectorStoreClient()
+    protected ProjectVectorStoresClient()
     { }
 }

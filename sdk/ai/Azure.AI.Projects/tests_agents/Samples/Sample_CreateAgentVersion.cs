@@ -122,7 +122,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation.Id);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation.Id);
 
         OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
 
