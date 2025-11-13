@@ -298,11 +298,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             {
                 Properties = new NginxDeploymentUpdateProperties()
             };
-            NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect
-            {
-                WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled
-            };
-            deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
+            deploymentPatch.Properties.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled;
             NginxDeploymentResource updatedNginxDeployment = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState);
@@ -314,8 +310,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ThreatCampaignsPackage);
             Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ComponentVersions);
 
-            nginxAppProtect.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Disabled;
-            deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
+            deploymentPatch.Properties.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Disabled;
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.AreEqual(nginxDeployment2.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, WebApplicationFirewallActivationState.Disabled);

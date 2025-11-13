@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="properties"> Nginx Certificate Properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Nginx.NginxCertificateData"/> instance for mocking. </returns>
-        public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxCertificateProperties properties = null, string location = null)
+        public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxCertificateProperties properties = null, AzureLocation? location = null)
         {
             return new NginxCertificateData(
                 id,

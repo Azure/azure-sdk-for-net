@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="properties"> Nginx Certificate Properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxCertificateProperties properties, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NginxCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxCertificateProperties properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Nginx
         /// <summary> Nginx Certificate Properties. </summary>
         public NginxCertificateProperties Properties { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

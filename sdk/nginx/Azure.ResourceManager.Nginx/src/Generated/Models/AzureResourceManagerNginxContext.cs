@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Nginx
     [ModelReaderWriterBuildable(typeof(NginxDeploymentResource))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentScalingProperties))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(NginxDeploymentUpdatePropertiesNginxAppProtect))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentUserProfile))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentWafPolicyApplyingStatus))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentWafPolicyCompilingStatus))]
