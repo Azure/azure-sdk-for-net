@@ -102,8 +102,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_DisabledByDefault()
         {
-            var tokenFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(tokenFilePath, "test-token");
+            var tokenFilePath = "/fake/path/token";
 
             var options = new WorkloadIdentityCredentialOptions
             {
@@ -130,8 +129,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_OptInWithoutEnvVars_NoError()
         {
-            var tokenFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(tokenFilePath, "test-token");
+            var tokenFilePath = "/fake/path/token";
 
             var options = new WorkloadIdentityCredentialOptions
             {
@@ -152,8 +150,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_InvalidProxyUrl_ThrowsInvalidOperation()
         {
-            var tokenFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(tokenFilePath, "test-token");
+            var tokenFilePath = "/fake/path/token";
 
             var options = new WorkloadIdentityCredentialOptions
             {
@@ -191,8 +188,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_BothCaFileAndCaData_ThrowsInvalidOperation()
         {
-            var tokenFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(tokenFilePath, "test-token");
+            var tokenFilePath = "/fake/path/token";
 
             var caFilePath = _tempFiles.GetTempFilePath();
             File.WriteAllText(caFilePath, "-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----");
@@ -223,8 +219,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_CaFileDoesNotExist_ThrowsInvalidOperation()
         {
-            var tokenFilePath = _tempFiles.GetTempFilePath();
-            File.WriteAllText(tokenFilePath, "test-token");
+            var tokenFilePath = "/fake/path/token";
 
             var options = new WorkloadIdentityCredentialOptions
             {
