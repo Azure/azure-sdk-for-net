@@ -1170,7 +1170,7 @@ namespace Azure.Core.Tests
                 // Now set the client certificate and update the transport
                 options.ClientCertificates.Add(clientCert);
 
-                transport.UpdateTransport(options);
+                transport.Update(options);
                 setClientCertificate = true;
 
                 request = transport.CreateRequest();
@@ -1230,7 +1230,7 @@ namespace Azure.Core.Tests
                 options.ClientCertificates.Clear();
                 options.ClientCertificates.Add(anotherCert);
 
-                transport.UpdateTransport(options);
+                transport.Update(options);
                 setClientCertificate = true;
 
                 request = transport.CreateRequest();

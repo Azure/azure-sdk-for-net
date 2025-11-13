@@ -37,7 +37,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="options">The options to use for updating the transport.</param>
 
-        public virtual void UpdateTransport(HttpPipelineTransportOptions options)
+        public virtual void Update(HttpPipelineTransportOptions options)
         {
             throw new NotSupportedException("This transport does not support updating options.");
         }

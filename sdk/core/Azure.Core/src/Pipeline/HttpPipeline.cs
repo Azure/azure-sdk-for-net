@@ -63,7 +63,7 @@ namespace Azure.Core.Pipeline
                 // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
                 if (policies[i] is ISupportsTransportCertificateUpdate transportUpdated)
                 {
-                    transportUpdated.TransportOptionsChanged += options => _transport.UpdateTransport(options);
+                    transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
                     break;
                 }
             }
@@ -94,7 +94,7 @@ namespace Azure.Core.Pipeline
                 // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
                 if (pipeline[i] is ISupportsTransportCertificateUpdate transportUpdated)
                 {
-                    transportUpdated.TransportOptionsChanged += options => _transport.UpdateTransport(options);
+                    transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
                     break;
                 }
             }

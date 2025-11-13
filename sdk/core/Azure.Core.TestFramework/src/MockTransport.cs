@@ -74,7 +74,7 @@ namespace Azure.Core.TestFramework
             await ProcessCore(message);
         }
 
-        public override void UpdateTransport(HttpPipelineTransportOptions options)
+        public override void Update(HttpPipelineTransportOptions options)
         {
             TransportUpdates.Add(options);
         }

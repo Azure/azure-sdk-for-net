@@ -40,7 +40,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public override void UpdateTransport(HttpPipelineTransportOptions options)
+        public override void Update(HttpPipelineTransportOptions options)
         {
             if (this == Shared)
             {
