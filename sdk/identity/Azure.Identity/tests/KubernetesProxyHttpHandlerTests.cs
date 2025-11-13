@@ -226,7 +226,7 @@ namespace Azure.Identity.Tests
                 if (requestCount == 2)
                 {
                     File.WriteAllText(caFilePath, cert2);
-                    Thread.Sleep(10); // Allow file system to flush
+                    Task.Delay(10).GetAwaiter().GetResult(); // Allow file system to flush
                 }
             });
 
@@ -285,10 +285,10 @@ namespace Azure.Identity.Tests
                 if (currentRequest == 2)
                 {
                     File.WriteAllText(caFilePath, cert2);
-                    Thread.Sleep(10);
+                    Task.Delay(10).GetAwaiter().GetResult();
                 }
 
-                Thread.Sleep(50); // Simulate processing time
+                Task.Delay(50).GetAwaiter().GetResult(); // Simulate processing time
                 var response = new MockResponse(200);
                 response.SetContent($"{{\"request\":{currentRequest}}}");
                 return response;
@@ -608,7 +608,7 @@ namespace Azure.Identity.Tests
                 if (requestCount == 2)
                 {
                     File.WriteAllText(caFilePath, cert2);
-                    Thread.Sleep(10);
+                    Task.Delay(10).GetAwaiter().GetResult();
                 }
             });
 
