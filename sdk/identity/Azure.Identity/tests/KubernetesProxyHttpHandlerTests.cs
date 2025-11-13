@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -524,6 +526,138 @@ namespace Azure.Identity.Tests
                     Assert.IsFalse(result, "Should reject RemoteCertificateNotAvailable");
                 }
             }
+        }
+
+        [Test]
+        public async Task SendAsync_LogsWhenCaFileIsEmptyOrMissing()
+        {
+            // Arrange
+            var caFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(caFilePath, GetTestCertificatePem());
+
+            var mockTransport = CreateMockTransport();
+            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+
+            // Act - First request succeeds
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Start listening after first request
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Informational);
+
+            File.WriteAllText(caFilePath, ""); // Empty the file
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Assert - Should log that reload was skipped
+            var loggedEvents = listener.EventData.Where(e => e.EventName == "KubernetesProxyCaCertificateReloadSkipped").ToList();
+            Assert.That(loggedEvents, Is.Not.Empty, "Should log when CA file is empty");
+
+            // Verify the reason parameter contains expected text
+            if (loggedEvents.Any())
+            {
+                var reason = loggedEvents.First().GetProperty<string>("reason");
+                Assert.That(reason, Contains.Substring("empty or missing"));
+            }
+        }
+
+        [Test]
+        public async Task SendAsync_LogsWhenCaFileReadFails()
+        {
+            // Arrange
+            var caFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(caFilePath, GetTestCertificatePem());
+
+            var mockTransport = CreateMockTransport();
+            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+
+            // Act - First request succeeds
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Start listening after first request
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Warning);
+
+            File.Delete(caFilePath);
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Assert - Should log a warning about the read failure
+            var loggedEvents = listener.EventData.Where(e => e.EventName == "KubernetesProxyCaCertificateReloadFailed").ToList();
+            Assert.That(loggedEvents, Is.Not.Empty, "Should log when CA file read fails");
+
+            // Verify the error parameter exists
+            if (loggedEvents.Any())
+            {
+                var error = loggedEvents.First().GetProperty<string>("error");
+                Assert.That(error, Is.Not.Null.And.Not.Empty);
+            }
+        }
+
+        [Test]
+        public async Task SendAsync_LogsWhenCaCertificateChanges()
+        {
+            // Arrange
+            var caFilePath = _tempFiles.GetTempFilePath();
+            var cert1 = GetTestCertificatePem();
+            var cert2 = GetDifferentTestCertificatePem();
+            File.WriteAllText(caFilePath, cert1);
+
+            var requestCount = 0;
+            var mockTransport = CreateMockTransport(requestValidator: req =>
+            {
+                requestCount++;
+                if (requestCount == 2)
+                {
+                    File.WriteAllText(caFilePath, cert2);
+                    Thread.Sleep(10);
+                }
+            });
+
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
+
+            // Act - Make first two requests
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Start listening before the third request that should detect the change
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Informational);
+
+            // This request should detect the change and log
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Assert - Should log that the certificate changed
+            var loggedEvents = listener.EventData.Where(e => e.EventName == "KubernetesProxyCaCertificateReloaded").ToList();
+            Assert.That(loggedEvents, Is.Not.Empty, "Should log when CA certificate changes");
+        }
+
+        [Test]
+        public async Task SendAsync_LogsDoNotAppearWhenCertificateUnchanged()
+        {
+            // Arrange
+            var caFilePath = _tempFiles.GetTempFilePath();
+            File.WriteAllText(caFilePath, GetTestCertificatePem());
+
+            var mockTransport = CreateMockTransport();
+            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+
+            // Act - Make first request
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Start listening after first request
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Informational);
+
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            await httpClient.GetAsync("https://login.microsoftonline.com/token");
+
+            // Assert - Should not log anything about certificate reloading
+            var reloadEvents = listener.EventData.Where(e =>
+                e.EventName == "KubernetesProxyCaCertificateReloaded" ||
+                e.EventName == "KubernetesProxyCaCertificateReloadSkipped" ||
+                e.EventName == "KubernetesProxyCaCertificateReloadFailed").ToList();
+            Assert.That(reloadEvents, Is.Empty, "Should not log when CA certificate is unchanged");
         }
     }
 }

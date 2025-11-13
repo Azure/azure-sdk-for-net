@@ -162,11 +162,13 @@ namespace Azure.Identity
             // Keep using current handler during rotation gaps (empty or missing file)
             if (currentCaData == null || currentCaData.Length == 0)
             {
+                AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloadSkipped("CA certificate file is empty or missing");
                 return false;
             }
 
             if (_lastCaData == null || !AreByteArraysEqual(currentCaData, _lastCaData))
             {
+                AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloaded();
                 return true;
             }
 
@@ -185,8 +187,9 @@ namespace Azure.Identity
 
                 return System.Text.Encoding.UTF8.GetBytes(caContent);
             }
-            catch
+            catch (Exception ex)
             {
+                AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloadFailed(ex.Message);
                 return null;
             }
         }
