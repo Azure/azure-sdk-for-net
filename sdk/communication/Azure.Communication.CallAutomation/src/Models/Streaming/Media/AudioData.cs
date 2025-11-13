@@ -19,6 +19,20 @@ namespace Azure.Communication.CallAutomation
             Data = data;
         }
 
+        /// <summary>
+        /// The audio data, encoded as a base64 string
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="markId"></param>
+        public AudioData(byte[] data, string markId)
+        {
+            Data = data;
+            Mark = new MarkAudio()
+            {
+                Id = markId
+            };
+        }
+
         internal AudioData(string data, DateTime timestamp, string participantId, bool silent, MarkAudio mark)
         {
             Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;

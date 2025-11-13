@@ -11,12 +11,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The mark data
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        public MarkData(string id, MarkStatus status)
+        public MarkData()
         {
-            Id = id;
-            Status = status;
         }
 
         /// <summary>

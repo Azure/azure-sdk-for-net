@@ -64,7 +64,11 @@ namespace Azure.Communication.CallAutomation
 
                 case "MarkData":
                     MarkDataInternal markDataInternal = JsonSerializer.Deserialize<MarkDataInternal>(streamingData.GetProperty("markData").ToString());
-                    return new MarkData(markDataInternal.Id, markDataInternal.Status);
+                    return new MarkData
+                    {
+                        Id = markDataInternal.Id,
+                        Status = markDataInternal.Status
+                    };
 
                 #endregion
 
