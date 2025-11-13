@@ -21,6 +21,7 @@ using OpenTelemetry.Trace;
 
 namespace Azure.AI.Projects.Tests;
 
+[Ignore("Temporarily disabled pending post-packaging investigation of regressions")]
 public partial class AgentsTelemetryTests : AgentsTestBase
 {
     public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";

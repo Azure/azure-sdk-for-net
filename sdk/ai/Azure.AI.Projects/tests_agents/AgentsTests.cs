@@ -991,6 +991,37 @@ public class AgentsTests : AgentsTestBase
         Assert.That(response.GetOutputText().ToLower(), Does.Contain(replyToFunctionCall.ToLower()));
     }
 
+    [RecordedTest]
+    public async Task CanOverrideUserAgentViaProtocolResponses()
+    {
+        AIProjectClientOptions options = CreateTestProjectClientOptions();
+
+        string userAgentValue = null;
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
+                if (message.Request.Headers.TryGetValue("User-Agent", out userAgentValue))
+                { }
+            }),
+            PipelinePosition.BeforeTransport);
+        AIProjectClient client = CreateProxyFromClient(new AIProjectClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), TestEnvironment.Credential, options));
+
+        RequestOptions protocolRequestOptions = new();
+        protocolRequestOptions.AddHeader("User-Agent", "DotnetTestMyProtocolUserAgent");
+
+        ClientResult protocolResult = await client.OpenAI.Responses.CreateResponseAsync(
+            BinaryContent.Create(
+                BinaryData.FromString($$"""
+                    {
+                      "model": "{{TestEnvironment.MODELDEPLOYMENTNAME}}",
+                      "input": [{"type":"message","role":"user","content":"hello, model!"}]
+                    }
+                    """)),
+            protocolRequestOptions);
+
+        Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
+    }
+
     private static readonly string s_HelloWorkflowYaml = """
         kind: workflow
         trigger:

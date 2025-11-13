@@ -57,16 +57,19 @@ internal static partial class PipelinePolicyHelpers
                 PipelinePosition.PerCall);
     }
 
-    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, string value)
+    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, string value, bool replaceExisting = false)
         => AddRequestHeaderPolicy(options, key, () => value);
 
-    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator)
+    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator, bool replaceExisting = false)
     {
         options.AddPolicy(
             new GenericActionPipelinePolicy(
                 requestAction: request =>
                 {
-                    request.Headers.Set(key, valueGenerator.Invoke());
+                    if (replaceExisting || !request.Headers.TryGetValue(key, out string _))
+                    {
+                        request.Headers.Set(key, valueGenerator.Invoke());
+                    }
                 }),
             PipelinePosition.PerCall);
     }
