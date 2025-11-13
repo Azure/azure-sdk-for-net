@@ -5,12 +5,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identity;
 
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Pipeline policy that inspects <see cref="AuthenticationFailedException"/> instances for the Entra ID token audience error code (AADSTS500011) and rethrows a new exception with clearer guidance.
+    /// Pipeline policy that inspects the exception for the Entra ID token audience error code (AADSTS500011) and rethrows a new exception with clearer guidance.
     /// </summary>
     internal class AudienceErrorHandlingPolicy : HttpPipelinePolicy
     {
@@ -30,7 +29,7 @@ namespace Azure.Data.AppConfiguration
             {
                 ProcessNext(message, pipeline);
             }
-            catch (AuthenticationFailedException ex)
+            catch (Exception ex)
             {
                 HandleAuthenticationAudienceError(ex);
                 throw;
@@ -43,23 +42,24 @@ namespace Azure.Data.AppConfiguration
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
-            catch (AuthenticationFailedException ex)
+            catch (Exception ex)
             {
                 HandleAuthenticationAudienceError(ex);
                 throw;
             }
         }
 
-        private void HandleAuthenticationAudienceError(AuthenticationFailedException ex)
+        private void HandleAuthenticationAudienceError(Exception ex)
         {
-            // Message string matching is used because AAD error codes are embedded in the exception message.
+            // Only AuthenticationFailedException should be thrown for the audience error, but we don't want to introduce the dependecy on Azure.Idendity.
+            // So we catch all exceptions here and inspect whether the AAD error codes are embedded in the exception message.
             if (!ex.Message.Contains(AadAudienceErrorCode))
             {
                 return;
             }
 
             string message = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
-            throw new AuthenticationFailedException(message, ex);
+            throw new RequestFailedException(message, ex);
         }
     }
 }
