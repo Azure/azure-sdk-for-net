@@ -286,6 +286,33 @@ catch (RequestFailedException exception)
 }
 ```
 
+## Translation using LLM
+
+You can get translations from Large Language Model (LLM) models in addition to default neural Machine Translation (NMT). [Azure resources for Azure AI translation](https://learn.microsoft.com/azure/ai-services/translator/how-to/create-translator-resource?tabs=foundry)
+
+```C# Snippet:GetTextTranslationLlmAsync
+try
+{
+    string targetLanguage = "cs";
+    string llmModelname = "gpt-4o-mini";
+    string inputText = "This is a test.";
+
+    TranslationTarget target = new TranslationTarget(targetLanguage, deploymentName: llmModelname);
+    TranslateInputItem input = new TranslateInputItem(inputText, target);
+
+    Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+    TranslatedTextItem translation = response.Value;
+
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
 See the [README] of the Text Translation client library for more information, including useful links and instructions.
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/README.md

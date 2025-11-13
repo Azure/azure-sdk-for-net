@@ -119,7 +119,7 @@ catch (RequestFailedException exception)
 
 You can provide multiple target languages which results in each input element being translated to all target languages.
 
-```C#  Snippet:GetTextTranslationMatrix
+```C# Snippet:GetTextTranslationMatrix
 try
 {
     IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };

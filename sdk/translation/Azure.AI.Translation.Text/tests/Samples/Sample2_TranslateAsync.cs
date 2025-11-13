@@ -20,32 +20,6 @@ namespace Azure.AI.Translation.Text.Samples
     public partial class Sample2_TranslateAsync : Sample0_CreateClient
     {
         [Test]
-        public async Task GetTextTranslationAsync()
-        {
-            TextTranslationClient client = CreateClient();
-
-            #region Snippet:GetTextTranslationAsync
-            try
-            {
-                string targetLanguage = "cs";
-                string inputText = "This is a test.";
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-                TranslatedTextItem translation = translations.FirstOrDefault();
-
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-            #endregion
-        }
-
-        [Test]
         public async Task GetTextTranslationBySourceAsync()
         {
             TextTranslationClient client = CreateClient();
@@ -288,7 +262,7 @@ namespace Azure.AI.Translation.Text.Samples
                 string inputText = "This is ***.";
 
                 TranslationTarget target = new TranslationTarget(targetLanguage, profanityAction: profanityAction, profanityMarker: profanityMarkers);
-                TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+                TranslateInputItem input = new TranslateInputItem(inputText, target);
 
                 Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
                 TranslatedTextItem translation = response.Value;
