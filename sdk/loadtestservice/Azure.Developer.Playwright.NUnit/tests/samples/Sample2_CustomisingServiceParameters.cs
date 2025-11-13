@@ -36,7 +36,7 @@ public class Sample2ServiceSetup : PlaywrightServiceBrowserNUnit
     }
 #else
     public Sample2ServiceSetup() : base(
-        credential: new ManagedIdentityCredential(),
+        credential: new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned),
         options: new PlaywrightServiceBrowserClientOptions()
         {
             OS = OSPlatform.Linux,
