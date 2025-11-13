@@ -166,7 +166,7 @@ namespace Azure.Identity
                 return false;
             }
 
-            if (_lastCaData == null || !AreByteArraysEqual(currentCaData, _lastCaData))
+            if (_lastCaData == null || !currentCaData.AsSpan().SequenceEqual(_lastCaData))
             {
                 AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloaded();
                 return true;
@@ -192,24 +192,6 @@ namespace Azure.Identity
                 AzureIdentityEventSource.Singleton.KubernetesProxyCaCertificateReloadFailed(ex.Message);
                 return null;
             }
-        }
-
-        private static bool AreByteArraysEqual(byte[] a, byte[] b)
-        {
-            if (a == null && b == null)
-                return true;
-            if (a == null || b == null)
-                return false;
-            if (a.Length != b.Length)
-                return false;
-
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] != b[i])
-                    return false;
-            }
-
-            return true;
         }
 
         private DisposingHttpClientHandler CreateHandler()
