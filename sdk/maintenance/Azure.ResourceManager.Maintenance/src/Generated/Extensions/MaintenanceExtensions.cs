@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,6 +283,76 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// Post Scheduled Event Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledEvent_Acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.AcknowledgeScheduledEvent(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource Name. </param>
+        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        public static async Task<Response<ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(this ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableMaintenanceResourceGroupResource(resourceGroupResource).AcknowledgeScheduledEventAsync(resourceType, resourceName, scheduledEventId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post Scheduled Event Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledEvent_Acknowledge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.AcknowledgeScheduledEvent(string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource Name. </param>
+        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
+        public static Response<ScheduledEventApproveResult> AcknowledgeScheduledEvent(this ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).AcknowledgeScheduledEvent(resourceType, resourceName, scheduledEventId, cancellationToken);
+        }
+
+        /// <summary>
         /// Track maintenance updates to resource with parent
         /// <list type="bullet">
         /// <item>
@@ -295,7 +365,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,7 +401,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +437,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -408,7 +478,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -449,7 +519,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -488,7 +558,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -527,7 +597,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -559,7 +629,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -591,7 +661,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -623,7 +693,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -655,7 +725,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -687,7 +757,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -719,7 +789,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -755,7 +825,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -791,7 +861,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -828,7 +898,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -865,7 +935,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -901,7 +971,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -937,7 +1007,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -975,7 +1045,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1013,7 +1083,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1049,7 +1119,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1073,6 +1143,70 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// Get Configuration records within a subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdateForResourceGroup_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetMaintenanceApplyUpdates(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription and resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdateForResourceGroup_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetMaintenanceApplyUpdates(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetMaintenanceApplyUpdates(cancellationToken);
+        }
+
+        /// <summary>
         /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
@@ -1085,7 +1219,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1118,7 +1252,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1151,7 +1285,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1185,7 +1319,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1219,7 +1353,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1253,7 +1387,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1287,7 +1421,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1320,7 +1454,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1353,7 +1487,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1391,7 +1525,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1429,7 +1563,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1465,7 +1599,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1518,7 +1652,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1556,7 +1690,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1586,6 +1720,78 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdates(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceApplyUpdateResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdates(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceApplyUpdates(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// <item>
@@ -1594,7 +1800,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1630,7 +1836,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1654,7 +1860,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// [UNSUPPORTED] Get configuration assignment within a subscription. This API is not implemented yet.
+        /// Get configuration assignment within a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1666,7 +1872,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1686,7 +1892,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// [UNSUPPORTED] Get configuration assignment within a subscription. This API is not implemented yet.
+        /// Get configuration assignment within a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1698,7 +1904,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1718,7 +1924,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration assignment for resource.
+        /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1730,7 +1936,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1751,7 +1957,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration assignment for resource.
+        /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1763,7 +1969,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1796,7 +2002,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1830,7 +2036,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1864,7 +2070,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1898,7 +2104,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1932,7 +2138,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1965,7 +2171,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

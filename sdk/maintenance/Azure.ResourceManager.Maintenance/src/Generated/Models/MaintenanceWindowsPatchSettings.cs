@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowsPatchSettings"/>. </summary>
         /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
         /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
-        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>
         /// <param name="isExcludeKbsRebootRequired"> Exclude patches which need reboot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MaintenanceWindowsPatchSettings(IList<string> kbNumbersToExclude, IList<string> kbNumbersToInclude, IList<string> classificationsToInclude, bool? isExcludeKbsRebootRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public IList<string> KbNumbersToExclude { get; }
         /// <summary> Windows KBID to be included for patching. </summary>
         public IList<string> KbNumbersToInclude { get; }
-        /// <summary> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </summary>
+        /// <summary> Classification category of patches to be patched. </summary>
         public IList<string> ClassificationsToInclude { get; }
         /// <summary> Exclude patches which need reboot. </summary>
         public bool? IsExcludeKbsRebootRequired { get; set; }

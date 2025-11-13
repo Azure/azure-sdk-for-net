@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
         /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
-        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MaintenanceLinuxPatchSettings(IList<string> packageNameMasksToExclude, IList<string> packageNameMasksToInclude, IList<string> classificationsToInclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public IList<string> PackageNameMasksToExclude { get; }
         /// <summary> Package names to be included for patching. </summary>
         public IList<string> PackageNameMasksToInclude { get; }
-        /// <summary> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </summary>
+        /// <summary> Classification category of patches to be patched. </summary>
         public IList<string> ClassificationsToInclude { get; }
     }
 }
