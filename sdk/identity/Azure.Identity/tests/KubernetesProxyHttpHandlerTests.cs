@@ -399,6 +399,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+#if NET5_0_OR_GREATER
         public void CertificateValidation_LoadsAndValidatesCertificateCorrectly()
         {
             // Verify certificate can be loaded from PEM data
@@ -413,6 +414,12 @@ namespace Azure.Identity.Tests
                 Assert.IsNotNull(handler);
             }, "Handler should be created successfully with valid CA data");
         }
+#else
+        public void CertificateValidation_LoadsAndValidatesCertificateCorrectly()
+        {
+            Assert.Ignore("X509Certificate2.CreateFromPem is not available on .NET Framework");
+        }
+#endif
 
         [Test]
         public async Task SendAsync_WithNoCaData_DoesNotConfigureCertificateValidation()
@@ -423,6 +430,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+#if NET5_0_OR_GREATER
         public void CertificateValidationCallback_ConfiguresCorrectly()
         {
             var validCaPem = GetTestCertificatePem();
@@ -476,5 +484,11 @@ namespace Azure.Identity.Tests
                 }
             }
         }
+#else
+        public void CertificateValidationCallback_ConfiguresCorrectly()
+        {
+            Assert.Ignore("X509Certificate2.CreateFromPem is not available on .NET Framework");
+        }
+#endif
     }
 }
