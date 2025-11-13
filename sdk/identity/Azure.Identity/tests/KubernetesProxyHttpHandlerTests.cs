@@ -399,12 +399,11 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-#if NET5_0_OR_GREATER
         public void CertificateValidation_LoadsAndValidatesCertificateCorrectly()
         {
             // Verify certificate can be loaded from PEM data
             var validCaPem = GetTestCertificatePem();
-            var cert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
+            var cert = PemReader.LoadCertificate(validCaPem.AsSpan(), allowCertificateOnly: true);
             Assert.IsNotNull(cert, "CA certificate should be loadable from PEM data");
 
             // Verify handler creation with CA data configures certificate validation
@@ -414,12 +413,6 @@ namespace Azure.Identity.Tests
                 Assert.IsNotNull(handler);
             }, "Handler should be created successfully with valid CA data");
         }
-#else
-        public void CertificateValidation_LoadsAndValidatesCertificateCorrectly()
-        {
-            Assert.Ignore("X509Certificate2.CreateFromPem is not available on .NET Framework");
-        }
-#endif
 
         [Test]
         public async Task SendAsync_WithNoCaData_DoesNotConfigureCertificateValidation()
@@ -430,7 +423,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-#if NET5_0_OR_GREATER
         public void CertificateValidationCallback_ConfiguresCorrectly()
         {
             var validCaPem = GetTestCertificatePem();
@@ -464,7 +456,7 @@ namespace Azure.Identity.Tests
             // Test callback behavior - verify it configures chain policy and handles edge cases
             if (innerHandlerWithCa?.ServerCertificateCustomValidationCallback != null)
             {
-                var testCert = System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPem(validCaPem);
+                var testCert = PemReader.LoadCertificate(validCaPem.AsSpan(), allowCertificateOnly: true);
                 var callback = innerHandlerWithCa.ServerCertificateCustomValidationCallback;
 
                 // Test normal case
@@ -484,11 +476,5 @@ namespace Azure.Identity.Tests
                 }
             }
         }
-#else
-        public void CertificateValidationCallback_ConfiguresCorrectly()
-        {
-            Assert.Ignore("X509Certificate2.CreateFromPem is not available on .NET Framework");
-        }
-#endif
     }
 }
