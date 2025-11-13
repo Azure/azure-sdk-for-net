@@ -7,6 +7,7 @@ using System.Threading;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    // The custom code is to make operations pageable
     public partial class LocalRulestackResource
     {
         /// <summary> List of Firewalls associated with Rulestack. </summary>

@@ -11,6 +11,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    // The custom code is to make operations pageable
     public partial class GlobalRulestackResource
     {
         private readonly GlobalRulestackRestOperations _globalRulestackRestOperations;
