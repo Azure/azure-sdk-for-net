@@ -44,7 +44,7 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
     /// <param name="defaultAgent"></param>
     /// <param name="defaultConversationId"></param>
     /// <param name="options"></param>
-    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId, ProjectResponsesClientOptions options = null)
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null, ProjectResponsesClientOptions options = null)
         : this(
               pipeline: ProjectOpenAIClient.CreatePipeline(
                   ProjectOpenAIClient.CreateAuthenticationPolicy(

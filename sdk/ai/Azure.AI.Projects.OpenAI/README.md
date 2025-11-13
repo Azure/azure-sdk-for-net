@@ -48,7 +48,7 @@ To use Azure AI Agents capabilities, you must have an [Azure subscription](https
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Orojects.OpenAI --prerelease
+dotnet add package Azure.AI.Projects.OpenAI --prerelease
 ```
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
@@ -117,7 +117,7 @@ OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(m
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
-In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Orojects.OpenAI/samples) for both synchronous and asynchronous code.
+In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects.OpenAI/samples) for both synchronous and asynchronous code.
 
 ## Examples
 
@@ -287,7 +287,7 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(items, respon
 
 ### Container App
 
-[Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Orojects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
+[Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Projects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
 
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
 AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -771,7 +771,7 @@ To further diagnose and troubleshoot issues, you can enable logging following th
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Orojects.OpenAI/samples)
+Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects.OpenAI/samples)
 
 ## Contributing
 
@@ -781,17 +781,17 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Orojects.OpenAI/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Projects.OpenAI/README.png)
 
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Orojects.OpenAI/samples
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
 <!-- remove "Persistent" -->
 [api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
-[nuget]: https://www.nuget.org/packages/Azure.AI.Orojects.OpenAI.Persistent/
+[nuget]: https://www.nuget.org/packages/Azure.AI.Projects.OpenAI.Persistent/
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Orojects.OpenAI
+[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI
 [product_doc]: https://learn.microsoft.com/azure/ai-studio/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
