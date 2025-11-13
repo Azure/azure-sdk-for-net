@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -62,7 +61,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getRestClient = getRestClientInfo.RestClientProvider;
             _isPatch = isPatch;
             _isAsync = isAsync;
-            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
+            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation || updateMethodProvider.IsFakeLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
             _getRestClientField = getRestClientInfo.RestClientField;
 

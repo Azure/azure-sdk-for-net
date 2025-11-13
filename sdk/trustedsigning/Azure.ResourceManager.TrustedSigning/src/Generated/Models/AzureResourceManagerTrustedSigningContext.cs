@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrustedSigning.Models;
 
@@ -13,11 +14,16 @@ namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccountSkuPatch))]
     [ModelReaderWriterBuildable(typeof(CertificateProfileListResult))]
+    [ModelReaderWriterBuildable(typeof(CertificateProfileProperties))]
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountListResult))]
+    [ModelReaderWriterBuildable(typeof(CodeSigningAccountPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(CodeSigningAccountProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(Revocation))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountData))]

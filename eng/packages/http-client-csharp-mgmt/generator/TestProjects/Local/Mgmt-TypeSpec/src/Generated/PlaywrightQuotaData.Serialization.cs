@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Subscription-level location-based Playwright quota resource. </summary>
     public partial class PlaywrightQuotaData : ResourceData, IJsonModel<PlaywrightQuotaData>
@@ -108,7 +108,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -144,7 +144,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PlaywrightQuotaData)} does not support writing '{options.Format}' format.");
             }
@@ -173,6 +173,18 @@ namespace MgmtTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlaywrightQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="playwrightQuotaData"> The <see cref="PlaywrightQuotaData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PlaywrightQuotaData playwrightQuotaData)
+        {
+            if (playwrightQuotaData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(playwrightQuotaData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightQuotaData"/> from. </param>
         internal static PlaywrightQuotaData FromResponse(Response result)

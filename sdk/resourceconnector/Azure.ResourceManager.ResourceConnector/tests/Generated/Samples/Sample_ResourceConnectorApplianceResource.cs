@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppliance()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesGet.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/AppliancesGet.json
             // this example is just showing the usage of "Appliances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppliance()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesDelete.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/AppliancesDelete.json
             // this example is just showing the usage of "Appliances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAppliance()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesPatch.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/AppliancesPatch.json
             // this example is just showing the usage of "Appliances_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialAppliance()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesListClusterUserCredential.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/AppliancesListClusterUserCredential.json
             // this example is just showing the usage of "Appliances_ListClusterUserCredential" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeysAppliance()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/AppliancesListKeys.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/AppliancesListKeys.json
             // this example is just showing the usage of "Appliances_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResourceConnector.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUpgradeGraph_GetApplianceUpgradeGraph()
         {
-            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/stable/2022-10-27/examples/UpgradeGraph.json
+            // Generated from example definition: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/stable/2022-10-27/examples/UpgradeGraph.json
             // this example is just showing the usage of "Appliances_GetUpgradeGraph" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

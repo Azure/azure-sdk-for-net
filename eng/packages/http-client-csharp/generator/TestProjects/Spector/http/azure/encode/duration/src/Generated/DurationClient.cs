@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Encode.Duration
+namespace Specs.Azure.Encode.Duration
 {
     public partial class DurationClient
     {

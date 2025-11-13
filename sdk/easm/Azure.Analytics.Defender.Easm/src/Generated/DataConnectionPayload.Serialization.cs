@@ -12,11 +12,20 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
+    /// <summary>
+    /// The DataConnectionPayload.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsDataConnectionPayload"/> and <see cref="AzureDataExplorerDataConnectionPayload"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownDataConnectionPayload))]
-    public partial class DataConnectionPayload : IUtf8JsonSerializable, IJsonModel<DataConnectionPayload>
+    public abstract partial class DataConnectionPayload : IJsonModel<DataConnectionPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataConnectionPayload"/> for deserialization. </summary>
+        internal DataConnectionPayload()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataConnectionPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Name))
@@ -56,15 +64,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,41 +81,51 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DataConnectionPayload IJsonModel<DataConnectionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataConnectionPayload IJsonModel<DataConnectionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataConnectionPayload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataConnectionPayload(document.RootElement, options);
         }
 
-        internal static DataConnectionPayload DeserializeDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataConnectionPayload DeserializeDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "azureDataExplorer": return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element, options);
-                    case "logAnalytics": return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element, options);
+                    case "logAnalytics":
+                        return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element, options);
+                    case "azureDataExplorer":
+                        return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element, options);
                 }
             }
             return UnknownDataConnectionPayload.DeserializeUnknownDataConnectionPayload(element, options);
         }
 
-        BinaryData IPersistableModel<DataConnectionPayload>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataConnectionPayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -117,15 +135,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DataConnectionPayload IPersistableModel<DataConnectionPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataConnectionPayload IPersistableModel<DataConnectionPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataConnectionPayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataConnectionPayload(document.RootElement, options);
                     }
                 default:
@@ -133,21 +156,18 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataConnectionPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DataConnectionPayload FromResponse(Response response)
+        /// <param name="dataConnectionPayload"> The <see cref="DataConnectionPayload"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(DataConnectionPayload dataConnectionPayload)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataConnectionPayload(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (dataConnectionPayload == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dataConnectionPayload, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

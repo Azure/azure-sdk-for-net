@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The history of how this asset was pulled into the workspace through the discovery process. </summary>
     public partial class AuditTrailItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuditTrailItem"/>. </summary>
         internal AuditTrailItem()
@@ -51,30 +22,34 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="AuditTrailItem"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="kind"> The kind of asset. </param>
         /// <param name="reason"> An explanation of why this audit trail node was discovered from the previous node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuditTrailItem(string id, string name, string displayName, AuditTrailItemKind? kind, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuditTrailItem(string id, string name, string displayName, AuditTrailItemKind? kind, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             DisplayName = displayName;
             Kind = kind;
             Reason = reason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The system generated unique id for the resource. </summary>
+        /// <summary> This is typically the same as the name but might be different for different models. </summary>
         public string Id { get; }
+
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }
+
         /// <summary> The name that can be used for display purposes. </summary>
         public string DisplayName { get; }
+
         /// <summary> The kind of asset. </summary>
         public AuditTrailItemKind? Kind { get; }
+
         /// <summary> An explanation of why this audit trail node was discovered from the previous node. </summary>
         public string Reason { get; }
     }

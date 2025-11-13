@@ -10,7 +10,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <ApiCompatBaselineTargetFramework>net8.0</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">net8.0</ApiCompatBaselineTargetFramework>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

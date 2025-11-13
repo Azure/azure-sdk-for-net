@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class LogAnalyticsDataConnectionPayload : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDataConnectionPayload>
+    /// <summary> The LogAnalyticsDataConnectionPayload. </summary>
+    public partial class LogAnalyticsDataConnectionPayload : DataConnectionPayload, IJsonModel<LogAnalyticsDataConnectionPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDataConnectionPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnectionPayload"/> for deserialization. </summary>
+        internal LogAnalyticsDataConnectionPayload()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogAnalyticsDataConnectionPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,109 +33,114 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionPayload)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }
 
-        LogAnalyticsDataConnectionPayload IJsonModel<LogAnalyticsDataConnectionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsDataConnectionPayload IJsonModel<LogAnalyticsDataConnectionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LogAnalyticsDataConnectionPayload)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataConnectionPayload JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionPayload)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLogAnalyticsDataConnectionPayload(document.RootElement, options);
         }
 
-        internal static LogAnalyticsDataConnectionPayload DeserializeLogAnalyticsDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LogAnalyticsDataConnectionPayload DeserializeLogAnalyticsDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            LogAnalyticsDataConnectionProperties properties = default;
-            string kind = default;
+            string kind = "logAnalytics";
             string name = default;
             DataConnectionContent? content = default;
             DataConnectionFrequency? frequency = default;
             int? frequencyOffset = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            LogAnalyticsDataConnectionProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    properties = LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(property.Value, options);
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    kind = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("content"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("content"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    content = new DataConnectionContent(property.Value.GetString());
+                    content = new DataConnectionContent(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("frequency"u8))
+                if (prop.NameEquals("frequency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    frequency = new DataConnectionFrequency(property.Value.GetString());
+                    frequency = new DataConnectionFrequency(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("frequencyOffset"u8))
+                if (prop.NameEquals("frequencyOffset"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    frequencyOffset = property.Value.GetInt32();
+                    frequencyOffset = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsDataConnectionPayload(
                 kind,
                 name,
                 content,
                 frequency,
                 frequencyOffset,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 properties);
         }
 
-        BinaryData IPersistableModel<LogAnalyticsDataConnectionPayload>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LogAnalyticsDataConnectionPayload>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -140,15 +150,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        LogAnalyticsDataConnectionPayload IPersistableModel<LogAnalyticsDataConnectionPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsDataConnectionPayload IPersistableModel<LogAnalyticsDataConnectionPayload>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogAnalyticsDataConnectionPayload)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataConnectionPayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLogAnalyticsDataConnectionPayload(document.RootElement, options);
                     }
                 default:
@@ -156,22 +171,7 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LogAnalyticsDataConnectionPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new LogAnalyticsDataConnectionPayload FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLogAnalyticsDataConnectionPayload(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

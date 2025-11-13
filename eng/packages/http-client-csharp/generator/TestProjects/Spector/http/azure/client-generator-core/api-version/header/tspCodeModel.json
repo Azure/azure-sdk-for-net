@@ -26,47 +26,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "ApiVersions",
-            "isGeneratedName": false,
-            "namespace": "Client.AlternateApiVersion.Service.Header",
-            "doc": "Supported api versions.",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v2025_01_01",
-                "value": "2025-01-01",
-                "doc": "Api version 2025-01-01.",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.ApiVersions",
-            "apiVersions": [
-              "2025-01-01"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "Api version 2025-01-01.",
           "decorators": []
@@ -84,13 +44,13 @@
   "models": [],
   "clients": [
     {
-      "$id": "7",
+      "$id": "4",
       "kind": "client",
       "name": "HeaderClient",
       "namespace": "Client.AlternateApiVersion.Service.Header",
       "methods": [
         {
-          "$id": "8",
+          "$id": "5",
           "kind": "basic",
           "name": "headerApiVersion",
           "accessibility": "public",
@@ -99,19 +59,19 @@
           ],
           "doc": "Header api version parameter.",
           "operation": {
-            "$id": "9",
+            "$id": "6",
             "name": "headerApiVersion",
             "resourceName": "Header",
             "doc": "Header api version parameter.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "10",
+                "$id": "7",
                 "kind": "header",
                 "name": "version",
                 "serializedName": "x-ms-version",
                 "type": {
-                  "$id": "11",
+                  "$id": "8",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -120,7 +80,7 @@
                 "isApiVersion": true,
                 "defaultValue": {
                   "type": {
-                    "$id": "12",
+                    "$id": "9",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -163,13 +123,13 @@
       ],
       "parameters": [
         {
-          "$id": "13",
+          "$id": "10",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "14",
+            "$id": "11",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -180,7 +140,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "15",
+              "$id": "12",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -191,8 +151,39 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.endpoint"
+        },
+        {
+          "$id": "13",
+          "kind": "method",
+          "name": "version",
+          "serializedName": "version",
+          "type": {
+            "$id": "14",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "15",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2025-01-01"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion.version",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header",
       "apiVersions": [

@@ -36,6 +36,6 @@ namespace _Type.Model.Visibility
         /// <param name="readOnlyModel"> The <see cref="ReadOnlyModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ReadOnlyModel readOnlyModel) => throw null;
 
-        public static explicit operator ReadOnlyModel(Response result) => throw null;
+        public static explicit operator ReadOnlyModel(Response response) => throw null;
     }
 }

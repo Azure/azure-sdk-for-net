@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
 {
     public partial class MoveToRootClientResourceOperations
     {

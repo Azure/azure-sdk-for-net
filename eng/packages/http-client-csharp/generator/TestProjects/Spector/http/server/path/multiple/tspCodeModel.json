@@ -26,47 +26,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "Server.Path.Multiple",
-            "doc": "Service versions",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v1_0",
-                "value": "v1.0",
-                "doc": "Version 1.0",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Server.Path.Multiple.Versions",
-            "apiVersions": [
-              "v1.0"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "Version 1.0",
           "decorators": []
@@ -84,13 +44,13 @@
   "models": [],
   "clients": [
     {
-      "$id": "7",
+      "$id": "4",
       "kind": "client",
       "name": "MultipleClient",
       "namespace": "Server.Path.Multiple",
       "methods": [
         {
-          "$id": "8",
+          "$id": "5",
           "kind": "basic",
           "name": "noOperationParams",
           "accessibility": "public",
@@ -98,7 +58,7 @@
             "v1.0"
           ],
           "operation": {
-            "$id": "9",
+            "$id": "6",
             "name": "noOperationParams",
             "resourceName": "Multiple",
             "accessibility": "public",
@@ -129,7 +89,7 @@
           "crossLanguageDefinitionId": "Server.Path.Multiple.noOperationParams"
         },
         {
-          "$id": "10",
+          "$id": "7",
           "kind": "basic",
           "name": "withOperationPathParam",
           "accessibility": "public",
@@ -137,18 +97,18 @@
             "v1.0"
           ],
           "operation": {
-            "$id": "11",
+            "$id": "8",
             "name": "withOperationPathParam",
             "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "12",
+                "$id": "9",
                 "kind": "path",
                 "name": "keyword",
                 "serializedName": "keyword",
                 "type": {
-                  "$id": "13",
+                  "$id": "10",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -186,12 +146,12 @@
           },
           "parameters": [
             {
-              "$id": "14",
+              "$id": "11",
               "kind": "method",
               "name": "keyword",
               "serializedName": "keyword",
               "type": {
-                "$id": "15",
+                "$id": "12",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -216,13 +176,13 @@
       ],
       "parameters": [
         {
-          "$id": "16",
+          "$id": "13",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Pass in http://localhost:3000 for endpoint.",
           "type": {
-            "$id": "17",
+            "$id": "14",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -237,7 +197,7 @@
           "crossLanguageDefinitionId": "Server.Path.Multiple.endpoint"
         },
         {
-          "$id": "18",
+          "$id": "15",
           "kind": "endpoint",
           "name": "apiVersion",
           "serializedName": "apiVersion",
@@ -251,7 +211,7 @@
           "isEndpoint": false,
           "defaultValue": {
             "type": {
-              "$id": "19",
+              "$id": "16",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -264,6 +224,7 @@
           "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Path.Multiple",
       "apiVersions": [

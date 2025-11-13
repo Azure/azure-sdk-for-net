@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
                     throw new InvalidOperationException("Only one update enumeration can be active at a time.");
                 }
 
-                _receiveCollectionResult = new AsyncVoiceLiveMessageCollectionResult(WebSocket, cancellationToken);
+                _receiveCollectionResult = new AsyncVoiceLiveMessageCollectionResult(WebSocket, _contentLogger, _connectionId, cancellationToken);
             }
 
             try

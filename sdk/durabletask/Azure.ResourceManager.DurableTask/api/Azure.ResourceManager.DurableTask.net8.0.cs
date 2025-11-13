@@ -38,7 +38,10 @@ namespace Azure.ResourceManager.DurableTask
     {
         public DurableTaskHubData() { }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.DurableTaskHubData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.DurableTaskHubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskHubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.DurableTask
     {
         public DurableTaskRetentionPolicyData() { }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -117,7 +123,10 @@ namespace Azure.ResourceManager.DurableTask
     {
         public DurableTaskSchedulerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.DurableTaskSchedulerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskSchedulerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskSchedulerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.DurableTaskSchedulerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskSchedulerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -186,17 +195,21 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData DurableTaskRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties DurableTaskRetentionPolicyProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails> retentionPolicies = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskSchedulerData DurableTaskSchedulerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch DurableTaskSchedulerPatch(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<string> ipAllowlist = null, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate sku = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties DurableTaskSchedulerProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<string> ipAllowlist = null, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku sku = null) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku DurableTaskSchedulerSku(string name = null, int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate DurableTaskSchedulerSkuUpdate(string name = null, int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku DurableTaskSchedulerSku(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName name = default(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate DurableTaskSchedulerSkuUpdate(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName? name = default(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName?), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
     }
     public partial class DurableTaskHubProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>
     {
         public DurableTaskHubProperties() { }
         public System.Uri DashboardUri { get { throw null; } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -223,6 +236,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState left, Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState left, Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -243,6 +257,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -261,6 +276,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -269,7 +285,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         public DurableTaskRetentionPolicyDetails(int retentionPeriodInDays) { }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState? OrchestrationState { get { throw null; } set { } }
         public int RetentionPeriodInDays { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -281,7 +300,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         public DurableTaskRetentionPolicyProperties() { }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails> RetentionPolicies { get { throw null; } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -293,7 +315,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         public DurableTaskSchedulerPatch() { }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -307,7 +332,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         public System.Collections.Generic.IList<string> IPAllowlist { get { throw null; } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -321,7 +349,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         public System.Collections.Generic.IList<string> IPAllowlist { get { throw null; } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -330,24 +361,49 @@ namespace Azure.ResourceManager.DurableTask.Models
     }
     public partial class DurableTaskSchedulerSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>
     {
-        public DurableTaskSchedulerSku(string name) { }
+        public DurableTaskSchedulerSku(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? RedundancyState { get { throw null; } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DurableTaskSchedulerSkuName : System.IEquatable<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DurableTaskSchedulerSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName Consumption { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName Dedicated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DurableTaskSchedulerSkuUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>
     {
         public DurableTaskSchedulerSkuUpdate() { }
         public int? Capacity { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName? Name { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? RedundancyState { get { throw null; } }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

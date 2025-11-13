@@ -17,6 +17,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Generator.Utilities;
 
 namespace Azure.Generator
 {
@@ -54,6 +55,12 @@ namespace Azure.Generator
             [
                 new("Azure.Core")
             ];
+
+        /// <inheritdoc/>
+        protected override string BuildServiceName()
+        {
+            return TypeNameUtilities.GetResourceProviderName();
+        }
 
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)

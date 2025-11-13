@@ -12,46 +12,18 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The items in the current page of results.
-    /// Please note <see cref="AssetResource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/> and <see cref="SslCertAssetResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
     /// </summary>
     public abstract partial class AssetResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AssetResource"/>. </summary>
-        protected AssetResource()
+        /// <param name="kind"> Discriminator property for AssetResource. </param>
+        private protected AssetResource(string kind)
         {
+            Kind = kind;
             Labels = new ChangeTrackingList<string>();
             AuditTrail = new ChangeTrackingList<AuditTrailItem>();
         }
@@ -71,8 +43,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IReadOnlyList<string> labels, bool? wildcard, string discoGroupName, IReadOnlyList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Id = id;
@@ -88,36 +60,49 @@ namespace Azure.Analytics.Defender.Easm
             DiscoGroupName = discoGroupName;
             AuditTrail = auditTrail;
             Reason = reason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Discriminator property for AssetResource. </summary>
         internal string Kind { get; set; }
+
         /// <summary> The system generated unique id for the resource. </summary>
         public string Id { get; }
+
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }
+
         /// <summary> The name that can be used for display purposes. </summary>
         public string DisplayName { get; }
+
         /// <summary> Global UUID for the asset. </summary>
         public Guid? Uuid { get; }
+
         /// <summary> The date this asset was first added to this workspace. </summary>
         public DateTimeOffset? CreatedDate { get; }
+
         /// <summary> The date this asset was last updated for this workspace. </summary>
         public DateTimeOffset? UpdatedDate { get; }
-        /// <summary> Gets the state. </summary>
+
+        /// <summary> Gets the State. </summary>
         public AssetState? State { get; }
+
         /// <summary> An optional customer provided identifier for this asset. </summary>
         public string ExternalId { get; }
+
         /// <summary> Customer labels assigned to this asset. </summary>
-        public IReadOnlyList<string> Labels { get; }
+        public IList<string> Labels { get; }
+
         /// <summary> An indicator of whether this asset represents a wildcard rollup of assets on this domain. </summary>
         public bool? Wildcard { get; }
+
         /// <summary> The name of the DiscoGroup that brought added this asset to the workspace. </summary>
         public string DiscoGroupName { get; }
+
         /// <summary> The history of how this asset was pulled into the workspace through the discovery process. </summary>
-        public IReadOnlyList<AuditTrailItem> AuditTrail { get; }
-        /// <summary> Gets the reason. </summary>
+        public IList<AuditTrailItem> AuditTrail { get; }
+
+        /// <summary> Gets the Reason. </summary>
         public string Reason { get; }
     }
 }

@@ -115,6 +115,7 @@ namespace Azure.Identity
         public BrowserCustomizationOptions() { }
         public string ErrorMessage { get { throw null; } set { } }
         public string SuccessMessage { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead")]
         public bool? UseEmbeddedWebView { get { throw null; } set { } }
     }
@@ -324,10 +325,12 @@ namespace Azure.Identity
     {
         protected ManagedIdentityCredential() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(Azure.Core.ResourceIdentifier resourceId, Azure.Identity.TokenCredentialOptions options = null) { }
         public ManagedIdentityCredential(Azure.Identity.ManagedIdentityCredentialOptions options) { }
         public ManagedIdentityCredential(Azure.Identity.ManagedIdentityId id) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

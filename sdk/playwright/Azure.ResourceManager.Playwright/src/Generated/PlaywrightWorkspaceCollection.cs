@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Playwright
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Playwright
     /// </summary>
     public partial class PlaywrightWorkspaceCollection : ArmCollection, IEnumerable<PlaywrightWorkspaceResource>, IAsyncEnumerable<PlaywrightWorkspaceResource>
     {
-        private readonly ClientDiagnostics _playwrightWorkspaceClientDiagnostics;
-        private readonly PlaywrightWorkspacesRestOperations _playwrightWorkspaceRestClient;
+        private readonly ClientDiagnostics _playwrightWorkspacesClientDiagnostics;
+        private readonly PlaywrightWorkspaces _playwrightWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PlaywrightWorkspaceCollection for mocking. </summary>
         protected PlaywrightWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PlaywrightWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _playwrightWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PlaywrightWorkspaceResource.ResourceType, out string playwrightWorkspaceApiVersion);
-            _playwrightWorkspaceRestClient = new PlaywrightWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightWorkspaceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _playwrightWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PlaywrightWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string playwrightWorkspaceName, PlaywrightWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(new PlaywrightWorkspaceOperationSource(Client), _playwrightWorkspaceClientDiagnostics, Pipeline, _playwrightWorkspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
+                    new PlaywrightWorkspaceOperationSource(Client),
+                    _playwrightWorkspacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Playwright
         /// Create a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PlaywrightWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string playwrightWorkspaceName, PlaywrightWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, data, cancellationToken);
-                var operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(new PlaywrightWorkspaceOperationSource(Client), _playwrightWorkspaceClientDiagnostics, Pipeline, _playwrightWorkspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
+                    new PlaywrightWorkspaceOperationSource(Client),
+                    _playwrightWorkspacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Playwright
         /// Get a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PlaywrightWorkspaceResource>> GetAsync(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Get");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Playwright
         /// Get a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PlaywrightWorkspaceResource> Get(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Get");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Playwright
         /// List PlaywrightWorkspace resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightWorkspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightWorkspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightWorkspaceResource(Client, PlaywrightWorkspaceData.DeserializePlaywrightWorkspaceData(e)), _playwrightWorkspaceClientDiagnostics, Pipeline, "PlaywrightWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
         /// List PlaywrightWorkspace resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Playwright
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightWorkspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightWorkspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightWorkspaceResource(Client, PlaywrightWorkspaceData.DeserializePlaywrightWorkspaceData(e)), _playwrightWorkspaceClientDiagnostics, Pipeline, "PlaywrightWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Exists");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +383,53 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Exists");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +440,57 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PlaywrightWorkspaceResource>> GetIfExistsAsync(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PlaywrightWorkspaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +501,57 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a PlaywrightWorkspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PlaywrightWorkspaceResource> GetIfExists(string playwrightWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
 
-            using var scope = _playwrightWorkspaceClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _playwrightWorkspacesClientDiagnostics.CreateScope("PlaywrightWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, playwrightWorkspaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PlaywrightWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PlaywrightWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PlaywrightWorkspaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Playwright
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PlaywrightWorkspaceResource> IAsyncEnumerable<PlaywrightWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

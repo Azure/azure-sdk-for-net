@@ -27,68 +27,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "Versioning.TypeChangedFrom",
-            "doc": "The version of the API.",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v1",
-                "value": "v1",
-                "doc": "The version v1.",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              },
-              {
-                "$id": "7",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v2",
-                "value": "v2",
-                "doc": "The version v2.",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.Versions",
-            "apiVersions": [
-              "v1",
-              "v2"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "The version v1.",
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "4",
           "kind": "enumvalue",
           "name": "v2",
           "value": "v2",
@@ -96,7 +41,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "4"
+            "$ref": "1"
           },
           "doc": "The version v2.",
           "decorators": []
@@ -112,13 +57,13 @@
   ],
   "constants": [
     {
-      "$id": "9",
+      "$id": "5",
       "kind": "constant",
       "name": "testContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "10",
+        "$id": "6",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -128,13 +73,13 @@
       "decorators": []
     },
     {
-      "$id": "11",
+      "$id": "7",
       "kind": "constant",
       "name": "testContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "12",
+        "$id": "8",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -146,7 +91,7 @@
   ],
   "models": [
     {
-      "$id": "13",
+      "$id": "9",
       "kind": "model",
       "name": "TestModel",
       "namespace": "Versioning.TypeChangedFrom",
@@ -155,12 +100,12 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "14",
+          "$id": "10",
           "kind": "property",
           "name": "prop",
           "serializedName": "prop",
           "type": {
-            "$id": "15",
+            "$id": "11",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -180,12 +125,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "16",
+          "$id": "12",
           "kind": "property",
           "name": "changedProp",
           "serializedName": "changedProp",
           "type": {
-            "$id": "17",
+            "$id": "13",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -209,14 +154,14 @@
   ],
   "clients": [
     {
-      "$id": "18",
+      "$id": "14",
       "kind": "client",
       "name": "TypeChangedFromClient",
       "namespace": "Versioning.TypeChangedFrom",
       "doc": "Test for the `@typeChangedFrom` decorator.",
       "methods": [
         {
-          "$id": "19",
+          "$id": "15",
           "kind": "basic",
           "name": "test",
           "accessibility": "public",
@@ -225,18 +170,18 @@
             "v2"
           ],
           "operation": {
-            "$id": "20",
+            "$id": "16",
             "name": "test",
             "resourceName": "TypeChangedFrom",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "21",
+                "$id": "17",
                 "kind": "query",
                 "name": "param",
                 "serializedName": "param",
                 "type": {
-                  "$id": "22",
+                  "$id": "18",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -251,13 +196,13 @@
                 "readOnly": false
               },
               {
-                "$id": "23",
+                "$id": "19",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
-                  "$ref": "9"
+                  "$ref": "5"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -268,12 +213,12 @@
                 "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.test.contentType"
               },
               {
-                "$id": "24",
+                "$id": "20",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "11"
+                  "$ref": "7"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -284,12 +229,12 @@
                 "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.test.accept"
               },
               {
-                "$id": "25",
+                "$id": "21",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
                 "type": {
-                  "$ref": "13"
+                  "$ref": "9"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -309,7 +254,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "13"
+                  "$ref": "9"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -332,12 +277,12 @@
           },
           "parameters": [
             {
-              "$id": "26",
+              "$id": "22",
               "kind": "method",
               "name": "body",
               "serializedName": "body",
               "type": {
-                "$ref": "13"
+                "$ref": "9"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -349,12 +294,12 @@
               "decorators": []
             },
             {
-              "$id": "27",
+              "$id": "23",
               "kind": "method",
               "name": "param",
               "serializedName": "param",
               "type": {
-                "$id": "28",
+                "$id": "24",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -370,13 +315,13 @@
               "decorators": []
             },
             {
-              "$id": "29",
+              "$id": "25",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
-                "$ref": "9"
+                "$ref": "5"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -388,12 +333,12 @@
               "decorators": []
             },
             {
-              "$id": "30",
+              "$id": "26",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "11"
+                "$ref": "7"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -407,7 +352,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "13"
+              "$ref": "9"
             }
           },
           "isOverride": false,
@@ -418,13 +363,13 @@
       ],
       "parameters": [
         {
-          "$id": "31",
+          "$id": "27",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "32",
+            "$id": "28",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -439,7 +384,7 @@
           "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.endpoint"
         },
         {
-          "$id": "33",
+          "$id": "29",
           "kind": "endpoint",
           "name": "version",
           "serializedName": "version",
@@ -453,7 +398,7 @@
           "isEndpoint": false,
           "defaultValue": {
             "type": {
-              "$id": "34",
+              "$id": "30",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -466,6 +411,7 @@
           "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.TypeChangedFrom",
       "apiVersions": [

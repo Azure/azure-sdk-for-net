@@ -211,6 +211,7 @@
           "crossLanguageDefinitionId": "Parameters.Path.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Path",
       "apiVersions": []

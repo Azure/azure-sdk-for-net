@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Quota</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Quota.</Description>
     <PackageTags>azure;management;arm;resource manager;quota</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

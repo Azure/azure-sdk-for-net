@@ -113,5 +113,5 @@ public partial class FunctionToolDefinition
             || (obj is RequiredFunctionToolCall requiredToolCall && Name == requiredToolCall.Name);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => InternalFunction.GetHashCode();
+    public override int GetHashCode() => Name.GetHashCode();
 }

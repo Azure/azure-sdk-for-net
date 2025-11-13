@@ -413,6 +413,7 @@
           "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest",
       "apiVersions": []

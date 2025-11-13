@@ -12,16 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarQuotaResource"/> and their operations.
-    /// Each <see cref="BarQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BarQuotaResourceCollection"/> instance call the GetBarQuotaResources method from an instance of the parent resource.
+    /// Each <see cref="BarQuotaResource"/> in the collection will belong to the same instance of <see cref="BarResource"/>.
+    /// To get a <see cref="BarQuotaResourceCollection"/> instance call the GetBarQuotaResources method from an instance of <see cref="BarResource"/>.
     /// </summary>
     public partial class BarQuotaResourceCollection : ArmCollection
     {
@@ -39,7 +38,7 @@ namespace MgmtTypeSpec
         internal BarQuotaResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(BarQuotaResource.ResourceType, out string barQuotaResourceApiVersion);
-            _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarQuotaResource.ResourceType.Namespace, Diagnostics);
+            _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarQuotaResource.ResourceType.Namespace, Diagnostics);
             _barQuotaOperationsRestClient = new BarQuotaOperations(_barQuotaOperationsClientDiagnostics, Pipeline, Endpoint, barQuotaResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -48,13 +47,29 @@ namespace MgmtTypeSpec
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != BarResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BarResource.ResourceType), id);
             }
         }
 
-        /// <summary> Get a BarQuotaResource. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarQuotaOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarQuotaResource>> GetAsync(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
@@ -83,7 +98,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a BarQuotaResource. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarQuotaOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarQuotaResource> Get(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
@@ -112,7 +143,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarQuotaOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
@@ -149,7 +196,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarQuotaOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
@@ -186,7 +249,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarQuotaOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<BarQuotaResource>> GetIfExistsAsync(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
@@ -227,7 +306,23 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a BarQuotaResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/quotas/{barQuotaResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarQuotaOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<BarQuotaResource> GetIfExists(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)

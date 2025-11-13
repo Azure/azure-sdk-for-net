@@ -39,7 +39,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="AsAsset"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="asn"></param>
         /// <param name="asNames"></param>
         /// <param name="orgNames"></param>
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
         /// <param name="detailedFromWhoisAt"></param>
-        internal AsAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, long? asn, IReadOnlyList<ObservedString> asNames, IReadOnlyList<ObservedString> orgNames, IReadOnlyList<ObservedString> orgIds, IReadOnlyList<ObservedString> countries, IReadOnlyList<ObservedString> registries, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedString> registrarNames, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, DateTimeOffset? detailedFromWhoisAt) : base(serializedAdditionalRawData)
+        internal AsAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, long? asn, IList<ObservedString> asNames, IList<ObservedString> orgNames, IList<ObservedString> orgIds, IList<ObservedString> countries, IList<ObservedString> registries, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> registrantContacts, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedString> registrarNames, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, DateTimeOffset? detailedFromWhoisAt) : base(additionalBinaryDataProperties)
         {
             Asn = asn;
             AsNames = asNames;
@@ -94,55 +94,79 @@ namespace Azure.Analytics.Defender.Easm
             DetailedFromWhoisAt = detailedFromWhoisAt;
         }
 
-        /// <summary> Gets the asn. </summary>
+        /// <summary> Gets the Asn. </summary>
         public long? Asn { get; }
-        /// <summary> Gets the as names. </summary>
-        public IReadOnlyList<ObservedString> AsNames { get; }
-        /// <summary> Gets the org names. </summary>
-        public IReadOnlyList<ObservedString> OrgNames { get; }
-        /// <summary> Gets the org ids. </summary>
-        public IReadOnlyList<ObservedString> OrgIds { get; }
-        /// <summary> Gets the countries. </summary>
-        public IReadOnlyList<ObservedString> Countries { get; }
-        /// <summary> Gets the registries. </summary>
-        public IReadOnlyList<ObservedString> Registries { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the AsNames. </summary>
+        public IList<ObservedString> AsNames { get; }
+
+        /// <summary> Gets the OrgNames. </summary>
+        public IList<ObservedString> OrgNames { get; }
+
+        /// <summary> Gets the OrgIds. </summary>
+        public IList<ObservedString> OrgIds { get; }
+
+        /// <summary> Gets the Countries. </summary>
+        public IList<ObservedString> Countries { get; }
+
+        /// <summary> Gets the Registries. </summary>
+        public IList<ObservedString> Registries { get; }
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the registrar created at. </summary>
-        public IReadOnlyList<ObservedLong> RegistrarCreatedAt { get; }
-        /// <summary> Gets the registrar updated at. </summary>
-        public IReadOnlyList<ObservedLong> RegistrarUpdatedAt { get; }
-        /// <summary> Gets the registrant contacts. </summary>
-        public IReadOnlyList<ObservedString> RegistrantContacts { get; }
-        /// <summary> Gets the admin contacts. </summary>
-        public IReadOnlyList<ObservedString> AdminContacts { get; }
-        /// <summary> Gets the technical contacts. </summary>
-        public IReadOnlyList<ObservedString> TechnicalContacts { get; }
-        /// <summary> Gets the registrar names. </summary>
-        public IReadOnlyList<ObservedString> RegistrarNames { get; }
-        /// <summary> Gets the registrant names. </summary>
-        public IReadOnlyList<ObservedString> RegistrantNames { get; }
-        /// <summary> Gets the admin names. </summary>
-        public IReadOnlyList<ObservedString> AdminNames { get; }
-        /// <summary> Gets the technical names. </summary>
-        public IReadOnlyList<ObservedString> TechnicalNames { get; }
-        /// <summary> Gets the admin orgs. </summary>
-        public IReadOnlyList<ObservedString> AdminOrgs { get; }
-        /// <summary> Gets the technical orgs. </summary>
-        public IReadOnlyList<ObservedString> TechnicalOrgs { get; }
-        /// <summary> Gets the registrant phones. </summary>
-        public IReadOnlyList<ObservedString> RegistrantPhones { get; }
-        /// <summary> Gets the admin phones. </summary>
-        public IReadOnlyList<ObservedString> AdminPhones { get; }
-        /// <summary> Gets the technical phones. </summary>
-        public IReadOnlyList<ObservedString> TechnicalPhones { get; }
-        /// <summary> Gets the detailed from whois at. </summary>
+
+        /// <summary> Gets the RegistrarCreatedAt. </summary>
+        public IList<ObservedLong> RegistrarCreatedAt { get; }
+
+        /// <summary> Gets the RegistrarUpdatedAt. </summary>
+        public IList<ObservedLong> RegistrarUpdatedAt { get; }
+
+        /// <summary> Gets the RegistrantContacts. </summary>
+        public IList<ObservedString> RegistrantContacts { get; }
+
+        /// <summary> Gets the AdminContacts. </summary>
+        public IList<ObservedString> AdminContacts { get; }
+
+        /// <summary> Gets the TechnicalContacts. </summary>
+        public IList<ObservedString> TechnicalContacts { get; }
+
+        /// <summary> Gets the RegistrarNames. </summary>
+        public IList<ObservedString> RegistrarNames { get; }
+
+        /// <summary> Gets the RegistrantNames. </summary>
+        public IList<ObservedString> RegistrantNames { get; }
+
+        /// <summary> Gets the AdminNames. </summary>
+        public IList<ObservedString> AdminNames { get; }
+
+        /// <summary> Gets the TechnicalNames. </summary>
+        public IList<ObservedString> TechnicalNames { get; }
+
+        /// <summary> Gets the AdminOrgs. </summary>
+        public IList<ObservedString> AdminOrgs { get; }
+
+        /// <summary> Gets the TechnicalOrgs. </summary>
+        public IList<ObservedString> TechnicalOrgs { get; }
+
+        /// <summary> Gets the RegistrantPhones. </summary>
+        public IList<ObservedString> RegistrantPhones { get; }
+
+        /// <summary> Gets the AdminPhones. </summary>
+        public IList<ObservedString> AdminPhones { get; }
+
+        /// <summary> Gets the TechnicalPhones. </summary>
+        public IList<ObservedString> TechnicalPhones { get; }
+
+        /// <summary> Gets the DetailedFromWhoisAt. </summary>
         public DateTimeOffset? DetailedFromWhoisAt { get; }
     }
 }

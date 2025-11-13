@@ -36,6 +36,6 @@ namespace _Type.Property.Optional
         /// <param name="plainDateProperty"> The <see cref="PlainDateProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(PlainDateProperty plainDateProperty) => throw null;
 
-        public static explicit operator PlainDateProperty(Response result) => throw null;
+        public static explicit operator PlainDateProperty(Response response) => throw null;
     }
 }

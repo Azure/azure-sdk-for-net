@@ -1,12 +1,25 @@
 parameters:
-  PackageName: ''
-  PackageNames: ''
-  ServiceDirectory: ''
-  TagSeparator: '_'
-  TestPipeline: false
+- name: PackageName
+  type: string
+  default: ''
+- name: PackageNames
+  type: string
+  default: ''
+- name: ServiceDirectory
+  type: string
+  default: ''
+- name: TagSeparator
+  type: string
+  default: '_'
+- name: TestPipeline
+  type: boolean
+  default: false
+- name: ArtifactsJson
+  type: string
+  default: ''
 
 steps:
-- ${{ if eq(parameters.TestPipeline, 'true') }}:
+- ${{ if eq(parameters.TestPipeline, true) }}:
     - task: PowerShell@2
       displayName: Prep template pipeline for release
       condition: and(succeeded(), ne(variables['Skip.SetTestPipelineVersion'], 'true'))
@@ -18,4 +31,5 @@ steps:
           -PackageNames '${{ coalesce(parameters.PackageName, parameters.PackageNames) }}'
           -ServiceDirectory '${{ parameters.ServiceDirectory }}'
           -TagSeparator '${{ parameters.TagSeparator }}'
+          -ArtifactsJson '${{ parameters.ArtifactsJson }}'
         pwsh: true

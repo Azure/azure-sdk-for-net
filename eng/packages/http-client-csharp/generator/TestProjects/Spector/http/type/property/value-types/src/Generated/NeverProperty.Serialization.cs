@@ -36,6 +36,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="neverProperty"> The <see cref="NeverProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(NeverProperty neverProperty) => throw null;
 
-        public static explicit operator NeverProperty(Response result) => throw null;
+        public static explicit operator NeverProperty(Response response) => throw null;
     }
 }

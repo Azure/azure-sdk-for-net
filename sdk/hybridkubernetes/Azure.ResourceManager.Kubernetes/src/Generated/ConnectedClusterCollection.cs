@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// A class representing a collection of <see cref="ConnectedClusterResource"/> and their operations.
-    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of the parent resource.
+    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConnectedClusterCollection : ArmCollection, IEnumerable<ConnectedClusterResource>, IAsyncEnumerable<ConnectedClusterResource>
     {
@@ -55,7 +55,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to register a new Kubernetes cluster and create or replace a connected cluster tracked resource in Azure Resource Manager (ARM). </summary>
+        /// <summary>
+        /// API to register a new Kubernetes cluster and create or replace a connected cluster tracked resource in Azure Resource Manager (ARM).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_CreateOrReplace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="data"> Parameters supplied to Create a Connected Cluster. </param>
@@ -97,7 +113,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to register a new Kubernetes cluster and create or replace a connected cluster tracked resource in Azure Resource Manager (ARM). </summary>
+        /// <summary>
+        /// API to register a new Kubernetes cluster and create or replace a connected cluster tracked resource in Azure Resource Manager (ARM).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_CreateOrReplace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="data"> Parameters supplied to Create a Connected Cluster. </param>
@@ -139,7 +171,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -172,7 +220,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -205,7 +269,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to enumerate registered connected K8s clusters under a Resource Group. </summary>
+        /// <summary>
+        /// API to enumerate registered connected K8s clusters under a Resource Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -217,7 +297,23 @@ namespace Azure.ResourceManager.Kubernetes
             return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
         }
 
-        /// <summary> API to enumerate registered connected K8s clusters under a Resource Group. </summary>
+        /// <summary>
+        /// API to enumerate registered connected K8s clusters under a Resource Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterResource> GetAll(CancellationToken cancellationToken = default)
@@ -229,7 +325,23 @@ namespace Azure.ResourceManager.Kubernetes
             return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -270,7 +382,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -311,7 +439,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
@@ -356,7 +500,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>

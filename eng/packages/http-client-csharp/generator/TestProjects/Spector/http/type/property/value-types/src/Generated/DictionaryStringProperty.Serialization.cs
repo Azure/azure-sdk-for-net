@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="dictionaryStringProperty"> The <see cref="DictionaryStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DictionaryStringProperty dictionaryStringProperty) => throw null;
 
-        public static explicit operator DictionaryStringProperty(Response result) => throw null;
+        public static explicit operator DictionaryStringProperty(Response response) => throw null;
     }
 }
