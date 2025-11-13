@@ -789,7 +789,8 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
 <!-- remove "Persistent" -->
 [api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
-[nuget]: https://www.nuget.org/packages/Azure.AI.Projects.OpenAI.Persistent/
+<!-- replace with https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/ -->
+[nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI
 [product_doc]: https://learn.microsoft.com/azure/ai-studio/
