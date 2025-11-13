@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> Source entity used to drive discovery. </summary>
     public partial class DiscoverySource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiscoverySource"/>. </summary>
         public DiscoverySource()
@@ -53,16 +24,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="DiscoverySource"/>. </summary>
         /// <param name="kind"> The kind of disco source. </param>
         /// <param name="name"> The name for the disco source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoverySource(DiscoverySourceKind? kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoverySource(DiscoverySourceKind? kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of disco source. </summary>
         public DiscoverySourceKind? Kind { get; set; }
+
         /// <summary> The name for the disco source. </summary>
         public string Name { get; set; }
     }

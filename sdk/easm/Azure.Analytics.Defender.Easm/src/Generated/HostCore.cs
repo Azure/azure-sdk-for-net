@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The HostCore. </summary>
     public partial class HostCore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HostCore"/>. </summary>
         internal HostCore()
@@ -89,8 +60,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="domainSpamReputationScore"></param>
         /// <param name="domainScamReputationScore"></param>
         /// <param name="uuid"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostCore(string host, string domain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? blacklistCauseFirstSeen, DateTimeOffset? blacklistCauseLastSeen, long? blacklistCauseCount, DateTimeOffset? blacklistResourceFirstSeen, DateTimeOffset? blacklistResourceLastSeen, long? blacklistResourceCount, DateTimeOffset? blacklistSequenceFirstSeen, DateTimeOffset? blacklistSequenceLastSeen, long? blacklistSequenceCount, long? phishCauseCount, long? malwareCauseCount, long? spamCauseCount, long? scamCauseCount, long? phishResourceCount, long? malwareResourceCount, long? spamResourceCount, long? scamResourceCount, long? phishSequenceCount, long? malwareSequenceCount, long? spamSequenceCount, long? scamSequenceCount, int? alexaRank, int? hostReputationScore, int? hostPhishReputationScore, int? hostMalwareReputationScore, int? hostSpamReputationScore, int? hostScamReputationScore, int? domainReputationScore, int? domainPhishReputationScore, int? domainMalwareReputationScore, int? domainSpamReputationScore, int? domainScamReputationScore, string uuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostCore(string host, string domain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? blacklistCauseFirstSeen, DateTimeOffset? blacklistCauseLastSeen, long? blacklistCauseCount, DateTimeOffset? blacklistResourceFirstSeen, DateTimeOffset? blacklistResourceLastSeen, long? blacklistResourceCount, DateTimeOffset? blacklistSequenceFirstSeen, DateTimeOffset? blacklistSequenceLastSeen, long? blacklistSequenceCount, long? phishCauseCount, long? malwareCauseCount, long? spamCauseCount, long? scamCauseCount, long? phishResourceCount, long? malwareResourceCount, long? spamResourceCount, long? scamResourceCount, long? phishSequenceCount, long? malwareSequenceCount, long? spamSequenceCount, long? scamSequenceCount, int? alexaRank, int? hostReputationScore, int? hostPhishReputationScore, int? hostMalwareReputationScore, int? hostSpamReputationScore, int? hostScamReputationScore, int? domainReputationScore, int? domainPhishReputationScore, int? domainMalwareReputationScore, int? domainSpamReputationScore, int? domainScamReputationScore, string uuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Domain = domain;
@@ -130,84 +101,121 @@ namespace Azure.Analytics.Defender.Easm
             DomainSpamReputationScore = domainSpamReputationScore;
             DomainScamReputationScore = domainScamReputationScore;
             Uuid = uuid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the host. </summary>
+        /// <summary> Gets the Host. </summary>
         public string Host { get; }
-        /// <summary> Gets the domain. </summary>
+
+        /// <summary> Gets the Domain. </summary>
         public string Domain { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the blacklist cause first seen. </summary>
+
+        /// <summary> Gets the BlacklistCauseFirstSeen. </summary>
         public DateTimeOffset? BlacklistCauseFirstSeen { get; }
-        /// <summary> Gets the blacklist cause last seen. </summary>
+
+        /// <summary> Gets the BlacklistCauseLastSeen. </summary>
         public DateTimeOffset? BlacklistCauseLastSeen { get; }
-        /// <summary> Gets the blacklist cause count. </summary>
+
+        /// <summary> Gets the BlacklistCauseCount. </summary>
         public long? BlacklistCauseCount { get; }
-        /// <summary> Gets the blacklist resource first seen. </summary>
+
+        /// <summary> Gets the BlacklistResourceFirstSeen. </summary>
         public DateTimeOffset? BlacklistResourceFirstSeen { get; }
-        /// <summary> Gets the blacklist resource last seen. </summary>
+
+        /// <summary> Gets the BlacklistResourceLastSeen. </summary>
         public DateTimeOffset? BlacklistResourceLastSeen { get; }
-        /// <summary> Gets the blacklist resource count. </summary>
+
+        /// <summary> Gets the BlacklistResourceCount. </summary>
         public long? BlacklistResourceCount { get; }
-        /// <summary> Gets the blacklist sequence first seen. </summary>
+
+        /// <summary> Gets the BlacklistSequenceFirstSeen. </summary>
         public DateTimeOffset? BlacklistSequenceFirstSeen { get; }
-        /// <summary> Gets the blacklist sequence last seen. </summary>
+
+        /// <summary> Gets the BlacklistSequenceLastSeen. </summary>
         public DateTimeOffset? BlacklistSequenceLastSeen { get; }
-        /// <summary> Gets the blacklist sequence count. </summary>
+
+        /// <summary> Gets the BlacklistSequenceCount. </summary>
         public long? BlacklistSequenceCount { get; }
-        /// <summary> Gets the phish cause count. </summary>
+
+        /// <summary> Gets the PhishCauseCount. </summary>
         public long? PhishCauseCount { get; }
-        /// <summary> Gets the malware cause count. </summary>
+
+        /// <summary> Gets the MalwareCauseCount. </summary>
         public long? MalwareCauseCount { get; }
-        /// <summary> Gets the spam cause count. </summary>
+
+        /// <summary> Gets the SpamCauseCount. </summary>
         public long? SpamCauseCount { get; }
-        /// <summary> Gets the scam cause count. </summary>
+
+        /// <summary> Gets the ScamCauseCount. </summary>
         public long? ScamCauseCount { get; }
-        /// <summary> Gets the phish resource count. </summary>
+
+        /// <summary> Gets the PhishResourceCount. </summary>
         public long? PhishResourceCount { get; }
-        /// <summary> Gets the malware resource count. </summary>
+
+        /// <summary> Gets the MalwareResourceCount. </summary>
         public long? MalwareResourceCount { get; }
-        /// <summary> Gets the spam resource count. </summary>
+
+        /// <summary> Gets the SpamResourceCount. </summary>
         public long? SpamResourceCount { get; }
-        /// <summary> Gets the scam resource count. </summary>
+
+        /// <summary> Gets the ScamResourceCount. </summary>
         public long? ScamResourceCount { get; }
-        /// <summary> Gets the phish sequence count. </summary>
+
+        /// <summary> Gets the PhishSequenceCount. </summary>
         public long? PhishSequenceCount { get; }
-        /// <summary> Gets the malware sequence count. </summary>
+
+        /// <summary> Gets the MalwareSequenceCount. </summary>
         public long? MalwareSequenceCount { get; }
-        /// <summary> Gets the spam sequence count. </summary>
+
+        /// <summary> Gets the SpamSequenceCount. </summary>
         public long? SpamSequenceCount { get; }
-        /// <summary> Gets the scam sequence count. </summary>
+
+        /// <summary> Gets the ScamSequenceCount. </summary>
         public long? ScamSequenceCount { get; }
-        /// <summary> Gets the alexa rank. </summary>
+
+        /// <summary> Gets the AlexaRank. </summary>
         public int? AlexaRank { get; }
-        /// <summary> Gets the host reputation score. </summary>
+
+        /// <summary> Gets the HostReputationScore. </summary>
         public int? HostReputationScore { get; }
-        /// <summary> Gets the host phish reputation score. </summary>
+
+        /// <summary> Gets the HostPhishReputationScore. </summary>
         public int? HostPhishReputationScore { get; }
-        /// <summary> Gets the host malware reputation score. </summary>
+
+        /// <summary> Gets the HostMalwareReputationScore. </summary>
         public int? HostMalwareReputationScore { get; }
-        /// <summary> Gets the host spam reputation score. </summary>
+
+        /// <summary> Gets the HostSpamReputationScore. </summary>
         public int? HostSpamReputationScore { get; }
-        /// <summary> Gets the host scam reputation score. </summary>
+
+        /// <summary> Gets the HostScamReputationScore. </summary>
         public int? HostScamReputationScore { get; }
-        /// <summary> Gets the domain reputation score. </summary>
+
+        /// <summary> Gets the DomainReputationScore. </summary>
         public int? DomainReputationScore { get; }
-        /// <summary> Gets the domain phish reputation score. </summary>
+
+        /// <summary> Gets the DomainPhishReputationScore. </summary>
         public int? DomainPhishReputationScore { get; }
-        /// <summary> Gets the domain malware reputation score. </summary>
+
+        /// <summary> Gets the DomainMalwareReputationScore. </summary>
         public int? DomainMalwareReputationScore { get; }
-        /// <summary> Gets the domain spam reputation score. </summary>
+
+        /// <summary> Gets the DomainSpamReputationScore. </summary>
         public int? DomainSpamReputationScore { get; }
-        /// <summary> Gets the domain scam reputation score. </summary>
+
+        /// <summary> Gets the DomainScamReputationScore. </summary>
         public int? DomainScamReputationScore { get; }
-        /// <summary> Gets the uuid. </summary>
+
+        /// <summary> Gets the Uuid. </summary>
         public string Uuid { get; }
     }
 }

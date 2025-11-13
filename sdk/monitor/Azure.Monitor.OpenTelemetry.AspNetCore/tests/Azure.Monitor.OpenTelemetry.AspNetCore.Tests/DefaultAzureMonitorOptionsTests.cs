@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.False(azureMonitorOptions.DisableOfflineStorage);
             Assert.Equal(1.0F, azureMonitorOptions.SamplingRatio);
             Assert.Null(azureMonitorOptions.StorageDirectory);
+            Assert.True(azureMonitorOptions.EnableTraceBasedLogsSampler);
         }
 
 #if NET
@@ -39,7 +40,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 ""ConnectionString"" : ""testJsonValue"",
                 ""DisableOfflineStorage"" : ""true"",
                 ""SamplingRatio"" : 0.5,
-                ""StorageDirectory"" : ""testJsonValue""
+                ""StorageDirectory"" : ""testJsonValue"",
+                ""EnableTraceBasedLogsSampler"" : ""true""
                 }}";
 
             var configuration = new ConfigurationBuilder()

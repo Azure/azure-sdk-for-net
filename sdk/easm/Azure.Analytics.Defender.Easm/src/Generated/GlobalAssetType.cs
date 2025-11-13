@@ -14,65 +14,102 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct GlobalAssetType : IEquatable<GlobalAssetType>
     {
         private readonly string _value;
+        /// <summary> page. </summary>
+        private const string PageValue = "page";
+        /// <summary> resource. </summary>
+        private const string ResourceValue = "resource";
+        /// <summary> mail server. </summary>
+        private const string MailServerValue = "mailServer";
+        /// <summary> name server. </summary>
+        private const string NameServerValue = "nameServer";
+        /// <summary> host. </summary>
+        private const string HostValue = "host";
+        /// <summary> domain. </summary>
+        private const string DomainValue = "domain";
+        /// <summary> ip address. </summary>
+        private const string IpAddressValue = "ipAddress";
+        /// <summary> ip block. </summary>
+        private const string IpBlockValue = "ipBlock";
+        /// <summary> autonomous system number. </summary>
+        private const string AsValue = "as";
+        /// <summary> contact. </summary>
+        private const string ContactValue = "contact";
+        /// <summary> ssl certificate. </summary>
+        private const string SslCertValue = "sslCert";
 
         /// <summary> Initializes a new instance of <see cref="GlobalAssetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GlobalAssetType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PageValue = "page";
-        private const string ResourceValue = "resource";
-        private const string MailServerValue = "mailServer";
-        private const string NameServerValue = "nameServer";
-        private const string HostValue = "host";
-        private const string DomainValue = "domain";
-        private const string IpAddressValue = "ipAddress";
-        private const string IpBlockValue = "ipBlock";
-        private const string AsValue = "as";
-        private const string ContactValue = "contact";
-        private const string SslCertValue = "sslCert";
+            _value = value;
+        }
 
         /// <summary> page. </summary>
         public static GlobalAssetType Page { get; } = new GlobalAssetType(PageValue);
+
         /// <summary> resource. </summary>
         public static GlobalAssetType Resource { get; } = new GlobalAssetType(ResourceValue);
+
         /// <summary> mail server. </summary>
         public static GlobalAssetType MailServer { get; } = new GlobalAssetType(MailServerValue);
+
         /// <summary> name server. </summary>
         public static GlobalAssetType NameServer { get; } = new GlobalAssetType(NameServerValue);
+
         /// <summary> host. </summary>
         public static GlobalAssetType Host { get; } = new GlobalAssetType(HostValue);
+
         /// <summary> domain. </summary>
         public static GlobalAssetType Domain { get; } = new GlobalAssetType(DomainValue);
+
         /// <summary> ip address. </summary>
         public static GlobalAssetType IpAddress { get; } = new GlobalAssetType(IpAddressValue);
+
         /// <summary> ip block. </summary>
         public static GlobalAssetType IpBlock { get; } = new GlobalAssetType(IpBlockValue);
+
         /// <summary> autonomous system number. </summary>
         public static GlobalAssetType As { get; } = new GlobalAssetType(AsValue);
+
         /// <summary> contact. </summary>
         public static GlobalAssetType Contact { get; } = new GlobalAssetType(ContactValue);
+
         /// <summary> ssl certificate. </summary>
         public static GlobalAssetType SslCert { get; } = new GlobalAssetType(SslCertValue);
+
         /// <summary> Determines if two <see cref="GlobalAssetType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GlobalAssetType left, GlobalAssetType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GlobalAssetType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GlobalAssetType left, GlobalAssetType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GlobalAssetType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GlobalAssetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GlobalAssetType(string value) => new GlobalAssetType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GlobalAssetType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GlobalAssetType?(string value) => value == null ? null : new GlobalAssetType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GlobalAssetType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GlobalAssetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

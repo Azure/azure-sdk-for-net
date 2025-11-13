@@ -15,12 +15,8 @@ namespace Azure.Analytics.Defender.Easm
     {
         /// <summary> Initializes a new instance of <see cref="IpAddressAssetResource"/>. </summary>
         /// <param name="asset"> asset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asset"/> is null. </exception>
-        internal IpAddressAssetResource(IpAddressAsset asset)
+        internal IpAddressAssetResource(IpAddressAsset asset) : base("ipAddress")
         {
-            Argument.AssertNotNull(asset, nameof(asset));
-
-            Kind = "ipAddress";
             Asset = asset;
         }
 
@@ -39,16 +35,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="asset"> asset. </param>
-        internal IpAddressAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IReadOnlyList<string> labels, bool? wildcard, string discoGroupName, IReadOnlyList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, IpAddressAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, serializedAdditionalRawData)
+        internal IpAddressAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpAddressAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, additionalBinaryDataProperties)
         {
             Asset = asset;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IpAddressAssetResource"/> for deserialization. </summary>
-        internal IpAddressAssetResource()
-        {
         }
 
         /// <summary> asset. </summary>

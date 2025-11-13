@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The DependentResource. </summary>
     public partial class DependentResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DependentResource"/>. </summary>
         internal DependentResource()
@@ -77,8 +48,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastObservedValidation"></param>
         /// <param name="lastObservedActualSriHash"></param>
         /// <param name="lastObservedExpectedSriHash"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DependentResource(string md5, long? responseBodySize, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string firstSeenCrawlGuid, string firstSeenPageGuid, string firstSeenResourceGuid, string lastSeenCrawlGuid, string lastSeenPageGuid, string lastSeenResourceGuid, IReadOnlyList<int> responseBodyMinhash, string contentType, string sha256, string sha384, string sha512, Uri url, bool? cached, IReadOnlyList<SubResourceIntegrityCheck> sriChecks, string host, DateTimeOffset? lastObservedViolation, DateTimeOffset? lastObservedValidation, string lastObservedActualSriHash, string lastObservedExpectedSriHash, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DependentResource(string md5, long? responseBodySize, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, string firstSeenCrawlGuid, string firstSeenPageGuid, string firstSeenResourceGuid, string lastSeenCrawlGuid, string lastSeenPageGuid, string lastSeenResourceGuid, IList<int> responseBodyMinhash, string contentType, string sha256, string sha384, string sha512, Uri url, bool? cached, IList<SubResourceIntegrityCheck> sriChecks, string host, DateTimeOffset? lastObservedViolation, DateTimeOffset? lastObservedValidation, string lastObservedActualSriHash, string lastObservedExpectedSriHash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Md5 = md5;
             ResponseBodySize = responseBodySize;
@@ -104,56 +75,79 @@ namespace Azure.Analytics.Defender.Easm
             LastObservedValidation = lastObservedValidation;
             LastObservedActualSriHash = lastObservedActualSriHash;
             LastObservedExpectedSriHash = lastObservedExpectedSriHash;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the md 5. </summary>
+        /// <summary> Gets the Md5. </summary>
         public string Md5 { get; }
-        /// <summary> Gets the response body size. </summary>
+
+        /// <summary> Gets the ResponseBodySize. </summary>
         public long? ResponseBodySize { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the first seen crawl guid. </summary>
+
+        /// <summary> Gets the FirstSeenCrawlGuid. </summary>
         public string FirstSeenCrawlGuid { get; }
-        /// <summary> Gets the first seen page guid. </summary>
+
+        /// <summary> Gets the FirstSeenPageGuid. </summary>
         public string FirstSeenPageGuid { get; }
-        /// <summary> Gets the first seen resource guid. </summary>
+
+        /// <summary> Gets the FirstSeenResourceGuid. </summary>
         public string FirstSeenResourceGuid { get; }
-        /// <summary> Gets the last seen crawl guid. </summary>
+
+        /// <summary> Gets the LastSeenCrawlGuid. </summary>
         public string LastSeenCrawlGuid { get; }
-        /// <summary> Gets the last seen page guid. </summary>
+
+        /// <summary> Gets the LastSeenPageGuid. </summary>
         public string LastSeenPageGuid { get; }
-        /// <summary> Gets the last seen resource guid. </summary>
+
+        /// <summary> Gets the LastSeenResourceGuid. </summary>
         public string LastSeenResourceGuid { get; }
-        /// <summary> Gets the response body minhash. </summary>
-        public IReadOnlyList<int> ResponseBodyMinhash { get; }
-        /// <summary> Gets the content type. </summary>
+
+        /// <summary> Gets the ResponseBodyMinhash. </summary>
+        public IList<int> ResponseBodyMinhash { get; }
+
+        /// <summary> Gets the ContentType. </summary>
         public string ContentType { get; }
-        /// <summary> Gets the sha 256. </summary>
+
+        /// <summary> Gets the Sha256. </summary>
         public string Sha256 { get; }
-        /// <summary> Gets the sha 384. </summary>
+
+        /// <summary> Gets the Sha384. </summary>
         public string Sha384 { get; }
-        /// <summary> Gets the sha 512. </summary>
+
+        /// <summary> Gets the Sha512. </summary>
         public string Sha512 { get; }
-        /// <summary> Gets the url. </summary>
+
+        /// <summary> Gets the Url. </summary>
         public Uri Url { get; }
-        /// <summary> Gets the cached. </summary>
+
+        /// <summary> Gets the Cached. </summary>
         public bool? Cached { get; }
-        /// <summary> Gets the sri checks. </summary>
-        public IReadOnlyList<SubResourceIntegrityCheck> SriChecks { get; }
-        /// <summary> Gets the host. </summary>
+
+        /// <summary> Gets the SriChecks. </summary>
+        public IList<SubResourceIntegrityCheck> SriChecks { get; }
+
+        /// <summary> Gets the Host. </summary>
         public string Host { get; }
-        /// <summary> Gets the last observed violation. </summary>
+
+        /// <summary> Gets the LastObservedViolation. </summary>
         public DateTimeOffset? LastObservedViolation { get; }
-        /// <summary> Gets the last observed validation. </summary>
+
+        /// <summary> Gets the LastObservedValidation. </summary>
         public DateTimeOffset? LastObservedValidation { get; }
-        /// <summary> Gets the last observed actual sri hash. </summary>
+
+        /// <summary> Gets the LastObservedActualSriHash. </summary>
         public string LastObservedActualSriHash { get; }
-        /// <summary> Gets the last observed expected sri hash. </summary>
+
+        /// <summary> Gets the LastObservedExpectedSriHash. </summary>
         public string LastObservedExpectedSriHash { get; }
     }
 }

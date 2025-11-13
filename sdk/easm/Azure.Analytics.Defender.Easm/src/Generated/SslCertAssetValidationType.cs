@@ -14,41 +14,59 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct SslCertAssetValidationType : IEquatable<SslCertAssetValidationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SslCertAssetValidationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SslCertAssetValidationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DomainValidationValue = "domainValidation";
         private const string OrganizationValidationValue = "organizationValidation";
         private const string ExtendedValidationValue = "extendedValidation";
 
-        /// <summary> domainValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslCertAssetValidationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SslCertAssetValidationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the DomainValidation. </summary>
         public static SslCertAssetValidationType DomainValidation { get; } = new SslCertAssetValidationType(DomainValidationValue);
-        /// <summary> organizationValidation. </summary>
+
+        /// <summary> Gets the OrganizationValidation. </summary>
         public static SslCertAssetValidationType OrganizationValidation { get; } = new SslCertAssetValidationType(OrganizationValidationValue);
-        /// <summary> extendedValidation. </summary>
+
+        /// <summary> Gets the ExtendedValidation. </summary>
         public static SslCertAssetValidationType ExtendedValidation { get; } = new SslCertAssetValidationType(ExtendedValidationValue);
+
         /// <summary> Determines if two <see cref="SslCertAssetValidationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SslCertAssetValidationType left, SslCertAssetValidationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SslCertAssetValidationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SslCertAssetValidationType left, SslCertAssetValidationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SslCertAssetValidationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SslCertAssetValidationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SslCertAssetValidationType(string value) => new SslCertAssetValidationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SslCertAssetValidationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SslCertAssetValidationType?(string value) => value == null ? null : new SslCertAssetValidationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SslCertAssetValidationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SslCertAssetValidationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

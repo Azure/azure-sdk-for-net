@@ -14,14 +14,6 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct DiscoverySourceKind : IEquatable<DiscoverySourceKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DiscoverySourceKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DiscoverySourceKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AsValue = "as";
         private const string AttributeValue = "attribute";
         private const string ContactValue = "contact";
@@ -29,35 +21,64 @@ namespace Azure.Analytics.Defender.Easm
         private const string HostValue = "host";
         private const string IpBlockValue = "ipBlock";
 
-        /// <summary> as. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoverySourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DiscoverySourceKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the As. </summary>
         public static DiscoverySourceKind As { get; } = new DiscoverySourceKind(AsValue);
-        /// <summary> attribute. </summary>
+
+        /// <summary> Gets the Attribute. </summary>
         public static DiscoverySourceKind Attribute { get; } = new DiscoverySourceKind(AttributeValue);
-        /// <summary> contact. </summary>
+
+        /// <summary> Gets the Contact. </summary>
         public static DiscoverySourceKind Contact { get; } = new DiscoverySourceKind(ContactValue);
-        /// <summary> domain. </summary>
+
+        /// <summary> Gets the Domain. </summary>
         public static DiscoverySourceKind Domain { get; } = new DiscoverySourceKind(DomainValue);
-        /// <summary> host. </summary>
+
+        /// <summary> Gets the Host. </summary>
         public static DiscoverySourceKind Host { get; } = new DiscoverySourceKind(HostValue);
-        /// <summary> ipBlock. </summary>
+
+        /// <summary> Gets the IpBlock. </summary>
         public static DiscoverySourceKind IpBlock { get; } = new DiscoverySourceKind(IpBlockValue);
+
         /// <summary> Determines if two <see cref="DiscoverySourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiscoverySourceKind left, DiscoverySourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiscoverySourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiscoverySourceKind left, DiscoverySourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiscoverySourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiscoverySourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiscoverySourceKind(string value) => new DiscoverySourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiscoverySourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiscoverySourceKind?(string value) => value == null ? null : new DiscoverySourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiscoverySourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiscoverySourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

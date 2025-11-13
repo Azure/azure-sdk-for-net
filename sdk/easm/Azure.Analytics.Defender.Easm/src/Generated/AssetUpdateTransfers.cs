@@ -14,14 +14,6 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct AssetUpdateTransfers : IEquatable<AssetUpdateTransfers>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AssetUpdateTransfers"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AssetUpdateTransfers(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AsValue = "as";
         private const string ContactValue = "contact";
         private const string DomainValue = "domain";
@@ -31,39 +23,70 @@ namespace Azure.Analytics.Defender.Easm
         private const string PageValue = "page";
         private const string SslCertValue = "sslCert";
 
-        /// <summary> as. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetUpdateTransfers"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AssetUpdateTransfers(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the As. </summary>
         public static AssetUpdateTransfers As { get; } = new AssetUpdateTransfers(AsValue);
-        /// <summary> contact. </summary>
+
+        /// <summary> Gets the Contact. </summary>
         public static AssetUpdateTransfers Contact { get; } = new AssetUpdateTransfers(ContactValue);
-        /// <summary> domain. </summary>
+
+        /// <summary> Gets the Domain. </summary>
         public static AssetUpdateTransfers Domain { get; } = new AssetUpdateTransfers(DomainValue);
-        /// <summary> host. </summary>
+
+        /// <summary> Gets the Host. </summary>
         public static AssetUpdateTransfers Host { get; } = new AssetUpdateTransfers(HostValue);
-        /// <summary> ipAddress. </summary>
+
+        /// <summary> Gets the IpAddress. </summary>
         public static AssetUpdateTransfers IpAddress { get; } = new AssetUpdateTransfers(IpAddressValue);
-        /// <summary> ipBlock. </summary>
+
+        /// <summary> Gets the IpBlock. </summary>
         public static AssetUpdateTransfers IpBlock { get; } = new AssetUpdateTransfers(IpBlockValue);
-        /// <summary> page. </summary>
+
+        /// <summary> Gets the Page. </summary>
         public static AssetUpdateTransfers Page { get; } = new AssetUpdateTransfers(PageValue);
-        /// <summary> sslCert. </summary>
+
+        /// <summary> Gets the SslCert. </summary>
         public static AssetUpdateTransfers SslCert { get; } = new AssetUpdateTransfers(SslCertValue);
+
         /// <summary> Determines if two <see cref="AssetUpdateTransfers"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AssetUpdateTransfers left, AssetUpdateTransfers right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AssetUpdateTransfers"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AssetUpdateTransfers left, AssetUpdateTransfers right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AssetUpdateTransfers"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AssetUpdateTransfers"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AssetUpdateTransfers(string value) => new AssetUpdateTransfers(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AssetUpdateTransfers"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AssetUpdateTransfers?(string value) => value == null ? null : new AssetUpdateTransfers(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssetUpdateTransfers other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AssetUpdateTransfers other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

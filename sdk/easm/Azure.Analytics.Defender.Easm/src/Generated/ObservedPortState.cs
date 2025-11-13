@@ -23,18 +23,19 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="port"></param>
-        internal ObservedPortState(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, ObservedPortStateValue? value, int? port) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
+        internal ObservedPortState(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties, ObservedPortStateValue? value, int? port) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
         {
             Value = value;
             Port = port;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Gets the Value. </summary>
         public ObservedPortStateValue? Value { get; }
-        /// <summary> Gets the port. </summary>
+
+        /// <summary> Gets the Port. </summary>
         public int? Port { get; }
     }
 }

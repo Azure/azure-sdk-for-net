@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.StorageActions
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageTaskResource"/> and their operations.
-    /// Each <see cref="StorageTaskResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="StorageTaskCollection"/> instance call the GetStorageTasks method from an instance of the parent resource.
+    /// Each <see cref="StorageTaskResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="StorageTaskCollection"/> instance call the GetStorageTasks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class StorageTaskCollection : ArmCollection, IEnumerable<StorageTaskResource>, IAsyncEnumerable<StorageTaskResource>
     {
@@ -277,7 +277,23 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary> Lists all the storage tasks available under the given resource group. </summary>
+        /// <summary>
+        /// Lists all the storage tasks available under the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -289,7 +305,23 @@ namespace Azure.ResourceManager.StorageActions
             return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
         }
 
-        /// <summary> Lists all the storage tasks available under the given resource group. </summary>
+        /// <summary>
+        /// Lists all the storage tasks available under the given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasks_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskResource> GetAll(CancellationToken cancellationToken = default)

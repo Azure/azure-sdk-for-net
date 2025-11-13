@@ -21,8 +21,8 @@ public static class ManagedIdentityTests
         string account1 = Environment.GetEnvironmentVariable("IDENTITY_STORAGE_NAME_1")!;
         string account2 = Environment.GetEnvironmentVariable("IDENTITY_STORAGE_NAME_2")!;
 
-        var credential1 = new ManagedIdentityCredential();
-        var credential2 = new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+        var credential1 = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+        var credential2 = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(resourceId)));
         var client1 = new BlobServiceClient(new Uri($"https://{account1}.blob.core.windows.net/"), credential1);
         var client2 = new BlobServiceClient(new Uri($"https://{account2}.blob.core.windows.net/"), credential2);
         client1.GetBlobContainers().ToList();

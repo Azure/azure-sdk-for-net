@@ -947,10 +947,7 @@
 # ServiceOwners:                                                   @armleads-azure
 
 # PRLabel: %Astronomer
-/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
-
-# ServiceLabel: %Astronomer %Mgmt
-# ServiceOwners:                                                   @banggaurav
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978

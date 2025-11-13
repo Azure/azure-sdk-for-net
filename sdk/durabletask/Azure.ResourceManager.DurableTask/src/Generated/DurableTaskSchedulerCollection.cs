@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
     /// A class representing a collection of <see cref="DurableTaskSchedulerResource"/> and their operations.
-    /// Each <see cref="DurableTaskSchedulerResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DurableTaskSchedulerCollection"/> instance call the GetDurableTaskSchedulers method from an instance of the parent resource.
+    /// Each <see cref="DurableTaskSchedulerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DurableTaskSchedulerCollection"/> instance call the GetDurableTaskSchedulers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DurableTaskSchedulerCollection : ArmCollection, IEnumerable<DurableTaskSchedulerResource>, IAsyncEnumerable<DurableTaskSchedulerResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> List Schedulers by resource group. </summary>
+        /// <summary>
+        /// List Schedulers by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DurableTaskSchedulerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DurableTaskSchedulerResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.DurableTask
             return new AsyncPageableWrapper<DurableTaskSchedulerData, DurableTaskSchedulerResource>(new SchedulersGetByResourceGroupAsyncCollectionResultOfT(_schedulersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DurableTaskSchedulerResource(Client, data));
         }
 
-        /// <summary> List Schedulers by resource group. </summary>
+        /// <summary>
+        /// List Schedulers by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DurableTaskSchedulerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DurableTaskSchedulerResource> GetAll(CancellationToken cancellationToken = default)

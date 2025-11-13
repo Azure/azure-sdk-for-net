@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PineconeVectorDB
 {
     /// <summary>
     /// A class representing a collection of <see cref="PineconeVectorDBOrganizationResource"/> and their operations.
-    /// Each <see cref="PineconeVectorDBOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PineconeVectorDBOrganizationCollection"/> instance call the GetPineconeVectorDBOrganizations method from an instance of the parent resource.
+    /// Each <see cref="PineconeVectorDBOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PineconeVectorDBOrganizationCollection"/> instance call the GetPineconeVectorDBOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PineconeVectorDBOrganizationCollection : ArmCollection, IEnumerable<PineconeVectorDBOrganizationResource>, IAsyncEnumerable<PineconeVectorDBOrganizationResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.PineconeVectorDB
             }
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-22-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PineconeVectorDBOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.PineconeVectorDB
             return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-22-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PineconeVectorDBOrganizationResource> GetAll(CancellationToken cancellationToken = default)

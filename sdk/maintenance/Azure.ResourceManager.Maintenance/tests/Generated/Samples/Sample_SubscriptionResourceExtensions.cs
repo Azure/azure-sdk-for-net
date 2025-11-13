@@ -19,40 +19,9 @@ namespace Azure.ResourceManager.Maintenance.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetMaintenanceApplyUpdates_ApplyUpdatesList()
-        {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/ApplyUpdates_List.json
-            // this example is just showing the usage of "ApplyUpdates_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (MaintenanceApplyUpdateResource item in subscriptionResource.GetMaintenanceApplyUpdatesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MaintenanceApplyUpdateData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetMaintenanceConfigurations_MaintenanceConfigurationsList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/MaintenanceConfigurations_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_List.json
             // this example is just showing the usage of "MaintenanceConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +52,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetConfigurationAssignmentsBySubscription_ConfigurationAssignmentsResultWithinSubscriptionList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/ConfigurationAssignmentsResultWithinSubscription_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsResultWithinSubscription_List.json
             // this example is just showing the usage of "ConfigurationAssignmentsWithinSubscription_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +79,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetConfigurationAssignmentBySubscription_ConfigurationAssignmentsGetParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/ConfigurationAssignmentsForSubscriptions_Get.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_Get.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +104,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateConfigurationAssignmentBySubscription_ConfigurationAssignmentsForSubscriptionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/ConfigurationAssignmentsForSubscriptions_CreateOrUpdate.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_CreateOrUpdate.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +148,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateConfigurationAssignmentBySubscription_ConfigurationAssignmentsForSubscriptionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/ConfigurationAssignmentsForSubscriptions_UpdateForResource.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_UpdateForResource.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,7 +192,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteConfigurationAssignmentBySubscription_ConfigurationAssignmentsForSubscriptionsDelete()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-10-01-preview/examples/ConfigurationAssignmentsForSubscriptions_Delete.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForSubscriptions_Delete.json
             // this example is just showing the usage of "ConfigurationAssignmentsForSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

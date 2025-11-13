@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The TaskResource. </summary>
     public partial class TaskResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TaskResource"/>. </summary>
         internal TaskResource()
@@ -60,8 +32,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="phase"> The phase the task is in. </param>
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> Attributes unique to the task.  This differs by task type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskResource(string id, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? lastPolledAt, TaskResourceState? state, TaskResourcePhase? phase, string reason, IReadOnlyDictionary<string, BinaryData> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TaskResource(string id, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? lastPolledAt, TaskResourceState? state, TaskResourcePhase? phase, string reason, IDictionary<string, BinaryData> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             StartedAt = startedAt;
@@ -71,53 +43,56 @@ namespace Azure.Analytics.Defender.Easm
             Phase = phase;
             Reason = reason;
             Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier of the task. </summary>
         public string Id { get; }
+
         /// <summary> The time the task started. </summary>
         public DateTimeOffset? StartedAt { get; }
+
         /// <summary> The time the task completed. </summary>
         public DateTimeOffset? CompletedAt { get; }
+
         /// <summary> The last time the status of the task was updated. </summary>
         public DateTimeOffset? LastPolledAt { get; }
+
         /// <summary> The state the task is in. </summary>
         public TaskResourceState? State { get; }
+
         /// <summary> The phase the task is in. </summary>
         public TaskResourcePhase? Phase { get; }
+
         /// <summary> The reason the task was moved into its current state, if the task wasn't completed. </summary>
         public string Reason { get; }
+
         /// <summary>
         /// Attributes unique to the task.  This differs by task type.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Metadata { get; }
+        public IDictionary<string, BinaryData> Metadata { get; }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// A class representing a collection of <see cref="ConnectedClusterResource"/> and their operations.
-    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of the parent resource.
+    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConnectedClusterCollection : ArmCollection, IEnumerable<ConnectedClusterResource>, IAsyncEnumerable<ConnectedClusterResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to enumerate registered connected K8s clusters under a Resource Group. </summary>
+        /// <summary>
+        /// API to enumerate registered connected K8s clusters under a Resource Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.Kubernetes
             return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
         }
 
-        /// <summary> API to enumerate registered connected K8s clusters under a Resource Group. </summary>
+        /// <summary>
+        /// API to enumerate registered connected K8s clusters under a Resource Group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterResource> GetAll(CancellationToken cancellationToken = default)

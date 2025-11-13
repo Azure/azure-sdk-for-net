@@ -34,6 +34,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
+            ["Azure.ResourceManager.Legacy.TrackedResourceWithOptionalLocation"] = typeof(TrackedResourceData),
         };
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()
@@ -41,6 +42,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedLocation),
             ["Azure.ResourceManager.CommonTypes.ExtendedLocationType"] = typeof(ExtendedLocationType),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),

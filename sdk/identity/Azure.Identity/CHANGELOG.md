@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Deprecated legacy `ManagedIdentityCredential` constructors. Use `ManagedIdentityCredential(ManagedIdentityId id)` or `ManagedIdentityCredential(ManagedIdentityCredentialOptions options)` instead for clearer intent when specifying system-assigned or user-assigned managed identity. ([#53800](https://github.com/Azure/azure-sdk-for-net/issues/53800))
+
 ## 1.17.0 (2025-10-07)
 
 ### Bugs Fixed

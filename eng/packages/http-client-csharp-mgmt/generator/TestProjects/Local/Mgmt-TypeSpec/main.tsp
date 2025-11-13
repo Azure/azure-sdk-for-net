@@ -13,6 +13,7 @@ import "./databox.tsp";
 import "./hcivm.tsp";
 import "./quota.tsp";
 import "./networkaction.tsp";
+import "./joo.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

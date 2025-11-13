@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DependencyMap
 {
     /// <summary>
     /// A class representing a collection of <see cref="DependencyMapResource"/> and their operations.
-    /// Each <see cref="DependencyMapResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DependencyMapCollection"/> instance call the GetDependencyMaps method from an instance of the parent resource.
+    /// Each <see cref="DependencyMapResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DependencyMapCollection"/> instance call the GetDependencyMaps method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DependencyMapCollection : ArmCollection, IEnumerable<DependencyMapResource>, IAsyncEnumerable<DependencyMapResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
-        /// <summary> List MapsResource resources by resource group. </summary>
+        /// <summary>
+        /// List MapsResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maps_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DependencyMapResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.DependencyMap
             return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DependencyMapResource(Client, data));
         }
 
-        /// <summary> List MapsResource resources by resource group. </summary>
+        /// <summary>
+        /// List MapsResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DependencyMap/maps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Maps_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DependencyMapResource> GetAll(CancellationToken cancellationToken = default)

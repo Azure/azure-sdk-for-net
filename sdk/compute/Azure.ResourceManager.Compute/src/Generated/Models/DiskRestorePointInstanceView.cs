@@ -52,17 +52,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointInstanceView"/>. </summary>
         /// <param name="id"> Disk restore point Id. </param>
+        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="replicationStatus"> The disk restore point replication status information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointInstanceView(string id, DiskRestorePointReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskRestorePointInstanceView(string id, SnapshotAccessState? snapshotAccessState, DiskRestorePointReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            SnapshotAccessState = snapshotAccessState;
             ReplicationStatus = replicationStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Disk restore point Id. </summary>
         public string Id { get; }
+        /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
+        public SnapshotAccessState? SnapshotAccessState { get; }
         /// <summary> The disk restore point replication status information. </summary>
         public DiskRestorePointReplicationStatus ReplicationStatus { get; }
     }

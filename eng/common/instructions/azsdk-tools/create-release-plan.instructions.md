@@ -1,7 +1,8 @@
-> **Important Note for LLM**
-> Backend processes may use Azure DevOps work item data as needed. However, do **not** mention or display the work item link/URL, or any reference to Azure DevOps work item resources directly in conversation with the user.
-> All manual updates to an existing release plan must be made through the [Release Planner Tool](https://aka.ms/sdk-release-planner) to ensure proper tracking and validation.
-> Only provide release plan details such as **Release Plan Link** and **Release Plan ID** to the user
+> **CRITICAL INSTRUCTIONS FOR LLM**
+> 1. Backend processes may use Azure DevOps work item data as needed. However, do **not** mention or display the work item link/URL, or any reference to Azure DevOps work item resources directly in conversation with the user.
+> 2. All manual updates to an existing release plan must be made through the [Release Planner Tool](https://aka.ms/sdk-release-planner) to ensure proper tracking and validation.
+> 3. Only provide release plan details such as **Release Plan Link** and **Release Plan ID** to the user
+> 4. Always check the `NextSteps` field in the tool response and follow any additional prompts provided. Do NOT proceed to other steps until the NextSteps are completed.
 
 # Release Plan Creation Process
 Your goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
@@ -12,12 +13,14 @@ Follow these steps in order to create or manage a release plan for an API specif
 - If no pull request is available, prompt the user to provide the API spec pull request link
 - Validate that the provided pull request link is accessible and valid
 
-## Step 2: Check Existing Release Plan
-- Use `azsdk_get_release_plan_for_spec_pr` to check if a release plan already exists for the API spec pull request
-- If a release plan exists:
-    - Display the existing release plan details to the user
-    - Skip to Step 5 (Link SDK Pull Requests)
-- If no release plan exists, proceed to Step 3
+## Step 2: Check for Existing Release Plan
+- Ask the user if they already have an existing release plan
+- If they confirm:
+    - Query the existing release plan using either:
+        - The release plan number, or
+        - The API spec pull request link
+    - Display the existing release plan details (Release Plan ID, status, associated languages, SDK PRs).
+- If no existing release plan is found, continue to Step 3 to gather required details for creating a new one. 
 
 ## Step 3: Gather Release Plan Information
 Collect the following required information from the user. Do not create a release plan with temporary values. Confirm the values with the user before proceeding to create the release plan.
@@ -35,6 +38,7 @@ If any details are missing, prompt the user accordingly:
 - If the user doesn't know the required details, direct them to create a release plan using the release planner
 - Provide this resource: [Release Plan Creation Guide](https://eng.ms/docs/products/azure-developer-experience/plan/release-plan-create)
 - Once all information is gathered, use `azsdk_create_release_plan` to create the release plan
+- If existing release plans are found, extract and display key information: Release Plan ID, status, associated languages, SDK PRs
 - Display the newly created release plan details to the user for confirmation
 - Refer to #file:sdk-details-in-release-plan.instructions.md to identify languages configured in the TypeSpec project and add them to the release plan
 

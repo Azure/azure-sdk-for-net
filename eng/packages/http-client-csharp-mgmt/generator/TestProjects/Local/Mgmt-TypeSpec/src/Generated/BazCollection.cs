@@ -21,8 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BazResource"/> and their operations.
-    /// Each <see cref="BazResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BazCollection"/> instance call the GetBazs method from an instance of the parent resource.
+    /// Each <see cref="BazResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BazCollection"/> instance call the GetBazs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BazCollection : ArmCollection, IEnumerable<BazResource>, IAsyncEnumerable<BazResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> List Baz resources by resource group. </summary>
+        /// <summary>
+        /// List Baz resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BazResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetAllAsyncCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new BazResource(Client, data));
         }
 
-        /// <summary> List Baz resources by resource group. </summary>
+        /// <summary>
+        /// List Baz resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BazResource> GetAll(CancellationToken cancellationToken = default)

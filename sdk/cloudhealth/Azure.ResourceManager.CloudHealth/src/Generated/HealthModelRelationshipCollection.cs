@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelRelationshipResource"/> and their operations.
-    /// Each <see cref="HealthModelRelationshipResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthModelRelationshipCollection"/> instance call the GetHealthModelRelationships method from an instance of the parent resource.
+    /// Each <see cref="HealthModelRelationshipResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
+    /// To get a <see cref="HealthModelRelationshipCollection"/> instance call the GetHealthModelRelationships method from an instance of <see cref="HealthModelResource"/>.
     /// </summary>
     public partial class HealthModelRelationshipCollection : ArmCollection, IEnumerable<HealthModelRelationshipResource>, IAsyncEnumerable<HealthModelRelationshipResource>
     {
@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary> List Relationship resources by HealthModel. </summary>
+        /// <summary>
+        /// List Relationship resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.CloudHealth
                 context), data => new HealthModelRelationshipResource(Client, data));
         }
 
-        /// <summary> List Relationship resources by HealthModel. </summary>
+        /// <summary>
+        /// List Relationship resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
