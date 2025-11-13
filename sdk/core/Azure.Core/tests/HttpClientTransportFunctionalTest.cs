@@ -22,7 +22,6 @@ namespace Azure.Core.Tests
     [NonParallelizable]
     public class HttpClientTransportFunctionalTest : TransportFunctionalTests
     {
-        private static RemoteCertificateValidationCallback certCallback = (_, _, _, _) => true;
         public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
         { }
 
@@ -31,15 +30,10 @@ namespace Azure.Core.Tests
 #if !NET462
             if (https)
             {
-                // return transportFactory is null ?
-                    return new HttpClientTransport(options ?? new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true });
-                    // : new HttpClientTransport();
+                return new HttpClientTransport(options ?? new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = _ => true });
             }
 #endif
             return new HttpClientTransport(options);
-            // return transportFactory is null ?
-                // new HttpClientTransport(options) :
-                // new HttpClientTransport(transportFactory as Func<HttpPipelineTransportOptions, HttpClient>);
         }
 
 #if NET462
