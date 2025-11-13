@@ -45,9 +45,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets or sets the FlattenedProperty. </param>
         /// <param name="extendedLocation"></param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -71,7 +72,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     new SafeFlattenModel(flattenedProperty, null),
                     etag,
                     null),
-                extendedLocation);
+                extendedLocation,
+                identity);
         }
 
         /// <param name="serviceUri"> the service url. </param>
