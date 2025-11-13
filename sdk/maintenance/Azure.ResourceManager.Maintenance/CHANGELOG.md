@@ -1,20 +1,10 @@
 # Release History
 
-## 1.2.0-beta.10 (Unreleased)
+## 1.1.3 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.2.0-beta.9 (2025-03-11)
-
-### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
+- Upgraded api-version tag from 'package-preview-2023-10' to 'package-2021-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/maintenance/resource-manager/readme.md.
 
 ## 1.2.0-beta.8 (2024-04-28)
 
