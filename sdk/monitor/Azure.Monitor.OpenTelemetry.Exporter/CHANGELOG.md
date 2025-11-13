@@ -12,6 +12,10 @@
   volume while maintaining trace-log correlation.
   ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
 
+* Update OpenTelemetry dependencies
+  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  - OpenTelemetry 1.14.0
+
 ### Breaking Changes
 
 ### Bugs Fixed
