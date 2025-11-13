@@ -6,22 +6,19 @@ using System.Text.Json.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Messages sent from websocket server
+    /// The status of the mark data.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum MediaKind
+    public enum MarkStatus
     {
         /// <summary>
-        /// Audio data type
-        /// </summary>F
-        AudioData,
-        /// <summary>
-        /// stop audio data type
+        /// The marker is completed
         /// </summary>
-        StopAudio,
+        Completed,
+
         /// <summary>
-        /// Mark data type
+        /// The marker is in cancelled
         /// </summary>
-        MarkData
+        Cancelled,
     }
 }

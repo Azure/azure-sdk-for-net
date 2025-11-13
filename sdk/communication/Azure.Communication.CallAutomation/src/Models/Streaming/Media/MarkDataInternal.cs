@@ -1,27 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Messages sent from websocket server
+    /// Streaming mark data.
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum MediaKind
+    internal class MarkDataInternal
     {
         /// <summary>
-        /// Audio data type
-        /// </summary>F
-        AudioData,
-        /// <summary>
-        /// stop audio data type
+        /// The id of this mark data
         /// </summary>
-        StopAudio,
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
         /// <summary>
-        /// Mark data type
+        /// The status of this mark data
         /// </summary>
-        MarkData
+        [JsonPropertyName("status")]
+        public MarkStatus Status { get; set; }
     }
 }
