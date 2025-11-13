@@ -317,28 +317,28 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AlertRuleCreationProperties : System.IEquatable<Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties>
+    public readonly partial struct AlertRuleCreationProperty : System.IEquatable<Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AlertRuleCreationProperties(string value) { throw null; }
-        public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties CreatedWithActionGroup { get { throw null; } }
-        public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties other) { throw null; }
+        public AlertRuleCreationProperty(string value) { throw null; }
+        public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty CreatedWithActionGroup { get { throw null; } }
+        public static Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty left, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty right) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class ArmDatabaseWatcherModelFactory
     {
         public static Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData DatabaseWatcherAlertRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(Azure.Core.ResourceIdentifier alertRuleResourceId = null, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties createdWithProperties = default(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties), System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState?), string alertRuleTemplateId = null, string alertRuleTemplateVersion = null) { throw null; }
+        public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(Azure.Core.ResourceIdentifier alertRuleResourceId = null, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty createdWithProperties = default(Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty), System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState?), string alertRuleTemplateId = null, string alertRuleTemplateVersion = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData DatabaseWatcherData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData DatabaseWatcherHealthValidationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue DatabaseWatcherHealthValidationIssue(string errorCode = null, string errorMessage = null, string additionalDetails = null, string recommendationMessage = null, System.Uri recommendationUri = null, Azure.Core.ResourceIdentifier relatedResourceId = null, Azure.Core.ResourceType? relatedResourceType = default(Azure.Core.ResourceType?)) { throw null; }
@@ -355,12 +355,12 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     }
     public partial class DatabaseWatcherAlertRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties>
     {
-        public DatabaseWatcherAlertRuleProperties(Azure.Core.ResourceIdentifier alertRuleResourceId, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties createdWithProperties, System.DateTimeOffset createdOn, string alertRuleTemplateId, string alertRuleTemplateVersion) { }
+        public DatabaseWatcherAlertRuleProperties(Azure.Core.ResourceIdentifier alertRuleResourceId, Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty createdWithProperties, System.DateTimeOffset createdOn, string alertRuleTemplateId, string alertRuleTemplateVersion) { }
         public Azure.Core.ResourceIdentifier AlertRuleResourceId { get { throw null; } set { } }
         public string AlertRuleTemplateId { get { throw null; } set { } }
         public string AlertRuleTemplateVersion { get { throw null; } set { } }
         public System.DateTimeOffset CreatedOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperties CreatedWithProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.DatabaseWatcher.Models.AlertRuleCreationProperty CreatedWithProperties { get { throw null; } set { } }
         public Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherResourceProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

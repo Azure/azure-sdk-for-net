@@ -539,7 +539,7 @@
     {
       "$id": "43",
       "kind": "enum",
-      "name": "alertRuleCreationProperties",
+      "name": "alertRuleCreationProperty",
       "crossLanguageDefinitionId": "Microsoft.DatabaseWatcher.alertRuleCreationProperties",
       "valueType": {
         "$id": "44",

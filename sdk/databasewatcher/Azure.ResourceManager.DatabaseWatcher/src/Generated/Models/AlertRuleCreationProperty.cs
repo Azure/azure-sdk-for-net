@@ -12,7 +12,7 @@ using Azure.ResourceManager.DatabaseWatcher;
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary> The properties with which the alert rule resource was created. </summary>
-    public readonly partial struct AlertRuleCreationProperties : IEquatable<AlertRuleCreationProperties>
+    public readonly partial struct AlertRuleCreationProperty : IEquatable<AlertRuleCreationProperty>
     {
         private readonly string _value;
         /// <summary> The alert rule was created with an action group. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> The alert rule was created with no properties. </summary>
         private const string NoneValue = "None";
 
-        /// <summary> Initializes a new instance of <see cref="AlertRuleCreationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleCreationProperty"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertRuleCreationProperties(string value)
+        public AlertRuleCreationProperty(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         }
 
         /// <summary> The alert rule was created with an action group. </summary>
-        public static AlertRuleCreationProperties CreatedWithActionGroup { get; } = new AlertRuleCreationProperties(CreatedWithActionGroupValue);
+        public static AlertRuleCreationProperty CreatedWithActionGroup { get; } = new AlertRuleCreationProperty(CreatedWithActionGroupValue);
 
         /// <summary> The alert rule was created with no properties. </summary>
-        public static AlertRuleCreationProperties None { get; } = new AlertRuleCreationProperties(NoneValue);
+        public static AlertRuleCreationProperty None { get; } = new AlertRuleCreationProperty(NoneValue);
 
-        /// <summary> Determines if two <see cref="AlertRuleCreationProperties"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AlertRuleCreationProperty"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AlertRuleCreationProperties left, AlertRuleCreationProperties right) => left.Equals(right);
+        public static bool operator ==(AlertRuleCreationProperty left, AlertRuleCreationProperty right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AlertRuleCreationProperties"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AlertRuleCreationProperty"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AlertRuleCreationProperties left, AlertRuleCreationProperties right) => !left.Equals(right);
+        public static bool operator !=(AlertRuleCreationProperty left, AlertRuleCreationProperty right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AlertRuleCreationProperties"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertRuleCreationProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertRuleCreationProperties(string value) => new AlertRuleCreationProperties(value);
+        public static implicit operator AlertRuleCreationProperty(string value) => new AlertRuleCreationProperty(value);
 
-        /// <summary> Converts a string to a <see cref="AlertRuleCreationProperties"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AlertRuleCreationProperty"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertRuleCreationProperties?(string value) => value == null ? null : new AlertRuleCreationProperties(value);
+        public static implicit operator AlertRuleCreationProperty?(string value) => value == null ? null : new AlertRuleCreationProperty(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AlertRuleCreationProperties other && Equals(other);
+        public override bool Equals(object obj) => obj is AlertRuleCreationProperty other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AlertRuleCreationProperties other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AlertRuleCreationProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

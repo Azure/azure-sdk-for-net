@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 return null;
             }
             ResourceIdentifier alertRuleResourceId = default;
-            AlertRuleCreationProperties createdWithProperties = default;
+            AlertRuleCreationProperty createdWithProperties = default;
             DateTimeOffset createdOn = default;
             DatabaseWatcherResourceProvisioningState? provisioningState = default;
             string alertRuleTemplateId = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("createdWithProperties"u8))
                 {
-                    createdWithProperties = new AlertRuleCreationProperties(prop.Value.GetString());
+                    createdWithProperties = new AlertRuleCreationProperty(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("creationTime"u8))
