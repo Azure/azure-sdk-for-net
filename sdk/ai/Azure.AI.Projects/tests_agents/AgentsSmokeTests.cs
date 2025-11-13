@@ -6,7 +6,6 @@ using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;

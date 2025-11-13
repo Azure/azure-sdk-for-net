@@ -1,24 +1,24 @@
 # Sample of using Azure Container App with Agent in Azure.AI.Projects.OpenAI.
 
-In this example we will demonstrate how to use [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) in Azure.AI.Projects.OpenAI
+In this example we will demonstrate how to use [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) in Azure.AI.Agents
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_Create_client_ContainerApp
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var containerAppResourceId = System.Environment.GetEnvironmentVariable("CONTAINER_APP_RESOURCE_ID");
 var ingressSubdomainSuffix = System.Environment.GetEnvironmentVariable("INGRESS_SUBDOMAIN_SUFFIX");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Create the `ContainerAppAgentDefinition` object, holding information about the Azure Container App and use it to create the versioned agent object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Sync
-AgentVersion containerAgentVersion = client.CreateAgentVersion(
+AgentVersion containerAgentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "containerAgent",
-    options: new(new ContainerAppAgentDefinition(
+    options: new(new ContainerApplicationAgentDefinition(
         containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
         containerAppResourceId: containerAppResourceId,
         ingressSubdomainSuffix: ingressSubdomainSuffix)));
@@ -26,9 +26,9 @@ AgentVersion containerAgentVersion = client.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
-AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
+AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "containerAgent",
-    options: new(new ContainerAppAgentDefinition(
+    options: new(new ContainerApplicationAgentDefinition(
         containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
         containerAppResourceId: containerAppResourceId,
         ingressSubdomainSuffix: ingressSubdomainSuffix)));
@@ -38,26 +38,20 @@ AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_ContainerApp_Sync
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-ConversationClient conversationClient = client.GetConversationClient();
-AgentConversationCreationOptions conversationOptions = new();
+ProjectConversationCreationOptions conversationOptions = new();
 conversationOptions.Items.Add(
     ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
 );
-AgentConversation conversation = conversationClient.CreateConversation(options: conversationOptions);
+AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation(options: conversationOptions);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_ContainerApp_Async
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
-ConversationClient conversationClient = client.GetConversationClient();
-AgentConversationCreationOptions conversationOptions = new();
+ProjectConversationCreationOptions conversationOptions = new();
 conversationOptions.Items.Add(
     ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
 );
-AgentConversation conversation = await conversationClient.CreateConversationAsync(options: conversationOptions);
+AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
 ```
 
 5. Create synchronous and asynchronous helper methods to wait for response completion. If the response status is not `Completed` we will thow the exception with the latest error.
@@ -94,64 +88,48 @@ private static async Task<OpenAIResponse> WaitResponseAsync(OpenAIResponseClient
 
 Synchronous sample:
 ```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
-AgentReference agentReference = new(name: containerAgentVersion.Name)
-{
-    Version = containerAgentVersion.Version,
-};
-
-OpenAIResponse response = responseClient.CreateResponse(
-    agentRef: agentReference,
-    conversation: conversation
-);
-response = WaitResponse(responseClient, response);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
+OpenAIResponse response = responseClient.CreateResponse([]);
+response = WaitResponse(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());
 
-conversationClient.CreateConversationItems(
+projectClient.OpenAI.Conversations.CreateAgentConversationItems(
     conversationId: conversation.Id,
     items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
-response = responseClient.CreateResponse(
-    agentRef: agentReference,
-    conversation: conversation
-);
-response = WaitResponse(responseClient, response);
+response = projectClient.OpenAI.Responses.CreateResponse([]);
+response = WaitResponse(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
-AgentReference agentReference = new(name: containerAgentVersion.Name)
+ResponseCreationOptions responseOptions = new()
 {
-    Version = containerAgentVersion.Version,
+    Agent = containerAgentVersion,
+    AgentConversationId = conversation.Id,
 };
-
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    agentRef: agentReference,
-    conversation: conversation
-);
-response = await WaitResponseAsync(responseClient, response);
+OpenAIResponse response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
+response = await WaitResponseAsync(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());
 
-await conversationClient.CreateConversationItemsAsync(
+await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
     conversationId: conversation.Id,
     items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
-response = await responseClient.CreateResponseAsync(
-    agentRef: agentReference,
-    conversation: conversation
-);
-response = await WaitResponseAsync(responseClient, response);
+response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
+response = await WaitResponseAsync(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());
 ```
 
-7. Clean up resources by deleting conversations and agent.
+7. Clean up resources by deleting conversations and Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ContainerApp_Sync
-conversationClient.DeleteConversation(conversationId: conversation.Id);
-client.DeleteAgentVersion(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
+projectClient.OpenAI.Conversations.DeleteConversation(conversationId: conversation.Id);
+projectClient.Agents.DeleteAgentVersion(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ContainerApp_Async
-await conversationClient.DeleteConversationAsync(conversationId:conversation.Id);
-await client.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
+await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId:conversation.Id);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
 ```

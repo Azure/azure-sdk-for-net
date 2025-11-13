@@ -1,7 +1,8 @@
 # Azure AI Projects client library for .NET
 The AI Projects client library is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
-* **Create and run Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Create and run Classic Agents** using the `GetPersistentAgentsClient` method on the client.
+* **Create Agents** using `Agents` property.
 * **Enumerate AI Models** deployed to your Foundry Project using the `Deployments` operations.
 * **Enumerate connected Azure resources** in your Foundry project using the `Connections` operations.
 * **Upload documents and create Datasets** to reference them using the `Datasets` operations.
@@ -23,6 +24,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Performing Classic Agent operations](#performing-classic-agent-operations)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -74,7 +76,7 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 
 ## Examples
 
-### Performing Agent operations
+### Performing Classic Agent operations
 
 The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
@@ -147,6 +149,94 @@ foreach (PersistentThreadMessage threadMessage in messages)
 
 agentsClient.Threads.DeleteThread(threadId: thread.Id);
 agentsClient.Administration.DeleteAgent(agentId: agent.Id);
+```
+
+### Performing Agent operations
+
+Azure.AI.Projects can be used to create, update and delete Agents.
+
+Create Agent
+
+Synchronous call:
+```C# Snippet:Sample_CreateAgentVersionCRUD_Sync
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent."
+};
+AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent2",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_CreateAgentVersionCRUD_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent."
+};
+AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent2",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Get Agent
+
+Synchronous call:
+```C# Snippet:Sample_GetAgentCRUD_Sync
+AgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
+Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_GetAgentCRUD_Async
+AgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
+Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
+```
+
+List Agents
+
+Synchronous call:
+```C# Snippet:Sample_ListAgentsCRUD_Sync
+foreach (AgentRecord agent in projectClient.Agents.GetAgents())
+{
+    Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
+}
+```
+
+Asynchronous call:
+```C# Snippet:Sample_ListAgentsCRUD_Async
+await foreach (AgentRecord agent in projectClient.Agents.GetAgentsAsync())
+{
+    Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
+}
+```
+
+Delete Agent
+
+Synchronous call:
+```C# Snippet:Sample_DeleteAgentCRUD_Sync
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
+```
+
+Asynchronous call:
+```C# Snippet:Sample_DeleteAgentCRUD_Async
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
 ### Get an authenticated AzureOpenAI client
@@ -363,12 +453,17 @@ The code below shows some Files operations, which allow you to manage files thro
 
 ```C# Snippet:AI_Projects_FileOperationsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.Agents.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
-OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+ProjectFilesClient fileClient = projectClient.OpenAI.Files;
 
-string fileId = "file-abc123"; // Replace with an actual file ID from your project
+// Upload file
+var dataDirectory = GetDataDirectory();
+var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
+OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
+        testFilePath,
+        FileUploadPurpose.FineTune);
+
+string fileId = uploadedFile.Id;
 
 // Retrieve file metadata
 OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);

@@ -9,13 +9,12 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using Azure.AI.Projects.OpenAI;
-using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class Sample_CreateAgentVersion : AgentsTestBase
+public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
@@ -120,18 +119,16 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         #region Snippet:Sample_GetResponse_Sync
 
-        OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation.Id);
-
-        OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
+        OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responsesClient.GetResponse(responseId: response.Id);
+            response = responseClient.GetResponse(responseId: response.Id);
         }
 
         Console.WriteLine(response.GetOutputText());

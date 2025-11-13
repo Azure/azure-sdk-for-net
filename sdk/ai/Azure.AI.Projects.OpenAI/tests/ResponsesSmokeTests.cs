@@ -4,6 +4,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Linq;
 using System.Text;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.OpenAI.Tests;
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]
+[SyncOnly]
 public class ResponsesSmokeTests : ProjectsOpenAITestBase
 {
     public ResponsesSmokeTests(bool isAsync) : base(isAsync)

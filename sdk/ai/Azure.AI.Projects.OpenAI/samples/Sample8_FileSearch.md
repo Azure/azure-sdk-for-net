@@ -2,13 +2,12 @@
 
 In this example we will create the local file, upload it to Azure and will use it in the newly created `VectorStore` for file search.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_FileSearch
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-OpenAIClient openAIClient = client.GetOpenAIClient();
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. We will create a toy example file and upload it using OpenAI mechanism.
@@ -19,7 +18,7 @@ string filePath = "sample_file_for_upload.txt";
 File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
+OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
 File.Delete(filePath);
 ```
@@ -30,7 +29,7 @@ string filePath = "sample_file_for_upload.txt";
 File.WriteAllText(
     path: filePath,
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
+OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
 File.Delete(filePath);
 ```
@@ -39,7 +38,7 @@ File.Delete(filePath);
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateVectorStore_FileSearch_Sync
-VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
+VectorStoreClient vctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
 VectorStoreCreationOptions options = new()
 {
     Name = "MySampleStore",
@@ -50,7 +49,7 @@ VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: options);
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateVectorStore_FileSearch_Async
-VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
+VectorStoreClient vctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
 VectorStoreCreationOptions options = new()
 {
     Name = "MySampleStore",
@@ -59,7 +58,7 @@ VectorStoreCreationOptions options = new()
 VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
 ```
 
-2. Now we can create an agent capable of using File search. 
+2. Now we can create an Agent capable of using File search. 
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_FileSearch_Sync
@@ -68,7 +67,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -80,7 +79,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent that can help fetch data from files you know about.",
     Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -89,9 +88,9 @@ AgentVersion agentVersion = await client.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Sync
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 OpenAIResponse response = responseClient.CreateResponse(
@@ -101,9 +100,9 @@ OpenAIResponse response = responseClient.CreateResponse(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Async
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
+responseOptions.Agent = agentVersion;
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -141,14 +140,14 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_FileSearch_Sync
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
 fileClient.DeleteFile(uploadedFile.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_FileSearch_Async
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
 await fileClient.DeleteFileAsync(uploadedFile.Id);
 ```

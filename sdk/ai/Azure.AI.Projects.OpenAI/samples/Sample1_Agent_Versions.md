@@ -2,12 +2,12 @@
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
+1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create the versioned agent object.
@@ -18,7 +18,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion = client.CreateAgentVersion(
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -29,7 +29,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion = await client.CreateAgentVersionAsync(
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -38,7 +38,7 @@ AgentVersion agentVersion = await client.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_ListAgentVersions_Sync
-var agentVersions = client.GetAgentVersions(agentName: "myAgent");
+var agentVersions = projectClient.Agents.GetAgentVersions(agentName: "myAgent");
 foreach (AgentVersion oneAgentVersion in agentVersions)
 {
     Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -47,7 +47,7 @@ foreach (AgentVersion oneAgentVersion in agentVersions)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListAgentVersions_Async
-var agentVersions = client.GetAgentVersionsAsync(agentName: "myAgent");
+var agentVersions = projectClient.Agents.GetAgentVersionsAsync(agentName: "myAgent");
 await foreach (AgentVersion oneAgentVersion in agentVersions)
 {
     Console.WriteLine($"Agent: {oneAgentVersion.Id}, Name: {oneAgentVersion.Name}, Version: {oneAgentVersion.Version}");
@@ -58,16 +58,14 @@ await foreach (AgentVersion oneAgentVersion in agentVersions)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateCoversation_Sync
-ConversationClient coversations = client.GetConversationClient();
-AgentConversation conversation = coversations.CreateConversation();
+AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
 ModelReaderWriterOptions options = new("W");
 BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateCoversation_Async
-ConversationClient coversations = client.GetConversationClient();
-AgentConversation conversation = await coversations.CreateConversationAsync();
+AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
 ModelReaderWriterOptions options = new("W");
 BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
 ```
@@ -76,30 +74,22 @@ BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponse_Sync
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(agentVersion.Name));
-responseOptions.SetConversationReference(conversation.Id);
-
-OpenAIResponse response = responsesClient.CreateResponse(
-    [ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")],
-    responseOptions);
+OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponse_Async
-OpenAIClient openAIClient = client.GetOpenAIClient();
-OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
 
-ResponseCreationOptions responseOptions = new();
-responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
-responseOptions.SetConversationReference(conversation.Id);
+ResponseCreationOptions responseOptions = new()
+{
+    Agent = agentVersion,
+    AgentConversationId = conversation,
+};
 
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")],
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```
 
 6. Wait for the agent to respond and print out the output; raise the error if the request was not successful.
@@ -109,7 +99,7 @@ Synchronous sample:
 while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responsesClient.GetResponse(responseId: response.Id);
+    response = responseClient.GetResponse(responseId: response.Id);
 }
 
 Console.WriteLine(response.GetOutputText());
@@ -129,12 +119,12 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Sync
-coversations.DeleteConversation(conversationId: conversation.Id);
-client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.OpenAI.Conversations.DeleteConversation(conversationId: conversation.Id);
+projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_Async
-await coversations.DeleteConversationAsync(conversationId: conversation.Id);
-await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversationId: conversation.Id);
+await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

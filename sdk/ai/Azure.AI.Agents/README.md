@@ -229,7 +229,7 @@ var agentReference = new AgentReference(name: agentVersion.Name);
 ResponseCreationOptions responseCreationOptions = new();
 responseCreationOptions.SetAgentReference(agentReference);
 OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("Write the Maxwell's eqution in LaTeX format.")],
+    [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
     responseCreationOptions);
 Console.WriteLine(response.GetOutputText());
 ```

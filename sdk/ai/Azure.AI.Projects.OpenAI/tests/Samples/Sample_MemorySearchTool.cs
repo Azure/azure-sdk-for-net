@@ -12,10 +12,10 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class Sample_MemorySearchTool : AgentsTestBase
+public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
@@ -94,7 +94,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             options: new(scope)
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (MemorySearchItem item in resp.Memories)
+        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -213,7 +213,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             options: searchOptions
         );
         Console.WriteLine("==The output from memory search tool.==");
-        foreach (MemorySearchItem item in resp.Memories)
+        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }

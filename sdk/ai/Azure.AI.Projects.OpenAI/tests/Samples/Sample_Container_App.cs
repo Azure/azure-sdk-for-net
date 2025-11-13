@@ -11,10 +11,10 @@ using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 [Ignore("Samples represented as tests only for validation of compilation.")]
-public class Sample_Container_App : AgentsTestBase
+public class Sample_Container_App : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
