@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -561,10 +560,13 @@ namespace Azure.Identity.Tests
             File.WriteAllText(caFilePath, GetTestCertificatePem());
 
             var mockTransport = CreateMockTransport();
-            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
 
             // Act - First request succeeds
             await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var initialInnerHandler = handler.InnerHandler;
 
             // Start listening after first request
             using var listener = new TestEventListener();
@@ -583,6 +585,10 @@ namespace Azure.Identity.Tests
                 var reason = loggedEvents.First().GetProperty<string>("reason");
                 Assert.That(reason, Contains.Substring("empty or missing"));
             }
+
+            // Verify handler was NOT reloaded
+            Assert.AreSame(initialInnerHandler, handler.InnerHandler,
+                "Handler should NOT be reloaded when CA file becomes empty");
         }
 
         [Test]
@@ -593,10 +599,13 @@ namespace Azure.Identity.Tests
             File.WriteAllText(caFilePath, GetTestCertificatePem());
 
             var mockTransport = CreateMockTransport();
-            var httpClient = CreateTestHttpClient(CreateTestConfig(caFilePath: caFilePath, transport: mockTransport));
+            var config = CreateTestConfig(caFilePath: caFilePath, transport: mockTransport);
+            var handler = new KubernetesProxyHttpHandler(config);
+            var httpClient = new HttpClient(handler);
 
             // Act - First request succeeds
             await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var initialInnerHandler = handler.InnerHandler;
 
             // Start listening after first request
             using var listener = new TestEventListener();
@@ -615,6 +624,10 @@ namespace Azure.Identity.Tests
                 var error = loggedEvents.First().GetProperty<string>("error");
                 Assert.That(error, Is.Not.Null.And.Not.Empty);
             }
+
+            // Verify handler was NOT reloaded
+            Assert.AreSame(initialInnerHandler, handler.InnerHandler,
+                "Handler should NOT be reloaded when CA file read fails (uses cached handler)");
         }
 
         [Test]
@@ -644,6 +657,7 @@ namespace Azure.Identity.Tests
             // Act - Make first two requests
             await httpClient.GetAsync("https://login.microsoftonline.com/token");
             await httpClient.GetAsync("https://login.microsoftonline.com/token");
+            var initialInnerHandler = handler.InnerHandler;
 
             // Start listening before the third request that should detect the change
             using var listener = new TestEventListener();
@@ -655,6 +669,10 @@ namespace Azure.Identity.Tests
             // Assert - Should log that the certificate changed
             var loggedEvents = listener.EventData.Where(e => e.EventName == "KubernetesProxyCaCertificateReloaded").ToList();
             Assert.That(loggedEvents, Is.Not.Empty, "Should log when CA certificate changes");
+
+            // Verify handler WAS reloaded
+            Assert.AreNotSame(initialInnerHandler, handler.InnerHandler,
+                "Handler should be reloaded when CA certificate changes");
         }
 
         [Test]
