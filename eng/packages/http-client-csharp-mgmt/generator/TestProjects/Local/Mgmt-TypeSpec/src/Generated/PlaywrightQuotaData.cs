@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Subscription-level location-based Playwright quota resource. </summary>
     public partial class PlaywrightQuotaData : ResourceData
@@ -20,7 +20,7 @@ namespace MgmtTypeSpec
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightQuotaData"/>. </summary>
-        internal PlaywrightQuotaData()
+        public PlaywrightQuotaData()
         {
         }
 
@@ -38,6 +38,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PlaywrightQuotaProperties Properties { get; }
+        [WirePath("properties")]
+        public PlaywrightQuotaProperties Properties { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2025-10-23)
+
+### Features Added
+
+- Aligned resource types to Microsoft.DeviceRegistry API version `2025-10-01`.
+- Added `Namespaces`, `NamespaceAssets`, `NamespaceDiscoveredAssets`, `NamespaceDevices`, `NamespaceDiscoveredDevices` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2025-10-01`.
+
+### Breaking Changes
+
+- Change `Schemas` and `SchemaVersions` DELETE operations to be asynchronous operations, returning 202 HTTP status codes.
 
 ## 1.0.0 (2025-02-28)
 

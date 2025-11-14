@@ -54,6 +54,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
+            if (Optional.IsCollectionDefined(Services))
+            {
+                writer.WritePropertyName("services"u8);
+                writer.WriteStartArray();
+                foreach (var item in Services)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ServiceName))
+            {
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
             if (Optional.IsDefined(ProviderVersion))
             {
                 writer.WritePropertyName("providerVersion"u8);
@@ -109,6 +124,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(CrossTenantTokenValidation))
+            {
+                writer.WritePropertyName("crossTenantTokenValidation"u8);
+                writer.WriteStringValue(CrossTenantTokenValidation.Value.ToString());
+            }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -135,6 +155,43 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("reRegisterSubscriptionMetadata"u8);
                 writer.WriteObjectValue(ReRegisterSubscriptionMetadata, options);
+            }
+            if (Optional.IsDefined(IsTenantLinkedNotificationEnabled))
+            {
+                if (IsTenantLinkedNotificationEnabled != null)
+                {
+                    writer.WritePropertyName("enableTenantLinkedNotification"u8);
+                    writer.WriteBooleanValue(IsTenantLinkedNotificationEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableTenantLinkedNotification");
+                }
+            }
+            if (Optional.IsCollectionDefined(Notifications))
+            {
+                writer.WritePropertyName("notifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in Notifications)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LinkedNotificationRules))
+            {
+                writer.WritePropertyName("linkedNotificationRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedNotificationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceProviderAuthorizationRules))
+            {
+                writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
+                writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -176,17 +233,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceProviderAuthentication providerAuthentication = default;
             IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations = default;
             string @namespace = default;
+            IReadOnlyList<ResourceProviderService> services = default;
+            string serviceName = default;
             string providerVersion = default;
             ResourceProviderType? providerType = default;
             IReadOnlyList<string> requiredFeatures = default;
-            FeaturesRule featuresRule = default;
-            RequestHeaderOptions requestHeaderOptions = default;
+            ProviderFeaturesRule featuresRule = default;
+            ProviderRequestHeaderOptions requestHeaderOptions = default;
             IReadOnlyList<ProviderResourceType> resourceTypes = default;
             ResourceProviderManagement management = default;
             IReadOnlyList<ResourceProviderCapabilities> capabilities = default;
+            CrossTenantTokenValidation? crossTenantTokenValidation = default;
             BinaryData metadata = default;
             IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
             ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = default;
+            bool? enableTenantLinkedNotification = default;
+            IReadOnlyList<ProviderNotification> notifications = default;
+            IReadOnlyList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
+            ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,6 +281,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("services"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceProviderService> array = new List<ResourceProviderService>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceProviderService.DeserializeResourceProviderService(item, options));
+                    }
+                    services = array;
+                    continue;
+                }
+                if (property.NameEquals("serviceName"u8))
+                {
+                    serviceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("providerVersion"u8))
@@ -253,7 +336,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestHeaderOptions"u8))
@@ -262,7 +345,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceTypes"u8))
@@ -302,6 +385,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     capabilities = array;
                     continue;
                 }
+                if (property.NameEquals("crossTenantTokenValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossTenantTokenValidation = new CrossTenantTokenValidation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -334,6 +426,53 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     reRegisterSubscriptionMetadata = ReRegisterSubscriptionMetadata.DeserializeReRegisterSubscriptionMetadata(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("enableTenantLinkedNotification"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        enableTenantLinkedNotification = null;
+                        continue;
+                    }
+                    enableTenantLinkedNotification = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("notifications"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProviderNotification> array = new List<ProviderNotification>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProviderNotification.DeserializeProviderNotification(item, options));
+                    }
+                    notifications = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedNotificationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FanoutLinkedNotificationRule> array = new List<FanoutLinkedNotificationRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FanoutLinkedNotificationRule.DeserializeFanoutLinkedNotificationRule(item, options));
+                    }
+                    linkedNotificationRules = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceProviderAuthorizationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -344,6 +483,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerAuthentication,
                 providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
                 @namespace,
+                services ?? new ChangeTrackingList<ResourceProviderService>(),
+                serviceName,
                 providerVersion,
                 providerType,
                 requiredFeatures ?? new ChangeTrackingList<string>(),
@@ -352,9 +493,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
                 management,
                 capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
+                crossTenantTokenValidation,
                 metadata,
                 globalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
                 reRegisterSubscriptionMetadata,
+                enableTenantLinkedNotification,
+                notifications ?? new ChangeTrackingList<ProviderNotification>(),
+                linkedNotificationRules ?? new ChangeTrackingList<FanoutLinkedNotificationRule>(),
+                resourceProviderAuthorizationRules,
                 serializedAdditionalRawData);
         }
 

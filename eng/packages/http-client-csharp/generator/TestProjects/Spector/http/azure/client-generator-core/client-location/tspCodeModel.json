@@ -211,6 +211,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation",
       "apiVersions": [],
@@ -253,6 +254,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient",
           "apiVersions": [],
@@ -373,6 +375,7 @@
                   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations",
               "apiVersions": [],
@@ -456,6 +459,7 @@
                   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations",
               "apiVersions": [],
@@ -503,6 +507,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient",
           "apiVersions": [],
@@ -586,6 +591,7 @@
                   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToNewSubClient.ProductOperations",
               "apiVersions": [],
@@ -633,6 +639,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient",
           "apiVersions": [],
@@ -716,6 +723,7 @@
                   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations",
               "apiVersions": [],
@@ -761,8 +769,30 @@
               "skipUrlEncoding": false,
               "readOnly": false,
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+            },
+            {
+              "$id": "60",
+              "kind": "method",
+              "name": "storageAccount",
+              "serializedName": "storageAccount",
+              "type": {
+                "$id": "61",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.getBlob.Parameter.anonymous.storageAccount",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
           "apiVersions": [],
@@ -771,30 +801,30 @@
           },
           "children": [
             {
-              "$id": "60",
+              "$id": "62",
               "kind": "client",
               "name": "BlobOperations",
               "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
               "methods": [
                 {
-                  "$id": "61",
+                  "$id": "63",
                   "kind": "basic",
                   "name": "getBlob",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "62",
+                    "$id": "64",
                     "name": "getBlob",
                     "resourceName": "BlobOperations",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "63",
+                        "$id": "65",
                         "kind": "query",
                         "name": "storageAccount",
                         "serializedName": "storageAccount",
                         "type": {
-                          "$id": "64",
+                          "$id": "66",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -803,18 +833,18 @@
                         "isApiVersion": false,
                         "explode": false,
                         "optional": false,
-                        "scope": "Method",
+                        "scope": "Client",
                         "decorators": [],
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.storageAccount",
                         "readOnly": false
                       },
                       {
-                        "$id": "65",
+                        "$id": "67",
                         "kind": "query",
                         "name": "container",
                         "serializedName": "container",
                         "type": {
-                          "$id": "66",
+                          "$id": "68",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -829,12 +859,12 @@
                         "readOnly": false
                       },
                       {
-                        "$id": "67",
+                        "$id": "69",
                         "kind": "query",
                         "name": "blob",
                         "serializedName": "blob",
                         "type": {
-                          "$id": "68",
+                          "$id": "70",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -849,7 +879,7 @@
                         "readOnly": false
                       },
                       {
-                        "$id": "69",
+                        "$id": "71",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -890,27 +920,6 @@
                     "decorators": []
                   },
                   "parameters": [
-                    {
-                      "$id": "70",
-                      "kind": "method",
-                      "name": "storageAccount",
-                      "serializedName": "storageAccount",
-                      "type": {
-                        "$id": "71",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "location": "Query",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.storageAccount",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
-                    },
                     {
                       "$id": "72",
                       "kind": "method",
@@ -1012,8 +1021,12 @@
                   "skipUrlEncoding": false,
                   "readOnly": false,
                   "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
+                },
+                {
+                  "$ref": "60"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations",
               "apiVersions": [],
@@ -1099,6 +1112,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation",
           "apiVersions": [],

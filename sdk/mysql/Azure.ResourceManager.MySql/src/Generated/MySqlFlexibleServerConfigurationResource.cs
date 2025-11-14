@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>Configuration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2024-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>Configuration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2024-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Update</description>
+        /// <description>Configuration_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2024-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Update</description>
+        /// <description>Configuration_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2024-12-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

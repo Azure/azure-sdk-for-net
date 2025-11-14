@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
-    internal partial class RemediationFilters
+    public partial class RemediationFilters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,18 +50,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public RemediationFilters()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
+            ResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
         /// <param name="locations"> The resource locations that will be remediated. </param>
+        /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemediationFilters(IList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemediationFilters(IList<AzureLocation> locations, IList<string> resourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locations = locations;
+            ResourceIds = resourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource locations that will be remediated. </summary>
         public IList<AzureLocation> Locations { get; }
+        /// <summary> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </summary>
+        public IList<string> ResourceIds { get; }
     }
 }

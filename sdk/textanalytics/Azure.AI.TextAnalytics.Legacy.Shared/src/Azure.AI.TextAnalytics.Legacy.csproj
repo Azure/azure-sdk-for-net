@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics shared code library</AssemblyTitle>
     <Version>1.0.0</Version>
@@ -6,6 +6,7 @@
     <IsShippingLibrary>false</IsShippingLibrary>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!--

@@ -266,6 +266,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ldapEnabled"u8);
                 writer.WriteBooleanValue(IsLdapEnabled.Value);
             }
+            if (Optional.IsDefined(LdapServerType))
+            {
+                if (LdapServerType != null)
+                {
+                    writer.WritePropertyName("ldapServerType"u8);
+                    writer.WriteStringValue(LdapServerType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("ldapServerType");
+                }
+            }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
@@ -441,6 +453,18 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("inheritedSizeInBytes");
                 }
             }
+            if (Optional.IsDefined(Language))
+            {
+                if (Language != null)
+                {
+                    writer.WritePropertyName("language"u8);
+                    writer.WriteStringValue(Language.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("language");
+                }
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -517,6 +541,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppEncryptionKeySource? encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             bool? ldapEnabled = default;
+            LdapServerType? ldapServerType = default;
             bool? coolAccess = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
@@ -542,6 +567,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
+            NetAppVolumeLanguage? language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -893,6 +919,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             ldapEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ldapServerType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                ldapServerType = null;
+                                continue;
+                            }
+                            ldapServerType = new LdapServerType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("coolAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -1128,6 +1164,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             inheritedSizeInBytes = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("language"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                language = null;
+                                continue;
+                            }
+                            language = new NetAppVolumeLanguage(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1176,6 +1222,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 encryptionKeySource,
                 keyVaultPrivateEndpointResourceId,
                 ldapEnabled,
+                ldapServerType,
                 coolAccess,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
@@ -1201,6 +1248,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 isLargeVolume,
                 originatingResourceId,
                 inheritedSizeInBytes,
+                language,
                 serializedAdditionalRawData);
         }
 

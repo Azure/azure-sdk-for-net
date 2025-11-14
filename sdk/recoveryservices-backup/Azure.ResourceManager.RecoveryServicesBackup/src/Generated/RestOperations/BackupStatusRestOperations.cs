@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/Subscriptions/", false);
+            uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
             uri.AppendPath(location, true);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/Subscriptions/", false);
+            uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
             uri.AppendPath(location, true);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Get the container backup status. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Get the container backup status. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

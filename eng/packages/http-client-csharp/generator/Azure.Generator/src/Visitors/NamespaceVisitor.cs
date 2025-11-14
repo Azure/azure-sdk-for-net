@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
-using Azure.Generator.Visitors.Extensions;
 
 namespace Azure.Generator.Visitors
 {
@@ -42,6 +42,11 @@ namespace Azure.Generator.Visitors
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is EnumProvider && type.Name == "ServiceVersion")
+            {
+                return type;
+            }
+
+            if (type is SerializationFormatDefinition)
             {
                 return type;
             }

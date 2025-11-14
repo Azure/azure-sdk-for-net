@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Indicates whether the name is available. </summary>
+        [WirePath("nameAvailability")]
         public FrontDoorNameAvailabilityState? NameAvailability { get; }
         /// <summary> The reason why the name is not available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> The detailed error message describing why the name is not available. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

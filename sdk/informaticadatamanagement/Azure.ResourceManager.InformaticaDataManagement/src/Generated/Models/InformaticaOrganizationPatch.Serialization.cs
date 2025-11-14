@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="InformaticaOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(InformaticaOrganizationPatch patch)
+        /// <param name="informaticaOrganizationPatch"> The <see cref="InformaticaOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(InformaticaOrganizationPatch informaticaOrganizationPatch)
         {
-            if (patch == null)
+            if (informaticaOrganizationPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(informaticaOrganizationPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

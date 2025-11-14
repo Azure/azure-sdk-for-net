@@ -96,16 +96,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// explorer displaying all the recoverable files and folders. This is an asynchronous operation. To know the status of
         /// provisioning, call GetProtectedItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="containerName"> Container name associated with the backed up items. </param>
-        /// <param name="protectedItemName"> Backed up item name whose files/folders are to be restored. </param>
-        /// <param name="recoveryPointId">
-        /// Recovery point ID which represents backed up data. iSCSI connection will be provisioned
-        /// for this backed up data.
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="content"/> is null. </exception>
@@ -137,16 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// explorer displaying all the recoverable files and folders. This is an asynchronous operation. To know the status of
         /// provisioning, call GetProtectedItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="containerName"> Container name associated with the backed up items. </param>
-        /// <param name="protectedItemName"> Backed up item name whose files/folders are to be restored. </param>
-        /// <param name="recoveryPointId">
-        /// Recovery point ID which represents backed up data. iSCSI connection will be provisioned
-        /// for this backed up data.
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/>, <paramref name="recoveryPointId"/> or <paramref name="content"/> is null. </exception>
@@ -229,16 +223,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Revokes an iSCSI connection which can be used to download a script. Executing this script opens a file explorer
         /// displaying all recoverable files and folders. This is an asynchronous operation.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="containerName"> Container name associated with the backed up items. </param>
-        /// <param name="protectedItemName"> Backed up item name whose files/folders are to be restored. </param>
-        /// <param name="recoveryPointId">
-        /// Recovery point ID which represents backed up data. iSCSI connection will be revoked for
-        /// this backed up data.
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -267,16 +258,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Revokes an iSCSI connection which can be used to download a script. Executing this script opens a file explorer
         /// displaying all recoverable files and folders. This is an asynchronous operation.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="containerName"> Container name associated with the backed up items. </param>
-        /// <param name="protectedItemName"> Backed up item name whose files/folders are to be restored. </param>
-        /// <param name="recoveryPointId">
-        /// Recovery point ID which represents backed up data. iSCSI connection will be revoked for
-        /// this backed up data.
-        /// </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>

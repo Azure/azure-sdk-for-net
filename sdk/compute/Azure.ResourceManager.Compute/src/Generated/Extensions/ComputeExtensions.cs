@@ -547,120 +547,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CommunityGalleryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunityGalleryResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCommunityGalleryResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CommunityGalleryResource"/> object. </returns>
-        public static CommunityGalleryResource GetCommunityGalleryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetCommunityGalleryResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CommunityGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunityGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCommunityGalleryImageResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CommunityGalleryImageResource"/> object. </returns>
-        public static CommunityGalleryImageResource GetCommunityGalleryImageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetCommunityGalleryImageResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CommunityGalleryImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunityGalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCommunityGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CommunityGalleryImageVersionResource"/> object. </returns>
-        public static CommunityGalleryImageVersionResource GetCommunityGalleryImageVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetCommunityGalleryImageVersionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SharedGalleryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedGalleryResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSharedGalleryResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SharedGalleryResource"/> object. </returns>
-        public static SharedGalleryResource GetSharedGalleryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetSharedGalleryResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SharedGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSharedGalleryImageResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SharedGalleryImageResource"/> object. </returns>
-        public static SharedGalleryImageResource GetSharedGalleryImageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetSharedGalleryImageResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SharedGalleryImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedGalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSharedGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SharedGalleryImageVersionResource"/> object. </returns>
-        public static SharedGalleryImageVersionResource GetSharedGalleryImageVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetSharedGalleryImageVersionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="GalleryApplicationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GalleryApplicationResource.CreateResourceIdentifier" /> to create a <see cref="GalleryApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -2382,197 +2268,6 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineExtensionImage(location, publisherName, type, version, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of CommunityGalleryResources in the SubscriptionResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleries()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
-        public static CommunityGalleryCollection GetCommunityGalleries(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleries();
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunityGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommunityGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommunityGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGallery(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<CommunityGalleryResource> GetCommunityGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGallery(location, publicGalleryName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of SharedGalleryResources in the SubscriptionResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleries(AzureLocation)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
-        public static SharedGalleryCollection GetSharedGalleries(this SubscriptionResource subscriptionResource, AzureLocation location)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleries(location);
-        }
-
-        /// <summary>
-        /// Get a shared gallery by subscription id or tenant id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryAsync(location, galleryUniqueName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a shared gallery by subscription id or tenant id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedGalleries_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedGalleryResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGallery(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SharedGalleryResource> GetSharedGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGallery(location, galleryUniqueName, cancellationToken);
         }
 
         /// <summary>
@@ -5247,6 +4942,646 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetGalleries(cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery images inside a gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="publicGalleryName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunityGalleryImageData> GetCommunityGalleryImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImagesAsync(location, publicGalleryName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery images inside a gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="publicGalleryName"/> is null. </exception>
+        /// <returns> A collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunityGalleryImageData> GetCommunityGalleryImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImages(location, publicGalleryName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a community gallery image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImage(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public static async Task<Response<CommunityGalleryImageData>> GetCommunityGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImageAsync(location, publicGalleryName, galleryImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImage(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public static Response<CommunityGalleryImageData> GetCommunityGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImage(location, publicGalleryName, galleryImageName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery image versions inside an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImageVersions(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImageVersionsAsync(location, publicGalleryName, galleryImageName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List community gallery image versions inside an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImageVersions(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImageVersions(location, publicGalleryName, galleryImageName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a community gallery image version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImageVersion(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public static async Task<Response<CommunityGalleryImageVersionData>> GetCommunityGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImageVersionAsync(location, publicGalleryName, galleryImageName, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery image version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryImageVersion(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
+        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public static Response<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryImageVersion(location, publicGalleryName, galleryImageName, galleryImageVersionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared galleries by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleries(AzureLocation,SharedToValue?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SharedGalleryData> GetSharedGalleriesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleriesAsync(location, sharedTo, cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared galleries by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleries(AzureLocation,SharedToValue?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SharedGalleryData> GetSharedGalleries(this SubscriptionResource subscriptionResource, AzureLocation location, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleries(location, sharedTo, cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery images by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImages(AzureLocation,string,SharedToValue?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SharedGalleryImageData> GetSharedGalleryImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImagesAsync(location, galleryUniqueName, sharedTo, cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery images by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImages(AzureLocation,string,SharedToValue?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <returns> A collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SharedGalleryImageData> GetSharedGalleryImages(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImages(location, galleryUniqueName, sharedTo, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImage(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public static async Task<Response<SharedGalleryImageData>> GetSharedGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImageAsync(location, galleryUniqueName, galleryImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImage(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public static Response<SharedGalleryImageData> GetSharedGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImage(location, galleryUniqueName, galleryImageName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery image versions by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImageVersions(AzureLocation,string,string,SharedToValue?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImageVersionsAsync(location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken);
+        }
+
+        /// <summary>
+        /// List shared gallery image versions by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImageVersions(AzureLocation,string,string,SharedToValue?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImageVersions(location, galleryUniqueName, galleryImageName, sharedTo, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image version by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImageVersion(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public static async Task<Response<SharedGalleryImageVersionData>> GetSharedGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImageVersionAsync(location, galleryUniqueName, galleryImageName, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image version by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryImageVersion(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public static Response<SharedGalleryImageVersionData> GetSharedGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryImageVersion(location, galleryUniqueName, galleryImageName, galleryImageVersionName, cancellationToken);
         }
 
         /// <summary>

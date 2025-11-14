@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooPreviewAction. </summary>
     public partial class FooPreviewAction
@@ -39,9 +39,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The action to be performed. </summary>
+        [WirePath("action")]
         public string Action { get; set; }
 
         /// <summary> Gets the Result. </summary>
+        [WirePath("result")]
         public string Result { get; }
     }
 }

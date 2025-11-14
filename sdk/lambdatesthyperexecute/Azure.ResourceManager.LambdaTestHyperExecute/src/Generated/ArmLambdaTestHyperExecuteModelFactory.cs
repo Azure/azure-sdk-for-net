@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.LambdaTestHyperExecute;
 using Azure.ResourceManager.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, new Dictionary<string, BinaryData>()),
+                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

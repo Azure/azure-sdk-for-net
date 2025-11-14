@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="InformaticaOrganizationResource"/> and their operations.
-    /// Each <see cref="InformaticaOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="InformaticaOrganizationCollection"/> instance call the GetInformaticaOrganizations method from an instance of the parent resource.
+    /// Each <see cref="InformaticaOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="InformaticaOrganizationCollection"/> instance call the GetInformaticaOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class InformaticaOrganizationCollection : ArmCollection, IEnumerable<InformaticaOrganizationResource>, IAsyncEnumerable<InformaticaOrganizationResource>
     {
@@ -55,7 +55,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Create a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Create a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -97,7 +113,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Create a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Create a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -139,7 +171,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Get a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
@@ -172,7 +220,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Get a InformaticaOrganizationResource. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
@@ -205,7 +269,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> List InformaticaOrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List InformaticaOrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InformaticaOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -217,7 +297,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new InformaticaOrganizationResource(Client, data));
         }
 
-        /// <summary> List InformaticaOrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List InformaticaOrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InformaticaOrganizationResource> GetAll(CancellationToken cancellationToken = default)
@@ -229,7 +325,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new InformaticaOrganizationResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
@@ -270,7 +382,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
@@ -311,7 +439,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
@@ -356,7 +500,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a InformaticaOrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>

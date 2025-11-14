@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    public partial class DurableTaskSchedulerPatchProperties : IUtf8JsonSerializable, IJsonModel<DurableTaskSchedulerPatchProperties>
+    /// <summary> The Scheduler resource properties to be updated. </summary>
+    public partial class DurableTaskSchedulerPatchProperties : IJsonModel<DurableTaskSchedulerPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DurableTaskSchedulerPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DurableTaskSchedulerPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DurableTaskSchedulerPatchProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -48,8 +48,13 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 writer.WritePropertyName("ipAllowlist"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPAllowlist)
+                foreach (string item in IPAllowlist)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -59,15 +64,15 @@ namespace Azure.ResourceManager.DurableTask.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +81,27 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
         }
 
-        DurableTaskSchedulerPatchProperties IJsonModel<DurableTaskSchedulerPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DurableTaskSchedulerPatchProperties IJsonModel<DurableTaskSchedulerPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DurableTaskSchedulerPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DurableTaskSchedulerPatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDurableTaskSchedulerPatchProperties(document.RootElement, options);
         }
 
-        internal static DurableTaskSchedulerPatchProperties DeserializeDurableTaskSchedulerPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DurableTaskSchedulerPatchProperties DeserializeDurableTaskSchedulerPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,60 +110,68 @@ namespace Azure.ResourceManager.DurableTask.Models
             string endpoint = default;
             IList<string> ipAllowlist = default;
             DurableTaskSchedulerSkuUpdate sku = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DurableTaskProvisioningState(property.Value.GetString());
+                    provisioningState = new DurableTaskProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpoint"u8))
+                if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = property.Value.GetString();
+                    endpoint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAllowlist"u8))
+                if (prop.NameEquals("ipAllowlist"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     ipAllowlist = array;
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = DurableTaskSchedulerSkuUpdate.DeserializeDurableTaskSchedulerSkuUpdate(property.Value, options);
+                    sku = DurableTaskSchedulerSkuUpdate.DeserializeDurableTaskSchedulerSkuUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DurableTaskSchedulerPatchProperties(provisioningState, endpoint, ipAllowlist ?? new ChangeTrackingList<string>(), sku, serializedAdditionalRawData);
+            return new DurableTaskSchedulerPatchProperties(provisioningState, endpoint, ipAllowlist ?? new ChangeTrackingList<string>(), sku, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DurableTaskSchedulerPatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DurableTaskSchedulerPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -163,15 +181,20 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
         }
 
-        DurableTaskSchedulerPatchProperties IPersistableModel<DurableTaskSchedulerPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DurableTaskSchedulerPatchProperties IPersistableModel<DurableTaskSchedulerPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DurableTaskSchedulerPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DurableTaskSchedulerPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDurableTaskSchedulerPatchProperties(document.RootElement, options);
                     }
                 default:
@@ -179,6 +202,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DurableTaskSchedulerPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

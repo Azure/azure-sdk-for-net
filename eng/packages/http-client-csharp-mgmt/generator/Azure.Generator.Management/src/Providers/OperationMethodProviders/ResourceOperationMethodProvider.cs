@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
@@ -18,6 +17,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -29,6 +29,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ResourceOperationMethodProvider
     {
         public bool IsLongRunningOperation { get; }
+        public bool IsFakeLongRunningOperation { get; }
 
         protected readonly TypeProvider _enclosingType;
         protected readonly RequestPathPattern _contextualPath;
@@ -45,7 +46,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
-        private readonly bool _isFakeLongRunningOperation;
         private readonly FormattableString? _description;
 
         /// <summary>
@@ -76,12 +76,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
+            bool isFakeLongRunningOperation = false;
             InitializeLroFlags(
                 _serviceMethod,
                 forceLro: forceLro,
                 ref isLongRunningOperation,
-                ref _isFakeLongRunningOperation);
+                ref isFakeLongRunningOperation);
             IsLongRunningOperation = isLongRunningOperation;
+            IsFakeLongRunningOperation = isFakeLongRunningOperation;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
@@ -126,15 +128,24 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual CSharpType BuildReturnType()
         {
-            return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
+            return _returnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
                 resourceOperationMethodProvider._enclosingType);
+
+            // Add enhanced XML documentation with structured tags
+            ResourceHelpers.BuildEnhancedXmlDocs(
+                resourceOperationMethodProvider._serviceMethod,
+                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
@@ -152,7 +163,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, _isFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -188,10 +199,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || _isFakeLongRunningOperation)
+            if (IsLongRunningOperation || IsFakeLongRunningOperation)
             {
                 tryStatements.AddRange(
-                    _isFakeLongRunningOperation ?
+                    IsFakeLongRunningOperation ?
                     BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
                     BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
             }
@@ -359,7 +370,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     .MakeGenericType([_returnBodyType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
-            ValueExpression[] armOperationArguments = [
+            ValueExpression[] commonArmOperationArguments = [
                 _clientDiagnosticsField,
                 This.As<ArmResource>().Pipeline(),
                 messageVariable.Property("Request"),
@@ -367,17 +378,28 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _returnBodyResourceClient != null
-                ? [
-                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
-                    .. armOperationArguments
-                  ]
-                : armOperationArguments;
+            ValueExpression? operationSourceInstance = null;
+            if (_returnBodyResourceClient != null)
+            {
+                // Resource type - pass client to operation source constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.ResourceData.Type].Type;
+                operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
+            }
+            else if (_originalBodyType != null)
+            {
+                // Non-resource type - use parameterless constructor
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_originalBodyType].Type;
+                operationSourceInstance = New.Instance(operationSourceType);
+            }
+
+            var armOperationArguments = operationSourceInstance != null
+                ? [operationSourceInstance, .. commonArmOperationArguments]
+                : commonArmOperationArguments;
 
             var operationDeclaration = Declare(
                 "operation",
                 armOperationType,
-                New.Instance(armOperationType, operationInstanceArguments),
+                New.Instance(armOperationType, armOperationArguments),
                 out var operationVariable);
             statements.Add(operationDeclaration);
 

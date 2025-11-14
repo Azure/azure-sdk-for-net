@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LambdaTestHyperExecuteOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="LambdaTestHyperExecuteOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LambdaTestHyperExecuteOrganizationPatch patch)
+        /// <param name="lambdaTestHyperExecuteOrganizationPatch"> The <see cref="LambdaTestHyperExecuteOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LambdaTestHyperExecuteOrganizationPatch lambdaTestHyperExecuteOrganizationPatch)
         {
-            if (patch == null)
+            if (lambdaTestHyperExecuteOrganizationPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(lambdaTestHyperExecuteOrganizationPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

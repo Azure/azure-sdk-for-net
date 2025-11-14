@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallBillingPlanInfo : IUtf8JsonSerializable, IJsonModel<FirewallBillingPlanInfo>
+    /// <summary> Billing plan information. </summary>
+    public partial class FirewallBillingPlanInfo : IJsonModel<FirewallBillingPlanInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallBillingPlanInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanInfo"/> for deserialization. </summary>
+        internal FirewallBillingPlanInfo()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallBillingPlanInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallBillingPlanInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("usageType"u8);
@@ -48,15 +53,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,22 +70,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallBillingPlanInfo IJsonModel<FirewallBillingPlanInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallBillingPlanInfo IJsonModel<FirewallBillingPlanInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallBillingPlanInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallBillingPlanInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFirewallBillingPlanInfo(document.RootElement, options);
         }
 
-        internal static FirewallBillingPlanInfo DeserializeFirewallBillingPlanInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FirewallBillingPlanInfo DeserializeFirewallBillingPlanInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,52 +98,53 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FirewallBillingPlanUsageType? usageType = default;
             FirewallBillingCycle billingCycle = default;
             string planId = default;
-            DateTimeOffset? effectiveDate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? effectiveOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("usageType"u8))
+                if (prop.NameEquals("usageType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usageType = new FirewallBillingPlanUsageType(property.Value.GetString());
+                    usageType = new FirewallBillingPlanUsageType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingCycle"u8))
+                if (prop.NameEquals("billingCycle"u8))
                 {
-                    billingCycle = new FirewallBillingCycle(property.Value.GetString());
+                    billingCycle = new FirewallBillingCycle(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("planId"u8))
+                if (prop.NameEquals("planId"u8))
                 {
-                    planId = property.Value.GetString();
+                    planId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("effectiveDate"u8))
+                if (prop.NameEquals("effectiveDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    effectiveDate = property.Value.GetDateTimeOffset("O");
+                    effectiveOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FirewallBillingPlanInfo(usageType, billingCycle, planId, effectiveDate, serializedAdditionalRawData);
+            return new FirewallBillingPlanInfo(usageType, billingCycle, planId, effectiveOn, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FirewallBillingPlanInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FirewallBillingPlanInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -143,15 +154,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallBillingPlanInfo IPersistableModel<FirewallBillingPlanInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallBillingPlanInfo IPersistableModel<FirewallBillingPlanInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallBillingPlanInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirewallBillingPlanInfo(document.RootElement, options);
                     }
                 default:
@@ -159,6 +175,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FirewallBillingPlanInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

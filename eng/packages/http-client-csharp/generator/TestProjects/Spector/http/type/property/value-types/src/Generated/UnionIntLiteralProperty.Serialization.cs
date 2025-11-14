@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="unionIntLiteralProperty"> The <see cref="UnionIntLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnionIntLiteralProperty unionIntLiteralProperty) => throw null;
 
-        public static explicit operator UnionIntLiteralProperty(Response result) => throw null;
+        public static explicit operator UnionIntLiteralProperty(Response response) => throw null;
     }
 }

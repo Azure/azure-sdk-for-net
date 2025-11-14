@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             }
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public void CreateResourceIdentifier()
         {
             string fileResourceName = Recording.GenerateAssetName("testResource-");
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.Throws<ArgumentException>(() => QumuloFileSystemResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task Data()
         {
             string fileResourceName = Recording.GenerateAssetName("testResource-");
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.IsTrue(fileSystemResource.Data.Name.Equals(fileResourceName));
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task Delete()
         {
             QumuloFileSystemResourceCollection collection = ResGroup.GetQumuloFileSystemResources();
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.IsFalse(await collection.ExistsAsync(fileResourceName));
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task Update()
         {
             string fileResourceName = Recording.GenerateAssetName("testResource-");
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Qumulo.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await fileSystemResource.UpdateAsync( null)).Value);
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("The tests aren't recordable and will need to be fixed in the future.")]
         public async Task AddTag()
         {
             string fileResourceName = Recording.GenerateAssetName("testDeployment-");

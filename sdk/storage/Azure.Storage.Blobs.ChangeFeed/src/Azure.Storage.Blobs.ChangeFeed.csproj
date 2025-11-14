@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs.ChangeFeed client library</AssemblyTitle>
-    <Version>12.0.0-preview.57</Version>
+    <Version>12.0.0-preview.58</Version>
     <DefineConstants>ChangeFeedSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Change Feed;Microsoft;Azure;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>
@@ -13,6 +13,7 @@
       in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs.ChangeFeed/BreakingChanges.txt
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />

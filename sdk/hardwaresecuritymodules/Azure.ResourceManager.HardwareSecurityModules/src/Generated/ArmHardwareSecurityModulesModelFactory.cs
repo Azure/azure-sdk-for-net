@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <param name="skuName"> SKU details. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <returns> A new <see cref="HardwareSecurityModules.DedicatedHsmData"/> instance for mocking. </returns>
-        public static DedicatedHsmData DedicatedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DedicatedHsmSkuName? skuName = null, IEnumerable<string> zones = null, DedicatedHsmProperties properties = null)
+        public static DedicatedHsmData DedicatedHsmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DedicatedHsmProperties properties = null, DedicatedHsmSkuName? skuName = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 systemData,
                 tags,
                 location,
+                properties,
                 skuName != null ? new DedicatedHsmSku(skuName, serializedAdditionalRawData: null) : null,
                 zones?.ToList(),
-                properties,
                 serializedAdditionalRawData: null);
         }
 

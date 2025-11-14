@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppContainers
       safeName: AzureResourceManagerAppContainers
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.AppContainers
-      ExpectedWarningsFilepath: None

@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectedClusterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="ConnectedClusterPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConnectedClusterPatch patch)
+        /// <param name="connectedClusterPatch"> The <see cref="ConnectedClusterPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectedClusterPatch connectedClusterPatch)
         {
-            if (patch == null)
+            if (connectedClusterPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(connectedClusterPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

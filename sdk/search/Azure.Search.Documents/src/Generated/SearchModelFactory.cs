@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Search.Documents.Agents.Models;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,16 +18,28 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="Models.FacetResult"/>. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="avg"> The resulting total avg for the facet when a avg metric is requested. </param>
+        /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
+        /// <param name="max"> The resulting total max for the facet when a max metric is requested. </param>
         /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
+        /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
         /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
-        public static FacetResult FacetResult(long? count = null, double? sum = null, IReadOnlyDictionary<string, IList<FacetResult>> facets = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static FacetResult FacetResult(long? count = null, double? avg = null, double? min = null, double? max = null, double? sum = null, long? cardinality = null, IReadOnlyDictionary<string, IList<FacetResult>> facets = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             facets ??= new Dictionary<string, IList<FacetResult>>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, sum, facets, additionalProperties);
+            return new FacetResult(
+                count,
+                avg,
+                min,
+                max,
+                sum,
+                cardinality,
+                facets,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryAnswerResult"/>. </summary>
@@ -190,26 +202,96 @@ namespace Azure.Search.Documents.Models
             return new AutocompleteResults(coverage, results?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.KnowledgeSourceStatus"/>. </summary>
+        /// <param name="synchronizationStatus"> The current synchronization status of the knowledge source. </param>
+        /// <param name="synchronizationInterval"> The synchronization interval (e.g., '1d' for daily). Null if no schedule is configured. </param>
+        /// <param name="currentSynchronizationState"> Current synchronization state that spans multiple indexer runs. </param>
+        /// <param name="lastSynchronizationState"> Details of the last completed synchronization. Null on first sync. </param>
+        /// <param name="statistics"> Statistical information about the knowledge source synchronization history. Null on first sync. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceStatus"/> instance for mocking. </returns>
+        public static KnowledgeSourceStatus KnowledgeSourceStatus(KnowledgeSourceSynchronizationStatus synchronizationStatus = default, string synchronizationInterval = null, SynchronizationState currentSynchronizationState = null, CompletedSynchronizationState lastSynchronizationState = null, KnowledgeSourceStatistics statistics = null)
+        {
+            return new KnowledgeSourceStatus(
+                synchronizationStatus,
+                synchronizationInterval,
+                currentSynchronizationState,
+                lastSynchronizationState,
+                statistics,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SynchronizationState"/>. </summary>
+        /// <param name="startTime"> The start time of the current synchronization. </param>
+        /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the current synchronization. </param>
+        /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the current synchronization. </param>
+        /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
+        /// <returns> A new <see cref="Indexes.Models.SynchronizationState"/> instance for mocking. </returns>
+        public static SynchronizationState SynchronizationState(DateTimeOffset startTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default)
+        {
+            return new SynchronizationState(startTime, itemsUpdatesProcessed, itemsUpdatesFailed, itemsSkipped, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.CompletedSynchronizationState"/>. </summary>
+        /// <param name="startTime"> The start time of the last completed synchronization. </param>
+        /// <param name="endTime"> The end time of the last completed synchronization. </param>
+        /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the last synchronization. </param>
+        /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
+        /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
+        /// <returns> A new <see cref="Indexes.Models.CompletedSynchronizationState"/> instance for mocking. </returns>
+        public static CompletedSynchronizationState CompletedSynchronizationState(DateTimeOffset startTime = default, DateTimeOffset endTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default)
+        {
+            return new CompletedSynchronizationState(
+                startTime,
+                endTime,
+                itemsUpdatesProcessed,
+                itemsUpdatesFailed,
+                itemsSkipped,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.KnowledgeSourceStatistics"/>. </summary>
+        /// <param name="totalSynchronization"> The total number of synchronizations completed. </param>
+        /// <param name="averageSynchronizationDuration"> The average duration of synchronizations in HH:MM:SS format. </param>
+        /// <param name="averageItemsProcessedPerSynchronization"> The average number of items processed per synchronization. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceStatistics"/> instance for mocking. </returns>
+        public static KnowledgeSourceStatistics KnowledgeSourceStatistics(int totalSynchronization = default, string averageSynchronizationDuration = null, int averageItemsProcessedPerSynchronization = default)
+        {
+            return new KnowledgeSourceStatistics(totalSynchronization, averageSynchronizationDuration, averageItemsProcessedPerSynchronization, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
+        /// <param name="runtime"> Snapshot of the indexer’s cumulative runtime consumption for the service over the current UTC period. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
-        public static SearchIndexerStatus SearchIndexerStatus(string name = null, IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null, IndexerState currentState = null)
+        public static SearchIndexerStatus SearchIndexerStatus(string name = null, IndexerStatus status = default, IndexerRuntime runtime = null, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null, IndexerState currentState = null)
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
             return new SearchIndexerStatus(
                 name,
                 status,
+                runtime,
                 lastResult,
                 executionHistory?.ToList(),
                 limits,
                 currentState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerRuntime"/>. </summary>
+        /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
+        /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
+        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexerRuntime"/> instance for mocking. </returns>
+        public static IndexerRuntime IndexerRuntime(long usedSeconds = default, long? remainingSeconds = null, DateTimeOffset beginningTime = default, DateTimeOffset endingTime = default)
+        {
+            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerExecutionResult"/>. </summary>
@@ -309,6 +391,16 @@ namespace Azure.Search.Documents.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceStatistics"/>. </summary>
+        /// <param name="counters"> Service level resource counters. </param>
+        /// <param name="indexersRuntime"> Service level indexers runtime information. </param>
+        /// <param name="limits"> Service level general limits. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchServiceStatistics"/> instance for mocking. </returns>
+        public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters = null, ServiceIndexersRuntime indexersRuntime = null, SearchServiceLimits limits = null)
+        {
+            return new SearchServiceStatistics(counters, indexersRuntime, limits, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceCounters"/>. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -335,14 +427,26 @@ namespace Azure.Search.Documents.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.ServiceIndexersRuntime"/>. </summary>
+        /// <param name="usedSeconds"> Cumulative runtime of all indexers in the service from the beginningTime to endingTime, in seconds. </param>
+        /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
+        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <returns> A new <see cref="Indexes.Models.ServiceIndexersRuntime"/> instance for mocking. </returns>
+        public static ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = default, long? remainingSeconds = null, DateTimeOffset beginningTime = default, DateTimeOffset endingTime = default)
+        {
+            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceLimits"/>. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
         /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
         /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
+        /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative runtime in seconds allowed for all indexers in the service over the current UTC period. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
-        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = null, int? maxFieldNestingDepthPerIndex = null, int? maxComplexCollectionFieldsPerIndex = null, int? maxComplexObjectsInCollectionsPerDocument = null, long? maxStoragePerIndexInBytes = null)
+        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = null, int? maxFieldNestingDepthPerIndex = null, int? maxComplexCollectionFieldsPerIndex = null, int? maxComplexObjectsInCollectionsPerDocument = null, long? maxStoragePerIndexInBytes = null, long? maxCumulativeIndexerRuntimeSeconds = null)
         {
             return new SearchServiceLimits(
                 maxFieldsPerIndex,
@@ -350,6 +454,7 @@ namespace Azure.Search.Documents.Models
                 maxComplexCollectionFieldsPerIndex,
                 maxComplexObjectsInCollectionsPerDocument,
                 maxStoragePerIndexInBytes,
+                maxCumulativeIndexerRuntimeSeconds,
                 serializedAdditionalRawData: null);
         }
 
@@ -374,50 +479,81 @@ namespace Azure.Search.Documents.Models
             return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/>. </summary>
         /// <param name="response"></param>
         /// <param name="activity">
         /// The activity records for tracking progress and billing implications.
-        /// Please note <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentRetrievalActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityRecord"/> and <see cref="Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord"/>.
+        /// Please note <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/>.
         /// </param>
         /// <param name="references">
         /// The references for the retrieval data used in the response.
-        /// Please note <see cref="Agents.Models.KnowledgeAgentReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentAzureBlobReference"/> and <see cref="Agents.Models.KnowledgeAgentSearchIndexReference"/>.
+        /// Please note <see cref="KnowledgeBases.Models.KnowledgeBaseReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/>.
         /// </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/> instance for mocking. </returns>
-        public static KnowledgeAgentRetrievalResponse KnowledgeAgentRetrievalResponse(IEnumerable<KnowledgeAgentMessage> response = null, IEnumerable<KnowledgeAgentActivityRecord> activity = null, IEnumerable<KnowledgeAgentReference> references = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response = null, IEnumerable<KnowledgeBaseActivityRecord> activity = null, IEnumerable<KnowledgeBaseReference> references = null)
         {
-            response ??= new List<KnowledgeAgentMessage>();
-            activity ??= new List<KnowledgeAgentActivityRecord>();
-            references ??= new List<KnowledgeAgentReference>();
+            response ??= new List<KnowledgeBaseMessage>();
+            activity ??= new List<KnowledgeBaseActivityRecord>();
+            references ??= new List<KnowledgeBaseReference>();
 
-            return new KnowledgeAgentRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList(), serializedAdditionalRawData: null);
+            return new KnowledgeBaseRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = default, string type = null, int? elapsedMs = null)
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id = default, string type = null, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null)
         {
-            return new UnknownKnowledgeAgentActivityRecord(id, type, elapsedMs, serializedAdditionalRawData: null);
+            return new UnknownKnowledgeBaseActivityRecord(id, type, elapsedMs, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseErrorDetail"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseErrorDetail"/> instance for mocking. </returns>
+        public static KnowledgeBaseErrorDetail KnowledgeBaseErrorDetail(string code = null, string message = null, string target = null, IEnumerable<KnowledgeBaseErrorDetail> details = null, IEnumerable<KnowledgeBaseErrorAdditionalInfo> additionalInfo = null)
+        {
+            details ??= new List<KnowledgeBaseErrorDetail>();
+            additionalInfo ??= new List<KnowledgeBaseErrorAdditionalInfo>();
+
+            return new KnowledgeBaseErrorDetail(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                additionalInfo?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo"/>. </summary>
+        /// <param name="type"> The additional info type. </param>
+        /// <param name="info"> The additional info. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseErrorAdditionalInfo"/> instance for mocking. </returns>
+        public static KnowledgeBaseErrorAdditionalInfo KnowledgeBaseErrorAdditionalInfo(string type = null, object info = null)
+        {
+            return new KnowledgeBaseErrorAdditionalInfo(type, info, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentReference"/> instance for mocking. </returns>
-        public static KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseReference KnowledgeBaseReference(string type = null, string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null)
         {
             sourceData ??= new Dictionary<string, object>();
 
-            return new UnknownKnowledgeAgentReference(
+            return new UnknownKnowledgeBaseReference(
                 type,
                 id,
                 activitySource,
@@ -427,78 +563,112 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.AzureBlobKnowledgeSourceParameters"/>. </summary>
-        /// <param name="identity">
-        /// An explicit identity to use for this knowledge source.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
         /// <param name="containerName"> The name of the blob storage container. </param>
         /// <param name="folderPath"> Optional folder path within the container. </param>
-        /// <param name="embeddingModel">
-        /// Optional vectorizer configuration for vectorizing content.
-        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
-        /// </param>
-        /// <param name="chatCompletionModel">
-        /// Optional chat completion model for image verbalization or context extraction.
-        /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
-        /// </param>
-        /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
+        /// <param name="isAdlsGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
-        /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(SearchIndexerDataIdentity identity = null, string connectionString = null, string containerName = null, string folderPath = null, VectorSearchVectorizer embeddingModel = null, KnowledgeAgentModel chatCompletionModel = null, IndexingSchedule ingestionSchedule = null, IReadOnlyDictionary<string, string> createdResources = null, bool? disableImageVerbalization = null)
+        public static AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(string connectionString = null, string containerName = null, string folderPath = null, bool? isAdlsGen2 = null, KnowledgeSourceIngestionParameters ingestionParameters = null, IReadOnlyDictionary<string, string> createdResources = null)
         {
             createdResources ??= new Dictionary<string, string>();
 
             return new AzureBlobKnowledgeSourceParameters(
-                identity,
                 connectionString,
                 containerName,
                 folderPath,
-                embeddingModel,
-                chatCompletionModel,
-                ingestionSchedule,
+                isAdlsGen2,
+                ingestionParameters,
                 createdResources,
-                disableImageVerbalization,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentRetrievalActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexedSharePointKnowledgeSourceParameters"/>. </summary>
+        /// <param name="connectionString"> SharePoint connection string with format: SharePointOnlineEndpoint=[SharePoint site url];ApplicationId=[Azure AD App ID];ApplicationSecret=[Azure AD App client secret];TenantId=[SharePoint site tenant id]. </param>
+        /// <param name="containerName"> Specifies which SharePoint libraries to access. </param>
+        /// <param name="query"> Optional query to filter SharePoint content. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="createdResources"> Resources created by the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexedSharePointKnowledgeSourceParameters"/> instance for mocking. </returns>
+        public static IndexedSharePointKnowledgeSourceParameters IndexedSharePointKnowledgeSourceParameters(string connectionString = null, IndexedSharePointContainerName containerName = default, string query = null, KnowledgeSourceIngestionParameters ingestionParameters = null, IReadOnlyDictionary<string, string> createdResources = null)
+        {
+            createdResources ??= new Dictionary<string, string>();
+
+            return new IndexedSharePointKnowledgeSourceParameters(
+                connectionString,
+                containerName,
+                query,
+                ingestionParameters,
+                createdResources,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
+        /// <param name="fabricWorkspaceId"> OneLake workspace ID. </param>
+        /// <param name="lakehouseId"> Specifies which OneLake lakehouse to access. </param>
+        /// <param name="targetPath"> Optional OneLakehouse folder or shortcut to filter OneLake content. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="createdResources"> Resources created by the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSourceParameters"/> instance for mocking. </returns>
+        public static IndexedOneLakeKnowledgeSourceParameters IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId = null, string lakehouseId = null, string targetPath = null, KnowledgeSourceIngestionParameters ingestionParameters = null, IReadOnlyDictionary<string, string> createdResources = null)
+        {
+            createdResources ??= new Dictionary<string, string>();
+
+            return new IndexedOneLakeKnowledgeSourceParameters(
+                fabricWorkspaceId,
+                lakehouseId,
+                targetPath,
+                ingestionParameters,
+                createdResources,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent"/>. </summary>
+        /// <param name="search"> The semantic query to execute. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent"/> instance for mocking. </returns>
+        public static KnowledgeRetrievalSemanticIntent KnowledgeRetrievalSemanticIntent(string search = null)
+        {
+            return new KnowledgeRetrievalSemanticIntent(KnowledgeRetrievalIntentType.Semantic, serializedAdditionalRawData: null, search);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentRetrievalActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentRetrievalActivityRecord KnowledgeAgentRetrievalActivityRecord(int id = default, int? elapsedMs = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrievalActivityRecord KnowledgeBaseRetrievalActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null)
         {
-            return new KnowledgeAgentRetrievalActivityRecord(
+            return new KnowledgeBaseRetrievalActivityRecord(
                 id,
-                "KnowledgeAgentRetrievalActivityRecord",
+                "KnowledgeBaseRetrievalActivityRecord",
                 elapsedMs,
+                error,
                 serializedAdditionalRawData: null,
                 knowledgeSourceName,
                 queryTime,
                 count);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentSearchIndexActivityRecord KnowledgeAgentSearchIndexActivityRecord(int id = default, int? elapsedMs = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeAgentSearchIndexActivityArguments searchIndexArguments = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseSearchIndexActivityRecord KnowledgeBaseSearchIndexActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = null)
         {
-            return new KnowledgeAgentSearchIndexActivityRecord(
+            return new KnowledgeBaseSearchIndexActivityRecord(
                 id,
                 "searchIndex",
                 elapsedMs,
+                error,
                 serializedAdditionalRawData: null,
                 knowledgeSourceName,
                 queryTime,
@@ -506,29 +676,43 @@ namespace Azure.Search.Documents.Models
                 searchIndexArguments);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityArguments"/>. </summary>
         /// <param name="search"> The search string used to query the search index. </param>
         /// <param name="filter"> The filter string. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchIndexActivityArguments"/> instance for mocking. </returns>
-        public static KnowledgeAgentSearchIndexActivityArguments KnowledgeAgentSearchIndexActivityArguments(string search = null, string filter = null)
+        /// <param name="sourceDataFields"> What fields were selected for search. </param>
+        /// <param name="searchFields"> What fields were searched against. </param>
+        /// <param name="semanticConfigurationName"> What semantic configuration was used from the search index. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseSearchIndexActivityArguments KnowledgeBaseSearchIndexActivityArguments(string search = null, string filter = null, IEnumerable<SearchIndexFieldReference> sourceDataFields = null, IEnumerable<SearchIndexFieldReference> searchFields = null, string semanticConfigurationName = null)
         {
-            return new KnowledgeAgentSearchIndexActivityArguments(search, filter, serializedAdditionalRawData: null);
+            sourceDataFields ??= new List<SearchIndexFieldReference>();
+            searchFields ??= new List<SearchIndexFieldReference>();
+
+            return new KnowledgeBaseSearchIndexActivityArguments(
+                search,
+                filter,
+                sourceDataFields?.ToList(),
+                searchFields?.ToList(),
+                semanticConfigurationName,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="azureBlobArguments"> The azure blob arguments for the retrieval activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentAzureBlobActivityRecord KnowledgeAgentAzureBlobActivityRecord(int id = default, int? elapsedMs = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeAgentAzureBlobActivityArguments azureBlobArguments = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseAzureBlobActivityRecord KnowledgeBaseAzureBlobActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeBaseAzureBlobActivityArguments azureBlobArguments = null)
         {
-            return new KnowledgeAgentAzureBlobActivityRecord(
+            return new KnowledgeBaseAzureBlobActivityRecord(
                 id,
                 "azureBlob",
                 elapsedMs,
+                error,
                 serializedAdditionalRawData: null,
                 knowledgeSourceName,
                 queryTime,
@@ -536,70 +720,221 @@ namespace Azure.Search.Documents.Models
                 azureBlobArguments);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityArguments"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityArguments"/>. </summary>
         /// <param name="search"> The search string used to query blob contents. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureBlobActivityArguments"/> instance for mocking. </returns>
-        public static KnowledgeAgentAzureBlobActivityArguments KnowledgeAgentAzureBlobActivityArguments(string search = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseAzureBlobActivityArguments KnowledgeBaseAzureBlobActivityArguments(string search = null)
         {
-            return new KnowledgeAgentAzureBlobActivityArguments(search, serializedAdditionalRawData: null);
+            return new KnowledgeBaseAzureBlobActivityArguments(search, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="indexedSharePointArguments"> The indexed SharePoint arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedSharePointActivityRecord KnowledgeBaseIndexedSharePointActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeBaseIndexedSharePointActivityArguments indexedSharePointArguments = null)
+        {
+            return new KnowledgeBaseIndexedSharePointActivityRecord(
+                id,
+                "indexedSharePoint",
+                elapsedMs,
+                error,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                indexedSharePointArguments);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query indexed SharePoint contents. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedSharePointActivityArguments KnowledgeBaseIndexedSharePointActivityArguments(string search = null)
+        {
+            return new KnowledgeBaseIndexedSharePointActivityArguments(search, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedOneLakeActivityRecord KnowledgeBaseIndexedOneLakeActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = null)
+        {
+            return new KnowledgeBaseIndexedOneLakeActivityRecord(
+                id,
+                "indexedOneLake",
+                elapsedMs,
+                error,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                indexedOneLakeArguments);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query indexed OneLake contents. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedOneLakeActivityArguments KnowledgeBaseIndexedOneLakeActivityArguments(string search = null)
+        {
+            return new KnowledgeBaseIndexedOneLakeActivityArguments(search, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="webArguments"> The web arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseWebActivityRecord KnowledgeBaseWebActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeBaseWebActivityArguments webArguments = null)
+        {
+            return new KnowledgeBaseWebActivityRecord(
+                id,
+                "web",
+                elapsedMs,
+                error,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                webArguments);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query the web. </param>
+        /// <param name="language"> The language for the retrieval activity. </param>
+        /// <param name="market"> The market for the retrieval activity. </param>
+        /// <param name="count"> The number of web results returned. </param>
+        /// <param name="freshness"> The freshness for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseWebActivityArguments KnowledgeBaseWebActivityArguments(string search = null, string language = null, string market = null, int? count = null, string freshness = null)
+        {
+            return new KnowledgeBaseWebActivityArguments(
+                search,
+                language,
+                market,
+                count,
+                freshness,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="remoteSharePointArguments"> The remote SharePoint arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseRemoteSharePointActivityRecord KnowledgeBaseRemoteSharePointActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, string knowledgeSourceName = null, DateTimeOffset? queryTime = null, int? count = null, KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = null)
+        {
+            return new KnowledgeBaseRemoteSharePointActivityRecord(
+                id,
+                "remoteSharePoint",
+                elapsedMs,
+                error,
+                serializedAdditionalRawData: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                remoteSharePointArguments);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityArguments"/>. </summary>
+        /// <param name="search"> The search string used to query the remote SharePoint knowledge source. </param>
+        /// <param name="filterExpressionAddOn"> The filter expression add-on for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseRemoteSharePointActivityArguments KnowledgeBaseRemoteSharePointActivityArguments(string search = null, string filterExpressionAddOn = null)
+        {
+            return new KnowledgeBaseRemoteSharePointActivityArguments(search, filterExpressionAddOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = default, int? elapsedMs = null, int? inputTokens = null, int? outputTokens = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseModelQueryPlanningActivityRecord KnowledgeBaseModelQueryPlanningActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, int? inputTokens = null, int? outputTokens = null)
         {
-            return new KnowledgeAgentModelQueryPlanningActivityRecord(
+            return new KnowledgeBaseModelQueryPlanningActivityRecord(
                 id,
                 "modelQueryPlanning",
                 elapsedMs,
+                error,
                 serializedAdditionalRawData: null,
                 inputTokens,
                 outputTokens);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM answer synthesis activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM answer synthesis activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentModelAnswerSynthesisActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentModelAnswerSynthesisActivityRecord KnowledgeAgentModelAnswerSynthesisActivityRecord(int id = default, int? elapsedMs = null, int? inputTokens = null, int? outputTokens = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseModelAnswerSynthesisActivityRecord KnowledgeBaseModelAnswerSynthesisActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, int? inputTokens = null, int? outputTokens = null)
         {
-            return new KnowledgeAgentModelAnswerSynthesisActivityRecord(
+            return new KnowledgeBaseModelAnswerSynthesisActivityRecord(
                 id,
                 "modelAnswerSynthesis",
                 elapsedMs,
+                error,
                 serializedAdditionalRawData: null,
                 inputTokens,
                 outputTokens);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <param name="inputTokens"> The number of input tokens for the semantic ranker activity. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSemanticRerankerActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeAgentSemanticRerankerActivityRecord KnowledgeAgentSemanticRerankerActivityRecord(int id = default, int? elapsedMs = null, int? inputTokens = null)
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
+        /// <param name="retrievalReasoningEffort">
+        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
+        /// </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = null, KnowledgeBaseErrorDetail error = null, int? reasoningTokens = null, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = null)
         {
-            return new KnowledgeAgentSemanticRerankerActivityRecord(id, "semanticReranker", elapsedMs, serializedAdditionalRawData: null, inputTokens);
+            return new KnowledgeBaseAgenticReasoningActivityRecord(
+                id,
+                "agenticReasoning",
+                elapsedMs,
+                error,
+                serializedAdditionalRawData: null,
+                reasoningTokens,
+                retrievalReasoningEffort);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchIndexReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docKey"> The document key for the reference. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchIndexReference"/> instance for mocking. </returns>
-        public static KnowledgeAgentSearchIndexReference KnowledgeAgentSearchIndexReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string docKey = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string docKey = null)
         {
             sourceData ??= new Dictionary<string, object>();
 
-            return new KnowledgeAgentSearchIndexReference(
+            return new KnowledgeBaseSearchIndexReference(
                 "searchIndex",
                 id,
                 activitySource,
@@ -609,18 +944,18 @@ namespace Azure.Search.Documents.Models
                 docKey);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureBlobReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="blobUrl"> The blob URL for the reference. </param>
-        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureBlobReference"/> instance for mocking. </returns>
-        public static KnowledgeAgentAzureBlobReference KnowledgeAgentAzureBlobReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string blobUrl = null)
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string blobUrl = null)
         {
             sourceData ??= new Dictionary<string, object>();
 
-            return new KnowledgeAgentAzureBlobReference(
+            return new KnowledgeBaseAzureBlobReference(
                 "azureBlob",
                 id,
                 activitySource,
@@ -628,6 +963,114 @@ namespace Azure.Search.Documents.Models
                 rerankerScore,
                 serializedAdditionalRawData: null,
                 blobUrl);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/>. </summary>
+        /// <param name="id"> The ID of the reference. </param>
+        /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="docUrl"> The document URL for the reference. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedSharePointReference KnowledgeBaseIndexedSharePointReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string docUrl = null)
+        {
+            sourceData ??= new Dictionary<string, object>();
+
+            return new KnowledgeBaseIndexedSharePointReference(
+                "indexedSharePoint",
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null,
+                docUrl);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/>. </summary>
+        /// <param name="id"> The ID of the reference. </param>
+        /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="docUrl"> The document URL for the reference. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, string docUrl = null)
+        {
+            sourceData ??= new Dictionary<string, object>();
+
+            return new KnowledgeBaseIndexedOneLakeReference(
+                "indexedOneLake",
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null,
+                docUrl);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/>. </summary>
+        /// <param name="id"> The ID of the reference. </param>
+        /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="url"> The url the reference data originated from. </param>
+        /// <param name="title"> The title of the web document. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseWebReference KnowledgeBaseWebReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, Uri url = null, string title = null)
+        {
+            sourceData ??= new Dictionary<string, object>();
+
+            return new KnowledgeBaseWebReference(
+                "web",
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null,
+                url,
+                title);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/>. </summary>
+        /// <param name="id"> The ID of the reference. </param>
+        /// <param name="activitySource"> The source activity ID for the reference. </param>
+        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="rerankerScore"> The reranker score for the document reference. </param>
+        /// <param name="webUrl"> The url the reference data originated from. </param>
+        /// <param name="searchSensitivityLabelInfo"> Information about the sensitivity label applied to a SharePoint document. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/> instance for mocking. </returns>
+        public static KnowledgeBaseRemoteSharePointReference KnowledgeBaseRemoteSharePointReference(string id = null, int activitySource = default, IReadOnlyDictionary<string, object> sourceData = null, float? rerankerScore = null, Uri webUrl = null, SharePointSensitivityLabelInfo searchSensitivityLabelInfo = null)
+        {
+            sourceData ??= new Dictionary<string, object>();
+
+            return new KnowledgeBaseRemoteSharePointReference(
+                "remoteSharePoint",
+                id,
+                activitySource,
+                sourceData,
+                rerankerScore,
+                serializedAdditionalRawData: null,
+                webUrl,
+                searchSensitivityLabelInfo);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBases.Models.SharePointSensitivityLabelInfo"/>. </summary>
+        /// <param name="displayName"> The display name for the sensitivity label. </param>
+        /// <param name="sensitivityLabelId"> The ID of the sensitivity label. </param>
+        /// <param name="tooltip"> The tooltip that should be displayed for the label in a UI. </param>
+        /// <param name="priority"> The priority in which the sensitivity label is applied. </param>
+        /// <param name="color"> The color that the UI should display for the label, if configured. </param>
+        /// <param name="isEncrypted"> Indicates whether the sensitivity label enforces encryption. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.SharePointSensitivityLabelInfo"/> instance for mocking. </returns>
+        public static SharePointSensitivityLabelInfo SharePointSensitivityLabelInfo(string displayName = null, string sensitivityLabelId = null, string tooltip = null, int? priority = null, string color = null, bool? isEncrypted = null)
+        {
+            return new SharePointSensitivityLabelInfo(
+                displayName,
+                sensitivityLabelId,
+                tooltip,
+                priority,
+                color,
+                isEncrypted,
+                serializedAdditionalRawData: null);
         }
     }
 }

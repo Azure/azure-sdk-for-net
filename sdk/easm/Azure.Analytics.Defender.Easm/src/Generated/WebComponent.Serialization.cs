@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class WebComponent : IUtf8JsonSerializable, IJsonModel<WebComponent>
+    /// <summary> The WebComponent. </summary>
+    public partial class WebComponent : IJsonModel<WebComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebComponent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -53,8 +52,13 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStartArray();
-                foreach (var item in RuleId)
+                foreach (string item in RuleId)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -78,7 +82,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("cve"u8);
                 writer.WriteStartArray();
-                foreach (var item in Cve)
+                foreach (CveDetails item in Cve)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +102,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
-                foreach (var item in Ports)
+                foreach (PortDetails item in Ports)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +112,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
-                foreach (var item in Sources)
+                foreach (SourceDetails item in Sources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,15 +123,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,173 +140,183 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        WebComponent IJsonModel<WebComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebComponent IJsonModel<WebComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebComponent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebComponent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebComponent(document.RootElement, options);
         }
 
-        internal static WebComponent DeserializeWebComponent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WebComponent DeserializeWebComponent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string type = default;
+            string @type = default;
             string version = default;
-            IReadOnlyList<string> ruleId = default;
+            IList<string> ruleId = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
             long? count = default;
-            IReadOnlyList<CveDetails> cve = default;
+            IList<CveDetails> cve = default;
             long? endOfLife = default;
             bool? recent = default;
-            IReadOnlyList<PortDetails> ports = default;
-            IReadOnlyList<SourceDetails> sources = default;
+            IList<PortDetails> ports = default;
+            IList<SourceDetails> sources = default;
             string service = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleId"u8))
+                if (prop.NameEquals("ruleId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     ruleId = array;
                     continue;
                 }
-                if (property.NameEquals("firstSeen"u8))
+                if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firstSeen = property.Value.GetDateTimeOffset("O");
+                    firstSeen = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSeen"u8))
+                if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSeen = property.Value.GetDateTimeOffset("O");
+                    lastSeen = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt64();
+                    count = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cve"u8))
+                if (prop.NameEquals("cve"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CveDetails> array = new List<CveDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CveDetails.DeserializeCveDetails(item, options));
                     }
                     cve = array;
                     continue;
                 }
-                if (property.NameEquals("endOfLife"u8))
+                if (prop.NameEquals("endOfLife"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOfLife = property.Value.GetInt64();
+                    endOfLife = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recent"u8))
+                if (prop.NameEquals("recent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recent = property.Value.GetBoolean();
+                    recent = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ports"u8))
+                if (prop.NameEquals("ports"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PortDetails> array = new List<PortDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PortDetails.DeserializePortDetails(item, options));
                     }
                     ports = array;
                     continue;
                 }
-                if (property.NameEquals("sources"u8))
+                if (prop.NameEquals("sources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SourceDetails> array = new List<SourceDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
                 }
-                if (property.NameEquals("service"u8))
+                if (prop.NameEquals("service"u8))
                 {
-                    service = property.Value.GetString();
+                    service = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new WebComponent(
                 name,
-                type,
+                @type,
                 version,
                 ruleId ?? new ChangeTrackingList<string>(),
                 firstSeen,
@@ -314,13 +328,16 @@ namespace Azure.Analytics.Defender.Easm
                 ports ?? new ChangeTrackingList<PortDetails>(),
                 sources ?? new ChangeTrackingList<SourceDetails>(),
                 service,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<WebComponent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebComponent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -330,15 +347,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        WebComponent IPersistableModel<WebComponent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebComponent IPersistableModel<WebComponent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebComponent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebComponent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebComponent(document.RootElement, options);
                     }
                 default:
@@ -346,22 +368,7 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static WebComponent FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeWebComponent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

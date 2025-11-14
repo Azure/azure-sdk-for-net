@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DellFileSystemPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="DellFileSystemPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DellFileSystemPatch patch)
+        /// <param name="dellFileSystemPatch"> The <see cref="DellFileSystemPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DellFileSystemPatch dellFileSystemPatch)
         {
-            if (patch == null)
+            if (dellFileSystemPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(dellFileSystemPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

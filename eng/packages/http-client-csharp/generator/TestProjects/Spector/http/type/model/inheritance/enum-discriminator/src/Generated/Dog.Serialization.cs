@@ -39,6 +39,6 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
         /// <param name="dog"> The <see cref="Dog"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Dog dog) => throw null;
 
-        public static explicit operator Dog(Response result) => throw null;
+        public static explicit operator Dog(Response response) => throw null;
     }
 }

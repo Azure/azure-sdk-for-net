@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
                     IPAllowlist = { "10.0.0.0/8" },
                     Sku = new DurableTaskSchedulerSkuUpdate
                     {
-                        Name = SchedulerSkuName.Dedicated,
+                        Name = DurableTaskSchedulerSkuName.Dedicated,
                         Capacity = 3,
                     },
                 },

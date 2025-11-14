@@ -5,15 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class AIVisionImageAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageAnalysisResult"/>. </summary>
+        /// <summary> Represents the outcome of an Image Analysis operation. </summary>
         /// <param name="caption"> The generated phrase that describes the content of the analyzed image. </param>
         /// <param name="denseCaptions">
         /// The up to 10 generated phrases, the first describing the content of the whole image,
@@ -30,7 +32,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="tags"> A list of content tags in the analyzed image. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImageAnalysisResult"/> instance for mocking. </returns>
-        public static ImageAnalysisResult ImageAnalysisResult(CaptionResult caption = null, DenseCaptionsResult denseCaptions = null, ImageMetadata metadata = null, string modelVersion = null, ObjectsResult objects = null, PeopleResult people = null, ReadResult read = null, SmartCropsResult smartCrops = null, TagsResult tags = null)
+        public static ImageAnalysisResult ImageAnalysisResult(CaptionResult caption = default, DenseCaptionsResult denseCaptions = default, ImageMetadata metadata = default, string modelVersion = default, ObjectsResult objects = default, PeopleResult people = default, ReadResult read = default, SmartCropsResult smartCrops = default, TagsResult tags = default)
         {
             return new ImageAnalysisResult(
                 caption,
@@ -42,32 +44,35 @@ namespace Azure.AI.Vision.ImageAnalysis
                 read,
                 smartCrops,
                 tags,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CaptionResult"/>. </summary>
+        /// <summary> Represents a generated phrase that describes the content of the whole image. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="text"> The text of the caption. </param>
         /// <returns> A new <see cref="ImageAnalysis.CaptionResult"/> instance for mocking. </returns>
-        public static CaptionResult CaptionResult(float confidence = default, string text = null)
+        public static CaptionResult CaptionResult(float confidence = default, string text = default)
         {
-            return new CaptionResult(confidence, text, serializedAdditionalRawData: null);
+            return new CaptionResult(confidence, text, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DenseCaptionsResult"/>. </summary>
+        /// <summary>
+        /// Represents a list of up to 10 image captions for different regions of the image.
+        /// The first caption always applies to the whole image.
+        /// </summary>
         /// <param name="values"> The list of image captions. </param>
         /// <returns> A new <see cref="ImageAnalysis.DenseCaptionsResult"/> instance for mocking. </returns>
-        public static DenseCaptionsResult DenseCaptionsResult(IEnumerable<DenseCaption> values = null)
+        public static DenseCaptionsResult DenseCaptionsResult(IEnumerable<DenseCaption> values = default)
         {
-            values ??= new List<DenseCaption>();
+            values ??= new ChangeTrackingList<DenseCaption>();
 
-            return new DenseCaptionsResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new DenseCaptionsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DenseCaption"/>. </summary>
+        /// <summary> Represents a generated phrase that describes the content of the whole image or a region in the image. </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.
         /// Higher values indicating higher confidence.
@@ -75,12 +80,12 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> The text of the caption. </param>
         /// <param name="boundingBox"> The image region of which this caption applies. </param>
         /// <returns> A new <see cref="ImageAnalysis.DenseCaption"/> instance for mocking. </returns>
-        public static DenseCaption DenseCaption(float confidence = default, string text = null, ImageBoundingBox boundingBox = null)
+        public static DenseCaption DenseCaption(float confidence = default, string text = default, ImageBoundingBox boundingBox = default)
         {
-            return new DenseCaption(confidence, text, boundingBox, serializedAdditionalRawData: null);
+            return new DenseCaption(confidence, text, boundingBox, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageBoundingBox"/>. </summary>
+        /// <summary> A basic rectangle specifying a sub-region of the image. </summary>
         /// <param name="x"> X-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="y"> Y-coordinate of the top left point of the area, in pixels. </param>
         /// <param name="width"> Width of the area, in pixels. </param>
@@ -88,138 +93,150 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.ImageBoundingBox"/> instance for mocking. </returns>
         public static ImageBoundingBox ImageBoundingBox(int x = default, int y = default, int width = default, int height = default)
         {
-            return new ImageBoundingBox(x, y, width, height, serializedAdditionalRawData: null);
+            return new ImageBoundingBox(x, y, width, height, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageMetadata"/>. </summary>
+        /// <summary> Metadata associated with the analyzed image. </summary>
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImageMetadata"/> instance for mocking. </returns>
         public static ImageMetadata ImageMetadata(int height = default, int width = default)
         {
-            return new ImageMetadata(height, width, serializedAdditionalRawData: null);
+            return new ImageMetadata(height, width, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ObjectsResult"/>. </summary>
+        /// <summary> Represents a list of physical object detected in an image and their location. </summary>
         /// <param name="values"> A list of physical object detected in an image and their location. </param>
         /// <returns> A new <see cref="ImageAnalysis.ObjectsResult"/> instance for mocking. </returns>
-        public static ObjectsResult ObjectsResult(IEnumerable<DetectedObject> values = null)
+        public static ObjectsResult ObjectsResult(IEnumerable<DetectedObject> values = default)
         {
-            values ??= new List<DetectedObject>();
+            values ??= new ChangeTrackingList<DetectedObject>();
 
-            return new ObjectsResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new ObjectsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedObject"/>. </summary>
+        /// <summary> Represents a physical object detected in an image. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedObject"/> instance for mocking. </returns>
-        public static DetectedObject DetectedObject(ImageBoundingBox boundingBox = null, IEnumerable<DetectedTag> tags = null)
+        public static DetectedObject DetectedObject(ImageBoundingBox boundingBox = default, IEnumerable<DetectedTag> tags = default)
         {
-            tags ??= new List<DetectedTag>();
+            tags ??= new ChangeTrackingList<DetectedTag>();
 
-            return new DetectedObject(boundingBox, tags?.ToList(), serializedAdditionalRawData: null);
+            return new DetectedObject(boundingBox, tags.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTag"/>. </summary>
+        /// <summary>
+        /// A content entity observation in the image. A tag can be a physical object, living being, scenery, or action
+        /// that appear in the image.
+        /// </summary>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="name"> Name of the entity. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
-        public static DetectedTag DetectedTag(float confidence = default, string name = null)
+        public static DetectedTag DetectedTag(float confidence = default, string name = default)
         {
-            return new DetectedTag(confidence, name, serializedAdditionalRawData: null);
+            return new DetectedTag(confidence, name, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.PeopleResult"/>. </summary>
+        /// <summary> Represents a list of people detected in an image and their location. </summary>
         /// <param name="values"> A list of people detected in an image and their location. </param>
         /// <returns> A new <see cref="ImageAnalysis.PeopleResult"/> instance for mocking. </returns>
-        public static PeopleResult PeopleResult(IEnumerable<DetectedPerson> values = null)
+        public static PeopleResult PeopleResult(IEnumerable<DetectedPerson> values = default)
         {
-            values ??= new List<DetectedPerson>();
+            values ??= new ChangeTrackingList<DetectedPerson>();
 
-            return new PeopleResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new PeopleResult(values.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedPerson"/>. </summary>
+        /// <summary> Represents a person detected in an image. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the person was detected. </param>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
         /// Higher values indicating higher confidence.
         /// </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedPerson"/> instance for mocking. </returns>
-        public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = null, float confidence = default)
+        public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = default, float confidence = default)
         {
-            return new DetectedPerson(boundingBox, confidence, serializedAdditionalRawData: null);
+            return new DetectedPerson(boundingBox, confidence, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ReadResult"/>. </summary>
+        /// <summary> The results of a Read (OCR) operation. </summary>
         /// <param name="blocks"> A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image. </param>
         /// <returns> A new <see cref="ImageAnalysis.ReadResult"/> instance for mocking. </returns>
-        public static ReadResult ReadResult(IEnumerable<DetectedTextBlock> blocks = null)
+        public static ReadResult ReadResult(IEnumerable<DetectedTextBlock> blocks = default)
         {
-            blocks ??= new List<DetectedTextBlock>();
+            blocks ??= new ChangeTrackingList<DetectedTextBlock>();
 
-            return new ReadResult(blocks?.ToList(), serializedAdditionalRawData: null);
+            return new ReadResult(blocks.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextBlock"/>. </summary>
+        /// <summary> Represents a single block of detected text in the image. </summary>
         /// <param name="lines"> A list of text lines in this block. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTextBlock"/> instance for mocking. </returns>
-        public static DetectedTextBlock DetectedTextBlock(IEnumerable<DetectedTextLine> lines = null)
+        public static DetectedTextBlock DetectedTextBlock(IEnumerable<DetectedTextLine> lines = default)
         {
-            lines ??= new List<DetectedTextLine>();
+            lines ??= new ChangeTrackingList<DetectedTextLine>();
 
-            return new DetectedTextBlock(lines?.ToList(), serializedAdditionalRawData: null);
+            return new DetectedTextBlock(lines.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextLine"/>. </summary>
+        /// <summary> Represents a single line of text in the image. </summary>
         /// <param name="text"> Text content of the detected text line. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="words"> A list of words in this line. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTextLine"/> instance for mocking. </returns>
-        public static DetectedTextLine DetectedTextLine(string text = null, IEnumerable<ImagePoint> boundingPolygon = null, IEnumerable<DetectedTextWord> words = null)
+        public static DetectedTextLine DetectedTextLine(string text = default, IEnumerable<ImagePoint> boundingPolygon = default, IEnumerable<DetectedTextWord> words = default)
         {
-            boundingPolygon ??= new List<ImagePoint>();
-            words ??= new List<DetectedTextWord>();
+            boundingPolygon ??= new ChangeTrackingList<ImagePoint>();
+            words ??= new ChangeTrackingList<DetectedTextWord>();
 
-            return new DetectedTextLine(text, boundingPolygon?.ToList(), words?.ToList(), serializedAdditionalRawData: null);
+            return new DetectedTextLine(text, boundingPolygon.ToList(), words.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImagePoint"/>. </summary>
+        /// <summary> Represents the coordinates of a single pixel in the image. </summary>
         /// <param name="x"> The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image. </param>
         /// <param name="y"> The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImagePoint"/> instance for mocking. </returns>
         public static ImagePoint ImagePoint(int x = default, int y = default)
         {
-            return new ImagePoint(x, y, serializedAdditionalRawData: null);
+            return new ImagePoint(x, y, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextWord"/>. </summary>
+        /// <summary>
+        /// A word object consisting of a contiguous sequence of characters. For non-space delimited languages,
+        /// such as Chinese, Japanese, and Korean, each character is represented as its own word.
+        /// </summary>
         /// <param name="text"> Text content of the word. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTextWord"/> instance for mocking. </returns>
-        public static DetectedTextWord DetectedTextWord(string text = null, IEnumerable<ImagePoint> boundingPolygon = null, float confidence = default)
+        public static DetectedTextWord DetectedTextWord(string text = default, IEnumerable<ImagePoint> boundingPolygon = default, float confidence = default)
         {
-            boundingPolygon ??= new List<ImagePoint>();
+            boundingPolygon ??= new ChangeTrackingList<ImagePoint>();
 
-            return new DetectedTextWord(text, boundingPolygon?.ToList(), confidence, serializedAdditionalRawData: null);
+            return new DetectedTextWord(text, boundingPolygon.ToList(), confidence, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.SmartCropsResult"/>. </summary>
+        /// <summary>
+        /// Smart cropping result. A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.
+        /// These regions preserve as much content as possible from the analyzed image, with priority given to detected faces.
+        /// </summary>
         /// <param name="values"> A list of crop regions. </param>
         /// <returns> A new <see cref="ImageAnalysis.SmartCropsResult"/> instance for mocking. </returns>
-        public static SmartCropsResult SmartCropsResult(IEnumerable<CropRegion> values = null)
+        public static SmartCropsResult SmartCropsResult(IEnumerable<CropRegion> values = default)
         {
-            values ??= new List<CropRegion>();
+            values ??= new ChangeTrackingList<CropRegion>();
 
-            return new SmartCropsResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new SmartCropsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CropRegion"/>. </summary>
+        /// <summary>
+        /// A region at the desired aspect ratio that can be used as image thumbnail.
+        /// The region preserves as much content as possible from the analyzed image, with priority given to detected faces.
+        /// </summary>
         /// <param name="aspectRatio">
         /// The aspect ratio of the crop region.
         /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.
@@ -228,19 +245,22 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="boundingBox"> The bounding box of the region. </param>
         /// <returns> A new <see cref="ImageAnalysis.CropRegion"/> instance for mocking. </returns>
-        public static CropRegion CropRegion(float aspectRatio = default, ImageBoundingBox boundingBox = null)
+        public static CropRegion CropRegion(float aspectRatio = default, ImageBoundingBox boundingBox = default)
         {
-            return new CropRegion(aspectRatio, boundingBox, serializedAdditionalRawData: null);
+            return new CropRegion(aspectRatio, boundingBox, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysis.TagsResult"/>. </summary>
+        /// <summary>
+        /// A list of entities observed in the image. Tags can be physical objects, living being, scenery, or actions
+        /// that appear in the image.
+        /// </summary>
         /// <param name="values"> A list of tags. </param>
         /// <returns> A new <see cref="ImageAnalysis.TagsResult"/> instance for mocking. </returns>
-        public static TagsResult TagsResult(IEnumerable<DetectedTag> values = null)
+        public static TagsResult TagsResult(IEnumerable<DetectedTag> values = default)
         {
-            values ??= new List<DetectedTag>();
+            values ??= new ChangeTrackingList<DetectedTag>();
 
-            return new TagsResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new TagsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

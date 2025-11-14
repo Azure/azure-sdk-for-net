@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfACertificateProfile()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Get.json
-            // this example is just showing the usage of "CertificateProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CertificateProfiles_Get.json
+            // this example is just showing the usage of "CertificateProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACertificateProfile()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Delete.json
-            // this example is just showing the usage of "CertificateProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CertificateProfiles_Delete.json
+            // this example is just showing the usage of "CertificateProfile_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateACertificateProfile()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Create.json
-            // this example is just showing the usage of "CertificateProfiles_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-10-13/CertificateProfiles_Create.json
+            // this example is just showing the usage of "CertificateProfile_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,13 +96,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             TrustedSigningCertificateProfileResource trustedSigningCertificateProfile = client.GetTrustedSigningCertificateProfileResource(trustedSigningCertificateProfileResourceId);
 
             // invoke the operation
-            TrustedSigningCertificateProfileData data = new TrustedSigningCertificateProfileData
-            {
-                ProfileType = CertificateProfileType.PublicTrust,
-                IncludeStreetAddress = false,
-                IncludePostalCode = true,
-                IdentityValidationId = "00000000-1234-5678-3333-444444444444",
-            };
+            TrustedSigningCertificateProfileData data = new TrustedSigningCertificateProfileData();
             ArmOperation<TrustedSigningCertificateProfileResource> lro = await trustedSigningCertificateProfile.UpdateAsync(WaitUntil.Completed, data);
             TrustedSigningCertificateProfileResource result = lro.Value;
 
@@ -117,7 +111,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RevokeCertificate_RevokeACertificateUnderACertificateProfile()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_RevokeCertificate.json
+            // Generated from example definition: 2025-10-13/CertificateProfiles_RevokeCertificate.json
             // this example is just showing the usage of "CertificateProfiles_RevokeCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

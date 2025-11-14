@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : TrackedResourceData
@@ -22,8 +23,17 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public FooData(AzureLocation location) : base(location)
+        /// <param name="something"> something. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
         {
+            Argument.AssertNotNull(something, nameof(something));
+            Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
+
+            Properties = new FooProperties(something, prop1, new NestedFooModel(nestedPropertyProperties, null));
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -36,20 +46,29 @@ namespace MgmtTypeSpec
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            Identity = identity;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal FooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> the service url. </summary>
+        [WirePath("properties.serviceUrl")]
         public Uri ServiceUri
         {
             get
@@ -67,7 +86,8 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> something. </summary>
-        public string Something
+        [WirePath("properties.something")]
+        public ManagedServiceIdentity Something
         {
             get
             {
@@ -84,6 +104,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> boolean value. </summary>
+        [WirePath("properties.boolValue")]
         public bool? BoolValue
         {
             get
@@ -101,6 +122,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> float value. </summary>
+        [WirePath("properties.floatValue")]
         public float? FloatValue
         {
             get
@@ -118,6 +140,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> double value. </summary>
+        [WirePath("properties.doubleValue")]
         public double? DoubleValue
         {
             get
@@ -135,24 +158,53 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("properties.prop1")]
         public IList<string> Prop1
         {
             get
             {
-                return Properties is null ? default : Properties.Prop1;
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.Prop1;
             }
         }
 
         /// <summary> Gets the Prop2. </summary>
+        [WirePath("properties.prop2")]
         public IList<int> Prop2
         {
             get
             {
-                return Properties is null ? default : Properties.Prop2;
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.Prop2;
+            }
+        }
+
+        /// <summary> ETag property for testing etag parameter name generation. </summary>
+        [WirePath("properties.etag")]
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ETag = value.Value;
             }
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties.nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
         {
             get
@@ -166,6 +218,24 @@ namespace MgmtTypeSpec
                     Properties = new FooProperties();
                 }
                 Properties.NestedPropertyProperties = value;
+            }
+        }
+
+        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        [WirePath("properties.optionalProperty.flattenedProperty")]
+        public string FlattenedProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlattenedProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.FlattenedProperty = value;
             }
         }
     }

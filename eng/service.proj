@@ -99,9 +99,22 @@
   </Target>
 
 
-  <Target Name="GenerateCode">
+  <Target Name="InstallTspClient">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="InstallTspClient"
+             BuildInParallel="false"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="BuildPlugin">
+    <Exec Command="dotnet build $(MSBuildThisFileDirectory)packages\plugins\client\Client.Plugin\" />
+  </Target>
+
+  <Target Name="GenerateCode" DependsOnTargets="InstallTspClient;BuildPlugin">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
+             Properties="SkipTspClientInstall=true"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
@@ -136,16 +149,16 @@
             SkipNonexistentTargets="true">
       <Output ItemName="PackageInfoLines" TaskParameter="TargetOutputs" />
     </MSBuild>
-    
+
     <!-- Deduplicate package info lines -->
     <RemoveDuplicates Inputs="@(PackageInfoLines)">
       <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
     </RemoveDuplicates>
-    
+
     <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified -->
-    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
-                      File="$(OutputProjectInfoListFilePath)" 
-                      Lines="@(PackageInfoLinesFiltered)" 
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''"
+                      File="$(OutputProjectInfoListFilePath)"
+                      Lines="@(PackageInfoLinesFiltered)"
                       Overwrite="true" />
   </Target>
 

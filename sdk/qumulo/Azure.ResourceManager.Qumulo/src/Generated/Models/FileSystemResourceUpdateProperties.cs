@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
-        /// <param name="clusterLoginUri"> File system Id of the resource. </param>
-        /// <param name="privateIPs"> Private IPs of the resource. </param>
+        /// <param name="clusterLoginUri"></param>
+        /// <param name="privateIPs"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,19 +77,10 @@ namespace Azure.ResourceManager.Qumulo.Models
         public string UserDetailsEmail
         {
             get => UserDetails is null ? default : UserDetails.Email;
-            set
-            {
-                if (UserDetails is null)
-                    UserDetails = new QumuloUserDetails();
-                UserDetails.Email = value;
-            }
+            set => UserDetails = new QumuloUserDetails(value);
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
         public ResourceIdentifier DelegatedSubnetId { get; set; }
-        /// <summary> File system Id of the resource. </summary>
-        public Uri ClusterLoginUri { get; set; }
-        /// <summary> Private IPs of the resource. </summary>
-        public IList<string> PrivateIPs { get; }
     }
 }

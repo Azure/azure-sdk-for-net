@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());
             }
+            if (Optional.IsDefined(StorageOptions))
+            {
+                writer.WritePropertyName("storageOptions"u8);
+                writer.WriteObjectValue(StorageOptions, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,6 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IDictionary<string, string> tags = default;
             IList<EgressEndpoint> additionalEgressEndpoints = default;
             CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default;
+            CloudServicesNetworkStorageOptionsPatch storageOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,6 +159,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             enableDefaultEgressEndpoints = new CloudServicesNetworkEnableDefaultEgressEndpoint(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("storageOptions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageOptions = CloudServicesNetworkStorageOptionsPatch.DeserializeCloudServicesNetworkStorageOptionsPatch(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -162,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudCloudServicesNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), enableDefaultEgressEndpoints, serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), enableDefaultEgressEndpoints, storageOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkPatch>.Write(ModelReaderWriterOptions options)

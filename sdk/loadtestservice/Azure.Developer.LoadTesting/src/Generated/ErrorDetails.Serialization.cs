@@ -34,10 +34,36 @@ namespace Azure.Developer.LoadTesting
                 throw new FormatException($"The model {nameof(ErrorDetails)} does not support writing '{format}' format.");
             }
 
+            if (options.Format != "W" && Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartArray();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WriteStringValue(item0);
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,14 +102,47 @@ namespace Azure.Developer.LoadTesting
             {
                 return null;
             }
+            string code = default;
             string message = default;
+            IReadOnlyDictionary<string, IList<string>> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("code"u8))
+                {
+                    code = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
+                    }
+                    properties = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,7 +151,7 @@ namespace Azure.Developer.LoadTesting
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ErrorDetails(message, serializedAdditionalRawData);
+            return new ErrorDetails(code, message, properties ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorDetails>.Write(ModelReaderWriterOptions options)

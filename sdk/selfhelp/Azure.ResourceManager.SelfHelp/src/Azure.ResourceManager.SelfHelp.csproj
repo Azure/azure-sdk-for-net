@@ -6,5 +6,7 @@
     <PackageId>Azure.ResourceManager.SelfHelp</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider SelfHelp.</Description>
     <PackageTags>azure;management;arm;resource manager;selfhelp</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>

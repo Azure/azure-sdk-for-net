@@ -67,8 +67,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="roles"> Roles associated with the branch. </param>
         /// <param name="databases"> Neon Databases associated with the branch. </param>
         /// <param name="endpoints"> Endpoints associated with the branch. </param>
+        /// <param name="branchId"> Unique identifier for the branch. </param>
+        /// <param name="branch"> Name of the branch. </param>
+        /// <param name="dataSize"> Total data size in MB for the branch. </param>
+        /// <param name="lastActive"> Last active compute for the branch. </param>
+        /// <param name="computeHours"> Compute hours for the branch. </param>
+        /// <param name="isProtected"> Branch protected status. </param>
+        /// <param name="isDefault"> Branch default status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonBranchProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, IList<NeonRoleProperties> roles, IList<NeonDatabaseProperties> databases, IList<NeonEndpointProperties> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonBranchProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, IList<NeonRoleProperties> roles, IList<NeonDatabaseProperties> databases, IList<NeonEndpointProperties> endpoints, string branchId, string branch, string dataSize, string lastActive, string computeHours, bool? isProtected, bool? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -82,6 +89,13 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             Roles = roles;
             Databases = databases;
             Endpoints = endpoints;
+            BranchId = branchId;
+            Branch = branch;
+            DataSize = dataSize;
+            LastActive = lastActive;
+            ComputeHours = computeHours;
+            IsProtected = isProtected;
+            IsDefault = isDefault;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -109,5 +123,19 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public IList<NeonDatabaseProperties> Databases { get; }
         /// <summary> Endpoints associated with the branch. </summary>
         public IList<NeonEndpointProperties> Endpoints { get; }
+        /// <summary> Unique identifier for the branch. </summary>
+        public string BranchId { get; set; }
+        /// <summary> Name of the branch. </summary>
+        public string Branch { get; set; }
+        /// <summary> Total data size in MB for the branch. </summary>
+        public string DataSize { get; }
+        /// <summary> Last active compute for the branch. </summary>
+        public string LastActive { get; }
+        /// <summary> Compute hours for the branch. </summary>
+        public string ComputeHours { get; }
+        /// <summary> Branch protected status. </summary>
+        public bool? IsProtected { get; }
+        /// <summary> Branch default status. </summary>
+        public bool? IsDefault { get; }
     }
 }

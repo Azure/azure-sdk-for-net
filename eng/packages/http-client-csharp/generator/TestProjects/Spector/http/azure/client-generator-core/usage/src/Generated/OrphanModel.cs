@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage
+namespace Specs.Azure.ClientGenerator.Core.Usage
 {
     public partial class OrphanModel
     {

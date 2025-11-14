@@ -53,16 +53,22 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(searchIndexName, nameof(searchIndexName));
 
             SearchIndexName = searchIndexName;
+            SourceDataFields = new ChangeTrackingList<SearchIndexFieldReference>();
+            SearchFields = new ChangeTrackingList<SearchIndexFieldReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParameters"/>. </summary>
         /// <param name="searchIndexName"> The name of the Search index. </param>
-        /// <param name="sourceDataSelect"> Used to request additional fields for referenced source data. </param>
+        /// <param name="sourceDataFields"> Used to request additional fields for referenced source data. </param>
+        /// <param name="searchFields"> Used to restrict which fields to search on the search index. </param>
+        /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, string sourceDataSelect, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchIndexName = searchIndexName;
-            SourceDataSelect = sourceDataSelect;
+            SourceDataFields = sourceDataFields;
+            SearchFields = searchFields;
+            SemanticConfigurationName = semanticConfigurationName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,6 +80,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The name of the Search index. </summary>
         public string SearchIndexName { get; set; }
         /// <summary> Used to request additional fields for referenced source data. </summary>
-        public string SourceDataSelect { get; set; }
+        public IList<SearchIndexFieldReference> SourceDataFields { get; }
+        /// <summary> Used to restrict which fields to search on the search index. </summary>
+        public IList<SearchIndexFieldReference> SearchFields { get; }
+        /// <summary> Used to specify a different semantic configuration on the target search index other than the default one. </summary>
+        public string SemanticConfigurationName { get; set; }
     }
 }

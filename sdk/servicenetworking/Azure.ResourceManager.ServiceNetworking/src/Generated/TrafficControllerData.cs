@@ -101,19 +101,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <summary> Security Policies References List. </summary>
         public IReadOnlyList<SubResource> SecurityPolicies { get; }
         /// <summary> Security Policy Configuration. </summary>
-        internal SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
-        {
-            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
-            set
-            {
-                if (SecurityPolicyConfigurations is null)
-                    SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
-            }
-        }
-
+        public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
         /// <summary> The status of the last operation. </summary>
         public ServiceNetworkingProvisioningState? TrafficControllerProvisioningState { get; }
     }

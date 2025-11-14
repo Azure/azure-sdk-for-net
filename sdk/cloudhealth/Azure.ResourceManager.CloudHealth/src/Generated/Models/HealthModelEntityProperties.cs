@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Properties which are common across all kinds of entities. </summary>
     public partial class HealthModelEntityProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthModelEntityProperties"/>. </summary>
         public HealthModelEntityProperties()
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="deletedOn"> Date when the entity was (soft-)deleted. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, string kind, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> labels, EntitySignalGroup signals, string discoveredBy, DateTimeOffset? deletedOn, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, string kind, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> labels, EntitySignalGroup signals, string discoveredBy, DateTimeOffset? deletedOn, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -81,33 +53,45 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DeletedOn = deletedOn;
             HealthState = healthState;
             Alerts = alerts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the last operation. </summary>
         public HealthModelProvisioningState? ProvisioningState { get; }
+
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Entity kind. </summary>
         public string Kind { get; set; }
+
         /// <summary> Positioning of the entity on the model canvas. </summary>
         public EntityCoordinates CanvasPosition { get; set; }
+
         /// <summary> Visual icon definition. If not set, a default icon is used. </summary>
         public EntityIcon Icon { get; set; }
+
         /// <summary> Health objective as a percentage of time the entity should be healthy. </summary>
         public float? HealthObjective { get; set; }
+
         /// <summary> Impact of the entity in health state propagation. </summary>
         public EntityImpact? Impact { get; set; }
+
         /// <summary> Optional set of labels (key-value pairs). </summary>
         public IDictionary<string, string> Labels { get; }
+
         /// <summary> Signal groups which are assigned to this entity. </summary>
         public EntitySignalGroup Signals { get; set; }
+
         /// <summary> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }
+
         /// <summary> Date when the entity was (soft-)deleted. </summary>
         public DateTimeOffset? DeletedOn { get; }
+
         /// <summary> Health state of this entity. </summary>
         public EntityHealthState? HealthState { get; }
+
         /// <summary> Alert configuration for this entity. </summary>
         public EntityAlerts Alerts { get; set; }
     }

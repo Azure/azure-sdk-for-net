@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DurableTask.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
-    /// A Class representing a DurableTaskScheduler along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DurableTaskSchedulerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDurableTaskSchedulerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDurableTaskScheduler method.
+    /// A class representing a DurableTaskScheduler along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DurableTaskSchedulerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDurableTaskSchedulers method.
     /// </summary>
     public partial class DurableTaskSchedulerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DurableTaskSchedulerResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="schedulerName"> The schedulerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schedulerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _durableTaskSchedulerSchedulersClientDiagnostics;
-        private readonly SchedulersRestOperations _durableTaskSchedulerSchedulersRestClient;
+        private readonly ClientDiagnostics _schedulersClientDiagnostics;
+        private readonly Schedulers _schedulersRestClient;
         private readonly DurableTaskSchedulerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DurableTask/schedulers";
 
-        /// <summary> Initializes a new instance of the <see cref="DurableTaskSchedulerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DurableTaskSchedulerResource for mocking. </summary>
         protected DurableTaskSchedulerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DurableTaskSchedulerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DurableTaskSchedulerResource(ArmClient client, DurableTaskSchedulerData data) : this(client, data.Id)
@@ -56,147 +46,92 @@ namespace Azure.ResourceManager.DurableTask
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DurableTaskSchedulerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskSchedulerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _durableTaskSchedulerSchedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string durableTaskSchedulerSchedulersApiVersion);
-            _durableTaskSchedulerSchedulersRestClient = new SchedulersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskSchedulerSchedulersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string durableTaskSchedulerApiVersion);
+            _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskSchedulerApiVersion ?? "2025-11-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DurableTaskSchedulerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="schedulerName"> The schedulerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schedulerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of DurableTaskHubResources in the DurableTaskScheduler. </summary>
-        /// <returns> An object representing collection of DurableTaskHubResources and their operations over a DurableTaskHubResource. </returns>
-        public virtual DurableTaskHubCollection GetDurableTaskHubs()
-        {
-            return GetCachedClient(client => new DurableTaskHubCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Task Hub
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="taskHubName"> The name of the TaskHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DurableTaskHubResource>> GetDurableTaskHubAsync(string taskHubName, CancellationToken cancellationToken = default)
-        {
-            return await GetDurableTaskHubs().GetAsync(taskHubName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Task Hub
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/taskHubs/{taskHubName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TaskHub_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskHubResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="taskHubName"> The name of the TaskHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DurableTaskHubResource> GetDurableTaskHub(string taskHubName, CancellationToken cancellationToken = default)
-        {
-            return GetDurableTaskHubs().Get(taskHubName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a DurableTaskRetentionPolicyResource along with the instance operations that can be performed on it in the DurableTaskScheduler. </summary>
-        /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
-        public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicy()
-        {
-            return new DurableTaskRetentionPolicyResource(Client, Id.AppendChildResource("retentionPolicies", "default"));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DurableTaskSchedulerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Get");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Get");
             scope.Start();
             try
             {
-                var response = await _durableTaskSchedulerSchedulersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,118 +145,42 @@ namespace Azure.ResourceManager.DurableTask
         /// Get a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DurableTaskSchedulerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Get");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Get");
             scope.Start();
             try
             {
-                var response = _durableTaskSchedulerSchedulersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Scheduler
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _durableTaskSchedulerSchedulersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DurableTaskArmOperation(_durableTaskSchedulerSchedulersClientDiagnostics, Pipeline, _durableTaskSchedulerSchedulersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Scheduler
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _durableTaskSchedulerSchedulersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DurableTaskArmOperation(_durableTaskSchedulerSchedulersClientDiagnostics, Pipeline, _durableTaskSchedulerSchedulersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -334,20 +193,20 @@ namespace Azure.ResourceManager.DurableTask
         /// Update a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,14 +218,27 @@ namespace Azure.ResourceManager.DurableTask
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Update");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Update");
             scope.Start();
             try
             {
-                var response = await _durableTaskSchedulerSchedulersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DurableTaskArmOperation<DurableTaskSchedulerResource>(new DurableTaskSchedulerOperationSource(Client), _durableTaskSchedulerSchedulersClientDiagnostics, Pipeline, _durableTaskSchedulerSchedulersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DurableTaskSchedulerPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DurableTaskArmOperation<DurableTaskSchedulerResource> operation = new DurableTaskArmOperation<DurableTaskSchedulerResource>(
+                    new DurableTaskSchedulerOperationSource(Client),
+                    _schedulersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -380,20 +252,20 @@ namespace Azure.ResourceManager.DurableTask
         /// Update a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,14 +277,27 @@ namespace Azure.ResourceManager.DurableTask
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Update");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Update");
             scope.Start();
             try
             {
-                var response = _durableTaskSchedulerSchedulersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DurableTaskArmOperation<DurableTaskSchedulerResource>(new DurableTaskSchedulerOperationSource(Client), _durableTaskSchedulerSchedulersClientDiagnostics, Pipeline, _durableTaskSchedulerSchedulersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DurableTaskSchedulerPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DurableTaskArmOperation<DurableTaskSchedulerResource> operation = new DurableTaskArmOperation<DurableTaskSchedulerResource>(
+                    new DurableTaskSchedulerOperationSource(Client),
+                    _schedulersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -423,26 +308,104 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Delete a Scheduler
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DurableTaskArmOperation operation = new DurableTaskArmOperation(_schedulersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Scheduler
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Schedulers_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DurableTaskSchedulerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schedulersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DurableTaskArmOperation operation = new DurableTaskArmOperation(_schedulersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -452,28 +415,34 @@ namespace Azure.ResourceManager.DurableTask
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.AddTag");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _durableTaskSchedulerSchedulersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DurableTaskSchedulerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
+                    return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DurableTaskSchedulerPatch();
-                    foreach (var tag in current.Tags)
+                    DurableTaskSchedulerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DurableTaskSchedulerPatch patch = new DurableTaskSchedulerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DurableTaskSchedulerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -484,27 +453,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -514,28 +463,34 @@ namespace Azure.ResourceManager.DurableTask
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.AddTag");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _durableTaskSchedulerSchedulersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DurableTaskSchedulerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
+                    return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DurableTaskSchedulerPatch();
-                    foreach (var tag in current.Tags)
+                    DurableTaskSchedulerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DurableTaskSchedulerPatch patch = new DurableTaskSchedulerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DurableTaskSchedulerResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -546,53 +501,39 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DurableTaskSchedulerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.SetTags");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _durableTaskSchedulerSchedulersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DurableTaskSchedulerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
+                    return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DurableTaskSchedulerPatch();
+                    DurableTaskSchedulerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DurableTaskSchedulerPatch patch = new DurableTaskSchedulerPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DurableTaskSchedulerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -603,53 +544,39 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DurableTaskSchedulerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.SetTags");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _durableTaskSchedulerSchedulersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DurableTaskSchedulerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
+                    return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DurableTaskSchedulerPatch();
+                    DurableTaskSchedulerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DurableTaskSchedulerPatch patch = new DurableTaskSchedulerPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DurableTaskSchedulerResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -660,27 +587,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -688,28 +595,34 @@ namespace Azure.ResourceManager.DurableTask
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.RemoveTag");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _durableTaskSchedulerSchedulersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DurableTaskSchedulerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
+                    return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DurableTaskSchedulerPatch();
-                    foreach (var tag in current.Tags)
+                    DurableTaskSchedulerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DurableTaskSchedulerPatch patch = new DurableTaskSchedulerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DurableTaskSchedulerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -720,27 +633,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Scheduler_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DurableTaskSchedulerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -748,28 +641,34 @@ namespace Azure.ResourceManager.DurableTask
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _durableTaskSchedulerSchedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.RemoveTag");
+            using DiagnosticScope scope = _schedulersClientDiagnostics.CreateScope("DurableTaskSchedulerResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _durableTaskSchedulerSchedulersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DurableTaskSchedulerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _schedulersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DurableTaskSchedulerData> response = Response.FromValue(DurableTaskSchedulerData.FromResponse(result), result);
+                    return Response.FromValue(new DurableTaskSchedulerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DurableTaskSchedulerPatch();
-                    foreach (var tag in current.Tags)
+                    DurableTaskSchedulerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DurableTaskSchedulerPatch patch = new DurableTaskSchedulerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DurableTaskSchedulerResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -778,6 +677,46 @@ namespace Azure.ResourceManager.DurableTask
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of DurableTaskHubs in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of DurableTaskHubs and their operations over a DurableTaskHubResource. </returns>
+        public virtual DurableTaskHubCollection GetDurableTaskHubs()
+        {
+            return GetCachedClient(client => new DurableTaskHubCollection(client, Id));
+        }
+
+        /// <summary> Get a Task Hub. </summary>
+        /// <param name="taskHubName"> The name of the TaskHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DurableTaskHubResource>> GetDurableTaskHubAsync(string taskHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
+
+            return await GetDurableTaskHubs().GetAsync(taskHubName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Task Hub. </summary>
+        /// <param name="taskHubName"> The name of the TaskHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DurableTaskHubResource> GetDurableTaskHub(string taskHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskHubName, nameof(taskHubName));
+
+            return GetDurableTaskHubs().Get(taskHubName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
+        public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicy()
+        {
+            return new DurableTaskRetentionPolicyResource(Client, Id.AppendChildResource("retentionPolicies", "default"));
         }
     }
 }

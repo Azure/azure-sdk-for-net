@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a Baz along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace MgmtTypeSpec
         internal BazResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string bazApiVersion);
-            _bazsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -92,7 +92,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Baz. </summary>
+        /// <summary>
+        /// Get a Baz
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BazResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BazResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -120,7 +140,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Baz. </summary>
+        /// <summary>
+        /// Get a Baz
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BazResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BazResource> Get(CancellationToken cancellationToken = default)
         {
@@ -148,7 +188,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Delete a Baz. </summary>
+        /// <summary>
+        /// Delete a Baz
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BazResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -163,7 +223,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -177,7 +237,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Delete a Baz. </summary>
+        /// <summary>
+        /// Delete a Baz
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BazResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -192,7 +272,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -206,7 +286,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Update a Baz. </summary>
+        /// <summary>
+        /// Update a Baz
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BazResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,7 +325,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<BazResource> operation = new MgmtTypeSpecArmOperation<BazResource>(
+                TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
@@ -245,7 +345,27 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Update a Baz. </summary>
+        /// <summary>
+        /// Update a Baz
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs/{bazName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BazResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,7 +384,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<BazResource> operation = new MgmtTypeSpecArmOperation<BazResource>(
+                TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
