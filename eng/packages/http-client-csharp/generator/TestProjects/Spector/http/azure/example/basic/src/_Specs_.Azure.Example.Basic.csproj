@@ -3,7 +3,7 @@
     <Description>This is the _Specs_.Azure.Example.Basic client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation _Specs_.Azure.Example.Basic</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>_Specs_.Azure.Example.Basic</PackageTags>
+    <PackageTags>Specs.Azure.Example.Basic</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

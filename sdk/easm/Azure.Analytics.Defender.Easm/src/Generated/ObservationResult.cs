@@ -14,37 +14,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The result response for the observation. </summary>
     public partial class ObservationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObservationResult"/>. </summary>
         /// <param name="name"> The name of the observation. </param>
@@ -54,12 +25,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cvssScoreV3"> The CVSS v3 score. </param>
         /// <param name="remediationState"> The remediation state of the observation. </param>
         /// <param name="remediationSource"> The source of the remediation state of the observation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="types"/> is null. </exception>
         internal ObservationResult(string name, IEnumerable<ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(types, nameof(types));
-
             Name = name;
             Types = types.ToList();
             Priority = priority;
@@ -77,8 +44,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cvssScoreV3"> The CVSS v3 score. </param>
         /// <param name="remediationState"> The remediation state of the observation. </param>
         /// <param name="remediationSource"> The source of the remediation state of the observation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObservationResult(string name, IReadOnlyList<ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ObservationResult(string name, IList<ObservationType> types, ObservationPriority priority, double cvssScoreV2, double cvssScoreV3, ObservationRemediationState remediationState, ObservationRemediationSource remediationSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Types = types;
@@ -87,26 +54,27 @@ namespace Azure.Analytics.Defender.Easm
             CvssScoreV3 = cvssScoreV3;
             RemediationState = remediationState;
             RemediationSource = remediationSource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ObservationResult"/> for deserialization. </summary>
-        internal ObservationResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the observation. </summary>
         public string Name { get; }
+
         /// <summary> The list of applicable types. </summary>
-        public IReadOnlyList<ObservationType> Types { get; }
+        public IList<ObservationType> Types { get; }
+
         /// <summary> The priority of the observation. </summary>
         public ObservationPriority Priority { get; }
+
         /// <summary> The CVSS v2 score. </summary>
         public double CvssScoreV2 { get; }
+
         /// <summary> The CVSS v3 score. </summary>
         public double CvssScoreV3 { get; }
+
         /// <summary> The remediation state of the observation. </summary>
         public ObservationRemediationState RemediationState { get; }
+
         /// <summary> The source of the remediation state of the observation. </summary>
         public ObservationRemediationSource RemediationSource { get; }
     }

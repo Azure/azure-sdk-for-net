@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceRegistryAssetPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="DeviceRegistryAssetPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeviceRegistryAssetPatch patch)
+        /// <param name="deviceRegistryAssetPatch"> The <see cref="DeviceRegistryAssetPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceRegistryAssetPatch deviceRegistryAssetPatch)
         {
-            if (patch == null)
+            if (deviceRegistryAssetPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(deviceRegistryAssetPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

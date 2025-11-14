@@ -36,6 +36,6 @@ namespace _Type.Property.Optional
         /// <param name="intLiteralProperty"> The <see cref="IntLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IntLiteralProperty intLiteralProperty) => throw null;
 
-        public static explicit operator IntLiteralProperty(Response result) => throw null;
+        public static explicit operator IntLiteralProperty(Response response) => throw null;
     }
 }

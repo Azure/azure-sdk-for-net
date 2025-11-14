@@ -224,6 +224,7 @@
           "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Path.Multiple",
       "apiVersions": [

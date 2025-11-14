@@ -340,6 +340,7 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven",
       "apiVersions": [

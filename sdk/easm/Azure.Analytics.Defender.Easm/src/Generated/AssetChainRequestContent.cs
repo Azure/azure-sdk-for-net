@@ -14,37 +14,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> AssetChainRequest containing information needed for the retrieval of the asset chain summary. </summary>
     public partial class AssetChainRequestContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AssetChainRequestContent"/>. </summary>
         /// <param name="assetChainSource"> Asset chain source. </param>
@@ -61,21 +32,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="AssetChainRequestContent"/>. </summary>
         /// <param name="assetChainSource"> Asset chain source. </param>
         /// <param name="sourceIds"> A collection of asset chain source ids. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetChainRequestContent(AssetChainSource assetChainSource, IList<string> sourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AssetChainRequestContent(AssetChainSource assetChainSource, IList<string> sourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssetChainSource = assetChainSource;
             SourceIds = sourceIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AssetChainRequestContent"/> for deserialization. </summary>
-        internal AssetChainRequestContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Asset chain source. </summary>
         public AssetChainSource AssetChainSource { get; }
+
         /// <summary> A collection of asset chain source ids. </summary>
         public IList<string> SourceIds { get; }
     }

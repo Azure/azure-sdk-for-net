@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlaywrightWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="PlaywrightWorkspacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PlaywrightWorkspacePatch patch)
+        /// <param name="playwrightWorkspacePatch"> The <see cref="PlaywrightWorkspacePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PlaywrightWorkspacePatch playwrightWorkspacePatch)
         {
-            if (patch == null)
+            if (playwrightWorkspacePatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(playwrightWorkspacePatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

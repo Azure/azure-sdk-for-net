@@ -34,6 +34,6 @@ namespace _Type.Union.Discriminated
 
         string IPersistableModel<Dog>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator Dog(Response result) => throw null;
+        public static explicit operator Dog(Response response) => throw null;
     }
 }

@@ -3,7 +3,7 @@
 
 using System.Net;
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Lro.Standard;
+using Specs.Azure.Core.Lro.Standard;
 using Azure;
 using NUnit.Framework;
 

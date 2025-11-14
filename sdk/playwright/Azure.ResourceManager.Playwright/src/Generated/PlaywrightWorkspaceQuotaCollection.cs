@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightWorkspaceQuotaResource"/> and their operations.
-    /// Each <see cref="PlaywrightWorkspaceQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlaywrightWorkspaceQuotaCollection"/> instance call the GetPlaywrightWorkspaceQuotas method from an instance of the parent resource.
+    /// Each <see cref="PlaywrightWorkspaceQuotaResource"/> in the collection will belong to the same instance of <see cref="PlaywrightWorkspaceResource"/>.
+    /// To get a <see cref="PlaywrightWorkspaceQuotaCollection"/> instance call the GetPlaywrightWorkspaceQuotas method from an instance of <see cref="PlaywrightWorkspaceResource"/>.
     /// </summary>
     public partial class PlaywrightWorkspaceQuotaCollection : ArmCollection, IEnumerable<PlaywrightWorkspaceQuotaResource>, IAsyncEnumerable<PlaywrightWorkspaceQuotaResource>
     {
@@ -55,7 +55,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
+        /// <summary>
+        /// Gets a Playwright workspace quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlaywrightWorkspaceQuotaResource>> GetAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
@@ -84,7 +100,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
+        /// <summary>
+        /// Gets a Playwright workspace quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PlaywrightWorkspaceQuotaResource> Get(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
@@ -113,7 +145,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
+        /// <summary>
+        /// Lists quota resources for a given Playwright workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_ListByPlaywrightWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -125,7 +173,23 @@ namespace Azure.ResourceManager.Playwright
             return new AsyncPageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceAsyncCollectionResultOfT(_playwrightWorkspaceQuotasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PlaywrightWorkspaceQuotaResource(Client, data));
         }
 
-        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
+        /// <summary>
+        /// Lists quota resources for a given Playwright workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_ListByPlaywrightWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceQuotaResource> GetAll(CancellationToken cancellationToken = default)
@@ -137,7 +201,23 @@ namespace Azure.ResourceManager.Playwright
             return new PageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceCollectionResultOfT(_playwrightWorkspaceQuotasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PlaywrightWorkspaceQuotaResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Gets a Playwright workspace quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
@@ -174,7 +254,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Gets a Playwright workspace quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
@@ -211,7 +307,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a Playwright workspace quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<PlaywrightWorkspaceQuotaResource>> GetIfExistsAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
@@ -252,7 +364,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Gets a Playwright workspace quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<PlaywrightWorkspaceQuotaResource> GetIfExists(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)

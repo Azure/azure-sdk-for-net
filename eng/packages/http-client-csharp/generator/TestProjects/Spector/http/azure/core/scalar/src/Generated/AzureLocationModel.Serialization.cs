@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Scalar
+namespace Specs.Azure.Core.Scalar
 {
     public partial class AzureLocationModel : IJsonModel<AzureLocationModel>
     {
@@ -38,6 +38,6 @@ namespace _Specs_.Azure.Core.Scalar
         /// <param name="azureLocationModel"> The <see cref="AzureLocationModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(AzureLocationModel azureLocationModel) => throw null;
 
-        public static explicit operator AzureLocationModel(Response result) => throw null;
+        public static explicit operator AzureLocationModel(Response response) => throw null;
     }
 }

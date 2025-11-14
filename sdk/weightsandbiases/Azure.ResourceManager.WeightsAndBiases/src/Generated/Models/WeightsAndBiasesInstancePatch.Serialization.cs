@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WeightsAndBiasesInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="WeightsAndBiasesInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WeightsAndBiasesInstancePatch patch)
+        /// <param name="weightsAndBiasesInstancePatch"> The <see cref="WeightsAndBiasesInstancePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WeightsAndBiasesInstancePatch weightsAndBiasesInstancePatch)
         {
-            if (patch == null)
+            if (weightsAndBiasesInstancePatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(weightsAndBiasesInstancePatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -96,6 +96,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override",
       "apiVersions": [],
@@ -266,6 +267,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters",
           "apiVersions": [],
@@ -408,6 +410,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters",
           "apiVersions": [],
@@ -581,6 +584,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RequireOptionalParameter",
           "apiVersions": [],
@@ -791,6 +795,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter",
           "apiVersions": [],

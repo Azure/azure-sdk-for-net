@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
+namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
 {
     public partial class FlattenModel : IJsonModel<FlattenModel>
     {
@@ -38,6 +38,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
         /// <param name="flattenModel"> The <see cref="FlattenModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FlattenModel flattenModel) => throw null;
 
-        public static explicit operator FlattenModel(Response result) => throw null;
+        public static explicit operator FlattenModel(Response response) => throw null;
     }
 }
