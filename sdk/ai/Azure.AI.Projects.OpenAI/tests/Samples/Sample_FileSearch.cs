@@ -4,13 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.OpenAI;
-using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
@@ -66,17 +63,10 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_FileSearch_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
-        OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_FileSearch_Async
-        List<ResponseItem> updateItems = [request];
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -133,17 +123,10 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
-        OpenAIResponse response = responseClient.CreateResponse([request]);
+        OpenAIResponse response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_FileSearch_Sync
-        List<ResponseItem> updateItems = [request];
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion

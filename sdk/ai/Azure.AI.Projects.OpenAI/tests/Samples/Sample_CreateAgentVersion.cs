@@ -68,11 +68,6 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_WriteOutput_Async
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId:  response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async
@@ -126,12 +121,6 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync

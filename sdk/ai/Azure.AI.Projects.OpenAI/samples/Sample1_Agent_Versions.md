@@ -92,26 +92,15 @@ ResponseCreationOptions responseOptions = new()
 OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```
 
-6. Wait for the agent to respond and print out the output; raise the error if the request was not successful.
+6. Print the output; raise the error if the request was not successful.
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_Sync
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_WriteOutput_Async
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId:  response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```
 

@@ -53,17 +53,12 @@ ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke
 OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
 ```
 
-5. Wait for the response to complete and record the responses to `MemoryUpdateOptions` object.
+5. Make sure the repone has completed and record the response items to `MemoryUpdateOptions` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Sync
 string scope = "Joke from conversation";
 List<ResponseItem> updateItems = [request];
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 
 foreach (ResponseItem item in response.OutputItems)
@@ -197,11 +192,6 @@ responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVer
 
 response = responseClient.CreateResponse(
     [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
-while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```
@@ -211,12 +201,7 @@ Asynchronous sample:
 responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
 
 response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
-while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId: response.Id);
-}
+    "Please explain me the meaning of the joke from the previous conversation.");
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```

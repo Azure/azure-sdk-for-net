@@ -24,26 +24,14 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
-3. Wait for request to complete; raise the error if the request was not successful.
+3. Write the response output, raise the error if the request was not successful.
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_ResponseBasic_Sync
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_WriteOutput_ResponseBasic_Async
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId: response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```

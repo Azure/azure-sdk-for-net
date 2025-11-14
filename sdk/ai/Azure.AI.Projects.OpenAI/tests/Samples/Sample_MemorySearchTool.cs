@@ -110,12 +110,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
 
         response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
-        while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
+            "Please explain me the meaning of the joke from the previous conversation.");
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -162,11 +157,6 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #region Snippet:Sample_WriteOutput_MemoryTool_Sync
         string scope = "Joke from conversation";
         List<ResponseItem> updateItems = [request];
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 
         foreach (ResponseItem item in response.OutputItems)
@@ -224,11 +214,6 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
         response = responseClient.CreateResponse(
             [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
-        while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion

@@ -168,7 +168,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         OpenAIResponse response;
         do
         {
-            response = await CreateAndWaitForResponseAsync(
+            response = await CreateAndCheckReponseAsync(
                 responseClient,
                 inputItems);
             funcionCalled = false;
@@ -191,31 +191,21 @@ public class Sample_Function : ProjectsOpenAITestBase
         #endregion
     }
 
-    #region Snippet:Sample_WaitForResponse_Function_Async
-    public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+    #region Snippet:Sample_CheckResponse_Function_Async
+    public static async Task<OpenAIResponse> CreateAndCheckReponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
     {
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             inputItems: items);
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
     }
     #endregion
 
-    #region Snippet:Sample_WaitForResponse_Function_Sync
-    public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+    #region Snippet:Sample_CheckResponse_Function_Sync
+    public static OpenAIResponse CreateAndCheckReponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
     {
         OpenAIResponse response = responseClient.CreateResponse(
             inputItems: items);
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
     }
@@ -256,7 +246,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         OpenAIResponse response;
         do
         {
-            response = CreateAndWaitForResponse(
+            response = CreateAndCheckReponse(
                 responseClient,
                 inputItems);
             funcionCalled = false;

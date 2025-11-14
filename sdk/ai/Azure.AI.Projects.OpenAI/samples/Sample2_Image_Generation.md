@@ -97,26 +97,7 @@ ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientFo
 OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
 ```
 
-5. Waiting for response.
-
-Synchronous sample:
-```C# Snippet:Sample_WaitForRun_ImageGeneration_Sync
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
-```
-
-Asynchronous sample:
-```C# Snippet:Sample_WaitForRun_ImageGeneration_Async
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId:  response.Id);
-}
-```
-
-6. Parse the `OpenAIResponse` object and save the generated image.
+5. Parse the `OpenAIResponse` object and save the generated image.
 
 ```C# Snippet:Sample_SaveImage_ImageGeneration
 foreach (ResponseItem item in response.OutputItems)
@@ -129,7 +110,7 @@ foreach (ResponseItem item in response.OutputItems)
 }
 ```
 
-7. Clean up resources by deleting the Agent.
+6. Clean up resources by deleting the Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ImageGeneration_Sync

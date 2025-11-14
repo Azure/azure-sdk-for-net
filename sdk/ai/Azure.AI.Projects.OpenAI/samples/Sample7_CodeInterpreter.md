@@ -55,43 +55,29 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Sync
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
-OpenAIResponse response = responseClient.CreateResponse([request]);
+OpenAIResponse response = responseClient.CreateResponse("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Async
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
-OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
+OpenAIResponse response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
-5 Wait for the response, raise the exception if the request was not successful.
+5 Write out the output of a response, raise the exception if the request was not successful.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForResponse_CodeInterpreter_Sync
-List<ResponseItem> updateItems = [request];
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_WaitForResponse_CodeInterpreter_Async
-List<ResponseItem> updateItems = [request];
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId: response.Id);
-}
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```

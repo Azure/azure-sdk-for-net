@@ -35,12 +35,6 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseBasic_Async
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
     }
@@ -64,12 +58,6 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseBasic_Sync
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
     }

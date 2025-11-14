@@ -158,41 +158,31 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-5. To supply functions outputs, we will need to wait for response multiple times. We will define methods `CreateAndWaitForResponse` and `CreateAndWaitForResponseAsync` for brevity.
+5. To supply functions outputs, we will need to obtain responses multiple times. We will define methods `CreateAndCheckReponse` and `CreateAndCheckReponseAsync` for brevity.
 
 Synchronous sample:
-```C# Snippet:Sample_WaitForResponse_Function_Sync
-public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+```C# Snippet:Sample_CheckResponse_Function_Sync
+public static OpenAIResponse CreateAndCheckReponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
 {
     OpenAIResponse response = responseClient.CreateResponse(
         inputItems: items);
-    while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-    {
-        Thread.Sleep(TimeSpan.FromMilliseconds(500));
-        response = responseClient.GetResponse(responseId: response.Id);
-    }
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WaitForResponse_Function_Async
-public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+```C# Snippet:Sample_CheckResponse_Function_Async
+public static async Task<OpenAIResponse> CreateAndCheckReponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
 {
     OpenAIResponse response = await responseClient.CreateResponseAsync(
         inputItems: items);
-    while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-    {
-        await Task.Delay(TimeSpan.FromMilliseconds(500));
-        response = await responseClient.GetResponseAsync(responseId: response.Id);
-    }
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
 ```
 
-6. Wait for the response; if the local function call is required, the response item will be of `FunctionCallResponseItem` type and will contain the function name needed by the Agent. In this case we will use our helper method `GetResolvedToolOutput` to get the `FunctionCallOutputResponseItem` with function call result. To provide the right answer, we need to supply all the response items to `CreateResponse` or `CreateResponseAsync` call. At the end we will print out the function response.
+6. If the local function call is required, the response item will be of `FunctionCallResponseItem` type and will contain the function name needed by the Agent. In this case we will use our helper method `GetResolvedToolOutput` to get the `FunctionCallOutputResponseItem` with function call result. To provide the right answer, we need to supply all the response items to `CreateResponse` or `CreateResponseAsync` call. At the end we will print out the function response.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Function_Sync
@@ -204,7 +194,7 @@ bool funcionCalled = false;
 OpenAIResponse response;
 do
 {
-    response = CreateAndWaitForResponse(
+    response = CreateAndCheckReponse(
         responseClient,
         inputItems);
     funcionCalled = false;
@@ -232,7 +222,7 @@ bool funcionCalled = false;
 OpenAIResponse response;
 do
 {
-    response = await CreateAndWaitForResponseAsync(
+    response = await CreateAndCheckReponseAsync(
         responseClient,
         inputItems);
     funcionCalled = false;

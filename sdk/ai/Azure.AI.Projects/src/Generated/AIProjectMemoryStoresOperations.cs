@@ -78,6 +78,44 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
+        /// <summary> Create a memory store. </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="definition"> The memory store definition. </param>
+        /// <param name="description"> A human-readable description of the memory store. </param>
+        /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<MemoryStore> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata, definition, default);
+            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+        }
+
+        /// <summary> Create a memory store. </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="definition"> The memory store definition. </param>
+        /// <param name="description"> A human-readable description of the memory store. </param>
+        /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<MemoryStore>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata, definition, default);
+            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
+        }
+
         /// <summary>
         /// [Protocol Method] Update a memory store.
         /// <list type="bullet">

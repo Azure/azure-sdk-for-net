@@ -22,21 +22,6 @@ namespace Azure.AI.Projects
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCreateMemoryStoreRequest"/>. </summary>
-        /// <param name="name"> The name of the memory store. </param>
-        /// <param name="description"> A human-readable description of the memory store. </param>
-        /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
-        /// <param name="definition"> The memory store definition. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCreateMemoryStoreRequest(string name, string description, IDictionary<string, string> metadata, MemoryStoreDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            Description = description;
-            Metadata = metadata;
-            Definition = definition;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The name of the memory store. </summary>
         public string Name { get; }
 

@@ -85,12 +85,6 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
         #endregion
-        #region Snippet:Sample_WaitForRun_ImageGeneration_Async
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId:  response.Id);
-        }
-        #endregion
         #region Snippet:Sample_SaveImage_ImageGeneration
         foreach (ResponseItem item in response.OutputItems)
         {
@@ -151,13 +145,6 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
         OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");
-        #endregion
-        #region Snippet:Sample_WaitForRun_ImageGeneration_Sync
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
         #endregion
         foreach (ResponseItem item in response.OutputItems)
         {
