@@ -77,8 +77,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
         }
       }
 
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
-      # if artifact has baselined warnings, run AOT checks; 
+      # CheckAOTCompat logic: if set in CI.yml, respect that value;
+      # if artifact has baselined warnings, run AOT checks;
       # otherwise use AotCompatOptOut from project settings
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
@@ -567,11 +567,11 @@ function EnsureCustomSource($package) {
 }
 
 function Get-dotnet-EmitterName() {
-  return "@azure-typespec/http-client-csharp"
+  return "@azure-tools/typespec-csharp"
 }
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
-  return "--option @azure-typespec/http-client-csharp.emitter-output-dir=$projectDirectory/src"
+  return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
 }
 
 function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
