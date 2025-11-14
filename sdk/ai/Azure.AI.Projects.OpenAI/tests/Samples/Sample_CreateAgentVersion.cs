@@ -13,13 +13,13 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task CreateAgentVersionAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -85,6 +85,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
     [SyncOnly]
     public void CreateAgentVersion()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

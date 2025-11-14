@@ -104,10 +104,18 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     };
     #endregion
 
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
     private readonly List<string> _conversationIDs = [];
     private ProjectConversationsClient _conversations = null;
 
-    public ProjectsOpenAITestBase(bool isAsync) : base(isAsync) { }
+    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync, testMode: GetRecordedTestMode()) { }
 
     public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {

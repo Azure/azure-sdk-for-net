@@ -106,14 +106,14 @@ The Azure.AI.Projects.OpenAI framework organized in a way that for each call, re
 
 Synchronous call:
 ```C# Snippet:Sample_CreateResponse_Sync
-OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous call:
 
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
@@ -156,14 +156,14 @@ The code above will result in creation of `AgentVersion` object, which is the da
 OpenAI API allows you to get the response without creating an agent by using the response API. In this scenario we first create the response object.
 
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
 After the response was created we need to wait for it to complete.
 
 ```C# Snippet:Sample_WriteOutput_ResponseBasic_Async
-while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
+while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
     response = await responseClient.GetResponseAsync(responseId: response.Id);
@@ -363,14 +363,11 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Now we can ask the agent a question, which requires running python code in the container.
 
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [request],
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
 ```
 
 ### Computer tool
@@ -646,11 +643,10 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 To supply functions outputs, we will need to wait for response multiple times. We will define method `CreateAndWaitForResponseAsync` for brevity.
 
 ```C# Snippet:Sample_WaitForResponse_Function_Async
-public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
 {
     OpenAIResponse response = await responseClient.CreateResponseAsync(
-        inputItems: items,
-        options: options);
+        inputItems: items);
     while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
     {
         await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -664,9 +660,7 @@ public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIRes
 Wait for the response; if the local function call is required, the response item will be of `FunctionCallResponseItem` type and will contain the function name needed by the Agent. In this case we will use our helper method `GetResolvedToolOutput` to get the `FunctionCallOutputResponseItem` with function call result. To provide the right answer, we need to supply all the response items to `CreateResponse` or `CreateResponseAsync` call. At the end we will print out the function response.
 
 ```C# Snippet:Sample_CreateResponse_Function_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
 List<ResponseItem> inputItems = [request];
@@ -676,8 +670,7 @@ do
 {
     response = await CreateAndWaitForResponseAsync(
         responseClient,
-        inputItems,
-        responseOptions);
+        inputItems);
     funcionCalled = false;
     foreach (ResponseItem responseItem in response.OutputItems)
     {

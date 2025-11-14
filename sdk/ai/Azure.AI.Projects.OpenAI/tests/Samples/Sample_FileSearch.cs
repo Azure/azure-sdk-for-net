@@ -64,14 +64,10 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Async
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.Agent = agentVersion;
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [request],
-            responseOptions);
+        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
+        OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
         #endregion
 
         #region Snippet:Sample_WaitForResponse_FileSearch_Async
@@ -135,14 +131,10 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.Agent = agentVersion;
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIResponse response = responseClient.CreateResponse(
-            [request],
-            responseOptions);
+        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
+        OpenAIResponse response = responseClient.CreateResponse([request]);
         #endregion
 
         #region Snippet:Sample_WaitForResponse_FileSearch_Sync

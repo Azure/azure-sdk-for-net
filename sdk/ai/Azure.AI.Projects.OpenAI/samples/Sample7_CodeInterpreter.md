@@ -54,26 +54,20 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Sync
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
-OpenAIResponse response = responseClient.CreateResponse(
-    [request],
-    responseOptions);
+OpenAIResponse response = responseClient.CreateResponse([request]);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
+OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [request],
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
 ```
 
 5 Wait for the response, raise the exception if the request was not successful.

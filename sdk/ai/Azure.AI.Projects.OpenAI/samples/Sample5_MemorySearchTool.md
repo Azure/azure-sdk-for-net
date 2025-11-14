@@ -39,28 +39,18 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Sync
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-OpenAIResponse response = responseClient.CreateResponse(
-    [request],
-    responseOptions);
+OpenAIResponse response = responseClient.CreateResponse([request]);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [request],
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
 ```
 
 5. Wait for the response to complete and record the responses to `MemoryUpdateOptions` object.
@@ -203,12 +193,10 @@ AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_AnotherConversation_MemoryTool_Sync
-responseOptions = new();
-responseOptions.Agent = agentVersion2;
+responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
 
 response = responseClient.CreateResponse(
-    [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
-    responseOptions);
+    [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
 while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -220,12 +208,10 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_AnotherConversation_MemoryTool_Async
-responseOptions = new();
-responseOptions.Agent = agentVersion2;
+responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
 
 response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
-    responseOptions);
+    [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
 while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
