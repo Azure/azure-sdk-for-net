@@ -2,6 +2,8 @@
 # and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
 # ContinueOnError   - true: Pipeline warns on spelling error
 #                     false: Pipeline fails on spelling error
+# TargetBranch      - Target ref (e.g. main) to compare to create file change
+#                     list.
 # CspellConfigPath  - Path to cspell.json config location
 #
 # ScriptToValidateUpgrade - Optional script to validate cspell upgrade. This
@@ -15,15 +17,8 @@
 # if set to 'true', spellchecking will not be invoked.
 
 parameters:
-  - name: ContinueOnError
-    type: boolean
-    default: true
-  - name: CspellConfigPath
-    type: string
-    default: ./.vscode/cspell.json
-  - name: EnableCspellUpgradeVerification
-    type: boolean
-    default: false
+  ContinueOnError: true
+  CspellConfigPath: ./.vscode/cspell.json
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
@@ -38,33 +33,3 @@ steps:
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true
-
-    - ${{ if eq(parameters.EnableCspellUpgradeVerification, true) }}:
-      # If the repo has a spell-check-public-api.ps1 script and there is a change
-      # to the cspell package-lock.json, verify the upgrade.
-      - pwsh: |
-          if ('true' -eq '$(Skip.SpellCheck)') {
-            Write-Host "Spell check is skipped in this build. Skipping cspell upgrade verification."
-            Write-Host "##vso[task.setvariable variable=RunCspellUpgradeVerification]false"
-            exit 0
-          }
-          $publicApiCheckExists = Test-Path 'eng/scripts/spell-check-public-api.ps1'
-          if (!$publicApiCheckExists) {
-            Write-Host "Public API spell check script not found. Skipping upgrade checks."
-            exit 0
-          }
-          Write-Host "Changed Files:"
-          ./eng/common/scripts/Generate-PR-Diff.ps1 `
-            -TargetPath '.' `
-            -ArtifactPath '$(ArtifactStagingDirectory)'
-          $changedFiles = (Get-Content '$(ArtifactStagingDirectory)/diff.json' | ConvertFrom-Json).ChangedFiles
-          Write-Host $changedFiles
-
-          if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
-            Write-Host "No changes to cspell package-lock.json detected."
-            exit 0
-          }
-
-          Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
-          ./eng/scripts/spell-check-public-api.ps1
-        displayName: Verify cspell upgrade
