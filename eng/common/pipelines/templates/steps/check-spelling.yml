@@ -5,10 +5,10 @@
 # CspellConfigPath  - Path to cspell.json config location
 #
 # ScriptToValidateUpgrade - Optional script to validate cspell upgrade. This
-#                           is invoked only if package-lock.json for cspell is 
+#                           is invoked only if package-lock.json for cspell is
 #                           changed. This script should exit with a nonzero exit
 #                           code if the upgrade is invalid. Upgrade check should
-#                           check for errors which would prevent release (i.e. 
+#                           check for errors which would prevent release (i.e.
 #                           public API surface).
 #
 # This check recognizes the setting of variable "Skip.SpellCheck"
@@ -16,14 +16,17 @@
 
 parameters:
   - name: ContinueOnError
-    type: boolean
+    type: string
     default: true
   - name: CspellConfigPath
     type: string
     default: ./.vscode/cspell.json
-  - name: ScriptToValidateUpgrade
+  - name: PublicApiCheckoutExpression
     type: string
-    default: ''
+    default: sdk/**
+  - name: ArtifactDirectory
+    type: string
+    default: $(Build.ArtifactStagingDirectory)/spelling-upgrade-check
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
@@ -38,16 +41,56 @@ steps:
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true
-    - ${{ if ne('', parameters.ScriptToValidateUpgrade) }}:
-      - pwsh: |
-          $changedFiles = ./eng/common/scripts/get-changedfiles.ps1
 
-          if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
-            Write-Host "No changes to cspell package-lock.json detected."
-            exit 0
-          }
+    # If the repo has a spell-check-public-api.ps1 script and there is a change
+    # to the cspell package-lock.json, verify the upgrade.
+    - pwsh: |
+        $publicApiCheckExists = Test-Path 'eng/scripts/spell-check-public-api.ps1'
+        if (!$publicApiCheckExists) {
+          Write-Host "Public API spell check script not found. Skipping upgrade checks."
+        }
+        Write-Host "Changed Files:"
+        # TODO: Use a common script that lists changed files
+        git diff --name-only $(System.PullRequest.TargetBranch) | Tee-Object -Variable changedFiles
 
-          Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
-          & '${{ parameters.ScriptToValidateUpgrade }}'
-        displayName: Verify cspell upgrade
-        condition: and(succeeded(), ne('true', variables['Skip.SpellCheck']))
+        if ($changedFiles -contains 'eng/common/spelling/package-lock.json') {
+          Write-Host "Detected change to cspell package-lock.json. Setting variables to run cspell upgrade verification."
+          New-Item -ItemType Directory -Path '${{ parameters.ArtifactDirectory }}' -Force | Out-Null
+          Write-Host "##vso[task.setvariable variable=RunCspellUpgradeVerification]true"
+        } else {
+          Write-Host "No changes to cspell package-lock.json detected."
+          Write-Host "##vso[task.setvariable variable=RunCspellUpgradeVerification]false"
+        }
+
+    - checkout: self
+      path: $(Pipeline.Workspace)/public-api-before
+      sparseCheckoutPatterns: eng/** ${{ parameters.PublicApiCheckoutExpression }}
+      condition: and(succeeded(), eq(variables['RunCspellUpgradeVerification'], 'true'))
+
+    - pwsh: |
+        . ./eng/scripts/spell-check-public-api.ps1 `
+          | Tee-Object -FilePath ${{ parameters.ArtifactDirectory }}/spelling-after.txt
+      condition: and(succeeded(), eq(variables['RunCspellUpgradeVerification'], 'true'))
+      displayName: Get public API spelling errors after cspell upgrade
+
+    - pwsh: |
+        . ./eng/scripts/spell-check-public-api.ps1 `
+          | Tee-Object -FilePath ${{ parameters.ArtifactDirectory }}/spelling-before.txt
+      condition: and(succeeded(), eq(variables['RunCspellUpgradeVerification'], 'true'))
+      displayName: Get public API spelling errors before cspell upgrade
+      workingDirectory: $(Pipeline.Workspace)/public-api-before
+
+    # On Linux the diff command exits with a nonzero exit code if there is a
+    # diff. This step will fail if there are differences.
+    - pwsh: |
+        diff --unified `
+          ${{ parameters.ArtifactDirectory }}/spelling-before.txt `
+          ${{ parameters.ArtifactDirectory }}/spelling-after.txt | Tee-Object -FilePath ${{ parameters.ArtifactDirectory }}/spelling-diff.txt
+      condition: and(succeeded(), eq(variables['RunCspellUpgradeVerification'], 'true'))
+      displayName: Compare public API spelling errors before and after cspell upgrade
+
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactName: cspell-upgrade-check
+        ArtifactPath: ${{ parameters.ArtifactDirectory }}
+        CustomCondition: and(succeededOrFailed(), eq(variables['RunCspellUpgradeVerification'], 'true'))
