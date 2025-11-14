@@ -58,11 +58,6 @@ namespace Azure.Generator.Providers
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
 
-        protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
-
-        protected override string BuildName()
-            => $"{Client.Type.Name}{_operation.Name.ToIdentifierName()}{(IsAsync ? "Async" : "")}CollectionResult{(_isProtocol ? "" : "OfT")}";
-
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
