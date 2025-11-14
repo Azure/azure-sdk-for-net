@@ -30,6 +30,9 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string Gpt41Value = "gpt-4.1";
         private const string Gpt41MiniValue = "gpt-4.1-mini";
         private const string Gpt41NanoValue = "gpt-4.1-nano";
+        private const string Gpt5Value = "gpt-5";
+        private const string Gpt5MiniValue = "gpt-5-mini";
+        private const string Gpt5NanoValue = "gpt-5-nano";
 
         /// <summary> text-embedding-ada-002. </summary>
         public static AzureOpenAIModelName TextEmbeddingAda002 { get; } = new AzureOpenAIModelName(TextEmbeddingAda002Value);
@@ -47,6 +50,12 @@ namespace Azure.Search.Documents.Indexes.Models
         public static AzureOpenAIModelName Gpt41Mini { get; } = new AzureOpenAIModelName(Gpt41MiniValue);
         /// <summary> gpt-4.1-nano. </summary>
         public static AzureOpenAIModelName Gpt41Nano { get; } = new AzureOpenAIModelName(Gpt41NanoValue);
+        /// <summary> gpt-5. </summary>
+        public static AzureOpenAIModelName Gpt5 { get; } = new AzureOpenAIModelName(Gpt5Value);
+        /// <summary> gpt-5-mini. </summary>
+        public static AzureOpenAIModelName Gpt5Mini { get; } = new AzureOpenAIModelName(Gpt5MiniValue);
+        /// <summary> gpt-5-nano. </summary>
+        public static AzureOpenAIModelName Gpt5Nano { get; } = new AzureOpenAIModelName(Gpt5NanoValue);
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
         public static bool operator ==(AzureOpenAIModelName left, AzureOpenAIModelName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are not the same. </summary>
