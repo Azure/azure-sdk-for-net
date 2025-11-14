@@ -48,21 +48,15 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Async
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-        ModelReaderWriterOptions options = new("W");
-        BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
+        #region Snippet:Sample_CreateConversation_Async
+        ProjectConversation conversation
+            = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         #endregion
 
-        #region Snippet:Sample_GetResponse_Async
+        #region Snippet:Sample_CreateSimpleResponse_Async
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-        ResponseCreationOptions responseOptions = new()
-        {
-            Agent = agentVersion,
-            AgentConversationId = conversation,
-        };
+        OpenAIResponseClient responseClient
+            = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 
@@ -107,15 +101,15 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Sync
-        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
-        ModelReaderWriterOptions options = new("W");
-        BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
+        #region Snippet:Sample_CreateConversation_Sync
+        ProjectConversation conversation
+            = projectClient.OpenAI.Conversations.CreateProjectConversation();
         #endregion
 
-        #region Snippet:Sample_GetResponse_Sync
+        #region Snippet:Sample_CreateSimpleResponse_Sync
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+        OpenAIResponseClient responseClient
+            = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
         OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 

@@ -54,40 +54,34 @@ await foreach (AgentVersion oneAgentVersion in agentVersions)
 }
 ```
 
-4. To communicate with the agent, we will need to create a conversation.
+4. To automatically store history, we can optionally create a conversation to use with the agent:
 
 Synchronous sample:
-```C# Snippet:Sample_CreateCoversation_Sync
-ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
-ModelReaderWriterOptions options = new("W");
-BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
+```C# Snippet:Sample_CreateConversation_Sync
+ProjectConversation conversation
+    = projectClient.OpenAI.Conversations.CreateProjectConversation();
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateCoversation_Async
-ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-ModelReaderWriterOptions options = new("W");
-BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
+```C# Snippet:Sample_CreateConversation_Async
+ProjectConversation conversation
+    = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 ```
 
 5. Ask question for an agent.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResponse_Sync
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+```C# Snippet:Sample_CreateSimpleResponse_Sync
+OpenAIResponseClient responseClient
+    = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
 OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResponse_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-ResponseCreationOptions responseOptions = new()
-{
-    Agent = agentVersion,
-    AgentConversationId = conversation,
-};
+```C# Snippet:Sample_CreateSimpleResponse_Async
+OpenAIResponseClient responseClient
+    = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
 OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```

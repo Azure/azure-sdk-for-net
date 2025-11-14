@@ -1,5 +1,11 @@
 # Release History
 
+## 1.2.0-beta.2 (2025-11-14)
+
+### Bugs Fixed
+
+- Addressed an issue with memory store creation failing when not providing `metadata`
+
 ## 1.2.0-beta.1 (2025-11-14)
 
 ### Features Added
