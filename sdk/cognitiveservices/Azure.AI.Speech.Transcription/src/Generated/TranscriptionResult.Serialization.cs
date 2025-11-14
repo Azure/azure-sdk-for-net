@@ -40,7 +40,7 @@ namespace Azure.AI.Speech.Transcription
             writer.WriteStartArray();
             foreach (var item in CombinedPhrases)
             {
-                writer.WriteObjectValue<ChannelCombinedPhrases>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("phrases"u8);

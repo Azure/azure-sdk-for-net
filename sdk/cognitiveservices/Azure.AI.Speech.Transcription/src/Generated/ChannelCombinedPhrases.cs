@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Speech.Transcription
 {
     /// <summary> The full transcript per channel. </summary>
-    internal partial class ChannelCombinedPhrases
+    public partial class ChannelCombinedPhrases
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

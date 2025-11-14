@@ -63,5 +63,14 @@ namespace Azure.AI.Speech.Transcription
 
             return new EnhancedModeProperties(enabled, task, targetLanguage, prompt?.ToList(), serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Transcription.ChannelCombinedPhrases"/>. </summary>
+        /// <param name="channel"> The 0-based channel index. Only present if channel separation is enabled. </param>
+        /// <param name="text"> The complete transcribed text for the channel. </param>
+        /// <returns> A new <see cref="Transcription.ChannelCombinedPhrases"/> instance for mocking. </returns>
+        public static ChannelCombinedPhrases ChannelCombinedPhrases(int? channel = null, string text = null)
+        {
+            return new ChannelCombinedPhrases(channel, text, serializedAdditionalRawData: null);
+        }
     }
 }

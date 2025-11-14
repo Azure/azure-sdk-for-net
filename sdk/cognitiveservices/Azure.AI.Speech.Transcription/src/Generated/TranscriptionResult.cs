@@ -78,5 +78,7 @@ namespace Azure.AI.Speech.Transcription
         internal TranscriptionResult()
         {
         }
+        /// <summary> The full transcript for each channel. </summary>
+        public IReadOnlyList<ChannelCombinedPhrases> CombinedPhrases { get; }
     }
 }

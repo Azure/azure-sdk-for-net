@@ -48,8 +48,6 @@ public partial class TranscriptionResult
     /// <summary> The duration of the audio in milliseconds. </summary>
     internal int DurationMilliseconds { get; }
 
-    /// <summary> The full transcript for each channel. </summary>
-    internal IReadOnlyList<ChannelCombinedPhrases> CombinedPhrases { get; }
     /// <summary> The transcription results segmented into phrases. </summary>
     internal IReadOnlyList<TranscribedPhrase> Phrases { get; }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Speech.Transcription
 {
-    internal partial class ChannelCombinedPhrases : IUtf8JsonSerializable, IJsonModel<ChannelCombinedPhrases>
+    public partial class ChannelCombinedPhrases : IUtf8JsonSerializable, IJsonModel<ChannelCombinedPhrases>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChannelCombinedPhrases>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
