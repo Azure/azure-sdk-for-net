@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.5.0 (2025-11-14)
 
 ### Features Added
 
@@ -15,12 +15,6 @@
 * Update OpenTelemetry dependencies
   ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
   - OpenTelemetry 1.14.0
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.5.0-beta.1 (2025-10-16)
 
