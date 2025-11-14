@@ -672,6 +672,7 @@ namespace Azure.AI.Projects.OpenAI
         public void CopyTo(System.Collections.Generic.KeyValuePair<string, System.BinaryData>[] array, int arrayIndex) { }
         public bool Remove(System.Collections.Generic.KeyValuePair<string, System.BinaryData> item) { throw null; }
         public bool Remove(string key) { throw null; }
+        public void SetData(System.BinaryData dictionaryJsonBytes) { }
         System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, System.BinaryData>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String,System.BinaryData>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> key, out System.BinaryData value) { throw null; }

@@ -156,5 +156,14 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
         options.StructuredInputs.Add("boolValueKey", true);
         Assert.That(bool.TryParse(options.StructuredInputs["boolValueKey"].ToString(), out bool retrievedBoolValue), Is.True);
         Assert.That(retrievedBoolValue, Is.True);
+
+        options.StructuredInputs.SetData(BinaryData.FromString("""
+            {
+              "direct_value_1": "foo",
+              "direct_value_2": 42
+            }
+            """));
+        Assert.That(options.StructuredInputs.Keys, Has.Count.EqualTo(2));
+        Assert.That(options.StructuredInputs["direct_value_2"].ToString(), Is.EqualTo("42"));
     }
 }

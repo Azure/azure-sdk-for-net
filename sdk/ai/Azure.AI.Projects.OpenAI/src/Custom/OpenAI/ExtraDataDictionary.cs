@@ -114,6 +114,11 @@ public partial class ExtraDataDictionary : IDictionary<string, BinaryData>
     public bool TryGetValue(string key, out BinaryData value)
         => TryGetValue(Encoding.UTF8.GetBytes(key), out value);
 
+    public void SetData(BinaryData dictionaryJsonBytes)
+    {
+        _parentOptions.Patch.Set(GetPathBytes(), dictionaryJsonBytes);
+    }
+
     private Dictionary<string, BinaryData> GetFullParsedDictionary()
     {
         ReadOnlySpan<byte> rootPathBytes = GetPathBytes();
