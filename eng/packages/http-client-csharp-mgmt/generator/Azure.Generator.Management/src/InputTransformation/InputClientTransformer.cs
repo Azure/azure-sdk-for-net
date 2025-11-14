@@ -15,26 +15,25 @@ namespace Azure.Generator.Management.InputTransformation
             {
                 var operation = method.Operation;
                 SetSubscriptionIdToMethodParameter(operation);
+                RemoveSubscriptionIdFromClient(client);
             }
 
             return client;
         }
 
+        // Remove subscriptionId from client parameter, this is needed due to MTG.
+        // Otherwise, subscriptionId will be added to client constructor
         private static void RemoveSubscriptionIdFromClient(InputClient client)
         {
             var updatedParameters = new List<InputParameter>();
             foreach (var parameter in client.Parameters)
             {
-                if (parameter is InputPathParameter pathParameter && pathParameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Remove subscriptionId from client parameter
-                }
-                else
+                if (!parameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
                     updatedParameters.Add(parameter);
                 }
             }
-            client.Parameters(updatedParameters);
+            client.Update(parameters: updatedParameters);
         }
 
         private static void SetSubscriptionIdToMethodParameter(InputOperation operation)

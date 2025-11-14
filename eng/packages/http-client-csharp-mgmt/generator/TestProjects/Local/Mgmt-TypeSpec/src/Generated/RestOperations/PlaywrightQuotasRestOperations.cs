@@ -16,7 +16,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-        private readonly Guid _subscriptionId;
 
         /// <summary> Initializes a new instance of PlaywrightQuotas for mocking. </summary>
         protected PlaywrightQuotas()
@@ -28,14 +27,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        /// <param name="subscriptionId"></param>
-        internal PlaywrightQuotas(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, Guid subscriptionId)
+        internal PlaywrightQuotas(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _subscriptionId = subscriptionId;
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -49,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/playwrightQuotas/", false);
@@ -68,7 +65,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/playwrightQuotas", false);
@@ -98,7 +95,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/playwrightQuotas/", false);
