@@ -15,8 +15,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Install the package](#install-the-package)
-- [Key concepts](#key-concepts)
   - [Authenticate the client](#authenticate-the-client)
+- [Key concepts](#key-concepts)
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
@@ -53,8 +53,6 @@ dotnet add package Azure.AI.Projects.OpenAI --prerelease
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
-## Key concepts
-
 ### Authenticate the client
 
 To be able to create, update and delete Agent, please install `Azure.AI.Projects` and use `AIProjectClient`. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
@@ -82,6 +80,8 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
 ```
+
+## Key concepts
 
 ### Service API versions
 
