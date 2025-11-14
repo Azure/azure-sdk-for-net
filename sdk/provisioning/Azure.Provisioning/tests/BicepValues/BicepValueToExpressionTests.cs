@@ -816,6 +816,48 @@ namespace Azure.Provisioning.Tests.BicepValues
             TestHelpers.AssertExpression("'Hyphenated: ${test.dictionary[\'my-key\']}, Dotted: ${test.dictionary[\'key.with.dots\']}, Spaced: ${test.dictionary[\'key with spaces\']}'", interpolatedWithExpressions);
         }
 
+        [Test]
+        public void ValidatePropertyReferenceFromAnotherResource()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = "skuValue";
+            var r2 = new TestResource("r2")
+            {
+                WithValue = r1.WithValue
+            };
+
+            // r2.WithValue should have the same value as r1.WithValue
+            TestHelpers.AssertExpression("'skuValue'", r2.WithValue);
+            // The Bicep expression should reference r2's property, not r1's
+            TestHelpers.AssertExpression("r2.withValue", r2.WithValue.ToBicepExpression());
+
+            // r1.WithValue's Bicep expression should reference r1
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateCollectionPropertyReferenceFromAnotherResource()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = "itemFromR1";
+            var r2 = new TestResource("r2");
+            r2.List.Add(r1.WithValue); // Add r1's property to r2's list
+
+            // The value should be the literal value
+            TestHelpers.AssertExpression("""
+            [
+              'itemFromR1'
+            ]
+            """, r2.List);
+            // The Bicep expression should reference r2's list
+            TestHelpers.AssertExpression("r2.list", r2.List.ToBicepExpression());
+
+            // The item in the list should reference r2's list index in Bicep expression
+            TestHelpers.AssertExpression("r2.list[0]", r2.List[0].ToBicepExpression());
+            // The original property should reference r1
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
         private class TestResource : ProvisionableResource
         {
             public TestResource(string identifier) : base(identifier, "Microsoft.Tests/tests", "2025-11-09")
