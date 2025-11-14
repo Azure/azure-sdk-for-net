@@ -1,77 +1,81 @@
-# Azure Cognitive Language Services Question Answering (Inference) client library for .NET
+# Azure Cognitive Language Services Question Answering Authoring client library for .NET
 
-The Question Answering service lets you build a conversational question–answering layer over your data. It can extract questions and answers from semi‑structured content (FAQs, manuals, documents) and improve relevance over time.
+The Question Answering Authoring client library lets you manage Question Answering projects: create and configure projects, add and update knowledge sources, add QnA pairs, deploy a project, and delete it. Use this library to automate lifecycle management while using the runtime (Inference) library to ask questions.
 
-[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference][questionanswering_refdocs] | [Samples][questionanswering_samples] | [Migration guide][migration_guide] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs]
+[Source code][authoring_src] | [Package (NuGet)][authoring_package] | [API reference][authoring_refdocs] | [Samples][authoring_samples] | [Product documentation][questionanswering_docs] | [REST API docs][authoring_rest_docs]
 
-> This package provides **runtime inference (querying)** only.  
-> To create/update/deploy projects (authoring operations), use the Authoring package `Azure.AI.Language.QuestionAnswering` (namespace: `Azure.AI.Language.QuestionAnswering.Authoring`).
+> If you only need to query deployed projects, install the runtime package (`Azure.AI.Language.QuestionAnswering.Inference`).
+>
+> If you need to create/update/deploy projects (authoring), install `Azure.AI.Language.QuestionAnswering` (it already brings inference transitively via type forwarding).
 
 ## Getting started
 
-Service API version targeted: `2025-05-15-preview`  
-Package version: `1.0.0-beta.1` (preview).
+Service API version targeted: `2025-05-15-preview`.
 
 ### Install the package
 
+Authoring (includes inference through type forwarding/dependency):
+```dotnetcli
+dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+```
+
+Inference only (slimmer surface if you do not perform authoring operations):
 ```dotnetcli
 dotnet add package Azure.AI.Language.QuestionAnswering.Inference --prerelease
 ```
 
 ### Prerequisites
 
-* An [Azure subscription][azure_subscription]
-* A Cognitive Services Language resource with a deployed Question Answering project (created via Authoring SDK or Language Studio)
+* An Azure subscription
+* A Cognitive Services Language resource with Question Answering enabled
 * Endpoint (e.g. `https://<resource>.cognitiveservices.azure.com/`)
-* API key or AAD credential (Reader role)
-
-Language Studio remains the preferred experience for creating and managing projects; the Authoring SDK enables CI/CD automation.
+* API key OR an Azure AD identity (role: “Cognitive Services Language Contributor” or appropriate RBAC)
 
 ### Authenticate the client
 
-You need an endpoint plus either an API key or AAD credential.
+You can use an API key or Azure Active Directory (AAD) credentials (including Managed Identity).
 
-#### API key
+#### Namespaces
 
-```C# Snippet:QuestionAnsweringClient_Namespaces
-using Azure.Core;
-using Azure.AI.Language.QuestionAnswering;
+Add the authoring namespace:
+
+```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
+using Azure.AI.Language.QuestionAnswering.Authoring;
 ```
 
-```C# Snippet:QuestionAnsweringClient_Create
+#### Create a QuestionAnsweringAuthoringClient (API key)
+
+```C# Snippet:QuestionAnsweringAuthoringClient_Create
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
-#### Azure Active Directory (AAD)
+#### Create a QuestionAnsweringAuthoringClient (Managed Identity / DefaultAzureCredential)
 
-```C# Snippet:QuestionAnswering_Identity_Namespace
-using Azure.Identity;
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateWithDefaultCredential
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+TokenCredential credential = new DefaultAzureCredential();
+
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential, new QuestionAnsweringAuthoringClientOptions());
 ```
 
-```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-DefaultAzureCredential credential = new DefaultAzureCredential();
-
-QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
-```
-
-> Regional endpoints do not support AAD directly; configure a [custom domain][custom_domain] to use AAD authentication.
+> Regional endpoints may require a custom domain configuration to use AAD / Managed Identity. See official authentication docs for details.
 
 ## Key concepts
 
-- `QuestionAnsweringClient`: asks questions against a deployed project (knowledge base).
-- `QuestionAnsweringProject`: identifies the project and deployment.
-- `AnswersOptions`: optional tuning (top answers, confidence threshold, follow‑up context).
-- `AnswersResult` / `KnowledgeBaseAnswer`: structured answers (confidence, source, answer text, optional short answer).
-- Follow‑up (chit‑chat) uses `KnowledgeBaseAnswerContext(previousAnswer.QnaId.Value)` for dialog continuity.
-- This package does **not** include project creation, source ingestion, QnA editing, deployment operations.
+| Concept | Description |
+|--------|-------------|
+| Project | A container for language configuration, knowledge sources, QnA pairs, and deployments. |
+| Deployment | A named, queryable snapshot of a project used by runtime clients. |
+| Knowledge Source | A URL / file / structured or unstructured content ingested into the project. |
+| QnA Pair | A question with one or more answers that can be updated incrementally. |
+| Long‑running Operations | Creating deployments, updating sources, updating QnAs, and export operations return `Operation<T>`. |
 
 ### Thread safety
 
-Client instances are thread‑safe; reuse them across threads and requests.
+Client instances are thread-safe and intended to be reused.
 
 ### Additional concepts
 
@@ -87,64 +91,103 @@ Client instances are thread‑safe; reuse them across threads and requests.
 
 ## Examples
 
-### Ask a question
+### Create a project
 
-```C# Snippet:QuestionAnsweringClient_GetAnswers
-string projectName = "{ProjectName}";
-string deploymentName = "{DeploymentName}";
-QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
-Response<AnswersResult> response = client.GetAnswers("How long should my Surface battery last?", project);
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
+// Set project name and request content parameters
+string newProjectName = "{ProjectName}";
+RequestContent creationRequestContent = RequestContent.Create(
+    new {
+        description = "This is the description for a test project",
+        language = "en",
+        multilingualResource = false,
+        settings = new {
+            defaultAnswer = "No answer found for your question."
+            }
+        }
+    );
 
-foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
+Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
+
+// Projects can be retrieved as follows
+Pageable<QuestionAnsweringProject> projects = client.GetProjects();
+
+Console.WriteLine("Projects: ");
+foreach (QuestionAnsweringProject project in projects)
 {
-    Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
-    Console.WriteLine($"Source: {answer.Source}");
-    Console.WriteLine();
+    Console.WriteLine(project);
 }
 ```
 
-### Ask a follow‑up question (chit‑chat)
+### Deploy a project
 
-```C# Snippet:QuestionAnsweringClient_Chat
-string projectName = "{ProjectName}";
-string deploymentName = "{DeploymentName}";
-// Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
-QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
-AnswersOptions options = new AnswersOptions
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
+// Set deployment name and start operation
+string newDeploymentName = "{DeploymentName}";
+
+Operation deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
+
+// Deployments can be retrieved as follows
+Pageable<ProjectDeployment> deployments = client.GetDeployments(newProjectName);
+Console.WriteLine("Deployments: ");
+foreach (ProjectDeployment deployment in deployments)
 {
-    AnswerContext = new KnowledgeBaseAnswerContext(previousAnswer.QnaId.Value)
-};
-
-Response<AnswersResult> response = client.GetAnswers("How long should charging take?", project, options);
-
-foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
-{
-    Console.WriteLine($"({answer.Confidence:P2}) {answer.Answer}");
-    Console.WriteLine($"Source: {answer.Source}");
-    Console.WriteLine();
+    Console.WriteLine(deployment);
 }
 ```
+
+### Add (or update) knowledge sources
+
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
+// Set request content parameters for updating our new project's sources
+string sourceUri = "{KnowledgeSourceUri}";
+RequestContent updateSourcesRequestContent = RequestContent.Create(
+    new[] {
+        new {
+                op = "add",
+                value = new
+                {
+                    displayName = "MicrosoftFAQ",
+                    source = sourceUri,
+                    sourceUri = sourceUri,
+                    sourceKind = "url",
+                    contentStructureKind = "unstructured",
+                    refresh = false
+                }
+            }
+    });
+
+Operation updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
+
+// Knowledge Sources can be retrieved as follows
+BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
+
+Console.WriteLine($"Sources: {sources}");
+```
+
+> Additional operations (update QnAs, export, delete) follow similar patterns using `Operation<T>` or direct `Response` objects.
+
+## Type forwarding & migration
+
+As of the 2.0.0 preview split:
+- The main package (`Azure.AI.Language.QuestionAnswering`) focuses on authoring but continues to expose inference types via type forwarding.
+- The runtime implementation is provided by `Azure.AI.Language.QuestionAnswering.Inference`.
+- Existing source code using inference or authoring APIs should compile without change after upgrading, because public inference types remain in the reference surface (source + binary compatibility).
+- If you only need runtime querying, you can depend solely on the inference package for a reduced dependency surface.
+- Future previews may de-emphasize inference APIs in the main package—follow the CHANGELOG for updates.
+
+No code changes are required for upgrading typical projects; standard `dotnet add package ... --prerelease` is sufficient.
 
 ## Troubleshooting
 
-Common HTTP status codes map directly from service responses (e.g. 400 invalid project/deployment, 404 not found).
+| Issue | Possible Cause | Mitigation |
+|-------|----------------|-----------|
+| 401/403 | Invalid key or missing AAD role | Regenerate key or assign proper role |
+| 404 | Project or deployment name incorrect | Verify spelling and casing |
+| 409 | Concurrent modification conflict | Introduce retry / sequence operations |
+| Operation timeout | Long-running network or service delay | Poll with backoff; inspect diagnostics / activity IDs |
 
-Bad request example:
-
-```C# Snippet:QuestionAnsweringClient_BadRequest
-try
-{
-    QuestionAnsweringProject project = new QuestionAnsweringProject("invalid-knowledgebase", "test");
-    Response<AnswersResult> response = client.GetAnswers("Does this knowledge base exist?", project);
-}
-catch (RequestFailedException ex)
-{
-    Console.WriteLine(ex.ToString());
-}
-```
-
-Enable console diagnostics:
+Enable diagnostics logging:
 
 ```csharp
 using Azure.Core.Diagnostics;
@@ -153,23 +196,18 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 ## Next steps
 
-* Explore [samples][questionanswering_samples].
-* Use Authoring SDK or Language Studio to evolve your knowledge base.
-* Review the [migration guide][migration_guide] (may not yet reflect the inference package split).
+* Export a project and store the snapshot in version control.
+* Automate deployment after source updates.
+* Integrate with CI/CD to promote projects across environments.
 
 ## Contributing
 
-See [CONTRIBUTING.md][contributing]. This project follows the Microsoft Open Source Code of Conduct.
+See the root repository contributing guide for how to build, test, and submit changes.
 
 <!-- LINKS -->
-[questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering.Inference/
-[questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
-[questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
-[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
-[questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
-[questionanswering_docs_chat]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/chit-chat
-[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering
-[azure_subscription]: https://azure.microsoft.com/free/dotnet/
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
-[custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[authoring_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/src/
+[authoring_package]: https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering
+[authoring_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering.Authoring
+[authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/samples/
+[questionanswering_docs]: https://learn.microsoft.com/azure/cognitive-services/
+[authoring_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering-projects
