@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 throw new FormatException($"The model {nameof(MonitoredSubscription)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
+            writer.WritePropertyName("subscriptionId"u8);
+            writer.WriteStringValue(SubscriptionId);
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -101,10 +98,6 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }

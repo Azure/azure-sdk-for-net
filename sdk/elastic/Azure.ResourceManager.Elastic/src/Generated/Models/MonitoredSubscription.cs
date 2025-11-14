@@ -47,8 +47,13 @@ namespace Azure.ResourceManager.Elastic.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>
-        public MonitoredSubscription()
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public MonitoredSubscription(ResourceIdentifier subscriptionId)
         {
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+
+            SubscriptionId = subscriptionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>

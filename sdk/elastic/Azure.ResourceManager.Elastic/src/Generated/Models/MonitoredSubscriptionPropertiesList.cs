@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> The MonitoredSubscriptionPropertiesList. </summary>
+    /// <summary> Paged collection of MonitoredSubscriptionProperties items. </summary>
     internal partial class MonitoredSubscriptionPropertiesList
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Elastic.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
-        internal MonitoredSubscriptionPropertiesList()
+        /// <param name="value"> The MonitoredSubscriptionProperties items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MonitoredSubscriptionPropertiesList(IEnumerable<MonitoredSubscriptionPropertyData> value)
         {
-            Value = new ChangeTrackingList<MonitoredSubscriptionPropertyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The MonitoredSubscriptionProperties items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<MonitoredSubscriptionPropertyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<MonitoredSubscriptionPropertyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/> for deserialization. </summary>
+        internal MonitoredSubscriptionPropertiesList()
+        {
+        }
+
+        /// <summary> The MonitoredSubscriptionProperties items on this page. </summary>
         public IReadOnlyList<MonitoredSubscriptionPropertyData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

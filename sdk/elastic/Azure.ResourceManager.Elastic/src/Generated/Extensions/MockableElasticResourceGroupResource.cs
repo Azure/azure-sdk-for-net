@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

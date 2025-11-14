@@ -77,5 +77,49 @@ namespace Azure.ResourceManager.Elastic
             var response = Update(WaitUntil.Completed, patch, cancellationToken);
             return Response.FromValue(new ElasticMonitorResource(Client, response.Value.Data), response.GetRawResponse());
         }
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAllTrafficFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllTrafficFilters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetAllTrafficFilterAsync(CancellationToken cancellationToken = default)
+            => await GetAllTrafficFiltersAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/listAllTrafficFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllTrafficFilters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ElasticTrafficFilterListResult> GetAllTrafficFilter(CancellationToken cancellationToken = default)
+            => GetAllTrafficFilters(cancellationToken);
     }
 }

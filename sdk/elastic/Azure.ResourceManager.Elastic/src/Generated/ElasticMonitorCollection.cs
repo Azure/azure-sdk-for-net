@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Elastic
     /// </summary>
     public partial class ElasticMonitorCollection : ArmCollection, IEnumerable<ElasticMonitorResource>, IAsyncEnumerable<ElasticMonitorResource>
     {
-        private readonly ClientDiagnostics _elasticMonitorMonitorsClientDiagnostics;
-        private readonly MonitorsRestOperations _elasticMonitorMonitorsRestClient;
+        private readonly ClientDiagnostics _elasticMonitorElasticMonitorResourcesClientDiagnostics;
+        private readonly ElasticMonitorResourcesRestOperations _elasticMonitorElasticMonitorResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ElasticMonitorCollection"/> class for mocking. </summary>
         protected ElasticMonitorCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ElasticMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticMonitorMonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ElasticMonitorResource.ResourceType, out string elasticMonitorMonitorsApiVersion);
-            _elasticMonitorMonitorsRestClient = new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorMonitorsApiVersion);
+            _elasticMonitorElasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ElasticMonitorResource.ResourceType, out string elasticMonitorElasticMonitorResourcesApiVersion);
+            _elasticMonitorElasticMonitorResourcesRestClient = new ElasticMonitorResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorElasticMonitorResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Create</description>
+        /// <description>ElasticMonitorResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="monitorName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> Elastic monitor resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Elastic
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.CreateOrUpdate");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorMonitorsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorMonitorsClientDiagnostics, Pipeline, _elasticMonitorMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _elasticMonitorElasticMonitorResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Create</description>
+        /// <description>ElasticMonitorResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="monitorName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> Elastic monitor resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Elastic
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.CreateOrUpdate");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticMonitorMonitorsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorMonitorsClientDiagnostics, Pipeline, _elasticMonitorMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _elasticMonitorElasticMonitorResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, _elasticMonitorElasticMonitorResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.Get");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.Get");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.Get");
             scope.Start();
             try
             {
-                var response = _elasticMonitorMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken);
+                var response = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_ListByResourceGroup</description>
+        /// <description>ElasticMonitorResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An async collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), _elasticMonitorMonitorsClientDiagnostics, Pipeline, "ElasticMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_ListByResourceGroup</description>
+        /// <description>ElasticMonitorResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), _elasticMonitorMonitorsClientDiagnostics, Pipeline, "ElasticMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorElasticMonitorResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorElasticMonitorResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), _elasticMonitorElasticMonitorResourcesClientDiagnostics, Pipeline, "ElasticMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.Exists");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.Exists");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.Exists");
             scope.Start();
             try
             {
-                var response = _elasticMonitorMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
+                var response = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -415,11 +415,11 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.GetIfExists");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _elasticMonitorMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _elasticMonitorElasticMonitorResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ElasticMonitorResource>(response.GetRawResponse());
                 return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <description>ElasticMonitorResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.Elastic
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorCollection.GetIfExists");
+            using var scope = _elasticMonitorElasticMonitorResourcesClientDiagnostics.CreateScope("ElasticMonitorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _elasticMonitorMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
+                var response = _elasticMonitorElasticMonitorResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ElasticMonitorResource>(response.GetRawResponse());
                 return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
