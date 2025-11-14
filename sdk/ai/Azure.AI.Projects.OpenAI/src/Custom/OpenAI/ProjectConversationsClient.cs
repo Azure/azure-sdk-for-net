@@ -163,7 +163,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
             dataItemDeserializer: AgentResponseItem.DeserializeAgentResponseItem,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
+            new InternalOpenAICollectionResultOptions(limit, order, after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
 
@@ -190,7 +190,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
             dataItemDeserializer: AgentResponseItem.DeserializeAgentResponseItem,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
+            new InternalOpenAICollectionResultOptions(limit, order, after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
 
