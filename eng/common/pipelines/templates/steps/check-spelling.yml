@@ -51,6 +51,7 @@ steps:
           $publicApiCheckExists = Test-Path 'eng/scripts/spell-check-public-api.ps1'
           if (!$publicApiCheckExists) {
             Write-Host "Public API spell check script not found. Skipping upgrade checks."
+            exit 0
           }
           Write-Host "Changed Files:"
           ./eng/common/scripts/Generate-PR-Diff.ps1 `
