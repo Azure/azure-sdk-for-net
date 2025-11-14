@@ -7,15 +7,14 @@ In this example we will demonstrate how to get a response in streaming scenarios
 ```C# Snippet:Sample_CreateAgentClient_ResponseStreaming
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-
-ProjectOpenAIClient client = new(projectEndpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create a `ProjectOpenAIResponseClient`, which will be used to create stream.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponseStreaming
-ProjectResponsesClient responsesClient = client.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 ```
 
 3. Stream the results; raise the error if the request was not successful.

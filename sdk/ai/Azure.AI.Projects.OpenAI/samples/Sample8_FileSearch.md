@@ -88,50 +88,28 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Sync
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIResponse response = responseClient.CreateResponse(
-    [request],
-    responseOptions);
+OpenAIResponse response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [request],
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
 ```
 
-4. Wait for the response and throw an exception if the response contains the error.
+4. Create the response and throw an exception if the response contains the error.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForResponse_FileSearch_Sync
-List<ResponseItem> updateItems = [request];
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responseClient.GetResponse(responseId: response.Id);
-}
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_WaitForResponse_FileSearch_Async
-List<ResponseItem> updateItems = [request];
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId: response.Id);
-}
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```

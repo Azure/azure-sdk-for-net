@@ -115,6 +115,42 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestResonses()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        OpenAIResponse response = await client.CreateResponseAsync("What is steam reactor?");
+        response = await WaitForRun(client, response);
+        Assert.That(response.GetOutputText(), Is.Not.Null.Or.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestResonsesStreaming()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        bool isCreated = false;
+        bool textReceived = false;
+        await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
+        {
+            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+            {
+                isCreated = true;
+            }
+            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
+            {
+                textReceived |= !string.IsNullOrEmpty(textDoneUpdate.Text);
+            }
+            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
+            {
+                Assert.Fail($"The stream has failed with the error: {errorUpdate.Message}");
+            }
+        }
+        Assert.That(isCreated, Is.True, "The run was not created.");
+        Assert.That(textReceived, Is.True, "The text response was not received.");
+    }
+
+    [RecordedTest]
     public async Task TestConversationCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();

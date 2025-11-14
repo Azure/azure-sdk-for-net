@@ -106,20 +106,17 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Agent = agentVersion,
             AgentConversationId = conversation.Id,
         };
-
-        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync([request], responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync("Can you give me the documented codes for 'banana' and 'orange'?", responseOptions))
         {
             ParseResponse(streamResponse);
         }
         #endregion
         #region Snippet:Sample_FollowUp_FileSearch_Streaming_Async
         Console.WriteLine("Demonstrating follow-up query with streaming...");
-        request = ResponseItem.CreateUserMessageItem("What was my previous question about?");
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync([request], responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync("What was my previous question about?", responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -179,20 +176,17 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
             Agent = agentVersion,
             AgentConversationId = conversation.Id,
         };
-
-        ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
-        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming([request], responseOptions))
+        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming("Can you give me the documented codes for 'banana' and 'orange'?", responseOptions))
         {
             ParseResponse(streamResponse);
         }
         #endregion
         #region Snippet:Sample_FollowUp_FileSearch_Streaming_Sync
         Console.WriteLine("Demonstrating follow-up query with streaming...");
-        request = ResponseItem.CreateUserMessageItem("What was my previous question about?");
-        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming([request], responseOptions))
+        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming("What was my previous question about?", responseOptions))
         {
             ParseResponse(streamResponse);
         }

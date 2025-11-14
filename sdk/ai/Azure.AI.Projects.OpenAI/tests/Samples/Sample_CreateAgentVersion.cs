@@ -13,13 +13,13 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task CreateAgentVersionAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -68,11 +68,6 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_WriteOutput_Async
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId:  response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async
@@ -85,6 +80,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
     [SyncOnly]
     public void CreateAgentVersion()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -125,12 +121,6 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync
