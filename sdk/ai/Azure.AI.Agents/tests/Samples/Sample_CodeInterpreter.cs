@@ -20,7 +20,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
     public async Task CodeInterpreterAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClient_CodeInterpreter
+        #region Snippet:Sample_CreateAgentClient_CodeInterpreter_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -31,7 +31,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
-        #region Snippet:Sample_CreateAgent_CodeInterpreter_Async
+        #region Snippet:Sample_CreateAgent_CodeInterpreter_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a personal math tutor. When asked a math question, write and run code using the python tool to answer the question.",
@@ -47,7 +47,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_CodeInterpreter_Async
+        #region Snippet:Sample_CreateResponse_CodeInterpreter_Async_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -58,7 +58,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
             responseOptions);
         #endregion
 
-        #region Snippet:Sample_WaitForResponse_CodeInterpreter_Async
+        #region Snippet:Sample_WaitForResponse_CodeInterpreter_Async_2
         List<ResponseItem> updateItems = [request];
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
@@ -69,7 +69,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
 
-        #region Snippet:Sample_Cleanup_CodeInterpreter_Async
+        #region Snippet:Sample_Cleanup_CodeInterpreter_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -89,7 +89,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
 
-        #region Snippet:Sample_CreateAgent_CodeInterpreter_Sync
+        #region Snippet:Sample_CreateAgent_CodeInterpreter_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
@@ -107,7 +107,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_CodeInterpreter_Sync
+        #region Snippet:Sample_CreateResponse_CodeInterpreter_Sync_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -118,7 +118,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
             responseOptions);
         #endregion
 
-        #region Snippet:Sample_WaitForResponse_CodeInterpreter_Sync
+        #region Snippet:Sample_WaitForResponse_CodeInterpreter_Sync_2
         List<ResponseItem> updateItems = [request];
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
@@ -129,7 +129,7 @@ public class Sample_CodeInterpreter : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
 
-        #region Snippet:Sample_Cleanup_CodeInterpreter_Sync
+        #region Snippet:Sample_Cleanup_CodeInterpreter_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

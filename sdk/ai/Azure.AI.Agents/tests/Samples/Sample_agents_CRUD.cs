@@ -16,7 +16,7 @@ public class Sample_agents_CRUD : AgentsTestBase
     public async Task AgentCRUDAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClientCRUD
+        #region Snippet:Sample_CreateAgentClientCRUD_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -27,7 +27,7 @@ public class Sample_agents_CRUD : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:Sample_CreateAgentVersionCRUD_Async
+        #region Snippet:Sample_CreateAgentVersionCRUD_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
@@ -42,19 +42,19 @@ public class Sample_agents_CRUD : AgentsTestBase
         Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
 
-        #region Snippet:Sample_GetAgentCRUD_Async
+        #region Snippet:Sample_GetAgentCRUD_Async_2
         AgentRecord result = await client.GetAgentAsync(agentVersion1.Name);
         Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
         #endregion
 
-        #region Snippet:Sample_ListAgentsCRUD_Async
+        #region Snippet:Sample_ListAgentsCRUD_Async_2
         await foreach (AgentRecord agent in client.GetAgentsAsync())
         {
             Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
         }
         #endregion
 
-        #region Snippet:Sample_DeleteAgentCRUD_Async
+        #region Snippet:Sample_DeleteAgentCRUD_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
@@ -76,7 +76,7 @@ public class Sample_agents_CRUD : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        #region Snippet:Sample_CreateAgentVersionCRUD_Sync
+        #region Snippet:Sample_CreateAgentVersionCRUD_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
@@ -91,19 +91,19 @@ public class Sample_agents_CRUD : AgentsTestBase
         Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
 
-        #region Snippet:Sample_GetAgentCRUD_Sync
+        #region Snippet:Sample_GetAgentCRUD_Sync_2
         AgentRecord result = client.GetAgent(agentVersion1.Name);
         Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
         #endregion
 
-        #region Snippet:Sample_ListAgentsCRUD_Sync
+        #region Snippet:Sample_ListAgentsCRUD_Sync_2
         foreach (AgentRecord agent in client.GetAgents())
         {
             Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
         }
         #endregion
 
-        #region Snippet:Sample_DeleteAgentCRUD_Sync
+        #region Snippet:Sample_DeleteAgentCRUD_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
@@ -116,7 +116,7 @@ public class Sample_agents_CRUD : AgentsTestBase
     public void SelectAPIVersion()
     {
         IgnoreSampleMayBe();
-        #region Snippet:SelectAPIVersion
+        #region Snippet:SelectAPIVersion2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

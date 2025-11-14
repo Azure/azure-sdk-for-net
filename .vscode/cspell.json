@@ -220,6 +220,10 @@
         "azureai",
         "bleu",
         "gleu",
+        "includable",
+        "inpaint",
+        "inpainting",
+        "logprobs",
         "ubinary"
       ]
     },

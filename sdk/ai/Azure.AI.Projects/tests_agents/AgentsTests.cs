@@ -785,7 +785,7 @@ public async Task TestToolChoiceWorks()
     }
 
     [RecordedTest]
-    // [TestCase(true)] File upload mecahnism is blocked by the Bug 4806071 (ADO)
+    // [TestCase(true)] File upload mechanism is blocked by the Bug 4806071 (ADO)
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {

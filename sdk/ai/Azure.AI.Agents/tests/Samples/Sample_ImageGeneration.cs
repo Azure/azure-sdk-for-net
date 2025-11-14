@@ -15,7 +15,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Agents.Tests.Samples;
 
-# region Snippet:Sample_CustomHeader_ImageGeneration
+# region Snippet:Sample_CustomHeader_ImageGeneration_2
 internal class HeaderPolicy(string image_deployment) : PipelinePolicy
 {
     private const string image_deployment_header = "x-ms-oai-image-generation-deployment";
@@ -42,7 +42,7 @@ public class Sample_ImageGeneration : AgentsTestBase
     public async Task ImageGenerationAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateClient_ImageGeneration
+        #region Snippet:Sample_CreateClient_ImageGeneration_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -55,7 +55,7 @@ public class Sample_ImageGeneration : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:Sample_CreateAgent_ImageGeneration_Async
+        #region Snippet:Sample_CreateAgent_ImageGeneration_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "Generate images based on user prompts.",
@@ -72,7 +72,7 @@ public class Sample_ImageGeneration : AgentsTestBase
             options: new(agentDefinition));
         #endregion
 
-        #region Snippet:Sample_GetResponse_ImageGeneration_Async
+        #region Snippet:Sample_GetResponse_ImageGeneration_Async_2
         OpenAIClientOptions options = new();
         options.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
         OpenAIClient openAIClient = client.GetOpenAIClient(options: options);
@@ -85,13 +85,13 @@ public class Sample_ImageGeneration : AgentsTestBase
             "Generate parody of Newton with apple.",
             responseOptions);
         #endregion
-        #region Snippet:Sample_WaitForRun_ImageGeneration_Async
+        #region Snippet:Sample_WaitForRun_ImageGeneration_Async_2
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
             await Task.Delay(TimeSpan.FromMilliseconds(500));
             response = await responseClient.GetResponseAsync(responseId:  response.Id);
         }
         #endregion
-        #region Snippet:Sample_SaveImage_ImageGeneration
+        #region Snippet:Sample_SaveImage_ImageGeneration_2
         foreach (ResponseItem item in response.OutputItems)
         {
             if (item is ImageGenerationCallResponseItem imageItem)
@@ -101,7 +101,7 @@ public class Sample_ImageGeneration : AgentsTestBase
             }
         }
         #endregion
-        #region Snippet:Sample_Cleanup_ImageGeneration_Async
+        #region Snippet:Sample_Cleanup_ImageGeneration_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -122,7 +122,7 @@ public class Sample_ImageGeneration : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        #region Snippet:Sample_CreateAgent_ImageGeneration_Sync
+        #region Snippet:Sample_CreateAgent_ImageGeneration_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "Generate images based on user prompts.",
@@ -139,7 +139,7 @@ public class Sample_ImageGeneration : AgentsTestBase
             options: new(agentDefinition));
         #endregion
 
-        #region Snippet:Sample_GetResponse_ImageGeneration_Sync
+        #region Snippet:Sample_GetResponse_ImageGeneration_Sync_2
         OpenAIClientOptions options = new();
         options.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
         OpenAIClient openAIClient = client.GetOpenAIClient(options: options);
@@ -152,7 +152,7 @@ public class Sample_ImageGeneration : AgentsTestBase
             "Generate parody of Newton with apple.",
             responseOptions);
         #endregion
-        #region Snippet:Sample_WaitForRun_ImageGeneration_Sync
+        #region Snippet:Sample_WaitForRun_ImageGeneration_Sync_2
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -167,7 +167,7 @@ public class Sample_ImageGeneration : AgentsTestBase
                 Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("newton.png")}");
             }
         }
-        #region Snippet:Sample_Cleanup_ImageGeneration_Sync
+        #region Snippet:Sample_Cleanup_ImageGeneration_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

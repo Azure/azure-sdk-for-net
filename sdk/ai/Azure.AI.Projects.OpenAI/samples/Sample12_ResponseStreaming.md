@@ -1,6 +1,6 @@
 # Sample on getting the responses in Azure.AI.Projects.OpenAI in streaming scenarios.
 
-In this example we will demonstrate how to get a responsein streaming scenarios.
+In this example we will demonstrate how to get a response in streaming scenarios.
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 

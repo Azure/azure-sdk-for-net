@@ -21,7 +21,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
     [AsyncOnly]
     public async Task MemorySearchToolAsync()
     {
-        #region Snippet:Sample_MemoryTool
+        #region Snippet:Sample_MemoryTool_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -34,7 +34,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:Sample_CreateAgent_MemoryTool_Async
+        #region Snippet:Sample_CreateAgent_MemoryTool_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
@@ -44,7 +44,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             options: new(agentDefinition));
         #endregion
 
-        #region Snippet:Sample_CreateConversation_MemoryTool_Async
+        #region Snippet:Sample_CreateConversation_MemoryTool_Async_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
@@ -57,7 +57,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             responseOptions);
         #endregion
 
-        #region Snippet:Sample_WriteOutput_MemoryTool_Async
+        #region Snippet:Sample_WriteOutput_MemoryTool_Async_2
         string scope = "Joke from conversation";
         List<ResponseItem> updateItems = [request];
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
@@ -72,7 +72,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         }
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:CreateMemoryStore_MemoryTool_Async
+        #region Snippet:CreateMemoryStore_MemoryTool_Async_2
         MemoryStoreClient memoryClient = client.GetMemoryStoreClient();
         MemoryStoreDefaultDefinition memoryStoreDefinition = new(
             chatModel: modelDeploymentName,
@@ -85,7 +85,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         );
         memoryClient.UpdateMemories(memoryStore.Id, scope, updateItems);
         #endregion
-        #region Snippet:Sample_CheckMemorySearch_Async
+        #region Snippet:Sample_CheckMemorySearch_Async_2
         MemorySearchOptions opts = new()
         {
             MaxMemories = 1,
@@ -103,10 +103,10 @@ public class Sample_MemorySearchTool : AgentsTestBase
         }
         Console.WriteLine("==End of memory tool output.==");
         #endregion
-        #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
+        #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Async_2
         agentDefinition = new(model: modelDeploymentName)
         {
-            Instructions = "You are a prompt agent capable to access memorised conversation.",
+            Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = await client.CreateAgentVersionAsync(
@@ -114,7 +114,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             options: new(agentDefinition));
         #endregion
 
-        #region Snippet:Sample_AnotherConversation_MemoryTool_Async
+        #region Snippet:Sample_AnotherConversation_MemoryTool_Async_2
         responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
 
@@ -129,7 +129,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_MemoryTool_Async
+        #region Snippet:Sample_Cleanup_MemoryTool_Async_2
         await memoryClient.DeleteMemoryStoreAsync(name: memoryStore.Name);
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await client.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
@@ -150,7 +150,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        #region Snippet:Sample_CreateAgent_MemoryTool_Sync
+        #region Snippet:Sample_CreateAgent_MemoryTool_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
@@ -160,7 +160,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             options: new(agentDefinition));
         #endregion
 
-        #region Snippet:Sample_CreateConversation_MemoryTool_Sync
+        #region Snippet:Sample_CreateConversation_MemoryTool_Sync_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
@@ -173,7 +173,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             responseOptions);
         #endregion
 
-        #region Snippet:Sample_WriteOutput_MemoryTool_Sync
+        #region Snippet:Sample_WriteOutput_MemoryTool_Sync_2
         string scope = "Joke from conversation";
         List<ResponseItem> updateItems = [request];
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
@@ -189,7 +189,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         }
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:CreateMemoryStore_MemoryTool_Sync
+        #region Snippet:CreateMemoryStore_MemoryTool_Sync_2
         MemoryStoreClient memoryClient = client.GetMemoryStoreClient();
         MemoryStoreDefaultDefinition memoryStoreDefinition = new(
             chatModel: modelDeploymentName,
@@ -202,7 +202,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         );
         memoryClient.UpdateMemories(memoryStore.Id, scope, updateItems);
         #endregion
-        #region Snippet:Sample_CheckMemorySearch_Sync
+        #region Snippet:Sample_CheckMemorySearch_Sync_2
         MemorySearchOptions opts = new()
         {
             MaxMemories = 1,
@@ -220,10 +220,10 @@ public class Sample_MemorySearchTool : AgentsTestBase
         }
         Console.WriteLine("==End of memory search tool output.==");
         #endregion
-        #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync
+        #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync_2
         agentDefinition = new(model: modelDeploymentName)
         {
-            Instructions = "You are a prompt agent capable to access memorised conversation.",
+            Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = client.CreateAgentVersion(
@@ -231,7 +231,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
             options: new(agentDefinition));
         #endregion
 
-        #region Snippet:Sample_AnotherConversation_MemoryTool_Sync
+        #region Snippet:Sample_AnotherConversation_MemoryTool_Sync_2
         responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion2.Name));
 
@@ -246,7 +246,7 @@ public class Sample_MemorySearchTool : AgentsTestBase
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_MemoryTool_Sync
+        #region Snippet:Sample_Cleanup_MemoryTool_Sync_2
         memoryClient.DeleteMemoryStore(name: memoryStore.Name);
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         client.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);

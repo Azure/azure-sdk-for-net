@@ -54,7 +54,7 @@ conversationOptions.Items.Add(
 ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
 ```
 
-5. Create synchronous and asynchronous helper methods to wait for response completion. If the response status is not `Completed` we will thow the exception with the latest error.
+5. Create synchronous and asynchronous helper methods to wait for response completion. If the response status is not `Completed` we will throw an exception with the latest error.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForRun_ContainerApp_Sync

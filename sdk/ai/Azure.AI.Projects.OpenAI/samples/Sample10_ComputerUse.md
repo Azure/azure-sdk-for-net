@@ -20,7 +20,7 @@ private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth
 }
 ```
 
-3. In this example we will read in three toy schreenshots and place them into dictionary.
+3. In this example we will read in three example screenshots and place them into a dictionary.
 
 ```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
 Dictionary<string, BinaryData> screenshots = new() {

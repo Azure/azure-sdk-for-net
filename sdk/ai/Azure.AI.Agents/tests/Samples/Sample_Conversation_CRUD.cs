@@ -16,7 +16,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
     [AsyncOnly]
     public async Task ConversationCRUDAsync()
     {
-        #region Snippet:Sample_CreateAgentClient_ConversationCRUD
+        #region Snippet:Sample_CreateAgentClient_ConversationCRUD_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
@@ -25,7 +25,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:Sample_CreateConversations_ConversationCRUD_Async
+        #region Snippet:Sample_CreateConversations_ConversationCRUD_Async_2
         ConversationClient conversationClient = client.GetConversationClient();
         AgentConversation conversation1 = await conversationClient.CreateConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
@@ -34,18 +34,18 @@ public class Sample_conversation_CRUD : AgentsTestBase
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
-        #region Snippet:Sample_GetConversation_ConversationCRUD_Async
+        #region Snippet:Sample_GetConversation_ConversationCRUD_Async_2
         AgentConversation conversation = await conversationClient.GetConversationAsync(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
-        #region Snippet:Sample_ListConversations_ConversationCRUD_Async
+        #region Snippet:Sample_ListConversations_ConversationCRUD_Async_2
         await foreach (AgentConversation res in conversationClient.GetConversationsAsync()){
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
 
-        #region Snippet:Sample_UpdateConversations_ConversationCRUD_Async
+        #region Snippet:Sample_UpdateConversations_ConversationCRUD_Async_2
         AgentConversationUpdateOptions updateOptions = new()
         {
             Metadata = { ["key"] = "value" },
@@ -57,7 +57,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
-        #region Snippet:Sample_DeleteConversations_ConversationCRUD_Async
+        #region Snippet:Sample_DeleteConversations_ConversationCRUD_Async_2
         await conversationClient.DeleteConversationAsync(conversationId: conversation1.Id);
         Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
         await conversationClient.DeleteConversationAsync(conversationId: conversation2.Id);
@@ -76,7 +76,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        #region Snippet:Sample_CreateConversations_ConversationCRUD_Sync
+        #region Snippet:Sample_CreateConversations_ConversationCRUD_Sync_2
         ConversationClient conversationClient = client.GetConversationClient();
         AgentConversation conversation1 = conversationClient.CreateConversation();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
@@ -85,19 +85,19 @@ public class Sample_conversation_CRUD : AgentsTestBase
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
-        #region Snippet:Sample_GetConversation_ConversationCRUD_Sync
+        #region Snippet:Sample_GetConversation_ConversationCRUD_Sync_2
         AgentConversation conversation = conversationClient.GetConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
-        #region Snippet:Sample_ListConversations_ConversationCRUD_Sync
+        #region Snippet:Sample_ListConversations_ConversationCRUD_Sync_2
         foreach (AgentConversation res in conversationClient.GetConversations())
         {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
 
-        #region Snippet:Sample_UpdateConversations_ConversationCRUD_Sync
+        #region Snippet:Sample_UpdateConversations_ConversationCRUD_Sync_2
         AgentConversationUpdateOptions updateOptions = new()
         {
             Metadata = { ["key"] = "value" },
@@ -109,7 +109,7 @@ public class Sample_conversation_CRUD : AgentsTestBase
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
-        #region Snippet:Sample_DeleteConversations_ConversationCRUD_Sync
+        #region Snippet:Sample_DeleteConversations_ConversationCRUD_Sync_2
         conversationClient.DeleteConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Conversation deleted(id: {conversation1.Id})");
         conversationClient.DeleteConversation(conversationId: conversation2.Id);

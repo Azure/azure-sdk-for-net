@@ -18,7 +18,7 @@ public class Sample_Container_App : AgentsTestBase
     [AsyncOnly]
     public async Task SampleContainerAppAsync()
     {
-        #region Snippet:Sample_Create_client_ContainerApp
+        #region Snippet:Sample_Create_client_ContainerApp_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var containerAppResourceId = System.Environment.GetEnvironmentVariable("CONTAINER_APP_RESOURCE_ID");
@@ -32,7 +32,7 @@ public class Sample_Container_App : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
-        #region Snippet:Sample_CreateContainerApp_ContainerApp_Async
+        #region Snippet:Sample_CreateContainerApp_ContainerApp_Async_2
         AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
             agentName: "containerAgent",
             options: new(new ContainerAppAgentDefinition(
@@ -40,7 +40,7 @@ public class Sample_Container_App : AgentsTestBase
                 containerAppResourceId: containerAppResourceId,
                 ingressSubdomainSuffix: ingressSubdomainSuffix)));
         #endregion
-        #region Snippet:Sample_CreateConversation_ContainerApp_Async
+        #region Snippet:Sample_CreateConversation_ContainerApp_Async_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ConversationClient conversationClient = client.GetConversationClient();
@@ -50,7 +50,7 @@ public class Sample_Container_App : AgentsTestBase
         );
         AgentConversation conversation = await conversationClient.CreateConversationAsync(options: conversationOptions);
         #endregion
-        #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
+        #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async_2
         AgentReference agentReference = new(name: containerAgentVersion.Name)
         {
             Version = containerAgentVersion.Version,
@@ -73,7 +73,7 @@ public class Sample_Container_App : AgentsTestBase
         response = await WaitResponseAsync(responseClient, response);
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_ContainerApp_Async
+        #region Snippet:Sample_Cleanup_ContainerApp_Async_2
         await conversationClient.DeleteConversationAsync(conversationId:conversation.Id);
         await client.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
         #endregion
@@ -95,7 +95,7 @@ public class Sample_Container_App : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        #region Snippet:Sample_CreateContainerApp_ContainerApp_Sync
+        #region Snippet:Sample_CreateContainerApp_ContainerApp_Sync_2
         AgentVersion containerAgentVersion = client.CreateAgentVersion(
             agentName: "containerAgent",
             options: new(new ContainerAppAgentDefinition(
@@ -103,7 +103,7 @@ public class Sample_Container_App : AgentsTestBase
                 containerAppResourceId: containerAppResourceId,
                 ingressSubdomainSuffix: ingressSubdomainSuffix)));
         #endregion
-        #region Snippet:Sample_CreateConversation_ContainerApp_Sync
+        #region Snippet:Sample_CreateConversation_ContainerApp_Sync_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ConversationClient conversationClient = client.GetConversationClient();
@@ -113,7 +113,7 @@ public class Sample_Container_App : AgentsTestBase
         );
         AgentConversation conversation = conversationClient.CreateConversation(options: conversationOptions);
         #endregion
-        #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
+        #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync_2
         AgentReference agentReference = new(name: containerAgentVersion.Name)
         {
             Version = containerAgentVersion.Version,
@@ -136,13 +136,13 @@ public class Sample_Container_App : AgentsTestBase
         response = WaitResponse(responseClient, response);
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_ContainerApp_Sync
+        #region Snippet:Sample_Cleanup_ContainerApp_Sync_2
         conversationClient.DeleteConversation(conversationId: conversation.Id);
         client.DeleteAgentVersion(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
         #endregion
     }
 
-    #region Snippet:Sample_WaitForRun_ContainerApp_Sync
+    #region Snippet:Sample_WaitForRun_ContainerApp_Sync_2
     private static OpenAIResponse WaitResponse(OpenAIResponseClient responseClient, OpenAIResponse response)
     {
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
@@ -155,7 +155,7 @@ public class Sample_Container_App : AgentsTestBase
     }
     #endregion
 
-    #region Snippet:Sample_WaitForRun_ContainerApp_Async
+    #region Snippet:Sample_WaitForRun_ContainerApp_Async_2
     private static async Task<OpenAIResponse> WaitResponseAsync(OpenAIResponseClient responseClient, OpenAIResponse response)
     {
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)

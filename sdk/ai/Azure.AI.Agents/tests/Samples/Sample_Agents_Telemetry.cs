@@ -64,13 +64,13 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        #region Snippet:EnableActivitySourceToGetAgentTraces
+        #region Snippet:EnableActivitySourceToGetAgentTraces_2
         AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
         #endregion
-        #region Snippet:DisableContentRecordingForAgentTraces
+        #region Snippet:DisableContentRecordingForAgentTraces_2
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
         #endregion
-        #region Snippet:AgentTelemetrySetupTracingToConsole
+        #region Snippet:AgentTelemetrySetupTracingToConsole_2
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
                         .AddSource("Azure.AI.Agents.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
@@ -141,7 +141,7 @@ public partial class Sample_Agents_Telemetry : AgentsTestBase
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        #region Snippet:AgentTelemetrySetupTracingToAzureMonitor
+        #region Snippet:AgentTelemetrySetupTracingToAzureMonitor_2
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
             .AddSource("Azure.AI.Agents.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
