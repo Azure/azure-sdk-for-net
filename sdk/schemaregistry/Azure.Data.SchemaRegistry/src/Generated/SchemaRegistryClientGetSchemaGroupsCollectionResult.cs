@@ -47,7 +47,7 @@ namespace Azure.Data.SchemaRegistry
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureDataSchemaRegistryContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;

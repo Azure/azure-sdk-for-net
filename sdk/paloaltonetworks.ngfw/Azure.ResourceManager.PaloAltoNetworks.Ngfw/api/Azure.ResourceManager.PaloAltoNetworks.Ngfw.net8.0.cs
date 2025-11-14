@@ -32,7 +32,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -89,7 +92,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? Scope { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices SecurityServices { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -121,7 +127,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FqdnList { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -172,7 +181,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PrefixList { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -276,7 +288,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -332,7 +347,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? Scope { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices SecurityServices { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -364,7 +382,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FqdnList { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -415,7 +436,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PrefixList { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -538,7 +562,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? RuleState { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo Source { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -570,8 +597,48 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MetricsObjectFirewallData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>
+    {
+        public MetricsObjectFirewallData(string applicationInsightsResourceId, string applicationInsightsConnectionString) { }
+        public string ApplicationInsightsConnectionString { get { throw null; } set { } }
+        public string ApplicationInsightsResourceId { get { throw null; } set { } }
+        public Azure.ETag? PanETag { get { throw null; } set { } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MetricsObjectFirewallResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MetricsObjectFirewallResource() { }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class NgfwExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus> CreateProductSerialNumber(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>> CreateProductSerialNumberAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList> GetCloudManagerTenants(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>> GetCloudManagerTenantsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> GetGlobalRulestack(this Azure.ResourceManager.Resources.TenantResource tenantResource, string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>> GetGlobalRulestackAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -589,6 +656,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCollection GetLocalRulestacks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacks(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacksAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource GetMetricsObjectFirewallResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewall(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -598,6 +666,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource GetPostRulestackRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource GetPreRulestackRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus> GetProductSerialNumberStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>> GetProductSerialNumberStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel> GetSupportInfo(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>> GetSupportInfoAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PaloAltoNetworksFirewallCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>, System.Collections.IEnumerable
     {
@@ -620,17 +692,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     {
         public PaloAltoNetworksFirewallData(Azure.Core.AzureLocation location, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails) { }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails AssociatedRulestack { get { throw null; } set { } }
+        public string CloudManagerName { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings DnsSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> FrontEndSettings { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? IsPanoramaManaged { get { throw null; } set { } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? IsStrataCloudManaged { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ETag? PanETag { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration PanoramaConfig { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo PlanData { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -654,6 +731,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>> GetGlobalRulestackAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings> GetLogProfile(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings>> GetLogProfileAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource GetMetricsObjectFirewall() { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatus() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo> GetSupportInfo(string email = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo>> GetSupportInfoAsync(string email = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -677,9 +755,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public string HealthReason { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? HealthStatus { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? IsPanoramaManaged { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? IsStrataCloudManaged { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus PanoramaStatus { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo StrataCloudManagerInfo { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -741,7 +824,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? RuleState { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo Source { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -813,7 +899,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? RuleState { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo Source { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -860,6 +949,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource GetLocalRulestackPrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource GetLocalRulestackResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource GetLocalRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallResource GetMetricsObjectFirewallResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource GetPostRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -878,10 +968,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
     public partial class MockablePaloAltoNetworksNgfwSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockablePaloAltoNetworksNgfwSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus> CreateProductSerialNumber(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>> CreateProductSerialNumberAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList> GetCloudManagerTenants(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>> GetCloudManagerTenantsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus> GetProductSerialNumberStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>> GetProductSerialNumberStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel> GetSupportInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>> GetSupportInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockablePaloAltoNetworksNgfwTenantResource : Azure.ResourceManager.ArmResource
     {
@@ -893,12 +991,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 }
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccountRegistrationStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccountRegistrationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus NotRegistered { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus Registered { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AdvancedSecurityObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>
     {
         internal AdvancedSecurityObject() { }
         public string AdvSecurityObjectModelType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject> Entry { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -910,7 +1030,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal AdvancedSecurityObjectListResult() { }
         public string NextLink { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -932,6 +1055,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -950,6 +1074,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -968,6 +1093,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -981,7 +1107,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string Tag { get { throw null; } }
         public string Technology { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -993,7 +1122,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal AppSeenInfoList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo> AppSeenList { get { throw null; } }
         public int Count { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1006,33 +1138,75 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObjectListResult AdvancedSecurityObjectListResult(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo AppSeenInfo(string title = null, string category = null, string subCategory = null, string risk = null, string tag = null, string technology = null, string standardPorts = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList AppSeenInfoList(int count = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfo> appSeenList = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList CloudManagerTenantList(System.Collections.Generic.IEnumerable<string> value = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo DestinationAddressInfo(System.Collections.Generic.IEnumerable<string> cidrs = null, System.Collections.Generic.IEnumerable<string> countries = null, System.Collections.Generic.IEnumerable<string> feeds = null, System.Collections.Generic.IEnumerable<string> prefixLists = null, System.Collections.Generic.IEnumerable<string> fqdnLists = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory EdlMatchCategory(System.Collections.Generic.IEnumerable<string> urlCustom = null, System.Collections.Generic.IEnumerable<string> feeds = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo FirewallBillingPlanInfo(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType? usageType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle billingCycle = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle), string planId = null, System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings FirewallDnsSettings(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType? enableDnsProxy = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType? enabledDnsType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> dnsServers = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile FirewallNetworkProfile(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration vnetConfiguration = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration vwanConfiguration = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType networkType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> publicIPs = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType enableEgressNat = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> egressNatIP = null, System.Collections.Generic.IEnumerable<string> trustedRanges = null, System.Collections.Generic.IEnumerable<string> privateSourceNatRulesDestination = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration FirewallPanoramaConfiguration(string configString = null, string vmAuthKey = null, string panoramaServer = null, string panoramaServer2 = null, string dgName = null, string tplName = null, string cgName = null, string hostName = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus FirewallPanoramaStatus(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus? panoramaServerStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus? panoramaServer2Status = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter FirewallRuleCounter(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null, int? hitCount = default(int?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AppSeenInfoList appSeen = null, System.DateTimeOffset? responseOn = default(System.DateTimeOffset?), System.DateTimeOffset? requestOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter FirewallRuleResetConter(string priority = null, string ruleStackName = null, string ruleListName = null, string firewallName = null, string ruleName = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo FirewallSupportInfo(string productSku = null, string productSerial = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? accountRegistered = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), string accountId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? userDomainSupported = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? userRegistered = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? freeTrial = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), int? freeTrialDaysLeft = default(int?), int? freeTrialCreditLeft = default(int?), string helpURL = null, string supportURL = null, string registerURL = null) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string certificateSignerResourceId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType certificateSelfSigned = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType), string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData GlobalRulestackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties FirewallUpdateProperties(Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isStrataCloudManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, string cloudManagerName = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string certificateSignerResourceId, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string certificateSignerResourceId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? certificateSelfSigned = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData GlobalRulestackData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData GlobalRulestackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData GlobalRulestackFqdnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> fqdnList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo GlobalRulestackInfo(string azureId = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData GlobalRulestackPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> prefixList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string certificateSignerResourceId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType certificateSelfSigned = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType), string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData LocalRulestackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties GlobalRulestackUpdateProperties(Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string certificateSignerResourceId, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string certificateSignerResourceId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? certificateSelfSigned = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), string auditComment = null, string description = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData LocalRulestackData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData LocalRulestackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData LocalRulestackFqdnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> fqdnList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch LocalRulestackPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData LocalRulestackPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> prefixList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData LocalRulestackRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string ruleName = null, int? priority = default(int?), string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? ruleState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo source = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? negateSource = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo destination = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? negateDestination = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), System.Collections.Generic.IEnumerable<string> applications = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory category = null, string protocol = null, System.Collections.Generic.IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType? actionType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? enableLogging = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType? decryptionRuleType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties LocalRulestackUpdateProperties(Azure.ETag? panETag = default(Azure.ETag?), Azure.Core.AzureLocation? panLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? scope = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType?), System.Collections.Generic.IEnumerable<string> associatedSubscriptions = null, string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? defaultMode = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode?), string minAppIdVersion = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices securityServices = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.MetricsObjectFirewallData MetricsObjectFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string applicationInsightsResourceId = null, string applicationInsightsConnectionString = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject NameDescriptionObject(string name = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? healthStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus?), string healthReason = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus panoramaStatus = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? panETag = default(Azure.ETag?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isStrataCloudManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration panoramaConfig = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails = null, string cloudManagerName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch PaloAltoNetworksFirewallPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties properties = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? healthStatus, string healthReason, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus panoramaStatus, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? provisioningState) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? healthStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus?), string healthReason = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus panoramaStatus = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? isStrataCloudManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo strataCloudManagerInfo = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails PanFirewallMarketplaceDetails(string marketplaceSubscriptionId = null, string offerId = null, string publisherId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData PostRulestackRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string ruleName = null, int? priority = default(int?), string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? ruleState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo source = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? negateSource = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo destination = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? negateDestination = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), System.Collections.Generic.IEnumerable<string> applications = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory category = null, string protocol = null, System.Collections.Generic.IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType? actionType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? enableLogging = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType? decryptionRuleType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory PredefinedUrlCategory(string action = null, string name = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData PreRulestackRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string ruleName = null, int? priority = default(int?), string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? ruleState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo source = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? negateSource = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo destination = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? negateDestination = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType?), System.Collections.Generic.IEnumerable<string> applications = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory category = null, string protocol = null, System.Collections.Generic.IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType? actionType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? enableLogging = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType? decryptionRuleType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus ProductSerialNumberRequestStatus(string status = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus ProductSerialNumberStatus(string serialNumber = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialStatusValues status = Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialStatusValues.Allocated) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog RulestackChangelog(System.Collections.Generic.IEnumerable<string> changes = null, System.DateTimeOffset? lastCommittedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry RulestackCountry(string code = null, string description = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult RulestackSecurityServiceListResult(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList RulestackSecurityServiceTypeList(string securityServicesTypeListType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject> entry = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo SourceAddressInfo(System.Collections.Generic.IEnumerable<string> cidrs = null, System.Collections.Generic.IEnumerable<string> countries = null, System.Collections.Generic.IEnumerable<string> feeds = null, System.Collections.Generic.IEnumerable<string> prefixLists = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo StrataCloudManagerInfo(string folderName = null, string hubUri = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel SupportInfoModel(string productSku = null, string productSerial = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus? accountRegistrationStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus?), string accountId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus? freeTrial = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus?), int? freeTrialDaysLeft = default(int?), int? freeTrialCreditLeft = default(int?), string helpURL = null, string supportURL = null, string registerURL = null, string hubUri = null, int? credits = default(int?), int? monthlyCreditLeft = default(int?), string startDateForCredits = null, string endDateForCredits = null) { throw null; }
+    }
+    public partial class CloudManagerTenantList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>
+    {
+        internal CloudManagerTenantList() { }
+        public System.Collections.Generic.IList<string> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.CloudManagerTenantList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DecryptionRuleType : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType>
@@ -1050,6 +1224,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1061,7 +1236,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public System.Collections.Generic.IList<string> Feeds { get { throw null; } }
         public System.Collections.Generic.IList<string> FqdnLists { get { throw null; } }
         public System.Collections.Generic.IList<string> PrefixLists { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddressInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1073,7 +1251,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public EdlMatchCategory(System.Collections.Generic.IEnumerable<string> urlCustom, System.Collections.Generic.IEnumerable<string> feeds) { }
         public System.Collections.Generic.IList<string> Feeds { get { throw null; } }
         public System.Collections.Generic.IList<string> UrlCustom { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EdlMatchCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1095,6 +1276,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1106,7 +1288,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string NameSpace { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1118,7 +1303,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public FirewallApplicationInsights() { }
         public string Id { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallApplicationInsights>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1140,6 +1328,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingCycle right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1150,7 +1339,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public System.DateTimeOffset? EffectiveOn { get { throw null; } }
         public string PlanId { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType? UsageType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1172,6 +1364,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanUsageType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1190,6 +1383,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1199,7 +1393,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> DnsServers { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType? EnabledDnsType { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowDnsProxyType? EnableDnsProxy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1211,7 +1408,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public FirewallEndpointConfiguration(string port, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo address) { }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo Address { get { throw null; } set { } }
         public string Port { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1225,7 +1425,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallEndpointConfiguration FrontendConfiguration { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType Protocol { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1249,6 +1452,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallHealthStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1258,7 +1462,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration EventHubConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration MonitorConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration StorageConfiguration { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1280,6 +1487,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1293,7 +1501,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType? LogType { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination ThreatLogDestination { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogDestination TrafficLogDestination { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1319,6 +1530,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1328,11 +1540,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> EgressNatIP { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType EnableEgressNat { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType NetworkType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PrivateSourceNatRulesDestination { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> PublicIPs { get { throw null; } }
         public System.Collections.Generic.IList<string> TrustedRanges { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration VnetConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration VwanConfiguration { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1354,6 +1570,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1368,7 +1585,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string PanoramaServer2 { get { throw null; } }
         public string TplName { get { throw null; } }
         public string VmAuthKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1390,6 +1610,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1398,7 +1619,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal FirewallPanoramaStatus() { }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus? PanoramaServer2Status { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaServerStatus? PanoramaServerStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1420,6 +1644,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1445,6 +1670,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1464,6 +1690,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallProvisioningStateType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1480,7 +1707,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string RuleListName { get { throw null; } }
         public string RuleName { get { throw null; } }
         public string RuleStackName { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleCounter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1495,7 +1725,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string RuleListName { get { throw null; } }
         public string RuleName { get { throw null; } }
         public string RuleStackName { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1517,7 +1750,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string SupportURL { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? UserDomainSupported { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? UserRegistered { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallSupportInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1528,15 +1764,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     {
         public FirewallUpdateProperties() { }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails AssociatedRulestack { get { throw null; } set { } }
+        public string CloudManagerName { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings DnsSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> FrontEndSettings { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? IsPanoramaManaged { get { throw null; } set { } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBooleanType? IsStrataCloudManaged { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ETag? PanETag { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallPanoramaConfiguration PanoramaConfig { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo PlanData { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1550,7 +1791,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo TrustSubnet { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo UnTrustSubnet { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo Vnet { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1565,18 +1809,43 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo TrustSubnet { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo UnTrustSubnet { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo Vhub { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FreeTrialEnableStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FreeTrialEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GlobalRulestackInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>
     {
         internal GlobalRulestackInfo() { }
         public string AzureId { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1589,7 +1858,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1607,7 +1879,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.Core.AzureLocation? PanLocation { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? Scope { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices SecurityServices { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1619,7 +1894,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public IPAddressInfo() { }
         public string Address { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1631,7 +1909,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public IPAddressSpaceInfo() { }
         public string AddressSpace { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressSpaceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1644,7 +1925,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1662,7 +1946,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.Core.AzureLocation? PanLocation { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? Scope { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices SecurityServices { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1688,6 +1975,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1699,7 +1987,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string SecondaryKey { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public string Workspace { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MonitorLogConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1711,7 +2002,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal NameDescriptionObject() { }
         public string Description { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1724,7 +2018,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1738,7 +2035,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
         public string OfferId { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1750,12 +2050,49 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal PredefinedUrlCategory() { }
         public string Action { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProductSerialNumberRequestStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>
+    {
+        internal ProductSerialNumberRequestStatus() { }
+        public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberRequestStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProductSerialNumberStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>
+    {
+        internal ProductSerialNumberStatus() { }
+        public string SerialNumber { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialStatusValues Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProductSerialNumberStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ProductSerialStatusValues
+    {
+        Allocated = 0,
+        InProgress = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RuleCreationDefaultMode : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode>
@@ -1773,6 +2110,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1793,6 +2131,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1802,7 +2141,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public System.Collections.Generic.IReadOnlyList<string> Changes { get { throw null; } }
         public System.DateTimeOffset? LastCommittedOn { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackChangelog>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1814,7 +2156,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal RulestackCountry() { }
         public string Code { get { throw null; } }
         public string Description { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1827,7 +2172,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string RulestackId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1849,6 +2197,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackScopeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1857,7 +2206,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal RulestackSecurityServiceListResult() { }
         public string NextLink { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1875,7 +2227,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string OutboundUnTrustCertificate { get { throw null; } set { } }
         public string UrlFilteringProfile { get { throw null; } set { } }
         public string VulnerabilityProfile { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServices>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1901,6 +2256,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1909,7 +2265,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal RulestackSecurityServiceTypeList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject> Entry { get { throw null; } }
         public string SecurityServicesTypeListType { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1931,6 +2290,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackStateType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1939,7 +2299,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public RulestackTagInfo(string key, string value) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackTagInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1953,7 +2316,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public System.Collections.Generic.IList<string> Countries { get { throw null; } }
         public System.Collections.Generic.IList<string> Feeds { get { throw null; } }
         public System.Collections.Generic.IList<string> PrefixLists { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddressInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1966,11 +2332,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string AccountName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StorageAccountConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StrataCloudManagerInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>
+    {
+        internal StrataCloudManagerInfo() { }
+        public string FolderName { get { throw null; } }
+        public string HubUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StrataCloudManagerInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SupportInfoModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>
+    {
+        internal SupportInfoModel() { }
+        public string AccountId { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus? AccountRegistrationStatus { get { throw null; } }
+        public int? Credits { get { throw null; } }
+        public string EndDateForCredits { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus? FreeTrial { get { throw null; } }
+        public int? FreeTrialCreditLeft { get { throw null; } }
+        public int? FreeTrialDaysLeft { get { throw null; } }
+        public string HelpURL { get { throw null; } }
+        public string HubUri { get { throw null; } }
+        public int? MonthlyCreditLeft { get { throw null; } }
+        public string ProductSerial { get { throw null; } }
+        public string ProductSku { get { throw null; } }
+        public string RegisterURL { get { throw null; } }
+        public string StartDateForCredits { get { throw null; } }
+        public string SupportURL { get { throw null; } }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

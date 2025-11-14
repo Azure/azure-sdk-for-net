@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistrySchemaVersionResource"/> and their operations.
-    /// Each <see cref="DeviceRegistrySchemaVersionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistrySchemaVersionCollection"/> instance call the GetDeviceRegistrySchemaVersions method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistrySchemaVersionResource"/> in the collection will belong to the same instance of <see cref="DeviceRegistrySchemaResource"/>.
+    /// To get a <see cref="DeviceRegistrySchemaVersionCollection"/> instance call the GetDeviceRegistrySchemaVersions method from an instance of <see cref="DeviceRegistrySchemaResource"/>.
     /// </summary>
     public partial class DeviceRegistrySchemaVersionCollection : ArmCollection, IEnumerable<DeviceRegistrySchemaVersionResource>, IAsyncEnumerable<DeviceRegistrySchemaVersionResource>
     {

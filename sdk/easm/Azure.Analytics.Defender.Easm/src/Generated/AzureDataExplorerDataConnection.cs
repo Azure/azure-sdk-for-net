@@ -15,12 +15,8 @@ namespace Azure.Analytics.Defender.Easm
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnection"/>. </summary>
         /// <param name="properties"> properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        internal AzureDataExplorerDataConnection(AzureDataExplorerDataConnectionProperties properties)
+        internal AzureDataExplorerDataConnection(AzureDataExplorerDataConnectionProperties properties) : base("azureDataExplorer")
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Kind = "azureDataExplorer";
             Properties = properties;
         }
 
@@ -37,16 +33,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal AzureDataExplorerDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureDataExplorerDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, serializedAdditionalRawData)
+        internal AzureDataExplorerDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureDataExplorerDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, additionalBinaryDataProperties)
         {
             Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnection"/> for deserialization. </summary>
-        internal AzureDataExplorerDataConnection()
-        {
         }
 
         /// <summary> properties. </summary>

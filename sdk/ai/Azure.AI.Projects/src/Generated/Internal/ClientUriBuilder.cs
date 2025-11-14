@@ -19,9 +19,9 @@ namespace Azure.AI.Projects
         {
         }
 
-        private UriBuilder UriBuilder => _uriBuilder  ??=  new UriBuilder();
+        private UriBuilder UriBuilder => _uriBuilder ??= new UriBuilder();
 
-        private StringBuilder PathAndQuery => _pathAndQuery  ??=  new StringBuilder();
+        private StringBuilder PathAndQuery => _pathAndQuery ??= new StringBuilder();
 
         public void Reset(Uri uri)
         {
@@ -37,13 +37,13 @@ namespace Azure.AI.Projects
             {
                 value = Uri.EscapeDataString(value);
             }
-            if (_pathLength > 0 && PathAndQuery[_pathLength  -  1] == '/' && value[0] == '/')
+            if (_pathLength > 0 && PathAndQuery[_pathLength - 1] == '/' && value[0] == '/')
             {
-                PathAndQuery.Remove(_pathLength  -  1, 1);
-                _pathLength = _pathLength  -  1;
+                PathAndQuery.Remove(_pathLength - 1, 1);
+                _pathLength = _pathLength - 1;
             }
             PathAndQuery.Insert(_pathLength, value);
-            _pathLength = _pathLength  +  value.Length;
+            _pathLength = _pathLength + value.Length;
         }
 
         public void AppendPath(bool value, bool escape = false) => AppendPath(TypeFormatters.ConvertToString(value), escape);
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             {
                 PathAndQuery.Append('?');
             }
-            if (PathAndQuery.Length > _pathLength && PathAndQuery[PathAndQuery.Length  -  1] != '?')
+            if (PathAndQuery.Length > _pathLength && PathAndQuery[PathAndQuery.Length - 1] != '?')
             {
                 PathAndQuery.Append('&');
             }
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects
             UriBuilder.Path = PathAndQuery.ToString(0, _pathLength);
             if (PathAndQuery.Length > _pathLength)
             {
-                UriBuilder.Query = PathAndQuery.ToString(_pathLength  +  1, PathAndQuery.Length  -  _pathLength  -  1);
+                UriBuilder.Query = PathAndQuery.ToString(_pathLength + 1, PathAndQuery.Length - _pathLength - 1);
             }
             if (PathAndQuery.Length == _pathLength)
             {

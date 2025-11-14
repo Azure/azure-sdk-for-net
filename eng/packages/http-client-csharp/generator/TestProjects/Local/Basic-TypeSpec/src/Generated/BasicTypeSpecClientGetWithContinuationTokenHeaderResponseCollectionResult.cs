@@ -49,7 +49,7 @@ namespace BasicTypeSpec
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
                 if (response.Headers.TryGetValue("next-token", out string value))
