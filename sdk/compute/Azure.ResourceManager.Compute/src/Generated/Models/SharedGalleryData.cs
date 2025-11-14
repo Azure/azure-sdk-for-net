@@ -12,10 +12,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary>
-    /// A class representing the SharedGallery data model.
-    /// Specifies information about the Shared Gallery that you want to create or update.
-    /// </summary>
+    /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
     public partial class SharedGalleryData : PirSharedGalleryResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
@@ -37,7 +34,5 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The artifact tags of a shared gallery resource. </summary>
         public IReadOnlyDictionary<string, string> ArtifactTags { get; }
-        /// <summary> The resource identifier. </summary>
-        public ResourceIdentifier Id { get; internal set; }
     }
 }
