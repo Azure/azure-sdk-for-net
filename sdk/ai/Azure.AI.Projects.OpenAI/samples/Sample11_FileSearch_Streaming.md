@@ -86,7 +86,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
+ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
 ResponseCreationOptions responseOptions = new()
 {
     Agent = agentVersion,
@@ -98,7 +98,7 @@ ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the d
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 ResponseCreationOptions responseOptions = new()
 {
     Agent = agentVersion,

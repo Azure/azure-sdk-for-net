@@ -823,7 +823,7 @@ namespace Azure.AI.Projects.OpenAI
             return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AgentConversation. </summary>
+        /// <summary> The ProjectConversation. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="createdAt"></param>
         /// <param name="metadata">
@@ -834,12 +834,12 @@ namespace Azure.AI.Projects.OpenAI
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.AgentConversation"/> instance for mocking. </returns>
-        public static AgentConversation AgentConversation(string id = default, DateTimeOffset createdAt = default, IDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
+        public static ProjectConversation ProjectConversation(string id = default, DateTimeOffset createdAt = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentConversation(id, "conversation", createdAt, metadata, additionalBinaryDataProperties: null);
+            return new ProjectConversation(id, "conversation", createdAt, metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update a conversation. </summary>

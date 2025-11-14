@@ -100,7 +100,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         ResponseCreationOptions responseOptions = new()
         {
             Agent = agentVersion,
@@ -173,7 +173,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-        AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
+        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
         ResponseCreationOptions responseOptions = new()
         {
             Agent = agentVersion,

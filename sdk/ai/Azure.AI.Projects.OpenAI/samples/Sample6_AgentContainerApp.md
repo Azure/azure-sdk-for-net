@@ -34,7 +34,7 @@ AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersi
         ingressSubdomainSuffix: ingressSubdomainSuffix)));
 ```
 
-4. Create an `AgentConversation` conversation object, containing the first question.
+4. Create an `ProjectConversation` conversation object, containing the first question.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_ContainerApp_Sync
@@ -42,7 +42,7 @@ ProjectConversationCreationOptions conversationOptions = new();
 conversationOptions.Items.Add(
     ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
 );
-AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation(options: conversationOptions);
+ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options: conversationOptions);
 ```
 
 Asynchronous sample:
@@ -51,7 +51,7 @@ ProjectConversationCreationOptions conversationOptions = new();
 conversationOptions.Items.Add(
     ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
 );
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
 ```
 
 5. Create synchronous and asynchronous helper methods to wait for response completion. If the response status is not `Completed` we will thow the exception with the latest error.
@@ -93,7 +93,7 @@ OpenAIResponse response = responseClient.CreateResponse([]);
 response = WaitResponse(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());
 
-projectClient.OpenAI.Conversations.CreateAgentConversationItems(
+projectClient.OpenAI.Conversations.CreateProjectConversationItems(
     conversationId: conversation.Id,
     items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
 response = projectClient.OpenAI.Responses.CreateResponse([]);
@@ -112,7 +112,7 @@ OpenAIResponse response = await projectClient.OpenAI.Responses.CreateResponseAsy
 response = await WaitResponseAsync(projectClient.OpenAI.Responses, response);
 Console.WriteLine(response.GetOutputText());
 
-await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
     conversationId: conversation.Id,
     items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
 response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);

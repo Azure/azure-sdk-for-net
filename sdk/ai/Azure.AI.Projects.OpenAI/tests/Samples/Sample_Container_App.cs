@@ -3,12 +3,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
-using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
@@ -47,7 +44,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
         ResponseCreationOptions responseOptions = new()
@@ -59,7 +56,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         response = await WaitResponseAsync(projectClient.OpenAI.Responses, response);
         Console.WriteLine(response.GetOutputText());
 
-        await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
             conversationId: conversation.Id,
             items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
         response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
@@ -101,7 +98,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation(options: conversationOptions);
+        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options: conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
@@ -109,7 +106,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         response = WaitResponse(projectClient.OpenAI.Responses, response);
         Console.WriteLine(response.GetOutputText());
 
-        projectClient.OpenAI.Conversations.CreateAgentConversationItems(
+        projectClient.OpenAI.Conversations.CreateProjectConversationItems(
             conversationId: conversation.Id,
             items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
         response = projectClient.OpenAI.Responses.CreateResponse([]);

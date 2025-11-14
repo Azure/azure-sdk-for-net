@@ -13,7 +13,6 @@ namespace Azure.AI.Projects.OpenAI
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(A2ATool))]
-    [ModelReaderWriterBuildable(typeof(AgentConversation))]
     [ModelReaderWriterBuildable(typeof(AgentDefinition))]
     [ModelReaderWriterBuildable(typeof(AgentInfo))]
     [ModelReaderWriterBuildable(typeof(AgentObjectVersions))]
@@ -186,6 +185,7 @@ namespace Azure.AI.Projects.OpenAI
     [ModelReaderWriterBuildable(typeof(OpenApiManagedSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(OpenAPIProjectConnectionAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenAPIProjectConnectionSecurityScheme))]
+    [ModelReaderWriterBuildable(typeof(ProjectConversation))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationCreationOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationUpdateOptions))]
     [ModelReaderWriterBuildable(typeof(Prompt))]

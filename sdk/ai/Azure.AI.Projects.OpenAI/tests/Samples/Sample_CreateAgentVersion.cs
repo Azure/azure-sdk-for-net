@@ -49,9 +49,9 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateCoversation_Async
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         ModelReaderWriterOptions options = new("W");
-        BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+        BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
         #endregion
 
         #region Snippet:Sample_GetResponse_Async
@@ -112,9 +112,9 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateCoversation_Sync
-        AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
+        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
         ModelReaderWriterOptions options = new("W");
-        BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+        BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
         #endregion
 
         #region Snippet:Sample_GetResponse_Sync

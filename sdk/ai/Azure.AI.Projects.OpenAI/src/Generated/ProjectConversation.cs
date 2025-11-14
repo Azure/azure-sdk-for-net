@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OpenAI
 {
-    /// <summary> The AgentConversation. </summary>
-    public partial class AgentConversation
+    /// <summary> The ProjectConversation. </summary>
+    public partial class ProjectConversation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectConversation"/>. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="createdAt"></param>
         /// <param name="metadata">
@@ -24,14 +24,14 @@ namespace Azure.AI.Projects.OpenAI
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
-        internal AgentConversation(string id, DateTimeOffset createdAt, IDictionary<string, string> metadata)
+        internal ProjectConversation(string id, DateTimeOffset createdAt, IDictionary<string, string> metadata)
         {
             Id = id;
             CreatedAt = createdAt;
             Metadata = metadata;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentConversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectConversation"/>. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="object"> The object type, which is always 'conversation'. </param>
         /// <param name="createdAt"></param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.OpenAI
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentConversation(string id, string @object, DateTimeOffset createdAt, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversation(string id, string @object, DateTimeOffset createdAt, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;

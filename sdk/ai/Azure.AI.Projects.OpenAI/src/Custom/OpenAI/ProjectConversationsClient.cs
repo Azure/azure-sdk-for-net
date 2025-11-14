@@ -30,18 +30,18 @@ public partial class ProjectConversationsClient : ConversationClient
         _endpoint = options.Endpoint;
     }
 
-    public virtual ClientResult<AgentConversation> CreateAgentConversation(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectConversation> CreateProjectConversation(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         ClientResult protocolResult = base.CreateConversation(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
-    public virtual async Task<ClientResult<AgentConversation>> CreateAgentConversationAsync(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectConversation>> CreateProjectConversationAsync(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         ClientResult protocolResult = await base.CreateConversationAsync(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
     /// <summary> Returns the list of all conversations. </summary>
@@ -67,12 +67,12 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="agentId"> Filter by agent ID in the format `name:version`. If provided, only items associated with the specified agent ID will be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentConversation> GetAgentConversations(int? limit = default, string order = null, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectConversation> GetProjectConversations(int? limit = default, string order = null, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAICollectionResultOfT<AgentConversation>(
+        return new InternalOpenAICollectionResultOfT<ProjectConversation>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetAgentConversationsRequest(
+                => CreateGetProjectConversationsRequest(
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
                     localCollectionOptions.AfterId,
@@ -80,7 +80,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     localRequestOptions),
-            dataItemDeserializer: AgentConversation.DeserializeAgentConversation,
+            dataItemDeserializer: ProjectConversation.DeserializeProjectConversation,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, agentId]),
             cancellationToken.ToRequestOptions());
     }
@@ -108,12 +108,12 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="agentId"> Filter by agent ID in the format `name:version`. If provided, only items associated with the specified agent ID will be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentConversation> GetAgentConversationsAsync(int? limit = default, string order = null, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectConversation> GetProjectConversationsAsync(int? limit = default, string order = null, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAIAsyncCollectionResultOfT<AgentConversation>(
+        return new InternalOpenAIAsyncCollectionResultOfT<ProjectConversation>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetAgentConversationsRequest(
+                => CreateGetProjectConversationsRequest(
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
                     localCollectionOptions.AfterId,
@@ -121,69 +121,89 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     localRequestOptions),
-            dataItemDeserializer: AgentConversation.DeserializeAgentConversation,
+            dataItemDeserializer: ProjectConversation.DeserializeProjectConversation,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, agentId]),
             cancellationToken.ToRequestOptions());
     }
 
-    public virtual ClientResult<AgentConversation> GetAgentConversation(string conversationId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectConversation> GetProjectConversation(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         ClientResult protocolResult = base.GetConversation(conversationId, cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
-    public virtual async Task<ClientResult<AgentConversation>> GetAgentConversationAsync(string conversationId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectConversation>> GetProjectConversationAsync(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         ClientResult protocolResult = await base.GetConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
-    public virtual CollectionResult<AgentResponseItem> GetAgentConversationItems(
+    public virtual CollectionResult<AgentResponseItem> GetProjectConversationItems(
         string conversationId,
+        AgentResponseItemKind? itemKind = null,
         int? limit = null,
         string order = null,
         string after = null,
+        string before = null,
         IEnumerable<IncludedConversationItemProperty> include = null,
         CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<AgentResponseItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetAgentConversationItemsRequest(
+                => CreateGetProjectConversationItemsRequest(
                     conversationId,
+                    localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
                     localCollectionOptions.AfterId,
-                    localCollectionOptions.Filters.Select(rawFilter => new IncludedConversationItemProperty(rawFilter)),
+                    localCollectionOptions.BeforeId,
+                    localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
             dataItemDeserializer: AgentResponseItem.DeserializeAgentResponseItem,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before: null, filters: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
 
-    public virtual AsyncCollectionResult<AgentResponseItem> GetAgentConversationItemsAsync(
+    public virtual AsyncCollectionResult<AgentResponseItem> GetProjectConversationItemsAsync(
         string conversationId,
+        AgentResponseItemKind? itemKind = null,
         int? limit = null,
         string order = null,
         string after = null,
+        string before = null,
         IEnumerable<IncludedConversationItemProperty> include = null,
         CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<AgentResponseItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetAgentConversationItemsRequest(
+                => CreateGetProjectConversationItemsRequest(
                     conversationId,
+                    localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
                     localCollectionOptions.AfterId,
-                    localCollectionOptions.Filters.Select(rawFilter => new IncludedConversationItemProperty(rawFilter)),
+                    localCollectionOptions.BeforeId,
+                    localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
             dataItemDeserializer: AgentResponseItem.DeserializeAgentResponseItem,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before: null, filters: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
+    }
+
+    public virtual ClientResult<AgentResponseItem> GetProjectConversationItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
+    {
+        ClientResult protocolResult = GetConversationItem(conversationId, itemId, include, cancellationToken.ToRequestOptions());
+        return protocolResult.ToAgentClientResult<AgentResponseItem>();
+    }
+
+    public virtual async Task<ClientResult<AgentResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
+    {
+        ClientResult protocolResult = await GetConversationItemAsync(conversationId, itemId, include, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return protocolResult.ToAgentClientResult<AgentResponseItem>();
     }
 
     /// <summary> Create items in a conversation with the given ID. </summary>
@@ -197,7 +217,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="items"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<ReadOnlyCollection<ResponseItem>> CreateAgentConversationItems(string conversationId, IEnumerable<ResponseItem> items, IEnumerable<IncludedConversationItemProperty> include = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ReadOnlyCollection<ResponseItem>> CreateProjectConversationItems(string conversationId, IEnumerable<ResponseItem> items, IEnumerable<IncludedConversationItemProperty> include = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         BinaryContent content = ResponseItemHelpers.GetItemsRequestContent(items);
@@ -222,7 +242,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="items"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<ReadOnlyCollection<ResponseItem>>> CreateAgentConversationItemsAsync(string conversationId, IEnumerable<ResponseItem> items, IEnumerable<IncludedConversationItemProperty> include = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ReadOnlyCollection<ResponseItem>>> CreateProjectConversationItemsAsync(string conversationId, IEnumerable<ResponseItem> items, IEnumerable<IncludedConversationItemProperty> include = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         BinaryContent content = ResponseItemHelpers.GetItemsRequestContent(items);
@@ -236,16 +256,16 @@ public partial class ProjectConversationsClient : ConversationClient
             protocolResult.GetRawResponse());
     }
 
-    public virtual ClientResult<AgentConversation> UpdateAgentConversation(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectConversation> UpdateProjectConversation(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = base.UpdateConversation(conversationId, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
-    public virtual async Task<ClientResult<AgentConversation>> UpdateAgentConversationAsync(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectConversation>> UpdateProjectConversationAsync(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = await base.UpdateConversationAsync(conversationId, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<AgentConversation>();
+        return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
     protected ProjectConversationsClient()

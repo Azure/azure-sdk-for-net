@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 using OpenAI.Conversations;
 
 namespace Azure.AI.Projects.OpenAI;
@@ -19,11 +18,11 @@ public partial class ProjectConversationsClient : ConversationClient
     private static PipelineMessageClassifier _pipelineMessageClassifier200;
     private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-    internal PipelineMessage CreateGetAgentConversationsRequest(int? limit, string order, string after, string before, string agentName, string agentId, RequestOptions options)
+    internal PipelineMessage CreateGetProjectConversationsRequest(int? limit, string order, string after, string before, string agentName, string agentId, RequestOptions options)
     {
         ClientUriBuilder uri = new ClientUriBuilder();
         uri.Reset(_endpoint);
-        uri.AppendPath("/openai/conversations", false);
+        uri.AppendPath("/conversations", false);
         if (limit != null)
         {
             uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -55,13 +54,17 @@ public partial class ProjectConversationsClient : ConversationClient
         return message;
     }
 
-    internal virtual PipelineMessage CreateGetAgentConversationItemsRequest(string conversationId, int? limit, string order, string after, IEnumerable<IncludedConversationItemProperty> include, RequestOptions options)
+    internal virtual PipelineMessage CreateGetProjectConversationItemsRequest(string conversationId, string itemKind, int? limit, string order, string after, string before, IEnumerable<IncludedConversationItemProperty> include, RequestOptions options)
     {
         ClientUriBuilder uri = new ClientUriBuilder();
         uri.Reset(_endpoint);
         uri.AppendPath("/conversations/", false);
         uri.AppendPath(conversationId, true);
         uri.AppendPath("/items", false);
+        if (itemKind != null)
+        {
+            uri.AppendQuery("item_type", itemKind, true);
+        }
         if (limit != null)
         {
             uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -73,6 +76,10 @@ public partial class ProjectConversationsClient : ConversationClient
         if (after != null)
         {
             uri.AppendQuery("after", after, true);
+        }
+        if (before != null)
+        {
+            uri.AppendQuery("before", before, true);
         }
         if (include != null && !(include is ChangeTrackingList<IncludedConversationItemProperty> changeTrackingList && changeTrackingList.IsUndefined))
         {

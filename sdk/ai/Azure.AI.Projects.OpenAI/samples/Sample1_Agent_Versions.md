@@ -58,16 +58,16 @@ await foreach (AgentVersion oneAgentVersion in agentVersions)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateCoversation_Sync
-AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
+ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
 ModelReaderWriterOptions options = new("W");
-BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateCoversation_Async
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 ModelReaderWriterOptions options = new("W");
-BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+BinaryData conversationBin = ((IPersistableModel<ProjectConversation>)conversation).Write(options);
 ```
 
 5. Ask question for an agent.

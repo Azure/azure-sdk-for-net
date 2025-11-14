@@ -244,7 +244,7 @@ set the conversation parameter while calling `GetProjectResponsesClientForAgent`
 ```C# Snippet:ConversationClient
 ResponseCreationOptions responseCreationOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
 ```
 
@@ -262,14 +262,14 @@ ProjectConversationCreationOptions conversationOptions = new()
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state
 //
 string EXISTING_CONVERSATION_ID = conversation.Id;
 
-_ = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+_ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
     EXISTING_CONVERSATION_ID,
     [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
 //

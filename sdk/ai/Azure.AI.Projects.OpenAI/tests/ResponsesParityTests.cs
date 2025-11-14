@@ -357,7 +357,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        AgentConversation conversation = await client.Conversations.CreateAgentConversationAsync();
+        ProjectConversation conversation = await client.Conversations.CreateProjectConversationAsync();
         Assert.That(conversation.Id, Does.StartWith("conv_"));
 
         FunctionTool functionTool = ResponseTool.CreateFunctionTool(

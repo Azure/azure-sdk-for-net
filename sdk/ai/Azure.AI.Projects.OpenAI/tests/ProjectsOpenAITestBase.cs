@@ -341,6 +341,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                 Console.WriteLine($"Response headers: {headers}");
                 if (message.BufferResponse)
                 {
+                    message.Response.BufferContent();
                     Console.WriteLine("--- Begin response content ---");
                     Console.WriteLine(message.Response.Content?.ToString());
                     Console.WriteLine("--- End of response content ---");

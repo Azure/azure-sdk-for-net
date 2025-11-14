@@ -4,10 +4,10 @@
 namespace Azure.AI.Projects.OpenAI;
 
 [CodeGenType("ConversationResource")]
-public partial class AgentConversation
+public partial class ProjectConversation
 {
     [CodeGenMember("Object")]
     private string Object { get; } = "conversation";
 
-    public static implicit operator string(AgentConversation conversation) => conversation.Id;
+    public static implicit operator string(ProjectConversation conversation) => conversation.Id;
 }

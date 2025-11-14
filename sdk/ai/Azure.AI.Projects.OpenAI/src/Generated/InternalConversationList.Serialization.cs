@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (AgentConversation item in Data)
+            foreach (ProjectConversation item in Data)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -92,7 +92,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IList<AgentConversation> data = default;
+            IList<ProjectConversation> data = default;
             string @object = default;
             string firstId = default;
             string lastId = default;
@@ -102,10 +102,10 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<AgentConversation> array = new List<AgentConversation>();
+                    List<ProjectConversation> array = new List<ProjectConversation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentConversation.DeserializeAgentConversation(item, options));
+                        array.Add(ProjectConversation.DeserializeProjectConversation(item, options));
                     }
                     data = array;
                     continue;
