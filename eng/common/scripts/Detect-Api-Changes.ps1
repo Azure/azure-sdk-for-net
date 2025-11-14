@@ -74,7 +74,13 @@ function Submit-Request($filePath, $packageName, $packageType)
     }
     catch
     {
-        LogError "Error $StatusCode - Exception details: $($_.Exception.Response)"
+        Write-Host "ERROR: API request failed" -ForegroundColor Red
+        Write-Host "Status Code: $($_.Exception.Response.StatusCode.Value__)" -ForegroundColor Yellow  
+        Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Yellow
+        if ($_.ErrorDetails.Message) {
+            Write-Host "Details: $($_.ErrorDetails.Message)" -ForegroundColor Yellow
+        }
+        LogError "Failed to detect API changes. See details above."
         $StatusCode = $_.Exception.Response.StatusCode
     }
 

@@ -224,7 +224,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         public Azure.AI.Vision.ImageAnalysis.TagsResult Tags { get { throw null; } }
         protected virtual Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult (Azure.Response response) { throw null; }
         protected virtual Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

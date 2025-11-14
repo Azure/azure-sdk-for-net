@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    public partial class LogAnalyticsQuerySignalDefinitionProperties : IUtf8JsonSerializable, IJsonModel<LogAnalyticsQuerySignalDefinitionProperties>
+    /// <summary> Log Analytics Query Signal Definition properties. </summary>
+    public partial class LogAnalyticsQuerySignalDefinitionProperties : HealthModelSignalDefinitionProperties, IJsonModel<LogAnalyticsQuerySignalDefinitionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQuerySignalDefinitionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySignalDefinitionProperties"/> for deserialization. </summary>
+        internal LogAnalyticsQuerySignalDefinitionProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogAnalyticsQuerySignalDefinitionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsQuerySignalDefinitionProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queryText"u8);
             writer.WriteStringValue(QueryText);
@@ -49,29 +54,31 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        LogAnalyticsQuerySignalDefinitionProperties IJsonModel<LogAnalyticsQuerySignalDefinitionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsQuerySignalDefinitionProperties IJsonModel<LogAnalyticsQuerySignalDefinitionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LogAnalyticsQuerySignalDefinitionProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HealthModelSignalDefinitionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsQuerySignalDefinitionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLogAnalyticsQuerySignalDefinitionProperties(document.RootElement, options);
         }
 
-        internal static LogAnalyticsQuerySignalDefinitionProperties DeserializeLogAnalyticsQuerySignalDefinitionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LogAnalyticsQuerySignalDefinitionProperties DeserializeLogAnalyticsQuerySignalDefinitionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string queryText = default;
-            string timeGrain = default;
-            string valueColumnName = default;
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
             EntitySignalKind signalKind = default;
@@ -79,93 +86,101 @@ namespace Azure.ResourceManager.CloudHealth.Models
             IDictionary<string, string> labels = default;
             string dataUnit = default;
             EntitySignalEvaluationRule evaluationRules = default;
-            DateTimeOffset? deletionDate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? deletedOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string queryText = default;
+            string timeGrain = default;
+            string valueColumnName = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("queryText"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    queryText = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeGrain"u8))
-                {
-                    timeGrain = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueColumnName"u8))
-                {
-                    valueColumnName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HealthModelProvisioningState(property.Value.GetString());
+                    provisioningState = new HealthModelProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("signalKind"u8))
+                if (prop.NameEquals("signalKind"u8))
                 {
-                    signalKind = new EntitySignalKind(property.Value.GetString());
+                    signalKind = new EntitySignalKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("refreshInterval"u8))
+                if (prop.NameEquals("refreshInterval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refreshInterval = new EntitySignalRefreshInterval(property.Value.GetString());
+                    refreshInterval = new EntitySignalRefreshInterval(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labels"u8))
+                if (prop.NameEquals("labels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     labels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dataUnit"u8))
+                if (prop.NameEquals("dataUnit"u8))
                 {
-                    dataUnit = property.Value.GetString();
+                    dataUnit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("evaluationRules"u8))
+                if (prop.NameEquals("evaluationRules"u8))
                 {
-                    evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(property.Value, options);
+                    evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("deletionDate"u8))
+                if (prop.NameEquals("deletionDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deletionDate = property.Value.GetDateTimeOffset("O");
+                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("queryText"u8))
+                {
+                    queryText = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("timeGrain"u8))
+                {
+                    timeGrain = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("valueColumnName"u8))
+                {
+                    valueColumnName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsQuerySignalDefinitionProperties(
                 provisioningState,
                 displayName,
@@ -174,17 +189,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletionDate,
-                serializedAdditionalRawData,
+                deletedOn,
+                additionalBinaryDataProperties,
                 queryText,
                 timeGrain,
                 valueColumnName);
         }
 
-        BinaryData IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -194,15 +212,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        LogAnalyticsQuerySignalDefinitionProperties IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsQuerySignalDefinitionProperties IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogAnalyticsQuerySignalDefinitionProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HealthModelSignalDefinitionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLogAnalyticsQuerySignalDefinitionProperties(document.RootElement, options);
                     }
                 default:
@@ -210,6 +233,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LogAnalyticsQuerySignalDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

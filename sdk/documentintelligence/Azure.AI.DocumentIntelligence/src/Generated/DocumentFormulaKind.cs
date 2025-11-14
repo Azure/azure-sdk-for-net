@@ -14,38 +14,57 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentFormulaKind : IEquatable<DocumentFormulaKind>
     {
         private readonly string _value;
+        /// <summary> A formula embedded within the content of a paragraph. </summary>
+        private const string InlineValue = "inline";
+        /// <summary> A formula in display mode that takes up an entire line. </summary>
+        private const string DisplayValue = "display";
 
         /// <summary> Initializes a new instance of <see cref="DocumentFormulaKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentFormulaKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InlineValue = "inline";
-        private const string DisplayValue = "display";
+            _value = value;
+        }
 
         /// <summary> A formula embedded within the content of a paragraph. </summary>
         public static DocumentFormulaKind Inline { get; } = new DocumentFormulaKind(InlineValue);
+
         /// <summary> A formula in display mode that takes up an entire line. </summary>
         public static DocumentFormulaKind Display { get; } = new DocumentFormulaKind(DisplayValue);
+
         /// <summary> Determines if two <see cref="DocumentFormulaKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentFormulaKind left, DocumentFormulaKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentFormulaKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentFormulaKind left, DocumentFormulaKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFormulaKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentFormulaKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentFormulaKind(string value) => new DocumentFormulaKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentFormulaKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentFormulaKind?(string value) => value == null ? null : new DocumentFormulaKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentFormulaKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentFormulaKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

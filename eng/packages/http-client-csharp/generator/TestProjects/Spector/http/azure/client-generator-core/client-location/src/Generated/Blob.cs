@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient
 {
     public partial class Blob
     {

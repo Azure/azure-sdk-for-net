@@ -38,6 +38,6 @@ namespace Encode.Datetime
         /// <param name="defaultDatetimeProperty"> The <see cref="DefaultDatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DefaultDatetimeProperty defaultDatetimeProperty) => throw null;
 
-        public static explicit operator DefaultDatetimeProperty(Response result) => throw null;
+        public static explicit operator DefaultDatetimeProperty(Response response) => throw null;
     }
 }

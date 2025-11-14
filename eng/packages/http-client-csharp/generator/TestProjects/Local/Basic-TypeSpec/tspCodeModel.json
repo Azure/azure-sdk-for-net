@@ -6977,6 +6977,7 @@
           "crossLanguageDefinitionId": "BasicTypeSpec.basicTypeSpecUrl"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "BasicTypeSpec",
       "apiVersions": [

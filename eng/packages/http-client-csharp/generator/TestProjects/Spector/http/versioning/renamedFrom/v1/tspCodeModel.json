@@ -504,6 +504,7 @@
           "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.RenamedFrom",
       "apiVersions": [
@@ -725,6 +726,7 @@
               "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface",
           "apiVersions": [

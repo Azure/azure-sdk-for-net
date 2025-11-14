@@ -38,6 +38,6 @@ namespace Serialization.EncodedName.Json._Property
         /// <param name="jsonEncodedNameModel"> The <see cref="JsonEncodedNameModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(JsonEncodedNameModel jsonEncodedNameModel) => throw null;
 
-        public static explicit operator JsonEncodedNameModel(Response result) => throw null;
+        public static explicit operator JsonEncodedNameModel(Response response) => throw null;
     }
 }

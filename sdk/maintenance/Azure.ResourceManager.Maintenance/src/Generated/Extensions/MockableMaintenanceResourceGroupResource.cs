@@ -18,16 +18,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableMaintenanceResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _scheduledEventClientDiagnostics;
-        private ScheduledEventRestOperations _scheduledEventRestClient;
         private ClientDiagnostics _maintenanceApplyUpdateApplyUpdatesClientDiagnostics;
         private ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
         private ClientDiagnostics _configurationAssignmentsClientDiagnostics;
         private ConfigurationAssignmentsRestOperations _configurationAssignmentsRestClient;
         private ClientDiagnostics _applyUpdateForResourceGroupClientDiagnostics;
         private ApplyUpdateForResourceGroupRestOperations _applyUpdateForResourceGroupRestClient;
-        private ClientDiagnostics _configurationAssignmentsForResourceGroupClientDiagnostics;
-        private ConfigurationAssignmentsForResourceGroupRestOperations _configurationAssignmentsForResourceGroupRestClient;
         private ClientDiagnostics _updatesClientDiagnostics;
         private UpdatesRestOperations _updatesRestClient;
 
@@ -43,15 +39,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
         }
 
-        private ClientDiagnostics ScheduledEventClientDiagnostics => _scheduledEventClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ScheduledEventRestOperations ScheduledEventRestClient => _scheduledEventRestClient ??= new ScheduledEventRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MaintenanceApplyUpdateApplyUpdatesClientDiagnostics => _maintenanceApplyUpdateApplyUpdatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
         private ApplyUpdatesRestOperations MaintenanceApplyUpdateApplyUpdatesRestClient => _maintenanceApplyUpdateApplyUpdatesRestClient ??= new ApplyUpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MaintenanceApplyUpdateResource.ResourceType));
         private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ClientDiagnostics ApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ApplyUpdateForResourceGroupRestOperations ApplyUpdateForResourceGroupRestClient => _applyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ConfigurationAssignmentsForResourceGroupClientDiagnostics => _configurationAssignmentsForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ConfigurationAssignmentsForResourceGroupRestOperations ConfigurationAssignmentsForResourceGroupRestClient => _configurationAssignmentsForResourceGroupRestClient ??= new ConfigurationAssignmentsForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UpdatesRestOperations UpdatesRestClient => _updatesRestClient ??= new UpdatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -81,7 +73,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,7 +104,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,7 +142,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +176,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,92 +198,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledEvent_Acknowledge</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource Name. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        public virtual async Task<Response<ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
-
-            using var scope = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.AcknowledgeScheduledEvent");
-            scope.Start();
-            try
-            {
-                var response = await ScheduledEventRestClient.AcknowledgeAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceType, resourceName, scheduledEventId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post Scheduled Event Acknowledgement
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents/{scheduledEventId}/acknowledge</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledEvent_Acknowledge</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource Name. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        public virtual Response<ScheduledEventApproveResult> AcknowledgeScheduledEvent(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
-
-            using var scope = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.AcknowledgeScheduledEvent");
-            scope.Start();
-            try
-            {
-                var response = ScheduledEventRestClient.Acknowledge(Id.SubscriptionId, Id.ResourceGroupName, resourceType, resourceName, scheduledEventId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Track maintenance updates to resource with parent
         /// <list type="bullet">
         /// <item>
@@ -304,7 +210,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,7 +252,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,7 +294,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,7 +345,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -490,7 +396,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -537,7 +443,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -572,82 +478,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Get configuration assignment for resource..
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignments_GetParent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByParentAsync(ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentByParent");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsRestClient.GetParentAsync(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get configuration assignment for resource..
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignments_GetParent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByParent(ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentByParent");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsRestClient.GetParent(Id.SubscriptionId, Id.ResourceGroupName, options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Register configuration for resource.
         /// <list type="bullet">
         /// <item>
@@ -660,7 +490,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -698,7 +528,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -736,7 +566,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -774,7 +604,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -800,96 +630,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Get configuration assignment for resource..
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetConfigurationAssignment");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get configuration assignment for resource..
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetConfigurationAssignment");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Register configuration for resource.
         /// <list type="bullet">
         /// <item>
@@ -902,7 +642,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -949,7 +689,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -996,7 +736,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1041,7 +781,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1086,7 +826,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1124,7 +864,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1162,7 +902,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1196,7 +936,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1230,7 +970,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1255,7 +995,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1265,326 +1005,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get configuration assignment for resource..
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByResourceGroupAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForResourceGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get configuration assignment for resource..
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByResourceGroup(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForResourceGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.CreateOrUpdateConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForResourceGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByResourceGroup(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.CreateOrUpdateConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForResourceGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, data, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentByResourceGroupAsync(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.UpdateConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForResourceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Register configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="data"> The configurationAssignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentByResourceGroup(string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.UpdateConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForResourceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, data, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unregister configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByResourceGroupAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.DeleteConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = await ConfigurationAssignmentsForResourceGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unregister configuration for resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationAssignmentsForResourceGroup_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByResourceGroup(string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var scope = ConfigurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.DeleteConfigurationAssignmentByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = ConfigurationAssignmentsForResourceGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, configurationAssignmentName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -1600,7 +1020,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1638,7 +1058,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1676,7 +1096,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1710,7 +1130,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2021-05-01</description>
         /// </item>
         /// </list>
         /// </summary>

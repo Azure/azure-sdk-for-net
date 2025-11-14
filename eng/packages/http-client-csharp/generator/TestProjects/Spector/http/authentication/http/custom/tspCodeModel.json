@@ -160,6 +160,7 @@
           "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.Http.Custom",
       "apiVersions": []

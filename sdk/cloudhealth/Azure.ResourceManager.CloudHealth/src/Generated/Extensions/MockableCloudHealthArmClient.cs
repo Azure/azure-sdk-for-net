@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableCloudHealthArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCloudHealthArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCloudHealthArmClient for mocking. </summary>
         protected MockableCloudHealthArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCloudHealthArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCloudHealthArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCloudHealthArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableCloudHealthArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HealthModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthModelResource"/> object. </returns>
         public virtual HealthModelResource GetHealthModelResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             return new HealthModelResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthModelSignalDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelSignalDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelSignalDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HealthModelSignalDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthModelSignalDefinitionResource"/> object. </returns>
         public virtual HealthModelSignalDefinitionResource GetHealthModelSignalDefinitionResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             return new HealthModelSignalDefinitionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthModelAuthenticationSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelAuthenticationSettingResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelAuthenticationSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HealthModelAuthenticationSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthModelAuthenticationSettingResource"/> object. </returns>
         public virtual HealthModelAuthenticationSettingResource GetHealthModelAuthenticationSettingResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             return new HealthModelAuthenticationSettingResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthModelEntityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelEntityResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HealthModelEntityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthModelEntityResource"/> object. </returns>
         public virtual HealthModelEntityResource GetHealthModelEntityResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             return new HealthModelEntityResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthModelRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelRelationshipResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HealthModelRelationshipResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthModelRelationshipResource"/> object. </returns>
         public virtual HealthModelRelationshipResource GetHealthModelRelationshipResource(ResourceIdentifier id)
@@ -94,10 +71,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             return new HealthModelRelationshipResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthModelDiscoveryRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthModelDiscoveryRuleResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelDiscoveryRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HealthModelDiscoveryRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HealthModelDiscoveryRuleResource"/> object. </returns>
         public virtual HealthModelDiscoveryRuleResource GetHealthModelDiscoveryRuleResource(ResourceIdentifier id)

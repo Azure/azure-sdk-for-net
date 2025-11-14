@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient
 {
     public partial class Blob : IJsonModel<Blob>
     {
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameter
 
         string IPersistableModel<Blob>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator Blob(Response result) => throw null;
+        public static explicit operator Blob(Response response) => throw null;
     }
 }

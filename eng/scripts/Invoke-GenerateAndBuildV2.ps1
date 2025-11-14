@@ -42,6 +42,81 @@ $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
+$apiVersion = $inputJson.apiVersion
+$sdkReleaseType = $inputJson.sdkReleaseType
+
+function Update-PackageVersionSuffix {
+    param(
+        [string]$csprojPath,
+        [string]$sdkReleaseType
+    )
+    
+    if (-not $sdkReleaseType) {
+        Write-Host "No sdkReleaseType provided, skipping version suffix update"
+        return
+    }
+    
+    if (-not (Test-Path $csprojPath)) {
+        Write-Warning "csproj file not found at $csprojPath"
+        return
+    }
+    
+    Write-Host "Updating package version suffix based on sdkReleaseType: $sdkReleaseType"
+    
+    # Load the csproj file as XML
+    [xml]$csproj = Get-Content $csprojPath
+    
+    # Find the PropertyGroup that contains the Version element
+    $versionElement = $null
+    foreach ($propertyGroup in $csproj.Project.PropertyGroup) {
+        if ($propertyGroup.Version) {
+            $versionElement = $propertyGroup.SelectSingleNode("Version")
+            break
+        }
+    }
+    
+    if (-not $versionElement) {
+        Write-Warning "No Version element found in $csprojPath"
+        return
+    }
+    
+    $currentVersion = $versionElement.InnerText
+    Write-Host "Current version: $currentVersion"
+    
+    $newVersion = $currentVersion
+    $versionChanged = $false
+    
+    if ($sdkReleaseType -eq "beta") {
+        # If release type is beta, ensure version has beta suffix
+        if ($currentVersion -notmatch '-beta\.\d+$') {
+            # Version doesn't have beta suffix, add it
+            $newVersion = "$currentVersion-beta.1"
+            Write-Host "Adding beta suffix. New version: $newVersion"
+            $versionChanged = $true
+        } else {
+            Write-Host "Version already has beta suffix, no change needed"
+        }
+    } elseif ($sdkReleaseType -eq "stable") {
+        # If release type is stable, remove beta suffix if present
+        if ($currentVersion -match '^(.+)-beta\.\d+$') {
+            $newVersion = $matches[1]
+            Write-Host "Removing beta suffix. New version: $newVersion"
+            $versionChanged = $true
+        } else {
+            Write-Host "Version is already stable (no beta suffix), no change needed"
+        }
+    } else {
+        Write-Warning "Unknown sdkReleaseType: $sdkReleaseType. Expected 'beta' or 'stable'"
+        return
+    }
+    
+    # Update and save if version changed
+    if ($versionChanged) {
+        $versionElement.InnerText = $newVersion
+        $csproj.Save($csprojPath)
+        Write-Host "Successfully updated version to $newVersion in $csprojPath"
+    }
+}
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -150,6 +225,14 @@ if ($relatedTypeSpecProjectFolder) {
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
+        if ($apiVersion) {
+            # Validate apiVersion format to prevent command injection - allow alphanumeric, dots, and dashes
+            if ($apiVersion -match '^[a-zA-Z0-9.-]+$') {
+                $tspclientCommand += " --emitter-options `"api-version=$apiVersion`""
+            } else {
+                Write-Warning "apiVersion '$apiVersion' contains invalid characters and will be skipped. Only alphanumeric characters, dots, and dashes are allowed."
+            }
+        }
         Write-Host $tspclientCommand
         Invoke-Expression $tspclientCommand
         
@@ -162,6 +245,12 @@ if ($relatedTypeSpecProjectFolder) {
           })
           $exitCode = $LASTEXITCODE
         } else {
+            # Update package version suffix based on sdkReleaseType
+            if ($sdkReleaseType) {
+                $csprojPath = Join-Path $sdkProjectFolder "src" "$packageName.csproj"
+                Update-PackageVersionSuffix -csprojPath $csprojPath -sdkReleaseType $sdkReleaseType
+            }
+            
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
             -projectFolder $sdkProjectFolder `

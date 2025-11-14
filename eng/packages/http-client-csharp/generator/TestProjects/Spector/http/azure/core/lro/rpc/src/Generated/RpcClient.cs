@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Lro.Rpc
+namespace Specs.Azure.Core.Lro.Rpc
 {
     public partial class RpcClient
     {

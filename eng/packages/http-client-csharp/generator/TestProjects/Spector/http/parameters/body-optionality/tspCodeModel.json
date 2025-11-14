@@ -377,6 +377,7 @@
           "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.BodyOptionality",
       "apiVersions": [],
@@ -646,6 +647,7 @@
               "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit",
           "apiVersions": [],

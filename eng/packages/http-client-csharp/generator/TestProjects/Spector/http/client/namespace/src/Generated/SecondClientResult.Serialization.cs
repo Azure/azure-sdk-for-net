@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace client.clientnamespace.second
+namespace Client.Clientnamespace.Second
 {
     public partial class SecondClientResult : IJsonModel<SecondClientResult>
     {
@@ -34,6 +34,6 @@ namespace client.clientnamespace.second
 
         string IPersistableModel<SecondClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator SecondClientResult(Response result) => throw null;
+        public static explicit operator SecondClientResult(Response response) => throw null;
     }
 }

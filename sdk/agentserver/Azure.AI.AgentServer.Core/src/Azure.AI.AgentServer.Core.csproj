@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Approved override to LtsTargetFramework -->
+    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
+
+    <PackageTags>Azure.AI.AgentServer.Core</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.Projects"/>
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore"/>
+    <PackageReference Include="ModelContextProtocol"/>
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
+
+    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+  </ItemGroup>
+</Project>
+

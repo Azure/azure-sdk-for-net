@@ -129,7 +129,7 @@ namespace BasicTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeFriendModel(document.RootElement, options);
                     }
@@ -153,11 +153,10 @@ namespace BasicTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FriendModel"/> from. </param>
-        public static explicit operator FriendModel(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FriendModel"/> from. </param>
+        public static explicit operator FriendModel(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFriendModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

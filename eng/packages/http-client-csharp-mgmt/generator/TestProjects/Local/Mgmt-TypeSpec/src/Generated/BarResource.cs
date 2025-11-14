@@ -111,7 +111,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Bars_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -160,7 +160,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Bars_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -209,7 +209,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -257,7 +257,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -305,7 +305,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> Bars_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -357,7 +357,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> Bars_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -400,7 +400,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> List Employee resources by Bar. </summary>
+        /// <summary>
+        /// List Employee resources by Bar
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Employees_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Employee> GetEmployeesAsync(CancellationToken cancellationToken = default)
@@ -418,7 +438,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 context);
         }
 
-        /// <summary> List Employee resources by Bar. </summary>
+        /// <summary>
+        /// List Employee resources by Bar
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/employees. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Employees_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Employee"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Employee> GetEmployees(CancellationToken cancellationToken = default)

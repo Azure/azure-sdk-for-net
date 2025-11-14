@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="datetimeProperty"> The <see cref="DatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DatetimeProperty datetimeProperty) => throw null;
 
-        public static explicit operator DatetimeProperty(Response result) => throw null;
+        public static explicit operator DatetimeProperty(Response response) => throw null;
     }
 }

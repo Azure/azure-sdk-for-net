@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ServerlessRuntimes_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ServerlessRuntimes_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ServerlessRuntimes_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ServerlessRuntimes_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -286,7 +286,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Update a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary>
+        /// Update a InformaticaServerlessRuntimeResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -318,7 +338,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Update a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary>
+        /// Update a InformaticaServerlessRuntimeResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -359,7 +399,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CheckDependencies. </description>
+        /// <description> ServerlessRuntimes_CheckDependencies. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -407,7 +447,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CheckDependencies. </description>
+        /// <description> ServerlessRuntimes_CheckDependencies. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -455,7 +495,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StartFailedServerlessRuntime. </description>
+        /// <description> ServerlessRuntimes_StartFailedServerlessRuntime. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -498,7 +538,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> StartFailedServerlessRuntime. </description>
+        /// <description> ServerlessRuntimes_StartFailedServerlessRuntime. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -541,7 +581,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetServerlessResourceById. </description>
+        /// <description> ServerlessRuntimes_ServerlessResourceById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -589,7 +629,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetServerlessResourceById. </description>
+        /// <description> ServerlessRuntimes_ServerlessResourceById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

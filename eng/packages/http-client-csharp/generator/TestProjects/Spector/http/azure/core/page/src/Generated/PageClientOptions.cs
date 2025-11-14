@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Page
+namespace Specs.Azure.Core.Page
 {
     public partial class PageClientOptions : ClientOptions
     {

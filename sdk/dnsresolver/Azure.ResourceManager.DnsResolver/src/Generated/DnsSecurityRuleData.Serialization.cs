@@ -50,13 +50,26 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action, options);
-            writer.WritePropertyName("dnsResolverDomainLists"u8);
-            writer.WriteStartArray();
-            foreach (var item in DnsResolverDomainLists)
+            if (Optional.IsCollectionDefined(DnsResolverDomainLists))
             {
-                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                writer.WritePropertyName("dnsResolverDomainLists"u8);
+                writer.WriteStartArray();
+                foreach (var item in DnsResolverDomainLists)
+                {
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(ManagedDomainLists))
+            {
+                writer.WritePropertyName("managedDomainLists"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedDomainLists)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DnsSecurityRuleState))
             {
                 writer.WritePropertyName("dnsSecurityRuleState"u8);
@@ -100,6 +113,7 @@ namespace Azure.ResourceManager.DnsResolver
             int priority = default;
             DnsSecurityRuleAction action = default;
             IList<WritableSubResource> dnsResolverDomainLists = default;
+            IList<ManagedDomainList> managedDomainLists = default;
             DnsSecurityRuleState? dnsSecurityRuleState = default;
             DnsResolverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,12 +193,30 @@ namespace Azure.ResourceManager.DnsResolver
                         }
                         if (property0.NameEquals("dnsResolverDomainLists"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
                                 array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default));
                             }
                             dnsResolverDomainLists = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("managedDomainLists"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ManagedDomainList> array = new List<ManagedDomainList>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ManagedDomainList(item.GetString()));
+                            }
+                            managedDomainLists = array;
                             continue;
                         }
                         if (property0.NameEquals("dnsSecurityRuleState"u8))
@@ -224,7 +256,8 @@ namespace Azure.ResourceManager.DnsResolver
                 etag,
                 priority,
                 action,
-                dnsResolverDomainLists,
+                dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>(),
+                managedDomainLists ?? new ChangeTrackingList<ManagedDomainList>(),
                 dnsSecurityRuleState,
                 provisioningState,
                 serializedAdditionalRawData);

@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -149,9 +151,14 @@ namespace Azure.Generator.Providers
             [
                 Declare("items", new CSharpType(typeof(List<>), typeof(BinaryData)),
                     New.Instance(new CSharpType(typeof(List<>), typeof(BinaryData))), out itemsVariable),
-                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable)
+                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<object>>(), out var itemVariable)
                 {
-                    itemsVariable.Invoke("Add", [Static<BinaryData>().Invoke("FromObjectAsJson", [itemVariable])]).Terminate()
+                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
+                        [
+                            itemVariable,
+                            Static<ModelSerializationExtensionsDefinition>().Property(ModelSerializationExtensionsDefinition.WireOptionsFieldName),
+                            Static<ModelReaderWriterContextDefinition>().Property("Default")
+                        ])).Terminate()
                 }
             ];
         }
